@@ -1,4 +1,5 @@
 <?php
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
@@ -34,7 +35,7 @@ if (defined('ENVIRONMENT'))
 		case 'development':
 			error_reporting(E_ALL);
 		break;
-	
+
 		case 'testing':
 		case 'production':
 			error_reporting(0);
@@ -199,10 +200,6 @@ if (defined('ENVIRONMENT'))
  *
  */
 
-/* --------------------------------------------------------------------
- * LOAD THE DATAMAPPER BOOTSTRAP FILE
- * --------------------------------------------------------------------
- */
 require_once APPPATH.'third_party/datamapper/bootstrap.php';
 
 require_once BASEPATH.'core/CodeIgniter.php';
