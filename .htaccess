@@ -11,7 +11,7 @@ AddDefaultCharset UTF-8
   	# my url is http://localhost/arny
     #RewriteBase /arny/
 	# set your own
-	RewriteBase /banhji/
+	RewriteBase /c2/
 
     #Checks to see if the user is attempting to access a valid file,
     #such as an image or css document, if this isn't true it sends the
