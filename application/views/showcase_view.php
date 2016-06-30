@@ -77,7 +77,7 @@
 				<ul class="topnav pull-right">
 					<li><a href="#">FEATURES</a></li>
 					<li><a href="#">INSIGHT</a></li>
-					<li><a href="<?php echo base_url(); ?>login">Login</a></li>
+					<li><a href="<?php echo base_url(); ?>login">Sign In</a></li>
 					<li><a href="<?php echo base_url(); ?>create">Sign Up</a></li>
 				</ul>
 				<div class="clearfix"></div>
