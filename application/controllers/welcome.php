@@ -19,7 +19,7 @@ class Welcome extends MY_Controller {
 	 */
 	public function index()
 	{
-		$this->_render('welcome_message');
+		$this->_render('showcase_view');
 	}
 }
 
