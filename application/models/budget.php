@@ -25,9 +25,9 @@ class Budget extends DataMapper {
 				'cache_on' => false,
 				'char_set' => 'utf8',
 				'cachedir' => '',
-				'hostname' => 'localhost',
-				'username' => 'root',
-				'password' => '',
+				'hostname' => 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com',
+				'username' => 'mightyadmin',
+				'password' => 'banhji2016',
 				'database' => $db,
 				'prefix'   => ''
 			);
