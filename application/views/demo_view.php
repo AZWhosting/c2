@@ -22409,8 +22409,8 @@
 		});
 	}
 	banhji.institute = banhji.userData ? banhji.userData.institute : "";
-	banhji.locale = banhji.institute.currency.locale;
-	banhji.header = { Institute: banhji.institute.id };	
+	banhji.locale = banhji.institute[0].currency.locale;
+	banhji.header = { Institute: banhji.institute[0].id };	
 	var dataStore = function(url) {
 		var o = new kendo.data.DataSource({
 				transport: {
