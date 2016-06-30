@@ -77,7 +77,8 @@
 				<ul class="topnav pull-right">
 					<li><a href="#">FEATURES</a></li>
 					<li><a href="#">INSIGHT</a></li>
-					<li><a href="http://app.banhji.com/login">Login</a></li>
+					<li><a href="<?php echo base_url(); ?>login">Login</a></li>
+					<li><a href="<?php echo base_url(); ?>create">Sign Up</a></li>
 				</ul>
 				<div class="clearfix"></div>
 				<!-- // Top Menu Right END -->	
