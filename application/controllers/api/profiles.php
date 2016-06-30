@@ -51,7 +51,7 @@ class Profiles extends REST_Controller {
 						'description'=>$m->description
 					);
 				}
-			}
+			} 
 			$data[] = array(
 				'id' => $user->id,
 				'username' 	=> $user->username,
@@ -59,7 +59,7 @@ class Profiles extends REST_Controller {
 				'last_name' => $user->last_name,
 				'role' 		=> $user->role,
 				'profile_photo'=>$user->profile_photo_url,
-				'modules'   => $modules,
+				// 'modules'   => $modules,
 				'created_at'=> $user->created_at,
 				'updated_at'=> $user->updated_at
 			);
