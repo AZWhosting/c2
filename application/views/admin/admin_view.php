@@ -1546,7 +1546,7 @@
                   });
                 }
                 banhji.profileDS.fetch(function(e){
-                  if(banhji.profileDS.data()[0].role == 1) {
+                  // if(banhji.profileDS.data()[0].role == 1) {
                     kendo.bind('#main', banhji.aws);
                     if(userPool.getCurrentUser() == null) {
                       window.location.replace(baseUrl + "login");
@@ -1566,15 +1566,15 @@
                         });                        
                       }
                     }
-                    // banhji.users.modules.filter({
-                    //     field: 'username',
-                    //     value: userPool.getCurrentUser().username
-                    // });
-                  } else {
+                    banhji.users.modules.filter({
+                        field: 'username',
+                        value: userPool.getCurrentUser().username
+                    });
+                  // } else {
                     // redirect
-                    layout.showIn("#main-display-container", unthau);
-                    window.location.replace(baseUrl + "demo/");
-                  }
+                  //   layout.showIn("#main-display-container", unthau);
+                  //   window.location.replace(baseUrl + "demo/");
+                  // }
                 });
             },
             routeMissing: function(e) {
