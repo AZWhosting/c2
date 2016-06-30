@@ -50878,6 +50878,7 @@
 						window.location.replace(baseUrl + "login");
 					}
 					banhji.aws.getImage();
+					console.log(data);
 				}
 			});	
 			
