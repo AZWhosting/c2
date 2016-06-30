@@ -40,18 +40,18 @@ class Profiles extends REST_Controller {
 		}
 		$users->get_iterated();
 		foreach($users as $user) {
-			$user->module->get();
-			$modules = array();
-			if($user->module->exists()) {
-				foreach($user->module as $m) {
-					$modules[] = array(
-						'id' 		=> intval($m->id),
-						'name' 		=> $m->name,
-						'img_url' 	=> $m->image_url,
-						'description'=>$m->description
-					);
-				}
-			} 
+			// $user->module->get();
+			// $modules = array();
+			// if($user->module->exists()) {
+			// 	foreach($user->module as $m) {
+			// 		$modules[] = array(
+			// 			'id' 		=> intval($m->id),
+			// 			'name' 		=> $m->name,
+			// 			'img_url' 	=> $m->image_url,
+			// 			'description'=>$m->description
+			// 		);
+			// 	}
+			// } 
 			$data[] = array(
 				'id' => $user->id,
 				'username' 	=> $user->username,
