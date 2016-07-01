@@ -177,7 +177,7 @@
 								</a>
 							</div>
 							<div class="span3">
-								<a href="#/service" class="center">
+								<a href="#/item_service" class="center">
 									<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
 								</a>
 							</div>
