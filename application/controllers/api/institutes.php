@@ -220,9 +220,9 @@ class Institutes extends REST_Controller {
 		$filters = $requested_data['filters'];
 
 		$types = new Institute_type();
-		foreach($filters as $filter) {
-			$types->where($filter['field'], $filter['value']);
-		}
+		// foreach($filters as $filter) {
+		// 	$types->where($filter['field'], $filter['value']);
+		// }
 
 		$types->get();
 		if($types->exists()) {

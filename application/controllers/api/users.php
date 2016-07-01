@@ -178,6 +178,7 @@ class Users extends REST_Controller {
 			$User->email = $user->email;
 			$User->mobile = $user->mobile;
 			$User->profile_photo_url = $user->profile_photo;
+			$User->role = 1;
 			$User->is_confirmed = 0;
 			$User->is_disabled = 0;
 			if($User->save()) {

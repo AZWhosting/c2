@@ -499,7 +499,7 @@
         // start here
         banhji.router.route('/', function(){
           $('body').css("background-color","white");
-          layout.showIn("#main-container", watingView);
+          layout.showIn("#main-container", confirmView);
           
         });
         banhji.router.route('login', function() {
@@ -521,24 +521,6 @@
 
         $(document).ready(function() {
             banhji.router.start();
-            if(userPool.getCurrentUser() != null) {
-              // redirect to app
-              banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser().username});
-              
-              window.setTimeout(function () {
-                if(banhji.companyDS.data()[0]) {
-                  window.location.replace(baseUrl + "demo/");
-                } else {
-                  window.location.replace(baseUrl + "app/");
-                }           
-              }, 1000);
-            
-              // redirect to admin
-              // window.location.replace('index.html');
-            } else {
-              banhji.router.navigate('login');
-            }
-
             // prettyPrint();
         });
     </script>

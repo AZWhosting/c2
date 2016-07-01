@@ -721,6 +721,7 @@ class Banhji extends REST_Controller {
 			$inst = new Institute();
 			$inst->where('id', $r->institute);
 			$inst->get();
+			$data = array();
 			if($inst->exists()) {
 				// create connection data for this inst
 				$now = new DateTime();

@@ -310,6 +310,7 @@ class Profiles extends REST_Controller {
 			if($inst->save($user)) {
 				// fillin dafault data
 				$data[] = array(
+					'id' => $inst->id,
 					'institute' => $inst->name
 				);
 			}

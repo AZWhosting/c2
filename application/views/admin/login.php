@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Login</title>
+    <style>
+        html, body {
+            background-color: #203864;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .login{
+            width: 100%;
+            margin: 0 auto;
+            background: #203864;
+            height: auto;
+        }
+        .login-content{
+            margin: 238px 0 50px;
+            display: inline-block;
+            width: 100%;
+        }
+        .login-image{
+            width: 44%;
+            float: left;
+            margin-left: 5%;
+            text-align: center;
+            margin-top: -50px; 
+        }
+        .login-image p{
+            color: #8DB3DA;
+        }
+        .login-form{
+            width: 38%;
+            background: #2F5597;
+            float: left;
+            margin-right: 5%;
+            padding: 30px 50px;
+            color: #fff;
+        }
+       
+        .login-form .login-email{
+            height: 22px;
+            width: 100%;
+            margin-top: 10px;
+            padding: 8px;
+        }
+        
+        .btn-login{
+            width: 104%;
+            background: #222A35;
+            color: #68788E;
+            border: none;
+            margin: 15px 0 0 0;
+            height:  32px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="login">
+        <dis class="login-content">
+            <div class="login-image">
+                <img src="<?php echo base_url(); ?>assets/login.png" />
+                <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
+            </div>
+            <div class="login-form">
+                <form action="" method="">
+
+                    <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
+
+                    <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
+
+                    <input type="button" data-bind="click: signIn" class="btn-login" value="Login"><br><br>
+                    <div id="loginInformation"></div>
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <!-- cognito -->
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/sjcl.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/moment.js"></script>
+    <!-- For Cognito -->
+    <!--Core Cognito -->
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/aws-cognito-sdk.min.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/amazon-cognito-identity.min.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/aws-sdk.min.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/cred.js"></script>
+    <!--Core Cognito -->
+
+    <!-- jQuery -->
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jquery.min.js"></script>
+    <!-- kendoui-->
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/js/kendo.all.min.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
+    <script>
+        var banhji = banhji || {};
+        localforage.config({
+          driver: localforage.LOCALSTORAGE,
+          name: 'userData'
+        });
+        // Initialize aws userpool
+        var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
+        var baseUrl = "<?php echo base_url(); ?>"
+        var apiUrl = baseUrl + "api/";
+        banhji.companyDS = new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: apiUrl + "profiles/company",
+              type: "GET",
+              dataType: 'json'
+            },
+            update  : {
+              url: apiUrl + "profiles/company",
+              type: "PUT",
+              dataType: 'json'
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 1
+        });
+
+        banhji.profileDS = new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/profiles',
+              type: "GET",
+              dataType: 'json'
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 100
+        });
+
+        // banhji.userDS = new kendo.data.DataSource({
+        //   transport: {
+        //     read  : {
+        //       url: baseUrl + 'api/users',
+        //       type: "GET",
+        //       dataType: 'json'
+        //     },
+        //     create  : {
+        //       url: baseUrl + 'api/users/create',
+        //       type: "POST",
+        //       dataType: 'json'
+        //     },
+        //     update  : {
+        //       url: baseUrl + 'api/users',
+        //       type: "PUT",
+        //       dataType: 'json'
+        //     },
+        //     parameterMap: function(options, operation) {
+        //       if(operation === 'read') {
+        //         return {
+        //           limit: options.take,
+        //           page: options.page,
+        //           filter: options.filter
+        //         };
+        //       } else {
+        //         return {models: kendo.stringify(options.models)};
+        //       }
+        //     }
+        //   },
+        //   schema  : {
+        //     model: {
+        //       id: 'id'
+        //     },
+        //     data: 'results',
+        //     total: 'count'
+        //   },
+        //   batch: true,
+        //   serverFiltering: true,
+        //   serverPaging: true,
+        //   pageSize: 50
+        // });
+
+        banhji.aws = kendo.observable({
+          email: null,
+          password: null,
+          signIn: function() {
+            // var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;  
+            // if(this.get('password').match(decimal) != null)  {   
+            // layout.showIn("#main-container", watingView);
+            var authenticationData = {
+                Username : this.get('email'),
+                Password : this.get('password'),
+            };
+            var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
+            var userData = {
+                Username : this.get('email'),
+                Pool : userPool
+            };
+            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+            cognitoUser.authenticateUser(authenticationDetails, {
+              onSuccess: function (result) {
+                banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username});
+                    banhji.companyDS.bind('requestEnd', function(e) {
+                      var res = e.response;
+                      if(res.error) {
+                          // console.log()
+                      } else {
+                        var data = res.results[0];
+                        banhji.profileDS.filter({
+                          field: 'username', value: userPool.getCurrentUser().username
+                        });
+                        banhji.profileDS.bind('requestEnd', function(e){
+                          var id = e.response.results[0].id;
+                          if(e.response.results[0].id) {
+                            var user = {
+                                id: id,
+                                username: userPool.getCurrentUser().username,
+                                institute: data
+                            };
+                            localforage.setItem('user', user);
+                            window.location.replace(baseUrl + "demo/");
+                          } else {
+                            console.log('bad');
+                          }
+                        });                          
+                      }
+                  });                    
+              },
+              onFailure: function(err) {
+                // layout.showIn("#main-container", loginView);
+                $('#loginInformation').text('Please check username/password.');
+              }
+            });
+                  // return true;  
+                // } else {   
+                //   alert('Password must be at lease 8 characters and contains lower, upper case, number and special character');
+                //   return false;
+                // }    
+          },
+          redirect: function(data) {
+              // console.log(data.length > 0);
+              if(data.length > 0) {
+                window.location.replace(baseUrl + "demo/");
+              } else {
+                window.location.replace(baseUrl + "app/");
+              } 
+          },
+          forgotPassword: function(e) {
+            e.preventDefault();
+            var userData = {
+                Username : this.get('email'),
+                Pool : userPool
+            };
+            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+            cognitoUser.forgotPassword({
+                onSuccess: function (result) {
+                    console.log('call result: ' + result);
+                },
+                onFailure: function(err) {
+                    alert(err);
+                },
+                inputVerificationCode() {
+                    var verificationCode = prompt('Please input verification code ' ,'');
+                    var newPassword = prompt('Enter new password ' ,'');
+                    cognitoUser.confirmPassword(verificationCode, newPassword, this);
+                }
+            });
+          },
+          getCurrentUser: function() {
+              var cognitoUser = null;
+              if (userPool.getCurrentUser() != null) {
+                  cognitoUser = userPool.getCurrentUser();
+              }
+              return cognitoUser;
+          }
+        });
+      $(function(){
+        kendo.bind($('.login'), banhji.aws);
+      });
+    </script>
+</body>
+</html>
