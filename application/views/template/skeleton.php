@@ -81,12 +81,16 @@
 <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/skins/css/blue-gray.css" rel="stylesheet" type="text/css" />
 <link href='https://fonts.googleapis.com/css?family=Content:400,700' rel='stylesheet' type='text/css'>
 <style>
-	
+	body{
+		background: #f4f4f4 !important;
+		font-family: 'Open Sans', sans-serif !important;
+	}
+
 	#module-image {
 		list-style: none;
 	}
 	#module-image li {
-		width: 145px;
+		width: 116px;
 		float: left;
 		margin: 0.5px;
 	}
@@ -107,6 +111,7 @@
 	}
 	#content {
 		margin-top: -20px;
+		background: #f4f4f4;
 	}
 	.vendor {
 		list-style: none;
@@ -123,6 +128,153 @@
 		border-top: 1px solid #cccccc;
 	}
 
+	.supplier-icon{
+		width: 100%;
+	}
+	
+	.customer-icon{
+		width: 90%;
+		padding: 0 17%;
+	}
+	.customer-icon div:first-child{
+		margin-right: 10px;
+	}
+	.customer-border{
+		border: none;
+	}
+	.k-listview:after {
+		display: none !important;
+	}
+	.text-table tr td span{
+		color: #333 !important;
+	}
+	.customer-background{
+		width: 990px;
+		background: #fff;
+		margin: 0 auto;
+		padding: 15px 0 10px;
+	}
+	.table-condensed th, .table-condensed td{
+		padding: 0 0 10px 0 !important;
+	}
+	.cash-table td{
+	    padding: 4px 10px !important;
+	}
+	.k-selectable tr td{
+		padding: 0 !important;
+	}
+	.media, .media-body {
+		padding: 8px;
+	}
+	.btn-nomargin{
+		margin-left: 0 !important;
+	}
+
+	.welcome-board{
+		width: 98%;
+		padding: 15px;
+		background: #fff;
+		float: left;
+		position: relative;
+	}
+	.welcome-board .span4 h2{
+		font-size:  21px;
+		color: #333;
+		float: left;
+	}
+	.welcome-board .span8,
+	.welcome-board .span8 a:hover{
+		color: #90A5BA;
+	}
+	.welcome-board .span8 a{
+		font-weight: 600;
+	}
+	.btn-close{
+		position: absolute;
+	    font-size: 20px;
+	    cursor: pointer;
+	    right: 27px;
+	    top: 37%;
+	}
+
+	.board-add{
+		width: 98%;
+		padding: 15px;
+		background: #fff;
+		float: left;
+		position: relative;
+		margin-top: 10px; 
+	}
+	.board-add .span6 p{
+		font-size:  11px;
+		color: #333;
+		float: left;
+	}
+	.board-add .span5{
+		margin-top: 10px;
+	}
+	.board-financial{
+		width: 98%;
+		padding: 15px;
+		background: #fff;
+		float: left;
+		position: relative;
+		margin-top: 10px;
+		color: #333;
+	}
+	.board-financial P{ margin-bottom: 0; }
+	.board-financial .financial-text2{
+		color: #2D74B5;
+		font-size: 20px;
+
+	}
+
+	.board-chart{
+		width: 98%;
+		padding: 15px;
+		background: #fff;
+		float: left;
+		position: relative;
+		margin-top: 10px;
+		color: #333;
+	}
+	.board-chart p{
+		font-weight: 600;
+	}
+	.board-chart p{ font-size: 600; }
+	.performance,
+	.position {
+		background: #E7F2E0;
+	    width: 95%;
+	    padding: 15px;
+	    float: left;
+	    border-collapse: inherit;
+	}
+
+	.performance tr td,
+	.position tr td{
+		padding: 5px 0 5px 0;
+    	border-bottom: 1px  #D7DCD4 solid;
+	}
+	.performance tr:last-child td,
+	.position tr:last-child td{
+    	border-bottom: 3px  #D7DCD4 double;
+	}
+
+	.welcome-nopadding{
+		width:  90%;
+	}
+	.span12 .k-chart{
+		margin-left: -20px;
+	}
+	.welcome-nopadding p{
+		text-align:  center;
+		font-weight: 600;
+		color: #333;
+		font-size: 20px;
+		margin-top: 15px;
+	}
+
 	input.k-textbox {
 		height: 30px;
 		width: 220px;
@@ -134,6 +286,30 @@
 	.brand {
 		color: #ffffff;
 	}
+
+	@media (max-width: 2000px){
+		.container {
+		    width: 1170px !important;
+		}
+	}
+
+	@media (min-width: 1200px){
+		.container {
+		    width: 1170px !important;
+		}
+	}
+	
+	@media (min-width: 992px){
+		.container {
+		    width: 980px ;
+		}
+	}
+	@media (min-width: 768px){
+		.container {
+		    width: 750px ;
+		}
+	}
+
 </style>
 
 <!-- Global -->
