@@ -383,77 +383,78 @@
                 pageSize: 100
             }),
             create: function() {
-                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                if(re.test(this.get('email'))) {
-                    if(this.get('password') == this.get('cPassword')) {
-                        if(this.get('name') != '') {
-                            // create user
-                            var attributeList = [];
+                // var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                // if(re.test(this.get('email'))) {
+                //     if(this.get('password') == this.get('cPassword')) {
+                //         if(this.get('name') != '') {
+                //             // create user
+                //             var attributeList = [];
 
-                            var dataEmail = {
-                                Name : 'email',
-                                Value : this.get('email')
-                            };
+                //             var dataEmail = {
+                //                 Name : 'email',
+                //                 Value : this.get('email')
+                //             };
 
-                            var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
+                //             var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
 
-                            attributeList.push(attributeEmail);
+                //             attributeList.push(attributeEmail);
 
-                            userPool.signUp(this.get('email'), this.get('password'), attributeList, null, function(err, result){
-                                if (err) {
-                                    layout.showIn("#main-container", registerView);
-                                    $('#regInformation').text(err);
-                                    // alert(err)
-                                    return;
-                                } else {
-                                    console.log(result.user.username);
-                                    banhji.index.userDS.add({
-                                        username: result.user.username,
-                                        first_name: null,
-                                        last_name: null,
-                                        email: null,
-                                        mobile: null,
-                                        profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
-                                        company: {id: 0, name:''},
-                                        usertype: 1
-                                    });
-                                    banhji.index.userDS.sync();
-                                    banhji.userDS.bind('requestEnd', function(e){
-                                        var res = e.response, type = e.type;
-                                        if(res.results.length > 0) {
-                                            // create company
-                                            banhji.companyDS.insert(0, {
-                                                name:  banhji.index.get('name'),
-                                                country:  banhji.index.get('country'),
-                                                industry:  banhji.index.get('industry'),
-                                                type: banhji.index.get('type'),
-                                                username:result.user.username
-                                            });
-                                            banhji.companyDS.sync();
-                                            banhji.companyDS.bind('requestEnd', function(e){
-                                                banhji.index.set('email', null);
-                                                banhji.index.set('password', null);
-                                                banhji.index.set('cPassword', null);
-                                                banhji.index.set('name', '');
-                                                banhji.index.set('country', null);
-                                                banhji.index.set('industry', null);
-                                                banhji.index.set('type', null);
-                                                // go to confirm
-                                                window.location.replace(baseUrl + "confirm/");
-                                            });
-                                        }
-                                    });
-                                  }                    
-                            });
-                        } else {
-                            console.log('no name');
-                        }
-                    } else {
-                        console.log('passwords do not match.');
-                    }
-                } else {
-                    console.log('bad email');
-                }
+                //             userPool.signUp(this.get('email'), this.get('password'), attributeList, null, function(err, result){
+                //                 if (err) {
+                //                     layout.showIn("#main-container", registerView);
+                //                     $('#regInformation').text(err);
+                //                     // alert(err)
+                //                     return;
+                //                 } else {
+                //                     console.log(result.user.username);
+                //                     banhji.index.userDS.add({
+                //                         username: result.user.username,
+                //                         first_name: null,
+                //                         last_name: null,
+                //                         email: null,
+                //                         mobile: null,
+                //                         profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+                //                         company: {id: 0, name:''},
+                //                         usertype: 1
+                //                     });
+                //                     banhji.index.userDS.sync();
+                //                     banhji.userDS.bind('requestEnd', function(e){
+                //                         var res = e.response, type = e.type;
+                //                         if(res.results.length > 0) {
+                //                             // create company
+                //                             banhji.companyDS.insert(0, {
+                //                                 name:  banhji.index.get('name'),
+                //                                 country:  banhji.index.get('country'),
+                //                                 industry:  banhji.index.get('industry'),
+                //                                 type: banhji.index.get('type'),
+                //                                 username:result.user.username
+                //                             });
+                //                             banhji.companyDS.sync();
+                //                             banhji.companyDS.bind('requestEnd', function(e){
+                //                                 banhji.index.set('email', null);
+                //                                 banhji.index.set('password', null);
+                //                                 banhji.index.set('cPassword', null);
+                //                                 banhji.index.set('name', '');
+                //                                 banhji.index.set('country', null);
+                //                                 banhji.index.set('industry', null);
+                //                                 banhji.index.set('type', null);
+                //                                 // go to confirm
+                //                                 window.location.replace(baseUrl + "confirm/");
+                //                             });
+                //                         }
+                //                     });
+                //                   }                    
+                //             });
+                //         } else {
+                //             console.log('no name');
+                //         }
+                //     } else {
+                //         console.log('passwords do not match.');
+                //     }
+                // } else {
+                //     console.log('bad email');
+                // }
+                console.log('kdslfds');
             }
         });  
         $(function(){
