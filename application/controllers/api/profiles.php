@@ -307,6 +307,7 @@ class Profiles extends REST_Controller {
 			$inst->country_id = $r->country->id;
 			$inst->industry_id = $r->industry->id;
 			$inst->type_id = $r->type->id;
+			$inst->monetary_id = 3;
 			if($inst->save($user)) {
 				// fillin dafault data
 				$data[] = array(
