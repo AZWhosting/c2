@@ -86,6 +86,7 @@ class Categories extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $value->id,					
 					"sub_of" 		=> $value->sub_of,
+					"item_id" 		=> $value->item_id,
 					"code" 			=> $value->code,
 					"name" 	 		=> $value->name,
 					"abbr" 			=> $value->abbr,
@@ -105,6 +106,7 @@ class Categories extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Category(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 			$obj->sub_of 		= $value->sub_of;
+			$obj->item_id 		= $value->item_id;
 			$obj->code 			= $value->code;
 			$obj->name 			= $value->name;
 			$obj->abbr 			= $value->abbr;
@@ -114,6 +116,7 @@ class Categories extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
 					"sub_of" 		=> $obj->sub_of,
+					"item_id" 		=> $obj->item_id,
 					"code" 			=> $obj->code,
 					"name" 	 		=> $obj->name,
 					"abbr" 			=> $obj->abbr,
@@ -137,6 +140,7 @@ class Categories extends REST_Controller {
 			$obj->get_by_id($value->id);
 
 			$obj->sub_of 		= $value->sub_of;
+			$obj->item_id 		= $value->item_id;
 			$obj->code 			= $value->code;
 			$obj->name 			= $value->name;
 			$obj->abbr 			= $value->abbr;
@@ -146,6 +150,7 @@ class Categories extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
 					"sub_of" 		=> $obj->sub_of,
+					"item_id" 		=> $obj->item_id,
 					"code" 			=> $obj->code,
 					"name" 	 		=> $obj->name,
 					"abbr" 			=> $obj->abbr,

@@ -706,56 +706,58 @@ class Transactions extends REST_Controller {
 						$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$transaction->get_by_id($value->transaction_id);
 
-						switch ($transaction->type) { 
-						    case 'Invoice' || 'Cash_Sale': 
-						    	//Avg Price
-								$lastPrice = floatval($item->on_hand) * floatval($item->price);
-								$currentPrice = floatval($value->quantity) * floatval($value->price);
+						if($transaction->type=="Invoice" || $transaction->type=="Cash_Receipt" || $transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase"){
+							switch ($transaction->type) { 
+							    case 'Invoice' || 'Cash_Sale': 
+							    	//Avg Price
+									$lastPrice = floatval($item->on_hand) * floatval($item->price);
+									$currentPrice = floatval($value->quantity) * floatval($value->price);
 
-								$item->price = ($lastPrice + $currentPrice) / (floatval($item->on_hand) + floatval($value->quantity));
+									$item->price = ($lastPrice + $currentPrice) / (floatval($item->on_hand) + floatval($value->quantity));
 
-								$item->on_hand -= floatval($value->quantity);	
-						    break; 
+									$item->on_hand -= floatval($value->quantity);	
+							    break; 
 
-						    case 'Cash_Purchase' || 'Credit_Purchase': 
-						    	//Avg Cost
-								$lastCost = floatval($item->on_hand) * floatval($item->cost);
-								$currentCost = floatval($value->amount) + floatval($value->additional_cost);
+							    case 'Cash_Purchase' || 'Credit_Purchase': 
+							    	//Avg Cost
+									$lastCost = floatval($item->on_hand) * floatval($item->cost);
+									$currentCost = floatval($value->amount) + floatval($value->additional_cost);
 
-								$item->cost = ($lastCost + $currentCost) / (floatval($item->on_hand) + floatval($value->quantity));
+									$item->cost = ($lastCost + $currentCost) / (floatval($item->on_hand) + floatval($value->quantity));
 
-								$item->on_hand += floatval($value->quantity);
-						    break;
+									$item->on_hand += floatval($value->quantity);
+							    break;
 
-						    case 'Sale_Return': 
-						     	//Avg Cost
-								// $lastCost = floatval($item->on_hand) * floatval($item->cost);
-								// $currentCost = floatval($value->amount) + floatval($value->additional_cost);
+							    case 'Sale_Return': 
+							     	//Avg Cost
+									// $lastCost = floatval($item->on_hand) * floatval($item->cost);
+									// $currentCost = floatval($value->amount) + floatval($value->additional_cost);
 
-								// $item->cost = ($lastCost + $currentCost) / (floatval($item->on_hand) + floatval($value->quantity));
+									// $item->cost = ($lastCost + $currentCost) / (floatval($item->on_hand) + floatval($value->quantity));
 
-								$item->on_hand += floatval($value->quantity);
-						    break;
+									$item->on_hand += floatval($value->quantity);
+							    break;
 
-						    case 'Adjustment': 
-						    	$item->on_hand += floatval($value->quantity) * floatval($value->movement);
-						    break; 
-						}
+							    case 'Adjustment': 
+							    	$item->on_hand += floatval($value->quantity) * floatval($value->movement);
+							    break; 
+							}
 
-						if($item->save()){
-							$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							if($item->save()){
+								$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+								$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-							$po->select_sum("quantity");
-							$po->where_related("transaction", "type", "PO");
-							$po->where_related("transaction", "status", 0);
+								$po->select_sum("quantity");
+								$po->where_related("transaction", "type", "PO");
+								$po->where_related("transaction", "status", 0);
 
-							$so->select_sum("quantity");
-							$so->where_related("transaction", "type", "SO");
-							$so->where_related("transaction", "status", 0);
+								$so->select_sum("quantity");
+								$so->where_related("transaction", "type", "SO");
+								$so->where_related("transaction", "status", 0);
 
-							$obj->on_po = $po->get()->quantity;
-							$obj->on_so = $so->get()->quantity;
+								$obj->on_po = $po->get()->quantity;
+								$obj->on_so = $so->get()->quantity;
+							}
 						}
 					}
 				}

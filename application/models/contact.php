@@ -16,14 +16,14 @@ class Contact extends DataMapper {
 		'contact_type' => array(
 			'class' => 'contact_type',
 			'other_field' => 'contact'
-		),		
-		'business_type' => array(
-			'class' => 'business_type',
-			'other_field' => 'contact'
-		),		
-		'discount_account' => array(
+		),				
+		'trade_discount' => array(
 			'class' => 'account',
-			'other_field' => 'discount'
+			'other_field' => 'trade_discount'
+		),
+		'settlement_discount' => array(
+			'class' => 'account',
+			'other_field' => 'settlement_discount'
 		),
 		'deposit_account' => array(
 			'class' => 'account',
@@ -91,9 +91,9 @@ class Contact extends DataMapper {
 				'char_set' => 'utf8',
 				'cachedir' => '',
 				'dbcollat' => 'utf8_general_ci',
-				'hostname' => 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com',
-				'username' => 'mightyadmin',
-				'password' => 'banhji2016',
+				'hostname' => 'localhost',
+				'username' => 'root',
+				'password' => '',
 				'database' => $db,
 				'prefix'   => ''
 			);

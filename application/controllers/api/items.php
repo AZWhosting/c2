@@ -27,10 +27,12 @@ class Items extends REST_Controller {
 	function index_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = array();
 		$data["count"] = 0;
+		$is_pattern = 0;
+		$deleted = 0;
 
 		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -73,10 +75,19 @@ class Items extends REST_Controller {
 		    			$obj->where($value["field"], $value["value"]);
 		    		}
 	    		}else{	    			
-	    			$obj->where($value["field"], $value["value"]);	    				    			
+	    			if($value["field"]=="is_pattern"){
+	    				$is_pattern = $value["value"];
+	    			}else if($value["field"]=="deleted"){
+	    				$deleted = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}
 	    		}
 			}									 			
-		}		
+		}
+
+		$obj->where("is_pattern", $is_pattern);
+		$obj->where("deleted", $deleted);			
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -133,7 +144,7 @@ class Items extends REST_Controller {
 				   	"price" 				=> floatval($value->price),
 				   	"amount" 				=> floatval($value->amount),
 				   	"rate" 					=> floatval($value->rate),
-				   	"locale" 				=> floatval($value->locale),
+				   	"locale" 				=> $value->locale,
 				   	"on_hand" 				=> floatval($value->on_hand),
 				   	"on_po" 				=> floatval($value->on_po),
 				   	"on_so" 				=> floatval($value->on_so),
@@ -148,7 +159,8 @@ class Items extends REST_Controller {
 				   	"image_url" 			=> $value->image_url,
 				   	"favorite" 				=> $value->favorite=="true"?true:false,
 				   	"is_catalog" 			=> $value->is_catalog,
-				   	"is_assemble" 			=> $value->is_assemble,				  
+				   	"is_assemble" 			=> $value->is_assemble,
+				   	"is_pattern" 			=> intval($value->is_pattern),				  
 				   	"status" 				=> $value->status,
 				   	"deleted" 				=> $value->deleted, 					
  					
@@ -210,6 +222,7 @@ class Items extends REST_Controller {
 		   	isset($value->favorite) 				? $obj->favorite 				= $value->favorite : "";
 		   	isset($value->is_catalog) 				? $obj->is_catalog 				= $value->is_catalog : "";
 		   	isset($value->is_assemble) 				? $obj->is_assemble 			= $value->is_assemble : "";
+		   	isset($value->is_pattern) 				? $obj->is_pattern 				= $value->is_pattern : "";
 		   	isset($value->status) 					? $obj->status 					= $value->status : "";	   	
 		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
 
@@ -254,7 +267,8 @@ class Items extends REST_Controller {
 				   	"image_url" 			=> $obj->image_url,
 				   	"favorite" 				=> $obj->favorite=="true"?true:false,
 				   	"is_catalog" 			=> $obj->is_catalog,
-				   	"is_assemble" 			=> $obj->is_assemble,				  
+				   	"is_assemble" 			=> $obj->is_assemble,
+				   	"is_pattern" 			=> intval($obj->is_pattern),				  
 				   	"status" 				=> $obj->status,
 				   	"deleted" 				=> $obj->deleted
 			   	);
@@ -314,6 +328,7 @@ class Items extends REST_Controller {
 		   	isset($value->favorite) 				? $obj->favorite 				= $value->favorite : "";
 		   	isset($value->is_catalog) 				? $obj->is_catalog 				= $value->is_catalog : "";
 		   	isset($value->is_assemble) 				? $obj->is_assemble 			= $value->is_assemble : "";
+		   	isset($value->is_pattern) 				? $obj->is_pattern 				= $value->is_pattern : "";
 		   	isset($value->status) 					? $obj->status 					= $value->status : "";	   	
 		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
 
@@ -359,7 +374,8 @@ class Items extends REST_Controller {
 				   	"image_url" 			=> $obj->image_url,
 				   	"favorite" 				=> $obj->favorite=="true"?true:false,
 				   	"is_catalog" 			=> $obj->is_catalog,
-				   	"is_assemble" 			=> $obj->is_assemble,				  
+				   	"is_assemble" 			=> $obj->is_assemble,
+				   	"is_pattern" 			=> intval($obj->is_pattern),				  
 				   	"status" 				=> $obj->status,
 				   	"deleted" 				=> $obj->deleted
 				);						

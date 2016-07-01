@@ -40,10 +40,6 @@ class Item extends DataMapper {
 		'inventory_account' => array(
 			'class'=>'account',
 			'other_field' => 'inventory'
-		),
-		'preferred_vendor' => array(
-			'class' => 'contact',
-			'other_field' => 'vendor'
 		)
 	);
 
@@ -63,28 +59,9 @@ class Item extends DataMapper {
 		'item_price' => array(
 			'class' => 'item_price',
 			'other_field' => 'item'
-		),
-		'item_record' => array(
-			'class' => 'item_record',
-			'other_field' => 'item'
-		),		
-		'relateditem' => array(
-			'class' => 'item',
-			'other_field' => 'item'
-		),
-		'item' => array(
-			'other_field' => 'relateditem',
-		),
-		'bill_line' => array(
-			'class' => 'bill_line',
-			'other_field' => 'item'
-		),
-		'itemrecord' => array(
-			'class' => 'itemrecord',
-			'other_field' => 'item'
-		),		
+		),				
 		'assembly' => array(
-			'class' => 'price_list',
+			'class' => 'item_price',
 			'other_field' => 'assembly'
 		)
 	);
@@ -98,9 +75,9 @@ class Item extends DataMapper {
 				'char_set' => 'utf8',
 				'cachedir' => '',
 				'dbcollat' => 'utf8_general_ci',
-				'hostname' => 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com',
-				'username' => 'mightyadmin',
-				'password' => 'banhji2016',
+				'hostname' => 'localhost',
+				'username' => 'root',
+				'password' => '',
 				'database' => $db,
 				'prefix'   => ''
 			);

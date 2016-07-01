@@ -156,6 +156,7 @@ class Contacts extends REST_Controller {
 					"deposit_account_id"		=> $value->deposit_account_id,
 					"trade_discount_id" 		=> $value->trade_discount_id,
 					"settlement_discount_id"	=> $value->settlement_discount_id,
+					"salary_account_id"			=> $value->salary_account_id,
 					"account_id" 				=> $value->account_id,					
 					"ra_id" 					=> $value->ra_id,
 					"tax_item_id" 				=> $value->tax_item_id,					
@@ -166,7 +167,7 @@ class Contacts extends REST_Controller {
 					"use_electricity" 			=> $value->use_electricity,
 					"use_water" 				=> $value->use_water,
 					"is_local" 					=> $value->is_local,
-					"is_pattern" 				=> $value->is_pattern,
+					"is_pattern" 				=> intval($value->is_pattern),
 					"status" 					=> $value->status,
 
 					"fullname" 					=> $fullname,					
@@ -239,6 +240,7 @@ class Contacts extends REST_Controller {
 			isset($value->deposit_account_id)		? $obj->deposit_account_id		= $value->deposit_account_id : "";
 			isset($value->trade_discount_id)		? $obj->trade_discount_id		= $value->trade_discount_id : "";
 			isset($value->settlement_discount_id)	? $obj->settlement_discount_id	= $value->settlement_discount_id : "";		
+			isset($value->salary_account_id)		? $obj->salary_account_id		= $value->salary_account_id : "";
 			isset($value->account_id)				? $obj->account_id				= $value->account_id : "";
 			isset($value->ra_id)					? $obj->ra_id					= $value->ra_id : "";
 			isset($value->tax_item_id)				? $obj->tax_item_id				= $value->tax_item_id : "";
@@ -308,6 +310,7 @@ class Contacts extends REST_Controller {
 					"deposit_account_id"		=> $obj->deposit_account_id,
 					"trade_discount_id" 		=> $obj->trade_discount_id,
 					"settlement_discount_id"	=> $obj->settlement_discount_id,																		
+					"salary_account_id"			=> $obj->salary_account_id,
 					"account_id" 				=> $obj->account_id,																					
 					"account_id" 				=> $obj->account_id,					
 					"ra_id" 					=> $obj->ra_id,
@@ -319,7 +322,7 @@ class Contacts extends REST_Controller {
 					"use_electricity" 			=> $obj->use_electricity,
 					"use_water" 				=> $obj->use_water,
 					"is_local" 					=> $obj->is_local,
-					"is_pattern" 				=> $obj->is_pattern,
+					"is_pattern" 				=> intval($obj->is_pattern),
 					"status" 					=> $obj->status,
 
 					"fullname" 					=> $fullname,					
@@ -389,6 +392,7 @@ class Contacts extends REST_Controller {
 			isset($value->deposit_account_id)		? $obj->deposit_account_id		= $value->deposit_account_id : "";
 			isset($value->trade_discount_id)		? $obj->trade_discount_id		= $value->trade_discount_id : "";
 			isset($value->settlement_discount_id)	? $obj->settlement_discount_id	= $value->settlement_discount_id : "";		
+			isset($value->salary_account_id)		? $obj->salary_account_id		= $value->salary_account_id : "";
 			isset($value->account_id)				? $obj->account_id				= $value->account_id : "";
 			isset($value->ra_id)					? $obj->ra_id					= $value->ra_id : "";
 			isset($value->tax_item_id)				? $obj->tax_item_id				= $value->tax_item_id : "";
@@ -457,7 +461,8 @@ class Contacts extends REST_Controller {
 					"payment_method_id" 		=> $obj->payment_method_id,
 					"deposit_account_id"		=> $obj->deposit_account_id,
 					"trade_discount_id" 		=> $obj->trade_discount_id,
-					"settlement_discount_id"	=> $obj->settlement_discount_id,																		
+					"settlement_discount_id"	=> $obj->settlement_discount_id,
+					"salary_account_id"			=> $obj->salary_account_id,																		
 					"account_id" 				=> $obj->account_id,					
 					"ra_id" 					=> $obj->ra_id,
 					"tax_item_id" 				=> $obj->tax_item_id,					
@@ -468,7 +473,7 @@ class Contacts extends REST_Controller {
 					"use_electricity" 			=> $obj->use_electricity,
 					"use_water" 				=> $obj->use_water,
 					"is_local" 					=> $obj->is_local,
-					"is_pattern" 				=> $obj->is_pattern,
+					"is_pattern" 				=> intval($obj->is_pattern),
 					"status" 					=> $obj->status,
 
 					"fullname" 					=> $fullname,					
