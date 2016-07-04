@@ -12,6 +12,9 @@
         html, body {
             background-color: #203864;
         }
+        label {
+            color: #fff;
+        }
         *{
             margin: 0;
             padding: 0;
@@ -96,7 +99,7 @@
         <dis class="signup-content">
             <div class="col-sm-6">
                 <div class="singup-image">
-                    <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" />
+                    <img src="<?php echo base_url(); ?>assets/signup.png" height="350" />
                     <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
                 </div>
             </div>
@@ -142,7 +145,7 @@
                                 data-place-holder="select one">
                         </select><br>
 
-                        <input type="button" data-bind="click: create" class="btn-signup" value="Signup"><br>
+                        <input id="signupBtn" type="button" data-bind="click: create" class="btn-signup" value="Signup"><br>
                         <p class="signup-text-bottom">
                             By clicking on “signup”, you agree to the <a href="">Terms of Service</a> and <a href="">Privacy Policy</a>.
                         </p>
@@ -400,6 +403,7 @@
                 if(re.test(this.get('email'))) {
                     if(this.get('password') == this.get('cPassword')) {
                         if(this.get('name') != '') {
+                            $("#signupBtn").val("Signing up...");
                             // create user
                             var attributeList = [];
 
