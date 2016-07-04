@@ -34,7 +34,7 @@
         <div id="wrapper">
           <div id="waiting" class=" form">
             <section class="login_content">
-              <img src="assets/loading.gif" alt="" width="150"><br>
+              <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="150"><br>
               <span id="proccessMsg">Please wait...</span>
             </section>
           </div>
