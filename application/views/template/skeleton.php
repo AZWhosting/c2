@@ -286,6 +286,10 @@
 	.brand {
 		color: #ffffff;
 	}
+	#menu {
+		position: relative !important;
+	    width: 88%;
+	}
 
 	@media (max-width: 2000px){
 		.container {
