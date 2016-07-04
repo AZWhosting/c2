@@ -3,9 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Login</title>
+    <!-- Boostrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
     <style>
         html, body {
             background-color: #203864;
+            font-size: 16px;
+            font-family: 'Open Sans', sans-serif !important;
         }
         *{
             margin: 0;
@@ -23,38 +27,40 @@
             width: 100%;
         }
         .login-image{
-            width: 44%;
-            float: left;
-            margin-left: 5%;
             text-align: center;
             margin-top: -50px; 
         }
         .login-image p{
-            color: #8DB3DA;
+          color: #8DB3DA;
+          margin-top: 20px;
+          font-size: 13px;
         }
         .login-form{
-            width: 38%;
             background: #2F5597;
-            float: left;
             margin-right: 5%;
             padding: 30px 50px;
-            color: #fff;
+            color: #fff;            
+        }
+        .login-form input{
+          font-size: 20px;
+          font-family: 'Open Sans', sans-serif !important;
         }
        
         .login-form .login-email{
-            height: 22px;
-            width: 100%;
-            margin-top: 10px;
-            padding: 8px;
+          width: 100%;
+          margin-top: 10px;
+          padding: 8px;
         }
         
         .btn-login{
-            width: 104%;
-            background: #222A35;
-            color: #68788E;
-            border: none;
-            margin: 15px 0 0 0;
-            height:  32px;
+          width: 100%;
+          background: #222A35;
+          color: #68788E;
+          border: none;
+          margin: 15px 0 0 0;
+          height: 55px;
+          cursor: pointer;
+          font-size: 30px !important;
         }
         
     </style>
@@ -63,20 +69,24 @@
 <body>
     <div class="login">
         <dis class="login-content">
-            <div class="login-image">
-                <img src="<?php echo base_url(); ?>assets/login.png" />
-                <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
+            <div class="col-sm-6">
+              <div class="login-image">
+                  <img src="<?php echo base_url(); ?>assets/login.png" />
+                  <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
+              </div>
             </div>
-            <div class="login-form">
-                <form action="" method="">
+            <div class="col-sm-6">
+              <div class="login-form">
+                  <form action="" method="">
 
-                    <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
+                      <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
 
-                    <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
+                      <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
 
-                    <input type="button" data-bind="click: signIn" class="btn-login" value="Login"><br><br>
-                    <div id="loginInformation"></div>
-                </form> 
+                      <input type="button" data-bind="click: signIn" class="btn-login" value="Login"><br><br>
+                      <div id="loginInformation"></div>
+                  </form> 
+              </div>
             </div>
         </div>
     </div>
@@ -99,6 +109,8 @@
     <!-- kendoui-->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/js/kendo.all.min.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
+    <!-- Boostrap-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script>
         var banhji = banhji || {};
         localforage.config({
