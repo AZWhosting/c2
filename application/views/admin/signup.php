@@ -4,7 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Sign Up</title>
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.common.min.css">
-    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.material.min.css">    
+    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.material.min.css">
+    <!-- Boostrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  
     <style>
         html, body {
             background-color: #203864;
@@ -25,51 +27,55 @@
             width: 100%;
         }
         .singup-image{
-            width: 44%;
-            float: left;
-            margin-left: 5%;
             text-align: center;
             margin-top: 100px; 
         }
         .singup-image p{
             color: #8DB3DA;
+            margin-top: 20px;
+            font-size: 13px;
         }
         .signup-form{
-            width: 38%;
             background: #2F5597;
-            float: left;
-            margin-right: 5%;
             padding: 30px 50px;
             color: #fff;
+            text-align:  center;
+            font-family: 'Open Sans', sans-serif !important;
+        }
+        .signup-form input{
+          font-size: 18px;          
         }
         .signup-form label{
             font-size:  18px;
             font-weight: 600;
+            float: left;
         }
         .signup-form .signup-email{
-            height: 22px;
             width: 100%;
             margin-top: 10px;
             padding: 8px;
         }
         .signup-noted{
-            color: #5471A2;
-            margin: 5px 0 0 0;
-            font-size: 12px;
+            color: #ddd;
+            margin: 5px auto 0;
+            font-size: 11px;
             text-align: center;
+            width: 80%;
         }
         .signup-country{
             height: 37px;
-            width: 104%;
+            width: 100%;
             margin-top: 10px;
         }
         .btn-signup{
-            width: 104%;
+            width: 100%;
             background: #222A35;
             color: #68788E;
             border: none;
             margin: 15px 0 0 0;
-            height:  32px;
+            height: 55px;
+            cursor: pointer;
+            font-size: 30px !important;
         }
         .signup-text-bottom{
             color: #fff;
@@ -87,57 +93,61 @@
 <body>
     <div class="sign-up">
         <dis class="signup-content">
-            <div class="singup-image">
-                <img src="<?php echo base_url(); ?>assets/signup.png" />
-                <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
+            <div class="col-sm-6">
+                <div class="singup-image">
+                    <img src="<?php echo base_url(); ?>assets/signup.png" />
+                    <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
+                </div>
             </div>
-            <div class="signup-form">
-                <form action="" method="">
-                    <label>Personal Information</label><br>
+             <div class="col-sm-5">
+                <div class="signup-form">
+                    <form action="" method="">
+                        <label>Personal Information</label><br>
 
-                    <input type="email" data-bind="value: email" placeholder="Your email" class="signup-email"><br>
+                        <input type="email" data-bind="value: email" placeholder="Your email" class="signup-email"><br>
 
-                    <input type="password" data-bind="value: password" placeholder="Password " class="signup-email"><br>
+                        <input type="password" data-bind="value: password" placeholder="Password " class="signup-email"><br>
 
-                    <p class="signup-noted">The minimum requirements for password are:  at least 8 characters, letter, and numbers.</p>
-                    
-                    <input type="password" data-bind="value: cPassword" placeholder="Confirm password " class="signup-email"><br>
-                    <br>
+                        <p class="signup-noted">The minimum requirements for password are:  at least 8 characters, letter, and numbers.</p>
+                        
+                        <input type="password" data-bind="value: cPassword" placeholder="Confirm password " class="signup-email"><br>
+                        <br>
 
-                    <label>Company Information</label><br>
-                    <input type="text" data-bind="value: name" placeholder="Company Name " class="signup-email"><br>
+                        <label>Company Information</label><br>
+                        <input type="text" data-bind="value: name" placeholder="Company Name " class="signup-email"><br>
 
-                    <select class="signup-country" 
-                            data-role="dropdownlist" 
-                            data-bind="source: countries, value: country"
-                            data-text-field="name"
-                            data-value-field="id"
-                            data-option-label="select country">
-                    </select><br>
+                        <select class="signup-country" 
+                                data-role="dropdownlist" 
+                                data-bind="source: countries, value: country"
+                                data-text-field="name"
+                                data-value-field="id"
+                                data-option-label="select country">
+                        </select><br>
 
-                    <select class="signup-country"
-                            data-role="dropdownlist" 
-                            data-bind="source: types, value: type"
-                            data-text-field="name"
-                            data-value-field="id"
-                            data-option-label="select type">
-                    </select><br>
+                        <select class="signup-country"
+                                data-role="dropdownlist" 
+                                data-bind="source: types, value: type"
+                                data-text-field="name"
+                                data-value-field="id"
+                                data-option-label="select type">
+                        </select><br>
 
-                     <select class="signup-country"
-                            data-role="dropdownlist" 
-                            data-bind="source: industries, value: industry"
-                            data-text-field="name"
-                            data-value-field="id"
-                            data-option-label="select industry"
-                            data-place-holder="select one">
-                    </select><br>
+                         <select class="signup-country"
+                                data-role="dropdownlist" 
+                                data-bind="source: industries, value: industry"
+                                data-text-field="name"
+                                data-value-field="id"
+                                data-option-label="select industry"
+                                data-place-holder="select one">
+                        </select><br>
 
-                    <input type="button" data-bind="click: create" class="btn-signup" value="Signup"><br>
-                    <p class="signup-text-bottom">
-                        By clicking on “signup”, you agree to the <a href="">Terms of Service</a> and <a href="">Privacy Policy</a>.
-                    </p>
+                        <input type="button" data-bind="click: create" class="btn-signup" value="Signup"><br>
+                        <p class="signup-text-bottom">
+                            By clicking on “signup”, you agree to the <a href="">Terms of Service</a> and <a href="">Privacy Policy</a>.
+                        </p>
 
-                </form> 
+                    </form> 
+                </div>
             </div>
         </div>
     </div>
@@ -159,6 +169,8 @@
     <!-- kendoui-->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/js/kendo.all.min.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
+    <!-- Boostrap-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script>
         var banhji = banhji || {};
         var baseUrl = "<?php echo base_url(); ?>";
