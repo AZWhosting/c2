@@ -46,7 +46,7 @@
 </script>
 <script type="text/x-kendo-template" id="index">
 	<div class="row">
-		<div class="span6">
+		<div class="span5">
 			<div class="row">
 				<div class="span12" style="padding-left: 0; margin-left: 0; margin-top: 0;">
 					<ul id="module-image">
@@ -138,7 +138,7 @@
 		<!-- Welcome -->
 		<div class="span6">
 			<div class="row">
-				<div class="span12">
+				<div class="span11">
 					<!-- Welcome Board -->
 					<div class="welcome-board">
 						<div class="span4">
