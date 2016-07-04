@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Sign Up</title>
+    <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.common.min.css">
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.material.min.css">
     <!-- Boostrap-->
@@ -38,7 +39,7 @@
         .signup-form{
             background: #2F5597;
             padding: 30px 50px;
-            color: #fff;
+            color: #000000;
             text-align:  center;
             font-family: 'Open Sans', sans-serif !important;
         }
@@ -95,7 +96,7 @@
         <dis class="signup-content">
             <div class="col-sm-6">
                 <div class="singup-image">
-                    <img src="<?php echo base_url(); ?>assets/signup.png" />
+                    <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" />
                     <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
                 </div>
             </div>

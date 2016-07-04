@@ -46,11 +46,11 @@
                 <ul class="nav side-menu">
                   <li><a href="<?php echo base_url(); ?>admin"><i class="fa fa-home"></i> Home</a>
                   </li>
-                  <li><a href="#apps"><i class="fa fa-edit"></i> Apps Market</a>
-                  </li>
                   <li><a href="#userlist"><i class="fa fa-edit"></i> User List</a>
                   </li>
                   <li><a href="#company"><i class="fa fa-edit"></i> Company</a>
+                  </li>
+                  <li style="visibility: hidden;"><a href="#apps"><i class="fa fa-edit"></i> Apps Market</a>
                   </li>
                 </ul>
               </div>
@@ -86,12 +86,12 @@
               </div>
 
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="demo"><span class="glyphicon glyphicon glyphicon-th" aria-hidden="true"></span></a></li>
                 <li class="">
                   <a href="#profile" class="user-profile dropdown-toggle" aria-expanded="false">
                     <img data-bind="attr: {src: image}"><span data-bind="text: getCurrentUser().username"></span>
                   </a>
                 </li>
+                <li><a href="demo">BanhJi App</a></li>
               </ul>
             </nav>
           </div>
@@ -123,7 +123,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -239,45 +239,6 @@
         </div>
       </div>
       <div class="clearfix"></div>
-      <div class="col-md-6">
-        <div class="x_panel">
-          <div class="x_title">
-            <h2>User Addition</h2>
-            
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <div class="row">
-              <div class="col-sm-12">
-                <div id="userChart"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-      <div class="col-md-6">
-        <div class="x_panel">
-          <div class="x_title">
-            <h2>No. Employees</h2>
-            
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <div class="row">
-              <div class="col-sm-12">
-                <div id="empChart"></div>
-              </div>
-            </div>
-          </div>
-        </div>  
-      </div>
-      <div class="clearfix"></div>
-      <div>
-        <?php
-          echo file_get_contents("https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/sql/db_banhji_2016-06-21.sql");
-        ?>
-      </div>
     </script>
 
     <script type="text/x-kendo-template" id="template-userlist-page">
@@ -318,7 +279,7 @@
           <divclass="col-md-12 col-sm-12 col-xs-12"></div>
             <div class="x_panel" style="width: 94%">
               <div class="x_title">
-                <h2>User Information</h2>
+                <h2>Create User</h2>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content">
@@ -403,7 +364,7 @@
           <divclass="col-md-12 col-sm-12 col-xs-12"></div>
             <div class="x_panel" style="width: 94%">
               <div class="x_title">
-                <h2>User Information</h2>
+                <h2>Edit User</h2>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content">
@@ -481,7 +442,7 @@
           <divclass="col-md-12 col-sm-12 col-xs-12"></div>
             <div class="x_panel" style="width: 94%">
               <div class="x_title">
-                <h2>User Information</h2>
+                <h2>Edit User</h2>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content">
@@ -565,10 +526,7 @@
       </div>   
     </script>
     <script type="text/x-kendo-template" id="template-createcompany-info-page">
-      <div class="col-sm-5">
-        <div data-bind="html: data.description"></div>
-      </div>
-      <div class="col-sm-7">
+      <div class="col-sm-12">
         <table class="table">
           <tbody>
             <tr>
@@ -656,16 +614,29 @@
             </tr>
             <tr>
               <th scope="row">Fiscal Year</th>
-              <td><input type="text" data-bind="value: dataStore.data()[0].fiscal_date" class="form-control col-md-7 col-xs-12"></td>
+              <td><input type="text"
+                         data-role="datepicker"
+                         data-bind="value: dataStore.data()[0].fiscal_date" 
+                         data-format="dd-MM"
+                         class="form-control col-md-7 col-xs-12"></td>
             </tr>
             <tr>
               <th scope="row">Year Founded</th>
-              <td><input type="text" data-bind="value: dataStore.data()[0].year_founded" class="form-control col-md-7 col-xs-12"></td>
+              <td><input type="text"
+                         data-role="datepicker"
+                         data-depth="year"
+                         data-bind="value: dataStore.data()[0].year_founded"
+                         data-format="yyyy" 
+                         class="form-control col-md-7 col-xs-12"></td>
             </tr>
 
             <tr>
               <th scope="row">Fiscal Report Date</th>
-              <td><input type="text" data-bind="value: dataStore.data()[0].financial_report_date" class="form-control col-md-7 col-xs-12"></td>
+              <td><input type="text"
+                         data-role="datepicker"
+                         data-format="dd-MM" 
+                         data-bind="value: dataStore.data()[0].financial_report_date" 
+                         class="form-control col-md-7 col-xs-12"></td>
             </tr>
             <tr>
               <th scope="row">Country</th>
@@ -698,10 +669,6 @@
                         data-text-field="code"
                         data-value-field="id"
                         class="form-control col-md-7 col-xs-12"></td>
-            </tr>
-            <tr>
-              <th scope="row">Description</th>
-              <td><textarea data-role="editor" data-bind="value: dataStore.data()[0].description"></textarea></td>
             </tr>
             <tr><td colspan="2"></td></tr>
           </tbody>
@@ -1303,7 +1270,7 @@
             this.setCurrent(this.users.at(0));
             var win = $('#userForm').kendoWindow({
               width: "600px",
-              title: "User Form",
+              // title: "User Form",
               visible: false,
               modal: true,
               actions: [
@@ -1355,7 +1322,7 @@
             this.setCurrent(e.data);
             var win = $('#userFormEdit').kendoWindow({
               width: "600px",
-              title: "User Form",
+              // title: "User Form",
               visible: false,
               modal: true,
               actions: [

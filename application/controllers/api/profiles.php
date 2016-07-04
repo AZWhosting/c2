@@ -296,7 +296,7 @@ class Profiles extends REST_Controller {
 	function company_post() {
 		$request = json_decode($this->post('models'));
 
-		// todo: add user to institute during creation
+		// todo: add currency base on country selected
 		foreach($request as $r) {
 			// find user
 			$user = new User();
@@ -304,6 +304,10 @@ class Profiles extends REST_Controller {
 			$user->get();
 			$inst = new Institute();
 			$inst->name = $r->name;
+			$inst_year_founded = date('Y');
+			$inst->monetary_id = 3;
+			$inst->report_monetary_id = 3;
+			$inst->logo = 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/default_logo.png';
 			$inst->country_id = $r->country->id;
 			$inst->industry_id = $r->industry->id;
 			$inst->type_id = $r->type->id;

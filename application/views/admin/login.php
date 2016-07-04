@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Login</title>
     <!-- Boostrap-->
+    <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
     <style>
         html, body {
@@ -39,7 +40,7 @@
             background: #2F5597;
             margin-right: 5%;
             padding: 30px 50px;
-            color: #fff;            
+            color: #000000;            
         }
         .login-form input{
           font-size: 20px;
@@ -83,7 +84,7 @@
 
                       <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
 
-                      <input type="button" data-bind="click: signIn" class="btn-login" value="Login"><br><br>
+                      <input id="loginBtn" type="button" data-bind="click: signIn" class="btn-login" value="Login"><br><br>
                       <div id="loginInformation"></div>
                   </form> 
               </div>
@@ -239,6 +240,7 @@
             // var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;  
             // if(this.get('password').match(decimal) != null)  {   
             // layout.showIn("#main-container", watingView);
+            $("#loginBtn").val("Loging in...");
             var authenticationData = {
                 Username : this.get('email'),
                 Password : this.get('password'),
@@ -270,6 +272,7 @@
                                 institute: data
                             };
                             localforage.setItem('user', user);
+                            $("#loginBtn").val("Redirecting...");
                             window.location.replace(baseUrl + "demo/");
                           } else {
                             console.log('bad');
@@ -280,14 +283,10 @@
               },
               onFailure: function(err) {
                 // layout.showIn("#main-container", loginView);
+                $("#loginBtn").val("Login");
                 $('#loginInformation').text('Please check username/password.');
               }
-            });
-                  // return true;  
-                // } else {   
-                //   alert('Password must be at lease 8 characters and contains lower, upper case, number and special character');
-                //   return false;
-                // }    
+            });  
           },
           redirect: function(data) {
               // console.log(data.length > 0);
