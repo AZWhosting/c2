@@ -138,51 +138,40 @@
 		<!-- Welcome -->
 		<div class="span6">
 			<div class="row">
-				<div class="span12">
-					<!-- Welcome Board -->
-					<div class="welcome-board">
-						<div class="span4">
-							<h2>Welcome on board!</h2>
-						</div>
-						<div class="span8">
-							<p>
-								To get you started with BanhJi, please have a look at this <a target="_blank" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/welcome_guide.pdf">[Welcome Guide]</a>.
-							</p>
-						</div>
-						<div class="btn-close">X</div>
-					</div><!--End Welcome Board -->
+				<div class="span12">					
 
 					<!-- Add New Board -->
 					<div class="board-add">
 						<div class="span6">
+							<h2>Welcome on board!</h2>
 							<p>
-								To make it easy for you, we already set up a sample chart of account, supplier, customer, 
-								and inventory. You can setup your own info by going to each module or making this quick add:
+								To get you started with BanhJi, please have a look at this <a target="_blank" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/welcome_guide.pdf">[Welcome Guide]</a>.
 							</p>
 						</div>
-						<div class="span5">
-							<div class="span3">
-								<a href="#/customer" class="center">
-									<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
-								</a>
-							</div>
-							<div class="span3">
-								<a href="#/vendor" class="center">
-									<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
-								</a>
-							</div>
-							<div class="span3">
-								<a href="#/item" class="center">
-									<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
-								</a>
-							</div>
-							<div class="span3">
-								<a href="#/item_service" class="center">
-									<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
-								</a>
+						<div class="span6">
+							<div class="span12">
+								<div class="span3">
+									<a href="#/customer" class="center">
+										<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+									</a>
+								</div>
+								<div class="span3">
+									<a href="#/vendor" class="center">
+										<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
+									</a>
+								</div>
+								<div class="span3">
+									<a href="#/item" class="center">
+										<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+									</a>
+								</div>
+								<div class="span3">
+									<a href="#/service" class="center">
+										<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+									</a>
+								</div>
 							</div>
 						</div>
-						<div class="btn-close">X</div>
 					</div><!--End Add New Board -->
 
 					<!-- Financial Board -->
@@ -190,7 +179,7 @@
 						<div class="span12">
 							<h4 data-bind="text: companyName"></h4>
 							<h2 style="color: #113051;">Financial Snapshot</h2>
-							<span style="color: #000000;">As of:&nbsp;<span id="today-date" data-bind="text: curDate"></span></span><br/>
+							<span style="color: #000000;">As of:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
 						</div>
 					</div><!--End Financial Board -->
 
@@ -238,43 +227,36 @@
 								</table>
 							</div>
 						</div>
-						<div class="span12">
-							<!-- Graph -->
-							<div> 
-							    <div id="welcome-chart" style="height: 250px; "></div>
-							</div>
-						</div>
+						
 						<div class="span12">
 							<div class="span6">
-
-								<div class="widget-body alert-info welcome-nopadding">
-									<p>RECEVABLES</p>
-							
-									<div align="center" class="text-large strong">$0.00</div>
-
-									<br>
+								<a href="#/customer_balance">
+									<div class="widget-body alert-info welcome-nopadding">
+										<p>RECEIVABLES</p>
 								
-									<table width="100%">
-										<tr align="center">
-											<td>										
-												<span >0</span>
-												<br>
-												<span>Open</span>
-											</td>
-											<td>
-												<span >0</span>
-												<br>
-												<span>Customer</span>
-											</td>
-											<td>
-												<span >0</span>
-												<br>
-												<span>Overdue</span>
-											</td>
-										</tr>
-									</table>
-								</div>
-
+										<div align="center" class="text-large strong" data-bind="text: ar"></div>
+									
+										<table width="100%">
+											<tr align="center">
+												<td>										
+													<span data-bind="text: ar_open"></span>
+													<br>
+													<span>Open</span>
+												</td>
+												<td>
+													<span data-bind="text: ar_customer"></span>
+													<br>
+													<span>Customer</span>
+												</td>
+												<td>
+													<span data-bind="text: ar_overdue"></span>
+													<br>
+													<span>Overdue</span>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</a>
 							</div>
 							<div class="span6">
 								
@@ -282,24 +264,22 @@
 								<div class="widget-body  alert-info welcome-nopadding">
 									<p>PAYABLES</p>
 							
-									<div align="center" class="text-large strong" >$0.00</div>
-
-									<br>
+									<div align="center" class="text-large strong" data-bind="text: ap"></div>
 								
 									<table width="100%">
 										<tr align="center">
 											<td>										
-												<span >0</span>
+												<span data-bind="text: ap_open"></span>
 												<br>
 												<span>Open</span>
 											</td>
 											<td>
-												<span >0</span>
+												<span data-bind="text: ap_vendor"></span>
 												<br>
-												<span>Customer</span>
+												<span>Supplier</span>
 											</td>
 											<td>
-												<span >0</span>
+												<span data-bind="text: ap_overdue"></span>
 												<br>
 												<span>Overdue</span>
 											</td>
@@ -307,6 +287,26 @@
 									</table>
 								</div>
 							</div>
+						</div>
+
+						<div class="span12">
+							<!-- Graph -->
+							<div data-role="chart"
+								 data-auto-bind="false"
+				                 data-legend="{ position: 'top' }"
+				                 data-series-defaults="{ type: 'column' }"
+				                 data-tooltip='{
+				                    visible: true,
+				                    format: "{0}%",
+				                    template: "#= series.name #: #= value #"
+				                 }'                 
+				                 data-series="[
+				                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
+				                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
+				                             ]"	                             
+				                 data-bind="source: graphDS"
+				                 style="height: 250px;" ></div>
+				            <!-- End Graph -->      
 						</div>
 					</div><!--End Chart Board -->
 					
@@ -328,6 +328,678 @@
 <!-- ***************************
  *	Accounting Section        *
 **************************** -->
+<script id="accountingDashboard" type="text/x-kendo-template" >
+	<div class="row-fluid">
+		<!-- Left Side -->
+		<div class="span4">
+
+			<!-- Logo of the page -->
+			<table width="100%" cellpadding="10">
+				<tr>
+			        <td valign="top">
+			        	<h2>ACCOUNTING MODULE</h2>
+			        	<p>
+			        		In here, you can manage your cash information, transactions and reports. Cashflow forecast and other treasury management is coming soon..
+			        	</p>
+			        	<div class="customer-icon">
+				        	<div class="span4">
+					        	<a href="#/customer" class="center">
+					        		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+					        	</a>
+					        </div>
+					    </div>
+			        </td>
+			 	</tr>
+			</table>
+
+			<br>
+
+			<table class="table table-borderless table-condensed table-vertical-center ">
+				<tr>
+					<td class="center">
+						<a href="#/cash_transaction">
+							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png" width="110" height="200" />
+							C.Transaction
+						</a>						
+					</td>
+					<td class="center">
+						<a href="#/cash_receipt">
+							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
+							C.Receipt
+						</a>
+					</td>
+					<td class="center">
+						<a href="#/cash_payment">
+							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png" width="110" height="200" />
+							C.Payment
+						</a>						
+					</td>					
+				</tr>
+				<tr>
+					<td class="center">
+						<a href="#/cash_advance">
+							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_receipt.png" width="110" height="200" />
+							C.Advance
+						</a>
+					</td>
+					<td class="center">						
+						<a href="#/expense">
+							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
+							Expense
+						</a>						
+					</td>
+					<td class="center">						
+						<a href="#/">
+							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
+							Ex.Rate Record
+						</a>						
+					</td>										
+				</tr>							
+			</table>
+
+		</div>
+
+		<!-- Right Side -->
+		<div class="span8">
+
+			<!-- Summary -->
+			<div class="row-fluid ">
+	
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading">Cash Balance</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert alert-primary">
+							
+							<div align="center" class="text-large strong" data-bind="text: sale"></div>
+
+							<br>
+						
+							<table width="100%">
+								<tr align="center">
+									<td>										
+										<span data-bind="text: sale_customer"></span>
+										<br>
+										<span>In Bank</span>
+									</td>
+									<td>
+										<span data-bind="text: sale_product"></span>
+										<br>
+										<span>On Hand</span>
+									</td>
+									<td>
+										<span data-bind="text: sale_order"></span>
+										<br>
+										<span>In Transit</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading">Advance</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert-info">
+							
+							<div align="center" class="text-large strong" data-bind="text: order"></div>
+
+							<br>
+						
+							<table width="100%">
+								<tr align="center">
+									<td>										
+										<span data-bind="text: order_avg"></span>
+										<br>
+										<span>Open</span>
+									</td>
+									<td>
+										<span data-bind="text: order_open"></span>
+										<br>
+										<span>Overdue</span>
+									</td>									
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading">Cash Position</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body" style="background-color: LightGray">
+							
+							<div align="center" class="text-large strong" data-bind="text: ar"></div>
+
+							<br>
+						
+							<table width="100%">
+								<tr align="center">
+									<td>										
+										<span data-bind="text: ar_open"></span>
+										<br>
+										<span>To be Received</span>
+									</td>
+									<td>
+										<span data-bind="text: ar_customer"></span>
+										<br>
+										<span>To be Paid</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+			</div>
+
+			<!-- Top 5 -->
+			<div class="row-fluid">
+				<div class="span4">
+					<h4>Top 5 A/R</h4>					
+					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
+				        <thead>
+				            <tr>
+				                <th style="width: 1%;" class="center">#</th>
+				                <th>Name</th>			                
+				            </tr>
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"				        	                 
+			                 data-template="customerDashBoard-top-customer-template"
+			                 data-bind="source: topCustomerDS"></tbody>			        
+				    </table>			
+				</div>
+				<div class="span4">
+					<h4>Top 5 A/P</h4>
+					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
+				        <thead>
+				            <tr>
+				                <th style="width: 1%;" class="center">#</th>
+				                <th>Name</th>		                
+				            </tr>
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"				        	                  
+			                 data-template="customerDashBoard-top-ar-template"
+			                 data-bind="source: topARDS"></tbody>			        
+				    </table>
+				</div>
+				<div class="span4">
+					<h4>Top 5 Cash Account</h4>
+					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
+				        <thead>
+				            <tr>
+				                <th style="width: 1%;" class="center">#</th>
+				                <th>Name</span></th>			                		                
+				            </tr>
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"                
+			                 data-template="customerDashBoard-top-product-template"
+			                 data-bind="source: topProductDS"></tbody>			        
+				    </table>
+				</div>		
+			</div>
+
+			<!-- Graph -->
+			<div>
+				<div id="accounting-chart" style="height: 250px; "></div>
+			</div>
+
+		</div>		
+
+	</div>
+</script>
+<script id="accountingDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
+	<tr data-uid="#: uid #">
+		<td>#:banhji.cashDashboard.topCustomerDS.indexOf(data)+1#</td>		
+		<td>
+			<span>#=name#</span>
+			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
+		</td>		
+	</tr>
+</script>
+<script id="accountingDashBoard-top-ar-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>#:banhji.cashDashboard.topARDS.indexOf(data)+1#</td>		
+		<td>
+			<span>#=name#</span>
+			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
+		</td>
+	</tr>
+</script>
+<script id="accountingDashBoard-top-product-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>#:banhji.cashDashboard.topProductDS.indexOf(data)+1#</td>		
+		<td>
+			<span>#=name#</span>
+			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
+		</td>
+	</tr>
+</script>
+
+<script id="accountingCenter" type="text/x-kendo-template">	
+	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
+		<div class="widget-body padding-none">			
+			<div class="row-fluid row-merge">
+				<div class="span3 listWrapper" style="height: 700px;">
+					<div class="innerAll">							
+						<form autocomplete="off" class="form-inline">
+							<div class="widget-search separator bottom">
+								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<div class="overflow-hidden">
+									<input type="search" placeholder="Customer ..." data-bind="value: searchText, events:{change: enterSearch}">
+								</div>
+							</div>
+							<div class="select2-container" style="width: 100%;">								
+																
+							</div>
+						</form>					
+					</div>
+					
+					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
+
+					<div class="table table-condensed" style="height: 580px;"						 
+						 data-role="grid" 
+						 data-bind="source: contactDS"
+						 data-auto-bind="false" 
+						 data-row-template="cashCenter-customer-list-tmpl"
+						 data-columns="[{title: ''}]"
+						 data-selectable=true
+						 data-height="600"						 
+						 data-scrollable="{virtual: true}"></div>									
+				</div>
+				<div class="span9 detailsWrapper">
+					<div class="row-fluid">					
+						<div class="span6">
+							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
+
+							    <!-- Widget Heading -->
+							    <div class="widget-head">
+
+							        <!-- Tabs -->
+							        <ul class="pull-right">
+							        	<li style="font-size: large; color: black; font-weight: bold;">
+							            	<span data-bind="text: obj.number"></span>
+							            	-
+							            	<span data-bind="text: obj.fullname"></span>
+							            </li>
+							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-7"><i></i></span>
+							            </li>							           
+							            <li class="glyphicons riflescope"><span data-toggle="tab" data-target="#tab2-7"><i></i></span>
+							            </li>							            
+							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab3-7"><i></i></span>
+							            </li>							            
+							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab4-7"><i></i></span>
+							            </li>
+							            <li class="glyphicons edit"><span data-bind="click: goEditContact"><i></i></span>
+							            </li>
+							            <li class="glyphicons user_add"><a href="#/customer"><i></i></a>
+							            </li>							            							            
+							        </ul>
+							        <div class="clearfix"></div>
+							        <!-- // Tabs END -->
+
+							    </div>
+							    <!-- Widget Heading END -->
+
+							    <div class="widget-body">
+							        <div class="tab-content">
+
+							            <!-- Transactions Tab content -->
+							            <div id="tab1-7" class="tab-pane active box-generic">
+							            	<table class="table table-borderless table-condensed cart_total cash-table">
+								            	<tr>
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-primary" data-bind="click: goQuote">Cash Transaction</span>
+								            		</td>
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit">Cash Receipt</span>								            			
+								            		</td>
+								            	</tr>
+								            	<tr>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleOrder">Cash Payment</span>
+								            		</td>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashSale">Cash Advance</span>								            											            			
+								            		</td>
+								            	</tr>
+								            	<tr>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn">Expense</span>
+								            		</td>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice">Exchange Rate Record</span>								            											            			
+								            		</td>
+								            	</tr>
+								            	
+							            	</table>
+							            </div>
+							            <!-- // Transactions Tab content END -->
+
+							            <!-- SEARCH Tab content -->
+							            <div id="tab2-7" class="tab-pane box-generic">
+							                <input data-role="dropdownlist"
+							                	   data-auto-bind="false"
+						            			   data-option-label="Select Customer Type..."					            			   		                   
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: contact_type_id,
+								                              source: contactTypeDS"
+								                   style="width: 100%"/>
+
+							                <input data-role="dropdownlist"
+						            			   data-option-label="Select Currency..."
+						            			   data-template="currency-list-tmpl"					            			   		                   
+								                   data-value-primitive="true"
+								                   data-text-field="code"
+								                   data-value-field="id"
+								                   data-bind="value: currency_id,
+								                              source: currencyDS"
+								                   style="width: 100%"/>
+
+								            <br><br>
+								            <span class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search"></span></span>
+								            <br>
+							            </div>
+							            <!-- // SEARCH Tab content END -->							            
+
+							            <!-- INFO Tab content -->
+							            <div id="tab3-7" class="tab-pane box-generic">
+							            	<div class="row-fluid">
+								            	<div class="span6">
+										
+													<!-- Bio -->
+													<div class="widget widget-heading-simple widget-body-gray margin-none">
+														<div class="widget-head">
+															<h4 class="heading glyphicons user"><i></i> <span data-bind="text: obj.wnumber"></span> <span data-bind="text: obj.fullname"></span></h4>
+														</div>
+														<div class="widget-body">
+															<ul class="unstyled icons margin-none">
+																<li class="glyphicons group"><i></i> <span data-bind="text: obj.contact_type"></span></li>
+																<li class="glyphicons phone"><i></i> <span data-bind="text: obj.phone"></span></li>
+																<li class="glyphicons envelope"><i></i> <span data-bind="text: obj.email"></li>
+																<li class="glyphicons calendar"><i></i> <span data-bind="text: obj.registered_date"></li>
+															</ul>
+														</div>
+													</div>
+													<!-- // Bio END -->
+													
+												</div>
+												<div class="span6">
+													<!-- Bio -->
+													<div class="widget widget-heading-simple widget-body-gray margin-none">
+														<div class="widget-head">
+															<h4 class="heading glyphicons edit" data-bind="click: goEditContact"><i></i> <span data-bind="text: lang.lang.edit"></span></h4>
+														</div>
+														<div class="widget-body">
+															<p><i class="icon-home"></i> <span data-bind="text: obj.address"></span></p>
+														</div>
+													</div>
+													<!-- // Bio END -->
+												</div>
+											</div>
+							            </div>
+							            <!-- // INFO Tab content END -->
+
+							            <!-- NOTE Tab content -->
+							            <div id="tab4-7" class="tab-pane box-generic">
+
+										    <div class="chat-controls">															
+												<form class="margin-none">
+													<div class="row-fluid">
+														<div class="span10">
+															<input type="text" name="message" class="input-block-level margin-none" data-bind="value: note" placeholder="កំណត់Memo ...">
+														</div>
+														<div class="span2">
+															<span class="btn btn-block btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.save"></span></span>
+														</div>
+													</div>
+												</form>															
+											</div>
+
+											<br>
+
+									    	<div data-role="grid"
+									    	 	 data-height="100"
+					 							 data-scrollable="{virtual: true}"									                 
+								                 data-row-template="cashCenter-note-tmpl"
+								                 data-bind="source: noteDS"
+								                 data-columns="[{title: ''}]"></div>
+											
+							            </div>
+							            <!-- // NOTE Tab content END -->							            								            
+
+							        </div>
+							    </div>
+							</div>
+						</div>
+
+						<div class="span6">
+							<div class="row-fluid">
+								<div class="span6">
+									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
+										<span class="glyphicons coins"><i></i></span>
+										<span class="txt">Balance<span data-bind="text: balance" style="font-size:medium;"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="span6">
+									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit">
+										<span class="glyphicons briefcase"><i></i></span>
+										<span class="txt">Deposit<span data-bind="text: deposit" style="font-size:medium;"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>							
+							
+							<div class="row-fluid">
+								<div class="span6">
+									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
+										<span class="glyphicons circle_exclamation_mark"><i></i></span>
+										<span class="txt"><span data-bind="text: outInvoice"></span> Open</span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="span6">
+									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice">
+										<span class="glyphicons turtle"><i></i></span>
+										<span class="txt"><span data-bind="text: overInvoice"></span> Over Due</span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>														
+						</div>											          	
+		          	</div>
+					
+					<div>
+						<input data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList,                              
+					                      events: { change: sorterChanges }" />
+
+						<input data-role="datepicker"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					                      events: { change: dateChanges }"
+					           placeholder="From ..." >
+
+					    <input data-role="datepicker"
+					    	   data-format="dd-MM-yyyy"
+					           data-bind="value: edate,
+					                      events: { change: dateChanges }"
+					           placeholder="To ..." >
+					    
+					    <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+					</div>
+
+					<table class="table table-bordered table-striped table-white">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Type</th>								
+								<th>Reference No</th>
+								<th>Amount</th>
+								<th>Status</th>
+								<th>Action</th>
+							</tr>
+						</thead>	            		
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            					            					            					            			
+				                data-template="cashCenter-transaction-tmpl"
+				                data-bind="source: transactionDS" >
+				        </tbody>
+	            	</table>
+
+	            	<div id="pager" class="k-pager-wrap"
+				    	 data-auto-bind="false"
+			             data-role="pager" data-bind="source: transactionDS"></div>	            	
+				</div>
+			</div>			
+		</div>
+	</div>		
+</script>
+<script id="accountingCenter-transaction-tmpl" type="text/x-kendo-tmpl">
+    <tr>    	  	
+    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+    	<td>#=type#</td>
+        <td>
+        	#if(type=="Invoice" || type=="Cash_Sale" || type=="Quote" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return"){#
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>						
+			#}else{#
+				#=number#
+			#}#        	
+        </td>
+    	<td class="right">
+    		#if(type=="GDN"){#
+    			#=kendo.toString(amount, "n0")#
+    		#}else{#
+    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
+    		#}#
+    	</td>
+    	<td>        	
+        	#if(type==="Invoice"){#
+        		#if(status==="0" || status==="2") {#
+        			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
+					#if(dueDate < toDay) {#
+						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
+					#} else {#
+						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
+					#}#
+				#} else {#
+					Paid
+				#}#
+        	#}else if(type==="Sale_Order" || type==="GDN"){#
+        		#if(status==="0"){#
+        			Open
+        		#}else{#
+        			Done        			
+        		#}#
+        	#}else if(type==="Quote"){#        		
+        		#if(status==="0"){#
+        			Open
+        		#}else{#
+        			Approved        			
+        		#}#
+        	#}#			
+		</td>    	
+    	<td align="center">
+			#if(type==="Invoice"){#
+				<a href="\#/invoice/#=id#"><i></i> Send</a>
+
+				#if(status==="0" || status==="2"){#					
+					| <a href="\#/cashier/#=id#"><i></i> Pay</a>
+				#}#        	
+			#}else if(type==="Sale_Order"){#
+        		#if(status==="0"){#
+        			
+        		#}#
+        	#}else if(type==="Quote"){#
+        		<a href="\#/quote/#=id#"><i></i> Send</a>        		
+        		#if(status==="0"){#
+        			
+        		#}#
+        	#}else if(type==="GDN"){#        		
+        		#if(status==="0"){#
+        			
+        		#}#
+        	#}#
+		</td>     	
+    </tr>
+</script>
+<script id="accountingCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
+	<tr data-bind="click: selectedRow">
+		<td>
+			<div class="media-body">
+				<span class="strong">
+					#=number# #=fullname#				
+				</span>
+			</div>
+		</td>
+	</tr>
+</script>
+<script id="accountingCenter-note-tmpl" type="text/x-kendo-template">
+	<tr>
+		<td>			
+			<blockquote>
+				<small class="author">
+					<span class="strong">#=creator#</span> :
+					<cite>#=kendo.toString(new Date(noted_date), "g")#</cite>
+				</small>					
+				<p>#=note#</p>
+			</blockquote>				
+		</td>
+	</tr>	
+</script>
+
 <script id="account" type="text/x-kendo-template">	
 	<div id="slide-form">
 		<div class="customer-background">
@@ -898,321 +1570,328 @@
 </script>
 <script id="journal" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="container-960">					
-			<div id="example" class="k-content">				
-					
-			    <div class="hidden-print">
-			    	<div class="pull-right">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">				
+						
+				    <div class="hidden-print">
+				    	<div class="pull-right">
 
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
-					</div>
-
-			        <h2>JOURNAL ENTRY</h2>				        				        				        	
-			    </div>			   
-
-			    <br>				   				
-					
-				<!-- Upper Part -->
-				<div class="row-fluid">
-					<div class="span4">
-						<div class="box-generic well" style="height: 150px;">				
-							<table class="table table-borderless table-condensed cart_total">									
-								<tr data-bind="visible: isEdit">				
-									<td>No.</td>
-									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
-								</tr>
-								<tr>
-									<td>Date</td>
-									<td class="right">
-										<input id="issuedDate" name="issuedDate" 
-												data-role="datepicker"
-												data-format="dd-MM-yyyy"
-												data-parse-formats="yyyy-MM-dd" 
-												data-bind="value: obj.issued_date, 
-															events:{ change : setRate }" 
-												required data-required-msg="required"
-												style="width:100%;" />
-									</td>
-								</tr>
-								<tr>
-									<td>Type</td>
-									<td>
-										<input id="ddlType" name="ddlType"
-											   data-role="dropdownlist"								                   
-							                   data-value-primitive="true"
-							                   data-text-field="name"
-							                   data-value-field="id"
-							                   data-bind="value: obj.journal_type,
-							                              source: types"							                   
-							                   data-option-label="(--- Select ---)"
-							                   required data-required-msg="required" 
-							                   style="width: 100%;" />
-									</td>
-								</tr>
-								<tr>
-									<td>Currency</td>
-									<td>
-										<input id="cbbCurrency" name="cbbCurrency"
-												data-bind="value: obj.locale,
-							                              events:{change:setRate}" 
-							                    placeholder="Select currency ..." 
-							                    required data-required-msg="required" 
-							                    style="width: 100%;" />
-									</td>
-								</tr>									
-							</table>
+				    		<span class="glyphicons no-js remove_2" 
+								data-bind="click: cancel"><i></i></span>						
 						</div>
-					</div>					   
 
-					<div class="span8">
+				        <h2>JOURNAL ENTRY</h2>				        				        				        	
+				    </div>			   
 
-						<div class="box-generic" style="height: 150px;">
+				    <br>				   				
+						
+					<!-- Upper Part -->
+					<div class="row-fluid">
+						<div class="span4">
+							<div class="box-generic well" style="height: 150px;">				
+								<table class="table table-borderless table-condensed cart_total">									
+									<tr data-bind="visible: isEdit">				
+										<td>No.</td>
+										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+									</tr>
+									<tr>
+										<td>Date</td>
+										<td class="right">
+											<input id="issuedDate" name="issuedDate" 
+													data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd" 
+													data-bind="value: obj.issued_date, 
+																events:{ change : setRate }" 
+													required data-required-msg="required"
+													style="width:100%;" />
+										</td>
+									</tr>
+									<tr>
+										<td>Type</td>
+										<td>
+											<input id="ddlType" name="ddlType"
+												   data-role="dropdownlist"								                   
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.journal_type,
+								                              source: types"							                   
+								                   data-option-label="(--- Select ---)"
+								                   required data-required-msg="required" 
+								                   style="width: 100%;" />
+										</td>
+									</tr>
+									<tr>
+										<td>Currency</td>
+										<td>
+											<input id="cbbCurrency" name="cbbCurrency"
+												   data-role="combobox"				                
+								                   data-value-primitive="true"
+								                   data-template="currency-list-tmpl"				   
+								                   data-text-field="code"
+								                   data-value-field="locale"
+								                   data-bind="value: obj.locale, 
+								                   			source: currencyDS, 
+								                   			events: {change : setRate}"
+								                   placeholder="Select currency..." 
+								                   required data-required-msg="required" style="width: 100%" />										
+										</td>
+									</tr>									
+								</table>
+							</div>
+						</div>					   
 
-						    <!-- Tabs Heading -->
-						    <div class="tabsbar tabsbar-2">
-						        <ul class="row-fluid row-merge">
-						            <li class="span3 glyphicons pencil active"><a href="#tab1-3" data-toggle="tab"><i></i> Memo</a>
-						            </li>
-						            <li class="span3 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i> Attach</a>
-						            </li>
-						            <li class="span3 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i> Recuring</a>
-						            </li>								            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
+						<div class="span8">
 
-						    <div class="tab-content">
+							<div class="box-generic" style="height: 150px;">
 
-						        <!-- Memo Tab content -->
-						        <div class="tab-pane active" id="tab1-3">
-						        	<textarea id="memo2" cols="0" rows="4" class="k-textbox" 
-						        		data-bind="value: obj.memo2" style="width:100%;" 
-						        		placeholder="Please enter transaction purpose here ..."></textarea>
-						        </div>
-						        <!-- // Memo Tab content END -->
+							    <!-- Tabs Heading -->
+							    <div class="tabsbar tabsbar-2">
+							        <ul class="row-fluid row-merge">
+							            <li class="span3 glyphicons pencil active"><a href="#tab1-3" data-toggle="tab"><i></i> Memo</a>
+							            </li>
+							            <li class="span3 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i> Attach</a>
+							            </li>
+							            <li class="span3 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i> Recuring</a>
+							            </li>								            
+							        </ul>
+							    </div>
+							    <!-- // Tabs Heading END -->
 
-						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab2-3">							            	
-						            
-						            <input name="files"
-						                   type="file"
-						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
-						        </div>
-						        <!-- // Attach Tab content END -->
+							    <div class="tab-content">
 
-						        <!-- Recuring Tab content -->
-						        <div class="tab-pane" id="tab3-3">							            	
-						            
-						            <div class="span5">
+							        <!-- Memo Tab content -->
+							        <div class="tab-pane active" id="tab1-3">
+							        	<textarea id="memo2" cols="0" rows="4" class="k-textbox" 
+							        		data-bind="value: obj.memo2" style="width:100%;" 
+							        		placeholder="Please enter transaction purpose here ..."></textarea>
+							        </div>
+							        <!-- // Memo Tab content END -->
 
-							        	<input data-role="combobox"
-						                   data-placeholder="Select existing recuring ..."
-						                   data-value-primitive="true"
-						                   data-auto-bind="false"
-						                   data-text-field="recurring_name"
-						                   data-value-field="id"
-						                   data-bind="value: obj.recurring_id,
-						                              source: recurringDS,
-						                              events:{ change:applyRecurring }"
-						                   style="width: 100%" />
+							        <!-- Attach Tab content -->
+							        <div class="tab-pane" id="tab2-3">							            	
+							            
+							            <input name="files"
+							                   type="file"
+							                   data-role="upload"
+							                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
+							            
+							        </div>
+							        <!-- // Attach Tab content END -->
 
-						                <br><br>
+							        <!-- Recuring Tab content -->
+							        <div class="tab-pane" id="tab3-3">							            	
+							            
+							            <div class="span5">
 
-						                <div align="right">
-							                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
+								        	<input data-role="combobox"
+							                   data-placeholder="Select existing recuring ..."
+							                   data-value-primitive="true"
+							                   data-auto-bind="false"
+							                   data-text-field="recurring_name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.recurring_id,
+							                              source: recurringDS,
+							                              events:{ change:applyRecurring }"
+							                   style="width: 100%" />
+
+							                <br><br>
+
+							                <div align="right">
+								                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
+								            </div>
+
 							            </div>
 
-						            </div>
+							            <div class="span7">
 
-						            <div class="span7">
-
-							            <table style="width: 100%">
-							            	<tr align="right">
-							            		<td>
-							            			Name
-							            		</td>
-							            		<td>
-							            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
-							            					placeholder="Recurring name.." 
-							            					style="width: 40%;" />
-							            			Start
-									                <input data-role="datepicker"
-															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd"
-															data-bind="value: obj.start_date"
-															style="width: 40%;" />
-							            		</td>
-							            	</tr>
-							            	<tr align="right">
-							            		<td>
-								            		Every
-								            	</td>
-							            		<td>
-								            		<input data-role="numerictextbox"
-									                   data-format="n0"
-									                   data-min="0"								                   
-									                   data-bind="value: obj.interval"
-									                   style="width: 45%;" />
-
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
-										                              events: { change: frequencyChanges }"
-										                   style="width: 45%;" />
-								            	</td>
-							            	</tr>
-								            <tr align="right">
-								            	<td>
-								            		On
-								            	</td>							            	
-								            	<td>
-
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.month,
-										                   			  visible: showMonth,
-										                              source: monthList"										                   
+								            <table style="width: 100%">
+								            	<tr align="right">
+								            		<td>
+								            			Name
+								            		</td>
+								            		<td>
+								            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
+								            					placeholder="Recurring name.." 
+								            					style="width: 40%;" />
+								            			Start
+										                <input data-role="datepicker"
+																data-format="dd-MM-yyyy"
+																data-parse-formats="yyyy-MM-dd"
+																data-bind="value: obj.start_date"
+																style="width: 40%;" />
+								            		</td>
+								            	</tr>
+								            	<tr align="right">
+								            		<td>
+									            		Every
+									            	</td>
+								            		<td>
+									            		<input data-role="numerictextbox"
+										                   data-format="n0"
+										                   data-min="0"								                   
+										                   data-bind="value: obj.interval"
 										                   style="width: 45%;" />
 
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.month_option,
-										                   			  visible: showMonthOption,
-										                              source: monthOptionList,
-										                              events: { change: monthOptionChanges }"										                   
-										                   style="width: 45%;" />
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.frequency,
+											                              source: frequencyList,
+											                              events: { change: frequencyChanges }"
+											                   style="width: 45%;" />
+									            	</td>
+								            	</tr>
+									            <tr align="right">
+									            	<td>
+									            		On
+									            	</td>							            	
+									            	<td>
 
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.week,
-										                   			  visible: showWeek,
-										                              source: weekDayList"										                  
-										                   style="width: 45%;" />										            
-										        
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.day,
-										                   			  visible: showDay,
-										                              source: dayList"										                   
-										                   style="width: 45%;" />
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.month,
+											                   			  visible: showMonth,
+											                              source: monthList"										                   
+											                   style="width: 45%;" />
 
-								            	</td>
-								            </tr>
-							            </table>
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.month_option,
+											                   			  visible: showMonthOption,
+											                              source: monthOptionList,
+											                              events: { change: monthOptionChanges }"										                   
+											                   style="width: 45%;" />
 
-							        </div>									     
-						            
-						        </div>
-						        <!-- // Recuring Tab content END -->								        
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.week,
+											                   			  visible: showWeek,
+											                              source: weekDayList"										                  
+											                   style="width: 45%;" />										            
+											        
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.day,
+											                   			  visible: showDay,
+											                              source: dayList"										                   
+											                   style="width: 45%;" />
 
-						    </div>
-						</div>
+									            	</td>
+									            </tr>
+								            </table>
 
-				    </div>
-				</div>
+								        </div>									     
+							            
+							        </div>
+							        <!-- // Recuring Tab content END -->								        
 
-				<!-- Item List -->
-				<table class="table table-bordered table-primary table-striped table-vertical-center">
-			        <thead>
-			            <tr>
-			                <th style="width: 1%;">No.</th>
-			                <th style="width: 20%;">ACCOUNT</th>
-			                <th>DESCRIPTION</th>
-			                <th data-bind="visible: showRef" style="width: 7%;">REF</th>
-			                <th data-bind="visible: showName" style="width: 15%;">NAME</th>
-			                <th data-bind="visible: showSegment" style="width: 15%;">SEGMENT</th>
-			                <th style="width: 15%;">DEBITS (Dr)</th>
-			                <th style="width: 15%;">CREDITS (Cr)</th>			                
-			            </tr> 
-			        </thead>
-			        <tbody data-role="listview"
-			        		data-template="journal-template" 
-			        		data-auto-bind="false"
-			        		data-bind="source: lineDS"></tbody>			        
-			    </table>			    
-								
-	            <!-- Bottom part -->
-	            <div class="row-fluid">
-		
-					<!-- Column -->
-					<div class="span6 hidden-print">
-						
-						<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
-
-						<div class="btn-group">
-							<div class="leadcontainer">
-								
+							    </div>
 							</div>
-							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-							<ul class="dropdown-menu" style="padding-left: 10px">
-								<li>
-									<input type="checkbox" data-bind="checked: showRef" /> REF
-								</li>
-								<li>
-									<input type="checkbox" data-bind="checked: showName" /> NAME
-								</li>
-								<li>
-									<input type="checkbox" data-bind="checked: showSegment" /> SEGMENT
-								</li>								
-							</ul>
-						</div>
 
-						<span class="btn btn-default">Add New Account</span>						
-						
+					    </div>
 					</div>
-					<!-- Column END -->
-					
-					<!-- Column -->
-					<div class="span6">
-						<div class="box-generic">						
-							<div class="row-fluid row-merge">
-								<div class="span6">
-									<div class="center">
-										<h5 class="strong muted text-uppercase">Total Debit</h5>
-										<span class="text-large strong text-primary" data-bind="text: dr"></span>
+
+					<!-- Item List -->
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				                <th style="width: 1%;">No.</th>
+				                <th style="width: 30%;">ACCOUNT</th>
+				                <th>DESCRIPTION</th>
+				                <th data-bind="visible: showRef" style="width: 7%;">REF</th>
+				                <th data-bind="visible: showName" style="width: 15%;">NAME</th>
+				                <th data-bind="visible: showSegment" style="width: 15%;">SEGMENT</th>
+				                <th style="width: 15%;">DEBITS (Dr)</th>
+				                <th style="width: 15%;">CREDITS (Cr)</th>			                
+				            </tr> 
+				        </thead>
+				        <tbody data-role="listview"
+				        		data-template="journal-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: lineDS"></tbody>			        
+				    </table>			    
+									
+		            <!-- Bottom part -->
+		            <div class="row-fluid">
+			
+						<!-- Column -->
+						<div class="span6 hidden-print">
+							
+							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
+
+							<div class="btn-group">
+								<div class="leadcontainer">
+									
+								</div>
+								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+								<ul class="dropdown-menu" style="padding-left: 10px">
+									<li>
+										<input type="checkbox" data-bind="checked: showRef" /> REF
+									</li>
+									<li>
+										<input type="checkbox" data-bind="checked: showName" /> NAME
+									</li>
+									<li>
+										<input type="checkbox" data-bind="checked: showSegment" /> SEGMENT
+									</li>								
+								</ul>
+							</div>
+
+							<a href="#/account" class="btn btn-default">Add New Account</a>						
+							
+						</div>
+						<!-- Column END -->
+						
+						<!-- Column -->
+						<div class="span6">
+							<div class="box-generic">						
+								<div class="row-fluid row-merge">
+									<div class="span6">
+										<div class="center">
+											<h5 class="strong muted text-uppercase">Total Debit</h5>
+											<span class="text-large strong text-primary" data-bind="text: dr"></span>
+										</div>
+									</div>
+									<div class="span6">
+										<div class="center muted">
+											<h5 class="strong muted text-uppercase">Total Credit</h5>
+											<span class="text-large strong" data-bind="text: cr"></span>
+										</div>
 									</div>
 								</div>
-								<div class="span6">
-									<div class="center muted">
-										<h5 class="strong muted text-uppercase">Total Credit</h5>
-										<span class="text-large strong" data-bind="text: cr"></span>
-									</div>
-								</div>
 							</div>
 						</div>
+						<!-- // Column END -->
+						
 					</div>
-					<!-- // Column END -->
+		           
+		            <br>
 					
-				</div>
-	           
-	            <br>
-				
-				<!-- Form actions -->
-				<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-					<span id="notification"></span>
+					<!-- Form actions -->
+					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
+						<span id="notification"></span>
 
-					<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-					<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>										
-					<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
-					<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-				</div>
-				<!-- // Form actions END -->								
+						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
+						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>										
+						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
+						<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+					</div>
+					<!-- // Form actions END -->								
 
-			</div>							
+				</div>							
+			</div>
 		</div>
 	</div>
 </script>
@@ -1226,7 +1905,7 @@
 			<input id="cbbAccounts" name="cbbAccounts" 
 				   data-role="combobox"                   
                    data-value-primitive="true"
-                   data-template="journal-account-list-tmpl"
+                   data-template="account-list-tmpl"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -1248,7 +1927,7 @@
 		<td data-bind="visible: showName">
 			<input data-role="combobox"                   
                    data-value-primitive="true"
-                   data-template="journal-contact-list-tmpl"
+                   data-template="contact-list-tmpl"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
@@ -1259,7 +1938,7 @@
 		<td data-bind="visible: showSegment">
 			<select data-role="multiselect"
 				   data-value-primitive="true"				   
-				   data-item-template="journal-segment-tmpl"				    
+				   data-item-template="segment-list-tmpl"				    
 				   data-value-field="id" 
 				   data-text-field="code"
 				   data-bind="value: segments, 
@@ -1284,28 +1963,6 @@
 		</td>		
     </tr>   
 </script>
-<script id="journal-account-list-tmpl" type="text/x-kendo-template">
-	<span>
-		#=code# #=name#
-	</span>
-</script>
-<script id="journal-contact-list-tmpl" type="text/x-kendo-template">
-	<span>
-		#=number# #=surname# #=name#
-	</span>
-</script>
-<script id="journal-segment-tmpl" type="text/x-kendo-template">
-	<span>
-		#=name# (#=segment.name#)
-	</span>
-</script>
-<script id="journal-tooltip-template" type="text/x-kendo-template">
-    Journal entries transaction records are used for <br>
-	mainly non-cash transactions and specific trasactions <br> 
-	that requires accounting knowledge. Those transactions <br>
-	include: correcting entries, adjustments, opening balance, <br>
-	closing balance, reclassification, accraul, depreciation, and others
-</script>
 
 <script id="currencyRate" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -1329,7 +1986,16 @@
 					    	</div>
 
 					    	<div class="hidden-print well">
-					    		<input id="cbbCurrency" placeholder="Select currency ..." style="width: 300px;" />
+					    		<input id="cbbCurrency" name="cbbCurrency"
+									   data-role="combobox"				                
+					                   data-value-primitive="true"
+					                   data-template="currency-list-tmpl"				   
+					                   data-text-field="code"
+					                   data-value-field="locale"
+					                   data-bind="value: currency_locale, 
+					                   			source: currencyDS"
+					                   placeholder="Add currency..." 
+					                   required data-required-msg="required" style="width: 300px" />
 
 					            <input id="sorter" name="sorter"
 						    	   data-role="dropdownlist"                   
@@ -1446,216 +2112,16 @@
 		<td>#=source#</td>
 		<td>#=method#</td>				
 		<td>
-			<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
-    		|
-    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>			
+			#if(is_system==0){#
+				<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
+	    		|    		
+	    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
+    		#}#			
 		</td>		
     </tr>   
 </script>
 <script id="currencyRate-currency-template" type="text/x-kendo-template">	
 	#=code# #=country#
-</script>
-
-<script id="recurring" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-			<div id="example" class="k-content">				
-					
-			    <div class="hidden-print">
-			    	<div class="pull-right">
-
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
-					</div>
-
-			        <h2>RECURING TRANSACTION LISTS</h2>				        				        				        	
-			    </div>
-
-			    <br>			   
-			   
-				<!-- Item List -->
-				<table class="table table-bordered table-primary table-striped table-vertical-center">
-			        <thead>
-			            <tr>
-			                <th style="width: 1%;">No.</th>
-			                <th style="width: 30%">NAME</th>
-			                <th class="center" style="width: 10%">TYPE</th>
-			                <th class="center">START DATE</th>
-			                <th class="center">FREQUENCY</th>
-			                <th></th>			                			                
-			            </tr> 
-			        </thead>
-			        <tbody data-template="recurring-template"
-			        		data-auto-bind="false"			        		
-			        		data-bind="source: dataSource"></tbody>			        
-			    </table>											
-
-			</div>							
-			</div>
-		</div>
-	</div>
-</script>
-<script id="recurring-template" type="text/x-kendo-tmpl">		
-	<tr data-uid="#: uid #">		
-		<td class="center">			
-			#:banhji.recurring.dataSource.indexOf(data)+1#			
-		</td>		
-		<td>#=recurring_name#</td>
-		<td class="center">#=type#</td>		
-		<td class="center">#=kendo.toString(start_date, "dd-MMMM-yyyy")#</td>
-		<td class="center">#=frequency#</td>
-		<td class="right">
-			<span class="btn btn-success btn-icon glyphicons notes" data-bind="click: goToTemplate" style="width: 80px;"><i></i> Template</span>
-			<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete" style="width: 80px;"><i></i> Delete</span>
-		</td>
-    </tr>   
-</script>
-
-<script id="journalReport" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-fluid">					
-			<div id="example" class="k-content">
-
-		    	<div class="hidden-print well">
-		    		<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>	    		
-
-		            <input id="sorter" name="sorter"
-			    	   data-role="dropdownlist"                   
-			           data-value-primitive="true"
-			           data-text-field="text"
-			           data-value-field="value"
-			           data-bind="value: sorter,
-			                      source: sortList" />
-			                                   
-			        <input id="sdate" name="sdate"						           
-				           data-bind="value: sdate"
-				           placeholder="From ..." />
-			        
-			       	<input id="edate" name="edate"						           
-				           data-bind="value: edate"
-				           placeholder="To ..." />
-
-		            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
-	          		|
-					<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
-					|					
-				    <div class="btn-group dropdown">
-				        <button class="dropdown-toggle" data-toggle="dropdown">Sort <span class="caret"></span></button>
-				        <ul class="dropdown-menu">
-				            <li>
-				            	<span class="btn btn-block btn-primary" data-bind="click: sort">TYPE</span>				            	
-				            </li>
-				            <li>
-				            	<span class="btn btn-block btn-info" data-bind="click: sort">DATE</span>
-				            </li>
-				            <li>
-				            	<span class="btn btn-block btn-primary" data-bind="click: sort">ACCOUNT</span>
-				            </li>				            			           				            				            
-				        </ul>
-				    </div>
-									
-		    	</div>						
-
-				<div align="center">
-					<h3>JOURNAL REPORT</h3>
-					<span id="strDate"></span>
-				</div>
-
-				<br>
-
-				<table class="table table-bordered table-primary table-striped table-vertical-center">
-			        <thead>
-			            <tr>
-			                <th>TYPE</th>
-			                <th>DATE</th>
-			                <th>TXN#</th>			                
-			                <th>TXN DESCRIPTION</th>
-			                <th>ACCOUNT</th>			                		                
-			                <th>DEBITS (Dr)</th>
-			                <th>CREDITS (Cr)</th>			                
-			            </tr> 
-			        </thead>
-			        <tbody data-role="listview"
-			        		data-template="journalReport-template"			        		
-			        		data-bind="source: dataSource"></tbody>			        
-			    </table>
-
-	            <div data-role="pager" data-bind="source: dataSource"></div>					  
-
-			</div>							
-		</div>
-	</div>
-</script>
-<script id="journalReport-template" type="text/x-kendo-tmpl">
-	#var sumDr =0, sumCr = 0;#
-	#for(var i=0; i<line.length; i++){#
-	#sumDr += line[i].dr / line[i].rate;#
-	#sumCr += line[i].cr / line[i].rate;#
-	<tr>
-		<td style="color: black;">
-			#if(i==0){#
-				#if(type=="Invoice" || type=="Cash_Sale" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return" || type=="Purchase_Return" || type=="Cash_Advance" || type=="Cash_Receipt" || type=="Cash_Payment" || type=="Expense" || type=="Journal"){#
-					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=type#</a>					
-				#}else if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
-					<a href="\#/purchase/#=id#"><i></i> #=type#</a>
-				#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
-					<a href="\#/cash_transaction/#=id#"><i></i> #=type#</a>				
-				#}else{#
-					#=type#
-				#}#
-			#}#
-		</td>		
-		<td style="color: black;">
-			#if(i==0){#
-				#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy")#
-			#}#
-		</td>
-		<td style="color: black;">
-			#if(i==0){#
-				#if(type=="Invoice" || type=="Cash_Sale" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return" || type=="Purchase_Return" || type=="Cash_Advance" || type=="Cash_Receipt" || type=="Cash_Payment" || type=="Expense" || type=="Journal"){#
-					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>					
-				#}else if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
-					<a href="\#/purchase/#=id#"><i></i> #=number#</a>
-				#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
-					<a href="\#/cash_transaction/#=id#"><i></i> #=number#</a>				
-				#}else{#
-					#=type#
-				#}#
-			#}#
-		</td>		
-		<td style="color: black;">
-			#if(i==0){#
-				#=memo#
-			#}#
-		</td>
-		<td style="color: black;">#=line[i].account[0].name#</td>			
-		<td class="right" style="color: black;">
-			#if(line[i].dr>0){#
-				#=kendo.toString(line[i].dr / line[i].rate, "c0", banhji.institute.locale)#
-			#}#
-		</td>
-		<td class="right" style="color: black;">
-			#if(line[i].cr>0){#
-				#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.institute.locale)#
-			#}#
-		</td>		
-    </tr>    
-    #}# 
-    <tr>
-    	<td style="color: black;">Total:</td>
-    	<td></td>    	
-    	<td></td>
-    	<td></td>
-    	<td></td>    	
-    	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumDr, "c0", banhji.institute.locale)#
-    	</td>
-    	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumCr, "c0", banhji.institute.locale)#
-    	</td>    	
-    </tr>  
 </script>
 
 <script id="saleTax" type="text/x-kendo-template">
@@ -1846,6 +2312,745 @@
     		<span data-bind="click: deleteItem"><i class="icon-remove"></i> Delete</span>
     	</td>
    	</tr>
+</script>
+
+<script id="recurring" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+			<div id="example" class="k-content">				
+					
+			    <div class="hidden-print">
+			    	<div class="pull-right">
+			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back();"><i></i></span>						
+					</div>
+
+			        <h2>RECURING TRANSACTION LISTS</h2>				        				        				        	
+			    </div>
+
+			    <br>			   
+			   
+				<!-- Item List -->
+				<table class="table table-bordered table-primary table-striped table-vertical-center">
+			        <thead>
+			            <tr>
+			                <th style="width: 1%;">No.</th>
+			                <th style="width: 30%">NAME</th>
+			                <th class="center" style="width: 10%">TYPE</th>
+			                <th class="center">START DATE</th>
+			                <th class="center">FREQUENCY</th>
+			                <th></th>			                			                
+			            </tr> 
+			        </thead>
+			        <tbody data-template="recurring-template"
+			        		data-auto-bind="false"			        		
+			        		data-bind="source: dataSource"></tbody>			        
+			    </table>											
+
+			</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="recurring-template" type="text/x-kendo-tmpl">		
+	<tr data-uid="#: uid #">		
+		<td class="center">			
+			#:banhji.recurring.dataSource.indexOf(data)+1#			
+		</td>		
+		<td>#=recurring_name#</td>
+		<td class="center">#=type#</td>		
+		<td class="center">#=kendo.toString(start_date, "dd-MMMM-yyyy")#</td>
+		<td class="center">#=frequency#</td>
+		<td class="right">
+			<span class="btn btn-success btn-icon glyphicons notes" data-bind="click: goToTemplate" style="width: 80px;"><i></i> Template</span>
+			<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete" style="width: 80px;"><i></i> Delete</span>
+		</td>
+    </tr>   
+</script>
+
+<script id="accountingReportCenter" type="text/x-kendo-template">
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<div class="row-fluid sale-report">
+				<h2>PERIOD-END CLOSING REPORTS</h2>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td width="50%">
+								<h3><a href="#/">Journal Entry Report</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/">General Ledger</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td width="50%">
+								<p>
+									Lists all accounting transactions within a period of time into debits and credits and displays them chronologically.
+
+								</p>
+								
+							</td>
+							<td width="50%">
+								<p>
+									Groups all accounting transactions by each account in your chart of accounts within a period of time into debits, credits, and balances. 
+
+								</p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td width="50%">
+								<h3><a href="#/">Transaction Detail by Account</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/">Transaction List by Date</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td width="50%">
+								<p>
+									Lists individual expenses/ purchase transactions by date for each supplier within a period of time.
+								</p>
+							</td>
+							<td width="50%">
+								<p>
+									This is similar with journal entry; however, it does not include debit and credit. In addition, it includes not financial transactions, such as sale order or purchase order.
+
+								</p>
+							</td>
+						</tr>
+
+						<tr>
+							<td width="50%">
+								<h3><a href="#/">Recent Transactions List</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/">Reconciliation Report</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td width="50%">
+								<p>
+									Lists all transaction recorded or edited within the last five days.
+								</p>
+							</td>
+							<td width="50%">
+								<p>
+									Lists of all reconciliation reports 
+								</p>
+							</td>
+						</tr>
+
+						<tr>
+							<td width="50%">
+								<h3><a href="#/">Trail Balance</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/">Period-End Closing Checklist</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td width="50%">
+								<p>
+									Summarizes each account balance on your chart of accounts in the format of debit and credit within a period of time
+
+								</p>
+							</td>
+							<td>
+								
+							</td>
+						</tr>
+
+					</table>
+				</div>
+			</div>
+
+			<div class="row-fluid recevable-report">
+				<h2>FINANCIAL STATEMENTS</h2>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td >
+								<h3><a href="#/">Statement of Profit or Loss</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Statement of Financial Position</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Provides the progress of your company’s financial performance, summarized in a record of income generated and expenses incurred over a given period.
+
+								</p>
+								
+							</td>
+							<td >
+								<p>
+									Provides the snapshot of your company’s financial position on value and ownership. It is the relationship of the company’s assets, liabilities and equities as of a specific date.
+
+								</p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Statement of Profit or Loss Comparison</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Statement of Financial Position Comparison</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Shows a year-over-year comparison of your financial performance.
+								</p>
+							</td>
+							<td >
+								<p>
+									Shows a year-over-year comparison of your financial position.
+								</p>
+							</td>
+						</tr>
+
+						<tr>
+							<td >
+								<h3><a href="#/">Statement of Cash Flow</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Statement of Changes in Equity</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Shows cash generated by your company operating activities, cash spent on investing in your company assets long term asset, and cash in or out from your own share or financial institutions.
+
+								</p>
+							</td>
+							<td >
+								<p>
+									Shows the movement of your paid-up capital, dividends, the effects of changes in accounting policies and corrections of errors recognized in the period, and the profit or loss for a reporting period
+
+								</p>
+							</td>
+						</tr>
+
+					</table>
+				</div>
+			</div>
+			<div class="row-fluid recevable-report">
+				<h2>OTHER REPORTS/ LISTS</h2>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td >
+								<h3><a href="#/">Chart of Account </a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Audit Trail Report</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists of all accounts with name, type, and balance.
+
+								</p>
+								
+							</td>
+							<td >
+								<h3><a href="#/">Recurring Journal List</a></h3>							
+							</td>
+							
+						</tr>
+						<tr>
+							<td >
+							</td>
+							<td >
+
+							</td>
+							
+						</tr>
+						
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="span5">
+			<div class="report-chart">
+				<div class="statement">
+					<h2>Statement of Financial Position</h2>
+					<p>As of xx/xx/xxxx</p>
+					<table width="100%">
+						<tr>
+							<td>
+								<span>Current Asset</span>
+							</td>
+							<td>
+								<span> 1,000</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span>Properties, Plants & Equipment</span>
+							</td>
+							<td>
+								<span> 1,000</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span>Investment Property</span>
+							</td>
+							<td>
+								<span> 1,000</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span>Investment</span>
+							</td>
+							<td>
+								<span> 1,000</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span>Other Asset</span>
+							</td>
+							<td>
+								<span> 5,000</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span>Total Asset</span>
+							</td>
+							<td>
+								<span> 1,000</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span>Current Liabilities</span>
+							</td>
+							<td>
+								<span> 1,000</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span>Non-Current Liabilities</span>
+							</td>
+							<td>
+								<span> 2,000</span>
+							</td>
+						</tr>
+						<tr >
+							<td>
+								<span>Total Liabilities</span>
+							</td>
+							<td>
+								<span> 3,000</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span>Equity</span>
+							</td>
+							<td>
+								<span> 2,000</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="report-chart">				
+				<div id="sale-report-chart">Chart</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="journalReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="container-fluid">					
+			<div id="example" class="k-content">
+
+		    	<div class="hidden-print well">
+		    		<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>	    		
+
+		            <input id="sorter" name="sorter"
+			    	   data-role="dropdownlist"                   
+			           data-value-primitive="true"
+			           data-text-field="text"
+			           data-value-field="value"
+			           data-bind="value: sorter,
+			                      source: sortList" />
+			                                   
+			        <input id="sdate" name="sdate"						           
+				           data-bind="value: sdate"
+				           placeholder="From ..." />
+			        
+			       	<input id="edate" name="edate"						           
+				           data-bind="value: edate"
+				           placeholder="To ..." />
+
+		            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
+	          		|
+					<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
+					|					
+				    <div class="btn-group dropdown">
+				        <button class="dropdown-toggle" data-toggle="dropdown">Sort <span class="caret"></span></button>
+				        <ul class="dropdown-menu">
+				            <li>
+				            	<span class="btn btn-block btn-primary" data-bind="click: sort">TYPE</span>				            	
+				            </li>
+				            <li>
+				            	<span class="btn btn-block btn-info" data-bind="click: sort">DATE</span>
+				            </li>
+				            <li>
+				            	<span class="btn btn-block btn-primary" data-bind="click: sort">ACCOUNT</span>
+				            </li>				            			           				            				            
+				        </ul>
+				    </div>
+									
+		    	</div>						
+
+				<div align="center">
+					<h3>JOURNAL REPORT</h3>
+					<span id="strDate"></span>
+				</div>
+
+				<br>
+
+				<table class="table table-bordered table-primary table-striped table-vertical-center">
+			        <thead>
+			            <tr>
+			                <th>TYPE</th>
+			                <th>DATE</th>
+			                <th>TXN#</th>			                
+			                <th>TXN DESCRIPTION</th>
+			                <th>ACCOUNT</th>			                		                
+			                <th>DEBITS (Dr)</th>
+			                <th>CREDITS (Cr)</th>			                
+			            </tr> 
+			        </thead>
+			        <tbody data-role="listview"
+			        		data-template="journalReport-template"			        		
+			        		data-bind="source: dataSource"></tbody>			        
+			    </table>
+
+	            <div data-role="pager" data-bind="source: dataSource"></div>					  
+
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="journalReport-template" type="text/x-kendo-tmpl">
+	#var sumDr =0, sumCr = 0;#
+	#for(var i=0; i<line.length; i++){#
+	#sumDr += line[i].dr / line[i].rate;#
+	#sumCr += line[i].cr / line[i].rate;#
+	<tr>
+		<td style="color: black;">
+			#if(i==0){#
+				#if(type=="Invoice" || type=="Cash_Sale" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return" || type=="Purchase_Return" || type=="Cash_Advance" || type=="Cash_Receipt" || type=="Cash_Payment" || type=="Expense" || type=="Journal"){#
+					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=type#</a>					
+				#}else if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
+					<a href="\#/purchase/#=id#"><i></i> #=type#</a>
+				#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
+					<a href="\#/cash_transaction/#=id#"><i></i> #=type#</a>				
+				#}else{#
+					#=type#
+				#}#
+			#}#
+		</td>		
+		<td style="color: black;">
+			#if(i==0){#
+				#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy")#
+			#}#
+		</td>
+		<td style="color: black;">
+			#if(i==0){#
+				#if(type=="Invoice" || type=="Cash_Sale" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return" || type=="Purchase_Return" || type=="Cash_Advance" || type=="Cash_Receipt" || type=="Cash_Payment" || type=="Expense" || type=="Journal"){#
+					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>					
+				#}else if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
+					<a href="\#/purchase/#=id#"><i></i> #=number#</a>
+				#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
+					<a href="\#/cash_transaction/#=id#"><i></i> #=number#</a>				
+				#}else{#
+					#=type#
+				#}#
+			#}#
+		</td>		
+		<td style="color: black;">
+			#if(i==0){#
+				#=memo#
+			#}#
+		</td>
+		<td style="color: black;">
+			#=line[i].account.length>0 ? line[i].account[0].name : ""#
+		</td>			
+		<td class="right" style="color: black;">
+			#if(line[i].dr>0){#
+				#=kendo.toString(line[i].dr / line[i].rate, "c0", banhji.institute.locale)#
+			#}#
+		</td>
+		<td class="right" style="color: black;">
+			#if(line[i].cr>0){#
+				#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.institute.locale)#
+			#}#
+		</td>		
+    </tr>    
+    #}# 
+    <tr>
+    	<td style="color: black;">Total:</td>
+    	<td></td>    	
+    	<td></td>
+    	<td></td>
+    	<td></td>    	
+    	<td class="right strong" style="border-top-color: black; color: black;">
+    		#=kendo.toString(sumDr, "c0", banhji.institute.locale)#
+    	</td>
+    	<td class="right strong" style="border-top-color: black; color: black;">
+    		#=kendo.toString(sumCr, "c0", banhji.institute.locale)#
+    	</td>    	
+    </tr>  
+</script>
+
+<script id="accountingSetting" type="text/x-kendo-template">
+	<span class="pull-right glyphicons no-js remove_2" 
+			onclick="javascript:window.history.back()"><i></i></span>
+
+	<h2>General Setting</h2>
+
+	<br>
+
+	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
+
+	    <!-- Tabs Heading -->
+	    <div class="widget-head span3">
+	        <ul>
+	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Customer Type</span></a>
+	            </li>
+	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Payment Method</span></a>
+	            </li>
+	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Payment Term</span></a>
+	            </li>	                        
+	        </ul>
+	    </div>
+	    <!-- // Tabs Heading END -->
+
+	    <div class="widget-body span9">
+	        <div class="tab-content">
+
+	            <!-- Tab Branch content -->
+	            <div class="tab-pane active" id="tab1-1">
+	            	<div class="input-append">
+					    <input class="span12" id="appendedInputButtons" type="text" placeholder="type name ..." data-bind="value: contactTypeName">
+					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i></button>
+					</div>
+	            	<table class="table table-bordered table-white">
+	            		<thead>
+	            			<tr>
+	            				<th>Type</th>
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"
+		            			data-edit-template="customerSetting-edit-contact-type-template"
+				                data-template="customerSetting-contact-type-template"
+				                data-bind="source: contactTypeDS"></tbody>
+	            	</table>		            
+	            </div>
+	            <!-- // Tab Branch content END -->
+
+	            <!-- Tab Contact Type content -->
+	            <div class="tab-pane" id="tab2-1">
+	            	<div class="input-append">
+					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
+					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i></button>
+					</div>
+	            	<table class="table table-bordered table-white">
+	            		<thead>
+	            			<tr>
+	            				<th>Name</th>
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+		            			data-edit-template="customerSetting-edit-payment-method-template"
+				                data-template="customerSetting-payment-method-template"
+				                data-bind="source: paymentMethodDS"></tbody>
+	            	</table>			            
+	            </div>
+	            <!-- // Tab Contact Type content END -->
+
+	            <!-- Tab Block content -->
+	            <div class="tab-pane" id="tab3-1">
+            		<div class="input-append">
+					    <input class="span4" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
+					    <input class="span4" id="appendedInputButtons" type="text" placeholder="term ..." data-bind="value: paymentTerm">
+					    <input class="span4" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">
+					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i></button>
+					</div>
+	            	<table class="table table-bordered table-white">
+	            		<thead>
+	            			<tr>
+	            				<th>Name</th>
+	            				<th>Term</th>
+	            				<th>%</th>
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+		            			data-edit-template="customerSetting-edit-payment-term-template"
+				                data-template="customerSetting-payment-term-template"
+				                data-bind="source: paymentTermDS"></tbody>
+	            	</table>
+	            </div>
+	            <!-- // Tab Block content END -->
+
+	        </div>
+	    </div>
+
+	</div>
+</script>
+<script id="accountingSetting-contact-type-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		 #:name#
+   		</td>
+   		<td>
+   			#if(is_system=="0"){#
+	   			<div class="edit-buttons">       
+			        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+			   	</div>
+		   	#}#
+   		</td>
+   	</tr>
+</script>
+<script id="accountingSetting-edit-contact-type-template" type="text/x-kendo-tmpl">
+    <div class="product-view k-widget">
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+                <span data-for="ProductName" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
+        <div class="edit-buttons">
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+        </div>
+    </div>
+</script>
+<script id="accountingSetting-payment-method-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		 #:name#
+   		</td>
+   		<td>
+   			<div class="edit-buttons">       
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+		   	</div>
+		</td>
+   	</tr>
+</script>
+<script id="accountingSetting-edit-payment-method-template" type="text/x-kendo-tmpl">
+    <div class="product-view k-widget">
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+                <span data-for="ProductName" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
+        <div class="edit-buttons">
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+        </div>
+    </div>
+</script>
+<script id="accountingSetting-payment-term-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		 #:name#
+   		</td>
+   		<td>
+    		 #:term#
+   		</td>
+   		<td>
+    		 #:discount_percentage#
+   		</td>
+   		<td>
+   			<div class="edit-buttons">       
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+		   	</div>
+		</td>
+   	</tr>
+</script>
+<script id="accountingSetting-edit-payment-term-template" type="text/x-kendo-tmpl">
+    <div class="product-view k-widget">
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+                <span data-for="ProductName" class="k-invalid-msg"></span>
+            </dd>
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:net_due" name="term" required="required" validationMessage="required" />
+                <span data-for="term" class="k-invalid-msg"></span>
+            </dd>
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:discount_percentage" name="percentage" required="required" validationMessage="required" />
+                <span data-for="percentage" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
+        <div class="edit-buttons">
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+        </div>
+    </div>
+</script>
+<script id="accountingList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span12">
+					<div id="example" class="k-content">
+						<div class="hidden-print">
+							<span class="pull-right glyphicons no-js remove_2" 
+								onclick="javascript:window.history.back()"><i></i></span>
+
+							<input data-role="dropdownlist"
+							   data-option-label="(--- TYPE ---)"
+			                   data-auto-bind="false"
+			                   data-value-primitive="true"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="value: contact_type_id,
+			                              source: contactTypeDS" />
+
+							<button id="search" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
+							<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>		
+						</div>
+
+						<h3 align="center"><span data-bind="text: lang.lang.customer_list"></span></h3>
+				
+						<div id="grid"></div>					
+					    					
+					</div> <!-- //End div example--> 
+				</div><!-- //End div span12-->
+			</div><!-- //End div row-fluid-->
+		</div>
+	</div>	
 </script>
 
 
@@ -2261,27 +3466,23 @@
 		          	</div>
 					
 					<div>
-						<input data-role="dropdownlist"                   
-					           data-value-primitive="true"
-					           data-text-field="text"
-					           data-value-field="value"
-					           data-bind="value: sorter,
-					                      source: sortList,                              
-					                      events: { change: sorterChanges }" />
+						<input id="sorter" name="sorter"
+				    	   data-role="dropdownlist"                   
+				           data-value-primitive="true"
+				           data-text-field="text"
+				           data-value-field="value"
+				           data-bind="value: sorter,
+				                      source: sortList" />
+				                                   
+				        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+				        
+				       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />
 
-						<input data-role="datepicker"
-							   data-format="dd-MM-yyyy"
-					           data-bind="value: sdate,
-					                      events: { change: dateChanges }"
-					           placeholder="From ..." >
-
-					    <input data-role="datepicker"
-					    	   data-format="dd-MM-yyyy"
-					           data-bind="value: edate,
-					                      events: { change: dateChanges }"
-					           placeholder="To ..." >
-					    
-					    <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+			            <button id="search" type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
 
 					<table class="table table-bordered table-striped table-white">
@@ -4175,27 +5376,23 @@
 		          	</div>
 					
 					<div>
-						<input data-role="dropdownlist"                   
-					           data-value-primitive="true"
-					           data-text-field="text"
-					           data-value-field="value"
-					           data-bind="value: sorter,
-					                      source: sortList,                              
-					                      events: { change: sorterChanges }" />
+						<input id="sorter" name="sorter"
+				    	   data-role="dropdownlist"                   
+				           data-value-primitive="true"
+				           data-text-field="text"
+				           data-value-field="value"
+				           data-bind="value: sorter,
+				                      source: sortList" />
+				                                   
+				        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+				        
+				       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />
 
-						<input data-role="datepicker"
-							   data-format="dd-MM-yyyy"
-					           data-bind="value: sdate,
-					                      events: { change: dateChanges }"
-					           placeholder="From ..." >
-
-					    <input data-role="datepicker"
-					    	   data-format="dd-MM-yyyy"
-					           data-bind="value: edate,
-					                      events: { change: dateChanges }"
-					           placeholder="To ..." >
-					    
-					    <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+			            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
 					</div>
 
 					<table class="table table-bordered table-striped table-white">
@@ -7498,7 +8695,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2>General Setting</h2>
+	<h2>General Supplier Setting</h2>
 
 	<br>
 
@@ -7507,7 +8704,7 @@
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
 	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Vendor Type</span></a>
+	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Supplier Type</span></a>
 	            </li>
 	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Payment Method</span></a>
 	            </li>
@@ -7524,7 +8721,7 @@
 	            <div class="tab-pane active" id="tab1-1">
 	            	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Enter New Vendor Type here ..." data-bind="value: contactTypeName">
-					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i> Add New</button>
+					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i> Add Type</button>
 					</div>
 	            	<table class="table table-bordered table-white">
 	            		<thead>
@@ -7546,7 +8743,7 @@
 	            <div class="tab-pane" id="tab2-1">
 	            	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Enter new Payment Method here ..." data-bind="value: paymentMethodName">
-					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i> Add New</button>
+					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i> Add Method</button>
 					</div>
 	            	<table class="table table-bordered table-white">
 	            		<thead>
@@ -7570,7 +8767,7 @@
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Net Due in ..." data-bind="value: paymentTermNetDue">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Discount if paid within ..." data-bind="value: paymentTermDiscountPeriod">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Discount % ..." data-bind="value: paymentTermDiscountPercentage">
-					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i> Add New</button>
+					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i> Add Term</button>
 					</div>
 	            	<table class="table table-bordered table-white">
 	            		<thead>
@@ -7715,6 +8912,270 @@
     </div>
 </script>
 
+<script id="vendorReportCenter" type="text/x-kendo-template">
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<div class="row-fluid sale-report">
+				<h2>EXPENSE/PURCHASE MANAGEMENT REPORTS</h2>
+				<p>
+					The following reports provide summary and detailed reports in different ways to help analyze what 
+					you spent and their impact on your cash flow and performance. 
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Expenses/ Purchase Summary by Supplier</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Suppliers Transaction List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Summarizes total expenses/ purchase for each suppliers within a period of time.
+								</p>
+								
+							</td>
+							<td >
+								<p>
+									Lists of all transactions related to and grouped by each suppliers
+								</p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Expenses/Purchase Detail by Customer</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Deposit Detail by Supplier</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists individual expenses/ purchase transactions by date for each supplier within a period of time.
+								</p>
+							</td>
+							<td >
+								<p>
+									Provides detailed information about supplier deposit for specific order, prepayment, or credit.
+								</p>
+							</td>
+						</tr>
+
+						<tr>
+							<td >
+								<h3><a href="#/">Purchase Summary by Product/ Services</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Open Purchase Order</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Summarizes total expenses/ purchase for each product/ service within a period of time. 
+								</p>
+							</td>
+							<td >
+								<p>
+									Lists all the open purchase order grouped by suppliers including the original amount as well.
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Purchase Detail by Product/ Services</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists individual sale transactions by date for each product/ service with a period of time.
+								</p>
+							</td>
+						</tr>
+
+					</table>
+				</div>
+			</div>
+
+			<div class="row-fluid recevable-report">
+				<h2>PAYABLES MANAGEMENT REPORTS</h2>
+				<p>
+					The following reports provide summary and detailed reports.
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Suppliers Balance Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Suppliers Balance Detail</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Show each supplier’s total outstanding balances.
+								</p>
+								
+							</td>
+							<td >
+								<p>
+									Lists individual unpaid bill for each supplier
+								</p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Payables Aging Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Payable Aging Detail</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists all unpaid bills for the current period, 30, 60, 90, and more than 90 days, grouped by individual suppliers. 
+								</p>
+							</td>
+							<td >
+								<p>
+									Lists individual unpaid bills, grouped by suppliers. This includes due date, outstanding days (aging days), and amount.
+								</p>
+							</td>
+						</tr>
+
+						<tr>
+							<td >
+								<h3><a href="#/">List of bills to be paid</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Bill Payment List</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists all unpaid invoices, grouped by Due today and Overdue.
+								</p>
+							</td>
+							<td >
+								<p>
+									Lists of paid bills for the select period of time, group by method of payments.
+								</p>
+							</td>
+						</tr>						
+
+					</table>
+				</div>
+			</div>
+			<div class="row-fluid recevable-report">
+				<h2>OTHER REPORTS/ LISTS</h2>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Product/ Service List</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Supplier List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists the products and services you purchase. The following information is included: name, 
+									description, cost, sales price, and quantity on hand.
+
+								</p>
+								
+							</td>
+							<td >
+								<p>
+									Lists of all active suppliers
+								</p>
+							</td>							
+						</tr>
+						<tr>
+							<td>
+							</td>
+							<td >
+								<h3><a href="#/">Recurring Supplier Template List</a></h3>								
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="span5">
+			<div class="report-chart">
+				<div class="widget-body alert alert-primary sale-overview">
+					<h2>Expenses/ Purchase Overview</h2>
+					<div align="center" class="text-large strong">$183,690,640</div>
+					<table width="100%">
+						<tr align="center">
+							<td>										
+								<span>6</span>
+								<br>
+								<span>Suppliers</span>
+							</td>
+							<td>
+								<span>0</span>
+								<br>
+								<span>Products</span>
+							</td>
+							<td>
+								<span>0</span>
+								<br>
+								<span>Order</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="sale-report-chart">Chart</div>
+			</div>
+			<div class="report-chart">
+				<div class="widget-body receivable-overview" style="background-color: LightGray">
+					<h2>PAYABLES MANAGEMENT</h2>
+					<div align="center" class="text-large strong">$183,690,640</div>
+					<table width="100%">
+						<tr align="center">
+							<td>										
+								<span>6</span>
+								<br>
+								<span>Open</span>
+							</td>
+							<td>
+								<span>0</span>
+								<br>
+								<span>Supplier</span>
+							</td>
+							<td>
+								<span>0</span>
+								<br>
+								<span>Overdue</span>
+							</td>
+							<td>
+								<span>20 Days</span>
+								<br>
+								<span>Payable Payment Days</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="sale-report-chart">Chart</div>
+			</div>
+		</div>
+	</div>
+</script>
 
 <!-- ***************************
  *	SME Section               *
@@ -7840,7 +9301,7 @@
 						<div class="widget-body alert alert-primary">
 							
 							<div align="center" class="text-large strong" data-bind="text: sale"></div>
-
+						
 							<br>
 						
 							<table width="100%">
@@ -7962,13 +9423,11 @@
 
 			<!-- Top 5 -->
 			<div class="row-fluid">
-				<div class="span4">
-					<h4>Top 5 Customers</h4>					
+				<div class="span4">								
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</th>			                
+				                <th colspan="2">Top 5 Customers</th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -7977,14 +9436,12 @@
 			                 data-bind="source: topCustomerDS"></tbody>			        
 				    </table>			
 				</div>
-				<div class="span4">
-					<h4>Top 5 A/R Balance</h4>
+				<div class="span4">					
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>
+				        <thead>				           
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</th>		                
-				            </tr>
+				                <th colspan="2">Top 5 A/R Balance</th>				                			                
+				            </tr>					        
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                  
@@ -7992,14 +9449,12 @@
 			                 data-bind="source: topARDS"></tbody>			        
 				    </table>
 				</div>
-				<div class="span4">
-					<h4>Top 5 Products</h4>
+				<div class="span4">					
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>
+				        <thead>				           
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</span></th>			                		                
-				            </tr>
+				                <th colspan="2">Top 5 Products</th>				                			                
+				            </tr>					        
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"                
@@ -8010,9 +9465,21 @@
 			</div>
 
 			<!-- Graph -->
-			<div> 
-			    <div id="customer-chart" style="height: 250px; "></div>
-			</div>
+			<div data-role="chart"
+                 data-legend="{ position: 'top' }"
+                 data-series-defaults="{ type: 'column' }"
+                 data-tooltip='{
+                    visible: true,
+                    format: "{0}%",
+                    template: "#= series.name #: #= value #"
+                 }'                 
+                 data-series="[
+                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+                             ]"	                             
+                 data-bind="source: graphDS"
+                 style="height: 250px;" ></div>
+            <!-- End Graph -->
 
 		</div>		
 
@@ -8277,27 +9744,23 @@
 		          	</div>
 					
 					<div>
-						<input data-role="dropdownlist"                   
-					           data-value-primitive="true"
-					           data-text-field="text"
-					           data-value-field="value"
-					           data-bind="value: sorter,
-					                      source: sortList,                              
-					                      events: { change: sorterChanges }" />
+						<input id="sorter" name="sorter"
+				    	   data-role="dropdownlist"                   
+				           data-value-primitive="true"
+				           data-text-field="text"
+				           data-value-field="value"
+				           data-bind="value: sorter,
+				                      source: sortList" />
+				                                   
+				        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+				        
+				       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />
 
-						<input data-role="datepicker"
-							   data-format="dd-MM-yyyy"
-					           data-bind="value: sdate,
-					                      events: { change: dateChanges }"
-					           placeholder="From ..." >
-
-					    <input data-role="datepicker"
-					    	   data-format="dd-MM-yyyy"
-					           data-bind="value: edate,
-					                      events: { change: dateChanges }"
-					           placeholder="To ..." >
-					    
-					    <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+			            <button id="search" type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
 
 					<table class="table table-bordered table-striped table-white">
@@ -8333,8 +9796,8 @@
         <td>
         	#if(type=="Invoice" || type=="Cash_Sale" || type=="Quote" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return" || type=="Cash_Receipt"){#
 				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>						
-			#}else if(type=="Credit"){#
-				<a href="\#/customer_deposit/#=id#"><i></i> #=number#</a>
+			#}else if(type=="Credit" || type=="Deposit"){#
+				<a href="\#/customer_deposit/#=id#"><i></i> #=number#</a>			
 			#}else{#
 				#=number#
 			#}#        	
@@ -8448,7 +9911,7 @@
 								                   data-bind="value: obj.contact_type_id,
 								                   			  disabled: obj.is_pattern,
 								                              source: contactTypeDS,
-								                              events:{change: loadPattern}"
+								                              events:{change: contactTypeChanges}"
 								                   data-option-label="(--- Select ---)"
 								                   required data-required-msg="required" style="width: 100%;" />																				            
 									</div>
@@ -8559,22 +10022,84 @@
 						    <!-- //Tabs Heading -->
 						    <div class="tabsbar tabsbar-1">
 						        <ul class="row-fluid row-merge">						            
-						            <li class="span2 glyphicons usd active">
-						            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.account"></span></span></a>
+						            <li class="span2 glyphicons nameplate_alt active">
+						            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.info"></span></span></a>
 						            </li>								            
-						            <li class="span2 glyphicons nameplate_alt">
-						            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.info"></span></span></a>
+						            <li class="span2 glyphicons usd">
+						            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.account"></span></span></a>
 						            </li>
 						            <li class="span2 glyphicons parents">
-						            	<a href="#tab3" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.agents"></span></span></a>
+						            	<a href="#tab3" data-toggle="tab"><i></i> <span><span ></span>Contact</span></a>
 						            </li>						            					            
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
 
 						    <div class="tab-content">
-						        <!-- //ACCOUNTING INFO -->
+						    	 <!-- //GENERAL INFO -->
 						        <div class="tab-pane active" id="tab1">
+					            	<table class="table table-borderless table-condensed cart_total">						            	
+					            		<tr>
+							                <td><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></td>
+							              	<td>
+							              		<input id="customerStatus" name="customerStatus" 
+							              				data-role="dropdownlist"
+									            		data-text-field="name"
+						           						data-value-field="id"
+						           						data-value-primitive="true" 
+									            		data-bind="source: statusList, value: obj.status"
+									            		data-option-label="(--- Select ---)"
+									            		required data-required-msg="ត្រូវការ ស្ថានភាព" />
+							              	</td>							              	
+							            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
+							              	<td>
+							              		<input id="registered_date" name="registered_date" 
+								            		data-role="datepicker"			            		
+					            					data-bind="value: obj.registered_date" 
+					            					data-format="dd-MM-yyyy"
+					            					data-parse-formats="yyyy-MM-dd" 
+					            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
+							              	</td>
+							            </tr>
+							            <tr>
+							                <td><span data-bind="text: lang.lang.gender"></span></td>
+							              	<td><select data-role="dropdownlist" data-bind="source: genders, value: obj.gender"></select></td>							              	
+							            	<td><span data-bind="text: lang.lang.phone"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
+							            </tr>
+							            <tr>
+							            	<td><span data-bind="text: lang.lang.address"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />							              	
+							            	<td><span data-bind="text: lang.lang.email"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" />
+							            </tr>									            
+							            <tr>
+							            	<td>
+							            		<label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label>											            
+							            	</td>
+							            	<td>
+							            		<input class="k-textbox" data-bind="value: obj.bill_to" placeholder="bill to ..." />
+							            	</td>
+							            	<td>
+							            		<span data-bind="text: lang.lang.ship_to"></span>										            
+							            	</td>
+							            	<td>
+							            		<input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." />
+							            	</td>
+							            </tr>
+							            <tr>									            								              	
+							            	<td><span data-bind="text: lang.lang.memo"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>
+							              	<td></td>
+							              	<td></td>
+							            </tr>							            							            								            								            			            
+							        </table>
+					        	</div>
+						        <!-- //GENERAL INFO END -->
+
+
+						        <!-- //ACCOUNTING INFO -->
+						        <div class="tab-pane" id="tab2">
 						        	
 						        	<div class="row-fluid">								        		
 						            	<div class="span3">
@@ -8708,72 +10233,12 @@
 										</div>																							
 									</div>
 					        	</div>
-						        <!-- //ACCOUNTING INFO END -->								        							       
-
-						        <!-- //GENERAL INFO -->
-						        <div class="tab-pane" id="tab2">
-					            	<table class="table table-borderless table-condensed cart_total">						            	
-					            		<tr>
-							                <td><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></td>
-							              	<td>
-							              		<input id="customerStatus" name="customerStatus" 
-							              				data-role="dropdownlist"
-									            		data-text-field="name"
-						           						data-value-field="id"
-						           						data-value-primitive="true" 
-									            		data-bind="source: statusList, value: obj.status"
-									            		data-option-label="(--- Select ---)"
-									            		required data-required-msg="ត្រូវការ ស្ថានភាព" />
-							              	</td>							              	
-							            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
-							              	<td>
-							              		<input id="registered_date" name="registered_date" 
-								            		data-role="datepicker"			            		
-					            					data-bind="value: obj.registered_date" 
-					            					data-format="dd-MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
-							              	</td>
-							            </tr>
-							            <tr>
-							                <td><span data-bind="text: lang.lang.gender"></span></td>
-							              	<td><select data-role="dropdownlist" data-bind="source: genders, value: obj.gender"></select></td>							              	
-							            	<td><span data-bind="text: lang.lang.phone"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
-							            </tr>
-							            <tr>
-							            	<td><span data-bind="text: lang.lang.address"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />							              	
-							            	<td><span data-bind="text: lang.lang.email"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" />
-							            </tr>									            
-							            <tr>
-							            	<td>
-							            		<label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label>											            
-							            	</td>
-							            	<td>
-							            		<input class="k-textbox" data-bind="value: obj.bill_to" placeholder="bill to ..." />
-							            	</td>
-							            	<td>
-							            		<span data-bind="text: lang.lang.ship_to"></span>										            
-							            	</td>
-							            	<td>
-							            		<input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." />
-							            	</td>
-							            </tr>
-							            <tr>									            								              	
-							            	<td><span data-bind="text: lang.lang.memo"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>
-							              	<td></td>
-							              	<td></td>
-							            </tr>							            							            								            								            			            
-							        </table>
-					        	</div>
-						        <!-- //GENERAL INFO END -->
+						        <!-- //ACCOUNTING INFO END -->
+						       
 
 						        <!-- //CONTACT PERSON -->
 						        <div class="tab-pane" id="tab3">
-						        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i> <span data-bind="text: lang.lang.new_agent"></span></span>
+						        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i> <span ></span>New Contact Person</span>
 						        	
 						        	<table class="table table-bordered table-white">
 								        <thead>
@@ -8806,7 +10271,7 @@
 						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
 						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
 						<!-- <span id="saveSend" class="btn btn-icon btn-warning glyphicons envelope" style="width: 80px;"><i></i> Save Send</span>										 -->
-						<span id="savePrint" class="btn btn-icon btn-default glyphicons print" data-bind="click: cancel" style="width: 80px;"><i></i> Save Print</span>
+						
 						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
 					</div>
 					<!-- // Form actions END -->
@@ -8840,9 +10305,7 @@
 		</td>		
 	</tr>
 </script>
-<!-- ***************************
- *	Invoice Section               *
-**************************** -->
+
 <script id="invoice" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -8915,15 +10378,15 @@
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
 						        <ul class="row-fluid row-merge">
-						        	<li class="span3 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i> Option</a>
+						        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i></a>
 						            </li>
-						            <li class="span3 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i> Address</a>
+						            <li class="span1 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i></a>
 						            </li>
-						            <li class="span2 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i> Info</a>
+						            <li class="span1 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i></a>
 						            </li>
 						            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
 						            </li>						            
-						            <li class="span3 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
+						            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i></a>
 						            </li>						            								            
 						        </ul>
 						    </div>
@@ -9388,10 +10851,6 @@
 		</td>				
     </tr>   
 </script>
-
-<!-- ***************************
- *	Cash Sale Section               *
-**************************** -->
 <script id="cashSale" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -9495,8 +10954,7 @@
 							              				data-value-field="id"						              				 
 							              				data-bind="value: obj.payment_method_id,
 							              							source: paymentMethodDS"
-							              				data-option-label="Select method..." 
-							              				required data-required-msg="required" 
+							              				data-option-label="Select method..."							              				 
 							              				style="width: 100%" />
 											</td>
 										</tr>
@@ -9948,9 +11406,6 @@
 		</td>				
     </tr>   
 </script>
-<!-- ***************************
- *	Sale Order Section               *
-**************************** -->
 <script id="saleOrder" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -10467,9 +11922,6 @@
 		</td>						
     </tr>   
 </script>
-<!-- ***************************
- *	Sale Order Section               *
-**************************** -->
 <script id="quote" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -10961,9 +12413,6 @@
 		</td>						
     </tr>   
 </script>
-<!-- ***************************
- *	Good Delivery note Section               *
-**************************** -->
 <script id="gdn" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -11351,7 +12800,6 @@
 		</td>						
     </tr>   
 </script>
-
 <script id="saleReturn" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -12388,7 +13836,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2>General Setting</h2>
+	<h2>General Customer Setting</h2>
 
 	<br>
 
@@ -12413,8 +13861,8 @@
 	            <!-- Tab Branch content -->
 	            <div class="tab-pane active" id="tab1-1">
 	            	<div class="input-append">
-					    <input class="span12" id="appendedInputButtons" type="text" placeholder="type name ..." data-bind="value: contactTypeName">
-					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i></button>
+					    <input class="span12" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
+					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i> Add Type</button>
 					</div>
 	            	<table class="table table-bordered table-white">
 	            		<thead>
@@ -12436,7 +13884,7 @@
 	            <div class="tab-pane" id="tab2-1">
 	            	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
-					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i></button>
+					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i> Add Method</button>
 					</div>
 	            	<table class="table table-bordered table-white">
 	            		<thead>
@@ -12459,7 +13907,7 @@
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="term ..." data-bind="value: paymentTerm">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">
-					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i></button>
+					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i> Add Term</button>
 					</div>
 	            	<table class="table table-bordered table-white">
 	            		<thead>
@@ -12582,93 +14030,433 @@
     </div>
 </script>
 
+<script id="customerReportCenter" type="text/x-kendo-template">
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<div class="row-fluid sale-report">
+				<h2>SALE MANAGEMENT REPORTS</h2>
+				<p>
+					The following reports provide summary and detailed reports in 
+					different ways to help analyze your revenue performance.
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td width="50%">
+								<h3><a href="#/customer_balance">Sale Summary by Customer</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/">Customer Transaction List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td width="50%">
+								<p>
+									Summarizes total sales for each customer within a period 
+									of time so you can see which ones generate the most revenue for you.
+								</p>
+								
+							</td>
+							<td width="50%">
+								<p>
+									List of all transactions related to and grouped by each customer, including invoice, cash sale
+								</p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td width="50%">
+								<h3><a href="#/">Sale Detail by Customer</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/">Deposit Detail by Customer</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td width="50%">
+								<p>
+									Lists individual sale transactions by date for each customer with a period of time.
+								</p>
+							</td>
+							<td width="50%">
+								<p>
+									Provides detailed information about customer deposit for specific order, prepayment, or credit.
+								</p>
+							</td>
+						</tr>
+
+						<tr>
+							<td width="50%">
+								<h3><a href="#/">Sale Summary by Product/ Services</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/">Sale Detail by Product/ Services</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td width="50%">
+								<p>
+									Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices. 
+								</p>
+							</td>
+							<td width="50%">
+								<p>
+									Lists individual sale transactions by date for each product/ service with a period of time.
+								</p>
+							</td>
+						</tr>
+
+					</table>
+					
+				</div>
+			</div>
+
+			<div class="row-fluid recevable-report">
+				<h2>RECEIVABLE MANAGEMENT REPORTS</h2>
+				<p>
+					The following reports provide summary and detailed reports.
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td >
+								<h3><a href="#/">Statement of Profit or Loss</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Statement of Financial Position</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td>
+								<p>
+									Provides the progress of your company’s financial performance, summarized in 
+									a record of income generated and expenses incurred over a given period.
+								</p>
+								
+							</td>
+							<td >
+								<p>
+									Provides the snapshot of your company’s financial position on value and ownership. 
+									It is the relationship of the company’s assets, liabilities and equities as of a 
+									specific date.
+								</p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">List of invoices to be collected</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Collection Report</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists all unpaid invoices, grouped by Due today and Overdue.
+								</p>
+							</td>
+							<td >
+								<p>
+									Lists of collected invoices for the select period of time, group by method of payment.
+								</p>
+							</td>
+						</tr>
+
+						<tr>
+							<td >
+								<h3><a href="#/">Invoice List</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/customer_list">Customer List</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p>
+									Shows a chronological list of all your invoices for a selected date range.
+								</p>
+							</td>
+							<td >
+								<p>
+									List of all active customers
+								</p>
+							</td>
+						</tr>
+
+						<tr>
+							<td >
+								<h3><a href="#/">Sale Summary by Product/ Services</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Sale Detail by Product/ Services</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices. 
+								</p>
+							</td>
+							<td >
+								<p>
+									Lists individual sale transactions by date for each product/ service with a period of time.
+								</p>
+							</td>
+						</tr>
+
+					</table>
+				</div>
+			</div>
+			<div class="row-fluid recevable-report">
+				<h2>OTHER REPORTS/ LISTS</h2>
+				<p>
+					The following reports provide summary and detailed reports.
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Product/ Service List</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Payment Method & Term List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists the products and services you sell. The following information is 
+									included: name, description, cost, sales price, and quantity on hand.
+								</p>
+								
+							</td>
+							<td>
+								<p>
+									List the types of payments and the term that determine due date for payment from customers.
+								</p>
+							</td>
+							
+						</tr>
+						<tr >
+							<td></td>
+							<td>
+								<h3><a href="#/">Recurring Customer Template List</a></h3>								
+							</td>							
+						</tr>
+
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="span5">
+			<div class="report-chart">
+				<div class="widget-body alert alert-primary sale-overview">
+					<h2>SALE OVERVIEW</h2>
+					<div align="center" class="text-large strong">$183,690,640</div>
+					<table width="100%">
+						<tr align="center">
+							<td>										
+								<span>6</span>
+								<br>
+								<span>Customer</span>
+							</td>
+							<td>
+								<span>0</span>
+								<br>
+								<span>Product</span>
+							</td>
+							<td>
+								<span>0</span>
+								<br>
+								<span>Order</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="sale-report-chart">Chart</div>
+			</div>
+			<div class="report-chart">
+				<div class="widget-body receivable-overview" style="background-color: LightGray">
+					<h2>RECEIVABLES MANAGEMENT</h2>
+					<div align="center" class="text-large strong">$183,690,640</div>
+					<table width="100%">
+						<tr align="center">
+							<td>										
+								<span>6</span>
+								<br>
+								<span>Open</span>
+							</td>
+							<td>										
+								<span>0</span>
+								<br>
+								<span>Customer</span>
+							</td>
+							<td>
+								<span>0</span>
+								<br>
+								<span>Overdue</span>
+							</td>
+							<td>
+								<span>20 days</span>
+								<br>
+								<span>Collection Days</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="sale-report-chart">Chart</div>
+			</div>
+		</div>
+	</div>
+</script>
 <script id="customerList" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">
-						<div class="hidden-print">
-							<span class="pull-right glyphicons no-js remove_2" 
-								onclick="javascript:window.history.back()"><i></i></span>
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content">
 
-							<input data-role="dropdownlist"
-							   data-option-label="(--- TYPE ---)"
-			                   data-auto-bind="false"
-			                   data-value-primitive="true"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="value: contact_type_id,
-			                              source: contactTypeDS" />
+					<div class="hidden-print">
+						<span class="pull-right glyphicons no-js remove_2" 
+							onclick="javascript:window.history.back()"><i></i></span>
 
-							<button id="search" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-							<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>		
-						</div>
+						<input data-role="dropdownlist"
+						   data-option-label="Select Type..."		                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: contact_type_id,
+		                              source: contactTypeDS" />
 
-						<h3 align="center"><span data-bind="text: lang.lang.customer_list"></span></h3>
-				
-						<div id="grid"></div>					
-					    					
-					</div> <!-- //End div example--> 
-				</div><!-- //End div span12-->
+		                <input data-role="dropdownlist"
+						   data-option-label="Select Status..."		                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: status,
+		                              source: statusList" />
+
+						<button id="search" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
+						<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>		
+					</div>
+
+					<h3 align="center" data-bind="text: lang.lang.customer_list"></h3>
+
+					<br>
+			
+					<div data-role="grid"
+						 data-groupable="true"
+						 data-sortable="true"
+						 data-pageable="true"			                 		                 
+		                 data-columns="[
+                             { field: 'number', title:'Number' },
+                             { field: 'surname', title:'Surname' },
+                             { field: 'name', title:'Name' },
+                             { field: 'contact_type_id', title:'Type', template:'#=contact_type#' },
+                             { field: 'phone', title:'Phone' },
+                             { field: 'status', title:'Status', template:'#=status==1?&quot;Active&quot;:&quot;Inactive&quot;#' }
+                                                       ]"'
+		                 data-bind="source: dataSource"></div>
+
+				</div> <!-- //End div example-->				
 			</div><!-- //End div row-fluid-->
 		</div>
 	</div>	
 </script>
+<script id="customerBalance" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content">									
 
-<script id="customerReportCenter" type="text/x-kendo-template">
-	<h2>Report</h2>
-	<br>
+					<div class="box-generic hidden-print">
+						
+						<span class="pull-right glyphicons no-js remove_2" 
+							onclick="javascript:window.history.back()"><i></i></span>
 
-	<div class="row-fluid">
-		<div class="span3">
-			<h4>Customer Information</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/customer_list'>Customer List</a></li>
-	  				<li><a href='#/wBrand_new_customer'>Brand New Customer</a></li>	  				
-				</ul>
-			</div>
-		</div>
-		<div class="span3">
-			<h4>Accounting</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/wCustomer_balance'>Custoemr Balance</a></li>	  				 				  				
-	  				<br>  
-	  				<li><a href='#/wAging_summary'>Aging Summary</a></li> 
-	  				<li><a href='#/wAging_detail'>Aging Detail</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="span3">
-			<h4>Sale</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/wSale_summary'>Sale Summary</a></li>
-	  				<li><a href='#/wSale_detail'>Sale Detail</a></li>	  				
-				</ul>
-			</div>
-		</div>
-		<div class="span3">
-			<h4>Payment</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/wPayment_summary'>Payment Summary</a></li> 
-  					<li><a href='#/wPayment_detail'>Payment Detail</a></li>
-  					<br>  
-	  				<li><a href='#/wPayment_by_source_summary'>Payment By Source Summary</a></li>
-	  				<li><a href='#/wPayment_by_source_detail'>Payment By Source Detail</a></li> 
-				</ul>
-			</div>
-		</div>
-	</div>
+						Type:
+						<input data-role="dropdownlist"
+						   data-option-label="Select Type..."		                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: contact_type_id,
+		                              source: contactTypeDS" />
 
-	<p class="separator text-center"><i class="icon-ellipsis-horizontal icon-3x"></i></p>
+		                Status:
+		                <input data-role="dropdownlist"
+						   data-option-label="Select Status..."		                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: status,
+		                              source: statusList" />
+
+		                As of Date:
+		                <input data-role="datepicker"	                       
+		                   data-format="dd-MM-yyyy"
+		                   data-parse-formats="yyyy-MM-dd"
+		                   data-bind="value: date"
+		                   placeholder="Pick A Date..." />
+
+						<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
+						<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>		
+					</div>
+
+					<br>
+
+					<h3 align="center">Customer Balance</h3>
+
+					<br>
+
+					<div class="row-fluid row-merge">
+						<div class="col-md-6">
+							<div class="innerAll padding-bottom-none-phone">
+								<a href="" class="widget-stats widget-stats-gray widget-stats-4">
+									<span class="txt">Total Customer </span>
+									<span class="count" data-format="n0" data-bind="text: dataSource.total()"></span>
+									<span class="glyphicons user"><i></i></span>
+									<div class="clearfix"></div>
+									<i class="icon-play-circle"></i>
+								</a>
+							</div>
+						</div>						
+						<div class="col-md-6">
+							<div class="innerAll padding-bottom-none-phone">
+								<a href="" class="widget-stats widget-stats-primary widget-stats-4">
+									<span class="txt">Total Balance As Of <span data-format="dd-MM-yyyy" data-bind="text: date"></span> </span>
+									<span class="count" data-bind="text: total"></span>
+									<span class="glyphicons coins"><i></i></span>
+									<div class="clearfix"></div>
+									<i class="icon-play-circle"></i>
+								</a>
+							</div>
+						</div>												
+					</div>
+
+					<br>					
+			
+					<div data-role="grid"
+						 data-auto-bind="false"
+						 data-groupable="true"
+						 data-sortable="true"
+						 data-pageable="true"			                 		                 
+		                 data-columns="[
+                            { field: 'number', title:'Number' },
+                            { field: 'fullname', title:'Name' },                             
+                            { field: 'contact_type_id', title:'Type', template:'#=contact_type#' },
+                            { field: 'balance', title:'Balance', 
+                            	template:'#=kendo.toString(balance, &quot;c0&quot;, banhji.locale)#', 
+                            	attributes:{style:'text-align:right;'} 
+                            }
+                         ]"
+		                 data-bind="source: dataSource"></div>
+
+				</div> <!-- //End div example-->				
+			</div><!-- //End div row-fluid-->
+		</div>
+	</div>	
 </script>
 
 
@@ -14874,27 +16662,23 @@
 		          	</div>
 					
 					<div>
-						<input data-role="dropdownlist"                   
-					           data-value-primitive="true"
-					           data-text-field="text"
-					           data-value-field="value"
-					           data-bind="value: sorter,
-					                      source: sortList,                              
-					                      events: { change: sorterChanges }" />
+						<input id="sorter" name="sorter"
+				    	   data-role="dropdownlist"                   
+				           data-value-primitive="true"
+				           data-text-field="text"
+				           data-value-field="value"
+				           data-bind="value: sorter,
+				                      source: sortList" />
+				                                   
+				        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+				        
+				       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />
 
-						<input data-role="datepicker"
-							   data-format="dd-MM-yyyy"
-					           data-bind="value: sdate,
-					                      events: { change: dateChanges }"
-					           placeholder="From ..." >
-
-					    <input data-role="datepicker"
-					    	   data-format="dd-MM-yyyy"
-					           data-bind="value: edate,
-					                      events: { change: dateChanges }"
-					           placeholder="To ..." >
-					    
-					    <button type="button" data-role="button" data-bind="click: searchMovement"><i class="icon-search"></i></button>
+			            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
 					</div>
 
 					<table class="table table-bordered table-striped table-white">
@@ -15363,7 +17147,6 @@
 						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
 						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
 						<!-- <span id="saveSend" class="btn btn-icon btn-warning glyphicons envelope" style="width: 80px;"><i></i> Save Send</span>										 -->
-						<span id="savePrint" class="btn btn-icon btn-default glyphicons print" data-bind="click: cancel" style="width: 80px;"><i></i> Save Print</span>
 						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
 					</div>
 					<!-- // Form actions END -->
@@ -17073,7 +18856,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2><span data-bind="text: lang.lang.general_settings_inventory"></span></h2>
+	<h2>General Inventory Setting</h2>
 
 	<br>
 
@@ -17112,7 +18895,7 @@
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: category_code">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="New..." data-bind="value: category_name">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: category_abbr">					    
-					    <button class="btn btn-default" type="button" data-bind="click: addCategory"><i class="icon-plus"></i></button>					  
+					    <button class="btn btn-default" type="button" data-bind="click: addCategory"><i class="icon-plus"></i> Add Category</button>					  
 					</div>
 		            
 	            	<table class="table table-bordered table-white">
@@ -17155,7 +18938,7 @@
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: item_group_code">	
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="New Name..." data-bind="value: item_group_name">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: item_group_abbr">					    
-					    <button class="btn btn-default" type="button" data-bind="click: addItemGroup"><i class="icon-plus"></i></button>					  
+					    <button class="btn btn-default" type="button" data-bind="click: addItemGroup"><i class="icon-plus"></i> Add Group</button>					  
 					</div>
 		            
 	            	<table class="table table-bordered table-white">
@@ -17179,7 +18962,7 @@
 	            <div class="tab-pane" id="tab3-1">
                 	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Measurement..." data-bind="value: measurement_name">					    
-					    <button class="btn btn-default" type="button" data-bind="click: addMeasurement"><i class="icon-plus"></i></button>					  
+					    <button class="btn btn-default" type="button" data-bind="click: addMeasurement"><i class="icon-plus"></i> Add Measurement</button>					  
 					</div>
 	            	<table class="table table-bordered table-white">
 	            		<thead>
@@ -17211,7 +18994,7 @@
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: brand_code">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="New Brand..." data-bind="value: brand_name">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: brand_abbr">					    
-					    <button class="btn btn-default" type="button" data-bind="click: addBrand"><i class="icon-plus"></i></button>					  
+					    <button class="btn btn-default" type="button" data-bind="click: addBrand"><i class="icon-plus"></i> Add Brand</button>					  
 					</div>
 		            
 	            	<table class="table table-bordered table-white">
@@ -17422,39 +19205,237 @@
     </div>
 </script>
 <script id="itemReportCenter" type="text/x-kendo-template">
-	<h2>Inventory Reports</h2>
-	<br>
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<div class="row-fluid sale-report">
+				<h2>INVENTORY POSITION</h2>
+				<p>
+					The following reports provide summary and detailed reports on the position of inventory. 
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Inventory Position Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Inventory Sale by Item Analysis</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price.  
 
-	<div class="row-fluid">
-		<div class="span6">
-			<h4>Inventory Position Analysis</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>					
-	  				<li><a href='#/inventory_position_summary'>Inventory Position Summary</a></li> 
-	  				<li><a href='#/inventory_position_detail'>Inventory Position Detail</a></li>
-	  				<li><a href='#/inventory_sale_by_item'>Inventory Sale by Item Analysis</a></li> 
-	  				<li><a href='#/inventory_turnover_list'>Inventory Turnover List</a></li>
-	  				<li><a href='#/inventory_list'>Inventory List</a></li> 
-				</ul>
+								</p>
+								
+							</td>
+							<td >
+								<p>
+									Lists of all transactions related to and grouped by each inventory with analysis of average gross profit margin.
+
+								</p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Inventory Position Detail</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Inventory Turnover List</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists individual inventory movement transactions by date for each inventory within a period of time.
+
+								</p>
+							</td>
+							<td >
+								<p>
+									Provides analysis of inventory turnover days by each inventory.
+
+								</p>
+							</td>
+						</tr>
+
+						<tr>
+							<td >
+								<h3><a href="#/">Purchase Summary by Product/ Services</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Open Purchase Order</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Summarizes total expenses/ purchase for each product/ service within a period of time. 
+								</p>
+							</td>
+							<td >
+								<p>
+									Lists all the open purchase order grouped by suppliers including the original amount as well.
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Purchase Detail by Product/ Services</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists individual sale transactions by date for each product/ service with a period of time.
+								</p>
+							</td>
+						</tr>
+
+					</table>
+				</div>
 			</div>
-		</div>		
-		<div class="span6">
-			<h4>Inventory Movement Reports</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/inventory_movement_summary'>Inventory Movement Summary</a></li>
-	  				<li><a href='#/inventory_movement_detail'>Inventory Movement Detail</a></li>	  	
-					<li><a href='#/inventory_purchase_by_vendor_summary'>Purchase By Supplier Summary</a></li>
-	  				<li><a href='#/inventory_purchase_by_vendor_detail'>Purchase By Supplier Detail</a></li>
-	  								
-				</ul>
+
+			<div class="row-fluid recevable-report">
+				<h2>INVENTORY MOVEMENT REPORTS</h2>
+				<p>
+					The following reports provide summary and detailed reports on the movement of the inventories
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Inventory Position Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Inventory Movement Detail</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Shows the movement of each inventory by opening balance, sale, purchase and adjustment. 
+								</p>
+								
+							</td>
+							<td >
+								<p>
+									Lists of all detailed transactions related to and grouped by each inventory
+								</p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Purchase by Supplier Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Purchase by Supplier Detail</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists all inventory purchases from each suppliers
+								</p>
+							</td>
+							<td >
+								<p>
+									Lists of detailed inventory purchase transactions from each suppliers
+								</p>
+							</td>
+						</tr>
+
+						<tr>
+							<td >
+								<h3><a href="#/">Sale by Customer Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Sale by Customer Detail</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists all inventory sold to each customer
+								</p>
+							</td>
+							<td >
+								<p>
+									Lists of detailed inventory sale transactions to each customer
+								</p>
+							</td>
+						</tr>
+						
+					</table>
+				</div>
 			</div>
-		</div>				
+			<div class="row-fluid recevable-report">
+				<h2>OTHER REPORTS/ LISTS</h2>
+				<p>
+					The following reports provide summary and detailed reports on the movement of the inventories
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Inventory List</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Recurring Inventory Template List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td width="50%">
+								<p>
+									Lists the products you purchase and sold. The following information is included: name, description, cost, sales price, and quantity on hand.
+								</p>								
+							</td>
+							<td >								
+							</td>
+							
+						</tr>
+						
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="span5">
+			<div class="report-chart">
+				<div class="widget-body alert alert-primary sale-overview">
+					<h2>Inventory Balance</h2>
+					<div align="center" class="text-large strong">$183,690,640</div>
+					<table width="100%">
+						<tr align="center">
+							<td>										
+								<span>6</span>
+								<br>
+								<span>Inventory items</span>
+							</td>
+							<td>
+								<span>1</span>
+								<br>
+								<span>Categories</span>
+							</td>
+							<td>
+								<span>10%</span>
+								<br>
+								<span>Average Margin</span>
+							</td>
+							<td>
+								<span>20 days</span>
+								<br>
+								<span>Turnover Days</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="sale-report-chart">Chart</div>
+			</div>
+		</div>
 	</div>
-
-	<p class="separator text-center"><i class="icon-ellipsis-horizontal icon-3x"></i></p>
 </script>
 <script id="inventoryPositionSummary" type="text/x-kendo-template">
 	<div class="container-fluid">
@@ -18242,6 +20223,7 @@
         <td align="right">#=kendo.toString(amount, "c0", banhji.institute.locale)#</td>        
    </tr>
 </script>
+
 
 
 <!-- ***************************
@@ -19574,1446 +21556,136 @@
 </script>
 
 <script id="cashReportCenter" type="text/x-kendo-template">
-	<h2>Report</h2>
-	<br>
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<div class="row-fluid sale-report">
+				<h2>CASH POSITION</h2>
+				<p>
+					The following reports provide summary and detailed reports on employee related transactions.  
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Cash Position Report</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Cash Payment Report</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price.  
 
-	<div class="row-fluid">
-		<div class="span3">
-			<h4>Customer Information</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/customer_list'>Customer List</a></li>
-	  				<li><a href='#/wBrand_new_customer'>Brand New Customer</a></li>	  				
-				</ul>
+
+								</p>
+								
+							</td>
+							<td >
+								<p>
+									Lists of all transactions related to and grouped by each inventory with analysis of average gross profit margin.
+
+
+								</p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Cash Receipt Report</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Reconciliation Report</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists individual inventory movement transactions by date for each inventory within a period of time.
+
+
+								</p>
+							</td>
+							<td >
+								<p>
+									List of all cash related reconciliation reports.
+								</p>
+							</td>
+						</tr>
+					</table>					
+				</div>
+			</div>
+			<div class="row-fluid recevable-report">
+				<h2>OTHER REPORTS</h2>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Realized Exchange Gains & Losses</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/">Unrealized Exchange Gains & Losses</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									This detailed report lists foreign transactions that are closed (referred to as realized gains and losses) and totals the gains and losses due to changes in exchange rates.
+
+
+								</p>
+								
+							</td>
+							<td >
+								<p>
+									This summary report lists your foreign accounts and calculates the potential gain or loss for each account.
+
+
+								</p>
+							</td>							
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
-		<div class="span3">
-			<h4>Accounting</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/wCustomer_balance'>Custoemr Balance</a></li>	  				 				  				
-	  				<br>  
-	  				<li><a href='#/wAging_summary'>Aging Summary</a></li> 
-	  				<li><a href='#/wAging_detail'>Aging Detail</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="span3">
-			<h4>Sale</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/wSale_summary'>Sale Summary</a></li>
-	  				<li><a href='#/wSale_detail'>Sale Detail</a></li>	  				
-				</ul>
-			</div>
-		</div>
-		<div class="span3">
-			<h4>Payment</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/wPayment_summary'>Payment Summary</a></li> 
-  					<li><a href='#/wPayment_detail'>Payment Detail</a></li>
-  					<br>  
-	  				<li><a href='#/wPayment_by_source_summary'>Payment By Source Summary</a></li>
-	  				<li><a href='#/wPayment_by_source_detail'>Payment By Source Detail</a></li> 
-				</ul>
+		<div class="span5">
+			<div class="report-chart">
+				<div class="widget-body alert alert-primary sale-overview">
+					<h2>Cash Balance</h2>
+					<div align="center" class="text-large strong">$183,690,640</div>
+					<table width="100%">
+						<tr align="center">
+							<td>										
+								<span>0.5</span>
+								<br>
+								<span>Cash Ratio</span>
+							</td>
+							<td>
+								<span>1.5</span>
+								<br>
+								<span>Quick Ratio</span>
+							</td>
+							<td>
+								<span>2.1</span>
+								<br>
+								<span>Current Ratio</span>
+							</td>
+							<td>
+								<span>20 days</span>
+								<br>
+								<span>Cash Conversion Cycle</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="sale-report-chart">Chart</div>
 			</div>
 		</div>
 	</div>
-
-	<p class="separator text-center"><i class="icon-ellipsis-horizontal icon-3x"></i></p>
 </script>
 
 
-
-<!-- ***************************
- *	Accounting  -> Pich             *
-**************************** -->
-<script id="accountingDashboard" type="text/x-kendo-template" >
-	<div class="row-fluid">
-		<!-- Left Side -->
-		<div class="span4">
-
-			<!-- Logo of the page -->
-			<table width="100%" cellpadding="10">
-				<tr>
-			        <td valign="top">
-			        	<h2>ACCOUNTING MODULE</h2>
-			        	<p>
-			        		In here, you can manage your cash information, transactions and reports. Cashflow forecast and other treasury management is coming soon..
-			        	</p>
-			        	<div class="customer-icon">
-				        	<div class="span4">
-					        	<a href="#/customer" class="center">
-					        		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
-					        	</a>
-					        </div>
-					    </div>
-			        </td>
-			 	</tr>
-			</table>
-
-			<br>
-
-			<table class="table table-borderless table-condensed table-vertical-center ">
-				<tr>
-					<td class="center">
-						<a href="#/cash_transaction">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png" width="110" height="200" />
-							C.Transaction
-						</a>						
-					</td>
-					<td class="center">
-						<a href="#/cash_receipt">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
-							C.Receipt
-						</a>
-					</td>
-					<td class="center">
-						<a href="#/cash_payment">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png" width="110" height="200" />
-							C.Payment
-						</a>						
-					</td>					
-				</tr>
-				<tr>
-					<td class="center">
-						<a href="#/cash_advance">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_receipt.png" width="110" height="200" />
-							C.Advance
-						</a>
-					</td>
-					<td class="center">						
-						<a href="#/expense">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
-							Expense
-						</a>						
-					</td>
-					<td class="center">						
-						<a href="#/">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
-							Ex.Rate Record
-						</a>						
-					</td>										
-				</tr>							
-			</table>
-
-		</div>
-
-		<!-- Right Side -->
-		<div class="span8">
-
-			<!-- Summary -->
-			<div class="row-fluid ">
-	
-				<!-- Column -->
-				<div class="span4">
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading">Cash Balance</h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<div class="widget-body alert alert-primary">
-							
-							<div align="center" class="text-large strong" data-bind="text: sale"></div>
-
-							<br>
-						
-							<table width="100%">
-								<tr align="center">
-									<td>										
-										<span data-bind="text: sale_customer"></span>
-										<br>
-										<span>In Bank</span>
-									</td>
-									<td>
-										<span data-bind="text: sale_product"></span>
-										<br>
-										<span>On Hand</span>
-									</td>
-									<td>
-										<span data-bind="text: sale_order"></span>
-										<br>
-										<span>In Transit</span>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-				
-				<!-- Column -->
-				<div class="span4">
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading">Advance</h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<div class="widget-body alert-info">
-							
-							<div align="center" class="text-large strong" data-bind="text: order"></div>
-
-							<br>
-						
-							<table width="100%">
-								<tr align="center">
-									<td>										
-										<span data-bind="text: order_avg"></span>
-										<br>
-										<span>Open</span>
-									</td>
-									<td>
-										<span data-bind="text: order_open"></span>
-										<br>
-										<span>Overdue</span>
-									</td>									
-								</tr>
-							</table>
-						</div>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-				
-				<!-- Column -->
-				<div class="span4">
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading">Cash Position</h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<div class="widget-body" style="background-color: LightGray">
-							
-							<div align="center" class="text-large strong" data-bind="text: ar"></div>
-
-							<br>
-						
-							<table width="100%">
-								<tr align="center">
-									<td>										
-										<span data-bind="text: ar_open"></span>
-										<br>
-										<span>To be Received</span>
-									</td>
-									<td>
-										<span data-bind="text: ar_customer"></span>
-										<br>
-										<span>To be Paid</span>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-				
-			</div>
-
-			<!-- Top 5 -->
-			<div class="row-fluid">
-				<div class="span4">
-					<h4>Top 5 A/R</h4>					
-					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
-				        <thead>
-				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</th>			                
-				            </tr>
-				        </thead>
-				        <tbody data-role="listview"
-				        	 data-auto-bind="false"				        	                 
-			                 data-template="customerDashBoard-top-customer-template"
-			                 data-bind="source: topCustomerDS"></tbody>			        
-				    </table>			
-				</div>
-				<div class="span4">
-					<h4>Top 5 A/P</h4>
-					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
-				        <thead>
-				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</th>		                
-				            </tr>
-				        </thead>
-				        <tbody data-role="listview"
-				        	 data-auto-bind="false"				        	                  
-			                 data-template="customerDashBoard-top-ar-template"
-			                 data-bind="source: topARDS"></tbody>			        
-				    </table>
-				</div>
-				<div class="span4">
-					<h4>Top 5 Cash Account</h4>
-					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
-				        <thead>
-				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</span></th>			                		                
-				            </tr>
-				        </thead>
-				        <tbody data-role="listview"
-				        	 data-auto-bind="false"                
-			                 data-template="customerDashBoard-top-product-template"
-			                 data-bind="source: topProductDS"></tbody>			        
-				    </table>
-				</div>		
-			</div>
-
-			<!-- Graph -->
-			<div>
-				<div id="accounting-chart" style="height: 250px; "></div>
-			</div>
-
-		</div>		
-
-	</div>
-</script>
-<script id="accountingDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
-	<tr data-uid="#: uid #">
-		<td>#:banhji.cashDashboard.topCustomerDS.indexOf(data)+1#</td>		
-		<td>
-			<span>#=name#</span>
-			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
-		</td>		
-	</tr>
-</script>
-<script id="accountingDashBoard-top-ar-template" type="text/x-kendo-tmpl">
-	<tr>
-		<td>#:banhji.cashDashboard.topARDS.indexOf(data)+1#</td>		
-		<td>
-			<span>#=name#</span>
-			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
-		</td>
-	</tr>
-</script>
-<script id="accountingDashBoard-top-product-template" type="text/x-kendo-tmpl">
-	<tr>
-		<td>#:banhji.cashDashboard.topProductDS.indexOf(data)+1#</td>		
-		<td>
-			<span>#=name#</span>
-			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
-		</td>
-	</tr>
-</script>
-
-<script id="accountingCenter" type="text/x-kendo-template">	
-	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
-		<div class="widget-body padding-none">			
-			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" style="height: 700px;">
-					<div class="innerAll">							
-						<form autocomplete="off" class="form-inline">
-							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-								<div class="overflow-hidden">
-									<input type="search" placeholder="Customer ..." data-bind="value: searchText, events:{change: enterSearch}">
-								</div>
-							</div>
-							<div class="select2-container" style="width: 100%;">								
-																
-							</div>
-						</form>					
-					</div>
-					
-					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
-
-					<div class="table table-condensed" style="height: 580px;"						 
-						 data-role="grid" 
-						 data-bind="source: contactDS"
-						 data-auto-bind="false" 
-						 data-row-template="cashCenter-customer-list-tmpl"
-						 data-columns="[{title: ''}]"
-						 data-selectable=true
-						 data-height="600"						 
-						 data-scrollable="{virtual: true}"></div>									
-				</div>
-				<div class="span9 detailsWrapper">
-					<div class="row-fluid">					
-						<div class="span6">
-							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
-
-							    <!-- Widget Heading -->
-							    <div class="widget-head">
-
-							        <!-- Tabs -->
-							        <ul class="pull-right">
-							        	<li style="font-size: large; color: black; font-weight: bold;">
-							            	<span data-bind="text: obj.number"></span>
-							            	-
-							            	<span data-bind="text: obj.fullname"></span>
-							            </li>
-							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-7"><i></i></span>
-							            </li>							           
-							            <li class="glyphicons riflescope"><span data-toggle="tab" data-target="#tab2-7"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab3-7"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab4-7"><i></i></span>
-							            </li>
-							            <li class="glyphicons edit"><span data-bind="click: goEditContact"><i></i></span>
-							            </li>
-							            <li class="glyphicons user_add"><a href="#/customer"><i></i></a>
-							            </li>							            							            
-							        </ul>
-							        <div class="clearfix"></div>
-							        <!-- // Tabs END -->
-
-							    </div>
-							    <!-- Widget Heading END -->
-
-							    <div class="widget-body">
-							        <div class="tab-content">
-
-							            <!-- Transactions Tab content -->
-							            <div id="tab1-7" class="tab-pane active box-generic">
-							            	<table class="table table-borderless table-condensed cart_total cash-table">
-								            	<tr>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goQuote">Cash Transaction</span>
-								            		</td>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit">Cash Receipt</span>								            			
-								            		</td>
-								            	</tr>
-								            	<tr>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleOrder">Cash Payment</span>
-								            		</td>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goCashSale">Cash Advance</span>								            											            			
-								            		</td>
-								            	</tr>
-								            	<tr>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn">Expense</span>
-								            		</td>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice">Exchange Rate Record</span>								            											            			
-								            		</td>
-								            	</tr>
-								            	
-							            	</table>
-							            </div>
-							            <!-- // Transactions Tab content END -->
-
-							            <!-- SEARCH Tab content -->
-							            <div id="tab2-7" class="tab-pane box-generic">
-							                <input data-role="dropdownlist"
-							                	   data-auto-bind="false"
-						            			   data-option-label="Select Customer Type..."					            			   		                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: contact_type_id,
-								                              source: contactTypeDS"
-								                   style="width: 100%"/>
-
-							                <input data-role="dropdownlist"
-						            			   data-option-label="Select Currency..."
-						            			   data-template="currency-list-tmpl"					            			   		                   
-								                   data-value-primitive="true"
-								                   data-text-field="code"
-								                   data-value-field="id"
-								                   data-bind="value: currency_id,
-								                              source: currencyDS"
-								                   style="width: 100%"/>
-
-								            <br><br>
-								            <span class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search"></span></span>
-								            <br>
-							            </div>
-							            <!-- // SEARCH Tab content END -->							            
-
-							            <!-- INFO Tab content -->
-							            <div id="tab3-7" class="tab-pane box-generic">
-							            	<div class="row-fluid">
-								            	<div class="span6">
-										
-													<!-- Bio -->
-													<div class="widget widget-heading-simple widget-body-gray margin-none">
-														<div class="widget-head">
-															<h4 class="heading glyphicons user"><i></i> <span data-bind="text: obj.wnumber"></span> <span data-bind="text: obj.fullname"></span></h4>
-														</div>
-														<div class="widget-body">
-															<ul class="unstyled icons margin-none">
-																<li class="glyphicons group"><i></i> <span data-bind="text: obj.contact_type"></span></li>
-																<li class="glyphicons phone"><i></i> <span data-bind="text: obj.phone"></span></li>
-																<li class="glyphicons envelope"><i></i> <span data-bind="text: obj.email"></li>
-																<li class="glyphicons calendar"><i></i> <span data-bind="text: obj.registered_date"></li>
-															</ul>
-														</div>
-													</div>
-													<!-- // Bio END -->
-													
-												</div>
-												<div class="span6">
-													<!-- Bio -->
-													<div class="widget widget-heading-simple widget-body-gray margin-none">
-														<div class="widget-head">
-															<h4 class="heading glyphicons edit" data-bind="click: goEditContact"><i></i> <span data-bind="text: lang.lang.edit"></span></h4>
-														</div>
-														<div class="widget-body">
-															<p><i class="icon-home"></i> <span data-bind="text: obj.address"></span></p>
-														</div>
-													</div>
-													<!-- // Bio END -->
-												</div>
-											</div>
-							            </div>
-							            <!-- // INFO Tab content END -->
-
-							            <!-- NOTE Tab content -->
-							            <div id="tab4-7" class="tab-pane box-generic">
-
-										    <div class="chat-controls">															
-												<form class="margin-none">
-													<div class="row-fluid">
-														<div class="span10">
-															<input type="text" name="message" class="input-block-level margin-none" data-bind="value: note" placeholder="កំណត់Memo ...">
-														</div>
-														<div class="span2">
-															<span class="btn btn-block btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.save"></span></span>
-														</div>
-													</div>
-												</form>															
-											</div>
-
-											<br>
-
-									    	<div data-role="grid"
-									    	 	 data-height="100"
-					 							 data-scrollable="{virtual: true}"									                 
-								                 data-row-template="cashCenter-note-tmpl"
-								                 data-bind="source: noteDS"
-								                 data-columns="[{title: ''}]"></div>
-											
-							            </div>
-							            <!-- // NOTE Tab content END -->							            								            
-
-							        </div>
-							    </div>
-							</div>
-						</div>
-
-						<div class="span6">
-							<div class="row-fluid">
-								<div class="span6">
-									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
-										<span class="glyphicons coins"><i></i></span>
-										<span class="txt">Balance<span data-bind="text: balance" style="font-size:medium;"></span></span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-								<div class="span6">
-									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit">
-										<span class="glyphicons briefcase"><i></i></span>
-										<span class="txt">Deposit<span data-bind="text: deposit" style="font-size:medium;"></span></span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>							
-							
-							<div class="row-fluid">
-								<div class="span6">
-									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
-										<span class="glyphicons circle_exclamation_mark"><i></i></span>
-										<span class="txt"><span data-bind="text: outInvoice"></span> Open</span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-								<div class="span6">
-									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice">
-										<span class="glyphicons turtle"><i></i></span>
-										<span class="txt"><span data-bind="text: overInvoice"></span> Over Due</span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>														
-						</div>											          	
-		          	</div>
-					
-					<div>
-						<input data-role="dropdownlist"                   
-					           data-value-primitive="true"
-					           data-text-field="text"
-					           data-value-field="value"
-					           data-bind="value: sorter,
-					                      source: sortList,                              
-					                      events: { change: sorterChanges }" />
-
-						<input data-role="datepicker"
-							   data-format="dd-MM-yyyy"
-					           data-bind="value: sdate,
-					                      events: { change: dateChanges }"
-					           placeholder="From ..." >
-
-					    <input data-role="datepicker"
-					    	   data-format="dd-MM-yyyy"
-					           data-bind="value: edate,
-					                      events: { change: dateChanges }"
-					           placeholder="To ..." >
-					    
-					    <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
-					</div>
-
-					<table class="table table-bordered table-striped table-white">
-						<thead>
-							<tr>
-								<th>Date</th>
-								<th>Type</th>								
-								<th>Reference No</th>
-								<th>Amount</th>
-								<th>Status</th>
-								<th>Action</th>
-							</tr>
-						</thead>	            		
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"	            					            					            					            			
-				                data-template="cashCenter-transaction-tmpl"
-				                data-bind="source: transactionDS" >
-				        </tbody>
-	            	</table>
-
-	            	<div id="pager" class="k-pager-wrap"
-				    	 data-auto-bind="false"
-			             data-role="pager" data-bind="source: transactionDS"></div>	            	
-				</div>
-			</div>			
-		</div>
-	</div>		
-</script>
-<script id="accountingCenter-transaction-tmpl" type="text/x-kendo-tmpl">
-    <tr>    	  	
-    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=type#</td>
-        <td>
-        	#if(type=="Invoice" || type=="Cash_Sale" || type=="Quote" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return"){#
-				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>						
-			#}else{#
-				#=number#
-			#}#        	
-        </td>
-    	<td class="right">
-    		#if(type=="GDN"){#
-    			#=kendo.toString(amount, "n0")#
-    		#}else{#
-    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
-    		#}#
-    	</td>
-    	<td>        	
-        	#if(type==="Invoice"){#
-        		#if(status==="0" || status==="2") {#
-        			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
-					#if(dueDate < toDay) {#
-						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
-					#} else {#
-						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
-					#}#
-				#} else {#
-					Paid
-				#}#
-        	#}else if(type==="Sale_Order" || type==="GDN"){#
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Done        			
-        		#}#
-        	#}else if(type==="Quote"){#        		
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Approved        			
-        		#}#
-        	#}#			
-		</td>    	
-    	<td align="center">
-			#if(type==="Invoice"){#
-				<a href="\#/invoice/#=id#"><i></i> Send</a>
-
-				#if(status==="0" || status==="2"){#					
-					| <a href="\#/cashier/#=id#"><i></i> Pay</a>
-				#}#        	
-			#}else if(type==="Sale_Order"){#
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}else if(type==="Quote"){#
-        		<a href="\#/quote/#=id#"><i></i> Send</a>        		
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}else if(type==="GDN"){#        		
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}#
-		</td>     	
-    </tr>
-</script>
-<script id="accountingCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
-	<tr data-bind="click: selectedRow">
-		<td>
-			<div class="media-body">
-				<span class="strong">
-					#=number# #=fullname#				
-				</span>
-			</div>
-		</td>
-	</tr>
-</script>
-<script id="accountingCenter-note-tmpl" type="text/x-kendo-template">
-	<tr>
-		<td>			
-			<blockquote>
-				<small class="author">
-					<span class="strong">#=creator#</span> :
-					<cite>#=kendo.toString(new Date(noted_date), "g")#</cite>
-				</small>					
-				<p>#=note#</p>
-			</blockquote>				
-		</td>
-	</tr>	
-</script>
-
-<script id="accounting" type="text/x-kendo-template">
-	<div class="container-960">	
-		<div class="row-fluid">		    
-			<div class="span12">			
-				<div id="example" class="k-content">
-
-					<!-- Collapsible Widget -->			
-					<div class="widget">
-					    <div class="widget-head">
-					    	<span class="btn btn-primary pull-right" 
-									onclick="javascript:window.history.back()">X</span>
-					        
-					        <h4 class="heading glyphicons circle_info"><i></i> Customer</h4>							        	
-					    </div>
-					    <div class="widget-body">
-
-					    	<div class="row-fluid">
-					    		<div class="span6 well">									
-									<div class="row-fluid">
-										<div class="span6">														
-											<!-- Group -->
-											<div class="control-group">										
-												<label for="ddlCustomerType"><span data-bind="text: lang.lang.customer_type"></span> <span style="color:red">*</span></label>
-												<input id="ddlCustomerType" name="ddlCustomerType"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.contact_type_id,
-										                              source: contactTypeDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />																				            
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span6">	
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="number"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>
-						              			<input id="number" name="number" class="k-textbox"
-							              				data-bind="value: obj.number, events:{change: checkExistingNumber}" 
-							              				placeholder="e.g. ID0001" required data-required-msg="required"
-							              				style="width: 100%;" />
-							              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
-											</div>
-											<!-- // Group END -->											
-										</div>
-									</div>
-									
-									<div class="row-fluid">
-										<div class="span6">						
-											<!-- Group -->
-											<div class="control-group">
-												<label for="surname"><span data-bind="text: lang.lang.surname"></span> <span style="color:red">*</span></label>
-							              		<input id="surname" name="surname" class="k-textbox" data-bind="value: obj.surname" 
-									              		placeholder="surname ..." required data-required-msg="required"
-									              		style="width: 100%;" />
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span6">	
-											<!-- Group -->
-											<div class="control-group">								
-												<label for="name"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
-									            <input id="name" name="name" class="k-textbox" data-bind="value: obj.name" 
-									              		placeholder="name ..." required data-required-msg="required"
-									              		style="width: 100%;" />
-											</div>																		
-											<!-- // Group END -->
-										</div>
-									</div>
-									
-									<div class="row-fluid" data-bind="visible: isCompany">
-										<div class="span6">
-											<!-- Group -->
-											<div class="control-group">
-												<label for="companyName"><span data-bind="text: lang.lang.organization_name"></span> <span style="color:red">*</span></label>
-												<input id="companyName" name="companyName" class="k-textbox" data-bind="enabled: isCompany, value: obj.company"									
-														placeholder="e.g. PCG & Partner"
-														style="width: 100%;" />	
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span6">	
-											<!-- Group -->
-											<div class="control-group">
-												<label for="vatNo">VAT Number</label>								
-							            		<input id="vatNo" name="vatNo" class="k-textbox" data-bind="enabled: isCompany, value: obj.vat_no" 
-														placeholder="e.g. 01234567897"
-														style="width: 100%;" />												
-											</div>					
-											<!-- // Group END -->
-										</div>
-									</div>																
-								</div>
-								<div class="span6">
-									<div class="row-fluid">	
-										<!-- Map -->
-										<div id="map" class="span12" style="height: 130px;"></div>
-									</div>
-
-									<div class="separator line bottom"></div>
-
-									<div class="row-fluid">	
-										<div class="span6">									
-											<!-- Group -->
-											<div class="control-group">
-								    			<label for="latitute"><span data-bind="text: lang.lang.latitute"></span> </label>
-												<div class="input-prepend">
-													<span class="add-on glyphicons direction"><i></i></span>
-													<input type="text" class="input-large span12" data-bind="value: obj.latitute, events:{change: loadMap}" placeholder="012345.67897">
-												</div>
-											</div>									
-											<!-- // Group END -->
-										</div>	
-										
-										<div class="span6">	
-											<!-- Group -->
-											<div class="control-group">
-								    			<label for="longtitute"><span data-bind="text: lang.lang.longtitute"></span> </label>
-								    			<div class="input-prepend">
-													<span class="add-on glyphicons google_maps"><i></i></span>
-													<input type="text" class="input-large span12" data-bind="value: obj.longtitute, events:{change: loadMap}" placeholder="012345.67897">
-												</div>										
-											</div>
-											<!-- // Group END -->
-										</div>										
-									</div>
-								</div>
-							</div>								
-									
-							<!-- // Inner Tabs -->
-							<div class="row-fluid">								
-								<div class="box-generic">
-								    <!-- //Tabs Heading -->
-								    <div class="tabsbar tabsbar-1">
-								        <ul class="row-fluid row-merge">						            
-								            <li class="span2 glyphicons usd active">
-								            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.account"></span></span></a>
-								            </li>								            
-								            <li class="span2 glyphicons nameplate_alt">
-								            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.info"></span></span></a>
-								            </li>
-								            <li class="span2 glyphicons parents">
-								            	<a href="#tab3" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.agents"></span></span></a>
-								            </li>						            					            
-								        </ul>
-								    </div>
-								    <!-- // Tabs Heading END -->
-
-								    <div class="tab-content">
-								        <!-- //ACCOUNTING INFO -->
-								        <div class="tab-pane active" id="tab1">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span data-bind="text: lang.lang.account_receiveable"></span> <span style="color:red">*</span></label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span data-bind="text: lang.lang.revenue_account"></span> <span style="color:red">*</span></label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlDepositAccount">Deposit Acccount <span style="color:red">*</span></label>
-													<input id="ddlDepositAccount" name="ddlDepositAccount"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.deposit_account_id,
-										                              source: depositDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlTradeDiscount">Trade Discount <span style="color:red">*</span></label>
-													<input id="ddlTradeDiscount" name="ddlTradeDiscount"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.trade_discount_id,
-										                              source: tradeDiscountDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />														
-												</div>												
-									        </div>
-
-									        <div class="separator line bottom"></div>
-
-									        <div class="row-fluid">
-								        		<div class="span3">						
-										            <label for="currency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>
-										            <input id="currency" name="currency" 
-										            	data-role="dropdownlist"
-										            	data-template="currency-list-tmpl"
-										            	data-value-primitive="true"
-										                data-text-field="code"
-										                data-value-field="id"
-														data-bind="value: obj.currency_id, source: currencyDS"
-														data-option-label="(--- Select ---)" 
-														required data-required-msg="required" style="width: 100%;" />
-										        </div>
-								            	<div class="span3">
-													<label for="ddlPaymentTerm"><span data-bind="text: lang.lang.payment_term"></span></label>
-													<input id="ddlPaymentTerm" name="ddlPaymentTerm"
-														data-role="dropdownlist"
-										            	data-value-primitive="true"
-										                data-text-field="name"
-										                data-value-field="id"
-														data-bind="value: obj.payment_term_id, source: paymentTermDS" 
-														data-option-label="(--- Select ---)"
-														style="width: 100%;" />
-												</div>
-												<div class="span3">
-													<label for="ddlPaymentMethod"><span data-bind="text: lang.lang.payment_method"></span></label>
-													<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-														data-role="dropdownlist"
-										            	data-value-primitive="true"
-										                data-text-field="name"
-										                data-value-field="id"
-														data-bind="value: obj.payment_method_id, source: paymentMethodDS"
-														data-option-label="(--- Select ---)" 
-														style="width: 100%;" />
-												</div>
-												<div class="span3">
-													<label for="ddlSettlementDiscount">Settlement Discount <span style="color:red">*</span></label>
-													<input id="ddlSettlementDiscount" name="ddlSettlementDiscount"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.settlement_discount_id,
-										                              source: settlementDiscountDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />														
-												</div>												
-									        </div>
-
-									        <div class="separator line bottom"></div>
-
-									        <div class="row-fluid">
-									        	<div class="span3">
-													<label for="ddlTaxItem">Tax </label>
-													<input id="ddlTaxItem" name="ddlTaxItem"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.tax_item_id,
-										                              source: taxItemDS"
-										                   data-option-label="(--- Select ---)"
-										                   style="width: 100%;" />
-												</div>	
-										        <div class="span3">
-													<label for="txtCreditLimit"><span data-bind="text: lang.lang.credit_limit"></span> </label>								              		
-										            <input data-role="numerictextbox"
-										                   data-format="n"
-										                   data-min="0"										                   
-										                   data-bind="value: obj.credit_limit"										                  
-										                   style="width: 100%;">
-												</div>																							
-											</div>
-							        	</div>
-								        <!-- //ACCOUNTING INFO END -->								        							       
-
-								        <!-- //GENERAL INFO -->
-								        <div class="tab-pane" id="tab2">
-							            	<table class="table table-borderless table-condensed cart_total">						            	
-							            		<tr>
-									                <td><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></td>
-									              	<td>
-									              		<input id="customerStatus" name="customerStatus" 
-									              				data-role="dropdownlist"
-											            		data-text-field="name"
-								           						data-value-field="id"
-								           						data-value-primitive="true" 
-											            		data-bind="source: statusList, value: obj.status"
-											            		data-option-label="(--- Select ---)"
-											            		required data-required-msg="ត្រូវការ ស្ថានភាព" />
-									              	</td>							              	
-									            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
-									              	<td>
-									              		<input id="registered_date" name="registered_date" 
-										            		data-role="datepicker"			            		
-							            					data-bind="value: obj.registered_date" 
-							            					data-format="dd-MM-yyyy"
-							            					data-parse-formats="yyyy-MM-dd" 
-							            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
-									              	</td>
-									            </tr>
-									            <tr>
-									                <td><span data-bind="text: lang.lang.gender"></span></td>
-									              	<td><select data-role="dropdownlist" data-bind="source: genders, value: obj.gender"></select></td>							              	
-									            	<td><span data-bind="text: lang.lang.phone"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
-									            </tr>
-									            <tr>
-									            	<td><span data-bind="text: lang.lang.address"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />							              	
-									            	<td><span data-bind="text: lang.lang.email"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" />
-									            </tr>									            
-									            <tr>
-									            	<td>
-									            		<label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label>											            
-									            	</td>
-									            	<td>
-									            		<input class="k-textbox" data-bind="value: obj.bill_to" placeholder="bill to ..." />
-									            	</td>
-									            	<td>
-									            		<span data-bind="text: lang.lang.ship_to"></span>										            
-									            	</td>
-									            	<td>
-									            		<input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." />
-									            	</td>
-									            </tr>
-									            <tr>									            								              	
-									            	<td><span data-bind="text: lang.lang.memo"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>
-									              	<td></td>
-									              	<td></td>
-									            </tr>							            							            								            								            			            
-									        </table>
-							        	</div>
-								        <!-- //GENERAL INFO END -->
-
-								        <!-- //CONTACT PERSON -->
-								        <div class="tab-pane" id="tab3">
-								        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i> <span data-bind="text: lang.lang.new_agent"></span></span>
-								        	
-								        	<table class="table table-bordered table-white">
-										        <thead>
-										            <tr>
-										                <th><span data-bind="text: lang.lang.name"></span></th>
-										                <th><span data-bind="text: lang.lang.department"></span></th>						                
-										                <th><span data-bind="text: lang.lang.phone"></span></th>
-										                <th><span data-bind="text: lang.lang.email"></span></th>
-										                <th width="20px"></th>										               
-										            </tr>
-										        </thead>
-										        <tbody data-role="listview"										        		
-										        		data-auto-bind="false"										        						        		 
-										        		data-template="contact-person-row-tmpl" 
-										        		data-bind="source: contactPersonDS">
-										        </tbody>										        						        
-										    </table>
-							        	</div>
-								        <!-- //CONTACT PERSON END -->
-								    </div>
-								</div>
-							</div>
-
-							<br>											
-							
-							<!-- Form actions -->
-							<div align="center">
-								<span id="notification"></span>
-
-								<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-								<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-								<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-							</div>
-							<!-- // Form actions END -->
-
-						</div> <!-- End Widget-Body List -->
-					</div>
-					<!-- // Collapsible Widget END -->				          					                
-			    											
-				</div> <!-- // End div example-->  
-			</div> <!-- // End div span12-->
-		</div> <!-- // End div row-fluid-->	
-	</div> 	
-</script>
-<script id="contact-person-row-tmpl" type="text/x-kendo-tmpl">
-	<tr>		
-		<td>
-			<input id="name" name="name" 
-					type="text" class="k-textbox" 
-					data-bind="value: name"
-					placeholder="eg: Mr. John" 
-					required="required" validationMessage="required" style="width: 190px;" />
-            <span data-for="name" class="k-invalid-msg"></span>
-		</td>
-		<td>
-			<input type="text" class="k-textbox" data-bind="value: department" placeholder="eg: Accounting" style="width: 190px;" />
-		</td>		
-		<td>
-			<input type="text" class="k-textbox" data-bind="value: phone" placeholder="eg: 012 333 444" style="width: 190px;" />
-		</td>
-		<td>
-			<input type="text" class="k-textbox" data-bind="value: email" placeholder="eg: john@email.com" style="width: 190px;" />
-		</td>		
-		<td align="center">            
-			<span class="glyphicons no-js delete" data-bind="click: deleteContactPerson"><i></i></span>									
-		</td>		
-	</tr>
-</script>
-
-<script id="accountingSetting" type="text/x-kendo-template">
-	<span class="pull-right glyphicons no-js remove_2" 
-			onclick="javascript:window.history.back()"><i></i></span>
-
-	<h2>General Setting</h2>
-
-	<br>
-
-	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
-
-	    <!-- Tabs Heading -->
-	    <div class="widget-head span3">
-	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Customer Type</span></a>
-	            </li>
-	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Payment Method</span></a>
-	            </li>
-	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Payment Term</span></a>
-	            </li>	                        
-	        </ul>
-	    </div>
-	    <!-- // Tabs Heading END -->
-
-	    <div class="widget-body span9">
-	        <div class="tab-content">
-
-	            <!-- Tab Branch content -->
-	            <div class="tab-pane active" id="tab1-1">
-	            	<div class="input-append">
-					    <input class="span12" id="appendedInputButtons" type="text" placeholder="type name ..." data-bind="value: contactTypeName">
-					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i></button>
-					</div>
-	            	<table class="table table-bordered table-white">
-	            		<thead>
-	            			<tr>
-	            				<th>Type</th>
-	            				<th></th>
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-		            			data-edit-template="customerSetting-edit-contact-type-template"
-				                data-template="customerSetting-contact-type-template"
-				                data-bind="source: contactTypeDS"></tbody>
-	            	</table>		            
-	            </div>
-	            <!-- // Tab Branch content END -->
-
-	            <!-- Tab Contact Type content -->
-	            <div class="tab-pane" id="tab2-1">
-	            	<div class="input-append">
-					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
-					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i></button>
-					</div>
-	            	<table class="table table-bordered table-white">
-	            		<thead>
-	            			<tr>
-	            				<th>Name</th>
-	            				<th></th>
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"	            				
-		            			data-edit-template="customerSetting-edit-payment-method-template"
-				                data-template="customerSetting-payment-method-template"
-				                data-bind="source: paymentMethodDS"></tbody>
-	            	</table>			            
-	            </div>
-	            <!-- // Tab Contact Type content END -->
-
-	            <!-- Tab Block content -->
-	            <div class="tab-pane" id="tab3-1">
-            		<div class="input-append">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="term ..." data-bind="value: paymentTerm">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">
-					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i></button>
-					</div>
-	            	<table class="table table-bordered table-white">
-	            		<thead>
-	            			<tr>
-	            				<th>Name</th>
-	            				<th>Term</th>
-	            				<th>%</th>
-	            				<th></th>
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"	            				
-		            			data-edit-template="customerSetting-edit-payment-term-template"
-				                data-template="customerSetting-payment-term-template"
-				                data-bind="source: paymentTermDS"></tbody>
-	            	</table>
-	            </div>
-	            <!-- // Tab Block content END -->
-
-	        </div>
-	    </div>
-
-	</div>
-</script>
-<script id="accountingSetting-contact-type-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>
-    		 #:name#
-   		</td>
-   		<td>
-   			#if(is_system=="0"){#
-	   			<div class="edit-buttons">       
-			        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-			   	</div>
-		   	#}#
-   		</td>
-   	</tr>
-</script>
-<script id="accountingSetting-edit-contact-type-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd>               
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
-<script id="accountingSetting-payment-method-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>
-    		 #:name#
-   		</td>
-   		<td>
-   			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-		   	</div>
-		</td>
-   	</tr>
-</script>
-<script id="accountingSetting-edit-payment-method-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd>               
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
-<script id="accountingSetting-payment-term-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>
-    		 #:name#
-   		</td>
-   		<td>
-    		 #:term#
-   		</td>
-   		<td>
-    		 #:discount_percentage#
-   		</td>
-   		<td>
-   			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-		   	</div>
-		</td>
-   	</tr>
-</script>
-<script id="accountingSetting-edit-payment-term-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd>
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:net_due" name="term" required="required" validationMessage="required" />
-                <span data-for="term" class="k-invalid-msg"></span>
-            </dd>
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:discount_percentage" name="percentage" required="required" validationMessage="required" />
-                <span data-for="percentage" class="k-invalid-msg"></span>
-            </dd>               
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
-
-<script id="accountingList" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">
-						<div class="hidden-print">
-							<span class="pull-right glyphicons no-js remove_2" 
-								onclick="javascript:window.history.back()"><i></i></span>
-
-							<input data-role="dropdownlist"
-							   data-option-label="(--- TYPE ---)"
-			                   data-auto-bind="false"
-			                   data-value-primitive="true"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="value: contact_type_id,
-			                              source: contactTypeDS" />
-
-							<button id="search" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-							<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>		
-						</div>
-
-						<h3 align="center"><span data-bind="text: lang.lang.customer_list"></span></h3>
-				
-						<div id="grid"></div>					
-					    					
-					</div> <!-- //End div example--> 
-				</div><!-- //End div span12-->
-			</div><!-- //End div row-fluid-->
-		</div>
-	</div>	
-</script>
-
-<script id="accountingReportCenter" type="text/x-kendo-template">
-	<h2>Report</h2>
-	<br>
-
-	<div class="row-fluid">
-		<div class="span3">
-			<h4>Customer Information</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/customer_list'>Customer List</a></li>
-	  				<li><a href='#/wBrand_new_customer'>Brand New Customer</a></li>	  				
-				</ul>
-			</div>
-		</div>
-		<div class="span3">
-			<h4>Accounting</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/wCustomer_balance'>Custoemr Balance</a></li>	  				 				  				
-	  				<br>  
-	  				<li><a href='#/wAging_summary'>Aging Summary</a></li> 
-	  				<li><a href='#/wAging_detail'>Aging Detail</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="span3">
-			<h4>Sale</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/wSale_summary'>Sale Summary</a></li>
-	  				<li><a href='#/wSale_detail'>Sale Detail</a></li>	  				
-				</ul>
-			</div>
-		</div>
-		<div class="span3">
-			<h4>Payment</h4>
-			<div class="well margin-none" style="height: 150px;">
-				Description here...
-				<ul>
-					<li><a href='#/wPayment_summary'>Payment Summary</a></li> 
-  					<li><a href='#/wPayment_detail'>Payment Detail</a></li>
-  					<br>  
-	  				<li><a href='#/wPayment_by_source_summary'>Payment By Source Summary</a></li>
-	  				<li><a href='#/wPayment_by_source_detail'>Payment By Source Detail</a></li> 
-				</ul>
-			</div>
-		</div>
-	</div>
-
-	<p class="separator text-center"><i class="icon-ellipsis-horizontal icon-3x"></i></p>
-</script>
 
 <!-- ***************************
  *	Electricity Section       *
@@ -26949,9 +27621,7 @@
 	</span>
 </script>
 <script id="item-list-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=sku# #=name#
-	</span>
+	<span>#=sku# #=name#</span> <span class="pull-right">#=on_hand#</span>	
 </script>
 <script id="account-list-tmpl" type="text/x-kendo-tmpl">
 	<span>
@@ -26986,7 +27656,7 @@
   				<li><a href='#/currency_rate'>Exchange Rate</a></li>  				  				 				  				 				
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/journal_report'>REPORTS</a></li>	  	
+	  	<li><a href='#/accounting_report_center'>REPORTS</a></li>	  	
 	  	<li><a href='#/accounting_setting' class='glyphicons settings'><i></i></a></li>	  				
 	</ul>
 </script>
@@ -27002,8 +27672,8 @@
   				<li><a href='#/expense'>Expense</a></li>  				 				 				  				 				
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/vendor_report_center'>REPORTS</a></li>	  	
-	  	<li><a href='#/vendor_setting' class='glyphicons settings'><i></i></a></li>	  	
+	  	<li><a href='#/employees_report_center'>REPORTS</a></li>	  	
+	  	<li><a href='#/employees_setting' class='glyphicons settings'><i></i></a></li>	  	
 	</ul>
 </script>
 <script id="vendorMenu" type="text/x-kendo-template">
@@ -27042,7 +27712,7 @@
   				<li><a href='#/invoice'><span data-bind="text: lang.invoice"></span></a></li>
   				<li><a href='#/statement'>Statement</a></li>
   				<li><a href='#/cash_receipt'>Receive Payment</a></li>
-  				<li><a href="#/customerInvoiceSent">Invoice Sent To</a></li>
+  				<!-- <li><a href="#/customerInvoiceSent">Invoice Sent To</a></li> -->
   				<li><a href='#/recurring'>Recurring List</a></li>  				 				  				 				
   			</ul>
 	  	</li>	  	  	
@@ -27074,47 +27744,6 @@
 	</ul>
 </script>
 <script id="waterMenu" type="text/x-kendo-template">
-	<ul class="topnav">
-	  	<li><a href='#/water' class='glyphicons home'><i></i></a></li>
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.customer"></span> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'>  				
-  				<li><a href='#/wCustomer_center'><span data-bind="text: lang.lang.customer_center"></span></a></li>
-  				<li><a href='#/wNew_customer'><span data-bind="text: lang.lang.new_customer"></span></a></li>
-  				<li><a href='#/wCustomer_order'><span data-bind="text: lang.lang.reorder_customer"></span></a></li>  				
-  			</ul>
-	  	</li>	  	
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.reading"></span> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'> 
-  				<li><a href='#/wReading'><span data-bind="text: lang.lang.take_reading"></span></a></li>
-  				<li><a href='#/wIR_reader'><span data-bind="text: lang.lang.ir_reader"></span></a></li>  				
-  				<li><a href='#/wReading_book'><span data-bind="text: lang.lang.reading_book"></span></a></li>
-  				<li><a href='#/wReading_center'><span data-bind="text: lang.lang.edit_reading"></span></a></li>  				 
-  			</ul>
-	  	</li>
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.invoice"></span> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'> 
-  				<li><a href='#/wInvoice'><span data-bind="text: lang.lang.invoice"></span></a></li>
-  				<li><a href='#/wPrint_center'><span data-bind="text: lang.lang.print"></span></a></li>  				  								 
-  			</ul>
-	  	</li>	  	
-	  	<li><a href='#/cashier'><span data-bind="text: lang.lang.cashier"></span></a></li>	  	
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.inventory"></span> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'>  				
-  				<li><a href='#/wInventory_item'><span data-bind="text: lang.lang.inventory_center"></span></a></li>
-  				<li><a href='#/item'><span data-bind="text: lang.lang.new_item"></span></a></li>
-  				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.new_catalog"></span></a></li>
-  				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.new_assembly"></span></a></li>  				 				 				
-  			</ul>
-	  	</li>
-	  	<li><a href='#/wReport_center'><span data-bind="text: lang.lang.report"></span></a></li>	  	
-	  	<li><a href='#/wSettings' class='glyphicons settings'><i></i></a></li>
-	</ul>
-</script>
-<script id="accountingMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 	  	<li><a href='#/water' class='glyphicons home'><i></i></a></li>
 	  	<li role='presentation' class='dropdown'>
@@ -27291,7 +27920,6 @@
       filter: {field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username},
       pageSize: 1
     });
-
 	banhji.profileDS = new kendo.data.DataSource({
       transport: {
         read  : {
@@ -27325,7 +27953,6 @@
       filter: {field: 'username', value: userPool.getCurrentUser() == null ? '':userPool.getCurrentUser().username},
       pageSize: 100
     });
-
 	banhji.aws = kendo.observable({
         password: null,
         confirm: null,
@@ -27526,6 +28153,7 @@
 	}
 	banhji.institute = banhji.userData ? banhji.userData.institute : "";
 	banhji.locale = banhji.institute.currency.locale;
+	banhji.localeReport = banhji.institute.reportCurrency.locale;
 	banhji.header = { Institute: banhji.institute.id };	
 	var dataStore = function(url) {
 		var o = new kendo.data.DataSource({
@@ -28556,23 +29184,15 @@
 		save 		: function() {}
 	});
 	banhji.index = kendo.observable({
-		lang 	: langVM,
-		salesData : new kendo.data.DataSource({
+		lang 				: langVM,
+		dataSource			: dataStore(apiUrl+"customer_reports/home"),
+		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + 'sales',
+					url: apiUrl + "customer_reports/home_graph",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							limit: options.take,
-							page: options.page,
-							filter: options.filter
-						};
-					}
 				}
 			},
 			schema 	: {
@@ -28582,119 +29202,18 @@
 				data: 'results',
 				total: 'count'
 			},
-			batch: true,
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
 			serverFiltering: true,
+			serverSorting: true,
 			serverPaging: true,
 			pageSize: 100
-		}),
-		companyLogo: '',
-		// customers : banhji.customer.dataSource,
-		expenseDS : new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + 'sales/expense',
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							limit: options.take,
-							page: options.page,
-							filter: options.filter
-						};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			batch: true,
-			serverFiltering: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
-		expense   : 0,
-		customer  : new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + 'sales/top',
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							limit: options.take,
-							page: options.page,
-							filter: options.filter
-						};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			batch: true,
-			serverFiltering: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
-		equation  : new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + 'sales/equation',
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							limit: options.take,
-							page: options.page,
-							filter: options.filter
-						};
-					}
-				}
-			},
-			schema 	: {
-				data: 'results'
-			}
-		}),
-		cash 	  : new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + 'sales/cash',
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							limit: options.take,
-							page: options.page,
-							filter: options.filter
-						};
-					}
-				}
-			},
-			schema 	: {
-				data: 'results'
-			}
-		}),
-		modules 	: new kendo.data.DataSource({
+		}),		
+		companyLogo 		: '',
+		modules 			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + 'admin/modules',
@@ -28740,61 +29259,50 @@
 			serverPaging: true,
 			// pageSize: 100
 		}),
-		companyName: null,
-		companyInf: function() {
+		companyName 		: null,
+		companyInf 			: function() {
 			var company = JSON.parse(localStorage.getItem('userData/user'));
 			return company;
-		},
-		curDate   : function() {
-			return Date();
-		},
-		getLogo   : function() {
+		},		
+		getLogo   			: function() {
 			banhji.companyDS.fetch(function(){
 				if(banhji.companyDS.data().length > 0) {
 					banhji.index.set('companyLogo', banhji.companyDS.data()[0].logo);
 				}
 			});
 		},
-		cashBal   : 0,
-		asset 	  : 0,
-		liability : 0,
-		equity 	  : 0,
+		today 				: new Date(),		
+		ar 					: 0,
+		ar_open 			: 0,
+		ar_customer 		: 0,
+		ar_overdue 			: 0,
+		ap 					: 0,
+		ap_open 			: 0,
+		ap_vendor 			: 0,
+		ap_overdue 			: 0,		
+		pageLoad 			: function(){
+			var self = this;
 
-		dataSource 			: dataStore(apiUrl + "invoices/home_dashboard"),
+			this.graphDS.fetch();
 
-		selectedDate 		: new Date(),
-		totalSale 			: 0,
-		totalOpenInvoice 	: 0,
-		totalUnbill 		: 0,
-		totalCustomer 		: 0,
-		totalOrder 			: 0,
+			this.dataSource.query({
+				filter: [],								
+				page: 1,
+				take: 5
+			}).then(function(){
+				var view = self.dataSource.view();				
+				
+				self.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
+				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
+				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
 
-		dateChanges			: function(){
-			var self = this, selectedDate = this.get("selectedDate");
-
-			if(selectedDate){
-				var today = new Date(),
-				searchDate = new Date(selectedDate),
-				firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-
-				if(firstDayOfYear){
-					this.dataSource.query({
-						filter: [
-							{ field:"issued_date", operatoin:">=", value:kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-							{ field:"issued_date", operatoin:"<=", value:kendo.toString(searchDate, "yyyy-MM-dd") }
-						]
-					}).then(function(){
-						var view = self.dataSource.view();
-
-						self.set("totalSale", kendo.toString(view[0].totalSale, "c", banhji.institute.locale));
-						self.set("totalOpenInvoice", view[0].totalOpenInvoice);
-						self.set("totalUnbill", view[0].totalUnbill);
-						self.set("totalCustomer", view[0].totalCustomer);
-						self.set("totalOrder", view[0].totalOrder);
-					});
-				}
-			}
-		} 		
+				self.set("ap", kendo.toString(view[0].ap, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
+				self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
+				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
+			});										
+		}
 	});	
 
 
@@ -29157,7 +29665,8 @@
 				data: 'results',
 				total: 'count'
 			},
-			group: { field: "account_type[0].name"},
+			//group: { field: "account_type[0].name"},
+			sort: { field:"account_type_id", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -29429,7 +29938,7 @@
 				total: 'count'
 			},
 			filter: [
-					{ field:"account_type_id", value: 35 },
+					{ field:"account_type_id", value: 36 },
 					{ field:"status", value: 1 }
 			],
 			batch: true,
@@ -30759,8 +31268,8 @@
 		obj 				: null,
 		isEdit 				: false,
 		user_id				: banhji.source.user_id,				
-		baseCode 			: "",
-		reprotCode 			: "",						
+		baseCode 			: banhji.institute.currency.country +' - '+ banhji.institute.currency.code,
+		reportCode 			: banhji.institute.reportCurrency.country +' - '+ banhji.institute.reportCurrency.code,						
 		pageLoad 			: function(id){
 			if(id){
 				this.set("isEdit", true);							
@@ -30776,20 +31285,7 @@
 					this.addEmpty();					
 				}								
 			}
-		},
-		setBaseCurrency 	: function(){
-			var self = this;
-
-			this.baseCurrencyDS.query({
-				filter: { field:"locale", value: banhji.institute.locale },
-				page: 1,
-				take: 1
-			}).then(function(){
-				var view = self.baseCurrencyDS.view();
-
-				self.set("baseCode", view[0].country +" - "+ view[0].code);
-			});		
-		},
+		},		
 		openWindow			: function(){
       		this.addEmpty();
 
@@ -31066,11 +31562,11 @@
 	**********************/
 	banhji.employeeDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "dashboards/customer_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
-		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "dashboards/top_product"),
-		graphDS 			: dataStore(apiUrl + 'dashboards/monthly_sale'),
+		summaryDS 			: dataStore(apiUrl + "customer_reports/customer_summary"),
+		topCustomerDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
+		topARDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),
+		graphDS 			: dataStore(apiUrl + 'customer_reports/monthly_sale'),
 		sale 				: 0,
 		sale_customer 		: 0,
 		sale_product 		: 0,
@@ -31192,7 +31688,7 @@
 		currencyDS 			: banhji.source.currencyDS,		
 		summaryDS 			: dataStore(apiUrl + "transactions"),
 		sortList			: banhji.source.sortList,
-		sorter 				: "year",
+		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",				
 		obj 				: null,
@@ -33085,11 +33581,11 @@
 	**********************/
 	banhji.vendorDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "dashboards/customer_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
-		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "dashboards/top_product"),
-		graphDS 			: dataStore(apiUrl + 'dashboards/monthly_sale'),
+		summaryDS 			: dataStore(apiUrl + "customer_reports/customer_summary"),
+		topCustomerDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
+		topARDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),
+		graphDS 			: dataStore(apiUrl + 'customer_reports/monthly_sale'),
 		purchase 			: 0,
 		sale_customer 		: 0,
 		sale_product 		: 0,
@@ -33211,7 +33707,7 @@
 		currencyDS 			: banhji.source.currencyDS,		
 		summaryDS 			: dataStore(apiUrl + "transactions"),
 		sortList			: banhji.source.sortList,
-		sorter 				: "year",
+		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",				
 		obj 				: null,
@@ -33808,6 +34304,11 @@
 
 			if(this.get("isEdit")){
 				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type=="update"){
+						banhji.vendorCenter.contactDS.fetch();
+					}
+				});
 				this.contactPersonDS.sync();
 			}else{
 				this.contactSync().then(function(data){
@@ -33818,6 +34319,7 @@
 					}
 				}).then(function(){
 					self.addEmpty();
+					banhji.vendorCenter.contactDS.fetch();
 				});
 			}						
 		},
@@ -38967,11 +39469,36 @@
 	**************************/
 	banhji.customerDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "dashboards/customer_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
-		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "dashboards/top_product"),
-		graphDS 			: dataStore(apiUrl + 'dashboards/monthly_sale'),
+		summaryDS 			: dataStore(apiUrl + "customer_reports/summary"),
+		topCustomerDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
+		topARDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),		
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "customer_reports/monthly_sale",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),
 		sale 				: 0,
 		sale_customer 		: 0,
 		sale_product 		: 0,
@@ -38997,16 +39524,16 @@
 			}).then(function(){
 				var view = self.summaryDS.view();
 				
-				self.set("sale", kendo.toString(view[0].sale, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));
+				self.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
 				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
 				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
 
 				self.set("order", kendo.toString(view[0].order, "n0"));
-				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));				
+				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.locale=="km-KH"?"c0":"c", banhji.locale));				
 				self.set("order_open", kendo.toString(view[0].order_open, "n0"));
 
-				self.set("ar", kendo.toString(view[0].ar, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));
+				self.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				self.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
 				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
 				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
@@ -39037,51 +39564,7 @@
 				],							
 				page: 1,
 				take: 5
-			});
-
-			this.loadGraph();								
-		},
-		loadGraph 			: function(){
-			var self = this, 
-			today = new Date(),
-			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-
-			this.graphDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],
-				page: 1,
-				take: 100
-			}).then(function(e) {
-			    var view = self.graphDS.view();
-			    
-				$('#graph').kendoChart({
-					dataSource: {data: view},												
-					series: [
-						{field: 'sale', categoryField:'month', type: 'line', axis: 'order'}
-					],
-					valueAxes: [
-						{
-		                    name: "order",
-		                    color: "#007eff",
-		                    min: 0,
-		                    majorUnit: 500000,
-		                    max: 1000000
-		                }
-	                ],
-	                categoryAxis: {
-	                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
-	                    axisCrossingValues: [0, 13],
-	                    justified: true
-	                },
-	                tooltip: {
-	                    visible: true,
-	                    format: "{0}",
-	                    template: "#= series.field #: #= value #"
-	                }
-				});
-			});		
+			});										
 		}		
 	});
 	banhji.customerCenter = kendo.observable({
@@ -39091,9 +39574,9 @@
 		contactTypeDS  		: banhji.source.customerTypeDS,
 		noteDS 				: dataStore(apiUrl + 'notes'),		
 		currencyDS  		: banhji.source.currencyDS,
-		outstandingDS 		: dataStore(apiUrl + "dashboards/outstanding"),
+		outstandingDS 		: dataStore(apiUrl + "customer_reports/outstanding"),
 		sortList			: banhji.source.sortList,
-		sorter 				: "year",
+		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",				
 		obj 				: null,
@@ -39289,16 +39772,16 @@
         		para = [];
 
         	//Dates
-        	if(start && end){
-            	para.push({ field:"start_date", value: kendo.toString(start, "yyyy-MM-dd") });
-            	para.push({ field:"end_date", value: kendo.toString(end, "yyyy-MM-dd") });            	            	
+        	if(start && end){        		
+            	para.push({ field:"issued_date >=", value: start });
+            	para.push({ field:"issued_date <=", value: end });            	          	            	
             }else if(start){
-            	para.push({ field:"start_date", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", value: start });
             }else if(end){
-            	para.push({ field:"end_date", value: kendo.toString(end, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", value: end });
             }else{
             	
-            }            
+            }       
 
             this.transactionDS.query({
             	filter: para,
@@ -39439,6 +39922,33 @@
 				}								
 			}			
 		},
+		loadObj 				: function(id, is_pattern){
+			var self = this, para = [];
+
+			para.push({ field:"id", value: id });
+
+			if(is_pattern){
+				para.push({ field:"is_pattern", value: 1 });
+			}
+
+			this.dataSource.query({
+				filter: para,
+				page: 1,
+				pageSize: 100
+			}).then(function(e){
+				var view = self.dataSource.view();
+
+				if(view[0].company!==""){
+					self.set("isCompany", true);
+				}else{
+					self.set("isCompany", false);
+				}
+
+				self.set("obj", view[0]);
+				self.loadMap();
+				self.set("originalNo", view[0].number);								
+			});
+		},				
 		//Pattern
 		setPattern 				: function(contact_type_id){
 			var obj = this.get("obj");
@@ -39446,18 +39956,27 @@
 			obj.set("contact_type_id", contact_type_id);
 			obj.set("is_pattern", 1);
 		},
-		savePattern 			: function(contact_type_id, contact_id){
-			var data = banhji.customerSetting.contactTypeDS.get(contact_type_id);
-			data.set("contact_id", contact_id);
-			banhji.customerSetting.contactTypeDS.sync();			
-			window.history.back();
-		},
-		loadPattern 			: function(e){
-			var self = this, obj = self.get("obj"), type = this.contactTypeDS.get(obj.contact_type_id);
+		initPattern 			: function(){
+			var self = this;
+
+			if(this.contactTypeDS.total()>0){
+				var type = this.contactTypeDS.at(0);
+				this.applyPattern(type.contact_id);
+			}else{
+				this.contactTypeDS.bind("requestEnd", function(e){					
+					if(e.type=="read"){
+						var data = e.response.results;
+						self.applyPattern(data[0].contact_id);
+					}
+				});
+			}
+		},		
+		applyPattern 			: function(contact_id){
+			var self = this, obj = self.get("obj");
 			
 			this.patternDS.query({
 				filter: [
-					{ field:"id", value: type.contact_id },
+					{ field:"id", value: contact_id },
 					{ field:"is_pattern", value: 1 }
 				],
 				page: 1,
@@ -39493,34 +40012,34 @@
 					obj.set("business_type_id", 0);
 				}
 			});
-		},		
-		loadObj 				: function(id, is_pattern){
-			var self = this, para = [];
+		},
+		contactTypeChanges 		: function(){
+			var obj = this.get("obj");
 
-			para.push({ field:"id", value: id });
+			if(obj.contact_type_id){
+				var type = this.contactTypeDS.get(obj.contact_type_id);
+				this.applyPattern(type.contact_id);
+			}else{
+				obj.set("account_id", 0);
+				obj.set("ra_id", 0);
+				obj.set("trade_discount_id", 0);
+				obj.set("settlement_discount_id", 0);
+				obj.set("deposit_account_id", 0);
+				obj.set("tax_item_id", 0);
+				obj.set("currency_id", 0);
+				obj.set("credit_limit", 0);
 
-			if(is_pattern){
-				para.push({ field:"is_pattern", value: 1 });
+				obj.set("payment_term_id", 0);
+				obj.set("payment_method_id", 0);
+				obj.set("business_type_id", 0);
 			}
-
-			this.dataSource.query({
-				filter: para,
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.dataSource.view();
-
-				if(view[0].company!==""){
-					self.set("isCompany", true);
-				}else{
-					self.set("isCompany", false);
-				}
-
-				self.set("obj", view[0]);
-				self.loadMap();
-				self.set("originalNo", view[0].number);								
-			});
-		},		
+		},
+		savePattern 			: function(contact_type_id, contact_id){
+			var data = banhji.customerSetting.contactTypeDS.get(contact_type_id);
+			data.set("contact_id", contact_id);
+			banhji.customerSetting.contactTypeDS.sync();			
+			window.history.back();
+		},				
 		//Contact Person
 		loadContactPerson		: function(id){
 			this.contactPersonDS.query({
@@ -39623,7 +40142,7 @@
 				"wlocation_id" 			: 0,			
 				"currency_id" 			: 0,
 				"user_id" 				: 0,
-				"contact_type_id" 		: 0,							
+				"contact_type_id" 		: 4,							
 				"number"				: "",
 				"enumber"				: "",
 				"wnumber"				: "",
@@ -39669,7 +40188,8 @@
 
 			var data = this.dataSource.data();			
 			var obj = data[data.length - 1];			
-			this.set("obj", obj);	
+			this.set("obj", obj);
+			this.initPattern();			
 		},
 		contactSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -39686,6 +40206,11 @@
 
 			if(this.get("isEdit")){
 				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type=="update"){
+						banhji.customerCenter.contactDS.fetch();
+					}
+				});
 				this.contactPersonDS.sync();
 			}else{
 				this.contactSync().then(function(data){
@@ -39695,8 +40220,9 @@
 					}
 				}).then(function(){
 					self.addEmpty();
+					banhji.customerCenter.contactDS.fetch();					
 				});
-			}						
+			}									
 		},
 		delete 					: function(){
 			var self = this,
@@ -40020,7 +40546,8 @@
 		    	this.setRate();
 		    	this.setTerm();
 		    	this.loadDeposit();
-		    	this.loadBalance();		    			    	
+		    	this.loadBalance();
+		    	this.loadRecurring();		    			    	
 	    	}else{
 	    		this.set("total_credit", 0);
 	    	}
@@ -40366,7 +40893,7 @@
 			this.set("obj", obj);
 
 			this.addRow();
-			this.setRate();			
+			this.setRate();						
 		},
 		addRow 				: function(){				
 			var transaction_id = 0, obj = this.get("obj");
@@ -40673,7 +41200,18 @@
 
 			this.journalLineDS.sync();
 		},
-		//Recurring		
+		//Recurring
+		loadRecurring 		: function(){
+			var obj = this.get("obj");
+
+			if(obj.contact_id){
+				this.recurringDS.filter([
+					{ field:"type", value:obj.type },
+					{ field:"contact_id", value:obj.contact_id },
+					{ field:"is_recurring", value:1 }
+				]);
+			}
+		},		
 		applyRecurring 		: function(){
 			var self = this, obj = this.get("obj");
 			
@@ -40703,14 +41241,14 @@
 					$.each(line, function(index, value){
 						self.lineDS.add({					
 							transaction_id 		: 0,							
-							item_id 			: value.item_id,									
+							item_id 			: value.item_id,
+							tax_item_id 		: value.tax_item_id,									
 							description 		: value.description,							
 							quantity 			: value.quantity,
 							price 				: value.price,								
 							amount 	 			: value.amount,									
 							rate				: value.rate,
 							locale				: value.locale,
-							has_vat 			: value.has_vat,
 
 							item_prices 		: value.item_prices
 						});
@@ -40992,7 +41530,7 @@
 		total 				: 0,
 		original_total 		: 0,
 		original_credit 	: 0,
-		user_id				: banhji.userManagement.getLogin() === null ? 0 : banhji.userManagement.getLogin().id,
+		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
 			if(id){
 				this.set("isEdit", true);
@@ -41499,6 +42037,7 @@
 			   	memo2 				: "",
 			   	status 				: 0,
 			   	segments 			: [],
+			   	is_journal 			: 1,
 			   	//Recurring
 			   	recurring_name 		: "",
 			   	start_date 			: new Date(),
@@ -41703,16 +42242,16 @@
 			});//End Foreach Loop			
 
 			//Start journal
-			//cash 
+			//Cash on Dr 
 			this.journalLineDS.add({					
 				transaction_id 		: transaction_id,
-				account_id 			: contact.account_id,				
+				account_id 			: obj.account_id,				
 				contact_id 			: obj.contact_id,				
 				description 		: "",
 				reference_no 		: "",
 				segments 	 		: [],								
-				dr 	 				: 0,
-				cr 					: obj.amount,				
+				dr 	 				: obj.amount,
+				cr 					: 0,				
 				rate				: obj.rate,
 				locale				: obj.locale
 			});
@@ -43194,8 +43733,7 @@
 				
 				self.setRate();				
 				self.loadDeposit();							
-			});				
-
+			});
 		},
 		loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
@@ -43234,7 +43772,8 @@
 
 		    	this.setRate();		    	
 		    	this.loadDeposit();
-		    	this.loadBalance();		    			    	
+		    	this.loadBalance();
+		    	this.loadRecurring();		    			    	
 	    	}else{
 	    		this.set("total_credit", 0);
 	    	}
@@ -43584,7 +44123,7 @@
 			this.set("obj", obj);
 
 			this.addRow();
-			this.setRate();			
+			this.setRate();						
 		},
 		addRow 				: function(){				
 			var transaction_id = 0, obj = this.get("obj");
@@ -43694,10 +44233,19 @@
 			this.lineDS.cancelChanges();			
 
 			window.history.back();
-		},
-	    //Journal	        
-	 
-		//Recurring		
+		},	 
+		//Recurring
+		loadRecurring 		: function(){
+			var obj = this.get("obj");
+
+			if(obj.contact_id){
+				this.recurringDS.filter([
+					{ field:"type", value:obj.type },
+					{ field:"contact_id", value:obj.contact_id },
+					{ field:"is_recurring", value:1 }
+				]);
+			}
+		},		
 		applyRecurring 		: function(){
 			var self = this, obj = this.get("obj");
 			
@@ -43988,7 +44536,8 @@
 		segmentItemDS		: banhji.source.segmentItemDS,		
 		referenceTypes 		: [
 			{ id:"Quote", name:"Quote" },
-			{ id:"Sale_Order", name:"Sale Order" }			
+			{ id:"Sale_Order", name:"Sale Order" },
+			{ id:"Invoice", name:"Invoice" }			
 		],
 		frequencyList 		: banhji.source.frequencyList,
 		monthOptionList 	: banhji.source.monthOptionList,
@@ -46704,25 +47253,74 @@
 	});
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,
-		dataSource 				: dataStore(apiUrl + "contacts"),
-		contactTypeDS			: dataStore(apiUrl + "contacts/type"),
-
-		contact_type_id 		: 0,
-		
+		dataSource 				: dataStore(apiUrl+"contacts"),
+		contactTypeDS			: banhji.source.customerTypeDS,
+		statusList 				: banhji.source.statusList,
+		contact_type_id 		: null,
+		status 					: null,		
 		pageLoad 				: function(){
 
 		},
 		search 					: function(){
 			var para = [],
+			status = this.get("status"),
 			contact_type_id = this.get("contact_type_id");
+
+			if(status!==null){
+				para.push({ field:"status", value: status });
+			}
 
 			if(contact_type_id){
 				para.push({ field:"contact_type_id", value: contact_type_id });
 			}
 
-			para.push({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
+			this.dataSource.filter(para);
+			this.set("status", null);
+			this.set("contact_type_id", null);
+		}
+	});
+	banhji.customerBalance = kendo.observable({
+		lang 					: langVM,
+		dataSource 				: dataStore(apiUrl+"customer_reports/balance"),
+		totalDS 				: dataStore(apiUrl+"customer_reports/balance_total"),
+		contactTypeDS			: banhji.source.customerTypeDS,
+		statusList 				: banhji.source.statusList,
+		contact_type_id 		: null,
+		status 					: null,
+		date 					: new Date(),
+		total 					: 0,		
+		pageLoad 				: function(){
+
+		},
+		search 					: function(){
+			var self = this, para = [],
+			status = this.get("status"),
+			date = this.get("date"),
+			contact_type_id = this.get("contact_type_id");
+
+			if(status!==null){
+				para.push({ field:"status", value: status });
+			}
+
+			if(date){
+				para.push({ field:"issued_date", operator:"transaction_date", value: kendo.toString(date, "yyyy-MM-dd") });
+			}
+
+			if(contact_type_id){
+				para.push({ field:"contact_type_id", value: contact_type_id });
+			}
 
 			this.dataSource.filter(para);
+			this.totalDS.query({
+				filter: para,
+				page:1,
+				pageSize:100
+			}).then(function(){
+				var view = self.totalDS.view();
+				self.set("total", kendo.toString(view[0].total, "c0", banhji.locale));
+			});
+			this.set("status", null);
+			this.set("contact_type_id", null);
 		}
 	});
 	banhji.customerSetting =  kendo.observable({
@@ -49404,11 +50002,11 @@
 	**************************/
 	banhji.itemDashBoard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "dashboards/customer_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
-		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "dashboards/top_product"),
-		graphDS 			: dataStore(apiUrl + 'dashboards/monthly_sale'),
+		summaryDS 			: dataStore(apiUrl + "customer_reports/customer_summary"),
+		topCustomerDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
+		topARDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),
+		graphDS 			: dataStore(apiUrl + 'customer_reports/monthly_sale'),
 		sale 				: 0,
 		sale_customer 		: 0,
 		sale_product 		: 0,
@@ -49528,13 +50126,11 @@
     	soDS 				: dataStore(apiUrl + "transactions/line"),
 		movementDS			: dataStore(apiUrl + 'items/movement'),		
 		categoryDS 			: dataStore(apiUrl + "categories"),
-		itemGroupDS			: dataStore(apiUrl + "items/group"),			
-
+		itemGroupDS			: dataStore(apiUrl + "items/group"),
 		sortList			: banhji.source.sortList,
-		sorter 				: "year",
+		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",
-				
 		obj 				: null,
 		on_po 				: 0,
 		on_so				: 0,		
@@ -57787,6 +58383,8 @@
 
 		//DAWINE -----------------------------------------------------------------------------------------
 		//Accounting
+		accountingDashboard: new kendo.Layout("#accountingDashboard", {model: banhji.accountingDashboard}),
+		accountingCenter: new kendo.Layout("#accountingCenter", {model: banhji.accountingCenter}),
 		account: new kendo.Layout("#account", {model: banhji.account}),
 		itemTransaction: new kendo.Layout("#itemTransaction", {model: banhji.itemTransaction}),
 		journal: new kendo.Layout("#journal", {model: banhji.journal}),
@@ -57794,6 +58392,8 @@
 		recurring: new kendo.Layout("#recurring", {model: banhji.recurring}),
 		journalReport: new kendo.Layout("#journalReport", {model: banhji.journalReport}),
 		saleTax: new kendo.Layout("#saleTax", {model: banhji.saleTax}),
+		accountingReportCenter: new kendo.Layout("#accountingReportCenter"),
+		accountingSetting: new kendo.Layout("#accountingSetting", {model: banhji.accountingSetting}),
 
 		//Employee
 		employeeDashboard: new kendo.Layout("#employeeDashboard", {model: banhji.employeeDashboard}),
@@ -57812,12 +58412,12 @@
 		purchaseReturn: new kendo.Layout("#purchaseReturn", {model: banhji.purchaseReturn}),
 		vendorDeposit: new kendo.Layout("#vendorDeposit", {model: banhji.vendorDeposit}),		
 		vendorSetting: new kendo.Layout("#vendorSetting", {model: banhji.vendorSetting}),
+		vendorReportCenter: new kendo.Layout("#vendorReportCenter"),
 
 		//SME
 		customerDashboard: new kendo.Layout("#customerDashboard", {model: banhji.customerDashboard}),
 		customerCenter: new kendo.Layout("#customerCenter", {model: banhji.customerCenter}),		
-		customer: new kendo.Layout("#customer", {model: banhji.customer}),
-		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),		
+		customer: new kendo.Layout("#customer", {model: banhji.customer}),				
 		
 		invoice: new kendo.Layout("#invoice", {model: banhji.invoice}),
 		cashSale: new kendo.Layout("#cashSale", {model: banhji.cashSale}),
@@ -57828,6 +58428,8 @@
 		statement: new kendo.Layout("#statement", {model: banhji.statement}),
 		customerDeposit: new kendo.Layout("#customerDeposit", {model: banhji.customerDeposit}),
 		customerReportCenter: new kendo.Layout("#customerReportCenter"),
+		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
+		customerBalance : new kendo.Layout("#customerBalance", {model: banhji.customerBalance}),
 		customerSetting: new kendo.Layout("#customerSetting", {model: banhji.customerSetting}),
 
 		//Cashier
@@ -57876,8 +58478,7 @@
 		statement: new kendo.Layout("#statement", {model: banhji.statement}),
 		cashDeposit: new kendo.Layout("#cashDeposit", {model: banhji.cashDeposit}),
 		cashReportCenter: new kendo.Layout("#cashReportCenter"),
-		cashSetting: new kendo.Layout("#cashSetting", {model: banhji.cashSetting}),
-		
+		cashSetting: new kendo.Layout("#cashSetting", {model: banhji.cashSetting}),		
 
 
 		//Electricity
@@ -57990,7 +58591,7 @@
 		$('#current-section').text("");
 		$("#secondary-menu").html("");
 		banhji.index.getLogo();
-		banhji.view.layout.showIn('#content', banhji.view.index);
+		banhji.index.pageLoad();
 	});
 	
 	
@@ -57998,6 +58599,44 @@
 	/*************************
 	* Accounting Section   *
 	**************************/
+	banhji.router.route("/accounting", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{			
+			// var vm = banhji.accountingDashboard;
+						
+			banhji.view.layout.showIn("#content", banhji.view.accountingDashboard);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			if(banhji.pageLoaded["accounting"]==undefined){
+				banhji.pageLoaded["accounting"] = true;		         
+
+		          	
+			}
+
+			// vm.pageLoad();			
+		}				
+	});
+	banhji.router.route("/accounting_center", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{			
+			// var vm = banhji.accountingCenter;
+						
+			banhji.view.layout.showIn("#content", banhji.view.accountingCenter);			
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
+			if(banhji.pageLoaded["accounting_center"]==undefined){
+				banhji.pageLoaded["accounting_center"] = true;		         
+
+		               	
+			}
+
+			// vm.pageLoad();			
+		}				
+	});
 	banhji.router.route("/account(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -58134,38 +58773,7 @@
 				vm.recurringDS.filter([
 					{ field:"type", value:"Journal" },
 					{ field:"is_recurring", value:1 }
-				]);				            		
- 
-				var currency = $("#cbbCurrency").kendoComboBox({
-                    dataTextField: "code",
-                    dataValueField: "locale",
-                    valuePrimitive: true,
-                    height: 400,
-                    template:"#=code# - #=country#",
-                    dataSource: {
-                    	transport: {
-							read 	: {
-								url: apiUrl+"currencies",
-								type: "GET",
-								headers: {
-									"Entity": getDB(),
-									"User": banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id
-								},
-								dataType: 'json'
-							}							
-						},
-						schema 	: {
-							model: {
-								id: 'id'
-							},
-							data: 'results',
-							total: 'count'
-						},						
-						group: { field: "group" },						
-						page: 1,						
-						take: 100
-                    }
-                }).data("kendoComboBox");					
+				]);									
    
 				var validator = $("#example").kendoValidator().data("kendoValidator");
 				var notification = $("#notification").kendoNotification({				    
@@ -58225,39 +58833,7 @@
 			var vm = banhji.currencyRate;
 			
 			if(banhji.pageLoaded["currency_rate"]==undefined){
-				banhji.pageLoaded["currency_rate"] = true;
-
-				vm.setBaseCurrency();
-
-				var currency = $("#cbbCurrency").kendoComboBox({
-                    dataTextField: "code",
-                    dataValueField: "id",
-                    height: 400,
-                    template:"#=code# - #=country#",
-                    dataSource: {
-                    	transport: {
-							read 	: {
-								url: apiUrl+"currencies",
-								type: "GET",
-								headers: {
-									"Entity": getDB(),
-									"User": banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id
-								},
-								dataType: 'json'
-							}							
-						},
-						schema 	: {
-							model: {
-								id: 'id'
-							},
-							data: 'results',
-							total: 'count'
-						},						
-						group: { field: "group" },						
-						page: 1,						
-						take: 100
-                    }
-                }).data("kendoComboBox");
+				banhji.pageLoaded["currency_rate"] = true;				
 
 				function startChange() {
                     var startDate = start.value(),
@@ -58372,7 +58948,7 @@
 		        	e.preventDefault();
 
 		        	var para = [],
-		        	currency_id = currency.value(), 
+		        	locale = vm.currency_locale, 
 					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
 					edate = kendo.toString(end.value(), "yyyy-MM-dd");
 					
@@ -58388,8 +58964,8 @@
 		            	
 		            }
 
-		            if(currency_id){
-		            	para.push({ field:"currency_id", value: currency_id }); 
+		            if(locale){
+		            	para.push({ field:"locale", value: locale }); 
 		            }         
 
 		            vm.dataSource.filter(para);		            
@@ -58608,6 +59184,22 @@
 		        }).data("kendoDropDownList");
 		}		
 	});
+	banhji.router.route("/accounting_report_center", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.accountingReportCenter);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
+			//var vm = banhji.customerReportCenter;			
+			
+			if(banhji.pageLoaded["accounting_report_center"]==undefined){
+				banhji.pageLoaded["accounting_report_center"] = true;				
+								
+			}			
+		}		
+	});
 	
 	/*************************
 	*   Employee Section   *
@@ -58642,9 +59234,8 @@
 			var vm = banhji.employeeCenter;
 
 			if(banhji.pageLoaded["employee_center"]==undefined){
-				banhji.pageLoaded["employee_center"] = true;
-				
-				vm.sorterChanges();				
+				banhji.pageLoaded["employee_center"] = true;				
+							
 				vm.contactTypeDS.filter({ field:"parent_id", value:2 });
 				
 				vm.contactDS.query({
@@ -58660,7 +59251,116 @@
 				    	vm.loadTransaction(view[0].id);				    	
 				    	vm.loadNote(view[0].id);
 				    }
-				});				               
+				});
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());			               
 			}				
 		}
 	});
@@ -58891,8 +59591,7 @@
 
 			if(banhji.pageLoaded["vendor_center"]==undefined){
 				banhji.pageLoaded["vendor_center"] = true;
-				
-				vm.sorterChanges();				
+								
 				vm.contactTypeDS.filter({ field:"parent_id", value:2 });
 				
 				vm.contactDS.query({
@@ -58908,7 +59607,116 @@
 				    	vm.loadTransaction(view[0].id);				    	
 				    	vm.loadNote(view[0].id);
 				    }
-				});				               
+				});
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());				               
 			}				
 		}
 	});
@@ -59357,6 +60165,22 @@
 			vm.pageLoad();			     		
 		}
 	});
+	banhji.router.route("/vendor_report_center", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.vendorReportCenter);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
+
+			//var vm = banhji.customerReportCenter;			
+			
+			if(banhji.pageLoaded["vendor_report_center"]==undefined){
+				banhji.pageLoaded["vendor_report_center"] = true;				
+								
+			}			
+		}		
+	});
 
 
 	/*************************
@@ -59440,7 +60264,7 @@
 			if(banhji.pageLoaded["customer_center"]==undefined){
 				banhji.pageLoaded["customer_center"] = true;
 				
-				vm.sorterChanges();				
+							
 				
 				vm.contactDS.query({
 				  	filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
@@ -59455,7 +60279,118 @@
 				    	vm.loadTransaction(view[0].id);				    	
 				    	vm.loadNote(view[0].id);
 				    }
-				});				               
+				});
+
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());
+								               
 			}				
 		}
 	});
@@ -60248,27 +61183,23 @@
 			if(banhji.pageLoaded["customer_list"]==undefined){
 				banhji.pageLoaded["customer_list"] = true;				
 				
-				vm.contactTypeDS.filter({ field:"parent_id", value:1 });
-				vm.dataSource.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
+			}			
+		}		
+	});
+	banhji.router.route("/customer_balance", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerBalance);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
-				$("#grid").kendoGrid({
-				    dataSource: vm.dataSource,
-				    toolbar: ["excel"],
-		            excel: {
-		                fileName: "Customer_List.xlsx",
-		                filterable: true
-		            },
-		            reorderable: true,
-				    groupable: true,
-				    sortable: true,				    				    
-				    pageable: true,				    
-				    columns:[
-				    	{ field: "number", title:"Number" },
-				    	{ field: "surname", title:"Surname" },
-				    	{ field: "name", title:"Name" },
-				    	{ field: "contact_type", title:"Type" }
-				    ]				    
-				});
+			var vm = banhji.customerBalance;			
+			
+			if(banhji.pageLoaded["customer_balance"]==undefined){
+				banhji.pageLoaded["customer_balance"] = true;				
+				
+				vm.search();
 			}			
 		}		
 	});
@@ -60722,9 +61653,8 @@
 			var vm = banhji.itemCenter;
 
 			if(banhji.pageLoaded["item_center"]==undefined){
-				banhji.pageLoaded["item_center"] = true;
-				
-				vm.sorterChanges();				
+				banhji.pageLoaded["item_center"] = true;				
+						
 								
 				vm.itemDS.query({
 				  	filter:{ field:"item_type_id", value:1 },
@@ -60734,7 +61664,116 @@
 					var view = vm.itemDS.view();
 					vm.set("obj", view[0]);
 					vm.loadMovement(view[0].id);
-				});				               
+				});	
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());			               
 			}				
 		}
 	});
@@ -61334,8 +62373,7 @@
 
 			if(banhji.pageLoaded["cash_center"]==undefined){
 				banhji.pageLoaded["cash_center"] = true;
-				
-				vm.sorterChanges();				
+							
 				
 				vm.contactDS.query({
 				  	filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
@@ -61350,7 +62388,116 @@
 				    	vm.loadTransaction(view[0].id);				    	
 				    	vm.loadNote(view[0].id);
 				    }
-				});				               
+				});	
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());			               
 			}				
 		}
 	});

@@ -23,8 +23,15 @@
 <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.dataviz.bootstrap.min.css">
 
 <!-- Bootstrap -->
-<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/css/responsive.css">
+<!--<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/css/responsive.css"-->
+<link rel="stylesheet" href="<?php echo base_url()?>assets/bootstrap.css" >
+
+<!-- Main Theme Stylesheet :: CSS -->
+<!--<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/css/style-default-menus-dark.css?1374506511" rel="stylesheet" type="text/css" />
+<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/skins/css/blue-gray.css" rel="stylesheet" type="text/css" />-->
+<link rel="stylesheet" href="<?php echo base_url()?>assets/style-default-menus-dark.css" >
+<link rel="stylesheet" href="<?php echo base_url()?>assets/blue-gray.css" >
+<link href='https://fonts.googleapis.com/css?family=Content:400,700' rel='stylesheet' type='text/css'>
 
 <!-- Glyphicons Font Icons -->
 <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/glyphicons/css/glyphicons.css" rel="stylesheet" />
@@ -76,15 +83,10 @@
 <!-- Bootstrap Image Gallery -->
 <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/bootstrap-image-gallery/css/bootstrap-image-gallery.min.css" rel="stylesheet" />
 
-<!-- Main Theme Stylesheet :: CSS -->
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/css/style-default-menus-dark.css?1374506511" rel="stylesheet" type="text/css" />
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/skins/css/blue-gray.css" rel="stylesheet" type="text/css" />
-<link href='https://fonts.googleapis.com/css?family=Content:400,700' rel='stylesheet' type='text/css'>
+<!-- Customize CSS-->
+<link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" >
+
 <style>
-	body{
-		background: #f4f4f4 !important;
-		font-family: 'Open Sans', sans-serif !important;
-	}
 
 	#module-image {
 		list-style: none;
@@ -148,12 +150,12 @@
 	.text-table tr td span{
 		color: #333 !important;
 	}
-	.customer-background{
+	/*.customer-background{
 		width: 990px;
 		background: #fff;
 		margin: 0 auto;
 		padding: 15px 0 10px;
-	}
+	}*/
 	.table-condensed th, .table-condensed td{
 		padding: 0 0 10px 0 !important;
 	}
@@ -193,17 +195,17 @@
 		position: absolute;
 	    font-size: 20px;
 	    cursor: pointer;
-	    right: 27px;
-	    top: 37%;
+	    right: 12px;
+	    top: 31%;
+
 	}
 
 	.board-add{
-		width: 98%;
+		width: 100%;
 		padding: 15px;
 		background: #fff;
 		float: left;
-		position: relative;
-		margin-top: 10px; 
+		position: relative; 
 	}
 	.board-add .span6 p{
 		font-size:  11px;
@@ -214,8 +216,8 @@
 		margin-top: 10px;
 	}
 	.board-financial{
-		width: 98%;
-		padding: 15px;
+		width: 100%;
+		padding: 15px 0;
 		background: #fff;
 		float: left;
 		position: relative;
@@ -230,7 +232,7 @@
 	}
 
 	.board-chart{
-		width: 98%;
+		width: 100%;
 		padding: 15px;
 		background: #fff;
 		float: left;
@@ -262,7 +264,7 @@
 	}
 
 	.welcome-nopadding{
-		width:  90%;
+		width: 95%;
 	}
 	.span12 .k-chart{
 		margin-left: -20px;
@@ -274,41 +276,46 @@
 		font-size: 20px;
 		margin-top: 15px;
 	}
-
-	input.k-textbox {
-		height: 30px;
-		width: 220px;
-		line-height: 30px;
-		vertical-align: middle;
-		border-radius: 5px;
+	.widget.widget-body-primary > .widget-body *{
+		color: #333 !important;
 	}
-
+	.widget.widget-tabs-double > .widget-head ul li a span, .widget.widget-tabs-double > .widget-head ul li.active a span{
+		line-height: 30px !important;
+	}
+	#linkPay{
+		cursor: pointer;
+	}
 	.brand {
 		color: #ffffff;
 	}
-	
-
+	#txtDescription{
+		height: 134px;
+	    margin-bottom: 0;
+	    resize: none;
+<<<<<<< HEAD
+	}
+	.well textarea,
+	.tab-pane  textarea,
+	.row-fluid .span5 textarea{
+		resize: none;
+	}
+	.table-condensed th, .table-condensed td {
+	    padding: 5px 0 5px 0 !important;
+	}
 	@media (max-width: 2000px){
 		.container {
 		    width: 1170px !important;
 		}
+=======
+>>>>>>> refs/remotes/origin/Dawine
 	}
-
-	@media (min-width: 1200px){
-		.container {
-		    width: 1170px !important;
-		}
+	.well textarea,
+	.tab-pane  textarea,
+	.row-fluid .span5 textarea{
+		resize: none;
 	}
-	
-	@media (min-width: 992px){
-		.container {
-		    width: 980px ;
-		}
-	}
-	@media (min-width: 768px){
-		.container {
-		    width: 750px ;
-		}
+	.table-condensed th, .table-condensed td {
+	    padding: 5px 0 5px 0 !important;
 	}
 
 </style>

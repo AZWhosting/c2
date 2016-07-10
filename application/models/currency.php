@@ -36,9 +36,9 @@ class Currency extends DataMapper {
 				'char_set' => 'utf8',
 				'cachedir' => '',
 				'dbcollat' => 'utf8_general_ci',				
-				'hostname' => 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com',
-				'username' => 'mightyadmin',
-				'password' => 'banhji2016',
+				'hostname' => 'localhost',
+				'username' => 'root',
+				'password' => '',
 				'database' => $db,
 				'prefix'   => ''
 			);
