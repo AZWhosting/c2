@@ -3,18 +3,21 @@
 require APPPATH.'/libraries/REST_Controller.php';
 
 class Account_lines extends REST_Controller {	
-	public $entity;
+	public $_database;
+	public $server_host;
+	public $server_user;
+	public $server_pwd;
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
 		$institute = new Institute();
-		$institute->where('name', $this->input->get_request_header('Entity'))->get();
+		$institute->where('id', $this->input->get_request_header('Institute'))->get();
 		if($institute->exists()) {
 			$conn = $institute->connection->get();
-			// $this->entity = $conn->server_name;
-			// $this->user = $conn->user;
-			// $this->pwd = $conn->password;	
-			$this->entity = $conn->inst_database;
+			$this->server_host = $conn->server_name;
+			$this->server_user = $conn->username;
+			$this->server_pwd = $conn->password;	
+			$this->_database = $conn->inst_database;
 		}
 	}	
 
@@ -28,7 +31,7 @@ class Account_lines extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		$obj = new Account_line(null, $this->entity);		
+		$obj = new Account_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -112,7 +115,7 @@ class Account_lines extends REST_Controller {
 		$data["count"] = 0;
 		
 		foreach ($models as $value) {
-			$obj = new Account_line(null, $this->entity);		
+			$obj = new Account_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
 			isset($value->payment_method_id)? $obj->payment_method_id 	= $value->payment_method_id : "";
@@ -160,7 +163,7 @@ class Account_lines extends REST_Controller {
 		$data["count"] = 0;
 
 		foreach ($models as $value) {			
-			$obj = new Account_line(null, $this->entity);
+			$obj = new Account_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
@@ -208,7 +211,7 @@ class Account_lines extends REST_Controller {
 		$models = json_decode($this->delete('models'));
 
 		foreach ($models as $key => $value) {
-			$obj = new Account_line(null, $this->entity);
+			$obj = new Account_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
 			
 			$data["results"][] = array(

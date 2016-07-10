@@ -690,78 +690,59 @@ class Transactions extends REST_Controller {
 	//LINE POST
 	function line_post() {
 		$models = json_decode($this->post('models'));				
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
-		
+
 		foreach ($models as $value) {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 
 			//Record Item			
-			if(!empty($value->item_id) && isset($value->item_id)){
-				if($value->item_id>0){
-					$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$item->get_by_id($value->item_id);
+			if($value->item_id>0){
+				$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$item->get_by_id($value->item_id);
 
-					if($item->item_type_id=="1"){
-						$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$transaction->get_by_id($value->transaction_id);
+				if($item->item_type_id=="1"){
+					$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$transaction->get_by_id($value->transaction_id);
 
-						if($transaction->type=="Invoice" || $transaction->type=="Cash_Receipt" || $transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase"){
-							switch ($transaction->type) { 
-							    case 'Invoice' || 'Cash_Sale': 
-							    	//Avg Price
-									$lastPrice = floatval($item->on_hand) * floatval($item->price);
-									$currentPrice = floatval($value->quantity) * floatval($value->price);
+					if($transaction->type=="Invoice" || $transaction->type=="Cash_Receipt"){
+						$lastPrice = floatval($item->on_hand) * floatval($item->price);
+						$currentPrice = floatval($value->quantity) * floatval($value->price);
 
-									$item->price = ($lastPrice + $currentPrice) / (floatval($item->on_hand) + floatval($value->quantity));
+						$item->price = ($lastPrice + $currentPrice) / (floatval($item->on_hand) + floatval($value->quantity));
 
-									$item->on_hand -= floatval($value->quantity);	
-							    break; 
+						$item->on_hand -= floatval($value->quantity);
+					}else if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase"){
+						//Avg Cost
+						$lastCost = floatval($item->on_hand) * floatval($item->cost);
+						$currentCost = floatval($value->amount) + floatval($value->additional_cost);
 
-							    case 'Cash_Purchase' || 'Credit_Purchase': 
-							    	//Avg Cost
-									$lastCost = floatval($item->on_hand) * floatval($item->cost);
-									$currentCost = floatval($value->amount) + floatval($value->additional_cost);
+						$item->cost = ($lastCost + $currentCost) / (floatval($item->on_hand) + floatval($value->quantity));
 
-									$item->cost = ($lastCost + $currentCost) / (floatval($item->on_hand) + floatval($value->quantity));
+						$item->on_hand += floatval($value->quantity);
+					}else if($transaction->type=="Sale_Return"){
+						$item->on_hand += floatval($value->quantity);
+					}else if($transaction->type=="Adjustment"){
+						$item->on_hand += floatval($value->quantity) * floatval($value->movement);
+					}
 
-									$item->on_hand += floatval($value->quantity);
-							    break;
+					if($item->save()){
+						$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-							    case 'Sale_Return': 
-							     	//Avg Cost
-									// $lastCost = floatval($item->on_hand) * floatval($item->cost);
-									// $currentCost = floatval($value->amount) + floatval($value->additional_cost);
+						$po->select_sum("quantity");
+						$po->where_related("transaction", "type", "PO");
+						$po->where_related("transaction", "status", 0);
 
-									// $item->cost = ($lastCost + $currentCost) / (floatval($item->on_hand) + floatval($value->quantity));
+						$so->select_sum("quantity");
+						$so->where_related("transaction", "type", "SO");
+						$so->where_related("transaction", "status", 0);
 
-									$item->on_hand += floatval($value->quantity);
-							    break;
-
-							    case 'Adjustment': 
-							    	$item->on_hand += floatval($value->quantity) * floatval($value->movement);
-							    break; 
-							}
-
-							if($item->save()){
-								$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-								$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-								$po->select_sum("quantity");
-								$po->where_related("transaction", "type", "PO");
-								$po->where_related("transaction", "status", 0);
-
-								$so->select_sum("quantity");
-								$so->where_related("transaction", "type", "SO");
-								$so->where_related("transaction", "status", 0);
-
-								$obj->on_po = $po->get()->quantity;
-								$obj->on_so = $so->get()->quantity;
-							}
-						}
+						$obj->on_po = $po->get()->quantity;
+						$obj->on_so = $so->get()->quantity;
 					}
 				}
-			}
+			}			
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";			
 			isset($value->item_id)			? $obj->item_id				= $value->item_id : "";			
@@ -826,25 +807,20 @@ class Transactions extends REST_Controller {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);			
 
-			//Formula: old - new			
+			//Updat record item: old - new			
 			if(isset($value->item_id)){
 				if($value->item_id>0){
 					$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$item->get_by_id($value->item_id);
-
-					//Formula 
+					
 					if($item->item_type_id=="1"){
 						$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$transaction->get_by_id($value->transaction_id);
 
-						switch ($transaction->type) { 
-						    case 'Invoice' || 'Cash_Sale' || 'Cash_Purchase' || 'Credit_Purchase': 
-						    	$item->on_hand += floatval($obj->quantity) - floatval($value->quantity);	
-						    break;					    
-
-						    case 'Adjustment': 
-						    	$item->on_hand += floatval($obj->quantity) - (floatval($value->quantity) * floatval($value->movement));
-						    break; 
+						if($transaction->type=='Invoice' || $transaction->type=='Cash_Sale' || $transaction->type=='Cash_Purchase' || $transaction->type=='Credit_Purchase'){						
+						    $item->on_hand += floatval($obj->quantity) - floatval($value->quantity);	
+						}else if($transaction->type=='Adjustment'){ 
+						    $item->on_hand += floatval($obj->quantity) - (floatval($value->quantity) * floatval($value->movement));						     
 						}						
 
 						$item->save();

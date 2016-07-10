@@ -9,19 +9,7 @@ class Payment_method extends DataMapper {
 		'transaction' => array(
 			"class" => 'transaction',
 			"other_field" => "payment_method"
-		),
-		'first_payment' => array(
-			'class' => 'contact',
-			'other_field' => 'payment_main'
-		),
-		'second_payment' => array(
-			'class' => 'contact',
-			'other_field' => 'payment_second'
-		),
-		'payment' => array(
-			'class' => 'payment',
-			'other_field' => 'payment_method'
-		),
+		),		
 		'account_line' => array(
 			'class' => 'account_line',
 			'other_field' => 'payment_method'

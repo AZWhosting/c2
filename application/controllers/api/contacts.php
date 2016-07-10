@@ -120,6 +120,7 @@ class Contacts extends REST_Controller {
 					"contact_type_id" 			=> $value->contact_type_id,
 					"eorder" 					=> $value->eorder,
 					"worder" 					=> $value->worder, 						
+					"abbr" 						=> $value->abbr,
 					"number" 					=> $value->number,
 					"enumber" 					=> $value->enumber,
 					"wnumber" 					=> $value->wnumber,			
@@ -138,6 +139,8 @@ class Contacts extends REST_Controller {
 					"job" 						=> $value->job,
 					"vat_no" 					=> $value->vat_no,
 					"family_member"				=> $value->family_member,
+					"city" 						=> $value->city,
+					"post_code" 				=> $value->post_code,
 					"address" 					=> $value->address,
 					"bill_to" 					=> $value->bill_to,
 					"ship_to" 					=> $value->ship_to,
@@ -204,6 +207,7 @@ class Contacts extends REST_Controller {
 			isset($value->contact_type_id)			? $obj->contact_type_id 		= $value->contact_type_id : "";					
 			isset($value->eorder)					? $obj->eorder					= $last_id : "";
 			isset($value->worder)					? $obj->worder					= $last_id : "";
+			isset($value->abbr)						? $obj->abbr					= $value->abbr : "";
 			isset($value->number)					? $obj->number					= $value->number : "";
 			isset($value->enumber)					? $obj->enumber					= $value->enumber : "";
 			isset($value->wnumber)					? $obj->wnumber					= $value->wnumber : "";
@@ -222,6 +226,8 @@ class Contacts extends REST_Controller {
 			isset($value->job)						? $obj->job						= $value->job : "";
 			isset($value->vat_no)					? $obj->vat_no					= $value->vat_no : "";
 			isset($value->family_member)			? $obj->family_member			= $value->family_member : "";
+			isset($value->city)						? $obj->city 					= $value->city : "";
+			isset($value->post_code)				? $obj->post_code 				= $value->post_code : "";
 			isset($value->address)					? $obj->address 				= $value->address : "";
 			isset($value->bill_to)					? $obj->bill_to 				= $value->bill_to : "";
 			isset($value->ship_to)					? $obj->ship_to 				= $value->ship_to : "";
@@ -273,7 +279,8 @@ class Contacts extends REST_Controller {
 					"user_id"					=> $obj->user_id, 	
 					"contact_type_id" 			=> $obj->contact_type_id,
 					"eorder" 					=> $obj->eorder,
-					"worder" 					=> $obj->worder, 						
+					"worder" 					=> $obj->worder,
+					"abbr" 						=> $obj->abbr, 						
 					"number" 					=> $obj->number,
 					"enumber" 					=> $obj->enumber,
 					"wnumber" 					=> $obj->wnumber,			
@@ -292,6 +299,8 @@ class Contacts extends REST_Controller {
 					"job" 						=> $obj->job,
 					"vat_no" 					=> $obj->vat_no,
 					"family_member"				=> $obj->family_member,
+					"city" 						=> $obj->city,
+					"post_code" 				=> $obj->post_code,
 					"address" 					=> $obj->address,
 					"bill_to" 					=> $obj->bill_to,
 					"ship_to" 					=> $obj->ship_to,
@@ -356,6 +365,7 @@ class Contacts extends REST_Controller {
 			isset($value->contact_type_id)			? $obj->contact_type_id 		= $value->contact_type_id : "";					
 			isset($value->eorder)					? $obj->eorder					= $value->eorder : "";
 			isset($value->worder)					? $obj->worder					= $value->worder : "";
+			isset($value->abbr)						? $obj->abbr					= $value->abbr : "";
 			isset($value->number)					? $obj->number					= $value->number : "";
 			isset($value->enumber)					? $obj->enumber					= $value->enumber : "";
 			isset($value->wnumber)					? $obj->wnumber					= $value->wnumber : "";
@@ -374,6 +384,8 @@ class Contacts extends REST_Controller {
 			isset($value->job)						? $obj->job						= $value->job : "";
 			isset($value->vat_no)					? $obj->vat_no					= $value->vat_no : "";
 			isset($value->family_member)			? $obj->family_member			= $value->family_member : "";
+			isset($value->city)						? $obj->city 					= $value->city : "";
+			isset($value->post_code)				? $obj->post_code 				= $value->post_code : "";
 			isset($value->address)					? $obj->address 				= $value->address : "";
 			isset($value->bill_to)					? $obj->bill_to 				= $value->bill_to : "";
 			isset($value->ship_to)					? $obj->ship_to 				= $value->ship_to : "";
@@ -425,7 +437,8 @@ class Contacts extends REST_Controller {
 					"user_id"					=> $obj->user_id, 	
 					"contact_type_id" 			=> $obj->contact_type_id,
 					"eorder" 					=> $obj->eorder,
-					"worder" 					=> $obj->worder, 						
+					"worder" 					=> $obj->worder,
+					"abbr" 						=> $obj->abbr, 						
 					"number" 					=> $obj->number,
 					"enumber" 					=> $obj->enumber,
 					"wnumber" 					=> $obj->wnumber,			
@@ -444,6 +457,8 @@ class Contacts extends REST_Controller {
 					"job" 						=> $obj->job,
 					"vat_no" 					=> $obj->vat_no,
 					"family_member"				=> $obj->family_member,
+					"city" 						=> $obj->city,
+					"post_code" 				=> $obj->post_code,
 					"address" 					=> $obj->address,
 					"bill_to" 					=> $obj->bill_to,
 					"ship_to" 					=> $obj->ship_to,
@@ -796,6 +811,7 @@ class Contacts extends REST_Controller {
 		 			"id" 			=> $value->id,		 			
 					"parent_id" 	=> $value->parent_id,
 					"contact_id" 	=> $value->contact_id,						
+					"abbr" 			=> $value->abbr,
 					"name" 			=> $value->name,
 					"description" 	=> $value->description,
 					"is_system" 	=> $value->is_system						
@@ -813,11 +829,13 @@ class Contacts extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->parent_id 	= $value->parent_id;
-			$obj->contact_id 	= $value->contact_id;			
-			$obj->name 			= $value->name;
-			$obj->description 	= isset($value->description)?$value->description:"";
-			$obj->is_system 	= isset($value->is_system)?$value->is_system:0;
+			
+			isset($value->parent_id) 	? $obj->parent_id 		= $value->parent_id : "";
+			isset($value->contact_id) 	? $obj->contact_id 		= $value->contact_id : "";
+			isset($value->abbr) 		? $obj->abbr 			= $value->abbr : "";
+			isset($value->name) 		? $obj->name 			= $value->name : "";
+			isset($value->description) 	? $obj->description 	= $value->description : "";
+			isset($value->is_system) 	? $obj->is_system 		= $value->is_system : "";			
 			
 			if($obj->save()){
 				//Respsone
@@ -825,6 +843,7 @@ class Contacts extends REST_Controller {
 					"id" 			=> $obj->id,		 			
 					"parent_id" 	=> $obj->parent_id,
 					"contact_id" 	=> $obj->contact_id,
+					"abbr" 			=> $obj->abbr,
 					"name" 			=> $obj->name,
 					"description" 	=> $obj->description,
 					"is_system" 	=> $obj->is_system	
@@ -845,19 +864,21 @@ class Contacts extends REST_Controller {
 		foreach ($models as $value) {			
 			$obj = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
-
-			$obj->parent_id 	= $value->parent_id;
-			$obj->contact_id 	= $value->contact_id;			
-			$obj->name 			= $value->name;
-			$obj->description 	= isset($value->description)?$value->description:"";
-			$obj->is_system 	= isset($value->is_system)?$value->is_system:0;
+			
+			isset($value->parent_id) 	? $obj->parent_id 		= $value->parent_id : "";
+			isset($value->contact_id) 	? $obj->contact_id 		= $value->contact_id : "";
+			isset($value->abbr) 		? $obj->abbr 			= $value->abbr : "";
+			isset($value->name) 		? $obj->name 			= $value->name : "";
+			isset($value->description) 	? $obj->description 	= $value->description : "";
+			isset($value->is_system) 	? $obj->is_system 		= $value->is_system : "";
 
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
 					"id"			=> $obj->id,
 					"parent_id" 	=> $obj->parent_id,
-					"contact_id" 	=> $obj->contact_id,						
+					"contact_id" 	=> $obj->contact_id,
+					"abbr" 			=> $obj->abbr,						
 					"name" 			=> $obj->name,
 					"description" 	=> $obj->description,
 					"is_system" 	=> $obj->is_system

@@ -22,24 +22,24 @@ class Item_line extends DataMapper {
 			'other_field' => 'item_line'
 		)
 	);
-		
-	public function __construct($id = null, $server_name = null, $server_username = null, $server_password = null, $db = null) {	
-		$this->db_params = array(
-				'dbdriver' => 'mysql',
-				'pconnect' => true,
-				'db_debug' => true,
-				'cache_on' => false,
-				'char_set' => 'utf8',
-				'cachedir' => '',
-				'dbcollat' => 'utf8_general_ci',
-				'hostname' => 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com',
-				'username' => 'mightyadmin',
-				'password' => 'banhji2016',
-				'database' => $db,
-				'prefix'   => ''
-			);
-		parent::__construct($id);
-	}
+
+	public function __construct($id = null, $server_name = null, $server_username = null, $server_password = null, $db = null) {   
+        $this->db_params = array(
+                'dbdriver' => 'mysql',
+                'pconnect' => true,
+                'db_debug' => true,
+                'cache_on' => false,
+                'char_set' => 'utf8',
+                'cachedir' => '',
+                'dbcollat' => 'utf8_general_ci',
+                'hostname' => 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com',
+                'username' => 'mightyadmin',
+                'password' => 'banhji2016',
+                'database' => $db,
+                'prefix'   => ''
+            );
+        parent::__construct($id);
+    }
 }
 
 /* End of file item_line.php */

@@ -8,10 +8,6 @@ class Payment_term extends DataMapper {
 		'transaction' => array(
 			"class" => 'transaction',
 			"other_field" => "payment_term"
-		),
-		'bill' => array(
-			'class' => 'bill',
-			'other_field' => 'payment_term'
 		)
 	);
 

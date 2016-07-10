@@ -85,7 +85,8 @@ class Payment_methods extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $value->id,
 					"name" 			=> $value->name,
-					"description" 	=> $value->description
+					"description" 	=> $value->description,
+					"is_system" 	=> $value->is_system
 				);
 			}
 		}		
@@ -102,14 +103,16 @@ class Payment_methods extends REST_Controller {
 		
 		foreach ($models as $value) {
 			$obj = new Payment_method(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->name 		= $value->name;
-			$obj->description 		= $value->description;			
+			isset($value->name)			? $obj->name			= $value->name : "";
+			isset($value->description)	? $obj->description		= $value->description : "";
+			isset($value->is_system)	? $obj->is_system		= $value->is_system : "";
 			
 	   		if($obj->save()){		   		
 			   	$data["results"][] = array(
 			   		"id" 			=> $obj->id,
 					"name" 			=> $obj->name,
-					"description" 	=> $obj->description
+					"description" 	=> $obj->description,
+					"is_system" 	=> $obj->is_system
 			   	);
 		    }	
 		}
@@ -128,15 +131,17 @@ class Payment_methods extends REST_Controller {
 			$obj = new Payment_method(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			$obj->name 			= $value->name;
-			$obj->description 	= $value->description;			
+			isset($value->name)			? $obj->name			= $value->name : "";
+			isset($value->description)	? $obj->description		= $value->description : "";
+			isset($value->is_system)	? $obj->is_system		= $value->is_system : "";
 
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
 					"id" 			=> $obj->id,
 					"name" 			=> $obj->name,
-					"description" 	=> $obj->description
+					"description" 	=> $obj->description,
+					"is_system" 	=> $obj->is_system
 				);						
 			}
 		}
@@ -147,12 +152,19 @@ class Payment_methods extends REST_Controller {
 	
 	//DELETE
 	function index_delete() {
-		$obj = new Payment_method(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where("id", $this->delete("id"))->get();
-		
-		$data["status"] = $obj->delete();
-		$data["results"] = $this->delete();		
-		
+		$models = json_decode($this->delete('models'));
+
+		foreach ($models as $key => $value) {
+			$obj = new Payment_method(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where("id", $value->id)->get();
+			
+			$data["results"][] = array(
+				"data"   => $value,
+				"status" => $obj->delete()
+			);							
+		}
+
+		//Response data
 		$this->response($data, 200);
 	}
 	

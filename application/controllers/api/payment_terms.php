@@ -105,11 +105,12 @@ class Payment_terms extends REST_Controller {
 		
 		foreach ($models as $value) {
 			$obj = new Payment_term(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->name 				= $value->name;
-			$obj->net_due 			= $value->net_due;
-			$obj->discount_period 	= $value->discount_period;
-			$obj->discount_percentage = $value->discount_percentage;
-			$obj->is_system 		= $value->is_system;			
+			
+			isset($value->name)					? $obj->name				= $value->name : "";
+			isset($value->net_due)				? $obj->net_due				= $value->net_due : "";
+			isset($value->discount_period)		? $obj->discount_period		= $value->discount_period : "";
+			isset($value->discount_percentage)	? $obj->discount_percentage	= $value->discount_percentage : "";			
+			isset($value->is_system)			? $obj->is_system			= $value->is_system : "";			
 			
 	   		if($obj->save()){		   		
 			   	$data["results"][] = array(
@@ -137,11 +138,11 @@ class Payment_terms extends REST_Controller {
 			$obj = new Payment_term(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			$obj->name 				= $value->name;
-			$obj->net_due 			= $value->net_due;
-			$obj->discount_period 	= $value->discount_period;
-			$obj->discount_percentage = $value->discount_percentage;
-			$obj->is_system 		= $value->is_system;		
+			isset($value->name)					? $obj->name				= $value->name : "";
+			isset($value->net_due)				? $obj->net_due				= $value->net_due : "";
+			isset($value->discount_period)		? $obj->discount_period		= $value->discount_period : "";
+			isset($value->discount_percentage)	? $obj->discount_percentage	= $value->discount_percentage : "";			
+			isset($value->is_system)			? $obj->is_system			= $value->is_system : "";		
 
 			if($obj->save()){				
 				//Results
