@@ -29,7 +29,7 @@
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">&nbsp;BanhJi<br></a>
+              <a href="<?php echo base_url(); ?>demo" class="site_title"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">&nbsp;BanhJi<br></a>
             </div>
 
             <div class="clearfix"></div>
@@ -44,13 +44,11 @@
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <ul class="nav side-menu">
-                  <li><a href="<?php echo base_url(); ?>admin"><i class="fa fa-home"></i> Home</a>
+                  <li><a href="<?php echo base_url(); ?>admin">Dashboard</a>
                   </li>
-                  <li><a href="#userlist"><i class="fa fa-edit"></i> User List</a>
+                  <li><a href="#company">Company Profile</a>
                   </li>
-                  <li><a href="#company"><i class="fa fa-edit"></i> Company</a>
-                  </li>
-                  <li style="visibility: hidden;"><a href="#apps"><i class="fa fa-edit"></i> Apps Market</a>
+                  <li><a href="#userlist">Users</a>
                   </li>
                 </ul>
               </div>
@@ -58,19 +56,10 @@
             <!-- /sidebar menu -->
 
             <!-- /menu footer buttons -->
-            <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" data-bind="click: signOut">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
-              </a>
+            <div class="sidebar-footer hidden-large">
+              <a data-toggle="tooltip" data-placement="top" title="Logout" data-bind="click: signOut" style="width: 100%">
+                <strong>Sign Out</strong>
+              </a>  
             </div>
             <!-- /menu footer buttons -->
           </div>
@@ -81,17 +70,12 @@
 
           <div class="nav_menu">
             <nav class="" role="navigation">
-              <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-              </div>
-
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="#profile" class="user-profile dropdown-toggle" aria-expanded="false">
                     <img data-bind="attr: {src: image}"><span data-bind="text: getCurrentUser().username"></span>
                   </a>
                 </li>
-                <li><a href="demo">BanhJi App</a></li>
               </ul>
             </nav>
           </div>
@@ -222,23 +206,57 @@
       <div id="main-display-container"></div>
     </script>
     <script type="text/x-kendo-template" id="template-admin-page">
-      <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
+          <div class="col-md-3">
+            <img data-bind="attr: {src: data.logo}" style="width: 100%">
+            <a href="#" style="position: absolute; right: 30px; bottom: 0; z-index: 999" data-bind="click: edit">Edit Company</a>
+          </div>
+          <div class="col-md-9">
+            <h2 style="font-size: 3.5em; margin-top: -8px; padding: 0;" data-bind="text: data.name"></h2>
+            <h4 style="font-size: 1.5em; padding: 0; margin-top: -2px;">Company Registration No.</h4>
+            <h4 style="font-size: 1.5em; padding: 0; margin-top: -2px;">VAT Tin: <span data-bind="text: data.vat_number"></span></h4>
+          </div>
+        </div>
+      <div class="clearfix"></div>
+      <div class="divider"></div>
+      <div id="app-placeholder"></div>
+      <div class="animated flipInY col-lg-4 col-md-4 col-sm-4 col-xs-12">
         <div class="tile-stats">
           <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
           <div class="count"><span data-bind="text: dataStore.data()[0].users"></span></div>
-          <h3>Number of Users</h3>
-          <p>Total Users in this company</p>
+          <h3>Active Users</h3>
+          <p><a href="#">Add User</a></p>
         </div>
       </div>
-      <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="animated flipInY col-lg-4 col-md-4 col-sm-4 col-xs-12">
         <div class="tile-stats">
           <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
           <div class="count"><span data-bind="text: dataStore.data()[0].users"></span></div>
-          <h3>No. of Employee</h3>
-          <p>Total Users in this company</p>
+          <h3>Subscribed</h3>
+          <p>Modules/Apps</p>
+        </div>
+      </div>
+      <div class="animated flipInY col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="tile-stats">
+          <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
+          <div class="count"><span data-bind="text: dataStore.data()[0].users"></span></div>
+          <h3>User join in</h3>
+          <p>the last 30 days</p>
         </div>
       </div>
       <div class="clearfix"></div>
+      <div class="divider"></div>
+      <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+          <div>
+            <p>Usage</p>
+          </div>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+          <div class="pull-right">Show <input type="text" data-role="dropdownlist"> for the last <input type="text" data-role="dropdownlist"></div>
+        </div>
+      </div>
     </script>
 
     <script type="text/x-kendo-template" id="template-userlist-page">
@@ -493,6 +511,19 @@
     </script>
 
     <script type="text/x-kendo-template" id="template-createcompany-page">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
+          <div class="col-md-3">
+            <img data-bind="attr: {src: data.logo}" style="width: 100%">
+            <a href="#" style="position: absolute; right: 30px; bottom: 0; z-index: 999" data-bind="click: edit">Edit Company</a>
+          </div>
+          <div class="col-md-9">
+            <h2 style="font-size: 3.5em; margin-top: -8px; padding: 0;" data-bind="text: data.name"></h2>
+            <h4 style="font-size: 1.5em; padding: 0; margin-top: -2px;">Company Registration No.</h4>
+            <h4 style="font-size: 1.5em; padding: 0; margin-top: -2px;">VAT Tin: <span data-bind="text: data.vat_number"></span></h4>
+          </div>
+        </div>
+      </div>
       <div class="col-md-12">
         <div class="x_panel">
           <div class="x_content">
@@ -1698,9 +1729,9 @@
 
     <!-- compose -->
     <script>
-      $('#compose, .compose-close').click(function(){
-        $('.compose').slideToggle();
-      });
+      // $('#compose, .compose-close').click(function(){
+      //   $('.compose').slideToggle();
+      // });
     </script>
     <!-- /compose -->
   </body>
