@@ -11,6 +11,13 @@ class Job extends DataMapper {
 		)
 	);
 
+	public $has_many = array(		
+		'transaction' => array(
+			'class' => 'transaction',
+			'other_field' => 'job'
+		)
+	);
+
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
 		$this->db_params = array(
 				'dbdriver' => 'mysql',
