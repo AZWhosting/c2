@@ -239,6 +239,7 @@
 		position: relative;
 		margin-top: 10px;
 		color: #333;
+		overflow: hidden;
 	}
 	.board-chart p{
 		font-weight: 600;
@@ -251,8 +252,12 @@
 	    padding: 15px;
 	    float: left;
 	    border-collapse: inherit;
+	    margin-bottom: 10px;
 	}
-
+	.home-chart{
+		margin-left: 15px;
+		margin-right: 15px;
+	}
 	.performance tr td,
 	.position tr td{
 		padding: 5px 0 5px 0;
@@ -265,6 +270,7 @@
 
 	.welcome-nopadding{
 		width: 95%;
+		padding-bottom: 10px;
 	}
 	.span12 .k-chart{
 		margin-left: -20px;
@@ -274,7 +280,7 @@
 		font-weight: 600;
 		color: #333;
 		font-size: 20px;
-		margin-top: 15px;
+		padding-top: 10px;
 	}
 	.widget.widget-body-primary > .widget-body *{
 		color: #333 !important;

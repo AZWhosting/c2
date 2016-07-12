@@ -14,17 +14,7 @@ class Currency extends DataMapper {
 		'measurement' => array(
 			'class' => 'measurement',
 			'other_field' => 'currency'
-		),		
-		'item_record' => array(
-			'class' => 'item_record',
-			'other_field' => 'currency'
-		),
-		"contact" => array(
-			'class' => 'contact',
-			'other_field' => 'currency'
-		), 
-		"institute", 
-		"deposit"
+		)
 	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	

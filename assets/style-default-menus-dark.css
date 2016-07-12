@@ -3934,7 +3934,7 @@ div.glyphicons.glyphicon-primary i:before {
   border-radius: 0 ;
 }
 .widget-search div {
-  padding-right: 12px;
+  border-right: none !important;
 }
 .widget-search input {
   width: 100%;
@@ -5560,10 +5560,10 @@ img.flag {
   border-color: #efefef;
   border-width: 1px;
   /*
-			box-shadow: 0 0 0 1px #fff inset;
-			-webkit-box-shadow: 0 0 0 1px #fff inset;
-			-moz-box-shadow: 0 0 0 1px #fff inset;
-			*/
+      box-shadow: 0 0 0 1px #fff inset;
+      -webkit-box-shadow: 0 0 0 1px #fff inset;
+      -moz-box-shadow: 0 0 0 1px #fff inset;
+      */
 
 }
 .table-primary tbody tr:nth-child(odd) td,
@@ -7695,10 +7695,10 @@ a.thumbnail:focus {
 .tlypageguide_shadow:after {
   background: rgba(229, 65, 45, 0.2);
   /*
-	box-shadow: 0 0 1px 1px fade(@primaryColor, 70%);
-	-moz-box-shadow: 0 0 1px 1px fade(@primaryColor, 70%);
-	-webkit-box-shadow: 0 0 1px 1px fade(@primaryColor, 70%);
-	*/
+  box-shadow: 0 0 1px 1px fade(@primaryColor, 70%);
+  -moz-box-shadow: 0 0 1px 1px fade(@primaryColor, 70%);
+  -webkit-box-shadow: 0 0 1px 1px fade(@primaryColor, 70%);
+  */
 
   box-shadow: none;
   -moz-box-shadow: none;
@@ -9560,31 +9560,31 @@ html.rtl.front .navbar.main .secondary ul.topnav:first-of-type {
 }
 html.csstransitions.csstransforms3d.animations {
   /*
-	 * ONLY AFTER PAGE LOAD COMPLETE
-	 */
+   * ONLY AFTER PAGE LOAD COMPLETE
+   */
 
   /*
-	 * DESKTOP WITH GPU OPTION DISABLED
-	 */
+   * DESKTOP WITH GPU OPTION DISABLED
+   */
 
   /* GPU ACCELERATION 
-	 * BETTER PERFORMANCE BUT DOESNT PLAY WELL WITH ZINDEX AND FIXED POSITIONING 
-	 * IF DESKTOP && GPU OPTION ENABLED / OR WE'RE ON A TOUCH DEVICE */
+   * BETTER PERFORMANCE BUT DOESNT PLAY WELL WITH ZINDEX AND FIXED POSITIONING 
+   * IF DESKTOP && GPU OPTION ENABLED / OR WE'RE ON A TOUCH DEVICE */
 
   /*
-	 * FIX ZINDEX ISSUE
-	 * ONLY ON A TOUCH DEVICE
-	 */
+   * FIX ZINDEX ISSUE
+   * ONLY ON A TOUCH DEVICE
+   */
 
 }
 html.csstransitions.csstransforms3d.animations.content-transitions {
   /*
-		 * DESKTOP WITH GPU OPTION DISABLED
-		 */
+     * DESKTOP WITH GPU OPTION DISABLED
+     */
 
   /*
-		 * DESKTOP WITH GPU OPTION ENABLED / OR WE'RE ON A TOUCH DEVICE
-		 */
+     * DESKTOP WITH GPU OPTION ENABLED / OR WE'RE ON A TOUCH DEVICE
+     */
 
 }
 html.csstransitions.csstransforms3d.animations.content-transitions.no-touch:not(.animations-gpu) .menu-left #content {
