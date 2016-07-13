@@ -59,6 +59,186 @@ html.no-touch.sticky-top:not(.animations-gpu) #content {
 .navbar-form{
   padding-left: 0 !important;
 }
+
+.span5 .btn-group, .btn-group-vertical {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+#example.k-content .span5{
+  padding-left: 0;
+}
+#example.k-content .span5 textarea{
+float: left;
+clear: both;
+width: 50% !important;
+}
+#example.k-content .span7{
+  padding-right: 0;
+}
+.saleSummaryCustomer .box-search{
+  margin: 15px 0 auto;
+  padding: 15px;
+  background: #F2F2F2;
+}
+.saleSummaryCustomer .block-title{
+  text-align: center;
+  margin-bottom: 20px;
+}
+.saleSummaryCustomer .block-title h3{
+  font-size: 15px;
+}
+.saleSummaryCustomer .block-title h2{
+  font-size: 20px;
+  font-weight: 800;
+  margin-top: -10px;
+  margin-bottom: 0;
+}
+.saleSummaryCustomer .block-title p{
+  font-size: 15px;
+}
+.saleSummaryCustomer  .span5{
+  padding-right: 0;
+}
+.saleSummaryCustomer  .total-customer,
+.saleSummaryCustomer  .total-sale{
+  width: 100%;
+  padding: 10px;
+  background: #DDEBF7;
+  text-align: center;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+.saleSummaryCustomer  .table-customer{
+  width: 100%;
+  padding: 10px;
+  background: #DDEBF7;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.saleSummaryCustomer  .total-customer p,
+.saleSummaryCustomer  .total-sale p{
+  font-size: 15px;
+}
+.saleSummaryCustomer  .total-customer span,
+.saleSummaryCustomer  .total-sale span{
+  font-size: 50px;
+  font-weight: 800;
+}
+#edate,
+#sdate {
+  display: inline-block;
+  padding-bottom: 5px;
+  /*width: 95% !important;*/
+}
+.saleSummaryCustomer #edate,
+.saleSummaryCustomer #sdate {
+  width: auto;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed  tr th{
+  border: none;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr th{
+ background: #1E4E78;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:first-child th{
+ 
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  border: none;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:last-child th{
+
+  text-transform: uppercase;
+  font-size: 15px;
+  color: #fff;
+  font-weight: 800;
+  border: none;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:last-child th:first-child{
+  text-align: center;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:last-child th:last-child{
+  text-align: right;
+  padding-right: 20px !important;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr td{
+  padding-left: 5px;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {
+    background: #fff;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr td {
+  background: #F2F2F2;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr td:first-child{
+  padding-left: 10px !important;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr td:last-child{
+  text-align: right;
+  padding-right: 20px !important;
+}
+.btn.btn-icon.btn-success.glyphicons.share{
+  width: 125px !important;
+  text-align: right;
+  line-height: 15px;
+  color: #fff;
+}
+.btn.btn-success.btn-icon.glyphicons.ok_2,
+.btn.btn-icon.btn-primary.glyphicons.circle_ok{
+   width: 80px !important;
+  text-align: right;
+  line-height: 15px;
+  color: #fff;
+}
+.btn.btn-icon.btn-default.glyphicons.ban{
+width: 90px !important;
+  text-align: right;
+  line-height: 15px;
+  color: #333;
+}
+.span6.hidden-print{
+  padding-left: 0;
+}
+#example.k-content .span6{
+  padding-right: 0;
+}
+#example.k-content .span12{
+  padding: 0;
+}
+.btn.btn-success.btn-icon.glyphicons.ok_2{
+   width: 50px !important;
+  text-align: right;
+  line-height: 15px;
+  color: #fff;
+}
+#item-window .btn.btn-danger.btn-icon.glyphicons.remove_2,
+#saleTax-window .btn.btn-danger.btn-icon.glyphicons.remove_2{
+  width: 50px !important;
+}
+.input-prepend .input-large{
+  border: 1px solid #efefef;
+  width: 85%;
+  float: right;
+  margin-bottom: 10px;
+  color: #333;
+  padding: 5px !important;
+}
+.box-generic .btn.btn-icon.btn-default.glyphicons.remove_2{
+   width: 90px !important;
+  text-align: right;
+  line-height: 15px;
+  color: #333;
+}
+.box-generic .row-fluid.row-merge .span6{
+  overflow: hidden;
+  width: 49%;
+}
+
+
 .btn-group, .btn-group-vertical {
   float: left;
 }

@@ -24,8 +24,10 @@
 				    	<li data-bind="click: searchItem"><a href="#"><i class="icon-th-list"></i> Item</a></li>
 				  	</ul>
 				</div>
-			  	<input type="text" class="span2 search-query" placeholder="Search Contact" id="search-placeholder" style="background-color: #555555; color: #ffffff; border-color: #333333; height: 22px;">
-			  	<button type="submit" class="btn btn-inverse" data-bind="click: searchBotton"><i class="icon-search"></i></button>
+			  	<input type="text" class="span2 search-query" placeholder="Search Contact" id="search-placeholder" 
+			  			data-bind="value: searchText" 
+			  			style="background-color: #555555; color: #ffffff; border-color: #333333; height: 22px;">
+			  	<button type="submit" class="btn btn-inverse" data-bind="click: search"><i class="icon-search"></i></button>
 			</form>
 			<ul class="topnav" id="secondary-menu">
 			</ul>
@@ -323,6 +325,121 @@
 		</div>	
 	</div>		
 </script>
+<script id="searchAdvanced" type="text/x-kendo-template">
+    <div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"><i></i></span>						
+					</div>
+			        
+			        <h2>SEARCH</h2>
+				    
+				    <br>	
+				    
+				    <!-- Result -->
+				    <span class="results"><span data-format="n0" data-bind="text: found"></span> result found <i class="icon-circle-arrow-down"></i></span>
+					
+					<div data-role="listview"
+						 data-auto-bind="false"
+						 data-selectable="true"				                 
+		                 data-template="searchAdvanced-template"
+		                 data-bind="source: contactDS"></div>
+		            <div data-role="listview"
+						 data-auto-bind="false"
+						 data-selectable="true"				                 
+		                 data-template="searchAdvanced-transaction-template"
+		                 data-bind="source: transactionDS"></div>
+		            <div data-role="listview"
+						 data-auto-bind="false"
+						 data-selectable="true"				                 
+		                 data-template="searchAdvanced-item-template"
+		                 data-bind="source: itemDS"></div>					
+					<!-- End Result -->
+
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="searchAdvanced-template" type="text/x-kendo-template">
+	<dl data-bind="click: selectedContact">			
+		<dt>
+			<div class="widget widget-heading-simple widget-body-multiple widget-offers">
+				<div class="widget-body">
+					
+					<!-- Media item -->
+					<div class="media">
+						<img class="media-object pull-left thumb hidden-tablet hidden-phone" 
+							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" 
+							style="width: 100px; height: 100px;">
+						<div class="media-body">
+							<h5><a href="">#=surname# #=name#</a></h5>
+							<span>#=abbr# #=number#</span>
+							<br>
+							<span>#=contact_type#</span>
+							<br>
+							<span>#=address#</span>							
+						</div>
+					</div>
+					<!-- // Media item END -->
+						
+				</div>
+			</div>
+		</dt>											
+	</dl>	
+</script>
+<script id="searchAdvanced-transaction-template" type="text/x-kendo-template">
+	<dl data-bind="click: selectedTransaction">			
+		<dt>
+			<div class="widget widget-heading-simple widget-body-multiple widget-offers">
+				<div class="widget-body">
+					
+					<!-- Media item -->
+					<div class="media">
+						<img class="media-object pull-left thumb hidden-tablet hidden-phone" 
+							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/invoice.png" 
+							style="width: 100px; height: 100px;">
+						<div class="media-body">
+							<h5><a href="">#=number#</a></h5>
+							<span>#=amount#</span>
+							<br>
+							<span>#=issued_date#</span>					
+						</div>
+					</div>
+					<!-- // Media item END -->
+						
+				</div>
+			</div>
+		</dt>											
+	</dl>	
+</script>
+<script id="searchAdvanced-item-template" type="text/x-kendo-template">
+	<dl data-bind="click: selectedItem">			
+		<dt>
+			<div class="widget widget-heading-simple widget-body-multiple widget-offers">
+				<div class="widget-body">
+					
+					<!-- Media item -->
+					<div class="media">
+						<img class="media-object pull-left thumb hidden-tablet hidden-phone" 
+							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" 
+							style="width: 100px; height: 100px;">
+						<div class="media-body">
+							<h5><a href="">#=name#</a></h5>
+							<span>#=sku#</span>
+							<br>
+							<span>#=on_hand#</span>					
+						</div>
+					</div>
+					<!-- // Media item END -->
+						
+				</div>
+			</div>
+		</dt>											
+	</dl>	
+</script>
 
 
 
@@ -344,13 +461,23 @@
 			        	<p>
 			        		In here, you can manage your cash information, transactions and reports. Cashflow forecast and other treasury management is coming soon..
 			        	</p>
-			        	<div class="customer-icon">
-				        	<div class="span4">
-					        	<a href="#/customer" class="center">
-					        		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
-					        	</a>
-					        </div>
-					    </div>
+			        	<div class="supplier-icon">
+						    <div class="span4">
+						       	<a href="#/item" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/non_inventory_part" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/non_inventory_parts.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/item_service" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       	</a>
+						    </div>
+						</div>
 			        </td>
 			 	</tr>
 			</table>
@@ -422,21 +549,21 @@
 						
 						<div class="widget-body alert alert-primary">
 							
-							<div align="center" class="text-large strong" data-bind="text: sale"></div>
+							<div align="center" class="text-large strong" >0</div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: sale_customer"></span>
+										<span >0</span>
 										<br>
 										<span>In Bank</span>
 									</td>
 									<td>
-										<span data-bind="text: sale_product"></span>
+										<span >0</span>
 										<br>
 										<span>On Hand</span>
 									</td>
 									<td>
-										<span data-bind="text: sale_order"></span>
+										<span >0</span>
 										<br>
 										<span>In Transit</span>
 									</td>
@@ -465,16 +592,16 @@
 						
 						<div class="widget-body alert-info">
 							
-							<div align="center" class="text-large strong" data-bind="text: order"></div>
+							<div align="center" class="text-large strong" >0</div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: order_avg"></span>
+										<span >0</span>
 										<br>
 										<span>Open</span>
 									</td>
 									<td>
-										<span data-bind="text: order_open"></span>
+										<span >0</span>
 										<br>
 										<span>Overdue</span>
 									</td>									
@@ -501,18 +628,18 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body" style="background-color: LightGray">
+						<div class="widget-body alert-info3" style="background-color: LightGray">
 							
-							<div align="center" class="text-large strong" data-bind="text: ar"></div>
+							<div align="center" class="text-large strong">0</div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: ar_open"></span>
+										<span >0</span>
 										<br>
 										<span>To be Received</span>
 									</td>
 									<td>
-										<span data-bind="text: ar_customer"></span>
+										<span >0</span>
 										<br>
 										<span>To be Paid</span>
 									</td>
@@ -526,6 +653,8 @@
 					
 				</div>
 				<!-- // Column END -->
+				
+				
 				
 			</div>
 
@@ -1644,11 +1773,11 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							            <li class="span3 glyphicons pencil active"><a href="#tab1-3" data-toggle="tab"><i></i> Memo</a>
+							            <li class="span1 glyphicons pencil active"><a href="#tab1-3" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span3 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i> Attach</a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span3 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i> Recuring</a>
+							            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
 							            </li>								            
 							        </ul>
 							    </div>
@@ -2129,7 +2258,7 @@
 							data-bind="click: cancel"><i></i></span>						
 					</div>
 
-			        <h2>TAX SETTING</h2>				        				        				        	
+			        <h2>TAX</h2>				        				        				        	
 			    </div>			   
 
 			    <br>
@@ -2238,9 +2367,15 @@
 						<tr>
 							<td>Account</td>
 							<td>
-								<input id="ddlIncome" name="ddlIncome"
-									data-bind="value: item.account_id" 
-									required data-required-msg="required" style="width: 100%;" />
+								<input data-role="dropdownlist"
+					                   data-option-label="Select Account..."
+					                   data-template="account-list-tmpl"
+					                   data-value-primitive="true"					                   
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: item.account_id,
+					                              source: accountDS"
+					                   style="width: 100%" />
 							</td>
 						</tr>
 						
@@ -2572,6 +2707,10 @@
 			</div>
 		</div>
 		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
 			<div class="report-chart">
 				<div class="statement">
 					<h2>Statement of Financial Position</h2>
@@ -3069,19 +3208,26 @@
 			        		In here, you can manage your employee information, and other related transactions.
 			        	</p>
 			        	<div class="supplier-icon">
-					       	<div class="span3">
-						       	<a href="#/employee" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/employees.ico" />
+					       	<div class="span4">
+						       	<a href="#/customer" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
 						       	</a>
 						       </div>
+						    <div class="span4">
+						       	<a href="#/item" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/item_service" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       	</a>
+						    </div>
 						</div>
 
 			        </td>
 			 	</tr>
 			</table>
-
-			<br>
-
 			<table class="table table-borderless table-condensed table-vertical-center">
 				<tr>
 					<td class="center">
@@ -3115,36 +3261,33 @@
 				<div class="span4">
 				
 					<!-- Widget -->
-					<div class="widget widget-3">
+					<div class="widget widget-3 customer-border">
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons old_man"><i></i></span>ADVANCE BALANCE</h4>
+							<h4 class="heading"><span class="glyphicons coins"><i></i></span>Sale</h4>
 						</div>
 						<!-- // Widget heading END -->
 						
 						<div class="widget-body alert alert-primary">
 							
 							<div align="center" class="text-large strong" data-bind="text: sale"></div>
-
-							<br>
-						
 							<table width="100%">
 								<tr align="center">
-									<td>										
+									<td width="33%">										
 										<span data-bind="text: sale_customer"></span>
 										<br>
-										<span>Employee</span>
+										<span>Customer</span>
 									</td>
-									<td>
+									<td width="33%">
 										<span data-bind="text: sale_product"></span>
 										<br>
-										<span>Open</span>
+										<span>Product</span>
 									</td>
-									<td>
+									<td width="33%">
 										<span data-bind="text: sale_order"></span>
 										<br>
-										<span>Overdue</span>
+										<span>Order</span>
 									</td>
 								</tr>
 							</table>
@@ -3161,20 +3304,74 @@
 				<div class="span4">
 				
 					<!-- Widget -->
-					<div class="widget widget-3">
+					<div class="widget widget-3 customer-border">
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons eye_open"><i></i></span>EMPLOYEE NUMBER</h4>
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span>Order</h4>
 						</div>
 						<!-- // Widget heading END -->
 						
 						<div class="widget-body alert-info">
 							
 							<div align="center" class="text-large strong" data-bind="text: order"></div>
-							<br>
-							<br>
-							<br>							
+							<table width="100%">
+								<tr align="center">
+									<td width="50%">										
+										<span data-bind="text: order_avg"></span>
+										<br>
+										<span>Average</span>
+									</td>
+									<td width="50%">
+										<span data-bind="text: order_open"></span>
+										<br>
+										<span>Open</span>
+									</td>									
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span>Receivable</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert-info3" style="background-color: LightGray">
+							
+							<div align="center" class="text-large strong" data-bind="text: ar"></div>
+							<table width="100%">
+								<tr align="center">
+									<td width="33%">										
+										<span data-bind="text: ar_open"></span>
+										<br>
+										<span>Open</span>
+									</td>
+									<td width="33%">
+										<span data-bind="text: ar_customer"></span>
+										<br>
+										<span>Customer</span>
+									</td>
+									<td width="33%">
+										<span data-bind="text: ar_overdue"></span>
+										<br>
+										<span>Overdue</span>
+									</td>
+								</tr>
+							</table>
 						</div>
 						<!-- // Widget footer END -->
 						
@@ -3212,9 +3409,7 @@
 
 		</div>		
 
-	</div>		
-
-	<p class="separator text-center"><i class="icon-ellipsis-horizontal icon-3x"></i></p>
+	</div>
 </script>
 <script id="employeeDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
 	<tr data-uid="#: uid #">
@@ -3871,6 +4066,133 @@
 		</td>		
 	</tr>
 </script>
+
+<script id="employeeReportCenter" type="text/x-kendo-template">
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<div class="row-fluid sale-report">
+				<h2>EMPLOYEE REPORTS</h2>
+				<p>
+					The following reports provide summary and detailed reports on employee related transactions.   
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Inventory Position Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Inventory Sale by Item Analysis</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Summarizes each inventory balance by quantity on hand, on purchase 
+									order and sale order. In addition, it also includes average cost and price.
+								</p>
+								
+							</td>
+							<td >
+								<p>
+									Lists of all transactions related to and grouped by each inventory 
+									with analysis of average gross profit margin.
+								</p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Inventory Position Detail</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Inventory Turnover List</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists individual inventory movement transactions by date for 
+									each inventory within a period of time.
+								</p>
+							</td>
+							<td >
+								<p>
+									Provides analysis of inventory turnover days by each inventory.
+								</p>
+							</td>
+						</tr>
+					</table>					
+				</div>
+			</div>
+			<div class="row-fluid recevable-report">
+				<h2>OTHER REPORTS/ LISTS</h2>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Inventory List</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/">Recurring Inventory Template List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists the products you purchase and sold. The following 
+									information is included: name, description, cost, sales price, and quantity on hand.s						
+
+								</p>
+								
+							</td>
+							<td >
+							</td>							
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
+			<div class="report-chart">
+				<div class="widget-body alert alert-primary sale-overview">
+					<h2>Inventory Balance</h2>
+					<div align="center" class="text-large strong">$183,690,640</div>
+					<table width="100%">
+						<tr align="center">
+							<td>										
+								<span>6</span>
+								<br>
+								<span>Inventory items </span>
+							</td>
+							<td>
+								<span>1</span>
+								<br>
+								<span>Categories</span>
+							</td>
+							<td>
+								<span>10%</span>
+								<br>
+								<span>Average Margin</span>
+							</td>
+							<td>
+								<span>20 days</span>
+								<br>
+								<span>Turnover Days</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="sale-report-chart">Chart</div>
+			</div>
+		</div>
+	</div>
+</script>
+
 <script id="cashAdvance" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -5049,81 +5371,90 @@
 			<!-- Top 5 -->
 			<div class="row-fluid">
 				<div class="span4">
-					<h4>Top 5 Suppliers</h4>					
+					<h4></h4>					
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
-				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</th>			                
+				            <tr>				                
+				                <th colspan="2">Top 5 Suppliers</th>			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                 
-			                 data-template="customerDashBoard-top-customer-template"
-			                 data-bind="source: topCustomerDS"></tbody>			        
+			                 data-template="vendorDashboard-top-vendor-template"
+			                 data-bind="source: topContactDS"></tbody>			        
 				    </table>			
 				</div>
-				<div class="span4">
-					<h4>Top 5 A/P Balance</h4>
+				<div class="span4">					
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</th>		                
+				                <th colspan="2">Top 5 A/P Balance</th>
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                  
-			                 data-template="customerDashBoard-top-ar-template"
-			                 data-bind="source: topARDS"></tbody>			        
+			                 data-template="vendorDashboard-top-ap-template"
+			                 data-bind="source: topAPDS"></tbody>			        
 				    </table>
 				</div>
-				<div class="span4">
-					<h4>Top 5 Products</h4>
+				<div class="span4">					
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</span></th>			                		                
+				                <th colspan="2">Top 5 Products</th>			                		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"                
-			                 data-template="customerDashBoard-top-product-template"
+			                 data-template="vendorDashboard-top-product-template"
 			                 data-bind="source: topProductDS"></tbody>			        
 				    </table>
 				</div>		
 			</div>
 
 			<!-- Graph -->
-			<div>
-				<div id="vendor-chart" style="height: 250px;"></div>
-			</div>
+			<div class="home-chart">
+				<div data-role="chart"
+	                 data-legend="{ position: 'top' }"
+	                 data-series-defaults="{ type: 'column' }"
+	                 data-tooltip='{
+	                    visible: true,
+	                    format: "{0}%",
+	                    template: "#= series.name #: #= value #"
+	                 }'                 
+	                 data-series="[
+	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+	                             ]"	                             
+	                 data-bind="source: graphDS"
+	                 style="height: 250px;" ></div>
+            <!-- End Graph -->
+            </div>
 
 		</div>
 	</div>
 </script>
-<script id="vendorDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
+<script id="vendorDashboard-top-vendor-template" type="text/x-kendo-tmpl">	
 	<tr data-uid="#: uid #">
-		<td>#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td>		
+		<td>#:banhji.vendorDashboard.topContactDS.indexOf(data)+1#</td>		
 		<td>
 			<span>#=name#</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>		
 	</tr>
 </script>
-<script id="vendorDashBoard-top-ar-template" type="text/x-kendo-tmpl">
+<script id="vendorDashboard-top-ap-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		
+		<td>#:banhji.vendorDashboard.topAPDS.indexOf(data)+1#</td>		
 		<td>
 			<span>#=name#</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>
 	</tr>
 </script>
-<script id="vendorDashBoard-top-product-template" type="text/x-kendo-tmpl">
+<script id="vendorDashboard-top-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		
+		<td>#:banhji.vendorDashboard.topProductDS.indexOf(data)+1#</td>		
 		<td>
 			<span>#=name#</span>
 			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
@@ -9179,6 +9510,10 @@
 			</div>
 		</div>
 		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>Expenses/ Purchase Overview</h2>
@@ -13021,7 +13356,7 @@
 						            </li>						            
 						            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
 						            </li>						            
-						            <li class="span3 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
+						            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i></a>
 						            </li>						            								            
 						        </ul>
 						    </div>
@@ -14350,8 +14685,9 @@
 
 <script id="customerReportCenter" type="text/x-kendo-template">
 	<div class="row-fluid customer-report-center">
+
 		<div class="span7">
-			<div class="row-fluid sale-report">
+			<div class="row-fluid sale-report">				
 				<h2>SALE MANAGEMENT REPORTS</h2>
 				<p>
 					The following reports provide summary and detailed reports in 
@@ -14361,10 +14697,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td width="50%">
-								<h3><a href="#/">Sale Summary by Customer</a></h3>
+								<h3><a href="#/sale_summary_customer">Sale Summary by Customer</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a href="#/">Customer Transaction List</a></h3>								
+								<h3><a href="#/customer_transaction_list">Customer Transaction List</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -14384,7 +14720,7 @@
 						</tr>
 						<tr>
 							<td width="50%">
-								<h3><a href="#/">Sale Detail by Customer</a></h3>
+								<h3><a href="#/sale_detail_customer">Sale Detail by Customer</a></h3>
 							</td>
 							<td width="50%">
 								<h3><a href="#/">Deposit Detail by Customer</a></h3>
@@ -14405,7 +14741,7 @@
 
 						<tr>
 							<td width="50%">
-								<h3><a href="#/">Sale Summary by Product/ Services</a></h3>
+								<h3><a href="#/sale_summary_product">Sale Summary by Product/ Services</a></h3>
 							</td>
 							<td width="50%">
 								<h3><a href="#/">Sale Detail by Product/ Services</a></h3>
@@ -14423,6 +14759,14 @@
 								</p>
 							</td>
 						</tr>
+						<tr>
+							<td width="50%">
+								<h3><a href="#/">Sale by Job/Engagement</a></h3>
+							</td>
+							<td width="50%">
+							</td>
+						</tr>
+						
 
 					</table>
 					
@@ -14565,6 +14909,10 @@
 			</div>
 		</div>
 		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>SALE OVERVIEW</h2>
@@ -14586,6 +14934,12 @@
 								<br>
 								<span>Order</span>
 							</td>
+							<td >
+								<span>0</span>
+								<br>
+								<span>Sale Order</span>
+							</td>
+
 						</tr>
 					</table>
 				</div>
@@ -14625,6 +14979,974 @@
 		</div>
 	</div>
 </script>
+<script id="saleSummaryCustomer" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Summary by Customer</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<p>Total Customer</p>
+								<span>7</span>
+							</div>
+
+						</div>
+						<div class="span7">
+							<div class="total-sale">
+								<p>Total Sale</p>
+								<span>121,500.00</sapn>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>CUSTOMER</th>
+							<th>TOTAL SALE</th>
+						</tr>
+						<tr>
+							<td>A S Co.,Ltd</td>
+							<td>13,000.00</td>
+						</tr>
+						<tr>
+							<td>Bon Bon</td>
+							<td>8,500.00</td>
+						</tr>
+						<tr>
+							<td>Ly Channy</td>
+							<td>10,000.00</td>
+						</tr>
+						<tr>
+							<td>Ka Ka</td>
+							<td>15,000.00</td>
+						</tr>
+						<tr>
+							<td>Sok Chan</td>
+							<td>20,000.00</td>
+						</tr>
+						<tr>
+							<td>Yellow Trading</td>
+							<td>20,000.00</td>
+						</tr>
+						<tr>
+							<td>Zoo Image</td>
+							<td>30,000.00</td>
+						</tr>
+						<tr>
+							<th>Total</th>
+							<th>121,500.00</th>
+						</tr>
+					</table>
+
+				</div>		
+			</div>
+		</div>
+	</div>
+	<br>
+	<hr>
+	<br>
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Summary by Customer's Segment</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Segment</p>
+									<span>2</span>
+								</div>
+								<div class="span6">
+									<p>Total Customer</p>
+									<span>7</span>
+								</div>	
+									
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-sale">
+								<p>Total Sale</p>
+								<span>121,500.00</sapn>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>CUSTOMER</th>
+							<th>TOTAL SALE</th>
+						</tr>
+						<tr>
+							<td>Phonm Penh Branch</td>
+							<td>13,000.00</td>
+						</tr>
+						<tr>							
+							<td style="padding-left:30px !important;">A S Co.,Ltd</td>
+							<td style="padding-left:30px !important;">8,500.00</td>
+						</tr>
+						<tr>
+							<td style="padding-left:30px !important;">Bon Bon</td>
+							<td style="padding-left:30px !important;">10,000.00</td>
+						</tr>
+						<tr>
+							<td>Battambang Branch</td>
+							<td>13,000.00</td>
+						</tr>
+						<tr>
+							<td style="padding-left:30px !important;">Bon Bon</td>
+							<td style="padding-left:30px !important;">20,000.00</td>
+						</tr>
+						<tr>
+							<td style="padding-left:30px !important;">Sok Chan</td>
+							<td style="padding-left:30px !important;">25,000.00</td>
+						</tr>
+						<tr>
+							<td style="padding-left:30px !important;">Yellow Trading</td>
+							<td style="padding-left:30px !important;">30,000.00</td>
+						</tr>						
+						<tr>
+							<th>Total</th>
+							<th>121,500.00</th>
+						</tr>
+					</table>
+
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="customerTransactionList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />	
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Customer Transaction List</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span4">
+									<p>Total Customer</p>
+									<span>2</span>
+								</div>
+								<div class="span4">
+									<p>Cash Sale</p>
+									<span>500</span>
+								</div>	
+								<div class="span4">
+									<p>Cash Receipt</p>
+									<span>1,200</span>
+								</div>	
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Total Sale</p>
+									<span>2,700.00</span>
+								</div>
+								<div class="span6">
+									<p>Customer Balance</p>
+									<span>2,200.00</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th></th>
+							<th>Type</th>
+							<th>Date</th>
+							<th>No</th>
+							<th>Memo</th>							
+							<th>Account</th>
+							<th>Amount</th>
+						</tr>
+						<tr>
+							<td>Sovan Tevy</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Invoice</td>
+							<td>7/1/16</td>
+							<td>IV-0001</td>
+							<td>anmsjssd</td>
+							<td>Account Receivable</td>
+							<td>1,000.00</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Cash Sale</td>
+							<td></td>
+							<td>SR-0003</td>
+							<td>anmsjssd</td>
+							<td>Cash on hand</td>
+							<td>500.00</td>							
+						</tr>
+						<tr>
+							<td>Toni</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Invoice</td>
+							<td>7/1/16</td>
+							<td>IV-0015</td>
+							<td>asg</td>
+							<td>Account Receivable</td>
+							<td>1,200.00</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Cash Receipt</td>
+							<td></td>
+							<td>CR-0122</td>
+							<td>ss</td>
+							<td>Cash on hand</td>
+							<td>(1,200.00)</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Deposit</td>
+							<td></td>
+							<td>DS-0123</td>
+							<td>aa</td>
+							<td>Cash on hand</td>
+							<td>(2,100.00)</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Sub-total</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>(2,100.00)</td>							
+						</tr>
+						
+						<tr>
+							<th colspan="4">Total</th>
+							<th colspan="3">(600.00)</th>
+						</tr>
+					</table>
+					
+
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleDetailCustomer" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Detail by Customer</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<p>Total Customers</p>
+								<span></span>
+							</div>
+
+						</div>
+						<div class="span7">
+							<div class="total-sale">
+								<p>Total Sale</p>
+								<span></sapn>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>Type</th>
+							<th>Date</th>
+							<th>No</th>
+							<th>Memo</th>
+							<th>Item/service</th>
+							<th>Qty</th>
+							<th>Price</th>
+							<th>Amount</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th colspan="4">Total</th>
+							<th colspan="4">-</th>
+						</tr>
+					</table>
+
+				</div>		
+			</div>
+		</div>
+	</div>
+	<br>
+	<hr>
+	<br>
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Detail by Customer by Segment</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<p>Total Customers</p>
+								<span></span>
+							</div>
+
+						</div>
+						<div class="span7">
+							<div class="total-sale">
+								<p>Total Sale</p>
+								<span></sapn>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>Type</th>
+							<th>Date</th>
+							<th>Reference</th>
+							<th>Customer</th>
+							<th>Memo</th>
+							<th>Item/service</th>
+							<th>Qty</th>
+							<th>Price</th>
+							<th>Amount</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th colspan="5">Total</th>
+							<th colspan="4">-</th>
+						</tr>
+					</table>
+
+				</div>		
+			</div>
+		</div>
+	</div>	
+</script>
+<script id="saleSummaryProduct" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Summary by Product/Services</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Total Product/services</p>
+									<span>2</span>
+								</div>
+								<div class="span6">
+									<p>AVG Sale</p>
+									<span>600</span>
+								</div>	
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Total Sale</p>
+									<span>1,200.00</span>
+								</div>
+								<div class="span6">
+									<p>Gross Profit Margin</p>
+									<span>50%</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th></th>
+							<th>Qty</th>
+							<th>Amount</th>
+							<th>Sale %</th>
+							<th>AVG Price</th>							
+							<th>Cost</th>
+							<th>Gross Profit Margin</th>
+						</tr>
+						<tr>						
+							<td>Cement</td>
+							<td>100</td>
+							<td>500</td>
+							<td>33%</td>
+							<td>5.00</td>
+							<td>4.00</td>
+							<td>25%</td>
+						</tr>
+						<tr>
+							<td>Window</td>
+							<td>200</td>
+							<td>700</td>
+							<td>67%</td>
+							<td>3.50</td>
+							<td>2</td>
+							<td>75%</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th>Total</th>
+							<th>300.00</th>
+							<th colspan="2">1,200.00</th>
+							<th colspan="2">4.25</th>
+							<th>50%</th>
+						</tr>
+					</table>
+					
+
+				</div>		
+			</div>
+		</div>
+	</div>
+	<br>
+	<hr>
+	<br>
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Summary by Product/Services by Segment</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Total Product/services</p>
+									<span>2</span>
+								</div>
+								<div class="span6">
+									<p>AVG Sale</p>
+									<span>600</span>
+								</div>											
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Total Sale</p>
+									<span>1,200.00</span>
+								</div>
+								<div class="span6">
+									<p>Gross Profit Margin</p>
+									<span>50%</span>
+								</div>	
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th></th>
+							<th>Qty</th>
+							<th>Amount</th>
+							<th>Sale %</th>
+							<th>AVG Price</th>							
+							<th>Cost</th>
+							<th>Gross Profit Margin</th>
+						</tr>
+						<tr>
+							<td>PHNOM PENH BRANCH</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td style="padding-left:30px !important;">Window</td>
+							<td>200</td>
+							<td>700</td>
+							<td>67%</td>
+							<td>3.50</td>
+							<td>2</td>
+							<td>75%</td>
+						</tr>
+						<tr>						
+							<td style="padding-left:30px !important;">Cement</td>
+							<td >100</td>
+							<td>500</td>
+							<td>33%</td>
+							<td>5.00</td>
+							<td>4.00</td>
+							<td>25%</td>
+						</tr>						
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th>Total</th>
+							<th>300.00</th>
+							<th colspan="2">1,200.00</th>
+							<th colspan="2">4.25</th>
+							<th>50%</th>
+						</tr>
+					</table>
+
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+
 
 <script id="customerList" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -14772,6 +16094,963 @@
 			</div><!-- //End div row-fluid-->
 		</div>
 	</div>	
+</script>
+
+<script id="invoiceCustom" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2>INVOICE CUSTOM</h2>
+				    <br>	
+				    <div class="row" style="margin-left:0;">			   				
+						<div class="span4">	
+							<div class="span12">
+								<h2 class="btn btn-block btn-primary">Form Style</h2>
+								<div class="row formstyle">
+									<a class="span4 form-thumb-active" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/inv1_thumb.jpg" />
+									</a>
+									<a class="span4" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/inv2_thumb.jpg" />
+									</a>
+									<a class="span4" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/form-thumb1.jpg" />
+									</a>
+								</div>
+							</div>
+							<div class="span12" style="margin-left:0; margin-top: 10px;">
+								<h2 class="btn btn-block btn-primary">Form Color</h2>
+								<div class="colorPalatte">
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(242, 242, 242)" data-colorval="#bdbdbd" style="background-color: #bdbdbd"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(224, 224, 224)" data-colorval="#636363" style="background-color: #636363"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(204, 204, 204)" data-colorval="#000000" style="background-color: #000000"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(237, 242, 248)" data-colorval="#a6bddb" style="background-color: #a6bddb"></div>
+                                    </div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(228, 231, 236)" data-colorval="#7889a1" style="background-color: #7889a1"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(218, 221, 223)" data-colorval="#48565f" style="background-color: #48565f"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(228, 242, 222)" data-colorval="#79BD58" style="background-color: #79BD58"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(207, 233, 235)" data-colorval="#0e909a" style="background-color: #0e909a"></div>
+                                    </div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(210, 213, 222)" data-colorval="#202e5a" style="background-color: #202e5a"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(234, 242, 213)" data-colorval="#96bc2d" style="background-color: #96bc2d"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(212, 224, 210)" data-colorval="#2a651d" style="background-color: #2a651d"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(204, 217, 221)" data-colorval="#004254" style="background-color: #004254"></div>
+                                    </div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(255, 232, 204)" data-colorval="#ff8c00" style="background-color: #ff8c00"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(230, 204, 210)" data-colorval="#82001d" style="background-color: #82001d"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(225, 208, 215)" data-colorval="#6b1438" style="background-color: #6b1438"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(253, 227, 235)" data-colorval="#f4749b" style="background-color: #f4749b"></div>
+                                    </div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(234, 204, 225)" data-colorval="#950069" style="background-color: #950069"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(221, 212, 220)" data-colorval="#542852" style="background-color: #542852"></div>
+                                    </div>
+                                </div>
+							</div>
+						</div>
+						<div class="span8" style="border:1px solid #eee;margin-bottom:20px;">
+							<div class="inv1 invvisible">
+					        	<div class="head">
+					            	<div class="logo">
+					                	<img src="<?php echo base_url(); ?>assets/invoice/img/logo.png" />
+					                </div>
+					                <div class="cover-name-company">
+					                	<h2>ឈ្មោះក្រុមហ៊ុន​ជា​ភាសា​ខ្មែរ</h2>
+					                    <h3>Company Name</h3>
+					                    <div class="vattin">
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 1%;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+					                    </div>
+					                    <div class="clear">
+					                    	<pre>អាស័យ​ដ្ឋាន៖ ផ្ទះលេខ                    ផ្លូវ                            ឃុំ/សង្កាត់</pre>
+					                        <pre>Address       N<sup>o</sup>                          street                      Commune/Sangkat</pre>
+					                        <pre>ក្រុង/ស្រុក/ខណ្ឌ                            ខេត្ត/រាជធានី                            ទូរស័ព្ទលេខ</pre>
+					                        <pre>Town/District/Khan                     Province/City                         Telephone N<sup>o</sup></pre>
+					                    </div>
+					                </div>
+					            </div>
+					            <div class="content">
+					            	<h1>វិក្កយបត្រ</h1>
+					                <h2>invoice</h2>
+					                <div class="clear">
+					                	<div class="cover-customer">
+					                    	<h5>អតិថិជន​ / Customer :</h5>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+					                                <span>Company name / Customer</span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 62%;">
+					                            	<p style="font-weight:bold">ឡូត ជឿន</p>
+					                            </div>
+					                        </div>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ទូរស័ព្ទ​លេខ</p>
+					                                <span>Telephone N<sup>o</sup></span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 78%;">
+					                            	<p style="font-weight:bold">010 411429</p>
+					                            </div>
+					                        </div>
+					                    </div>
+					                    <div class="cover-inv-number">
+					                    	<div class="clear">
+					                        	<div class="left">
+					                        		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+					                                <span>​​Invoice N<sup>o</sup></span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 42%;">
+					                            	<p style="font-weight:bold">023450</p>
+					                            </div>
+					                        </div>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>កាល​បរិច្ឆេទ៖</p>
+					                                <span>​​Date</span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 57%;">
+					                            	<p style="font-weight:bold">24/Jun/2016</p>
+					                            </div>
+					                        </div>
+					                    </div>
+					                </div>
+					            	<div class="clear">
+					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 1%;">
+					                    	<thead>
+					                            <tr>
+					                                <th>ល.រ<br />N<sup>0</sup></th>
+					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+					                                <th>បរិមាណ<br />Quantity</th>
+					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
+					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+					                            </tr>
+					                        </thead>
+					                        <tbody style="margin-top: 2px">
+					                        	<tr>
+					                            	<td><i>1</i></td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>2</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>3</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>4</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>5</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>6</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>7</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>8</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>9</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>10</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>11</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>12</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>13</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>14</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>15</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
+					                                <td></td>
+					                            </tr>
+					                        </tbody>
+					                    </table>
+					                </div>
+					            </div>
+					            <div class="foot">
+					            	<div class="cover-signature">
+					                	<div class="singature" style="float:left">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+					                    </div>
+					                    <div class="singature" style="float:right">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+					                    </div>
+					                </div>
+					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+					            </div>
+					        </div>
+					        <div class="inv1 invhidden">
+					        	<div class="head">
+					            	<div class="logo">
+					                	<img src="<?php echo base_url(); ?>assets/invoice/img/logo.png" />
+					                </div>
+					                <div class="cover-name-company">
+					                	<h2>ឈ្មោះក្រុមហ៊ុន​ជា​ភាសា​ខ្មែរ</h2>
+					                    <h3>Company Name</h3>
+					                    <div class="vattin">
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 1%;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+					                    </div>
+					                    <div class="clear">
+					                    	<pre>អាស័យ​ដ្ឋាន៖ ផ្ទះលេខ                    ផ្លូវ                            ឃុំ/សង្កាត់</pre>
+					                        <pre>Address       N<sup>o</sup>                          street                      Commune/Sangkat</pre>
+					                        <pre>ក្រុង/ស្រុក/ខណ្ឌ                            ខេត្ត/រាជធានី                            ទូរស័ព្ទលេខ</pre>
+					                        <pre>Town/District/Khan                     Province/City                         Telephone N<sup>o</sup></pre>
+					                    </div>
+					                </div>
+					            </div>
+					            <div class="content">
+					            	<h1>វិក្កយបត្រអាករ</h1>
+					                <h2>invoice</h2>
+					                <div class="clear">
+					                	<div class="cover-customer" style="width: 80%;">
+					                    	<h5>អតិថិជន​ / Customer :</h5>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+					                                <span>Company name / Customer</span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 42%;">
+					                            	<p style="font-weight:bold">ឡូត ជឿន</p>
+					                            </div>
+					                        </div>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ទូរស័ព្ទ​លេខ</p>
+					                                <span>Telephone N<sup>o</sup></span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 52%;">
+					                            	<p style="font-weight:bold">010 411429</p>
+					                            </div>
+					                        </div>
+					                        <div class="vattin">
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 5px;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+					                    </div>
+					                    </div>
+					                    <div class="cover-inv-number" style="width: 20%;">
+					                    	<div style="position: absolute;left:-70%;width:165%; ">
+					                            <div class="clear">
+					                                <div class="left">
+					                                    <p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+					                                    <span>​​Invoice N<sup>o</sup></span>
+					                                </div>
+					                                <div class="left dotted-ruler" style="width: 46%;">
+					                                    <p style="font-weight:bold">023450</p>
+					                                </div>
+					                            </div>
+					                            <div class="clear">
+					                                <div class="left">
+					                                    <p>កាល​បរិច្ឆេទ៖</p>
+					                                    <span>​​Date</span>
+					                                </div>
+					                                <div class="left dotted-ruler" style="width: 59%;">
+					                                    <p style="font-weight:bold">24/Jun/2016</p>
+					                                </div>
+					                            </div>
+					                        </div>
+					                    </div>
+					                </div>
+					            	<div class="clear inv2">
+					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
+					                    	<thead>
+					                            <tr>
+					                                <th>ល.រ<br />N<sup>0</sup></th>
+					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+					                                <th>បរិមាណ<br />Quantity</th>
+					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
+					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+					                            </tr>
+					                        </thead>
+					                        <tbody style="margin-top: 2px">
+					                        	<tr>
+					                            	<td><i>1</i></td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>2</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>3</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>4</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>5</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>6</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>7</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>8</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>9</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>10</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>11</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>12</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>13</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>14</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>15</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​<br />Sub Total</td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០%<br />VAT (10%)</td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​<br />Grand Total</td>
+					                                <td></td>
+					                            </tr>
+					                        </tbody>
+					                    </table>
+					                </div>
+					            </div>
+					            <div class="foot">
+					            	<div class="cover-signature">
+					                	<div class="singature" style="float:left">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+					                    </div>
+					                    <div class="singature" style="float:right">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+					                    </div>
+					                </div>
+					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+					            </div>
+					        </div>
+						</div>
+					</div>
+					<!-- Form actions -->
+					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
+						<span id="notification"></span>
+
+						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
+						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>									
+					</div>
+					<!-- // Form actions END -->
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="invoiceSelect" type="text/x-kendo-template">
+    <div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2>INVOICE SELECT</h2>
+				    <br>	
+				    <div class="row" style="margin-left:0;">			   				
+						<div class="span4">	
+							<div class="span12">
+								<h2 class="btn btn-block btn-primary">Form Style</h2>
+								<div class="row formstyle">
+									<a class="span4 form-thumb-active" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/inv1_thumb.jpg" />
+									</a>
+									<a class="span4" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/inv2_thumb.jpg" />
+									</a>
+									<a class="span4" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/form-thumb1.jpg" />
+									</a>
+								</div>
+							</div>
+							
+						</div>
+						<div class="span8" style="border:1px solid #eee;margin-bottom:20px;">
+							<div class="inv1 invvisible">
+					        	<div class="head">
+					            	<div class="logo">
+					                	<img src="<?php echo base_url(); ?>assets/invoice/img/logo.png" />
+					                </div>
+					                <div class="cover-name-company">
+					                	<h2>ឈ្មោះក្រុមហ៊ុន​ជា​ភាសា​ខ្មែរ</h2>
+					                    <h3>Company Name</h3>
+					                    <div class="vattin">
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 1%;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+					                    </div>
+					                    <div class="clear">
+					                    	<pre>អាស័យ​ដ្ឋាន៖ ផ្ទះលេខ                    ផ្លូវ                            ឃុំ/សង្កាត់</pre>
+					                        <pre>Address       N<sup>o</sup>                          street                      Commune/Sangkat</pre>
+					                        <pre>ក្រុង/ស្រុក/ខណ្ឌ                            ខេត្ត/រាជធានី                            ទូរស័ព្ទលេខ</pre>
+					                        <pre>Town/District/Khan                     Province/City                         Telephone N<sup>o</sup></pre>
+					                    </div>
+					                </div>
+					            </div>
+					            <div class="content">
+					            	<h1>វិក្កយបត្រ</h1>
+					                <h2>invoice</h2>
+					                <div class="clear">
+					                	<div class="cover-customer">
+					                    	<h5>អតិថិជន​ / Customer :</h5>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+					                                <span>Company name / Customer</span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 62%;">
+					                            	<p style="font-weight:bold">ឡូត ជឿន</p>
+					                            </div>
+					                        </div>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ទូរស័ព្ទ​លេខ</p>
+					                                <span>Telephone N<sup>o</sup></span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 78%;">
+					                            	<p style="font-weight:bold">010 411429</p>
+					                            </div>
+					                        </div>
+					                    </div>
+					                    <div class="cover-inv-number">
+					                    	<div class="clear">
+					                        	<div class="left">
+					                        		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+					                                <span>​​Invoice N<sup>o</sup></span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 42%;">
+					                            	<p style="font-weight:bold">023450</p>
+					                            </div>
+					                        </div>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>កាល​បរិច្ឆេទ៖</p>
+					                                <span>​​Date</span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 57%;">
+					                            	<p style="font-weight:bold">24/Jun/2016</p>
+					                            </div>
+					                        </div>
+					                    </div>
+					                </div>
+					            	<div class="clear">
+					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 1%;">
+					                    	<thead>
+					                            <tr>
+					                                <th>ល.រ<br />N<sup>0</sup></th>
+					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+					                                <th>បរិមាណ<br />Quantity</th>
+					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
+					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+					                            </tr>
+					                        </thead>
+					                        <tbody style="margin-top: 2px">
+					                        	<tr>
+					                            	<td><i>1</i></td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>2</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>3</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>4</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>5</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>6</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>7</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>8</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>9</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>10</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>11</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>12</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>13</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>14</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>15</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
+					                                <td></td>
+					                            </tr>
+					                        </tbody>
+					                    </table>
+					                </div>
+					            </div>
+					            <div class="foot">
+					            	<div class="cover-signature">
+					                	<div class="singature" style="float:left">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+					                    </div>
+					                    <div class="singature" style="float:right">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+					                    </div>
+					                </div>
+					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+					            </div>
+					        </div>
+					        <div class="inv1 invhidden">
+					        	<div class="head">
+					            	<div class="logo">
+					                	<img src="<?php echo base_url(); ?>assets/invoice/img/logo.png" />
+					                </div>
+					                <div class="cover-name-company">
+					                	<h2>ឈ្មោះក្រុមហ៊ុន​ជា​ភាសា​ខ្មែរ</h2>
+					                    <h3>Company Name</h3>
+					                    <div class="vattin">
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 1%;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+					                    </div>
+					                    <div class="clear">
+					                    	<pre>អាស័យ​ដ្ឋាន៖ ផ្ទះលេខ                    ផ្លូវ                            ឃុំ/សង្កាត់</pre>
+					                        <pre>Address       N<sup>o</sup>                          street                      Commune/Sangkat</pre>
+					                        <pre>ក្រុង/ស្រុក/ខណ្ឌ                            ខេត្ត/រាជធានី                            ទូរស័ព្ទលេខ</pre>
+					                        <pre>Town/District/Khan                     Province/City                         Telephone N<sup>o</sup></pre>
+					                    </div>
+					                </div>
+					            </div>
+					            <div class="content">
+					            	<h1>វិក្កយបត្រអាករ</h1>
+					                <h2>invoice</h2>
+					                <div class="clear">
+					                	<div class="cover-customer" style="width: 80%;">
+					                    	<h5>អតិថិជន​ / Customer :</h5>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+					                                <span>Company name / Customer</span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 42%;">
+					                            	<p style="font-weight:bold">ឡូត ជឿន</p>
+					                            </div>
+					                        </div>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ទូរស័ព្ទ​លេខ</p>
+					                                <span>Telephone N<sup>o</sup></span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 52%;">
+					                            	<p style="font-weight:bold">010 411429</p>
+					                            </div>
+					                        </div>
+					                        <div class="vattin">
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 5px;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+					                    </div>
+					                    </div>
+					                    <div class="cover-inv-number" style="width: 20%;">
+					                    	<div style="position: absolute;left:-70%;width:165%; ">
+					                            <div class="clear">
+					                                <div class="left">
+					                                    <p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+					                                    <span>​​Invoice N<sup>o</sup></span>
+					                                </div>
+					                                <div class="left dotted-ruler" style="width: 46%;">
+					                                    <p style="font-weight:bold">023450</p>
+					                                </div>
+					                            </div>
+					                            <div class="clear">
+					                                <div class="left">
+					                                    <p>កាល​បរិច្ឆេទ៖</p>
+					                                    <span>​​Date</span>
+					                                </div>
+					                                <div class="left dotted-ruler" style="width: 59%;">
+					                                    <p style="font-weight:bold">24/Jun/2016</p>
+					                                </div>
+					                            </div>
+					                        </div>
+					                    </div>
+					                </div>
+					            	<div class="clear inv2">
+					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
+					                    	<thead>
+					                            <tr>
+					                                <th>ល.រ<br />N<sup>0</sup></th>
+					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+					                                <th>បរិមាណ<br />Quantity</th>
+					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
+					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+					                            </tr>
+					                        </thead>
+					                        <tbody style="margin-top: 2px">
+					                        	<tr>
+					                            	<td><i>1</i></td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>2</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>3</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>4</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>5</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>6</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>7</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>8</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>9</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>10</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>11</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>12</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>13</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>14</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>15</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​<br />Sub Total</td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០%<br />VAT (10%)</td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​<br />Grand Total</td>
+					                                <td></td>
+					                            </tr>
+					                        </tbody>
+					                    </table>
+					                </div>
+					            </div>
+					            <div class="foot">
+					            	<div class="cover-signature">
+					                	<div class="singature" style="float:left">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+					                    </div>
+					                    <div class="singature" style="float:right">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+					                    </div>
+					                </div>
+					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+					            </div>
+					        </div>
+						</div>
+					</div>
+					<!-- Form actions -->
+					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
+						<span id="notification"></span>
+
+						<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>									
+					</div>
+					<!-- // Form actions END -->
+				</div>							
+			</div>
+		</div>
+	</div>
 </script>
 
 
@@ -19654,6 +21933,10 @@
 			</div>
 		</div>
 		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>Inventory Balance</h2>
@@ -21892,6 +24175,10 @@
 			</div>
 		</div>
 		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>Cash Balance</h2>
@@ -21929,7 +24216,7 @@
 
 
 <!-- ***************************
-*	Report Section       *
+ *	Report Section       *
 **************************** -->
 <script id="reportDashboard" type="text/x-kendo-template" >
 	<div class="row-fluid">
@@ -21937,43 +24224,43 @@
 			<h2>No. of Reports/lists by Module</h2>
 			<ul>
 				<li>
-					<a href="#/customers">
+					<a href="#/customer_report_center">
 						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
 					</a>
 					<div class="span12">17</div>
 				</li>
 				<li>
-					<a href="#/employees">
+					<a href="#/employee_report_center">
 						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
 					</a>
 					<div class="span12">6</div>
 				</li>
 				<li>
-					<a href="#/vendors">
+					<a href="#/vendor_report_center">
 						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
 					</a>
 					<div class="span12">16</div>
 				</li>
 				<li>
-					<a href="#/inventories">
+					<a href="#/item_report_center">
 						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
 					</a>
 					<div class="span12">12</div>
 				</li>
 				<li>
-					<a href="#">
+					<a href="#/services_report_center">
 						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/services.png" alt="Service">
 					</a>
 					<div class="span12"></div>
 				</li>
 				<li>
-					<a href="#/cash">
+					<a href="#/cash_report_center">
 						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
 					</a>
 					<div class="span12">6</div>
 				</li>
 				<li>
-					<a href="#/accounting">
+					<a href="#/accounting_report_center">
 						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
 					</a>
 					<div class="span12">16</div>
@@ -22193,7 +24480,7 @@
   				<li><a href='#/expense'>Expense</a></li>  				 				 				  				 				
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/employees_report_center'>REPORTS</a></li>	  	
+	  	<li><a href='#/employee_report_center'>REPORTS</a></li>	  	
 	  	<li><a href='#/employees_setting' class='glyphicons settings'><i></i></a></li>	  	
 	</ul>
 </script>
@@ -22675,18 +24962,31 @@
 	};	
 	banhji.userManagement = kendo.observable({
 		lang : langVM,
+		searchText : "",
+		searchType : "contacts",
 		searchContact: function() {
+			this.set("searchType", "contacts");
+
 			$("#search-placeholder").attr('placeholder', "Search Contact");
 		},
 		searchTransaction: function() {
+			this.set("searchType", "transactions");
+
 			$("#search-placeholder").attr('placeholder', "Search Transaction");
 		},
 		searchItem: function() {
+			this.set("searchType", "items");
+
 			$("#search-placeholder").attr('placeholder', "Search Item");
 		},
-		searchBotton: function() {
-			alert('searching ' + $("#search-placeholder").text());
-		},
+		search: function(e) {
+			e.preventDefault();
+			
+			banhji.searchAdvanced.set("searchText", this.get("searchText"));
+			banhji.searchAdvanced.set("searchType", this.get("searchType"));
+			banhji.searchAdvanced.search();
+			banhji.router.navigate('/search_advanced');
+		},				
 		auth : new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -23765,7 +26065,71 @@
 				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
 			});										
 		}
-	});	
+	});
+	banhji.searchAdvanced =  kendo.observable({
+    	lang 				: langVM,    	
+    	contactDS 			: dataStore(apiUrl+"contacts"),
+    	transactionDS 		: dataStore(apiUrl+"transactions"),
+    	itemDS 				: dataStore(apiUrl+"items"),
+    	searchType 			: "",
+    	searchText 			: "",
+    	found 				: 0,
+    	pageLoad 			: function(){			
+																									
+		},
+		search 				: function(){
+			var self = this, 
+			searchText = this.get("searchText");
+			this.set("found", 0);
+
+			this.contactDS.query({
+				filter:[
+					{ field:"number", operator:"like", value: searchText },
+					{ field:"surname", operator:"or_like", value: searchText },
+					{ field:"name", operator:"or_like", value: searchText }
+				],
+				page:1,
+				pageSize: 10
+			}).then(function(){				
+				var found = self.get("found") + self.contactDS.total();
+				self.set("found", found);
+			});
+
+			this.transactionDS.query({
+				filter:[
+					{ field:"number", operator:"like", value: searchText }
+				],
+				page:1,
+				pageSize: 10
+			}).then(function(){
+				var found = self.get("found") + self.transactionDS.total();
+				self.set("found", found);
+			});
+
+			this.itemDS.query({
+				filter:[
+					{ field:"sku", operator:"like", value: searchText },					
+					{ field:"name", operator:"or_like", value: searchText }
+				],
+				page:1,
+				pageSize: 10
+			}).then(function(){
+				var found = self.get("found") + self.itemDS.total();
+				self.set("found", found);
+			});
+		},
+		selectedContact 	: function(){
+			banhji.router.navigate('/customer_center');
+		},
+		selectedTransaction : function(e){
+			var data = e.data;
+
+			banhji.router.navigate('/'+data.type.toLowerCase()+'/'+data.id);
+		},
+		selectedItem 		: function(){
+			banhji.router.navigate('/item_center');
+		}		    	
+    });	
 
 
 	//DAWINE -----------------------------------------------------------------------------------------
@@ -25952,6 +28316,7 @@
 		lang 				: langVM,		
         dataSource 			: dataStore(apiUrl + "tax_types"),        
         itemDS 	 			: dataStore(apiUrl + "tax_items"),
+        accountDS 			: banhji.source.accountDS,
         typeList			: [ 
 	 		{ id:"Invoice Based", name: "Invoice Based" }, 
 	 		{ id:"Payment Based", name: "Payment Based" },
@@ -28119,11 +30484,36 @@
 	banhji.vendorDashboard = kendo.observable({
 		lang 				: langVM,
 		summaryDS 			: dataStore(apiUrl + "customer_reports/summary"),
-		topCustomerDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
-		topARDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),
-		graphDS 			: dataStore(apiUrl + 'customer_reports/monthly_sale'),
-		purchase 			: 0,
+		topContactDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
+		topAPDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),		
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "customer_reports/monthly_sale",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),
+		sale 				: 0,
 		sale_customer 		: 0,
 		sale_product 		: 0,
 		sale_order 			: 0,
@@ -28147,23 +30537,23 @@
 				take: 5
 			}).then(function(){
 				var view = self.summaryDS.view();
-
-				self.set("purchase", kendo.toString(view[0].purchase, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				
+				self.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
 				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
 				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
 
 				self.set("order", kendo.toString(view[0].order, "n0"));
-				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));				
+				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.locale=="km-KH"?"c0":"c", banhji.locale));				
 				self.set("order_open", kendo.toString(view[0].order_open, "n0"));
 
-				self.set("ar", kendo.toString(view[0].ar, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));
+				self.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				self.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
 				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
 				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
 			});
 
-			this.topCustomerDS.query({
+			this.topContactDS.query({
 				filter: [
 					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
 					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
@@ -28172,7 +30562,7 @@
 				take: 5
 			});
 
-			this.topARDS.query({
+			this.topAPDS.query({
 				filter: [
 					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
 					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
@@ -28188,51 +30578,7 @@
 				],							
 				page: 1,
 				take: 5
-			});
-
-			this.loadGraph();								
-		},
-		loadGraph 			: function(){
-			var self = this, 
-			today = new Date(),
-			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-
-			this.graphDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],
-				page: 1,
-				take: 100
-			}).then(function(e) {
-			    var view = self.graphDS.view();
-			    
-				$('#graph').kendoChart({
-					dataSource: {data: view},												
-					series: [
-						{field: 'sale', categoryField:'month', type: 'line', axis: 'order'}
-					],
-					valueAxes: [
-						{
-		                    name: "order",
-		                    color: "#007eff",
-		                    min: 0,
-		                    majorUnit: 500000,
-		                    max: 1000000
-		                }
-	                ],
-	                categoryAxis: {
-	                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
-	                    axisCrossingValues: [0, 13],
-	                    justified: true
-	                },
-	                tooltip: {
-	                    visible: true,
-	                    format: "{0}",
-	                    template: "#= series.field #: #= value #"
-	                }
-				});
-			});		
+			});										
 		}		
 	});
 	banhji.vendorCenter = kendo.observable({
@@ -34209,6 +36555,33 @@
 				this.transactionDS.fetch();
 				this.outstandingDS.fetch();
 			}									
+		},
+		loadContact 		: function(id){
+			var self = this, para = [];
+
+			if(id){
+				//self.set("obj", view[0]);				    	
+		    	this.loadOutStandingInvoice(id);
+		    	this.loadTransaction(id);				    	
+		    	this.loadNote(id);
+			}else{
+				para.push({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
+
+				this.contactDS.query({
+				  	filter:para,
+				  	page: 1,
+				  	take: 50
+				}).then(function(e) {
+				    var view = self.contactDS.data();
+				    
+				    if(view.length>0){
+				    	self.set("obj", view[0]);				    	
+				    	self.loadOutStandingInvoice(view[0].id);
+				    	self.loadTransaction(view[0].id);				    	
+				    	self.loadNote(view[0].id);
+				    }
+				});
+			}
 		},
 		loadOutStandingInvoice: function(id){
 			var self = this, obj = this.get("obj");
@@ -42220,7 +44593,250 @@
       		window.history.back();
       	},	    
     });
+    banhji.invoiceSelect =  kendo.observable({
+		dataSource 			: dataStore(apiUrl + "transactions"),		
+		obj 				: null,
+		isEdit 				: false,		
+		user_id				: banhji.source.user_id,
+		pageLoad 			: function(id, is_recurring){
+			if(id){
+				this.set("isEdit", true);
+				this.set("original_total", 0);
+				this.set("original_credit", 0);							
+				this.loadObj(id, is_recurring);
+			}else{				
+				if(this.get("isEdit")){
+					this.set("isEdit", false);
+					this.set("original_total", 0);
+					this.set("original_credit", 0);					
+					this.dataSource.data([]);					
+					
+					this.addEmpty();
+				}else if(this.dataSource.total()==0){
+					this.addEmpty();					
+				}								
+			}
+			//Function write css to header
+			function loadStyle(href){
+			    // avoid duplicates
+			    for(var i = 0; i < document.styleSheets.length; i++){
+			        if(document.styleSheets[i].href == href){
+			            return;
+			        }
+			    }
+			    var head  = document.getElementsByTagName('head')[0];
+			    var link  = document.createElement('link');
+			    link.rel  = 'stylesheet';
+			    link.type = 'text/css';
+			    link.href = href;
+			    head.appendChild(link);
+			}
+			var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
+			loadStyle(Href1);
+			
+		},	 
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=800, height=500'),
+		        doc = win.document.open();
 
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title>Kendo UI Grid</title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" /> <link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" /> ' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style>' +
+		            '</head>' +
+		            '<body><div class="inv1">';
+
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('.inv1').html();
+		    //alert(printableContent);
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    //alert('a');
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();	
+		    },2000)
+		    
+		},   			
+		loadObj 			: function(id, is_recurring){
+			var self = this, para = [];
+
+			para.push({ field:"id", value: id });
+
+			if(is_recurring){
+				para.push({ field:"is_recurring", value: 1 });
+			}			
+
+			this.dataSource.query({    			
+				filter: para,
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.dataSource.view();				
+
+				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
+				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
+		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
+		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));	  			
+								
+				//self.contactDS.filter({ field: "id", value: view[0].contact_id });				
+				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
+				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });				
+				self.depositDS.filter([
+					{ field: "reference_id", value: view[0].id },
+					{ field: "type", value: "Credit" }
+				]);
+
+				self.set("obj", view[0]);
+				self.set("original_total", view[0].amount);
+				self.set("original_credit", view[0].credit);
+
+				self.loadDeposit();				
+			});				
+		},		
+		addEmpty 		 	: function(){			
+			this.dataSource.data([]);			
+
+			this.set("obj", null);				
+
+			this.dataSource.add({				
+				contact_id 			: "",
+				payment_term_id		: 0,				
+				reference_id 		: 0,
+				recurring_id 		: "",				
+				user_id 			: this.get("user_id"),
+				seller_id 			: this.get("user_id"), 	    		
+			   	type				: "Invoice",
+			   	sub_total 			: 0,				   		   					   				   	
+			   	amount				: 0,
+			   	credit_allowed 		: 0,
+			   	credit 				: 0,
+			   	deposit 			: 0,
+			   	discount 			: 0,		   	
+			   	fine 				: 0,
+			   	tax 				: 0,
+			   	rate				: 1,			   	
+			   	locale 				: "km-KH",			   	
+			   	issued_date 		: new Date(),
+			   	due_date 			: new Date(),			   	
+			   	bill_to 			: "",
+			   	ship_to 			: "",
+			   	memo 				: "",
+			   	memo2 				: "",
+			   	status 				: 0,
+			   	segments 			: [],
+			   	is_journal 			: 1,
+			   	//Recurring
+			   	recurring_name 		: "",
+			   	start_date 			: new Date(),
+			   	frequency 			: "Daily",
+			   	month_option 		: "Day",
+			   	interval 			: 1,
+			   	day 				: 1,
+			   	week 				: 0,
+			   	month 				: 0,
+			   	is_recurring 		: 0				
+	    	});		    		
+			
+			var data = this.dataSource.data();
+			var obj = data[data.length-1];			
+			this.set("obj", obj);					
+		},							    
+	    transactionSync 	: function(){
+	    	var dfd = $.Deferred();	        
+
+	    	this.dataSource.sync();
+		    this.dataSource.bind("requestEnd", function(e){			    	
+				dfd.resolve(e.response.results);    				
+		    });
+
+		    return dfd;	    		    	
+	    },	    	    
+		save 				: function(){				
+	    	var self = this, obj = this.get("obj");
+
+	    	//Warning over credit allowed
+	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
+	        	alert("Over credit allowed!");		        	
+	        }
+
+	    	//Update references
+			if(obj.reference_id>0){
+				var ref = this.referenceDS.get(obj.reference_id);
+				ref.set("status", 1);
+				this.referenceDS.sync();
+			} 			
+	    	
+	    	if(this.get("isEdit")){
+	    		this.dataSource.sync();
+
+	    		//Update credit changes
+	    		if(this.get("original_credit") !== obj.credit){	    			
+	    			this.set("original_credit", obj.credit);    			
+
+					var deposit = this.depositDS.at(0);
+					deposit.set("amount", obj.credit*-1);
+
+					this.depositDS.sync();
+	    		}	    		
+
+	    		//Update total changes
+	    		if(this.get("original_total") == obj.amount){
+	    			this.lineDS.sync();	    			
+	    		}else{
+	    			this.set("original_total", obj.amount);
+
+	    			$.each(this.journalLineDS.data(), function(index, value){										
+						value.set("deleted", 1);										
+					});
+
+					this.addJournal(obj.id);
+	    		}	    		
+	    	}else{
+	    		//Add brand new transaction
+				this.transactionSync()
+				.then(function(data){
+					//Deposit
+					if(obj.deposit > 0 || obj.credit > 0){
+						self.saveDeposit(data[0].id);
+					}
+
+					//Journal
+					self.addJournal(data[0].id);
+
+					//Item line
+					$.each(self.lineDS.data(), function(index, value){										
+						value.set("transaction_id", data[0].id);										
+					});
+					self.lineDS.sync();																	
+				}).then(function(){					
+					self.addEmpty();
+				});
+			}
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();
+			this.lineDS.cancelChanges();			
+
+			window.history.back();
+		}    
+	});
 
 	/*************************
 	*	Cashier Section   *
@@ -47995,7 +50611,8 @@
 		blank		: new kendo.View('<div></div>'),		
 		index  		: new kendo.Layout("#index", {model: banhji.index}),		
 		menu 		: new kendo.Layout('#menu-tmpl', {model: banhji.userManagement}),
-		
+		searchAdvanced: new kendo.Layout("#searchAdvanced", {model: banhji.searchAdvanced}),
+
 		//Accounting
 		accountingDashboard: new kendo.Layout("#accountingDashboard", {model: banhji.accountingDashboard}),
 		accountingCenter: new kendo.Layout("#accountingCenter", {model: banhji.accountingCenter}),
@@ -48015,6 +50632,7 @@
 		employee: new kendo.Layout("#employee", {model: banhji.employee}),
 		cashAdvance: new kendo.Layout("#cashAdvance", {model: banhji.cashAdvance}),
 		expense: new kendo.Layout("#expense", {model: banhji.expense}),
+		employeeReportCenter: new kendo.Layout("#employeeReportCenter"),
 
 		//Vendor
 		vendorDashboard: new kendo.Layout("#vendorDashboard", {model: banhji.vendorDashboard}),
@@ -48045,6 +50663,11 @@
 		customerBalance : new kendo.Layout("#customerBalance", {model: banhji.customerBalance}),
 		customerSetting: new kendo.Layout("#customerSetting", {model: banhji.customerSetting}),
 		job: new kendo.Layout("#job", {model: banhji.job}),
+		invoiceSelect: new kendo.Layout("#invoiceSelect", {model: banhji.invoiceSelect}),
+		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.saleSummaryCustomer}),
+		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.saleDetailCustomer}),
+		saleSummaryProduct: new kendo.Layout("#saleSummaryProduct", {model: banhji.saleSummaryProduct}),
+		customerTransactionList: new kendo.Layout("#customerTransactionList", {model: banhji.customerTransactionList}),
 
 		//Cashier
 		cashier: new kendo.Layout("#cashier", {model: banhji.cashier}),
@@ -48152,6 +50775,22 @@
 		$("#secondary-menu").html("");
 		banhji.index.getLogo();
 		banhji.index.pageLoad();
+	});
+	banhji.router.route("/search_advanced", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{			
+			var vm = banhji.searchAdvanced;
+						
+			banhji.view.layout.showIn("#content", banhji.view.searchAdvanced);
+			
+			if(banhji.pageLoaded["search_advanced"]==undefined){
+				banhji.pageLoaded["search_advanced"] = true;
+		          	
+			}
+
+			vm.pageLoad();			
+		}				
 	});	
 	
 	
@@ -49115,6 +51754,22 @@
 			vm.pageLoad(id,is_recurring);
 		}		
 	});
+	banhji.router.route("/employee_report_center", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.employeeReportCenter);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.employeeMenu);
+
+			//var vm = banhji.customerReportCenter;			
+			
+			if(banhji.pageLoaded["employee_report_center"]==undefined){
+				banhji.pageLoaded["employee_report_center"] = true;				
+								
+			}			
+		}		
+	});
 
 	/*************************
 	*   Vendor Section   *
@@ -49760,54 +52415,7 @@
 			if(banhji.pageLoaded["customers"]==undefined){
 				banhji.pageLoaded["customers"] = true;				
 								               
-			}
-
-			$("#sale-chart").kendoChart({
-               title: {
-                   text: "Monthly Sale Trend"
-               },
-               legend: {
-                   position: "top",
-                   visible: false
-               },
-               seriesDefaults: {
-                   type: "column"
-               },
-               series: [{
-                   name: "Sale Value",
-                   data: [100, 200, 300, 200, 100, 100, 200, 300, 200, 100,500,400],
-                   color: '#496CAD'               
-               }],
-               valueAxis: {
-                   labels: {
-                       format: ""
-                   },
-                   majorGridLines: {
-		                visible: false
-	               },
-                   line: {
-                       visible: true
-                   },
-                   axisCrossingValue: 0
-               },
-               categoryAxis: {
-                   categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct","Nov","Dec"],
-                   majorGridLines: {
-		               visible: false
-	               }, 
-                   line: {
-                       visible: true
-                   },
-                   labels: {
-                       padding: {top: 0}
-                   }
-               },
-               tooltip: {
-                   visible: true,
-                   format: "",
-                   template: "#= series.name #: #= value #"
-               }
-           	});
+			}			
 
 			vm.pageLoad();				
 		}
@@ -49825,20 +52433,7 @@
 			if(banhji.pageLoaded["customer_center"]==undefined){
 				banhji.pageLoaded["customer_center"] = true;							
 				
-				vm.contactDS.query({
-				  	filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
-				  	page: 1,
-				  	take: 50
-				}).then(function(e) {
-				    var view = vm.contactDS.data();
-				    
-				    if(view.length>0){
-				    	vm.set("obj", view[0]);				    	
-				    	vm.loadOutStandingInvoice(view[0].id);
-				    	vm.loadTransaction(view[0].id);				    	
-				    	vm.loadNote(view[0].id);
-				    }
-				});
+				vm.loadContact();
 
 				function startChange() {
                     var startDate = start.value(),
@@ -50799,7 +53394,569 @@
 			vm.pageLoad();		
 		}		
 	});
+	banhji.router.route("/invoice_select(/:id)", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{						
+			banhji.view.layout.showIn("#content", banhji.view.invoiceSelect);			
+			kendo.fx($("#slide-form")).slideIn("down").play();
 
+			var vm = banhji.invoiceSelect;
+			
+			if(banhji.pageLoaded["invoice_select"]==undefined){
+				banhji.pageLoaded["invoice_select"] = true;				        
+
+				var validator = $("#example").kendoValidator().data("kendoValidator");
+				var notification = $("#notification").kendoNotification({				    
+				    autoHideAfter: 5000,
+				    width: 300,				    
+				    height: 50
+				}).data('kendoNotification');
+				
+		        $("#saveNew").click(function(e){				
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();		            	
+
+		            	notification.success("Save Successful");			  
+			        }else{
+			        	notification.error("Warning, please review it again!");			           
+			        }		            
+				});
+				$("#saveClose").click(function(e){				
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();
+		            	window.history.back();
+
+		            	notification.success("Save Successful");			  
+			        }else{
+			        	notification.error("Warning, please review it again!");			           
+			        }		            
+				});				
+			};
+			
+			vm.pageLoad(id);		
+		};	
+	});
+	banhji.router.route("/sale_summary_customer", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleSummaryCustomer);
+			
+			//var vm = banhji.saleSummaryCustomer;
+
+			if(banhji.pageLoaded["saleSummaryCustomer"]==undefined){
+				banhji.pageLoaded["saleSummaryCustomer"] = true;				
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());	
+
+
+
+
+
+			}
+
+			vm.pageLoad();				
+		}
+	});
+	banhji.router.route("/sale_detail_customer", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleDetailCustomer);
+			
+			//var vm = banhji.saleSummaryCustomer;
+
+			if(banhji.pageLoaded["saleDetailCustomer"]==undefined){
+				banhji.pageLoaded["saleDetailCustomer"] = true;				
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());	
+
+
+
+
+
+			}
+
+			vm.pageLoad();				
+		}
+	});
+	banhji.router.route("/sale_summary_product", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleSummaryProduct);
+			
+			//var vm = banhji.saleSummaryCustomer;
+
+			if(banhji.pageLoaded["saleSummaryProduct"]==undefined){
+				banhji.pageLoaded["saleSummaryProduct"] = true;				
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());	
+
+
+
+
+
+			}
+
+			vm.pageLoad();				
+		}
+	});
+	banhji.router.route("/customer_transaction_list", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerTransactionList);
+			
+			//var vm = banhji.saleSummaryCustomer;
+
+			if(banhji.pageLoaded["customerTransactionList"]==undefined){
+				banhji.pageLoaded["customerTransactionList"] = true;				
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());	
+
+
+
+
+
+			}
+
+			vm.pageLoad();				
+		}
+	});
 
 	/*************************
 	*   Cashier Section   *
