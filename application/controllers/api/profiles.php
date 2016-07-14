@@ -406,8 +406,13 @@ class Profiles extends REST_Controller {
 	}
 
 	function module_get() {
+		$requested_data = $this->get("filter");
+		$filters = $requested_data['filters'];
 		$institute = new Institute(null);
-		$institute->where('id', 14)->get();
+		foreach($filters as $filter) {
+			$institute->where($filter['field'], $filter['value']);
+		}
+		$institute->get();
 		if($institute->exists()) {
 			$institute->module->include_join_fields()->get();
 			foreach($institute->module as $module) {
@@ -426,7 +431,13 @@ class Profiles extends REST_Controller {
 		}
 	}
 
-	function module_put() {}
+	function module_post() {
+		// $request = json_decode($this->post('models'));
+
+		// foreach($request as $d) {
+			
+		// }
+	}
 
 	private function _check_email($email) {
 		$query = $this->login->get_by(array("username"=>$email));
