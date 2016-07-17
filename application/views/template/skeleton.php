@@ -254,10 +254,10 @@
 	    border-collapse: inherit;
 	    margin-bottom: 10px;
 	}
-	.home-chart{
+	/*.home-chart{
 		margin-left: 15px;
 		margin-right: 15px;
-	}
+	}*/
 	.performance tr td,
 	.position tr td{
 		padding: 5px 0 5px 0;

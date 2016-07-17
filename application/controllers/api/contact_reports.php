@@ -2,7 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Customer_reports extends REST_Controller {	
+class Contact_reports extends REST_Controller {	
 	public $_database;
 	public $server_host;
 	public $server_user;
@@ -593,7 +593,7 @@ class Customer_reports extends REST_Controller {
 					$contact->get_by_id($key);
 
 					$fullname = $contact->surname ." ". $contact->name;
-					if($contact->company!==""){
+					if($contact->company){
 						$fullname = $contact->company;
 					}
 
@@ -710,7 +710,7 @@ class Customer_reports extends REST_Controller {
 					$contact->get_by_id($key);
 
 					$fullname = $contact->surname ." ". $contact->name;
-					if($contact->company!==""){
+					if($contact->company){
 						$fullname = $contact->company;
 					}
 
@@ -833,7 +833,7 @@ class Customer_reports extends REST_Controller {
 					$data["results"][] = array(
 						'id' 			=> 0,						
 						'quantity' 		=> $value['quantity'],
-						'name' 			=> $item->sku ." ". $item->name
+						'name' 			=> $item->name
 					);
 
 					$counter++;
@@ -922,7 +922,7 @@ class Customer_reports extends REST_Controller {
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				$fullname = $value->contact_surname ." ". $value->contact_name;
-				if($value->contact_company!==""){
+				if($value->contact_company){
 					$fullname = $value->contact_company;
 				}
 				

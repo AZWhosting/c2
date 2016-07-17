@@ -736,6 +736,22 @@ width: 90px !important;
 }
 
 
+
+.supplier-icon .span4{
+  padding-left: 5px !important;
+}
+.row-fluid .span4{
+  padding-left: 0;
+}
+.row-fluid .span4:nth-child(3){
+  padding-right: 0;
+}
+
+.supplier-icon .span4:last-child img{
+  width: 105px;
+}
+
+
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px)

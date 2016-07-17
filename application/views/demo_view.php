@@ -194,17 +194,17 @@
 									<tr>
 										<td>Income</td>
 										<td></td>
-										<td>0.00</td>
+										<td>10,171,667.00</td>
 									</tr>
 									<tr>
 										<td>Expense</td>
 										<td></td>
-										<td>0.00</td>
+										<td>5,391,230.00</td>
 									</tr>
 									<tr>
 										<td><b>Net Income</b></td>
 										<td></td>
-										<td><b>0.00</b></td>
+										<td><b>4,780,437.00</b></td>
 									</tr>
 								</table>
 							</div>
@@ -214,17 +214,17 @@
 									<tr>
 										<td>Assets</td>
 										<td></td>
-										<td>0.00</td>
+										<td>20,451,800.00</td>
 									</tr>
 									<tr>
 										<td>Liabilities</td>
 										<td></td>
-										<td>0.00</td>
+										<td>6,432,100.00</td>
 									</tr>
 									<tr>
 										<td><b>Equity</b></td>
 										<td></td>
-										<td><b>0.00</b></td>
+										<td><b>14,019,700.00</b></td>
 									</tr>
 								</table>
 							</div>
@@ -301,7 +301,7 @@
 					                 data-tooltip='{
 					                    visible: true,
 					                    format: "{0}%",
-					                    template: "#= series.name #: #= value #"
+					                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 					                 }'                 
 					                 data-series="[
 					                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
@@ -344,7 +344,7 @@
 					<div data-role="listview"
 						 data-auto-bind="false"
 						 data-selectable="true"				                 
-		                 data-template="searchAdvanced-template"
+		                 data-template="searchAdvanced-contact-template"
 		                 data-bind="source: contactDS"></div>
 		            <div data-role="listview"
 						 data-auto-bind="false"
@@ -363,7 +363,7 @@
 		</div>
 	</div>
 </script>
-<script id="searchAdvanced-template" type="text/x-kendo-template">
+<script id="searchAdvanced-contact-template" type="text/x-kendo-template">
 	<dl data-bind="click: selectedContact">			
 		<dt>
 			<div class="widget widget-heading-simple widget-body-multiple widget-offers">
@@ -375,12 +375,13 @@
 							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" 
 							style="width: 100px; height: 100px;">
 						<div class="media-body">
-							<h5><a href="">#=surname# #=name#</a></h5>
-							<span>#=abbr# #=number#</span>
+							<h5><a href="">#=surname# #=name#</a></h5>							
+							<span>#=abbr# #=number#</span>							
+							<br>
+							<span>#=company#</span>
 							<br>
 							<span>#=contact_type#</span>
-							<br>
-							<span>#=address#</span>							
+														
 						</div>
 					</div>
 					<!-- // Media item END -->
@@ -2504,7 +2505,7 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td width="50%">
-								<h3><a href="#/">Journal Entry Report</a></h3>
+								<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 							</td>
 							<td width="50%">
 								<h3><a href="#/">General Ledger</a></h3>								
@@ -2571,7 +2572,7 @@
 
 						<tr>
 							<td width="50%">
-								<h3><a href="#/">Trail Balance</a></h3>
+								<h3><a href="#/trial_balance">Trail Balance</a></h3>
 							</td>
 							<td width="50%">
 								<h3><a href="#/">Period-End Closing Checklist</a></h3>
@@ -2835,7 +2836,7 @@
 	          		|
 					<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
 					|					
-				    <div class="btn-group dropdown">
+				    <span class="btn-group dropdown">
 				        <button class="dropdown-toggle" data-toggle="dropdown">Sort <span class="caret"></span></button>
 				        <ul class="dropdown-menu">
 				            <li>
@@ -2848,7 +2849,7 @@
 				            	<span class="btn btn-block btn-primary" data-bind="click: sort">ACCOUNT</span>
 				            </li>				            			           				            				            
 				        </ul>
-				    </div>
+				    </span>
 									
 		    	</div>						
 
@@ -2952,6 +2953,110 @@
     		#=kendo.toString(sumCr, "c0", banhji.institute.locale)#
     	</td>    	
     </tr>  
+</script>
+
+<script id="trialBalance" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="container-fluid">					
+			<div id="example" class="k-content">
+
+		    	<div class="hidden-print well">
+		    		<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+		            
+		            As of:
+			       	<input id="asOf" name="asOf"
+			       			data-role="datepicker"        					
+        					data-format="dd-MM-yyyy"
+        					data-parse-formats="yyyy-MM-dd"						           
+				            data-bind="value: as_of"
+				            placeholder="As Of ..." />
+
+		            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+	          		|
+					<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
+					|					
+				    <span class="btn-group dropdown">
+				        <button class="dropdown-toggle" data-toggle="dropdown">Sort <span class="caret"></span></button>
+				        <ul class="dropdown-menu">
+				            <li>
+				            	<span class="btn btn-block btn-primary" data-bind="click: sort">TYPE</span>				            	
+				            </li>
+				            <li>
+				            	<span class="btn btn-block btn-info" data-bind="click: sort">DATE</span>
+				            </li>
+				            <li>
+				            	<span class="btn btn-block btn-primary" data-bind="click: sort">ACCOUNT</span>
+				            </li>				            			           				            				            
+				        </ul>
+				    </span>
+									
+		    	</div>						
+
+				<div align="center">
+					<h3>TRIAL BALANCE</h3>
+					<span id="strDate"></span>
+				</div>
+
+				<br>
+
+				<table class="table table-bordered table-primary table-striped table-vertical-center">
+			        <thead>
+			            <tr>
+			                <th class="center">NUMBER</th>
+			                <th class="center">NAME</th>
+			                <th class="center">TYPE</th>			                		                		                
+			                <th class="center">DEBIT</th>
+			                <th class="center">CREDIT</th>			                
+			            </tr> 
+			        </thead>
+			        <tbody data-role="listview"
+			        		data-template="trialBalance-template"			        		
+			        		data-bind="source: dataSource"></tbody>
+			        <tfoot data-template="trialBalance-footer-template" data-bind="source: this"></tfoot>			        
+			    </table>
+
+	            <div data-role="pager" data-bind="source: dataSource"></div>					  
+
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="trialBalance-template" type="text/x-kendo-tmpl">	
+	<tr>
+		<td style="color: black;">
+			#=number#
+		</td>		
+		<td style="color: black;">
+			#=name#
+		</td>
+		<td style="color: black;">
+			#=type#
+		</td>				
+		<td class="right" style="color: black;">
+			#if(dr!==0){#
+				#=kendo.toString(dr, "c0", banhji.locale)#
+			#}#
+		</td>
+		<td class="right" style="color: black;">
+			#if(cr!==0){#
+				#=kendo.toString(cr, "c0", banhji.locale)#
+			#}#
+		</td>		
+    </tr>    
+</script>
+<script id="trialBalance-footer-template" type="text/x-kendo-template">
+    <tr>
+        <td>TOTAL:</td>
+        <td></td>
+        <td></td>        
+        <td class="right">
+            #: totalDr() #
+        </td>
+        <td class="right">
+            #: totalDr() #
+        </td>
+    </tr>
 </script>
 
 <script id="accountingSetting" type="text/x-kendo-template">
@@ -3209,8 +3314,8 @@
 			        	</p>
 			        	<div class="supplier-icon">
 					       	<div class="span4">
-						       	<a href="#/customer" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+						       	<a href="#/employee" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/employees.ico" />
 						       	</a>
 						       </div>
 						    <div class="span4">
@@ -3242,8 +3347,10 @@
 							Expense
 						</a>
 					</td>
-					<td class="center">							
-							<img src="" width="110" height="200" />							
+					<td class="center">
+						<a href="#/cash_transaction">				
+							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />						
+							Cash Tnx.
 						</a>					
 					</td>					
 				</tr>							
@@ -3265,7 +3372,7 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons coins"><i></i></span>Sale</h4>
+							<h4 class="heading"><span class="glyphicons coins"><i></i></span>Expense</h4>
 						</div>
 						<!-- // Widget heading END -->
 						
@@ -3277,7 +3384,7 @@
 									<td width="33%">										
 										<span data-bind="text: sale_customer"></span>
 										<br>
-										<span>Customer</span>
+										<span>Employee</span>
 									</td>
 									<td width="33%">
 										<span data-bind="text: sale_product"></span>
@@ -5375,7 +5482,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>				                
-				                <th colspan="2">Top 5 Suppliers</th>			                
+				                <th class="center" colspan="2">Top 5 Suppliers</th>			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -5388,7 +5495,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th colspan="2">Top 5 A/P Balance</th>
+				                <th class="center" colspan="2">Top 5 A/P Balance</th>
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -5401,7 +5508,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th colspan="2">Top 5 Products</th>			                		                
+				                <th class="center" colspan="2">Top 5 Products</th>			                		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -5420,43 +5527,61 @@
 	                 data-tooltip='{
 	                    visible: true,
 	                    format: "{0}%",
-	                    template: "#= series.name #: #= value #"
+	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 	                 }'                 
 	                 data-series="[
 	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
 	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
 	                             ]"	                             
 	                 data-bind="source: graphDS"
-	                 style="height: 250px;" ></div>
-            <!-- End Graph -->
+	                 style="height: 250px;" ></div>            
             </div>
+            <!-- End Graph -->
 
 		</div>
 	</div>
 </script>
 <script id="vendorDashboard-top-vendor-template" type="text/x-kendo-tmpl">	
 	<tr data-uid="#: uid #">
-		<td>#:banhji.vendorDashboard.topContactDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.vendorDashboard.topContactDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>		
 	</tr>
 </script>
 <script id="vendorDashboard-top-ap-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.vendorDashboard.topAPDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.vendorDashboard.topAPDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>
 	</tr>
 </script>
 <script id="vendorDashboard-top-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.vendorDashboard.topProductDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.vendorDashboard.topProductDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
 		</td>
 	</tr>
@@ -7782,7 +7907,7 @@
 														data-text-field="name" 
 							              				data-value-field="id"						              				 
 							              				data-bind="value: obj.account_id,
-							              							source: selectAccountDS"
+							              							source: accountDS"
 							              				data-option-label="Select Account..."
 							              				required data-required-msg="required" 
 							              				style="width: 100%" />
@@ -8414,11 +8539,11 @@
 			<input id="cbbAccounts-#:uid#" name="cbbAccounts-#:uid#"
 				   data-role="combobox"                   
                    data-value-primitive="true"                   
-                   data-template="account-list-tmpl"
+                   data-template="account-list-tmpl"                                     
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
-                              source: accountDS"
+                              source: expenseAccountDS"
                    data-placeholder="Add Account.."
                    data-list-width="400"                    
                    required data-required-msg="required" style="width: 100%" />	
@@ -9157,8 +9282,8 @@
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
-		            			data-edit-template="customerSetting-edit-payment-method-template"
-				                data-template="customerSetting-payment-method-template"
+		            			data-edit-template="vendorSetting-edit-payment-method-template"
+				                data-template="vendorSetting-payment-method-template"
 				                data-bind="source: paymentMethodDS"></tbody>
 	            	</table>			            
 	            </div>
@@ -9184,8 +9309,8 @@
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
-		            			data-edit-template="customerSetting-edit-payment-term-template"
-				                data-template="customerSetting-payment-term-template"
+		            			data-edit-template="vendorSetting-edit-payment-term-template"
+				                data-template="vendorSetting-payment-term-template"
 				                data-bind="source: paymentTermDS"></tbody>
 	            	</table>
 	            </div>
@@ -9226,7 +9351,7 @@
         </div>
     </div>
 </script>
-<script id="customerSetting-payment-method-template" type="text/x-kendo-tmpl">                    
+<script id="vendorSetting-payment-method-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
     		#:name#
@@ -9241,7 +9366,7 @@
    		</td>
    	</tr>
 </script>
-<script id="customerSetting-edit-payment-method-template" type="text/x-kendo-tmpl">
+<script id="vendorSetting-edit-payment-method-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget">
         <dl>                
             <dd>
@@ -9255,7 +9380,7 @@
         </div>
     </div>
 </script>
-<script id="customerSetting-payment-term-template" type="text/x-kendo-tmpl">                    
+<script id="vendorSetting-payment-term-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
     		#:name#
@@ -9279,7 +9404,7 @@
    		</td>
    	</tr>
 </script>
-<script id="customerSetting-edit-payment-term-template" type="text/x-kendo-tmpl">
+<script id="vendorSetting-edit-payment-term-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget">
         <dl>                
             <dd>
@@ -9538,7 +9663,23 @@
 						</tr>
 					</table>
 				</div>
-				<div id="sale-report-chart">Chart</div>
+				<!-- Graph -->
+				<div class="home-chart">
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+	            <!-- End Graph -->
 			</div>
 			<div class="report-chart">
 				<div class="widget-body receivable-overview" style="background-color: LightGray">
@@ -9569,7 +9710,23 @@
 						</tr>
 					</table>
 				</div>
-				<div id="sale-report-chart">Chart</div>
+				<!-- Graph -->
+				<div class="home-chart">
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+	            <!-- End Graph -->
 			</div>
 		</div>
 	</div>
@@ -9820,7 +9977,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th colspan="2">Top 5 Customers</th>				                			                
+				                <th class="center" colspan="2">Top 5 Customers</th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -9833,7 +9990,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>				           
 				            <tr>
-				                <th colspan="2">Top 5 A/R Balance</th>				                			                
+				                <th class="center" colspan="2">Top 5 A/R Balance</th>				                			                
 				            </tr>					        
 				        </thead>
 				        <tbody data-role="listview"
@@ -9846,7 +10003,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>				           
 				            <tr>
-				                <th colspan="2">Top 5 Products</th>				                			                
+				                <th class="center" colspan="2">Top 5 Products</th>				                			                
 				            </tr>					        
 				        </thead>
 				        <tbody data-role="listview"
@@ -9865,7 +10022,7 @@
 	                 data-tooltip='{
 	                    visible: true,
 	                    format: "{0}%",
-	                    template: "#= series.name #: #= value #"
+	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 	                 }'                 
 	                 data-series="[
 	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
@@ -9881,27 +10038,45 @@
 </script>
 <script id="customerDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
 	<tr data-uid="#: uid #">
-		<td>#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>		
 	</tr>
 </script>
 <script id="customerDashBoard-top-ar-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>
 	</tr>
 </script>
 <script id="customerDashBoard-top-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
 		</td>
 	</tr>
@@ -9929,9 +10104,9 @@
 					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
 
 					<div class="table table-condensed" style="height: 580px;"						 
-						 data-role="grid" 
+						 data-role="grid"
+						 data-auto-bind="false"						 
 						 data-bind="source: contactDS"
-						 data-auto-bind="false" 
 						 data-row-template="customerCenter-customer-list-tmpl"
 						 data-columns="[{title: ''}]"
 						 data-selectable=true
@@ -14668,7 +14843,7 @@
     	<td>#=description#</td>
     	<td>
     		#if(contact.length>0){#
-    			#if(contact[0].company!==""){#
+    			#if(contact[0].company){#
     				#=contact[0].company#
     			#}else{#
     				#=contact[0].surname# #=contact[0].name#
@@ -14851,7 +15026,7 @@
 								<h3><a href="#/">Invoice List</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Customer List</a></h3>
+								<h3><a href="#/customer_list">Customer List</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -14943,7 +15118,24 @@
 						</tr>
 					</table>
 				</div>
-				<div id="sale-report-chart">Chart</div>
+				<!-- Graph -->
+				<div class="home-chart">
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+	            <!-- End Graph -->
+	            </div>
 			</div>
 			<div class="report-chart">
 				<div class="widget-body receivable-overview" style="background-color: LightGray">
@@ -14974,7 +15166,24 @@
 						</tr>
 					</table>
 				</div>
-				<div id="sale-report-chart">Chart</div>
+				<!-- Graph -->
+				<div class="home-chart">
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+	            <!-- End Graph -->
+            </div>
 			</div>
 		</div>
 	</div>
@@ -18886,23 +19095,23 @@
 						
 						<div class="widget-body alert alert-primary" >
 							
-							<div align="center" class="text-large strong" data-bind="text: ar"></div>
+							<div align="center" class="text-large strong" data-bind="text: sale"></div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: ar_open"></span>
+										<span data-bind="text: sale_customer"></span>
 										<br>
-										<span>Open</span>
+										<span>Supplier</span>
 									</td>
 									<td>
-										<span data-bind="text: ar_customer"></span>
+										<span data-bind="text: sale_product"></span>
 										<br>
-										<span>Customer</span>
+										<span>Product</span>
 									</td>
 									<td>
-										<span data-bind="text: ar_overdue"></span>
+										<span data-bind="text: sale_order"></span>
 										<br>
-										<span>Overdue</span>
+										<span>Order</span>
 									</td>
 								</tr>
 							</table>
@@ -18938,12 +19147,12 @@
 									<td>
 										<span data-bind="text: ar_customer"></span>
 										<br>
-										<span>Customer</span>
+										<span>Supplier</span>
 									</td>
 									<td>
 										<span data-bind="text: ar_overdue"></span>
 										<br>
-										<span>Overdue</span>
+										<span>Margin</span>
 									</td>
 								</tr>
 							</table>
@@ -18968,23 +19177,23 @@
 						
 						<div class="widget-body alert-info3" style="background-color: LightGray">
 							
-							<div align="center" class="text-large strong" data-bind="text: ar"></div>
+							<div align="center" class="text-large strong" data-bind="text: order"></div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: ar_open"></span>
+										<span data-bind="text: order_open"></span>
 										<br>
 										<span>Open</span>
 									</td>
 									<td>
-										<span data-bind="text: ar_customer"></span>
+										<span data-bind="text: order_open"></span>
 										<br>
-										<span>Customer</span>
+										<span>Supplier</span>
 									</td>
 									<td>
-										<span data-bind="text: ar_overdue"></span>
+										<span data-bind="text: order_avg"></span>
 										<br>
-										<span>Overdue</span>
+										<span>Turnover</span>
 									</td>
 								</tr>
 							</table>
@@ -19001,84 +19210,110 @@
 
 			<!-- Top 5 -->
 			<div class="row-fluid">
-				<div class="span4">
-					<h4>Inventory Turnover Days</h4>					
+				<div class="span4">									
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</th>			                
+				                <th colspan="2" class="center">Inventory Turnover Days</th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                 
-			                 data-template="itemDashBoard-top-customer-template"
+			                 data-template="itemDashboard-top-customer-template"
 			                 data-bind="source: topProductDS"></tbody>			        
 				    </table>			
 				</div>
-				<div class="span4">
-					<h4>Top 5 Suppliers</h4>
+				<div class="span4">					
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</th>		                
+				                <th colspan="2" class="center">Top 5 Suppliers</th>		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                  
-			                 data-template="itemDashBoard-top-ar-template"
+			                 data-template="itemDashboard-top-ar-template"
 			                 data-bind="source: topCustomerDS"></tbody>			        
 				    </table>
 				</div>
-				<div class="span4">
-					<h4>Top 5 Best Selling Products</h4>
+				<div class="span4">					
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</span></th>			                		                
+				                <th colspan="2" class="center">Top 5 Best Selling Products</th>			                		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"                
-			                 data-template="itemDashBoard-top-product-template"
+			                 data-template="itemDashboard-top-product-template"
 			                 data-bind="source: topProductDS"></tbody>			        
 				    </table>
 				</div>		
 			</div>
 
 			<!-- Graph -->
-			<div>
-				<div id="item-chart" style="height: 250px; "></div>
-			</div>
+			<div class="home-chart">
+				<div data-role="chart"
+	                 data-legend="{ position: 'top' }"
+	                 data-series-defaults="{ type: 'column' }"
+	                 data-tooltip='{
+	                    visible: true,
+	                    format: "{0}%",
+	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+	                 }'                 
+	                 data-series="[
+	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+	                             ]"	                             
+	                 data-bind="source: graphDS"
+	                 style="height: 250px;" ></div>            
+            </div>
+            <!-- End Graph -->
 
 		</div>
 	</div>	
 </script>
-<script id="itemDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
+<script id="itemDashboard-top-customer-template" type="text/x-kendo-tmpl">	
 	<tr data-uid="#: uid #">
-		<td>#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.itemDashBoard.topProductDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(quantity, "n0")# days</span>
 		</td>		
 	</tr>
 </script>
-<script id="itemDashBoard-top-ar-template" type="text/x-kendo-tmpl">
+<script id="itemDashboard-top-ar-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.itemDashBoard.topCustomerDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>
 	</tr>
 </script>
-<script id="itemDashBoard-top-product-template" type="text/x-kendo-tmpl">
+<script id="itemDashboard-top-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.itemDashBoard.topProductDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
 		</td>
 	</tr>
@@ -22776,19 +23011,26 @@
 			        	<p>
 			        		In here, you can manage your cash information, transactions and reports. Cashflow forecast and other treasury management is coming soon..
 			        	</p>
-			        	<div class="customer-icon">
-				        	<div class="span4">
-					        	<a href="#/customer" class="center">
-					        		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
-					        	</a>
-					        </div>
-					    </div>
+			        	<div class="supplier-icon">
+					       	<div class="span4">
+						       	<a href="#/employee" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/employees.ico" />
+						       	</a>
+						       </div>
+						    <div class="span4">
+						       	<a href="#/item" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/item_service" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       	</a>
+						    </div>
+						</div>
 			        </td>
 			 	</tr>
 			</table>
-
-			<br>
-
 			<table class="table table-borderless table-condensed table-vertical-center ">
 				<tr>
 					<td class="center">
@@ -22933,7 +23175,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body" style="background-color: LightGray">
+						<div class="widget-body alert-info3" style="background-color: LightGray">
 							
 							<div align="center" class="text-large strong" data-bind="text: ar"></div>
 							<table width="100%">
@@ -25947,11 +26189,11 @@
 	});
 	banhji.index = kendo.observable({
 		lang 				: langVM,
-		dataSource			: dataStore(apiUrl+"customer_reports/home"),
+		dataSource			: dataStore(apiUrl+"contact_reports/home"),
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "customer_reports/home_graph",
+					url: apiUrl + "contact_reports/home_graph",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -26069,6 +26311,7 @@
 	banhji.searchAdvanced =  kendo.observable({
     	lang 				: langVM,    	
     	contactDS 			: dataStore(apiUrl+"contacts"),
+    	contactTypeDS 		: dataStore(apiUrl+"contacts/type"),
     	transactionDS 		: dataStore(apiUrl+"transactions"),
     	itemDS 				: dataStore(apiUrl+"items"),
     	searchType 			: "",
@@ -26082,52 +26325,65 @@
 			searchText = this.get("searchText");
 			this.set("found", 0);
 
-			this.contactDS.query({
-				filter:[
-					{ field:"number", operator:"like", value: searchText },
-					{ field:"surname", operator:"or_like", value: searchText },
-					{ field:"name", operator:"or_like", value: searchText }
-				],
-				page:1,
-				pageSize: 10
-			}).then(function(){				
-				var found = self.get("found") + self.contactDS.total();
-				self.set("found", found);
-			});
+			if(searchText){
+				this.contactDS.query({
+					filter:[
+						{ field:"number", operator:"like", value: searchText },
+						{ field:"surname", operator:"or_like", value: searchText },
+						{ field:"name", operator:"or_like", value: searchText },
+						{ field:"company", operator:"or_like", value: searchText }
+					],
+					page:1,
+					pageSize: 10
+				}).then(function(){				
+					var found = self.get("found") + self.contactDS.total();
+					self.set("found", found);
+				});
 
-			this.transactionDS.query({
-				filter:[
-					{ field:"number", operator:"like", value: searchText }
-				],
-				page:1,
-				pageSize: 10
-			}).then(function(){
-				var found = self.get("found") + self.transactionDS.total();
-				self.set("found", found);
-			});
+				this.transactionDS.query({
+					filter:[
+						{ field:"number", operator:"like", value: searchText }
+					],
+					page:1,
+					pageSize: 10
+				}).then(function(){
+					var found = self.get("found") + self.transactionDS.total();
+					self.set("found", found);
+				});
 
-			this.itemDS.query({
-				filter:[
-					{ field:"sku", operator:"like", value: searchText },					
-					{ field:"name", operator:"or_like", value: searchText }
-				],
-				page:1,
-				pageSize: 10
-			}).then(function(){
-				var found = self.get("found") + self.itemDS.total();
-				self.set("found", found);
-			});
+				this.itemDS.query({
+					filter:[
+						{ field:"sku", operator:"like", value: searchText },					
+						{ field:"name", operator:"or_like", value: searchText }
+					],
+					page:1,
+					pageSize: 10
+				}).then(function(){
+					var found = self.get("found") + self.itemDS.total();
+					self.set("found", found);
+				});
+			}
 		},
-		selectedContact 	: function(){
-			banhji.router.navigate('/customer_center');
+		selectedContact 	: function(e){
+			var data = e.data, 
+			type = this.contactTypeDS.get(data.contact_type_id);
+			
+			if(type.parent_id==1){
+				banhji.customerCenter.loadContact(data.id);
+				banhji.router.navigate('/customer_center', false);								
+			}else{
+				banhji.vendorCenter.loadContact(data.id);
+				banhji.router.navigate('/vendor_center', false);
+			}
 		},
 		selectedTransaction : function(e){
 			var data = e.data;
 
 			banhji.router.navigate('/'+data.type.toLowerCase()+'/'+data.id);
 		},
-		selectedItem 		: function(){
-			banhji.router.navigate('/item_center');
+		selectedItem 		: function(e){
+			var data = e.data;
+			banhji.router.navigate('/item/'+e.data.id);
 		}		    	
     });	
 
@@ -26319,6 +26575,41 @@
 			pageSize: 100
 		}),
 		//Contact Type
+		contactTypeDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts/type",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		customerTypeDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -26567,7 +26858,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			//group: { field: "account_type[0].name"},
+			group: { field: "account_type[0].name"},
 			sort: { field:"account_type_id", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
@@ -26646,6 +26937,46 @@
 			},
 			filter: [
 					{ field:"account_type_id", operator:"where_in", value: [35,39] },
+					{ field:"status", value: 1 }
+			],
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		//Expense
+		expenseAccountDS				: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: [
+					{ field:"account_type_id", operator:"where_in", value: [36,37,38,40,41,42,43] },
 					{ field:"status", value: 1 }
 			],
 			batch: true,
@@ -28312,6 +28643,68 @@
 			this.dataSource.sort({ field:col, dir:this.get("currentSort") });
 		}		      		
 	});	
+	banhji.trialBalance =  kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "accounting_reports/trial_balance"),		
+		as_of 				: new Date(),		
+		currentSort 		: "asc",							
+		pageLoad 			: function(){
+			
+		},
+		search 				: function(){
+			var as_of = kendo.toString(this.get("as_of"), "yyyy-MM-dd");
+
+			if(as_of){
+				this.dataSource.filter([
+					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:as_of }
+				]);
+			}
+		},
+		sort 				: function(e){
+			var col = "",
+			target = e.currentTarget.innerText;
+
+			if(this.get("currentSort")=="asc"){
+				this.set("currentSort", "desc");
+			}else{
+				this.set("currentSort", "asc");
+			}
+
+			switch(target) {
+			    case "TYPE":
+			        col = "type";
+			        break;
+			    case "DATE":
+			        col = "issued_date";
+			        break;
+			    case "ACCOUNT":
+			        col = "account_id";
+			        break;
+			    default:
+			        //default code block
+			}			
+
+			this.dataSource.sort({ field:col, dir:this.get("currentSort") });
+		},
+		totalDr 			: function() {
+	        var sum = 0;
+
+	        $.each(this.dataSource.data(), function(index, value) {
+	            sum += kendo.parseFloat(value.dr);
+	        });
+
+	        return kendo.toString(sum, "c", banhji.locale);
+	    },
+	    totalCr 			: function() {
+	        var sum = 0;
+
+	        $.each(this.dataSource.data(), function(index, value) {
+	            sum += kendo.parseFloat(value.cr);
+	        });
+
+	        return kendo.toString(sum, "c", banhji.locale);
+	    }		      		
+	});
 	banhji.saleTax =  kendo.observable({
 		lang 				: langVM,		
         dataSource 			: dataStore(apiUrl + "tax_types"),        
@@ -28464,11 +28857,11 @@
 	**********************/
 	banhji.employeeDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "customer_reports/customer_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
-		topARDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),
-		graphDS 			: dataStore(apiUrl + 'customer_reports/monthly_sale'),
+		summaryDS 			: dataStore(apiUrl + "contact_reports/customer_summary"),
+		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
+		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),
+		graphDS 			: dataStore(apiUrl + 'contact_reports/monthly_sale'),
 		sale 				: 0,
 		sale_customer 		: 0,
 		sale_product 		: 0,
@@ -30483,14 +30876,14 @@
 	**********************/
 	banhji.vendorDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "customer_reports/summary"),
-		topContactDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
-		topAPDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),		
+		summaryDS 			: dataStore(apiUrl + "contact_reports/summary"),
+		topContactDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
+		topAPDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "customer_reports/monthly_sale",
+					url: apiUrl + "contact_reports/monthly_sale",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -30538,7 +30931,7 @@
 			}).then(function(){
 				var view = self.summaryDS.view();
 				
-				self.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("purchase", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
 				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
 				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
@@ -30584,7 +30977,42 @@
 	banhji.vendorCenter = kendo.observable({
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
-		contactDS 			: dataStore(apiUrl + 'contacts'),
+		contactDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:2 },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		contactTypeDS		: banhji.source.supplierTypeDS,
 		noteDS 				: dataStore(apiUrl + 'notes'),		
 		currencyDS 			: banhji.source.currencyDS,		
@@ -30605,7 +31033,28 @@
 		overInvoice 		: 0,		
 		pageLoad 			: function(){		
 			this.contactDS.fetch();
-			this.transactionDS.fectch();									
+			this.transactionDS.fetch();
+			this.summaryDS.fetch();										
+		},
+		loadContact 		: function(id){
+			var self = this;			
+			
+			this.contactDS.query({
+			  	filter:[
+			  		{ field:"id", value:id }
+			  	],
+			  	page: 1,
+			  	take: 50
+			}).then(function(e) {
+			    var view = self.contactDS.data();
+			    
+			    if(view.length>0){
+			    	self.set("obj", view[0]);				    	
+			    	self.loadSummary(view[0].id);
+			    	self.loadTransaction(view[0].id);				    	
+			    	self.loadNote(view[0].id);			    	
+			    }
+			});			
 		},				
 		loadSummary 		: function(id){
 			var self = this, obj = this.get("obj");
@@ -30951,7 +31400,7 @@
 			}).then(function(e){
 				var view = self.dataSource.view();
 
-				if(view[0].company!==""){
+				if(view[0].company){
 					self.set("isCompany", true);
 				}else{
 					self.set("isCompany", false);
@@ -33900,8 +34349,8 @@
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactListDS 		: banhji.source.supplierDS,
 		contactDS  			: banhji.source.supplierDS,
-		selectAccountDS  	: banhji.source.accountDS,		
-		accountDS  			: banhji.source.accountDS,
+		accountDS  			: dataStore(apiUrl + "accounts"),		
+		expenseAccountDS  	: banhji.source.expenseAccountDS,
 		itemDS  			: banhji.source.itemDS,
 		taxItemDS  			: new kendo.data.DataSource({
 			transport: {
@@ -34461,11 +34910,11 @@
 			if(obj.type=="Cash_Purchase"){
 				this.set("isCash", true);				
 
-				this.selectAccountDS.filter({ field:"account_type_id", value: banhji.source.cash_account_id });
+				this.accountDS.filter({ field:"account_type_id", value: banhji.source.cash_account_id });
 			}else{
 				this.set("isCash", false);				
 
-				this.selectAccountDS.filter({ field:"account_type_id", operator:"where_in", value:[23,24] });
+				this.accountDS.filter({ field:"account_type_id", operator:"where_in", value:[23,24] });
 			}			
 		},
 		segmentChanges 		: function(e) {
@@ -36339,6 +36788,38 @@
 				});
 	    	}	    	
 	    }	 		
+	});
+	banhji.vendorReportCenter = kendo.observable({
+		lang 				: langVM,				
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contact_reports/monthly_sale",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),						
+		pageLoad 			: function(){
+																
+		}		
 	});		
 	banhji.vendorSetting =  kendo.observable({
 		lang 				: langVM,		
@@ -36429,14 +36910,14 @@
 	**************************/
 	banhji.customerDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "customer_reports/summary"),
-		topCustomerDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
-		topARDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),		
+		summaryDS 			: dataStore(apiUrl + "contact_reports/summary"),
+		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
+		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "customer_reports/monthly_sale",
+					url: apiUrl + "contact_reports/monthly_sale",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -36529,12 +37010,47 @@
 	});
 	banhji.customerCenter = kendo.observable({
 		lang 				: langVM,
-		transactionDS  		: dataStore(apiUrl + 'transactions'),		
-		contactDS  			: dataStore(apiUrl + 'contacts'),			
+		transactionDS  		: dataStore(apiUrl + 'transactions'),
+		contactDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),		
 		contactTypeDS  		: banhji.source.customerTypeDS,
 		noteDS 				: dataStore(apiUrl + 'notes'),		
 		currencyDS  		: banhji.source.currencyDS,
-		outstandingDS 		: dataStore(apiUrl + "customer_reports/outstanding"),
+		outstandingDS 		: dataStore(apiUrl + "contact_reports/outstanding"),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -36549,39 +37065,31 @@
 		deposit 			: 0,
 		outInvoice 			: 0,
 		overInvoice 		: 0,		
-		pageLoad 			: function(){
-			if(banhji.pageLoaded["customer_center"]){		
-				this.contactDS.fetch();
-				this.transactionDS.fetch();
-				this.outstandingDS.fetch();
-			}									
+		pageLoad 			: function(){			
+			this.contactDS.fetch();
+			this.transactionDS.fetch();
+			this.outstandingDS.fetch();												
 		},
 		loadContact 		: function(id){
-			var self = this, para = [];
-
-			if(id){
-				//self.set("obj", view[0]);				    	
-		    	this.loadOutStandingInvoice(id);
-		    	this.loadTransaction(id);				    	
-		    	this.loadNote(id);
-			}else{
-				para.push({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
-
-				this.contactDS.query({
-				  	filter:para,
-				  	page: 1,
-				  	take: 50
-				}).then(function(e) {
-				    var view = self.contactDS.data();
-				    
-				    if(view.length>0){
-				    	self.set("obj", view[0]);				    	
-				    	self.loadOutStandingInvoice(view[0].id);
-				    	self.loadTransaction(view[0].id);				    	
-				    	self.loadNote(view[0].id);
-				    }
-				});
-			}
+			var self = this;			
+			
+			this.contactDS.query({
+			  	filter:[
+			  		{ field:"id", value:id }
+			  	],
+			  	page: 1,
+			  	take: 50
+			}).then(function(e) {
+			    var view = self.contactDS.data();
+			    
+			    if(view.length>0){
+			    	self.set("obj", view[0]);				    	
+			    	self.loadOutStandingInvoice(view[0].id);
+			    	self.loadTransaction(view[0].id);				    	
+			    	self.loadNote(view[0].id);
+			    }
+			});
+			
 		},
 		loadOutStandingInvoice: function(id){
 			var self = this, obj = this.get("obj");
@@ -36929,7 +37437,7 @@
 			}).then(function(e){
 				var view = self.dataSource.view();
 
-				if(view[0].company!==""){
+				if(view[0].company){
 					self.set("isCompany", true);
 				}else{
 					self.set("isCompany", false);
@@ -44381,6 +44889,38 @@
 	    	}	    	
 	    }	    	   
 	});
+	banhji.customerReportCenter = kendo.observable({
+		lang 				: langVM,				
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contact_reports/monthly_sale",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),						
+		pageLoad 			: function(){
+																
+		}		
+	});
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,
 		dataSource 				: dataStore(apiUrl+"contacts"),
@@ -44411,8 +44951,8 @@
 	});
 	banhji.customerBalance = kendo.observable({
 		lang 					: langVM,
-		dataSource 				: dataStore(apiUrl+"customer_reports/balance"),
-		totalDS 				: dataStore(apiUrl+"customer_reports/balance_total"),
+		dataSource 				: dataStore(apiUrl+"contact_reports/balance"),
+		totalDS 				: dataStore(apiUrl+"contact_reports/balance_total"),
 		contactTypeDS			: banhji.source.customerTypeDS,
 		statusList 				: banhji.source.statusList,
 		contact_type_id 		: null,
@@ -47451,11 +47991,36 @@
 	**************************/
 	banhji.itemDashBoard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "customer_reports/summary"),
-		topCustomerDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
-		topARDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),
-		graphDS 			: dataStore(apiUrl + 'customer_reports/monthly_sale'),
+		summaryDS 			: dataStore(apiUrl + "contact_reports/summary"),
+		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
+		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contact_reports/monthly_sale",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),
 		sale 				: 0,
 		sale_customer 		: 0,
 		sale_product 		: 0,
@@ -47481,12 +48046,12 @@
 			}).then(function(){
 				var view = self.summaryDS.view();
 				
-				self.set("sale", kendo.toString(view[0].sale, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));
+				self.set("sale", kendo.toString(17205, "n0"));
 				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
 				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
 				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
 
-				self.set("order", kendo.toString(view[0].order, "n0"));
+				self.set("order", kendo.toString(261, "n0"));
 				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));				
 				self.set("order_open", kendo.toString(view[0].order_open, "n0"));
 
@@ -47521,51 +48086,7 @@
 				],							
 				page: 1,
 				take: 5
-			});
-
-			this.loadGraph();								
-		},
-		loadGraph 			: function(){
-			var self = this, 
-			today = new Date(),
-			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-
-			this.graphDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],
-				page: 1,
-				take: 100
-			}).then(function(e) {
-			    var view = self.graphDS.view();
-			    
-				$('#graph').kendoChart({
-					dataSource: {data: view},												
-					series: [
-						{field: 'sale', categoryField:'month', type: 'line', axis: 'order'}
-					],
-					valueAxes: [
-						{
-		                    name: "order",
-		                    color: "#007eff",
-		                    min: 0,
-		                    majorUnit: 500000,
-		                    max: 1000000
-		                }
-	                ],
-	                categoryAxis: {
-	                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
-	                    axisCrossingValues: [0, 13],
-	                    justified: true
-	                },
-	                tooltip: {
-	                    visible: true,
-	                    format: "{0}",
-	                    template: "#= series.field #: #= value #"
-	                }
-				});
-			});		
+			});										
 		}		
 	});
 	banhji.itemCenter = kendo.observable({
@@ -50597,6 +51118,12 @@
     });
 
 
+
+
+
+    /*************************
+	*	Reports Module Section   *
+	**************************/
     banhji.reportDashboard = kendo.observable({
     	lang 				: langVM,    	 	
     	pageLoad 			: function(id){			
@@ -50622,6 +51149,7 @@
 		currencyRate: new kendo.Layout("#currencyRate", {model: banhji.currencyRate}),
 		recurring: new kendo.Layout("#recurring", {model: banhji.recurring}),
 		journalReport: new kendo.Layout("#journalReport", {model: banhji.journalReport}),
+		trialBalance: new kendo.Layout("#trialBalance", {model: banhji.trialBalance}),
 		saleTax: new kendo.Layout("#saleTax", {model: banhji.saleTax}),
 		accountingReportCenter: new kendo.Layout("#accountingReportCenter"),
 		accountingSetting: new kendo.Layout("#accountingSetting", {model: banhji.accountingSetting}),
@@ -50644,7 +51172,7 @@
 		purchaseReturn: new kendo.Layout("#purchaseReturn", {model: banhji.purchaseReturn}),
 		vendorDeposit: new kendo.Layout("#vendorDeposit", {model: banhji.vendorDeposit}),		
 		vendorSetting: new kendo.Layout("#vendorSetting", {model: banhji.vendorSetting}),
-		vendorReportCenter: new kendo.Layout("#vendorReportCenter"),
+		vendorReportCenter: new kendo.Layout("#vendorReportCenter", {model: banhji.vendorReportCenter}),
 
 		//Customer
 		customerDashboard: new kendo.Layout("#customerDashboard", {model: banhji.customerDashboard}),
@@ -50658,7 +51186,7 @@
 		saleReturn: new kendo.Layout("#saleReturn", {model: banhji.saleReturn}),		
 		statement: new kendo.Layout("#statement", {model: banhji.statement}),
 		customerDeposit: new kendo.Layout("#customerDeposit", {model: banhji.customerDeposit}),
-		customerReportCenter: new kendo.Layout("#customerReportCenter"),
+		customerReportCenter: new kendo.Layout("#customerReportCenter", {model: banhji.customerReportCenter}),
 		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
 		customerBalance : new kendo.Layout("#customerBalance", {model: banhji.customerBalance}),
 		customerSetting: new kendo.Layout("#customerSetting", {model: banhji.customerSetting}),
@@ -50786,7 +51314,8 @@
 			
 			if(banhji.pageLoaded["search_advanced"]==undefined){
 				banhji.pageLoaded["search_advanced"] = true;
-		          	
+		         
+		        vm.contactTypeDS.read();	
 			}
 
 			vm.pageLoad();			
@@ -51338,6 +51867,22 @@
 			}
 		}		
 	});
+	banhji.router.route("/trial_balance", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.trialBalance);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			var vm = banhji.trial_balance;
+
+			if(banhji.pageLoaded["trial_balance"]==undefined){
+				banhji.pageLoaded["trial_balance"] = true;              
+                						
+			}
+		}		
+	});
 	banhji.router.route("/sale_tax", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -51804,24 +52349,7 @@
 			var vm = banhji.vendorCenter;
 
 			if(banhji.pageLoaded["vendor_center"]==undefined){
-				banhji.pageLoaded["vendor_center"] = true;
-								
-				vm.contactTypeDS.filter({ field:"parent_id", value:2 });
-				
-				vm.contactDS.query({
-				  	filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:2 },
-				  	page: 1,
-				  	take: 50
-				}).then(function(e) {
-				    var view = vm.contactDS.data();
-				    
-				    if(view.length>0){
-				    	vm.set("obj", view[0]);				    	
-				    	vm.loadSummary(view[0].id);
-				    	vm.loadTransaction(view[0].id);				    	
-				    	vm.loadNote(view[0].id);
-				    }
-				});
+				banhji.pageLoaded["vendor_center"] = true;				
 
 				function startChange() {
                     var startDate = start.value(),
@@ -52431,9 +52959,7 @@
 			var vm = banhji.customerCenter;
 
 			if(banhji.pageLoaded["customer_center"]==undefined){
-				banhji.pageLoaded["customer_center"] = true;							
-				
-				vm.loadContact();
+				banhji.pageLoaded["customer_center"] = true;				
 
 				function startChange() {
                     var startDate = start.value(),
