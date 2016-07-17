@@ -3054,7 +3054,7 @@
             #: totalDr() #
         </td>
         <td class="right">
-            #: totalDr() #
+            #: totalCr() #
         </td>
     </tr>
 </script>
@@ -14820,8 +14820,7 @@
 					                                					
 	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
 	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
-	            			<tr>
-	            				<th>NUMBER</th>
+	            			<tr>	            				
 	            				<th>NAME</th>
 	            				<th>DESCRIPTION</th>
 	            				<th>CUSTOMER</th>	            					            				
@@ -39795,8 +39794,10 @@
 				//Inventory
 				if(item.item_type_id==1){
 					//Add cogs list
-					var itemCost = value.quantity*item.cost,
-					cogsID = item.cogs_account_id;				
+					var itemRate = obj.rate / item.item_prices[0].rate,
+					itemCost = value.quantity*item.cost/itemRate,
+					cogsID = item.cogs_account_id;
+
 					if(cogsList[cogsID]===undefined){
 						cogsList[cogsID]={"id": cogsID, "amount": itemCost};						
 					}else{											
@@ -45377,6 +45378,7 @@
 			window.history.back();
 		}    
 	});
+
 
 	/*************************
 	*	Cashier Section   *

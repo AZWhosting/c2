@@ -278,6 +278,7 @@ class Contact_reports extends REST_Controller {
 		$orderCount = 0;		
 		$orderAmount = 0;
 		$orderOpen = 0;
+		$orderAvg = 0;
 		foreach($order as $value) {
 			$orderCount++;
 
@@ -287,7 +288,10 @@ class Contact_reports extends REST_Controller {
 
 			$orderAmount += floatval($value->amount) / floatval($value->rate);
 		}
-		$orderAvg = $orderAmount / $orderCount;
+
+		if($orderCount>0){
+			$orderAvg = $orderAmount / $orderCount;
+		}
 
 		// AR			
 		$ar->where("type", "Invoice");
