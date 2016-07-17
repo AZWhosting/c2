@@ -76,7 +76,7 @@ class Users extends REST_Controller {
 			$User->email = $user->email;
 			$User->mobile = $user->mobile;
 			$User->profile_photo_url = $user->profile_photo;
-			$User->is_confirmed = 0;
+			$User->is_confirmed = $user->is_confirmed == true ? 1:0;
 			$User->is_disabled = 0;
 			if($User->save()) {
 				$data[] = array(
@@ -302,7 +302,7 @@ class Users extends REST_Controller {
 		$filters = $requested_data['filters'];
 		$limit = $this->get('limit') ? $this->get('limit'): 50;
 		$offset= $this->get('offset')? $this->get('offset'): null;
-
+		$data = array();
 		$user = new User();
 
 		if(isset($filters)) {
@@ -323,14 +323,31 @@ class Users extends REST_Controller {
 			}				
 		}
 
-		if(count($user) > 0) {
-			$this->response(array('results'=>$data, 'count'=>$user->paged->total_rows), 200);
+		if(count($data) > 0) {
+			$this->response(array('results'=>$data, 'count'=>count($data)), 200);
 		} else {
 			$this->response(array('results'=>$data, 'count'=>0), 200);
 		}
 	}
 
-	function modules_post() {}
+	function modules_post() {
+		$requested_data = json_decode($this->post('models'));
+
+		foreach($requested_data as $d) {
+			$user = new User();
+			$user->where('id', $d->user->id)->get();
+			$module = new Module();
+			$module->where('id', $d->module->id)->get();
+			if($user->save($module)) {
+				$data[] = array(
+					'id' 		=> intval($module->id),
+					'name' 		=> $module->name,
+					'img_url' 	=> $module->image_url,
+					'description'=>$module->description
+				);
+			}
+		}
+	}
 
 	function moduels_delete() {}
 
