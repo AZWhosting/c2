@@ -422,8 +422,8 @@
       <tr data-bind="events: {dblclick: getProfile}">
         <td><img src="#=profile_photo#" alt="" class='avatar'></td>
         <td style="line-height: 40px;">
-           # var x = email.substring(0,2); #
-          #=x.toUpperCase()#
+           # var x = username.substring(0,2); #
+           #=x.toUpperCase()#
         </td>
         <td style="line-height: 40px;">
           #=last_name#&nbsp;#=first_name#
@@ -858,7 +858,7 @@
     </script>
     <script type="text/x-kendo-template" id="template-modules-page">
       <div class="row">
-        <divclass="col-md-12 col-sm-12="" col-xs-12"=""></divclass="col-md-12></div>
+        <divclass="col-md-12 col-sm-12="" col-xs-12"=""></div class="col-md-12"></div>
           <div class="x_panel" style="width: 94%">
             <div class="x_title">
               <h2>Modules</h2>
@@ -891,7 +891,7 @@
     </script>
     <script type="text/x-kendo-template" id="template-modules-users-page">
       <div class="row">
-        <divclass="col-md-12 col-sm-12="" col-xs-12"=""></divclass="col-md-12></div>
+        <divclass="col-md-12 col-sm-12="" col-xs-12"=""></div class="col-md-12"></div>
           <div class="x_panel" style="width: 94%">
             <div class="x_title">
               <h2>Modules</h2>
@@ -924,8 +924,8 @@
     </script>
     <script type="text/x-kendo-template" id="template-unauth-page">
       <div class="col-md-55" style="height: 250px;">
-        <h1>You don't have access to this page!</h1>
-        <a href="<?php echo base_url(); ?>demo/">Banhji Application</a>
+        <h1>Unauthorized Page</h1>
+        <a href="<?php echo base_url(); ?>rrd/">Banhji Application</a>
       </div>
     </script>
 
