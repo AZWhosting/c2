@@ -24591,7 +24591,7 @@
 
 
 <!-- ***************************
- *	Report Section       *
+*	Report Section       *
 **************************** -->
 <script id="reportDashboard" type="text/x-kendo-template" >
 	<div class="row-fluid">
@@ -26992,7 +26992,7 @@
 				total: 'count'
 			},
 			group: { field: "account_type[0].name"},
-			sort: { field:"account_type_id", dir:"asc" },
+			sort:{ field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27029,9 +27029,10 @@
 				total: 'count'
 			},
 			filter: [
-					{ field:"account_type_id", value: 10 },
-					{ field:"status", value: 1 }
+				{ field:"account_type_id", value: 10 },
+				{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27072,6 +27073,7 @@
 					{ field:"account_type_id", operator:"where_in", value: [35,39] },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27112,6 +27114,7 @@
 					{ field:"account_type_id", operator:"where_in", value: [36,37,38,40,41,42,43] },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27151,6 +27154,7 @@
 					{ field:"account_type_id", value: 12 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27190,6 +27194,7 @@
 					{ field:"account_type_id", operator:"where_in", value: [23,24] },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27229,6 +27234,7 @@
 					{ field:"id", value: 72 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27268,6 +27274,7 @@
 					{ field:"id", value:99 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27307,6 +27314,7 @@
 					{ field:"account_type_id", value: 36 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27346,6 +27354,7 @@
 					{ field:"id", value:109 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27385,6 +27394,7 @@
 					{ field:"account_type_id", operator:"where_in", value: [14,21] },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27424,6 +27434,7 @@
 					{ field:"account_type_id", operator:"where_in", value: [25,30] },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27463,6 +27474,7 @@
 					{ field:"account_type_id", value: 36 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27502,6 +27514,7 @@
 					{ field:"account_type_id", value: 13 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,

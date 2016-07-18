@@ -104,7 +104,7 @@ class Contacts extends REST_Controller {
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
 				$fullname = $value->surname.' '.$value->name;
-				if($value->contact_type_id=="6" || $value->contact_type_id=="7" || $value->contact_type_id=="8"){
+				if($value->company){
 					$fullname = $value->company;
 				}			
 
