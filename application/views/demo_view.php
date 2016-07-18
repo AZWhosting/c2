@@ -372,7 +372,7 @@
 					<!-- Media item -->
 					<div class="media">
 						<img class="media-object pull-left thumb hidden-tablet hidden-phone" 
-							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" 
+							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/contact.ico" 
 							style="width: 100px; height: 100px;">
 						<div class="media-body">
 							<h5><a href="">#=surname# #=name#</a></h5>							
@@ -400,7 +400,7 @@
 					<!-- Media item -->
 					<div class="media">
 						<img class="media-object pull-left thumb hidden-tablet hidden-phone" 
-							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/invoice.png" 
+							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/transaction.ico" 
 							style="width: 100px; height: 100px;">
 						<div class="media-body">
 							<h5><a href="">#=number#</a></h5>
@@ -425,7 +425,7 @@
 					<!-- Media item -->
 					<div class="media">
 						<img class="media-object pull-left thumb hidden-tablet hidden-phone" 
-							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" 
+							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/item.ico" 
 							style="width: 100px; height: 100px;">
 						<div class="media-body">
 							<h5><a href="">#=name#</a></h5>
@@ -19564,7 +19564,7 @@
 							data-bind="click: cancel"><i></i></span>						
 					</div>
 
-			        <h2>ITEM</h2>			    		   
+			        <h2>INVENTORY FOR SALE</h2>			    		   
 
 				    <br>					
 					
@@ -19614,8 +19614,8 @@
 								<div class="span6">	
 									<!-- Group -->
 									<div class="control-group">							
-										<label for="txtSKU"><span data-bind="text: lang.lang.sku"></span><span style="color:red">*</span></label>
-				              			<input id="txtSKU" name="txtSKU" class="k-textbox"
+										<label for="txtNumber">Number<span style="color:red">*</span></label>
+				              			<input id="txtNumber" name="txtNumber" class="k-textbox"
 					              				data-bind="value: obj.sku, disabled: obj.is_pattern" 
 					              				placeholder="e.g. ID0001" 
 					              				required data-required-msg="required"
@@ -19628,7 +19628,7 @@
 								<div class="span6">						
 									<!-- Group -->
 									<div class="control-group">
-										<label for="txtName"><span data-bind="text: lang.lang.item_number"></span> <span style="color:red">*</span></label>
+										<label for="txtName">Name <span style="color:red">*</span></label>
 					              		<input id="txtName" name="txtName" class="k-textbox" data-bind="value: obj.name, disabled: obj.is_pattern" 
 							              		placeholder="item name..." required data-required-msg="required"
 							              		style="width: 100%;" />
@@ -20674,7 +20674,7 @@
 							data-bind="click: cancel"><i></i></span>						
 					</div>
 
-			        <h2>NON INVENTORY PART</h2>			    		   
+			        <h2>OTHER INVENTORY</h2>			    		   
 
 				    <br>					
 					
@@ -20724,8 +20724,8 @@
 								<div class="span6">	
 									<!-- Group -->
 									<div class="control-group">							
-										<label for="txtSKU"><span data-bind="text: lang.lang.sku"></span><span style="color:red">*</span></label>
-				              			<input id="txtSKU" name="txtSKU" class="k-textbox"
+										<label for="txtNumber"><span data-bind="text: lang.lang.number"></span><span style="color:red">*</span></label>
+				              			<input id="txtNumber" name="txtNumber" class="k-textbox"
 					              				data-bind="value: obj.sku, disabled: obj.is_pattern" 
 					              				placeholder="e.g. ID0001" 
 					              				required data-required-msg="required"
@@ -20738,7 +20738,7 @@
 								<div class="span6">						
 									<!-- Group -->
 									<div class="control-group">
-										<label for="txtName"><span data-bind="text: lang.lang.item_number"></span> <span style="color:red">*</span></label>
+										<label for="txtName"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
 					              		<input id="txtName" name="txtName" class="k-textbox" data-bind="value: obj.name, disabled: obj.is_pattern" 
 							              		placeholder="item name..." required data-required-msg="required"
 							              		style="width: 100%;" />
@@ -21681,7 +21681,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2>General Inventory Setting</h2>
+	<h2>GENERAL ITEM SETTING</h2>
 
 	<br>
 
@@ -21708,22 +21708,32 @@
 	            <!-- Tab Category content -->
 	            <div class="tab-pane active" id="tab1-1">	            	
 		            <div class="input-append">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: category_code">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="New..." data-bind="value: category_name">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: category_abbr">					    
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: category_code">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New..." data-bind="value: category_name">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: category_abbr">					    
+					    <input class="span2" id="appendedInputButtons"
+					    	   data-role="dropdownlist"					    	   
+			                   data-value-primitive="true"
+			                   data-auto-bind="false"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="value: category_item_type_id,
+			                              source: itemTypeDS" />
 					    <button class="btn btn-default" type="button" data-bind="click: addCategory"><i class="icon-plus"></i> Add Category</button>					  
 					</div>
 		            
 	            	<table class="table table-bordered table-white">
 	            		<thead>
 	            			<tr>	            				            				
-	            				<th>Code</th>	
-	            				<th>Name</th>	
-	            				<th>abbr</th>	            				
+	            				<th>CODE</th>	
+	            				<th>NAME</th>	
+	            				<th>ABBR</th>
+	            				<th>TYPE</th>	            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
-	            		<tbody data-role="listview"	            				
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            				
 		            			data-edit-template="itemSetting-edit-category-template"
 				                data-template="itemSetting-category-template"
 				                data-bind="source: categoryDS"></tbody>
@@ -21736,8 +21746,9 @@
 		            <div class="input-append">
 		            	<input id="appendedInputButtons" class="span2"
 		            	   data-role="dropdownlist"
-            			   data-option-label="(--- Select ---)"            			   			                   
+            			   data-option-label="(--- Select Category ---)"            			   			                   
 		                   data-value-primitive="true"
+		                   data-auto-bind="false"
 		                   data-text-field="name"
 		                   data-value-field="id"
 		                   data-bind="value: item_group_category_id,
@@ -21757,7 +21768,8 @@
 	            				<th></th>
 	            			</tr>
 	            		</thead>
-	            		<tbody data-role="listview"	            				
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            				
 		            			data-edit-template="itemSetting-edit-item-group-template"
 				                data-template="itemSetting-item-group-template"
 				                data-bind="source: itemGroupDS"></tbody>
@@ -21827,6 +21839,9 @@
    		</td>
    		<td>
     		#:abbr#
+   		</td>
+   		<td>
+    		#:item_type.length>0 ? item_type[0].name : ""#
    		</td>   		
    		<td>   			
    			<div class="edit-buttons">       
@@ -21841,16 +21856,7 @@
 </script>
 <script id="itemSetting-edit-category-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget">
-        <dl>
-        	<dd>
-                <input data-role="dropdownlist"
-        			   data-option-label="(--- Select ---)"        			   		                   
-	                   data-value-primitive="true"	                   
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: sub_of,
-	                              source: subItemGroupDS"/>
-            </dd>                
+        <dl>        	             
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:code" name="code" required="required" validationMessage="required" />
                 <span data-for="code" class="k-invalid-msg"></span>
@@ -21862,6 +21868,14 @@
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
                 <span data-for="abbr" class="k-invalid-msg"></span>
+            </dd>
+            <dd>
+            <input data-role="dropdownlist"
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: item_type_id,
+                              source: itemTypeDS" />
             </dd>               
         </dl>
         <div class="edit-buttons">
@@ -21896,20 +21910,12 @@
                 <input data-role="dropdownlist"
         			   data-option-label="(--- Select ---)"        			   		                   
 	                   data-value-primitive="true"
+	                   data-auto-bind="false"
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: category_id,
 	                              source: categoryDS"/>
-            </dd>
-            <dd>
-                <input data-role="dropdownlist"
-        			   data-option-label="(--- Select ---)"        			   		                   
-	                   data-value-primitive="true"	                   
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: sub_of,
-	                              source: subItemGroupDS"/>
-            </dd>                
+            </dd>                         
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:code" name="code" required="required" validationMessage="required" />
                 <span data-for="code" class="k-invalid-msg"></span>
@@ -21932,13 +21938,15 @@
 <script id="itemSetting-measurement-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
-    		 #:name#
+    		#:name#
    		</td>
-   		<td>
-   			<div class="edit-buttons">		        
-	        	<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-	        	<a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>		        
-		   	</div>		   
+   		<td>   			
+   			<div class="edit-buttons">       
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        #if(is_system=="0"){#
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+		        #}#
+		   	</div>		   	
    		</td>
    	</tr>
 </script>
@@ -22002,6 +22010,132 @@
         </div>
     </div>
 </script>
+
+<script id="serviceSetting" type="text/x-kendo-template">
+	<span class="pull-right glyphicons no-js remove_2" 
+			onclick="javascript:window.history.back()"><i></i></span>
+
+	<h2>GENERAL SERVICE SETTING</h2>
+
+	<br>
+
+	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
+
+	    <!-- Tabs Heading -->
+	    <div class="widget-head span3">
+	        <ul>
+	            <li class="active"><a href="#tab1-1" class="glyphicons bookmark" data-toggle="tab"><i></i><span class="strong">Category</span></a>
+	            </li>
+	            <li><a href="#tab2-1" class="glyphicons tag" data-toggle="tab"><i></i><span class="strong">Group</span></a>
+	            </li>
+	            <li><a href="#tab3-1" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong">Measurement</span></a>
+	            </li>	            	            
+	        </ul>
+	    </div>
+	    <!-- // Tabs Heading END -->
+
+	    <div class="widget-body span9">
+	        <div class="tab-content">	            
+
+	            <!-- Tab Category content -->
+	            <div class="tab-pane active" id="tab1-1">	            	
+		            <div class="input-append">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: category_code">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New..." data-bind="value: category_name">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: category_abbr">					    
+					    <input class="span2" id="appendedInputButtons"
+					    	   data-role="dropdownlist"					    	   
+			                   data-value-primitive="true"
+			                   data-auto-bind="false"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="value: category_item_type_id,
+			                              source: itemTypeDS" />
+					    <button class="btn btn-default" type="button" data-bind="click: addCategory"><i class="icon-plus"></i> Add Category</button>					  
+					</div>
+		            
+	            	<table class="table table-bordered table-white">
+	            		<thead>
+	            			<tr>	            				            				
+	            				<th>CODE</th>	
+	            				<th>NAME</th>	
+	            				<th>ABBR</th>
+	            				<th>TYPE</th>	            				
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            				
+		            			data-edit-template="itemSetting-edit-category-template"
+				                data-template="itemSetting-category-template"
+				                data-bind="source: categoryDS"></tbody>
+	            	</table>		            
+	            </div>
+	            <!-- // Tab Category Type content END -->	            
+
+	            <!-- Tab Item Group content -->
+	            <div class="tab-pane" id="tab2-1">
+		            <div class="input-append">
+		            	<input id="appendedInputButtons" class="span2"
+		            	   data-role="dropdownlist"
+            			   data-option-label="(--- Select Category ---)"
+            			   data-auto-bind="false"            			   			                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: item_group_category_id,
+		                              source: categoryDS"/>	
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: item_group_code">	
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New Name..." data-bind="value: item_group_name">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: item_group_abbr">					    
+					    <button class="btn btn-default" type="button" data-bind="click: addItemGroup"><i class="icon-plus"></i> Add Group</button>					  
+					</div>
+		            
+	            	<table class="table table-bordered table-white">
+	            		<thead>
+	            			<tr>	            					            				
+	            				<th>Code</th>	
+	            				<th>Name</th>	
+	            				<th>abbr</th>	            				
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            				
+		            			data-edit-template="itemSetting-edit-item-group-template"
+				                data-template="itemSetting-item-group-template"
+				                data-bind="source: itemGroupDS"></tbody>
+	            	</table>		            
+	            </div>
+	            <!-- // Tab Item Group Type content END -->
+
+	            <!-- Tab Measurement content -->
+	            <div class="tab-pane" id="tab3-1">
+                	<div class="input-append">
+					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Measurement..." data-bind="value: measurement_name">					    
+					    <button class="btn btn-default" type="button" data-bind="click: addMeasurement"><i class="icon-plus"></i> Add Measurement</button>					  
+					</div>
+	            	<table class="table table-bordered table-white">
+	            		<thead>
+	            			<tr>
+	            				<th>Measurement</th>	            				
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+		            			data-edit-template="itemSetting-edit-measurement-template"
+				                data-template="itemSetting-measurement-template"
+				                data-bind="source: measurementDS"></tbody>
+	            	</table>
+	            </div>
+	            <!-- // Tab Measurement content END -->	                     
+
+	        </div>
+	    </div>
+
+	</div>
+</script>
+
 <script id="itemReportCenter" type="text/x-kendo-template">
 	<div class="row-fluid customer-report-center">
 		<div class="span7">
@@ -26790,7 +26924,7 @@
 			serverPaging: true,
 			page:1,
 			pageSize: 100
-		}),
+		}),		
 		//Tax Item
 		taxItemDS				: new kendo.data.DataSource({
 			transport: {
@@ -35261,6 +35395,16 @@
 				});
 			}
 		},
+		delete 					: function(){
+			var obj = this.get("obj");
+			
+			if (confirm("Are you sure, you want to delete it?")) {				
+		        obj.set("deleted", 1);
+		        this.save();
+
+		        window.history.back();												
+	    	}	    	
+		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
@@ -37045,32 +37189,32 @@
 			serverPaging: true,
 			page:1,
 			pageSize: 100
-		}),		
+		}),
 		contactTypeDS  		: banhji.source.customerTypeDS,
-		noteDS 				: dataStore(apiUrl + 'notes'),		
+		noteDS 				: dataStore(apiUrl + 'notes'),
 		currencyDS  		: banhji.source.currencyDS,
 		outstandingDS 		: dataStore(apiUrl + "contact_reports/outstanding"),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
-		edate 				: "",				
+		edate 				: "",
 		obj 				: null,
-		note 				: "",		
-		searchText 			: "",		
+		note 				: "",
+		searchText 			: "",
 		contact_type_id 	: 0,
 		currency_id 		: 0,
 		user_id 			: banhji.source.user_id,
 		balance 			: 0,
 		deposit 			: 0,
 		outInvoice 			: 0,
-		overInvoice 		: 0,		
-		pageLoad 			: function(){			
+		overInvoice 		: 0,
+		pageLoad 			: function(){
 			this.contactDS.fetch();
 			this.transactionDS.fetch();
-			this.outstandingDS.fetch();												
+			this.outstandingDS.fetch();
 		},
 		loadContact 		: function(id){
-			var self = this;			
+			var self = this;
 			
 			this.contactDS.query({
 			  	filter:[
@@ -37082,9 +37226,9 @@
 			    var view = self.contactDS.data();
 			    
 			    if(view.length>0){
-			    	self.set("obj", view[0]);				    	
+			    	self.set("obj", view[0]);
 			    	self.loadOutStandingInvoice(view[0].id);
-			    	self.loadTransaction(view[0].id);				    	
+			    	self.loadTransaction(view[0].id);
 			    	self.loadNote(view[0].id);
 			    }
 			});
@@ -37166,11 +37310,11 @@
 		},			
 		selectedRow			: function(e){
 			var id = e.data.id,
-			data = e.data;			
+			data = e.data;
 			
-			this.set("obj", data);			
+			this.set("obj", data);
 			this.loadOutStandingInvoice(id);
-			this.loadTransaction(id);			
+			this.loadTransaction(id);
 			this.loadNote(id);
 		},
 		sorterChanges 		: function(){
@@ -37190,14 +37334,14 @@
 				var last = first + 6;
 
 				var firstDayOfWeek = new Date(thisWeek.setDate(first));
-				var lastDayOfWeek = new Date(thisWeek.setDate(last));				
+				var lastDayOfWeek = new Date(thisWeek.setDate(last));
 
 				this.set("sdate", firstDayOfWeek);
 				this.set("edate", lastDayOfWeek);
 				
 			  	break;
 			case "month":
-				var thisMonth = new Date;				  	
+				var thisMonth = new Date;
 				var firstDayOfMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1);
 				var lastDayOfMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 0);
 
@@ -37216,7 +37360,7 @@
 			  	break;
 			default:
 				this.set("sdate", "");
-				this.set("edate", "");					  
+				this.set("edate", "");
 			}
 		},
 		enterSearch 		: function(e){
@@ -37227,18 +37371,18 @@
 		search 				: function(){
 			var self = this, 
 			para = [],
-      		txtSearch = this.get("searchText"),       		
+      		txtSearch = this.get("searchText"),
       		contact_type_id = this.get("contact_type_id"),
-      		currency_id = this.get("currency_id");      		
+      		currency_id = this.get("currency_id");
       		
       		if(txtSearch){
-      			para.push(      				
+      			para.push(
       				{ field: "number", operator: "like", value: txtSearch },
       				{ field: "surname", operator: "or_like", value: txtSearch },
 					{ field: "name", operator: "or_like", value: txtSearch },
 					{ field: "company", operator: "or_like", value: txtSearch }
       			);
-      		}      		
+      		}
 
       		if(contact_type_id){
       			para.push({ field: "contact_type_id", value: contact_type_id });
@@ -37248,7 +37392,7 @@
 
       		if(currency_id){
       			para.push({ field: "currency_id", value: currency_id });
-      		}      		
+      		}
 
       		this.contactDS.filter(para);
       		var loaded = false;
@@ -37257,22 +37401,22 @@
       				loaded = true;
 
       				//Clear search filters
-		      		self.set("searchText", "");		      		
+		      		self.set("searchText", "");
 		      		self.set("contact_type_id", 0);
 		      		self.set("currency_id", 0);
       			}
-      		});      			
+      		});
 		},
 		searchTransaction	: function(){
 			var self = this,
 				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),	        		
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
         		para = [];
 
         	//Dates
-        	if(start && end){        		
+        	if(start && end){
             	para.push({ field:"issued_date >=", value: start });
-            	para.push({ field:"issued_date <=", value: end });            	          	            	
+            	para.push({ field:"issued_date <=", value: end });
             }else if(start){
             	para.push({ field:"issued_date", value: start });
             }else if(end){
@@ -37297,13 +37441,13 @@
 			var obj = this.get("obj");
 
 			banhji.router.navigate('/quote');
-			banhji.quote.loadContact(obj.id);			
+			banhji.quote.loadContact(obj.id);
 		},
 		goDeposit			: function(){
 			var obj = this.get("obj");
 
 			banhji.router.navigate('/customer_deposit');
-			banhji.customerDeposit.loadContact(obj.id);			
+			banhji.customerDeposit.loadContact(obj.id);
 		},
 		goSaleOrder			: function(){
 			var obj = this.get("obj");
@@ -37321,7 +37465,7 @@
 			var obj = this.get("obj");
 
 			banhji.router.navigate('/invoice');
-			banhji.invoice.loadContact(obj.id);					
+			banhji.invoice.loadContact(obj.id);
 		},
 		goGDN				: function(){
 			var obj = this.get("obj");
@@ -37377,7 +37521,7 @@
 			}else{
 				alert("required memo...");
 			}
-		}		
+		}
 	});
 	banhji.customer = kendo.observable({
 		lang 					: langVM,
@@ -48112,7 +48256,8 @@
 		isCategorySelected	: false,	
 		
 		pageLoad 			: function(){		
-												
+			this.itemDS.fetch();
+			this.movementDS.fetch();										
 		},
 		countPO 		: function(id){
     		var self = this;
@@ -48765,8 +48910,7 @@
 					if(view.length>0){
 						alert("Sorry, you can not delete it because it is using now.");
 					}else{
-						var data = self.dataSource.get(obj.id);
-				        self.dataSource.remove(data);
+						obj.set("deleted",1);
 				        self.save();
 
 				        window.history.back();
@@ -50105,18 +50249,20 @@
         categoryDS 			: dataStore(apiUrl + "categories"),        
         itemGroupDS 		: dataStore(apiUrl + "items/group"),        
         measurementDS		: dataStore(apiUrl + "measurements"),
-        brandDS 			: dataStore(apiUrl + "brands"),        
+        brandDS 			: dataStore(apiUrl + "brands"),
+        itemTypeDS 			: dataStore(apiUrl + "item_types"),        
         category_code 		: "",
         category_name 		: "",
         category_abbr 		: "",
-        item_group_category_id 	: 0,       
+        category_item_type_id : 1,
+        item_group_category_id : 0,       
         item_group_code 	: "",
         item_group_name 	: "",
-        item_group_abbr 	: "",
+        item_group_abbr 	: "",        
         measurement_name 	: "",        
         brand_code 			: "",
         brand_name 			: "",
-        brand_abbr 			: "",
+        brand_abbr 			: "",        
         pageLoad 			: function() {
         	
         },        
@@ -50128,11 +50274,13 @@
         	if(name!=="" && code!==""){        		
 	        	this.categoryDS.add({	        		
 	        		sub_of 		 	: 0,
+	        		item_type_id 	: this.get("category_item_type_id"),
 	        		item_id 		: 0,
 	        		code 			: code,	        		
 	        		name 			: name,
 	        		abbr 			: this.get("category_abbr"),	        		
-	        		is_system 		: 0
+	        		is_system 		: 0,
+	        		item_type 		: []
 	        	});
 
 	        	this.categoryDS.sync();
@@ -50176,7 +50324,8 @@
         	if(name!==""){
 	        	this.measurementDS.add({	        		
 	        		name 		: name,
-	        		description : name
+	        		description : name,
+	        		is_system 	: 0
 	        	});
 
 	        	this.measurementDS.sync();
@@ -50211,10 +50360,117 @@
         goPattern 	: function(e){
         	var data = e.data;        	        	
 
-        	if(kendo.parseInt(data.contact_id)>0){        		        	
-	        	banhji.router.navigate('/item/'+data.item_id+'/1');   	
+        	if(kendo.parseInt(data.item_id)>0){
+        		if(data.item_type_id==1){        		        	
+	        		banhji.router.navigate('/item/'+data.item_id+'/1');
+	        	}else{
+	        		banhji.router.navigate('/non_inventory_part/'+data.item_id+'/1');
+	        	}   	
         	}else{
-        		banhji.router.navigate('/item');
+        		if(data.item_type_id==1){        		        	
+	        		banhji.router.navigate('/item');
+	        		banhji.item.setPattern(data.id);
+	        	}else{
+	        		banhji.router.navigate('/non_inventory_part');
+	        		banhji.nonInventoryPart.setPattern(data.id);
+	        	}        		
+        	}
+        } 
+    });
+    banhji.serviceSetting =  kendo.observable({
+		lang 				: langVM,		        
+        categoryDS 			: dataStore(apiUrl + "categories"),        
+        itemGroupDS 		: dataStore(apiUrl + "items/group"),        
+        measurementDS		: dataStore(apiUrl + "measurements"),        
+        itemTypeDS 			: dataStore(apiUrl + "item_types"),        
+        category_code 		: "",
+        category_name 		: "",
+        category_abbr 		: "",
+        category_item_type_id : 4,
+        item_group_category_id : 0,       
+        item_group_code 	: "",
+        item_group_name 	: "",
+        item_group_abbr 	: "",        
+        measurement_name 	: "",        
+        pageLoad 			: function() {
+        	
+        },        
+        addCategory 		: function(){
+        	var self = this, 
+        	name = this.get("category_name"),
+        	code = this.get("category_code");
+
+        	if(name!=="" && code!==""){        		
+	        	this.categoryDS.add({	        		
+	        		sub_of 		 	: 0,
+	        		item_type_id 	: this.get("category_item_type_id"),
+	        		item_id 		: 0,
+	        		code 			: code,	        		
+	        		name 			: name,
+	        		abbr 			: this.get("category_abbr"),	        		
+	        		is_system 		: 0,
+	        		item_type 		: []
+	        	});
+
+	        	this.categoryDS.sync();
+	        	this.set("category_code", "");
+    			this.set("category_name", "");
+    			this.set("category_abbr", "");
+        	}else{
+        		alert("required number and name!");
+        	}
+        },
+        addItemGroup 		: function(){
+        	var self = this, 
+        	category_id = this.get("item_group_category_id"),
+        	name = this.get("item_group_name"),
+        	code = this.get("item_group_code");
+
+        	if(category_id>0 && name!=="" && code!==""){        		
+	        	this.itemGroupDS.add({	        		
+	        		category_id	 	: category_id,
+	        		sub_of 		 	: 0,
+	        		code 			: code,	        		
+	        		name 			: name,
+	        		abbr 			: this.get("item_group_abbr"),	        		
+	        		is_system 		: 0
+	        	});
+
+	        	this.itemGroupDS.sync();
+	        	
+    			self.set("item_group_category_id", 0);    			
+    			self.set("item_group_code", "");
+    			self.set("item_group_name", "");
+    			self.set("item_group_abbr", "");	        		
+        	}else{
+        		alert("required category, number, and name!");
+        	}
+        },
+        addMeasurement 		: function(){
+        	var self = this, 
+        	name = this.get("measurement_name");
+
+        	if(name!==""){
+	        	this.measurementDS.add({	        		
+	        		name 		: name,
+	        		description : name,
+	        		is_system 	: 0
+	        	});
+
+	        	this.measurementDS.sync();
+	        		        			
+	        	this.set("measurement_name", "");	        		
+        	}else{
+        		alert("required name");
+        	}
+        },        
+        goPattern 	: function(e){
+        	var data = e.data;        	
+
+        	if(kendo.parseInt(data.item_id)>0){        		       		        	
+	        	banhji.router.navigate('/item_service/'+data.item_id+'/1');	        		
+        	}else{        		       		        	
+	        	banhji.router.navigate('/item_service');	        	   		
         		banhji.item.setPattern(data.id);
         	}
         } 
@@ -51218,6 +51474,7 @@
 		itemRecord: new kendo.Layout("#itemRecord", {model: banhji.itemRecord}),
 		itemAdjustment: new kendo.Layout("#itemAdjustment", {model: banhji.itemAdjustment}),
 		itemSetting: new kendo.Layout("#itemSetting", {model: banhji.itemSetting}),
+		serviceSetting: new kendo.Layout("#serviceSetting", {model: banhji.serviceSetting}),
 		itemReportCenter: new kendo.Layout("#itemReportCenter"),
 		inventoryPositionSummary: new kendo.Layout("#inventoryPositionSummary", {model: banhji.inventoryPositionSummary}),
 		inventoryPositionDetail: new kendo.Layout("#inventoryPositionDetail", {model: banhji.inventoryPositionDetail}),
@@ -52340,7 +52597,7 @@
 			vm.pageLoad();				
 		}
 	});
-	banhji.router.route("/vendor_center", function(){
+	banhji.router.route("/vendor_center(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
@@ -52463,7 +52720,7 @@
                 end.min(start.value());				               
 			}
 
-			vm.pageLoad();				
+			vm.pageLoad(id);				
 		}
 	});
 	banhji.router.route("/vendor(/:id)(/:is_pattern)", function(id, is_pattern){
@@ -52950,7 +53207,7 @@
 			vm.pageLoad();				
 		}
 	});
-	banhji.router.route("/customer_center", function(){		
+	banhji.router.route("/customer_center(/:id)", function(id){		
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
@@ -53073,7 +53330,7 @@
                 end.min(start.value());								               
 			}
 
-			vm.pageLoad();				
+			vm.pageLoad(id);				
 		}
 	});
 	banhji.router.route("/customer(/:id)(/:is_pattern)", function(id,is_pattern){		
@@ -54904,7 +55161,7 @@
 			vm.pageLoad();
 		}				
 	});	
-	banhji.router.route("/item_center", function(){
+	banhji.router.route("/item_center(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
@@ -55036,7 +55293,9 @@
                 
                 start.max(end.value());
                 end.min(start.value());			               
-			}				
+			}
+
+			vm.pageLoad(id);				
 		}
 	});
 	banhji.router.route("/item(/:id)(/:is_pattern)", function(id, is_pattern){
@@ -55407,9 +55666,30 @@
 			if(banhji.pageLoaded["item_setting"]==undefined){
 				banhji.pageLoaded["item_setting"] = true;
 				
-				vm.subCategoryDS.filter({ field:"sub_of", value: 0 });
-				vm.subItemGroupDS.filter({ field:"sub_of", value: 0 });
-				vm.subBrandDS.filter({ field:"sub_of", value: 0 });
+				vm.categoryDS.filter({ field:"item_type_id", operator:"where_in", value: [1,2] });
+				vm.itemTypeDS.filter({ field:"id", operator:"where_in", value: [1,2] });
+				vm.itemGroupDS.filter({ field:"id", operator:"where_in", value: [1,2] });
+			}
+
+			vm.pageLoad();			     		
+		}
+	});
+	banhji.router.route("/service_setting", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.serviceSetting);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+
+			var vm = banhji.serviceSetting;
+			
+			if(banhji.pageLoaded["service_setting"]==undefined){
+				banhji.pageLoaded["service_setting"] = true;
+				
+				vm.categoryDS.filter({ field:"item_type_id", operator:"where_in", value: [4,6] });
+				vm.itemTypeDS.filter({ field:"id", operator:"where_in", value: [4,6] });
+				vm.itemGroupDS.filter({ field:"id", operator:"where_in", value: [3,4] });
 			}
 
 			vm.pageLoad();			     		

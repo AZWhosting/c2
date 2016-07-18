@@ -85,9 +85,10 @@ class Measurements extends REST_Controller {
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {							
 				$data["results"][] = array(
-					"id" 		=> $value->id,					
-					"name" 		=> $value->name,
-					"description" => $value->description
+					"id" 			=> $value->id,					
+					"name" 			=> $value->name,
+					"description" 	=> $value->description,
+					"is_system" 	=> $value->is_system
 				);
 			}
 		}
@@ -110,7 +111,8 @@ class Measurements extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $obj->id,						
 					"name" 			=> $obj->name,
-					"description"	=> $obj->description
+					"description"	=> $obj->description,
+					"is_system" 	=> $obj->is_system
 				);				
 			}			
 		}
@@ -137,7 +139,8 @@ class Measurements extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
 					"name" 			=> $obj->name,
-					"description"	=> $obj->description
+					"description"	=> $obj->description,
+					"is_system" 	=> $obj->is_system
 				);						
 			}
 		}

@@ -8,6 +8,10 @@ class Item_type extends DataMapper {
 		'item' => array(
 			'class' => 'item',
 			'other_field' => 'item_type'
+		),
+		'category' => array(
+			'class' => 'category',
+			'other_field' => 'item_type'
 		)
 	);
 

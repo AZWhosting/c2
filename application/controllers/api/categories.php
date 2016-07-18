@@ -86,11 +86,14 @@ class Categories extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $value->id,					
 					"sub_of" 		=> $value->sub_of,
+					"item_type_id" 	=> $value->item_type_id,
 					"item_id" 		=> $value->item_id,
 					"code" 			=> $value->code,
 					"name" 	 		=> $value->name,
 					"abbr" 			=> $value->abbr,
-					"is_system"		=> $value->is_system	
+					"is_system"		=> $value->is_system,
+
+					"item_type" 	=> $value->item_type->get_raw()->result()	
 				);
 			}
 		}
@@ -106,6 +109,7 @@ class Categories extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Category(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 			$obj->sub_of 		= $value->sub_of;
+			$obj->item_type_id	= $value->item_type_id;
 			$obj->item_id 		= $value->item_id;
 			$obj->code 			= $value->code;
 			$obj->name 			= $value->name;
@@ -116,11 +120,14 @@ class Categories extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
 					"sub_of" 		=> $obj->sub_of,
+					"item_type_id" 	=> $obj->item_type_id,
 					"item_id" 		=> $obj->item_id,
 					"code" 			=> $obj->code,
 					"name" 	 		=> $obj->name,
 					"abbr" 			=> $obj->abbr,
-					"is_system"		=> $obj->is_system	
+					"is_system"		=> $obj->is_system,
+
+					"item_type" 	=> $obj->item_type->get_raw()->result()	
 				);
 			}
 		}
@@ -140,6 +147,7 @@ class Categories extends REST_Controller {
 			$obj->get_by_id($value->id);
 
 			$obj->sub_of 		= $value->sub_of;
+			$obj->item_type_id	= $value->item_type_id;
 			$obj->item_id 		= $value->item_id;
 			$obj->code 			= $value->code;
 			$obj->name 			= $value->name;
@@ -150,11 +158,14 @@ class Categories extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
 					"sub_of" 		=> $obj->sub_of,
+					"item_type_id" 	=> $obj->item_type_id,
 					"item_id" 		=> $obj->item_id,
 					"code" 			=> $obj->code,
 					"name" 	 		=> $obj->name,
 					"abbr" 			=> $obj->abbr,
-					"is_system"		=> $obj->is_system	
+					"is_system"		=> $obj->is_system,
+
+					"item_type" 	=> $obj->item_type->get_raw()->result()	
 				);		
 			}
 		}
