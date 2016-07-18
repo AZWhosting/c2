@@ -194,17 +194,17 @@
 									<tr>
 										<td>Income</td>
 										<td></td>
-										<td>10,171,667.00</td>
+										<td>0</td>
 									</tr>
 									<tr>
 										<td>Expense</td>
 										<td></td>
-										<td>5,391,230.00</td>
+										<td>0</td>
 									</tr>
 									<tr>
 										<td><b>Net Income</b></td>
 										<td></td>
-										<td><b>4,780,437.00</b></td>
+										<td><b>0</b></td>
 									</tr>
 								</table>
 							</div>
@@ -214,17 +214,17 @@
 									<tr>
 										<td>Assets</td>
 										<td></td>
-										<td>20,451,800.00</td>
+										<td>0</td>
 									</tr>
 									<tr>
 										<td>Liabilities</td>
 										<td></td>
-										<td>6,432,100.00</td>
+										<td>0</td>
 									</tr>
 									<tr>
 										<td><b>Equity</b></td>
 										<td></td>
-										<td><b>14,019,700.00</b></td>
+										<td><b>0</b></td>
 									</tr>
 								</table>
 							</div>
@@ -755,7 +755,7 @@
 							<div class="widget-search separator bottom">
 								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
-									<input type="search" placeholder="Customer ..." data-bind="value: searchText, events:{change: enterSearch}">
+									<input type="search" placeholder="Account ..." data-bind="value: searchText, events:{change: enterSearch}">
 								</div>
 							</div>
 							<div class="select2-container" style="width: 100%;">								
@@ -764,13 +764,12 @@
 						</form>					
 					</div>
 					
-					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
+					<span class="results"><span data-bind="text: dataSource.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
 
 					<div class="table table-condensed" style="height: 580px;"						 
 						 data-role="grid" 
-						 data-bind="source: contactDS"
-						 data-auto-bind="false" 
-						 data-row-template="cashCenter-customer-list-tmpl"
+						 data-bind="source: dataSource"						 
+						 data-row-template="accountingCenter-list-tmpl"
 						 data-columns="[{title: ''}]"
 						 data-selectable=true
 						 data-height="600"						 
@@ -779,168 +778,8 @@
 				<div class="span9 detailsWrapper">
 					<div class="row-fluid">					
 						<div class="span6">
-							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
-
-							    <!-- Widget Heading -->
-							    <div class="widget-head">
-
-							        <!-- Tabs -->
-							        <ul class="pull-right">
-							        	<li style="font-size: large; color: black; font-weight: bold;">
-							            	<span data-bind="text: obj.number"></span>
-							            	-
-							            	<span data-bind="text: obj.fullname"></span>
-							            </li>
-							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-7"><i></i></span>
-							            </li>							           
-							            <li class="glyphicons riflescope"><span data-toggle="tab" data-target="#tab2-7"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab3-7"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab4-7"><i></i></span>
-							            </li>
-							            <li class="glyphicons edit"><span data-bind="click: goEditContact"><i></i></span>
-							            </li>
-							            <li class="glyphicons user_add"><a href="#/customer"><i></i></a>
-							            </li>							            							            
-							        </ul>
-							        <div class="clearfix"></div>
-							        <!-- // Tabs END -->
-
-							    </div>
-							    <!-- Widget Heading END -->
-
-							    <div class="widget-body">
-							        <div class="tab-content">
-
-							            <!-- Transactions Tab content -->
-							            <div id="tab1-7" class="tab-pane active box-generic">
-							            	<table class="table table-borderless table-condensed cart_total cash-table">
-								            	<tr>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goQuote">Cash Transaction</span>
-								            		</td>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit">Cash Receipt</span>								            			
-								            		</td>
-								            	</tr>
-								            	<tr>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleOrder">Cash Payment</span>
-								            		</td>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goCashSale">Cash Advance</span>								            											            			
-								            		</td>
-								            	</tr>
-								            	<tr>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn">Expense</span>
-								            		</td>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice">Exchange Rate Record</span>								            											            			
-								            		</td>
-								            	</tr>
-								            	
-							            	</table>
-							            </div>
-							            <!-- // Transactions Tab content END -->
-
-							            <!-- SEARCH Tab content -->
-							            <div id="tab2-7" class="tab-pane box-generic">
-							                <input data-role="dropdownlist"
-							                	   data-auto-bind="false"
-						            			   data-option-label="Select Customer Type..."					            			   		                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: contact_type_id,
-								                              source: contactTypeDS"
-								                   style="width: 100%"/>
-
-							                <input data-role="dropdownlist"
-						            			   data-option-label="Select Currency..."
-						            			   data-template="currency-list-tmpl"					            			   		                   
-								                   data-value-primitive="true"
-								                   data-text-field="code"
-								                   data-value-field="id"
-								                   data-bind="value: currency_id,
-								                              source: currencyDS"
-								                   style="width: 100%"/>
-
-								            <br><br>
-								            <span class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search"></span></span>
-								            <br>
-							            </div>
-							            <!-- // SEARCH Tab content END -->							            
-
-							            <!-- INFO Tab content -->
-							            <div id="tab3-7" class="tab-pane box-generic">
-							            	<div class="row-fluid">
-								            	<div class="span6">
-										
-													<!-- Bio -->
-													<div class="widget widget-heading-simple widget-body-gray margin-none">
-														<div class="widget-head">
-															<h4 class="heading glyphicons user"><i></i> <span data-bind="text: obj.wnumber"></span> <span data-bind="text: obj.fullname"></span></h4>
-														</div>
-														<div class="widget-body">
-															<ul class="unstyled icons margin-none">
-																<li class="glyphicons group"><i></i> <span data-bind="text: obj.contact_type"></span></li>
-																<li class="glyphicons phone"><i></i> <span data-bind="text: obj.phone"></span></li>
-																<li class="glyphicons envelope"><i></i> <span data-bind="text: obj.email"></li>
-																<li class="glyphicons calendar"><i></i> <span data-bind="text: obj.registered_date"></li>
-															</ul>
-														</div>
-													</div>
-													<!-- // Bio END -->
-													
-												</div>
-												<div class="span6">
-													<!-- Bio -->
-													<div class="widget widget-heading-simple widget-body-gray margin-none">
-														<div class="widget-head">
-															<h4 class="heading glyphicons edit" data-bind="click: goEditContact"><i></i> <span data-bind="text: lang.lang.edit"></span></h4>
-														</div>
-														<div class="widget-body">
-															<p><i class="icon-home"></i> <span data-bind="text: obj.address"></span></p>
-														</div>
-													</div>
-													<!-- // Bio END -->
-												</div>
-											</div>
-							            </div>
-							            <!-- // INFO Tab content END -->
-
-							            <!-- NOTE Tab content -->
-							            <div id="tab4-7" class="tab-pane box-generic">
-
-										    <div class="chat-controls">															
-												<form class="margin-none">
-													<div class="row-fluid">
-														<div class="span10">
-															<input type="text" name="message" class="input-block-level margin-none" data-bind="value: note" placeholder="កំណត់Memo ...">
-														</div>
-														<div class="span2">
-															<span class="btn btn-block btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.save"></span></span>
-														</div>
-													</div>
-												</form>															
-											</div>
-
-											<br>
-
-									    	<div data-role="grid"
-									    	 	 data-height="100"
-					 							 data-scrollable="{virtual: true}"									                 
-								                 data-row-template="cashCenter-note-tmpl"
-								                 data-bind="source: noteDS"
-								                 data-columns="[{title: ''}]"></div>
-											
-							            </div>
-							            <!-- // NOTE Tab content END -->							            								            
-
-							        </div>
-							    </div>
+							<div>
+								aasdfasdfds
 							</div>
 						</div>
 
@@ -1099,29 +938,39 @@
 		</td>     	
     </tr>
 </script>
-<script id="accountingCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
+<script id="accountingCenter-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
 		<td>
 			<div class="media-body">
-				<span class="strong">
-					#=number# #=fullname#				
-				</span>
+				#if(sub_of>0){#
+					&nbsp;&nbsp;
+					<span>
+						#=code#				
+					</span>
+					-
+					<span>
+						#if(name.length>25){#
+							#=name.substring(0, 25)#...
+						#}else{#
+							#=name#
+						#}#
+					</span>
+				#}else{#
+					<span class="strong">
+						#=code#				
+					</span>
+					-
+					<span class="strong">
+						#if(name.length>25){#
+							#=name.substring(0, 25)#...
+						#}else{#
+							#=name#
+						#}#
+					</span>
+				#}#				
 			</div>
 		</td>
 	</tr>
-</script>
-<script id="accountingCenter-note-tmpl" type="text/x-kendo-template">
-	<tr>
-		<td>			
-			<blockquote>
-				<small class="author">
-					<span class="strong">#=creator#</span> :
-					<cite>#=kendo.toString(new Date(noted_date), "g")#</cite>
-				</small>					
-				<p>#=note#</p>
-			</blockquote>				
-		</td>
-	</tr>	
 </script>
 
 <script id="account" type="text/x-kendo-template">	
@@ -1936,6 +1785,7 @@
 				                <th>DESCRIPTION</th>
 				                <th data-bind="visible: showRef" style="width: 7%;">REF</th>
 				                <th data-bind="visible: showName" style="width: 15%;">NAME</th>
+				                <th data-bind="visible: showJob" style="width: 7%;">JOB</th>
 				                <th data-bind="visible: showSegment" style="width: 15%;">SEGMENT</th>
 				                <th style="width: 15%;">DEBITS (Dr)</th>
 				                <th style="width: 15%;">CREDITS (Cr)</th>			                
@@ -1966,6 +1816,9 @@
 									</li>
 									<li>
 										<input type="checkbox" data-bind="checked: showName" /> NAME
+									</li>
+									<li>
+										<input type="checkbox" data-bind="checked: showJob" /> JOB
 									</li>
 									<li>
 										<input type="checkbox" data-bind="checked: showSegment" /> SEGMENT
@@ -2058,6 +1911,18 @@
                               source: contactDS"
                    data-placeholder="Add Name.."                    
                    style="width: 100%" />
+		</td>
+		<td data-bind="visible: showJob">
+			<input id="ddlJob" name="ddlJob"
+				   data-option-label="Add Job..." 
+				   data-role="dropdownlist"                   
+                   data-value-primitive="true"                   
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: job_id,
+                              source: jobDS"
+                   data-placeholder="Add Job.."
+                   style="width: 80px;" />	
 		</td>		
 		<td data-bind="visible: showSegment">
 			<select data-role="multiselect"
@@ -2572,7 +2437,7 @@
 
 						<tr>
 							<td width="50%">
-								<h3><a href="#/trial_balance">Trail Balance</a></h3>
+								<h3><a href="#/trial_balance">Trial Balance</a></h3>
 							</td>
 							<td width="50%">
 								<h3><a href="#/">Period-End Closing Checklist</a></h3>
@@ -2675,10 +2540,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td >
-								<h3><a href="#/">Chart of Account </a></h3>
+								<h3><a href="#/chart_of_account">Chart of Account </a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Audit Trail Report</a></h3>								
+								<h3><a href="#/">Audited Trial Report</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -3122,7 +2987,7 @@
 			#=name#
 		</td>
 		<td style="color: black;">
-			#=account_type[0].name#
+			#=account_type.length>0 ? account_type[0].name : ""#
 		</td>				
     </tr>    
 </script>
@@ -24901,10 +24766,9 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/account'>New Account</a></li>  				  				
-  				<li><a href='#/journal'>Journal</a></li>
-  				<li><a href='#/currency_rate'>Exchange Rate</a></li>
-  				<li><a href='#/sale_tax'>Sale Tax</a></li>  				  				 				  				 				
+  				<li><a href='#/account'>New Account</a></li>  				 				  				
+  				<li><a href='#/journal'>Journal</a></li>  				
+  				<li><a href='#/sale_tax'>Tax</a></li>  				  				 				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/accounting_report_center'>REPORTS</a></li>	  	
@@ -27059,7 +26923,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			group: { field: "account_type[0].name"},
+			//group: { field: "account_type[0].name"},
 			sort:{ field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
@@ -27785,6 +27649,187 @@
 	/*********************
 	*  Accounting Section  *
 	**********************/
+	banhji.accountingCenter = kendo.observable({
+		lang 				: langVM,
+		dataSource			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort:{ field:"code", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		transactionDS  		: dataStore(apiUrl + 'journal_lines'),		
+		sortList			: banhji.source.sortList,
+		sorter 				: "all",
+		sdate 				: "",
+		edate 				: "",				
+		obj 				: null,
+		note 				: "",		
+		searchText 			: "",		
+		contact_type_id 	: 0,
+		currency_id 		: 0,
+		user_id 			: banhji.source.user_id,
+		balance 			: 0,
+		po 					: 0,
+		openInvoice 		: 0,
+		overInvoice 		: 0,		
+		pageLoad 			: function(){		
+											
+		},						
+		loadSummary 		: function(id){
+			var self = this, obj = this.get("obj");
+
+			this.summaryDS.query({
+			  	filter: [
+			  		{ field:"contact_id", value: obj.id },
+			  		{ field:"type", operator:"where_in", value: ["Cash_Purchase","Credit_Purchase", "Purchase_Order"] },
+			  		{ field:"status", value: 0 }
+			  	],
+			  	sort: { field: "issued_date", dir: "desc" },
+			  	page: 1,
+			  	take: 100
+			}).then(function(){
+				var view = self.summaryDS.view(),
+				balance = 0, open = 0, over = 0, po = 0, today = new Date();
+
+				$.each(view, function(index, value){
+					if(value.type=="Purchase_Order"){
+						po++;
+					}else{
+						balance += kendo.parseFloat(value.amount);
+						open++;
+
+						if(new Date(value.due_date)<today){						
+							over++;
+						}
+					}									
+				});
+				
+				self.set("balance", kendo.toString(balance, "c", obj.locale));
+				self.set("po", kendo.toString(po, "n0"));
+				self.set("openInvoice", kendo.toString(open, "n0"));
+				self.set("overInvoice", kendo.toString(over, "n0"));
+			});
+		},
+		loadTransaction 	: function(id){
+			this.transactionDS.query({
+			  	filter: { field:"contact_id", value: id },
+			  	sort: { field: "issued_date", dir: "desc" },
+			  	page: 1,
+			  	take: 100
+			});
+		},					
+		selectedRow			: function(e){
+			var id = e.data.id,
+			data = e.data;			
+			
+			this.set("obj", data);			
+			this.loadSummary(id);
+			this.loadTransaction(id);			
+			this.loadNote(id);
+		},		
+		enterSearch 		: function(e){
+			e.preventDefault();
+
+			this.search();
+		},
+		search 				: function(){
+			var self = this, 
+			para = [],
+      		txtSearch = this.get("searchText"),       		
+      		contact_type_id = this.get("contact_type_id"),
+      		currency_id = this.get("currency_id");      		
+      		
+      		if(txtSearch){
+      			para.push(      				
+      				{ field: "number", operator: "like", value: txtSearch },
+      				{ field: "surname", operator: "or_like", value: txtSearch },
+					{ field: "name", operator: "or_like", value: txtSearch },
+					{ field: "company", operator: "or_like", value: txtSearch }
+      			);
+      		}      		
+
+      		if(contact_type_id){
+      			para.push({ field: "contact_type_id", value: contact_type_id });
+      		}else{
+      			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 2 });
+      		}
+
+      		if(currency_id){
+      			para.push({ field: "currency_id", value: currency_id });
+      		}      		
+
+      		this.contactDS.filter(para);
+      		var loaded = false;
+      		this.contactDS.bind("requestEnd", function(){
+      			if(loaded==false){
+      				loaded = true;
+
+      				//Clear search filters
+		      		self.set("searchText", "");		      		
+		      		self.set("contact_type_id", 0);
+		      		self.set("currency_id", 0);
+      			}
+      		});      			
+		},
+		searchTransaction	: function(){
+			var self = this,
+				para = [],
+				obj = this.get("obj"),
+				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+
+        	//Dates
+        	if(start && end){
+            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });            	            	
+            }else if(start){
+            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+            }else if(end){
+            	para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else{
+            	
+            }
+
+            para.push({ field:"contact_id", value: obj.id });            
+
+            this.transactionDS.query({
+            	filter: para,
+            	sort: { field: "issued_date", dir: "desc" },
+            	page: 1,
+            	take: 100
+            });            
+		}				
+	});
 	banhji.account =  kendo.observable({
     	lang 				: langVM,    	
     	dataSource 			: dataStore(apiUrl + "accounts"),
@@ -28238,6 +28283,7 @@
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "journal_lines"),
 		accountDS 			: banhji.source.accountDS,
+		jobDS 				: banhji.source.jobDS,
 		contactDS 			: banhji.source.contactDS,				
 		currencyDS 			: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
@@ -28259,6 +28305,7 @@
 		dayList 			: banhji.source.dayList,				
 		showRef 			: true,
 		showName 			: false,
+		showJob 			: false,
 		showSegment 		: false,
 		showMonthOption 	: false,
 		showMonth 			: false,
@@ -28400,6 +28447,7 @@
 				contact_id 			: "",				
 				description 		: "",
 				reference_no 		: "",
+				job_id 				: "",
 				segments 	 		: [],								
 				dr 	 				: 0,
 				cr 					: 0,				

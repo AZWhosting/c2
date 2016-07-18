@@ -96,7 +96,7 @@ class Accounts extends REST_Controller {
 					"status" 			=> $value->status,
 					"is_system" 		=> $value->is_system,
 
-				   	"account_type" 		=> $value->account_type->get_raw()->result()
+				   	"account_type" 		=> []//$value->account_type->get_raw()->result()
 				);
 			}
 		}		
