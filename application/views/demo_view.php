@@ -3059,6 +3059,74 @@
     </tr>
 </script>
 
+<script id="chartOfAccount" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="container-fluid">					
+			<div id="example" class="k-content">
+
+		    	<div class="hidden-print well">
+		    		<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+		            
+					<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
+					|					
+				    <span class="btn-group dropdown">
+				        <button class="dropdown-toggle" data-toggle="dropdown">Sort <span class="caret"></span></button>
+				        <ul class="dropdown-menu">
+				            <li>
+				            	<span class="btn btn-block btn-primary" data-bind="click: sort">TYPE</span>				            	
+				            </li>
+				            <li>
+				            	<span class="btn btn-block btn-info" data-bind="click: sort">DATE</span>
+				            </li>
+				            <li>
+				            	<span class="btn btn-block btn-primary" data-bind="click: sort">ACCOUNT</span>
+				            </li>				            			           				            				            
+				        </ul>
+				    </span>
+									
+		    	</div>						
+
+				<div align="center">
+					<h3>CHART OF ACCOUNT</h3>
+					<span id="strDate"></span>
+				</div>
+
+				<br>
+
+				<table class="table table-bordered table-primary table-striped table-vertical-center">
+			        <thead>
+			            <tr>
+			                <th class="center">NUMBER</th>
+			                <th class="center">NAME</th>
+			                <th class="center">TYPE</th>			                
+			            </tr> 
+			        </thead>
+			        <tbody data-role="listview"
+			        		data-template="chartOfAccount-template"			        		
+			        		data-bind="source: dataSource"></tbody> 
+			    </table>
+
+	            <div data-role="pager" data-bind="source: dataSource"></div>					  
+
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="chartOfAccount-template" type="text/x-kendo-tmpl">	
+	<tr>
+		<td style="color: black;">
+			#=code#
+		</td>		
+		<td style="color: black;">
+			#=name#
+		</td>
+		<td style="color: black;">
+			#=account_type[0].name#
+		</td>				
+    </tr>    
+</script>
+
 <script id="accountingSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
@@ -28851,6 +28919,41 @@
 	        return kendo.toString(sum, "c", banhji.locale);
 	    }		      		
 	});
+	banhji.chartOfAccount =  kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "accounts"),		
+		as_of 				: new Date(),		
+		currentSort 		: "asc",							
+		pageLoad 			: function(){
+			
+		},	
+		sort 				: function(e){
+			var col = "",
+			target = e.currentTarget.innerText;
+
+			if(this.get("currentSort")=="asc"){
+				this.set("currentSort", "desc");
+			}else{
+				this.set("currentSort", "asc");
+			}
+
+			switch(target) {
+			    case "TYPE":
+			        col = "type";
+			        break;
+			    case "DATE":
+			        col = "issued_date";
+			        break;
+			    case "ACCOUNT":
+			        col = "account_id";
+			        break;
+			    default:
+			        //default code block
+			}			
+
+			this.dataSource.sort({ field:col, dir:this.get("currentSort") });
+		}	      		
+	});
 	banhji.saleTax =  kendo.observable({
 		lang 				: langVM,		
         dataSource 			: dataStore(apiUrl + "tax_types"),        
@@ -51421,6 +51524,7 @@
 		recurring: new kendo.Layout("#recurring", {model: banhji.recurring}),
 		journalReport: new kendo.Layout("#journalReport", {model: banhji.journalReport}),
 		trialBalance: new kendo.Layout("#trialBalance", {model: banhji.trialBalance}),
+		chartOfAccount: new kendo.Layout("#chartOfAccount", {model: banhji.chartOfAccount}),
 		saleTax: new kendo.Layout("#saleTax", {model: banhji.saleTax}),
 		accountingReportCenter: new kendo.Layout("#accountingReportCenter"),
 		accountingSetting: new kendo.Layout("#accountingSetting", {model: banhji.accountingSetting}),
@@ -52151,6 +52255,22 @@
 
 			if(banhji.pageLoaded["trial_balance"]==undefined){
 				banhji.pageLoaded["trial_balance"] = true;              
+                						
+			}
+		}		
+	});
+	banhji.router.route("/chart_of_account", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.chartOfAccount);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			var vm = banhji.chartOfAccount;
+
+			if(banhji.pageLoaded["chart_of_account"]==undefined){
+				banhji.pageLoaded["chart_of_account"] = true;              
                 						
 			}
 		}		
