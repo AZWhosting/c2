@@ -43,9 +43,9 @@
   border-radius: 0;
   background: #1C2633 !important;
 }
-#content .row{
+/*#content .row{
   margin-left: 0 !important;
-}
+}*/
 #content {
     margin: -20px auto 0!important;
 }
@@ -203,9 +203,9 @@ width: 90px !important;
 .span6.hidden-print{
   padding-left: 0;
 }
-#example.k-content .span6{
+/*#example.k-content .span6{
   padding-right: 0;
-}
+}*/
 #example.k-content .span12{
   padding: 0;
 }
@@ -750,6 +750,150 @@ width: 90px !important;
 .supplier-icon .span4:last-child img{
   width: 105px;
 }
+
+
+.glyphicons.no-js.remove_2{
+  cursor: pointer;
+}
+.widget-body>div{
+  margin-bottom: 15px;
+}
+
+
+
+.span8.dash-accounting .span6.accounting-right,
+.span8.dash-accounting .span6{
+  padding-right: 0;
+}
+.accounting-right{
+  margin-top: 36px;
+  text-align: center;
+}
+.accounting-right p{
+  text-align: left;
+}
+.accounting-right .btn-download{
+  padding: 10px 20px;
+  color: #fff;
+  background: #30618B;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+}
+.account-stement h2{
+  text-align: left;
+  font-size: 15px;
+  font-weight: 800;
+}
+.account-stement table{
+   text-align: left;
+}
+.account-stement table tr td {
+    padding: 5px 0 5px 15px;
+}
+.account-stement table tr:nth-child(6), 
+.account-stement table tr:nth-child(9), 
+.account-stement table tr:nth-child(10) {
+    background: #E4EFF9;
+    font-weight: 700;
+}
+.account-stement table tr {
+    border-bottom: 3px solid #f4f4f4;
+}
+
+.accounting-management .capital-box {
+    text-align: center;
+    padding: 0;
+    height: 120px;
+    background: #26628C;
+    margin-left: 3px;
+    margin-bottom: 3px;
+    width: 49.5%;
+    color: #fff;
+}
+.accounting-management .capital-box span{
+    font-weight: 600;
+    font-size: 75px;
+    line-height: 55px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.accounting-management .capital-box .month{
+    color: #fff;
+    font-weight: 600;
+    margin-top: 10px;
+}
+.accounting-management .capital-box:nth-child(3), 
+.accounting-management .capital-box:nth-child(4) {
+    margin-bottom: 0;
+}
+.accounting-management .capital-box:nth-child(1), 
+.accounting-management .capital-box:nth-child(3){
+    margin-left: 0;
+}
+.accounting-management .capital-box:nth-child(1){
+  background: #30618B;
+}
+.accounting-management .capital-box:nth-child(2){
+  background: #CADFF1;
+  color: #333;
+}
+.accounting-management .capital-box:nth-child(2) .month,
+.accounting-management .capital-box:nth-child(3) .month{
+  color: #333;
+}
+.accounting-management .capital-box:nth-child(3){
+  background: #CBCBCB;
+  color: #333;
+}
+.accounting-management .capital-box:nth-child(4){
+  background: #4C4848;
+}
+
+.accounting-management table tr td{
+  padding: 5px 0 5px 15px;
+}
+.accounting-management table tr td:first-child{
+  font-weight: 600;
+}
+.accounting-management table tr td:last-child{
+  font-weight: 700;
+}
+.accounting-management table tr:nth-child(2),
+.accounting-management table tr:nth-child(4),
+.accounting-management table tr:nth-child(6) {
+    background: #E4EFF9;
+    font-weight: 700;
+}
+
+.tab1-aacountsetting{
+  border: 1px solid #fff;
+  width: 100%;
+  display: inline-block;
+  padding: 15px 15px 8px;
+}
+.tab1-aacountsetting p{
+  width: 80%;
+   display: inline-block;
+}
+.tab1-aacountsetting .btn-change{
+  float: right;
+  padding: 10px 15px;
+  color: #fff;
+  cursor: pointer;
+  background: #30618B;
+  font-weight: 600;
+}
+.noted{
+  width: 80%;
+  float: right;
+  margin-right: 50px;
+  text-align: right;
+}
+
 
 
 @media only screen 
