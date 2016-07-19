@@ -5,7 +5,7 @@
 <title>Login</title>
     <!-- Boostrap-->
     <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <style>
         html, body {
             background-color: #203864;
@@ -29,7 +29,7 @@
         }
         .login-image{
             text-align: center;
-            margin-top: -50px; 
+            margin-top: -50px;
         }
         .login-image p{
           color: #8DB3DA;
@@ -40,19 +40,19 @@
             background: #2F5597;
             margin-right: 5%;
             padding: 30px 50px;
-            color: #000000;            
+            color: #000000;
         }
         .login-form input{
           font-size: 20px;
           font-family: 'Open Sans', sans-serif !important;
         }
-       
+
         .login-form .login-email{
           width: 100%;
           margin-top: 10px;
           padding: 8px;
         }
-        
+
         .btn-login{
           width: 100%;
           background: #222A35;
@@ -63,7 +63,7 @@
           cursor: pointer;
           font-size: 30px !important;
         }
-        
+
     </style>
 </head>
 
@@ -82,11 +82,12 @@
 
                       <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
 
-                      <input type="password" data-bind="value: password, events:{change:signIn}" placeholder="Password " class="login-email"><br>                    
+                      <input type="password" data-bind="value: password, events:{change:signIn}" placeholder="Password " class="login-email"><br>
 
                       <input id="loginBtn" type="button" data-bind="click: signIn" class="btn-login" value="Login"><br><br>
                       <div id="loginInformation"></div>
-                  </form> 
+                      <div><a href="">Forget Password</a></div>
+                  </form>
               </div>
             </div>
         </div>
@@ -237,8 +238,8 @@
           email: null,
           password: null,
           signIn: function() {
-            // var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;  
-            // if(this.get('password').match(decimal) != null)  {   
+            // var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+            // if(this.get('password').match(decimal) != null)  {
             // layout.showIn("#main-container", watingView);
             $("#loginBtn").val("Loging in...");
             var authenticationData = {
@@ -277,16 +278,16 @@
                           } else {
                             console.log('bad');
                           }
-                        });                          
+                        });
                       }
-                  });                    
+                  });
               },
               onFailure: function(err) {
                 // layout.showIn("#main-container", loginView);
                 $("#loginBtn").val("Login");
                 $('#loginInformation').text('Please check username/password.');
               }
-            });  
+            });
           },
           redirect: function(data) {
               // console.log(data.length > 0);
@@ -294,7 +295,7 @@
                 window.location.replace(baseUrl + "rrd/");
               } else {
                 window.location.replace(baseUrl + "app/");
-              } 
+              }
           },
           forgotPassword: function(e) {
             e.preventDefault();

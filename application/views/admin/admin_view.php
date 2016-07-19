@@ -50,11 +50,7 @@
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-<<<<<<< HEAD
-              <a href="<?php echo base_url(); ?>demo" class="site_title"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">&nbsp;BanhJi<br></a>
-=======
               <a href="<?php echo base_url(); ?>rrd" class="site_title"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">&nbsp;BanhJi<br></a>
->>>>>>> master
             </div>
 
             <div class="clearfix"></div>
@@ -70,15 +66,9 @@
               <div class="menu_section">
                 <ul class="nav side-menu">
                   <li><a href="#">Dashboard</a>
-<<<<<<< HEAD
                   </li>
                   <li><a href="#company">Company Profile</a>
                   </li>
-=======
-                  </li>
-                  <li><a href="#company">Company Profile</a>
-                  </li>
->>>>>>> master
                   <li><a href="#userlist">Users</a>
                   </li>
                 </ul>
@@ -90,11 +80,7 @@
             <div class="sidebar-footer hidden-large">
               <a data-toggle="tooltip" data-placement="top" title="Logout" data-bind="click: signOut" style="width: 100%">
                 <strong>Sign Out</strong>
-<<<<<<< HEAD
-              </a>  
-=======
               </a>
->>>>>>> master
             </div>
             <!-- /menu footer buttons -->
           </div>
@@ -175,7 +161,7 @@
           <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
           <div class="count"><span data-bind="text: dataStore.data()[0].users"></span></div>
           <h3>Active Users</h3>
-          <p><a href="#">Add User</a></p>
+          <p><a href="#userlist/new">Add User</a></p>
         </div>
       </div>
       <div class="animated flipInY col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -436,13 +422,8 @@
       <tr data-bind="events: {dblclick: getProfile}">
         <td><img src="#=profile_photo#" alt="" class='avatar'></td>
         <td style="line-height: 40px;">
-<<<<<<< HEAD
-           # var x = email.substring(0,2); #
-          #=x.toUpperCase()#
-=======
            # var x = username.substring(0,2); #
            #=x.toUpperCase()#
->>>>>>> master
         </td>
         <td style="line-height: 40px;">
           #=last_name#&nbsp;#=first_name#
@@ -456,21 +437,11 @@
           #} else {#
             User
           #}#
-<<<<<<< HEAD
-        </td>
-        <td style="line-height: 40px;">
-          
-        </td>
-        <td style="line-height: 40px;">
-          
-=======
         </td>
         <td style="line-height: 40px;">
 
         </td>
         <td style="line-height: 40px;">
-
->>>>>>> master
         </td>
         <td style="line-height: 40px;">
           <button class="btn btn-default btn-xs" data-bind="visible: is_confirmed, events: {click: edit}"><i class="fa fa-pencil"></i> Edit </button>
@@ -535,15 +506,6 @@
                 <div class="form-group">
                   <label for="type" class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-<<<<<<< HEAD
-                    <input id="type" 
-                           data-role="dropdownlist" 
-                           data-bind="source: userTypes, value: current.usertype" 
-                           data-text-field="name"
-                           data-value-field="id"
-                           class="form-control col-md-7 col-xs-12" 
-                           type="text" 
-=======
                     <input id="type"
                            data-role="dropdownlist"
                            data-bind="source: userTypes, value: current.usertype"
@@ -551,7 +513,6 @@
                            data-value-field="id"
                            class="form-control col-md-7 col-xs-12"
                            type="text"
->>>>>>> master
                            name="middle-name">
                   </div>
                 </div>
@@ -624,15 +585,6 @@
                 <div class="form-group">
                   <label for="type" class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-<<<<<<< HEAD
-                    <input id="type" 
-                           data-role="dropdownlist" 
-                           data-bind="source: userTypes, value: current.usertype" 
-                           data-text-field="name"
-                           data-value-field="id"
-                           class="form-control col-md-7 col-xs-12" 
-                           type="text" 
-=======
                     <input id="type"
                            data-role="dropdownlist"
                            data-bind="source: userTypes, value: current.usertype"
@@ -640,7 +592,6 @@
                            data-value-field="id"
                            class="form-control col-md-7 col-xs-12"
                            type="text"
->>>>>>> master
                            name="middle-name">
                   </div>
                 </div>
@@ -670,11 +621,7 @@
             <h4 style="font-size: 1.5em; padding: 0; margin-top: -2px;">Registered Email: <span data-bind="text: current.email"></span></h4>
             <h4 style="font-size: 1.5em; padding: 0; margin-top: -2px;">Confirm: <span data-bind="text: current.is_confirmed"></span></h4>
           </div>
-<<<<<<< HEAD
-        </div>          
-=======
         </div>
->>>>>>> master
       </div>
       <div class="clearfix"></div>
       <div class="divider"></div>
@@ -818,15 +765,15 @@
             <tr>
             <tr>
               <th scope="row" width="150">Company Name</th>
-              <td><input type="text" data-bind="value: dataStore.data()[0].name" class="form-control col-md-7 col-xs-12"></td>
+              <td><input type="text" data-bind="value: dataStore.data()[0].name" class="form-control col-md-7 col-xs-12 k-input k-textbox"></td>
             </tr>
             <tr>
               <th scope="row" width="150">Email</th>
-              <td><input type="text" data-bind="value: dataStore.data()[0].email" class="form-control col-md-7 col-xs-12"></td>
+              <td><input type="text" data-bind="value: dataStore.data()[0].email" class="form-control col-md-7 col-xs-12 k-input k-textbox"></td>
             </tr>
             <tr>
               <th scope="row">address</th>
-              <td><input type="text" data-bind="value: dataStore.data()[0].address" class="form-control col-md-7 col-xs-12"></td>
+              <td><input type="text" data-bind="value: dataStore.data()[0].address" class="k-input k-textbox form-control col-md-7 col-xs-12" style="width: 100%;"></td>
             </tr>
             <tr>
               <th scope="row">Fiscal Year</th>
@@ -1731,11 +1678,7 @@
                         console.log('user created.');
                       }
                     });
-<<<<<<< HEAD
-                  }                    
-=======
                   }
->>>>>>> master
                   alert('Your action was successful.');
               });
             } else {
@@ -1776,13 +1719,14 @@
           },
           edit: function() {
             // e.preventDefault();
-            institute.showIn('#companyInfoPlaceholder', instEdit);
+            index.showIn('#app-placeholder', instEdit);
+            // institute.showIn('#companyInfoPlaceholder', instEdit);
           },
           cancel: function() {
             if(this.dataStore.hasChanges()) {
               this.dataStore.cancelChanges();
             }
-            institute.showIn('#companyInfoPlaceholder', instInfo);
+            index.showIn('#app-placeholder', instInfo);
           },
           save: function() {
             this.dataStore.sync();
@@ -1816,22 +1760,14 @@
         var profile = new kendo.View('#template-profile-page', {model: banhji.users});
         // router initization
         banhji.router = new kendo.Router({
-<<<<<<< HEAD
-            init: function() { 
-=======
             init: function() {
->>>>>>> master
                 if(!banhji.companyDS.data()[0]) {
                   banhji.companyDS.fetch(function() {
                     banhji.company.set('data', banhji.companyDS.data()[0]);
                     banhji.moduleDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
                     banhji.moduleDS.bind('requestEnd', function(e){
                       layout.render("#main-display");
-<<<<<<< HEAD
-                     });               
-=======
                      });
->>>>>>> master
                   });
                 }
                 banhji.profileDS.fetch(function(e){
@@ -1906,17 +1842,10 @@
             valueAxis: {
                 labels: {
                     format: "{0}%"
-<<<<<<< HEAD
                 },
                 line: {
                     visible: false
                 },
-=======
-                },
-                line: {
-                    visible: false
-                },
->>>>>>> master
                 axisCrossingValue: -10
             },
             categoryAxis: {
@@ -1995,11 +1924,7 @@
             banhji.userDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
             // layout.showIn("#main-display-container", index);
             index.showIn('#app-placeholder', userlist);
-<<<<<<< HEAD
-          }   
-=======
           }
->>>>>>> master
         });
 
         banhji.router.route('userlist/new', function() {
@@ -2014,11 +1939,6 @@
           if(banhji.users.get('current')) {
              index.showIn('#app-placeholder', userForm);
           }
-<<<<<<< HEAD
-         
-=======
-
->>>>>>> master
           console.log(id);
         });
 
