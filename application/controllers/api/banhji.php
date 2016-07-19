@@ -24,7 +24,7 @@ class Banhji extends REST_Controller {
 		$filters = $requested_data['filters'];
 		$limit = $this->get('limit') !== false ? $this->get('limit') : 1000;
 		$page = $this->get('page') !== false ? $this->get('page') : 1;
-		
+
 		$institute = new Institute();
 		// if(isset($filters)) {
 		// 	foreach($filters as $f) {
@@ -60,7 +60,7 @@ class Banhji extends REST_Controller {
 					'error'  => false,
 					'count' => count($data),
 					'results'=> $data
-					
+
 				),
 				200
 			);
@@ -69,7 +69,7 @@ class Banhji extends REST_Controller {
 				array(
 					'error'  => true,
 					'count' => 0,
-					'results'=> array()					
+					'results'=> array()
 				),
 				200
 			);
@@ -102,7 +102,7 @@ class Banhji extends REST_Controller {
 					'error'  => false,
 					'count' => count($data),
 					'results'=> $data
-					
+
 				),
 				200
 			);
@@ -111,7 +111,7 @@ class Banhji extends REST_Controller {
 				array(
 					'error'  => true,
 					'count' => 0,
-					'results'=> array()					
+					'results'=> array()
 				),
 				200
 			);
@@ -162,7 +162,7 @@ class Banhji extends REST_Controller {
 					'error'  => false,
 					'count' => count($data),
 					'results'=> $data
-					
+
 				),
 				201
 			);
@@ -171,7 +171,7 @@ class Banhji extends REST_Controller {
 				array(
 					'error'  => true,
 					'count' => 0,
-					'results'=> array()					
+					'results'=> array()
 				),
 				200
 			);
@@ -196,7 +196,7 @@ class Banhji extends REST_Controller {
 					'error'  => false,
 					'count' => count($data),
 					'results'=> $data
-					
+
 				),
 				200
 			);
@@ -205,7 +205,7 @@ class Banhji extends REST_Controller {
 				array(
 					'error'  => true,
 					'count' => 0,
-					'results'=> array()					
+					'results'=> array()
 				),
 				200
 			);
@@ -255,10 +255,10 @@ class Banhji extends REST_Controller {
 				}
 				$this->response(
 					array('error' => false, 'msg' => 'data found', 'results'=>$data, 'count'=>count($data)), 200);
-			} else {		
+			} else {
 				$this->response(
 					array('error' => false, 'msg' => 'no user found', 'results'=>array(), 'count'=>0), 200);
-			}	
+			}
 		} else {
 			$this->response(array('error' => true, 'msg' => 'no filter', 'results'=>array(), 'count'=>0), 200);
 		}
@@ -331,7 +331,7 @@ class Banhji extends REST_Controller {
 				array(
 					'error'  => true,
 					'count' => 0,
-					'results'=> array()					
+					'results'=> array()
 				),
 				200
 			);
@@ -384,7 +384,7 @@ class Banhji extends REST_Controller {
 				array(
 					'error'  => true,
 					'count' => 0,
-					'results'=> array()					
+					'results'=> array()
 				),
 				200
 			);
@@ -417,7 +417,7 @@ class Banhji extends REST_Controller {
 				array(
 					'error'  => true,
 					'count' => 0,
-					'results'=> array()					
+					'results'=> array()
 				),
 				200
 			);
@@ -441,7 +441,7 @@ class Banhji extends REST_Controller {
 				'error'  => false,
 				'count' => count($data),
 				'results'=> $data
-				
+
 			),
 			200
 		);
@@ -484,7 +484,7 @@ class Banhji extends REST_Controller {
 						array(
 							'error'  => false,
 							'count' => 1,
-							'results'=> array()	
+							'results'=> array()
 						),
 						201
 					);
@@ -494,7 +494,7 @@ class Banhji extends REST_Controller {
 							'error'  => true,
 							'count' => 1,
 							'results'=> array()
-							
+
 						),
 						200
 					);
@@ -505,7 +505,7 @@ class Banhji extends REST_Controller {
 						'error'  => true,
 						'count' => 1,
 						'results'=> array()
-						
+
 					),
 					200
 				);
@@ -528,7 +528,7 @@ class Banhji extends REST_Controller {
 				'error'  => false,
 				'count' => count($data),
 				'results'=> $data
-				
+
 			),
 			200
 		);
@@ -549,7 +549,7 @@ class Banhji extends REST_Controller {
 				'error'  => false,
 				'count' => count($data),
 				'results'=> $data
-				
+
 			),
 			200
 		);
@@ -557,6 +557,7 @@ class Banhji extends REST_Controller {
 
 	public function countries_get() {
 		$country = new Country();
+		$country->where('active', 1);
 		$country->get();
 		foreach($country as $i) {
 			$data[] = array(
@@ -570,7 +571,7 @@ class Banhji extends REST_Controller {
 				'error'  => false,
 				'count' => count($data),
 				'results'=> $data
-				
+
 			),
 			200
 		);
@@ -593,7 +594,7 @@ class Banhji extends REST_Controller {
 				'error'  => false,
 				'count' => count($data),
 				'results'=> $data
-				
+
 			),
 			200
 		);
@@ -619,7 +620,7 @@ class Banhji extends REST_Controller {
 						$config['width']	= 200;
 						$config['height']	= 200;
 
-						$this->load->library('image_lib', $config); 
+						$this->load->library('image_lib', $config);
 
 						$this->image_lib->resize();
 
@@ -631,7 +632,7 @@ class Banhji extends REST_Controller {
 								'results'=> array(
 									'error' => 0,
 									'url' => "uploads/logo/".$fileName
-								)	
+								)
 							),
 							200
 						);
@@ -641,7 +642,7 @@ class Banhji extends REST_Controller {
 								'error'  => false,
 								'count' => 1,
 								'msg' => 'Exceed max size limit.',
-								'results'=> array('url' => $files['name'])	
+								'results'=> array('url' => $files['name'])
 							),
 							200
 						);
@@ -652,7 +653,7 @@ class Banhji extends REST_Controller {
 							'error'  => true,
 							'count' => 1,
 							'msg' => 'Exceed max size limit.'.$files['name'],
-							'results'=> array()	
+							'results'=> array()
 						),
 						200
 					);
@@ -663,11 +664,11 @@ class Banhji extends REST_Controller {
 						'error'  => true,
 						'count' => 1,
 						'msg' => 'picture type not allowed (only jpeg, jpg or png is allowed).',
-						'results'=> array()	
+						'results'=> array()
 					),
 					200
 				);
-			}	
+			}
 		} else {
 			$this->response(
 				array(
@@ -705,7 +706,7 @@ class Banhji extends REST_Controller {
 				$user->first_name = $r->firstName;
 				$user->last_name = $r->lastName;
 				if($user->save()) {
-					
+
 				}
 			}
 		}
@@ -752,7 +753,7 @@ class Banhji extends REST_Controller {
 						foreach($files as $f) {
 							$this->db->query($data);
 							$sql = $this->db->query($f->statement);
-						}							
+						}
 					}
 				}
 
@@ -827,12 +828,12 @@ class Banhji extends REST_Controller {
 			),
 			'updated_at' => array(
 				'type' => 'DATE'
-			) 
+			)
 		);
 		$this->dbforge->add_field($acTypes);
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('account_types', TRUE);
-	
+
 		$accounts= array(
 			'id' => array(
 				'type' => 'INT',
@@ -913,7 +914,7 @@ class Banhji extends REST_Controller {
 		$this->dbforge->add_field($contactTypes);
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('contact_types', TRUE);
-		
+
 		$contacts = array(
 			'id' => array(
 				'type' => 'INT',
@@ -925,22 +926,22 @@ class Banhji extends REST_Controller {
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'currency_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'user_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'contact_type_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'number' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 100
@@ -948,54 +949,54 @@ class Banhji extends REST_Controller {
 			'surname' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 255
-			), 
+			),
 			'name' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 255
-			), 
+			),
 			'gender' => array(
 				'type' => 'ENUM("M", "F")',
 				'default' => "M"
-			), 
+			),
 			'dob' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'pob' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 255
-			), 
+			),
 			'family_member' => array(
 				'type' => 'TINYINT',
 				'constraint' => 2
-			), 
+			),
 			'id_number' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 20
-			), 
+			),
 			'phone' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 20
-			), 
+			),
 			'email' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 250
-			), 
+			),
 			'website' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 255
-			), 
+			),
 			'job' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 255
-			), 
+			),
 			'company' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 255
-			), 
+			),
 			'company_en' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 255
-			), 
+			),
 			'business_type_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
@@ -1004,78 +1005,78 @@ class Banhji extends REST_Controller {
 			'vat_no' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 20
-			), 
+			),
 			'image_url' => array(
 				'type' => 'TINYTEXT'
-			), 
+			),
 			'memo' => array(
 				'type' => 'TINYTEXT'
-			), 
+			),
 			'address' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 255
-			), 
+			),
 			'payment_term_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'credit_limit' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '30,15'
-			), 
+			),
 			'registered_date' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'payment_main_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'payment_second_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'bank_id'=> array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'name_on_cheque' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 250
-			), 
+			),
 			'bank_account_number' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 20,
 				'default' => '000000000000000000'
-			), 
+			),
 			'bank_account_name' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 250
-			), 
+			),
 			'bank_address' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 250
-			), 
+			),
 			'is_local' => array(
 				'type' => 'ENUM("true","false")',
 				'default' => 'true',
 				'null' => FALSE
-			), 
+			),
 			'status' => array(
 				'type' => 'TINYINT',
 				'constraint' => 2
-			), 
+			),
 			'deleted' => array(
 				'type' => 'ENUM("true","false")',
 				'default' => 'false',
 				'null' => FALSE
-			), 
+			),
 			'created_at' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'updated_at' => array(
 				'type' => 'DATE'
 			)
@@ -1196,7 +1197,7 @@ class Banhji extends REST_Controller {
 		$this->dbforge->add_field($itemTypes);
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('item_types', TRUE);
-		
+
 		$measurements = array(
 			'id' => array(
 				'type' => 'INT',
@@ -1216,114 +1217,114 @@ class Banhji extends REST_Controller {
 		$this->dbforge->add_field($measurements);
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('measurements', TRUE);
-		
+
 		$items = array(
 			'id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE,
 				'auto_increment' => TRUE
-			), 
+			),
 			'company_id'=> array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'category_id'=> array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'item_type_id'=> array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'measurement_id'=> array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'brand_id'=> array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'main_id'=> array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'sku' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 50
-			), 
+			),
 			'supplier_code' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 255
-			), 
+			),
 			'color_code' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 255
-			), 
+			),
 			'name' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 255
-			), 
+			),
 			'description' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'cost' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '30,25',
 				'default' => 0.00,
 				'null' => FALSE
-			), 
+			),
 			'on_hand' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'order_point' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'income_account_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'cogs_account_id'=> array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'inventory_account_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'preferred_vendor_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'image_url' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'favorite' => array(
 				'type' => 'TINYINT',
 				'constraint' => 2,
 				'unsigned' => TRUE
-			), 
+			),
 			'status' => array(
 				'type' => 'TINYINT',
 				'constraint' => 2,
 				'unsigned' => TRUE
-			), 
+			),
 			'deleted' => array(
 				'type' => 'ENUM("true","false")',
 				'default' => 'false',
@@ -1387,178 +1388,178 @@ class Banhji extends REST_Controller {
 				'constraint' => 11,
 				'unsigned' => TRUE,
 				'auto_increment' => TRUE
-			), 
+			),
 			'company_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'location_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'contact_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'payment_term_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'payment_method_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'reference_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'account_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'vat_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'user_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'number' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 10
-			), 
+			),
 			'reference_no' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 10
-			), 
+			),
 			'type' => array(
 				'type' => 'ENUM("Invoice", "eInvoice", "Receipt", "SO", "Estimate", "GDN", "Notice", "PO", "GRN", "Purchase", "Expense", "Deposit", "eDeposit", "wDeposit", "Item_Adjustment", "Journal")'
-			), 
+			),
 			'sub_total' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '30,2',
 				'default' => 0.00
-			), 
+			),
 			'amount' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '30,2',
 				'default' => 0.00
-			), 
+			),
 			'amount_paid' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '30,2',
 				'default' => 0.00
-			), 
+			),
 			'deposit' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '30,2',
 				'default' => 0.00
-			), 
+			),
 			'fine' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '30,2',
 				'default' => 0.00
-			), 
+			),
 			'discount' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '30,2',
 				'default' => 0.00
-			), 
+			),
 			'vat' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '30,2',
 				'default' => 0.00
-			), 
+			),
 			'rate' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '30,15',
 				'default' => 0.00
-			), 
+			),
 			'locale' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 5,
 				'null' => FALSE,
 				'default' => 'us-US'
-			), 
+			),
 			'month_of' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'issued_date' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'payment_date' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'due_date' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'deposit_date' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'check_no'  => array(
 				'type' => 'VARCHAR',
 				'constraint' => 10
-			), 
+			),
 			'segments' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'bill_to' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'ship_to' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'memo' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'memo2' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'status' => array(
 				'type' => 'TINYINT',
 				'constraint' => 1,
 				'default' => 0,
 				'unsigned' => TRUE,
 				'null' => FALSE
-			), 
+			),
 			'print_count' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE 
-			), 
+				'unsigned' => TRUE
+			),
 			'printed_by' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'updated_by' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'deleted' => array(
 				'type' => 'ENUM("true","false")',
 				'default' => 'false',
 				'null' => FALSE
-			), 
+			),
 			'created_at' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'updated_at' => array(
 				'type' => 'DATE'
 			)
@@ -1566,45 +1567,45 @@ class Banhji extends REST_Controller {
 		$this->dbforge->add_field($transactions);
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('transactions', TRUE);
-	
+
 		$transactionLines = array(
 			'id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE,
 				'auto_increment' => TRUE
-			), 
+			),
 			'transaction_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'measurement_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'item_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'description' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'on_hand' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'on_po' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'on_so' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'quantity' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
@@ -1612,44 +1613,44 @@ class Banhji extends REST_Controller {
 			'actual_quantity' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'cost' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'price' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'price_avg' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'amount' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'rate' => array(
 				'type' => 'DECIMAL(30,15)',
 				'default' => 0.00
-			), 
+			),
 			'locale' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 5
-			), 
+			),
 			'has_vat' => array(
 				'type' => 'ENUM("true", "false")',
 				'default' => 'false',
 				'null' => FALSE
-			), 
+			),
 			'movement' => array(
 				'type' => 'TINYINT',
 				'constraint' => 1,
 				'default' => 0
-			), 
+			),
 			'created_at' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'updated_at' => array(
 				'type' => 'DATE'
 			)
@@ -1664,45 +1665,45 @@ class Banhji extends REST_Controller {
 				'constraint' => 11,
 				'unsigned' => TRUE,
 				'auto_increment' => TRUE
-			), 
+			),
 			'transaction_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'measurement_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'item_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'description' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'quantity' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'amount' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'rate' => array(
 				'type' => 'DECIMAL(30,15)',
 				'default' => 0.00
-			), 
+			),
 			'locale' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 5
-			), 
+			),
 			'created_at' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'updated_at' => array(
 				'type' => 'DATE'
 			)
@@ -1717,29 +1718,29 @@ class Banhji extends REST_Controller {
 				'constraint' => 11,
 				'unsigned' => TRUE,
 				'auto_increment' => TRUE
-			), 
+			),
 			'transaction_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'account_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'description' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'amount' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'rate' => array(
 				'type' => 'DECIMAL(30,15)',
 				'default' => 0.00
-			),  
+			),
 			'has_vat' => array(
 				'type' => 'ENUM("true","false")',
 				'default' => 'false',
@@ -1748,10 +1749,10 @@ class Banhji extends REST_Controller {
 			'locale' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 5
-			), 
+			),
 			'created_at' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'updated_at' => array(
 				'type' => 'DATE'
 			)
@@ -1766,60 +1767,60 @@ class Banhji extends REST_Controller {
 				'constraint' => 11,
 				'unsigned' => TRUE,
 				'auto_increment' => TRUE
-			), 
+			),
 			'transaction_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'account_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'contact_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'description' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'reference_no' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'segments' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500,
-			), 
+			),
 			'dr' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'cr' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'rate' => array(
 				'type' => 'DECIMAL(30,15)',
 				'default' => 0.00
-			), 
+			),
 			'locale' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 5
-			), 
+			),
 			'created_at' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'updated_at' => array(
 				'type' => 'DATE'
 			)
 		);
 		$this->dbforge->add_field($journalLines);
 		$this->dbforge->add_key('id', TRUE);
-		$this->dbforge->create_table('journal_lines', TRUE);							
+		$this->dbforge->create_table('journal_lines', TRUE);
 
 		$winvoiceLines = array(
 			'id' => array(
@@ -1827,52 +1828,52 @@ class Banhji extends REST_Controller {
 				'constraint' => 11,
 				'unsigned' => TRUE,
 				'auto_increment' => TRUE
-			), 
+			),
 			'transaction_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'meter_record_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'description' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'quantity' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'price' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'amount' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'rate' => array(
 				'type' => 'DECIMAL(30,15)',
 				'default' => 0.00
-			), 
+			),
 			'locale' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 5
-			), 
+			),
 			'type' => array(
 				'type' => 'ENUM("tariff","maintenance","instatllment", "exemption", "exemptionMoney", "exemptionUsage","exemptionP")'
-			), 
+			),
 			'movement' => array(
 				'type' => 'TINYINT',
 				'constraint' => 1,
 				'default' => '0'
-			), 
+			),
 			'created_at' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'updated_at' => array(
 				'type' => 'DATE'
 			)
@@ -1887,52 +1888,52 @@ class Banhji extends REST_Controller {
 				'constraint' => 11,
 				'unsigned' => TRUE,
 				'auto_increment' => TRUE
-			), 
+			),
 			'transaction_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'meter_record_id' => array(
 				'type'=> 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			), 
+			),
 			'description' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 500
-			), 
+			),
 			'quantity' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'price' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'amount' => array(
 				'type' => 'DECIMAL(30,2)',
 				'default' => 0.00
-			), 
+			),
 			'rate' => array(
 				'type' => 'DECIMAL(30,15)',
 				'default' => 0.00
-			), 
+			),
 			'locale' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 5
-			), 
+			),
 			'type' => array(
 				'type' => 'ENUM("tariff","maintenance","instatllment", "exemption", "exemptionMoney", "exemptionUsage","exemptionP")'
-			), 
+			),
 			'movement' => array(
 				'type' => 'TINYINT',
 				'constraint' => 1,
 				'default' => '0'
-			), 
+			),
 			'created_at' => array(
 				'type' => 'DATE'
-			), 
+			),
 			'updated_at' => array(
 				'type' => 'DATE'
 			)
