@@ -104,18 +104,18 @@ class Contacts extends REST_Controller {
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
 				$fullname = $value->surname.' '.$value->name;
-				if($value->contact_type_id=="6" || $value->contact_type_id=="7" || $value->contact_type_id=="8"){
+				if($value->company){
 					$fullname = $value->company;
 				}			
 
 		 		$data["results"][] = array(
 		 			"id" 						=> $value->id,		 			
 					"company_id" 				=> $value->company_id,
+					"country_id" 				=> $value->country_id,
 					"ebranch_id" 				=> $value->ebranch_id,
 					"elocation_id" 				=> $value->elocation_id,
 					"wbranch_id" 				=> $value->wbranch_id,
-					"wlocation_id" 				=> $value->wlocation_id,						
-					"currency_id" 				=> $value->currency_id,
+					"wlocation_id" 				=> $value->wlocation_id,					
 					"user_id"					=> $value->user_id, 	
 					"contact_type_id" 			=> $value->contact_type_id,
 					"eorder" 					=> $value->eorder,
@@ -131,7 +131,8 @@ class Contacts extends REST_Controller {
 					"pob" 						=> $value->pob,
 					"latitute" 					=> $value->latitute,
 					"longtitute" 				=> $value->longtitute,
-					"credit_limit" 				=> $value->credit_limit,					
+					"credit_limit" 				=> $value->credit_limit,
+					"locale" 					=> $value->locale,					
 					"id_number" 				=> $value->id_number,
 					"phone" 					=> $value->phone,
 					"email" 					=> $value->email,
@@ -174,8 +175,7 @@ class Contacts extends REST_Controller {
 					"status" 					=> $value->status,
 
 					"fullname" 					=> $fullname,					
-					"contact_type"				=> $value->contact_type_name,					
-					"currency"					=> $value->currency->get_raw()->result()
+					"contact_type"				=> $value->contact_type_name
 		 		);
 			}
 		}
@@ -198,11 +198,11 @@ class Contacts extends REST_Controller {
 
 			$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
+			isset($value->country_id) 				? $obj->country_id 				= $value->country_id : "";
 			isset($value->ebranch_id) 				? $obj->ebranch_id 				= $value->ebranch_id : "";
 			isset($value->elocation_id) 			? $obj->elocation_id 			= $value->elocation_id : "";
 			isset($value->wbranch_id) 				? $obj->wbranch_id 				= $value->wbranch_id : "";
 			isset($value->wlocation_id) 			? $obj->wlocation_id			= $value->wlocation_id : "";		
-			isset($value->currency_id) 				? $obj->currency_id				= $value->currency_id : "";
 			isset($value->user_id)					? $obj->user_id 				= $value->user_id : "";
 			isset($value->contact_type_id)			? $obj->contact_type_id 		= $value->contact_type_id : "";					
 			isset($value->eorder)					? $obj->eorder					= $last_id : "";
@@ -218,7 +218,8 @@ class Contacts extends REST_Controller {
 			isset($value->pob)						? $obj->pob						= $value->pob : "";
 			isset($value->latitute)					? $obj->latitute 				= $value->latitute : "";
 			isset($value->longtitute)				? $obj->longtitute 				= $value->longtitute : "";
-			isset($value->credit_limit)				? $obj->credit_limit			= $value->credit_limit : "";			
+			isset($value->credit_limit)				? $obj->credit_limit			= $value->credit_limit : "";
+			isset($value->locale)					? $obj->locale					= $value->locale : "";			
 			isset($value->id_number)				? $obj->id_number				= $value->id_number : "";
 			isset($value->phone)					? $obj->phone 					= $value->phone : "";
 			isset($value->email)					? $obj->email 					= $value->email : "";			
@@ -271,11 +272,11 @@ class Contacts extends REST_Controller {
 				$data["results"][] = array(
 					"id" 						=> $obj->id,		 			
 					"company_id" 				=> $obj->company_id,
+					"country_id" 				=> $obj->country_id,
 					"ebranch_id" 				=> $obj->ebranch_id,
 					"elocation_id" 				=> $obj->elocation_id,
 					"wbranch_id" 				=> $obj->wbranch_id,
-					"wlocation_id" 				=> $obj->wlocation_id,						
-					"currency_id" 				=> $obj->currency_id,
+					"wlocation_id" 				=> $obj->wlocation_id,					
 					"user_id"					=> $obj->user_id, 	
 					"contact_type_id" 			=> $obj->contact_type_id,
 					"eorder" 					=> $obj->eorder,
@@ -291,7 +292,8 @@ class Contacts extends REST_Controller {
 					"pob" 						=> $obj->pob,
 					"latitute" 					=> $obj->latitute,
 					"longtitute" 				=> $obj->longtitute,
-					"credit_limit" 				=> $obj->credit_limit,					
+					"credit_limit" 				=> $obj->credit_limit,
+					"locale" 					=> $obj->locale,					
 					"id_number" 				=> $obj->id_number,
 					"phone" 					=> $obj->phone,
 					"email" 					=> $obj->email,
@@ -335,8 +337,7 @@ class Contacts extends REST_Controller {
 					"status" 					=> $obj->status,
 
 					"fullname" 					=> $fullname,					
-					"contact_type"				=> $obj->contact_type->get_raw()->result(),					
-					"currency"					=> $obj->currency->get_raw()->result()
+					"contact_type"				=> $obj->contact_type->get_raw()->result()
 				);				
 			}		
 		}
@@ -356,11 +357,11 @@ class Contacts extends REST_Controller {
 			$obj->get_by_id($value->id);
 
 			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
+			isset($value->country_id) 				? $obj->country_id 				= $value->country_id : "";
 			isset($value->ebranch_id) 				? $obj->ebranch_id 				= $value->ebranch_id : "";
 			isset($value->elocation_id) 			? $obj->elocation_id 			= $value->elocation_id : "";
 			isset($value->wbranch_id) 				? $obj->wbranch_id 				= $value->wbranch_id : "";
-			isset($value->wlocation_id) 			? $obj->wlocation_id			= $value->wlocation_id : "";		
-			isset($value->currency_id) 				? $obj->currency_id				= $value->currency_id : "";
+			isset($value->wlocation_id) 			? $obj->wlocation_id			= $value->wlocation_id : "";
 			isset($value->user_id)					? $obj->user_id 				= $value->user_id : "";
 			isset($value->contact_type_id)			? $obj->contact_type_id 		= $value->contact_type_id : "";					
 			isset($value->eorder)					? $obj->eorder					= $value->eorder : "";
@@ -376,7 +377,8 @@ class Contacts extends REST_Controller {
 			isset($value->pob)						? $obj->pob						= $value->pob : "";
 			isset($value->latitute)					? $obj->latitute 				= $value->latitute : "";
 			isset($value->longtitute)				? $obj->longtitute 				= $value->longtitute : "";
-			isset($value->credit_limit)				? $obj->credit_limit			= $value->credit_limit : "";			
+			isset($value->credit_limit)				? $obj->credit_limit			= $value->credit_limit : "";
+			isset($value->locale)					? $obj->locale					= $value->locale : "";			
 			isset($value->id_number)				? $obj->id_number				= $value->id_number : "";
 			isset($value->phone)					? $obj->phone 					= $value->phone : "";
 			isset($value->email)					? $obj->email 					= $value->email : "";			
@@ -429,11 +431,11 @@ class Contacts extends REST_Controller {
 				$data["results"][] = array(
 					"id" 						=> $obj->id,		 			
 					"company_id" 				=> $obj->company_id,
+					"country_id" 				=> $obj->country_id,
 					"ebranch_id" 				=> $obj->ebranch_id,
 					"elocation_id" 				=> $obj->elocation_id,
 					"wbranch_id" 				=> $obj->wbranch_id,
-					"wlocation_id" 				=> $obj->wlocation_id,						
-					"currency_id" 				=> $obj->currency_id,
+					"wlocation_id" 				=> $obj->wlocation_id,					
 					"user_id"					=> $obj->user_id, 	
 					"contact_type_id" 			=> $obj->contact_type_id,
 					"eorder" 					=> $obj->eorder,
@@ -449,7 +451,8 @@ class Contacts extends REST_Controller {
 					"pob" 						=> $obj->pob,
 					"latitute" 					=> $obj->latitute,
 					"longtitute" 				=> $obj->longtitute,
-					"credit_limit" 				=> $obj->credit_limit,					
+					"credit_limit" 				=> $obj->credit_limit,
+					"locale" 					=> $obj->locale,					
 					"id_number" 				=> $obj->id_number,
 					"phone" 					=> $obj->phone,
 					"email" 					=> $obj->email,
@@ -492,8 +495,7 @@ class Contacts extends REST_Controller {
 					"status" 					=> $obj->status,
 
 					"fullname" 					=> $fullname,					
-					"contact_type"				=> $obj->contact_type->get_raw()->result(),					
-					"currency"					=> $obj->currency->get_raw()->result()
+					"contact_type"				=> $obj->contact_type->get_raw()->result()
 				);						
 			}
 		}
@@ -814,7 +816,8 @@ class Contacts extends REST_Controller {
 					"abbr" 			=> $value->abbr,
 					"name" 			=> $value->name,
 					"description" 	=> $value->description,
-					"is_system" 	=> $value->is_system						
+					"is_company" 	=> intval($value->is_company),
+					"is_system" 	=> intval($value->is_system)						
 		 		);
 			}
 		}
@@ -835,6 +838,7 @@ class Contacts extends REST_Controller {
 			isset($value->abbr) 		? $obj->abbr 			= $value->abbr : "";
 			isset($value->name) 		? $obj->name 			= $value->name : "";
 			isset($value->description) 	? $obj->description 	= $value->description : "";
+			isset($value->is_company) 	? $obj->is_company 		= $value->is_company : "";
 			isset($value->is_system) 	? $obj->is_system 		= $value->is_system : "";			
 			
 			if($obj->save()){
@@ -846,6 +850,7 @@ class Contacts extends REST_Controller {
 					"abbr" 			=> $obj->abbr,
 					"name" 			=> $obj->name,
 					"description" 	=> $obj->description,
+					"is_company" 	=> $obj->is_company,
 					"is_system" 	=> $obj->is_system	
 				);				
 			}		
@@ -870,6 +875,7 @@ class Contacts extends REST_Controller {
 			isset($value->abbr) 		? $obj->abbr 			= $value->abbr : "";
 			isset($value->name) 		? $obj->name 			= $value->name : "";
 			isset($value->description) 	? $obj->description 	= $value->description : "";
+			isset($value->is_company) 	? $obj->is_company 		= $value->is_company : "";
 			isset($value->is_system) 	? $obj->is_system 		= $value->is_system : "";
 
 			if($obj->save()){				
@@ -881,6 +887,7 @@ class Contacts extends REST_Controller {
 					"abbr" 			=> $obj->abbr,						
 					"name" 			=> $obj->name,
 					"description" 	=> $obj->description,
+					"is_company" 	=> $obj->is_company,
 					"is_system" 	=> $obj->is_system
 				);						
 			}

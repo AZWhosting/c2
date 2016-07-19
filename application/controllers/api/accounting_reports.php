@@ -21,7 +21,7 @@ class Accounting_reports extends REST_Controller {
 		}
 	}
 	
-	//GET 
+	//GET JOURNAL
 	function journal_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
@@ -83,10 +83,7 @@ class Accounting_reports extends REST_Controller {
 	    		}
 			}									 			
 		}
-
-		$typeList = array('Invoice','eInvoice','wInvoice','Cash_Sale','Receipt_Allocation','Sale_Return','Cash_Purchase','Credit_Purchase','Expense','Purchase_Return','Payment_Allocation','Deposit','eDeposit','wDeposit','Witdraw','Transfer','Journal','Adjustment','Direct_Expense','Reimbursement','Cash_Advance','Advance_Settlement','Cash_Transfer');
-
-		//$obj->where_in("type", $typeList);
+		
 		$obj->where("is_recurring", $is_recurring);
 		$obj->where("is_journal", 1);
 		$obj->where("deleted", $deleted);		
@@ -129,6 +126,127 @@ class Accounting_reports extends REST_Controller {
 				   	"memo" 			=> $value->memo,
 
 				   	"line" 			=> $line
+				);
+			}
+		}		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET TRIAL BALANCE
+	function trial_balance_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
+		$deleted = 0;
+
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_related"){
+		    			$obj->where_related($value["model"], $value["field"], $value["value"]);		    				    		
+		    		}else{
+		    			$obj->where($value["field"], $value["value"]);
+		    		}
+	    		}else{	    			
+	    			if($value["field"]=="is_recurring"){
+	    				$is_recurring = $value["value"];
+	    			}else if($value["field"]=="deleted"){
+	    				$deleted = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}	    				    			
+	    		}
+			}									 			
+		}
+				
+		$obj->where("deleted", $deleted);			
+		
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+
+		if($obj->exists()){
+			//Sum dr and cr
+			$sumDr = 0;
+			$sumCr = 0;			
+			$accountList = [];
+			foreach ($obj as $value) {
+				if($value->dr>0 || $value->cr>0){
+					$sumDr += floatval($value->dr) / floatval($value->rate);
+					$sumCr += floatval($value->cr) / floatval($value->rate);
+
+					//Group customer
+					if(isset($accountList[$value->account_id])){
+						$accountList[$value->account_id]["dr"] += $sumDr;
+						$accountList[$value->account_id]["cr"] += $sumCr;
+					} else {
+						$accountList[$value->account_id]["dr"] = $sumDr;
+						$accountList[$value->account_id]["cr"] = $sumCr;
+					}
+				}
+			}
+
+			//Calculate by account nature
+			foreach ($accountList as $key => $value) {
+				$account = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$account->include_related("account_type", "*");
+				$account->get_by_id($key);
+
+				if($account->account_type_nature=="Dr"){
+					$dr = $value["dr"] - $value["cr"];
+					$cr = 0;
+				}else{
+					$dr = 0;
+					$cr = $value["cr"] - $value["dr"];					
+				}
+
+				$data["results"][] = array(
+					"id" 			=> $key,
+					"number" 		=> $account->code,
+					"name" 			=> $account->name,				
+				   	"type" 			=> $account->account_type_name,
+				   	"dr" 			=> $dr,
+				   	"cr" 			=> $cr
 				);
 			}
 		}		

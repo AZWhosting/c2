@@ -50,13 +50,17 @@
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
+<<<<<<< HEAD
               <a href="<?php echo base_url(); ?>demo" class="site_title"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">&nbsp;BanhJi<br></a>
+=======
+              <a href="<?php echo base_url(); ?>rrd" class="site_title"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">&nbsp;BanhJi<br></a>
+>>>>>>> master
             </div>
 
             <div class="clearfix"></div>
 
             <!-- menu profile quick info -->
-            
+
             <!-- /menu profile quick info -->
 
             <br />
@@ -66,9 +70,15 @@
               <div class="menu_section">
                 <ul class="nav side-menu">
                   <li><a href="#">Dashboard</a>
+<<<<<<< HEAD
                   </li>
                   <li><a href="#company">Company Profile</a>
                   </li>
+=======
+                  </li>
+                  <li><a href="#company">Company Profile</a>
+                  </li>
+>>>>>>> master
                   <li><a href="#userlist">Users</a>
                   </li>
                 </ul>
@@ -80,7 +90,11 @@
             <div class="sidebar-footer hidden-large">
               <a data-toggle="tooltip" data-placement="top" title="Logout" data-bind="click: signOut" style="width: 100%">
                 <strong>Sign Out</strong>
+<<<<<<< HEAD
               </a>  
+=======
+              </a>
+>>>>>>> master
             </div>
             <!-- /menu footer buttons -->
           </div>
@@ -114,7 +128,7 @@
                 </h3>
               </div>
 
-             
+
             </div>
 
             <div class="clearfix"></div>
@@ -128,7 +142,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            
+
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -216,7 +230,7 @@
                   </tr>
                 </thead>
                 <tbody data-role="listview" data-bind="source: users" data-template="template-userlist-item-page">
-                  
+
                 </tbody>
               </table>
               <!-- end project list -->
@@ -285,13 +299,13 @@
                   <div class="form-group">
                     <label for="type" class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input id="type" 
-                             data-role="dropdownlist" 
-                             data-bind="source: userTypes, value: current.usertype" 
+                      <input id="type"
+                             data-role="dropdownlist"
+                             data-bind="source: userTypes, value: current.usertype"
                              data-text-field="name"
                              data-value-field="id"
-                             class="form-control col-md-7 col-xs-12" 
-                             type="text" 
+                             class="form-control col-md-7 col-xs-12"
+                             type="text"
                              name="middle-name">
                     </div>
                   </div>
@@ -305,8 +319,8 @@
 
                 </form>
               </div>
-            </div>     
-        </div>      
+            </div>
+        </div>
       </div>
       <div id="userFormEdit" style="visibility: hidden">
         <div class="row">
@@ -363,13 +377,13 @@
                   <div class="form-group">
                     <label for="type" class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input id="type" 
-                             data-role="dropdownlist" 
-                             data-bind="source: userTypes" 
+                      <input id="type"
+                             data-role="dropdownlist"
+                             data-bind="source: userTypes"
                              data-text-field="name"
                              data-value-field="id"
-                             class="form-control col-md-7 col-xs-12" 
-                             type="text" 
+                             class="form-control col-md-7 col-xs-12"
+                             type="text"
                              name="middle-name">
                     </div>
                   </div>
@@ -383,8 +397,8 @@
 
                 </form>
               </div>
-            </div>     
-        </div>      
+            </div>
+        </div>
       </div>
       <div id="userFormConfirm" style="visibility: hidden">
         <div class="row">
@@ -414,16 +428,21 @@
 
                 </div>
               </div>
-            </div>     
-        </div>      
+            </div>
+        </div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="template-userlist-item-page">
       <tr data-bind="events: {dblclick: getProfile}">
         <td><img src="#=profile_photo#" alt="" class='avatar'></td>
         <td style="line-height: 40px;">
+<<<<<<< HEAD
            # var x = email.substring(0,2); #
           #=x.toUpperCase()#
+=======
+           # var x = username.substring(0,2); #
+           #=x.toUpperCase()#
+>>>>>>> master
         </td>
         <td style="line-height: 40px;">
           #=last_name#&nbsp;#=first_name#
@@ -437,12 +456,21 @@
           #} else {#
             User
           #}#
+<<<<<<< HEAD
         </td>
         <td style="line-height: 40px;">
           
         </td>
         <td style="line-height: 40px;">
           
+=======
+        </td>
+        <td style="line-height: 40px;">
+
+        </td>
+        <td style="line-height: 40px;">
+
+>>>>>>> master
         </td>
         <td style="line-height: 40px;">
           <button class="btn btn-default btn-xs" data-bind="visible: is_confirmed, events: {click: edit}"><i class="fa fa-pencil"></i> Edit </button>
@@ -507,6 +535,7 @@
                 <div class="form-group">
                   <label for="type" class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
+<<<<<<< HEAD
                     <input id="type" 
                            data-role="dropdownlist" 
                            data-bind="source: userTypes, value: current.usertype" 
@@ -514,6 +543,15 @@
                            data-value-field="id"
                            class="form-control col-md-7 col-xs-12" 
                            type="text" 
+=======
+                    <input id="type"
+                           data-role="dropdownlist"
+                           data-bind="source: userTypes, value: current.usertype"
+                           data-text-field="name"
+                           data-value-field="id"
+                           class="form-control col-md-7 col-xs-12"
+                           type="text"
+>>>>>>> master
                            name="middle-name">
                   </div>
                 </div>
@@ -586,6 +624,7 @@
                 <div class="form-group">
                   <label for="type" class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
+<<<<<<< HEAD
                     <input id="type" 
                            data-role="dropdownlist" 
                            data-bind="source: userTypes, value: current.usertype" 
@@ -593,6 +632,15 @@
                            data-value-field="id"
                            class="form-control col-md-7 col-xs-12" 
                            type="text" 
+=======
+                    <input id="type"
+                           data-role="dropdownlist"
+                           data-bind="source: userTypes, value: current.usertype"
+                           data-text-field="name"
+                           data-value-field="id"
+                           class="form-control col-md-7 col-xs-12"
+                           type="text"
+>>>>>>> master
                            name="middle-name">
                   </div>
                 </div>
@@ -622,7 +670,11 @@
             <h4 style="font-size: 1.5em; padding: 0; margin-top: -2px;">Registered Email: <span data-bind="text: current.email"></span></h4>
             <h4 style="font-size: 1.5em; padding: 0; margin-top: -2px;">Confirm: <span data-bind="text: current.is_confirmed"></span></h4>
           </div>
+<<<<<<< HEAD
         </div>          
+=======
+        </div>
+>>>>>>> master
       </div>
       <div class="clearfix"></div>
       <div class="divider"></div>
@@ -662,12 +714,12 @@
           <div class="x_content">
             <div class="row" id="companyInfoPlaceholder">
               <!-- CONTENT MAIL -->
-              
+
               <!-- /CONTENT MAIL -->
             </div>
           </div>
         </div>
-      </div>   
+      </div>
     </script>
     <script type="text/x-kendo-template" id="template-createcompany-info-page">
       <div class="col-lg-12">
@@ -780,7 +832,7 @@
               <th scope="row">Fiscal Year</th>
               <td><input type="text"
                          data-role="datepicker"
-                         data-bind="value: dataStore.data()[0].fiscal_date" 
+                         data-bind="value: dataStore.data()[0].fiscal_date"
                          data-format="dd-MM"
                          class="form-control col-md-7 col-xs-12"></td>
             </tr>
@@ -790,7 +842,7 @@
                          data-role="datepicker"
                          data-depth="year"
                          data-bind="value: dataStore.data()[0].year_founded"
-                         data-format="yyyy" 
+                         data-format="yyyy"
                          class="form-control col-md-7 col-xs-12"></td>
             </tr>
 
@@ -798,13 +850,13 @@
               <th scope="row">Fiscal Report Date</th>
               <td><input type="text"
                          data-role="datepicker"
-                         data-format="dd-MM" 
-                         data-bind="value: dataStore.data()[0].financial_report_date" 
+                         data-format="dd-MM"
+                         data-bind="value: dataStore.data()[0].financial_report_date"
                          class="form-control col-md-7 col-xs-12"></td>
             </tr>
             <tr>
               <th scope="row">Country</th>
-              <td><input type="text" data-role="dropdownlist" 
+              <td><input type="text" data-role="dropdownlist"
                          data-bind="source: countries, value: dataStore.data()[0].country.id"
                          data-text-field="name"
                          data-value-field="id"
@@ -812,7 +864,7 @@
             </tr>
             <tr>
               <th scope="row">Industry</th>
-              <td><input type="text" data-role="dropdownlist" 
+              <td><input type="text" data-role="dropdownlist"
                         data-bind="source: industries, value: dataStore.data()[0].industry.id"
                         data-text-field="name"
                         data-value-field="id"
@@ -820,7 +872,7 @@
             </tr>
             <tr>
               <th scope="row" width="150">Tax Regime</th>
-              <td><input type="text" data-role="dropdownlist" 
+              <td><input type="text" data-role="dropdownlist"
                          data-bind="source: taxRegimes, value: dataStore.data()[0].tax_regime"
                          data-text-field="value"
                          data-value-field="id"
@@ -828,7 +880,7 @@
             </tr>
             <tr>
               <th scope="row">Currency</th>
-              <td><input type="text" data-role="dropdownlist" 
+              <td><input type="text" data-role="dropdownlist"
                         data-bind="source: currencies, value: dataStore.data()[0].currency"
                         data-text-field="code"
                         data-value-field="id"
@@ -858,7 +910,7 @@
     </script>
     <script type="text/x-kendo-template" id="template-modules-page">
       <div class="row">
-        <divclass="col-md-12 col-sm-12="" col-xs-12"=""></divclass="col-md-12></div>
+        <divclass="col-md-12 col-sm-12="" col-xs-12"=""></div class="col-md-12"></div>
           <div class="x_panel" style="width: 94%">
             <div class="x_title">
               <h2>Modules</h2>
@@ -867,9 +919,9 @@
             <div class="x_content">
               <div data-role="listview" data-bind="source: dataStore" data-template="template-modules-list-page" style="border: 0"></div>
             </div>
-          </div>     
-        </div>      
-      </div> 
+          </div>
+        </div>
+      </div>
     </script>
     <script type="text/x-kendo-template" id="template-modules-list-page">
       <div class="col-md-55" style="height: 250px;">
@@ -891,7 +943,7 @@
     </script>
     <script type="text/x-kendo-template" id="template-modules-users-page">
       <div class="row">
-        <divclass="col-md-12 col-sm-12="" col-xs-12"=""></divclass="col-md-12></div>
+        <divclass="col-md-12 col-sm-12="" col-xs-12"=""></div class="col-md-12"></div>
           <div class="x_panel" style="width: 94%">
             <div class="x_title">
               <h2>Modules</h2>
@@ -900,9 +952,9 @@
             <div class="x_content">
               <div data-role="listview" data-bind="source: modules" data-template="template-modules-users-list-page" style="border: 0"></div>
             </div>
-          </div>     
-        </div>      
-      </div> 
+          </div>
+        </div>
+      </div>
     </script>
     <script type="text/x-kendo-template" id="template-modules-users-list-page">
       <div class="col-md-55" style="height: 250px;">
@@ -924,11 +976,11 @@
     </script>
     <script type="text/x-kendo-template" id="template-unauth-page">
       <div class="col-md-55" style="height: 250px;">
-        <h1>You don't have access to this page!</h1>
-        <a href="<?php echo base_url(); ?>demo/">Banhji Application</a>
+        <h1>Unauthorized Page</h1>
+        <a href="<?php echo base_url(); ?>rrd/">Banhji Application</a>
       </div>
     </script>
-  
+
     <!-- cognito -->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
@@ -956,7 +1008,7 @@
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/google-code-prettify/src/prettify.js"></script>
 
     <!-- Custom Theme Scripts -->
-    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/js/custom.js"></script> 
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/js/custom.js"></script>
     <!-- bootstrap-wysiwyg -->
     <!-- kendoui-->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/js/kendo.all.min.js"></script>
@@ -1000,7 +1052,7 @@
           filter: {field: 'username', value: userPool.getCurrentUser() == null ? '':userPool.getCurrentUser().username},
           pageSize: 100
         });
-        
+
         banhji.countries = new kendo.data.DataSource({
           transport: {
             read  : {
@@ -1218,7 +1270,7 @@
             oldPass: null,
             image: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
             getImage: function(image) {
-              
+
                 banhji.aws.set('image', image);
 
             },
@@ -1249,7 +1301,7 @@
                     // banhji.awsCognito.set('cognitoUser', result.user);
                     banhji.router.navigate('confirm');
                 });
-              }           
+              }
             },
             comfirmCode: function(e) {
                e.preventDefault();
@@ -1277,7 +1329,7 @@
                     Password : this.get('password'),
                 };
                 var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
-                
+
                 var userData = {
                     Username : this.get('email'),
                     Pool : userPool
@@ -1469,7 +1521,7 @@
                         alert(err);
                         return;
                     }
-                    
+
                     banhji.userDS.sync();
                     banhji.userDS.bind('requestEnd', function(e){
                       var res = e.response, type = e.type;
@@ -1481,7 +1533,7 @@
                     alert('Your action was successful.');
                 });
                 // save to database
-              } 
+              }
             });
           },
           cancel: function() {
@@ -1525,7 +1577,7 @@
                     alert('Your action was successful.');
                 });
                 // save to database
-              } 
+              }
 
               banhji.userDS.sync();
               banhji.userDS.bind('requestEnd', function(e){
@@ -1565,7 +1617,29 @@
                   banhji.users.save();
                   win.close();
               });
-            });              
+            });
+          },
+          addUser: function() {
+           this.users.insert(0, {
+              username: '',
+              first_name: '',
+              last_name: '',
+              email: '',
+              mobile: '',
+              profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+              company: {id: banhji.companyDS.data()[0].id, name:''},
+              role: 2,
+              usertype: 2
+            });
+            this.setCurrent(this.users.at(0));
+            banhji.router.navigate('userlist/new');
+          },
+          editProfile: function(e) {
+            e.preventDefault();
+            banhji.router.navigate('userlist/' + this.get('current').id);
+          },
+          edit: function(e) {
+            banhji.router.navigate('userlist/' + e.data.id);
           },
           addUser: function() {
            this.users.insert(0, {
@@ -1657,7 +1731,11 @@
                         console.log('user created.');
                       }
                     });
+<<<<<<< HEAD
                   }                    
+=======
+                  }
+>>>>>>> master
                   alert('Your action was successful.');
               });
             } else {
@@ -1682,7 +1760,7 @@
           appSub: 0,
           taxRegimes: [
             {id:'small', value: 'Small'},
-            {id:'medium', value: 'Medium'}, 
+            {id:'medium', value: 'Medium'},
             {id:'large', value: 'Large'}
           ],
           upload: function() {
@@ -1721,7 +1799,7 @@
           fkds: ''
         });
 
-        // index view 
+        // index view
         var layout = new kendo.Layout('#template-layout-page');
         var index = new kendo.Layout('#template-admin-page', {model: banhji.company});
         var dash = new kendo.View('#template-dashboard', {model: banhji.company});
@@ -1738,14 +1816,22 @@
         var profile = new kendo.View('#template-profile-page', {model: banhji.users});
         // router initization
         banhji.router = new kendo.Router({
+<<<<<<< HEAD
             init: function() { 
+=======
+            init: function() {
+>>>>>>> master
                 if(!banhji.companyDS.data()[0]) {
                   banhji.companyDS.fetch(function() {
                     banhji.company.set('data', banhji.companyDS.data()[0]);
                     banhji.moduleDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
                     banhji.moduleDS.bind('requestEnd', function(e){
                       layout.render("#main-display");
+<<<<<<< HEAD
                      });               
+=======
+                     });
+>>>>>>> master
                   });
                 }
                 banhji.profileDS.fetch(function(e){
@@ -1766,7 +1852,7 @@
                               }
                             });
                           }
-                        });                        
+                        });
                       }
                     }
                     banhji.users.modules.filter({
@@ -1820,10 +1906,17 @@
             valueAxis: {
                 labels: {
                     format: "{0}%"
+<<<<<<< HEAD
                 },
                 line: {
                     visible: false
                 },
+=======
+                },
+                line: {
+                    visible: false
+                },
+>>>>>>> master
                 axisCrossingValue: -10
             },
             categoryAxis: {
@@ -1902,7 +1995,11 @@
             banhji.userDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
             // layout.showIn("#main-display-container", index);
             index.showIn('#app-placeholder', userlist);
+<<<<<<< HEAD
           }   
+=======
+          }
+>>>>>>> master
         });
 
         banhji.router.route('userlist/new', function() {
@@ -1917,7 +2014,11 @@
           if(banhji.users.get('current')) {
              index.showIn('#app-placeholder', userForm);
           }
+<<<<<<< HEAD
          
+=======
+
+>>>>>>> master
           console.log(id);
         });
 

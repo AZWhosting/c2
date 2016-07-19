@@ -87,9 +87,10 @@ class Item_prices extends REST_Controller {
 					"item_id" 			=> $value->item_id,
 					"assembly_id" 		=> $value->assembly_id,
 					"measurement_id" 	=> $value->measurement_id,
-					"quantity" 			=> floatval($value->quantity),
-					"price" 			=> floatval($value->price),
+					"quantity" 			=> floatval($value->quantity),					
 					"unit_value" 		=> floatval($value->unit_value),
+					"price" 			=> floatval($value->price),
+					"amount" 			=> floatval($value->amount),					
 					"locale" 			=> $value->locale,					
 					"measurement" 		=> $value->measurement->get()->name					
 				);
@@ -106,13 +107,14 @@ class Item_prices extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-			$obj->item_id 			= $value->item_id;
-			$obj->assembly_id 		= isset($value->assembly_id)?$value->assembly_id:0;			
-			$obj->measurement_id 	= $value->measurement_id;
-			$obj->quantity 		 	= isset($value->quantity)?$value->quantity:0;
-			$obj->price 			= $value->price;
-			$obj->unit_value 		= $value->unit_value;
-			$obj->locale 			= $value->locale;
+			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
+			isset($value->assembly_id) 		? $obj->assembly_id 	= $value->assembly_id : "";
+			isset($value->measurement_id) 	? $obj->measurement_id 	= $value->measurement_id : "";
+			isset($value->quantity) 		? $obj->quantity 		= $value->quantity : "";
+			isset($value->unit_value) 		? $obj->unit_value 		= $value->unit_value : "";
+			isset($value->price) 			? $obj->price 			= $value->price : "";			
+			isset($value->amount) 			? $obj->amount 			= $value->amount : "";			
+			isset($value->locale) 			? $obj->locale 			= $value->locale : "";
 
 			if($obj->save()){				
 				//Respsone
@@ -121,9 +123,10 @@ class Item_prices extends REST_Controller {
 					"item_id" 			=> $obj->item_id,
 					"assembly_id" 		=> $obj->assembly_id,
 					"measurement_id" 	=> $obj->measurement_id,
-					"quantity" 			=> floatval($obj->quantity),
-					"price" 			=> floatval($obj->price),
+					"quantity" 			=> floatval($obj->quantity),					
 					"unit_value" 		=> floatval($obj->unit_value),
+					"price" 			=> floatval($obj->price),
+					"amount" 			=> floatval($obj->amount),					
 					"locale" 			=> $obj->locale,					
 					"measurement" 		=> $obj->measurement->get()->name
 				);				
@@ -143,14 +146,15 @@ class Item_prices extends REST_Controller {
 		foreach ($models as $value) {			
 			$obj = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
-						
-			$obj->item_id 			= $value->item_id;			
-			$obj->assembly_id 		= isset($value->assembly_id)?$value->assembly_id:0;			
-			$obj->measurement_id 	= $value->measurement_id;
-			$obj->quantity 		 	= isset($value->quantity)?$value->quantity:0;
-			$obj->price 			= $value->price;
-			$obj->unit_value 		= $value->unit_value;
-			$obj->locale 			= $value->locale;
+			
+			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
+			isset($value->assembly_id) 		? $obj->assembly_id 	= $value->assembly_id : "";
+			isset($value->measurement_id) 	? $obj->measurement_id 	= $value->measurement_id : "";
+			isset($value->quantity) 		? $obj->quantity 		= $value->quantity : "";
+			isset($value->unit_value) 		? $obj->unit_value 		= $value->unit_value : "";
+			isset($value->price) 			? $obj->price 			= $value->price : "";			
+			isset($value->amount) 			? $obj->amount 			= $value->amount : "";			
+			isset($value->locale) 			? $obj->locale 			= $value->locale : "";			
 
 			if($obj->save()){				
 				//Results
@@ -159,9 +163,10 @@ class Item_prices extends REST_Controller {
 					"item_id" 			=> $obj->item_id,
 					"assembly_id" 		=> $obj->assembly_id,
 					"measurement_id" 	=> $obj->measurement_id,
-					"quantity" 			=> floatval($obj->quantity),
-					"price" 			=> floatval($obj->price),
+					"quantity" 			=> floatval($obj->quantity),					
 					"unit_value" 		=> floatval($obj->unit_value),
+					"price" 			=> floatval($obj->price),
+					"amount" 			=> floatval($obj->amount),					
 					"locale" 			=> $obj->locale,					
 					"measurement" 		=> $obj->measurement->get()->name
 				);						

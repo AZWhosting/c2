@@ -8,11 +8,7 @@ class Contact extends DataMapper {
 		"company" => array(
 			'class' => "company",
 			'other_field' => 'contact'
-		),			
-		"currency" => array(
-			'class' => "currency",
-			'other_field' => 'contact'
-		),			
+		),
 		'contact_type' => array(
 			'class' => 'contact_type',
 			'other_field' => 'contact'
@@ -74,6 +70,10 @@ class Contact extends DataMapper {
 		),
 		'note' => array(
 			'class' => 'note',
+			'other_field' => 'contact'
+		),
+		'job' => array(
+			'class' => 'job',
 			'other_field' => 'contact'
 		),
 		'meter' => array(

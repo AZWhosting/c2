@@ -59,6 +59,186 @@ html.no-touch.sticky-top:not(.animations-gpu) #content {
 .navbar-form{
   padding-left: 0 !important;
 }
+
+.span5 .btn-group, .btn-group-vertical {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+#example.k-content .span5{
+  padding-left: 0;
+}
+#example.k-content .span5 textarea{
+float: left;
+clear: both;
+width: 50% !important;
+}
+#example.k-content .span7{
+  padding-right: 0;
+}
+.saleSummaryCustomer .box-search{
+  margin: 15px 0 auto;
+  padding: 15px;
+  background: #F2F2F2;
+}
+.saleSummaryCustomer .block-title{
+  text-align: center;
+  margin-bottom: 20px;
+}
+.saleSummaryCustomer .block-title h3{
+  font-size: 15px;
+}
+.saleSummaryCustomer .block-title h2{
+  font-size: 20px;
+  font-weight: 800;
+  margin-top: -10px;
+  margin-bottom: 0;
+}
+.saleSummaryCustomer .block-title p{
+  font-size: 15px;
+}
+.saleSummaryCustomer  .span5{
+  padding-right: 0;
+}
+.saleSummaryCustomer  .total-customer,
+.saleSummaryCustomer  .total-sale{
+  width: 100%;
+  padding: 10px;
+  background: #DDEBF7;
+  text-align: center;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+.saleSummaryCustomer  .table-customer{
+  width: 100%;
+  padding: 10px;
+  background: #DDEBF7;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.saleSummaryCustomer  .total-customer p,
+.saleSummaryCustomer  .total-sale p{
+  font-size: 15px;
+}
+.saleSummaryCustomer  .total-customer span,
+.saleSummaryCustomer  .total-sale span{
+  font-size: 50px;
+  font-weight: 800;
+}
+#edate,
+#sdate {
+  display: inline-block;
+  padding-bottom: 5px;
+  /*width: 95% !important;*/
+}
+.saleSummaryCustomer #edate,
+.saleSummaryCustomer #sdate {
+  width: auto;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed  tr th{
+  border: none;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr th{
+ background: #1E4E78;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:first-child th{
+ 
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  border: none;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:last-child th{
+
+  text-transform: uppercase;
+  font-size: 15px;
+  color: #fff;
+  font-weight: 800;
+  border: none;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:last-child th:first-child{
+  text-align: center;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:last-child th:last-child{
+  text-align: right;
+  padding-right: 20px !important;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr td{
+  padding-left: 5px;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {
+    background: #fff;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr td {
+  background: #F2F2F2;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr td:first-child{
+  padding-left: 10px !important;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr td:last-child{
+  text-align: right;
+  padding-right: 20px !important;
+}
+.btn.btn-icon.btn-success.glyphicons.share{
+  width: 125px !important;
+  text-align: right;
+  line-height: 15px;
+  color: #fff;
+}
+.btn.btn-success.btn-icon.glyphicons.ok_2,
+.btn.btn-icon.btn-primary.glyphicons.circle_ok{
+   width: 80px !important;
+  text-align: right;
+  line-height: 15px;
+  color: #fff;
+}
+.btn.btn-icon.btn-default.glyphicons.ban{
+width: 90px !important;
+  text-align: right;
+  line-height: 15px;
+  color: #333;
+}
+.span6.hidden-print{
+  padding-left: 0;
+}
+#example.k-content .span6{
+  padding-right: 0;
+}
+#example.k-content .span12{
+  padding: 0;
+}
+.btn.btn-success.btn-icon.glyphicons.ok_2{
+   width: 50px !important;
+  text-align: right;
+  line-height: 15px;
+  color: #fff;
+}
+#item-window .btn.btn-danger.btn-icon.glyphicons.remove_2,
+#saleTax-window .btn.btn-danger.btn-icon.glyphicons.remove_2{
+  width: 50px !important;
+}
+.input-prepend .input-large{
+  border: 1px solid #efefef;
+  width: 85%;
+  float: right;
+  margin-bottom: 10px;
+  color: #333;
+  padding: 5px !important;
+}
+.box-generic .btn.btn-icon.btn-default.glyphicons.remove_2{
+   width: 90px !important;
+  text-align: right;
+  line-height: 15px;
+  color: #333;
+}
+.box-generic .row-fluid.row-merge .span6{
+  overflow: hidden;
+  width: 49%;
+}
+
+
 .btn-group, .btn-group-vertical {
   float: left;
 }
@@ -81,7 +261,8 @@ html.no-touch.sticky-top:not(.animations-gpu) #content {
   border: none !important;
 }
 .btn{
-  padding: 6.5px 12px !important;
+  padding: 6px 12px !important;
+  border-left: none !important;
 }
 
 
@@ -110,9 +291,15 @@ html.no-touch.sticky-top:not(.animations-gpu) #content {
   line-height: 15px;
   color: #333;
 }
-.btn-danger,
+
 #saveNew{
   width: 111px !important;
+  text-align: right;
+  line-height: 15px;
+  color: #fff;
+}
+.btn.btn-danger{
+  width: 90px !important;
   text-align: right;
   line-height: 15px;
   color: #fff;
@@ -128,6 +315,7 @@ html.no-touch.sticky-top:not(.animations-gpu) #content {
   text-align: right;
   line-height: 15px;
 }
+
 .btn.btn-icon.btn-warning.glyphicons.remove_2{
   width: 90px !important;
   text-align: right;
@@ -257,8 +445,9 @@ html.no-touch.sticky-top:not(.animations-gpu) #content {
   background: none !important; 
 }
 .widget-search.separator.bottom .overflow-hidden>input{
-  border: 1px solid #ccc;
-  padding: 7px;
+  border: none;
+  padding: 8px;
+  border-right: none !important;
 }
 .widget-employees [class*="span"].listWrapper > .innerAll:first-of-type {
   padding: 11px;
@@ -270,9 +459,10 @@ html.no-touch.sticky-top:not(.animations-gpu) #content {
 }
 .span3.listWrapper>.results{
   border: none !important;
-  padding: 8px !important;
-  height: 40px !important;
+  padding: 10px 8px !important;
+  height: 0 !important;
   width: 100%;
+  line-height: 0 !important;
 }
 .table.table-condensed.k-grid.k-widget>.k-grid-header{
   border-bottom: none !important;
@@ -295,6 +485,11 @@ html.no-touch.sticky-top:not(.animations-gpu) #content {
   width: 18%;
 }
 
+
+.customer-border .alert-info,
+.customer-border .alert-info3{
+  padding: 15px;
+}
 
 .customer-report-center>.span5{
   padding: 0;
@@ -366,6 +561,196 @@ html.no-touch.sticky-top:not(.animations-gpu) #content {
   background: #E4EFF9;
   font-weight: 600;
 }
+
+.report-module h2,
+.capital-management h2,
+.cash-payments h2{
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+  font-weight: 700;
+}
+.report-module ul{
+  padding: 0;
+  margin: 0;
+}
+.report-module ul li{
+  list-style: none;
+  float: left;
+  width: 12.5%;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+.report-module ul li:first-child{
+  margin-left: 0;
+}
+.report-module ul li a img{
+  width: 100%;
+}
+.report-module ul li .span12{
+  margin-top: 10px;
+  width: 100%;
+  background: #fff;
+  color: #263041;
+  text-align: center;
+  line-height: 35px;
+  height: 35px;
+  font-size: 30px;
+  font-weight: 900;
+}
+.capital-management .span6,
+.cash-payments .span6,
+.financial-block,
+.revenue .span3{
+  padding-left: 0;
+}
+.capital-management .capital-box{
+  text-align: center;
+  padding: 0;
+  height: 120px;
+  background: #26628C;
+  margin-left: 3px;
+  margin-bottom: 3px;
+  width: 49.7%;
+  color: #fff;
+}
+.financial-block .financial-box {
+  text-align: center;
+  padding: 0;
+  height: 120px;
+  background: #515151;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  width: 49.7%;
+  color: #fff;
+}
+.capital-management .capital-box:nth-child(1),
+.capital-management .capital-box:nth-child(3),
+.cash-payments .capital-box:nth-child(1),
+.cash-payments .capital-box:nth-child(3){
+  margin-left: 0;
+}
+.financial-block .financial-box:last-child{
+  margin-right: 0;
+}
+.capital-management .capital-box:nth-child(3),
+.capital-management .capital-box:nth-child(4),
+.cash-payments .capital-box:nth-child(3),
+.cash-payments .capital-box:nth-child(4){
+  margin-bottom: 0;
+}
+.capital-management .capital-box .first-text,
+.cash-payments .capital-box .first-text,
+.financial-block .financial-box .first-text,
+.revenue .revenue-box .first-text{
+  margin-top: 5px;
+  color: #ADB8BF
+}
+.capital-management .capital-box span,
+.cash-payments .capital-box span,
+.financial-block .financial-box span,
+.revenue .revenue-box span{
+  font-weight: 900;
+  font-size: 75px;
+  line-height: 55px
+}
+.capital-management .capital-box .month,
+.cash-payments .capital-box .month,
+.financial-block .financial-box .month,
+.revenue .revenue-box .month{
+  font-size: 11px;
+  color: #fff;
+  font-weight: 600;
+}
+.capital-chart{
+  background: #fff;
+}
+.cash-payments .capital-box{
+  text-align: center;
+  padding: 0;
+  height: 120px;
+  background: #388AC3;
+  margin-left: 3px;
+  margin-bottom: 3px;
+  width: 49.7%;
+  color: #fff;
+}
+.cash-payments h2{
+  margin-top: 15px;
+  width: 65%;
+}
+
+
+.business-block h2,
+.financial-block h2,
+.revenue h2{
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+  font-weight: 700;
+   margin-top: 10px;
+}
+.business-box{
+  background: #47682E;
+  text-align: center;
+  padding: 0;
+  height: 120px;
+  color: #fff;
+  width: 36% ;
+}
+.business-block .business-box:nth-child(3){
+  width: 25%;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+.business-box .first-text{
+  margin-top: 5px;
+  color: #ADB8BF
+}
+.business-box span{
+  font-weight: 900;
+  font-size: 75px;
+  line-height: 55px
+}
+.business-box .month{
+  font-size: 11px;
+  color: #fff;
+  font-weight: 600;
+}
+.revenue .revenue-box{
+  background: #47682E;
+  text-align: center;
+  padding: 0;
+  height: 120px;
+  color: #fff;
+  margin-bottom: 3px;
+} 
+#example.k-content .span4,
+#example.k-content .row-fluid .span8,
+#example.k-content .row-fluid .span8 .row-fluid .span6{
+  padding-left: 0;
+}
+#example.k-content .row-fluid .span8,
+#example.k-content .span4:nth-child(2) {
+  padding-right: 0;
+}
+
+
+
+.supplier-icon .span4{
+  padding-left: 5px !important;
+}
+.row-fluid .span4{
+  padding-left: 0;
+}
+.row-fluid .span4:nth-child(3){
+  padding-right: 0;
+}
+
+.supplier-icon .span4:last-child img{
+  width: 105px;
+}
+
 
 @media only screen 
 and (min-device-width : 768px) 
@@ -460,6 +845,27 @@ and (-webkit-min-device-pixel-ratio: 2){
     display: inline-block;
     padding-bottom: 5px;
   }
+  .report-module ul li {
+    width: 12.4%;
+  }
+  .capital-management .capital-box,
+  .cash-payments .capital-box,
+  .financial-block .financial-box {
+    width: 49.6%;
+  }
+  .business-box {
+    min-height: 136px;
+    width: 37%;
+  }
+  .business-block .business-box:nth-child(3) {
+    width: 24%;
+  }
+  .cash-payments h2{
+    width: 100%;
+  }
+  .business-box .first-text {
+    min-height: 35px;
+  }
 
 }
 
@@ -470,5 +876,16 @@ and (orientation : portrait) {
   .cash-table tr td .btn-block {
     width: 120px;
     font-size: 72%;
+  }
+  .report-module ul li {
+    width: 11%;
+  }
+  .capital-management .capital-box,
+  .cash-payments .capital-box,
+  .financial-block .financial-box  {
+    width: 49%;
+  }
+  .business-box span {
+    font-size: 50px;
   }
 }

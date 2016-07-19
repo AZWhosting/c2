@@ -123,7 +123,8 @@ class Transactions extends REST_Controller {
 					"payment_method_id" => $value->payment_method_id,
 					"reference_id" 		=> $value->reference_id,
 					"recurring_id" 		=> $value->recurring_id,
-					"return_id" 		=> $value->return_id,					
+					"return_id" 		=> $value->return_id,
+					"job_id" 			=> $value->job_id,					
 					"account_id" 		=> $value->account_id,
 					"tax_item_id" 		=> $value->tax_item_id,					
 					"user_id" 			=> $value->user_id,
@@ -223,7 +224,8 @@ class Transactions extends REST_Controller {
 			isset($value->payment_method_id) 	? $obj->payment_method_id 	= $value->payment_method_id : "";
 			isset($value->reference_id) 		? $obj->reference_id 		= $value->reference_id : "";
 			isset($value->recurring_id) 		? $obj->recurring_id 		= $value->recurring_id : "";
-			isset($value->return_id) 			? $obj->return_id 			= $value->return_id : "";			
+			isset($value->return_id) 			? $obj->return_id 			= $value->return_id : "";
+			isset($value->job_id) 				? $obj->job_id 				= $value->job_id : "";			
 			isset($value->account_id) 			? $obj->account_id 			= $value->account_id : "";
 			isset($value->tax_item_id) 			? $obj->tax_item_id 		= $value->tax_item_id : "";			
 			isset($value->user_id) 				? $obj->user_id 			= $value->user_id : "";
@@ -308,7 +310,8 @@ class Transactions extends REST_Controller {
 					"payment_method_id" => $obj->payment_method_id,
 					"reference_id" 		=> $obj->reference_id,
 					"recuring_id" 		=> $obj->recuring_id,
-					"return_id" 		=> $obj->return_id,					
+					"return_id" 		=> $obj->return_id,
+					"job_id" 			=> $obj->job_id,					
 					"account_id" 		=> $obj->account_id,
 					"tax_item_id" 		=> $obj->tax_item_id,					
 					"user_id" 			=> $obj->user_id,
@@ -383,7 +386,8 @@ class Transactions extends REST_Controller {
 			isset($value->payment_method_id) 	? $obj->payment_method_id 	= $value->payment_method_id : "";
 			isset($value->reference_id) 		? $obj->reference_id 		= $value->reference_id : "";
 			isset($value->recurring_id) 		? $obj->recurring_id 		= $value->recurring_id : "";
-			isset($value->return_id) 			? $obj->return_id 			= $value->return_id : "";		
+			isset($value->return_id) 			? $obj->return_id 			= $value->return_id : "";
+			isset($value->job_id) 				? $obj->job_id 				= $value->job_id : "";		
 			isset($value->account_id) 			? $obj->account_id 			= $value->account_id : "";
 			isset($value->tax_item_id) 			? $obj->tax_item_id 		= $value->tax_item_id : "";			
 			isset($value->user_id) 				? $obj->user_id 			= $value->user_id : "";
@@ -469,7 +473,8 @@ class Transactions extends REST_Controller {
 					"payment_method_id" => $obj->payment_method_id,
 					"reference_id" 		=> $obj->reference_id,
 					"recuring_id" 		=> $obj->recuring_id,
-					"return_id" 		=> $obj->return_id,					
+					"return_id" 		=> $obj->return_id,
+					"job_id" 			=> $obj->job_id,					
 					"account_id" 		=> $obj->account_id,
 					"tax_item_id" 		=> $obj->tax_item_id,					
 					"user_id" 			=> $obj->user_id,
@@ -705,7 +710,7 @@ class Transactions extends REST_Controller {
 					$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$transaction->get_by_id($value->transaction_id);
 
-					if($transaction->type=="Invoice" || $transaction->type=="Cash_Receipt"){
+					if($transaction->type=="Invoice" || $transaction->type=="Cash_Sale"){
 						$lastPrice = floatval($item->on_hand) * floatval($item->price);
 						$currentPrice = floatval($value->quantity) * floatval($value->price);
 

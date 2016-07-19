@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Banhji | </title>
-    
+
     <!-- Bootstrap -->
     <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -97,7 +97,7 @@
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/google-code-prettify/src/prettify.js"></script>
 
     <!-- Custom Theme Scripts -->
-    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/js/custom.js"></script> 
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/js/custom.js"></script>
     <!-- bootstrap-wysiwyg -->
     <!-- kendoui-->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/js/kendo.all.min.js"></script>
@@ -309,9 +309,9 @@
                         console.log('user created.');
                       }
                     });
-                  }                    
+                  }
               });
-            }           
+            }
           },
           comfirmCode: function(e) {
              e.preventDefault();
@@ -327,6 +327,7 @@
                       layout.showIn("#main-container", confirmView);
                       return;
                   }
+
                   // OK create Database base on country
                   // 1 search for institute with username
                     banhji.companyDS.filter({
@@ -339,6 +340,12 @@
                       banhji.aws.createDB.bind('requestEnd', function(e){
                         $('#proccessMsg').text("Finalizing...");
                         if(e.response.results.institute) {
+                          banhji.userDS.filter({field: 'username', value: banhji.aws.get('email')});
+                          banhji.userDS.bind('requestEnd', function(e) {
+                            var data = banhji.userDS.at(0);
+                            data.set('is_confirmed', true);
+                            banhji.userDS.sync();
+                          });
                           $('#proccessMsg').text("Redirecting...");
                           window.location.replace(baseUrl + "login/");
                         }
@@ -351,15 +358,15 @@
             alert('code resent');
           },
           signIn: function() {
-              var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;  
-              // if(this.get('password').match(decimal) != null)  {   
+              var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+              // if(this.get('password').match(decimal) != null)  {
                 layout.showIn("#main-container", watingView);
                 var authenticationData = {
                     Username : this.get('email'),
                     Password : this.get('password'),
                 };
                 var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
-                
+
                 var userData = {
                     Username : this.get('email'),
                     Pool : userPool
@@ -396,9 +403,9 @@
                             } else {
                               console.log('bad');
                             }
-                          });                          
+                          });
                         }
-                      });                    
+                      });
                     },
 
                     onFailure: function(err) {
@@ -406,12 +413,12 @@
                       $('#loginInformation').text(err);
                     },
 
-                });  
-                // return true;  
-              // } else {   
+                });
+                // return true;
+              // } else {
               //   alert('Password must be at lease 8 characters and contains lower, upper case, number and special character');
               //   return false;
-              // }    
+              // }
           },
           redirect: function(data) {
             // console.log(data.length > 0);
@@ -419,7 +426,7 @@
               window.location.replace(baseUrl + "demo/");
             } else {
               window.location.replace(baseUrl + "app/");
-            } 
+            }
           },
           signOut: function(){
               var userData = {
@@ -478,7 +485,7 @@
         });
 
 
-        // index view 
+        // index view
         var layout = new kendo.Layout('#layout');
         var loginView = new kendo.View('#template-login-page', {model: banhji.aws});
         var confirmView = new kendo.View('#template-confirm-page', {model: banhji.aws});
@@ -500,7 +507,7 @@
         banhji.router.route('/', function(){
           $('body').css("background-color","white");
           layout.showIn("#main-container", confirmView);
-          
+
         });
         banhji.router.route('login', function() {
           $('body').css("background-color","white");

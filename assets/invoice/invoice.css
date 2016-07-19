@@ -1,0 +1,240 @@
+@charset "UTF-8";
+/* CSS Document */
+.inv1 *{
+	padding: 0;
+	font-family: 'Content', Arial;
+	margin: 0;	
+	background: none;
+	border:none;
+	line-height: 16px;
+}
+sup {
+	line-height: 0px;	
+}
+pre {
+	font-size: 10px;
+	line-height: 16px;
+}
+.inv1 h2,.inv1 h3 {
+	margin: 0!important;
+	line-height: 22px!important;
+}
+.clear {
+	clear: both;
+	overflow: hidden;
+}
+.dotted-ruler {
+	padding-bottom: 5px;
+	border-bottom: 2px dotted #000;
+}
+.inv1 {
+	width:100%;
+	height: 100%;
+	background-color: #fff;
+	position: relative;	
+	overflow: hidden;
+}
+.inv1 .head {
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+    border-bottom: 2px solid #000;
+    padding-top: 5%;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+.inv1 .logo {
+	height: 100%;
+	width: 20%;	
+	float: left;
+}
+.inv1 .head .logo .location {
+	width: 141px;
+	height: 141px;
+	background: url(img/logo.png) no-repeat left top;	
+}
+.inv1 .cover-name-company {
+	width: 75%;
+	height: 100%;
+	float: right;
+}
+.inv1 .cover-name-company h2 {
+	text-align: center;
+	color: #000;
+	font-family: 'Moul', cursive;
+	font-size: 100%;
+}
+.inv1 .cover-name-company h3 {
+	text-align: center;
+	color: #000;
+	font-size: 100%;
+	text-transform: uppercase;
+}
+
+.inv1 .content {
+	padding: 1% 5%;
+	position: relative;
+	clear: both;	
+	overflow: hidden;
+}
+.inv1 .content h1, .inv1 .content h2 {
+	text-align: center;
+	color: #000;
+	font-family: 'Moul', cursive;
+	font-size: 14px;
+}
+.inv1 .content h2 {
+	font-family: 'Moul', Arial;
+	margin-bottom: 10px;
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+.inv1 .cover-customer {
+	float: left;
+	width: 58%;
+	margin-top: 20px;
+	overflow: hidden;
+}
+.inv1 .cover-customer h5 {
+	    font-family: 'Moul', Arial;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: bold;
+}
+.inv1 .cover-customer p {
+	font-size: 24px;	
+	font-family: 'Content', Arial;
+}
+.inv1 .content .left {
+	float: left;	
+	margin-right: 10px;
+}
+.inv1 .content .left p {
+	font-size: 10px;
+}
+.inv1 .content .left span {
+	font-size: 8px;
+}
+.inv1 .cover-inv-number {
+	float: right;
+	width: 30%;	
+	position: relative;
+}
+.inv1 table {
+	font-size: 14px;	
+	font-family: 'Content', Arial;
+}
+.inv1 th {
+	font-size: 10px;
+	font-weight: bold;
+	border: 1px solid #000;
+	background-color: rgb(242, 242, 242);
+}
+.inv1 td {
+	text-align: center;
+	padding: 2px 0;	
+	font-size: 10px;	
+	font-family: 'Content', Arial;
+	border: 1px solid #000;
+}
+.inv1 .foot {
+	clear: both;
+	overflow: hidden;
+	margin-top: 11%;	
+}
+.inv1 .foot .cover-signature {
+	width: 80%;
+	margin: 0 auto;	
+	overflow: hidden;
+}
+.inv1 .cover-signature .singature {
+	    border-top: 1px solid #000;
+    padding-top: 5px;
+    width: 30%;
+    text-align: center;
+    font-weight: bold;
+}
+.inv1 .cover-signature .singature p {
+	font-size: 10px;
+}
+.inv1 .foot h6 {
+	    padding-left: 5px;
+    padding-top: 20px;
+    font-size: 10px;
+    font-family: 'Moul', Arial;
+}
+.inv1 .foot h6 span {
+	font-size: 10px;	
+}
+.inv1 .vattin {
+	clear: both;	
+	margin-top: 5px;
+	overflow: hidden;
+}
+.inv1 .vattin p {
+	font-weight: bold;
+	font-size: 10px;
+	font-family: 'Content', Arial;
+	float: left;
+}
+.inv1 .vattin span {
+	padding: 1px 2px;
+	font-size: 10px;
+	line-height: 10px;
+	border: 1px solid #000;
+	float: left;
+	margin-left: 0.8%;
+}
+.inv2 table td {
+	padding: 2px 0;	
+}
+
+.formstyle div img {
+	width: 100%;
+}
+.formstyle {
+	margin-left: 0;
+	padding-top: 10px;
+}
+.formstyle a {
+	cursor: pointer;
+	border:1px solid #eee;
+}
+.formstyle a.form-thumb-active {
+	-webkit-box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
+-moz-box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
+box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
+	border: none;
+}
+.invhidden {
+	display: none;
+}
+.invvisible {
+	display: block;
+}
+.colorPalatte {
+	overflow: hidden;
+	width: 100%;
+	position: relative;
+}
+.colorPalatte .tableRow {
+	margin-top: 5px;
+	overflow: hidden;
+}
+.search .span12 {
+	margin-left: 0;
+}
+.search .search-contact {
+	overflow: hidden;
+	width: 100%;
+}
+.search h2.word-search {
+	padding-top: 20px;
+	padding-left: 30px;
+	margin-bottom: 10px;
+}
+.search h3 {
+	padding: 10px 20px;
+	background: #eee;
+	font-size: 18px;}

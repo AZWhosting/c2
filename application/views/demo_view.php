@@ -1,8 +1,8 @@
-<div id="wrapperApplication" class="container"></div>
+<div id="wrapperApplication" class="container-fluid"></div>
 <!-- template section starts -->
 <script type="text/x-kendo-template" id="layout">
 	<div id="menu"></div>			
-	<div id="content" class="row-fluid"></div>
+	<div id="content" class="row-fluid container"></div>
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
@@ -24,8 +24,10 @@
 				    	<li data-bind="click: searchItem"><a href="#"><i class="icon-th-list"></i> Item</a></li>
 				  	</ul>
 				</div>
-			  	<input type="text" class="span2 search-query" placeholder="Search Contact" id="search-placeholder" style="background-color: #555555; color: #ffffff; border-color: #333333; height: 22px;">
-			  	<button type="submit" class="btn btn-inverse" data-bind="click: searchBotton"><i class="icon-search"></i></button>
+			  	<input type="text" class="span2 search-query" placeholder="Search Contact" id="search-placeholder" 
+			  			data-bind="value: searchText" 
+			  			style="background-color: #555555; color: #ffffff; border-color: #333333; height: 22px;">
+			  	<button type="submit" class="btn btn-inverse" data-bind="click: search"><i class="icon-search"></i></button>
 			</form>
 			<ul class="topnav" id="secondary-menu">
 			</ul>
@@ -89,9 +91,9 @@
 							</a>
 						</li>
 						<li style="text-align:center;">
-							
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Vendor">
-							
+							<a href="#/reports">
+								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Reports">
+							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.report"></span></span>
 						</li>
 						<li style="text-align:center;">
@@ -190,19 +192,19 @@
 								<p>Performance</p>
 								<table class="performance">
 									<tr>
-										<td>Incomes</td>
+										<td>Income</td>
 										<td></td>
-										<td>0.00</td>
+										<td>10,171,667.00</td>
 									</tr>
 									<tr>
 										<td>Expense</td>
 										<td></td>
-										<td>0.00</td>
+										<td>5,391,230.00</td>
 									</tr>
 									<tr>
 										<td><b>Net Income</b></td>
 										<td></td>
-										<td><b>0.00</b></td>
+										<td><b>4,780,437.00</b></td>
 									</tr>
 								</table>
 							</div>
@@ -212,17 +214,17 @@
 									<tr>
 										<td>Assets</td>
 										<td></td>
-										<td>0.00</td>
+										<td>20,451,800.00</td>
 									</tr>
 									<tr>
 										<td>Liabilities</td>
 										<td></td>
-										<td>0.00</td>
+										<td>6,432,100.00</td>
 									</tr>
 									<tr>
 										<td><b>Equity</b></td>
 										<td></td>
-										<td><b>0.00</b></td>
+										<td><b>14,019,700.00</b></td>
 									</tr>
 								</table>
 							</div>
@@ -290,23 +292,25 @@
 						</div>
 
 						<div class="span12">
-							<!-- Graph -->
-							<div data-role="chart"
-								 data-auto-bind="false"
-				                 data-legend="{ position: 'top' }"
-				                 data-series-defaults="{ type: 'column' }"
-				                 data-tooltip='{
-				                    visible: true,
-				                    format: "{0}%",
-				                    template: "#= series.name #: #= value #"
-				                 }'                 
-				                 data-series="[
-				                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
-				                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
-				                             ]"	                             
-				                 data-bind="source: graphDS"
-				                 style="height: 250px;" ></div>
-				            <!-- End Graph -->      
+							<div class="home-chart">
+								<!-- Graph -->
+								<div data-role="chart"
+									 data-auto-bind="false"
+					                 data-legend="{ position: 'top' }"
+					                 data-series-defaults="{ type: 'column' }"
+					                 data-tooltip='{
+					                    visible: true,
+					                    format: "{0}%",
+					                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+					                 }'                 
+					                 data-series="[
+					                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
+					                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
+					                             ]"	                             
+					                 data-bind="source: graphDS"
+					                 style="height: 250px;" ></div>
+					            <!-- End Graph -->      
+							</div>
 						</div>
 					</div><!--End Chart Board -->
 					
@@ -320,6 +324,122 @@
 			<p>© 2016 BanhJi PTE. Ltd. All rights reserved.</p>
 		</div>	
 	</div>		
+</script>
+<script id="searchAdvanced" type="text/x-kendo-template">
+    <div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"><i></i></span>						
+					</div>
+			        
+			        <h2>SEARCH</h2>
+				    
+				    <br>	
+				    
+				    <!-- Result -->
+				    <span class="results"><span data-format="n0" data-bind="text: found"></span> result found <i class="icon-circle-arrow-down"></i></span>
+					
+					<div data-role="listview"
+						 data-auto-bind="false"
+						 data-selectable="true"				                 
+		                 data-template="searchAdvanced-contact-template"
+		                 data-bind="source: contactDS"></div>
+		            <div data-role="listview"
+						 data-auto-bind="false"
+						 data-selectable="true"				                 
+		                 data-template="searchAdvanced-transaction-template"
+		                 data-bind="source: transactionDS"></div>
+		            <div data-role="listview"
+						 data-auto-bind="false"
+						 data-selectable="true"				                 
+		                 data-template="searchAdvanced-item-template"
+		                 data-bind="source: itemDS"></div>					
+					<!-- End Result -->
+
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="searchAdvanced-contact-template" type="text/x-kendo-template">
+	<dl data-bind="click: selectedContact">			
+		<dt>
+			<div class="widget widget-heading-simple widget-body-multiple widget-offers">
+				<div class="widget-body">
+					
+					<!-- Media item -->
+					<div class="media">
+						<img class="media-object pull-left thumb hidden-tablet hidden-phone" 
+							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/contact.ico" 
+							style="width: 100px; height: 100px;">
+						<div class="media-body">
+							<h5><a href="">#=surname# #=name#</a></h5>							
+							<span>#=abbr# #=number#</span>							
+							<br>
+							<span>#=company#</span>
+							<br>
+							<span>#=contact_type#</span>
+														
+						</div>
+					</div>
+					<!-- // Media item END -->
+						
+				</div>
+			</div>
+		</dt>											
+	</dl>	
+</script>
+<script id="searchAdvanced-transaction-template" type="text/x-kendo-template">
+	<dl data-bind="click: selectedTransaction">			
+		<dt>
+			<div class="widget widget-heading-simple widget-body-multiple widget-offers">
+				<div class="widget-body">
+					
+					<!-- Media item -->
+					<div class="media">
+						<img class="media-object pull-left thumb hidden-tablet hidden-phone" 
+							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/transaction.ico" 
+							style="width: 100px; height: 100px;">
+						<div class="media-body">
+							<h5><a href="">#=number#</a></h5>
+							<span>#=amount#</span>
+							<br>
+							<span>#=issued_date#</span>					
+						</div>
+					</div>
+					<!-- // Media item END -->
+						
+				</div>
+			</div>
+		</dt>											
+	</dl>	
+</script>
+<script id="searchAdvanced-item-template" type="text/x-kendo-template">
+	<dl data-bind="click: selectedItem">			
+		<dt>
+			<div class="widget widget-heading-simple widget-body-multiple widget-offers">
+				<div class="widget-body">
+					
+					<!-- Media item -->
+					<div class="media">
+						<img class="media-object pull-left thumb hidden-tablet hidden-phone" 
+							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/item.ico" 
+							style="width: 100px; height: 100px;">
+						<div class="media-body">
+							<h5><a href="">#=name#</a></h5>
+							<span>#=sku#</span>
+							<br>
+							<span>#=on_hand#</span>					
+						</div>
+					</div>
+					<!-- // Media item END -->
+						
+				</div>
+			</div>
+		</dt>											
+	</dl>	
 </script>
 
 
@@ -342,13 +462,23 @@
 			        	<p>
 			        		In here, you can manage your cash information, transactions and reports. Cashflow forecast and other treasury management is coming soon..
 			        	</p>
-			        	<div class="customer-icon">
-				        	<div class="span4">
-					        	<a href="#/customer" class="center">
-					        		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
-					        	</a>
-					        </div>
-					    </div>
+			        	<div class="supplier-icon">
+						    <div class="span4">
+						       	<a href="#/item" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/non_inventory_part" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/non_inventory_parts.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/item_service" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       	</a>
+						    </div>
+						</div>
 			        </td>
 			 	</tr>
 			</table>
@@ -420,24 +550,21 @@
 						
 						<div class="widget-body alert alert-primary">
 							
-							<div align="center" class="text-large strong" data-bind="text: sale"></div>
-
-							<br>
-						
+							<div align="center" class="text-large strong" >0</div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: sale_customer"></span>
+										<span >0</span>
 										<br>
 										<span>In Bank</span>
 									</td>
 									<td>
-										<span data-bind="text: sale_product"></span>
+										<span >0</span>
 										<br>
 										<span>On Hand</span>
 									</td>
 									<td>
-										<span data-bind="text: sale_order"></span>
+										<span >0</span>
 										<br>
 										<span>In Transit</span>
 									</td>
@@ -466,19 +593,16 @@
 						
 						<div class="widget-body alert-info">
 							
-							<div align="center" class="text-large strong" data-bind="text: order"></div>
-
-							<br>
-						
+							<div align="center" class="text-large strong" >0</div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: order_avg"></span>
+										<span >0</span>
 										<br>
 										<span>Open</span>
 									</td>
 									<td>
-										<span data-bind="text: order_open"></span>
+										<span >0</span>
 										<br>
 										<span>Overdue</span>
 									</td>									
@@ -505,21 +629,18 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body" style="background-color: LightGray">
+						<div class="widget-body alert-info3" style="background-color: LightGray">
 							
-							<div align="center" class="text-large strong" data-bind="text: ar"></div>
-
-							<br>
-						
+							<div align="center" class="text-large strong">0</div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: ar_open"></span>
+										<span >0</span>
 										<br>
 										<span>To be Received</span>
 									</td>
 									<td>
-										<span data-bind="text: ar_customer"></span>
+										<span >0</span>
 										<br>
 										<span>To be Paid</span>
 									</td>
@@ -533,6 +654,8 @@
 					
 				</div>
 				<!-- // Column END -->
+				
+				
 				
 			</div>
 
@@ -1651,11 +1774,11 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							            <li class="span3 glyphicons pencil active"><a href="#tab1-3" data-toggle="tab"><i></i> Memo</a>
+							            <li class="span1 glyphicons pencil active"><a href="#tab1-3" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span3 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i> Attach</a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span3 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i> Recuring</a>
+							            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
 							            </li>								            
 							        </ul>
 							    </div>
@@ -2112,12 +2235,10 @@
 		<td align="right">#=rate#</td>					
 		<td>#=source#</td>
 		<td>#=method#</td>				
-		<td>
-			#if(is_system==0){#
-				<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
-	    		|    		
-	    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
-    		#}#			
+		<td>			
+			<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
+    		|    		
+    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>					
 		</td>		
     </tr>   
 </script>
@@ -2138,7 +2259,7 @@
 							data-bind="click: cancel"><i></i></span>						
 					</div>
 
-			        <h2>TAX SETTING</h2>				        				        				        	
+			        <h2>TAX</h2>				        				        				        	
 			    </div>			   
 
 			    <br>
@@ -2247,9 +2368,15 @@
 						<tr>
 							<td>Account</td>
 							<td>
-								<input id="ddlIncome" name="ddlIncome"
-									data-bind="value: item.account_id" 
-									required data-required-msg="required" style="width: 100%;" />
+								<input data-role="dropdownlist"
+					                   data-option-label="Select Account..."
+					                   data-template="account-list-tmpl"
+					                   data-value-primitive="true"					                   
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: item.account_id,
+					                              source: accountDS"
+					                   style="width: 100%" />
 							</td>
 						</tr>
 						
@@ -2378,7 +2505,7 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td width="50%">
-								<h3><a href="#/">Journal Entry Report</a></h3>
+								<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 							</td>
 							<td width="50%">
 								<h3><a href="#/">General Ledger</a></h3>								
@@ -2445,7 +2572,7 @@
 
 						<tr>
 							<td width="50%">
-								<h3><a href="#/">Trail Balance</a></h3>
+								<h3><a href="#/trial_balance">Trail Balance</a></h3>
 							</td>
 							<td width="50%">
 								<h3><a href="#/">Period-End Closing Checklist</a></h3>
@@ -2581,6 +2708,10 @@
 			</div>
 		</div>
 		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
 			<div class="report-chart">
 				<div class="statement">
 					<h2>Statement of Financial Position</h2>
@@ -2705,7 +2836,7 @@
 	          		|
 					<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
 					|					
-				    <div class="btn-group dropdown">
+				    <span class="btn-group dropdown">
 				        <button class="dropdown-toggle" data-toggle="dropdown">Sort <span class="caret"></span></button>
 				        <ul class="dropdown-menu">
 				            <li>
@@ -2718,7 +2849,7 @@
 				            	<span class="btn btn-block btn-primary" data-bind="click: sort">ACCOUNT</span>
 				            </li>				            			           				            				            
 				        </ul>
-				    </div>
+				    </span>
 									
 		    	</div>						
 
@@ -2822,6 +2953,110 @@
     		#=kendo.toString(sumCr, "c0", banhji.institute.locale)#
     	</td>    	
     </tr>  
+</script>
+
+<script id="trialBalance" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="container-fluid">					
+			<div id="example" class="k-content">
+
+		    	<div class="hidden-print well">
+		    		<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+		            
+		            As of:
+			       	<input id="asOf" name="asOf"
+			       			data-role="datepicker"        					
+        					data-format="dd-MM-yyyy"
+        					data-parse-formats="yyyy-MM-dd"						           
+				            data-bind="value: as_of"
+				            placeholder="As Of ..." />
+
+		            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+	          		|
+					<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
+					|					
+				    <span class="btn-group dropdown">
+				        <button class="dropdown-toggle" data-toggle="dropdown">Sort <span class="caret"></span></button>
+				        <ul class="dropdown-menu">
+				            <li>
+				            	<span class="btn btn-block btn-primary" data-bind="click: sort">TYPE</span>				            	
+				            </li>
+				            <li>
+				            	<span class="btn btn-block btn-info" data-bind="click: sort">DATE</span>
+				            </li>
+				            <li>
+				            	<span class="btn btn-block btn-primary" data-bind="click: sort">ACCOUNT</span>
+				            </li>				            			           				            				            
+				        </ul>
+				    </span>
+									
+		    	</div>						
+
+				<div align="center">
+					<h3>TRIAL BALANCE</h3>
+					<span id="strDate"></span>
+				</div>
+
+				<br>
+
+				<table class="table table-bordered table-primary table-striped table-vertical-center">
+			        <thead>
+			            <tr>
+			                <th class="center">NUMBER</th>
+			                <th class="center">NAME</th>
+			                <th class="center">TYPE</th>			                		                		                
+			                <th class="center">DEBIT</th>
+			                <th class="center">CREDIT</th>			                
+			            </tr> 
+			        </thead>
+			        <tbody data-role="listview"
+			        		data-template="trialBalance-template"			        		
+			        		data-bind="source: dataSource"></tbody>
+			        <tfoot data-template="trialBalance-footer-template" data-bind="source: this"></tfoot>			        
+			    </table>
+
+	            <div data-role="pager" data-bind="source: dataSource"></div>					  
+
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="trialBalance-template" type="text/x-kendo-tmpl">	
+	<tr>
+		<td style="color: black;">
+			#=number#
+		</td>		
+		<td style="color: black;">
+			#=name#
+		</td>
+		<td style="color: black;">
+			#=type#
+		</td>				
+		<td class="right" style="color: black;">
+			#if(dr!==0){#
+				#=kendo.toString(dr, "c0", banhji.locale)#
+			#}#
+		</td>
+		<td class="right" style="color: black;">
+			#if(cr!==0){#
+				#=kendo.toString(cr, "c0", banhji.locale)#
+			#}#
+		</td>		
+    </tr>    
+</script>
+<script id="trialBalance-footer-template" type="text/x-kendo-template">
+    <tr>
+        <td>TOTAL:</td>
+        <td></td>
+        <td></td>        
+        <td class="right">
+            #: totalDr() #
+        </td>
+        <td class="right">
+            #: totalCr() #
+        </td>
+    </tr>
 </script>
 
 <script id="accountingSetting" type="text/x-kendo-template">
@@ -3078,19 +3313,26 @@
 			        		In here, you can manage your employee information, and other related transactions.
 			        	</p>
 			        	<div class="supplier-icon">
-					       	<div class="span3">
+					       	<div class="span4">
 						       	<a href="#/employee" class="center">
 						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/employees.ico" />
 						       	</a>
 						       </div>
+						    <div class="span4">
+						       	<a href="#/item" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/item_service" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       	</a>
+						    </div>
 						</div>
 
 			        </td>
 			 	</tr>
 			</table>
-
-			<br>
-
 			<table class="table table-borderless table-condensed table-vertical-center">
 				<tr>
 					<td class="center">
@@ -3105,8 +3347,10 @@
 							Expense
 						</a>
 					</td>
-					<td class="center">							
-							<img src="" width="110" height="200" />							
+					<td class="center">
+						<a href="#/cash_transaction">				
+							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />						
+							Cash Tnx.
 						</a>					
 					</td>					
 				</tr>							
@@ -3124,36 +3368,33 @@
 				<div class="span4">
 				
 					<!-- Widget -->
-					<div class="widget widget-3">
+					<div class="widget widget-3 customer-border">
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons old_man"><i></i></span>ADVANCE BALANCE</h4>
+							<h4 class="heading"><span class="glyphicons coins"><i></i></span>Expense</h4>
 						</div>
 						<!-- // Widget heading END -->
 						
 						<div class="widget-body alert alert-primary">
 							
 							<div align="center" class="text-large strong" data-bind="text: sale"></div>
-
-							<br>
-						
 							<table width="100%">
 								<tr align="center">
-									<td>										
+									<td width="33%">										
 										<span data-bind="text: sale_customer"></span>
 										<br>
 										<span>Employee</span>
 									</td>
-									<td>
+									<td width="33%">
 										<span data-bind="text: sale_product"></span>
 										<br>
-										<span>Open</span>
+										<span>Product</span>
 									</td>
-									<td>
+									<td width="33%">
 										<span data-bind="text: sale_order"></span>
 										<br>
-										<span>Overdue</span>
+										<span>Order</span>
 									</td>
 								</tr>
 							</table>
@@ -3170,20 +3411,74 @@
 				<div class="span4">
 				
 					<!-- Widget -->
-					<div class="widget widget-3">
+					<div class="widget widget-3 customer-border">
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons eye_open"><i></i></span>EMPLOYEE NUMBER</h4>
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span>Order</h4>
 						</div>
 						<!-- // Widget heading END -->
 						
 						<div class="widget-body alert-info">
 							
 							<div align="center" class="text-large strong" data-bind="text: order"></div>
-							<br>
-							<br>
-							<br>							
+							<table width="100%">
+								<tr align="center">
+									<td width="50%">										
+										<span data-bind="text: order_avg"></span>
+										<br>
+										<span>Average</span>
+									</td>
+									<td width="50%">
+										<span data-bind="text: order_open"></span>
+										<br>
+										<span>Open</span>
+									</td>									
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span>Receivable</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert-info3" style="background-color: LightGray">
+							
+							<div align="center" class="text-large strong" data-bind="text: ar"></div>
+							<table width="100%">
+								<tr align="center">
+									<td width="33%">										
+										<span data-bind="text: ar_open"></span>
+										<br>
+										<span>Open</span>
+									</td>
+									<td width="33%">
+										<span data-bind="text: ar_customer"></span>
+										<br>
+										<span>Customer</span>
+									</td>
+									<td width="33%">
+										<span data-bind="text: ar_overdue"></span>
+										<br>
+										<span>Overdue</span>
+									</td>
+								</tr>
+							</table>
 						</div>
 						<!-- // Widget footer END -->
 						
@@ -3221,9 +3516,7 @@
 
 		</div>		
 
-	</div>		
-
-	<p class="separator text-center"><i class="icon-ellipsis-horizontal icon-3x"></i></p>
+	</div>
 </script>
 <script id="employeeDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
 	<tr data-uid="#: uid #">
@@ -3880,6 +4173,133 @@
 		</td>		
 	</tr>
 </script>
+
+<script id="employeeReportCenter" type="text/x-kendo-template">
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<div class="row-fluid sale-report">
+				<h2>EMPLOYEE REPORTS</h2>
+				<p>
+					The following reports provide summary and detailed reports on employee related transactions.   
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Inventory Position Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Inventory Sale by Item Analysis</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Summarizes each inventory balance by quantity on hand, on purchase 
+									order and sale order. In addition, it also includes average cost and price.
+								</p>
+								
+							</td>
+							<td >
+								<p>
+									Lists of all transactions related to and grouped by each inventory 
+									with analysis of average gross profit margin.
+								</p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Inventory Position Detail</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Inventory Turnover List</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists individual inventory movement transactions by date for 
+									each inventory within a period of time.
+								</p>
+							</td>
+							<td >
+								<p>
+									Provides analysis of inventory turnover days by each inventory.
+								</p>
+							</td>
+						</tr>
+					</table>					
+				</div>
+			</div>
+			<div class="row-fluid recevable-report">
+				<h2>OTHER REPORTS/ LISTS</h2>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Inventory List</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/">Recurring Inventory Template List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists the products you purchase and sold. The following 
+									information is included: name, description, cost, sales price, and quantity on hand.s						
+
+								</p>
+								
+							</td>
+							<td >
+							</td>							
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
+			<div class="report-chart">
+				<div class="widget-body alert alert-primary sale-overview">
+					<h2>Inventory Balance</h2>
+					<div align="center" class="text-large strong">$183,690,640</div>
+					<table width="100%">
+						<tr align="center">
+							<td>										
+								<span>6</span>
+								<br>
+								<span>Inventory items </span>
+							</td>
+							<td>
+								<span>1</span>
+								<br>
+								<span>Categories</span>
+							</td>
+							<td>
+								<span>10%</span>
+								<br>
+								<span>Average Margin</span>
+							</td>
+							<td>
+								<span>20 days</span>
+								<br>
+								<span>Turnover Days</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="sale-report-chart">Chart</div>
+			</div>
+		</div>
+	</div>
+</script>
+
 <script id="cashAdvance" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -4944,9 +5364,6 @@
 						<div class="widget-body alert alert-primary">
 							
 							<div align="center" class="text-large strong" data-bind="text: purchase"></div>
-
-							<br>
-						
 							<table width="100%">
 								<tr align="center">
 									<td>										
@@ -4990,9 +5407,6 @@
 						<div class="widget-body alert-info">
 							
 							<div align="center" class="text-large strong" data-bind="text: order"></div>
-
-							<br>
-						
 							<table width="100%">
 								<tr align="center">
 									<td>										
@@ -5028,12 +5442,9 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body" style="background-color: LightGray">
+						<div class="widget-body alert-info3" style="background-color: LightGray">
 							
 							<div align="center" class="text-large strong" data-bind="text: ar"></div>
-
-							<br>
-						
 							<table width="100%">
 								<tr align="center">
 									<td>										
@@ -5067,83 +5478,110 @@
 			<!-- Top 5 -->
 			<div class="row-fluid">
 				<div class="span4">
-					<h4>Top 5 Suppliers</h4>					
+					<h4></h4>					
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
-				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</th>			                
+				            <tr>				                
+				                <th class="center" colspan="2">Top 5 Suppliers</th>			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                 
-			                 data-template="customerDashBoard-top-customer-template"
-			                 data-bind="source: topCustomerDS"></tbody>			        
+			                 data-template="vendorDashboard-top-vendor-template"
+			                 data-bind="source: topContactDS"></tbody>			        
 				    </table>			
 				</div>
-				<div class="span4">
-					<h4>Top 5 A/P Balance</h4>
+				<div class="span4">					
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</th>		                
+				                <th class="center" colspan="2">Top 5 A/P Balance</th>
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                  
-			                 data-template="customerDashBoard-top-ar-template"
-			                 data-bind="source: topARDS"></tbody>			        
+			                 data-template="vendorDashboard-top-ap-template"
+			                 data-bind="source: topAPDS"></tbody>			        
 				    </table>
 				</div>
-				<div class="span4">
-					<h4>Top 5 Products</h4>
+				<div class="span4">					
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</span></th>			                		                
+				                <th class="center" colspan="2">Top 5 Products</th>			                		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"                
-			                 data-template="customerDashBoard-top-product-template"
+			                 data-template="vendorDashboard-top-product-template"
 			                 data-bind="source: topProductDS"></tbody>			        
 				    </table>
 				</div>		
 			</div>
 
 			<!-- Graph -->
-			<div>
-				<div id="vendor-chart" style="height: 250px;"></div>
-			</div>
+			<div class="home-chart">
+				<div data-role="chart"
+	                 data-legend="{ position: 'top' }"
+	                 data-series-defaults="{ type: 'column' }"
+	                 data-tooltip='{
+	                    visible: true,
+	                    format: "{0}%",
+	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+	                 }'                 
+	                 data-series="[
+	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+	                             ]"	                             
+	                 data-bind="source: graphDS"
+	                 style="height: 250px;" ></div>            
+            </div>
+            <!-- End Graph -->
 
 		</div>
 	</div>
 </script>
-<script id="vendorDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
+<script id="vendorDashboard-top-vendor-template" type="text/x-kendo-tmpl">	
 	<tr data-uid="#: uid #">
-		<td>#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.vendorDashboard.topContactDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>		
 	</tr>
 </script>
-<script id="vendorDashBoard-top-ar-template" type="text/x-kendo-tmpl">
+<script id="vendorDashboard-top-ap-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.vendorDashboard.topAPDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>
 	</tr>
 </script>
-<script id="vendorDashBoard-top-product-template" type="text/x-kendo-tmpl">
+<script id="vendorDashboard-top-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.vendorDashboard.topProductDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
 		</td>
 	</tr>
@@ -5492,10 +5930,13 @@
 <script id="vendorCenter-vendor-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
 		<td>
-			<div class="media-body">
-				<span class="strong">
-					#=number# #=fullname#				
-				</span>
+			<div class="media-body strong">
+				<span>#=abbr##=number#</span>
+				#if(company){#
+					<span>#=company#</span>
+				#}else{#
+					<span>#=surname#</span> <span>#=name#</span>
+				#}#
 			</div>
 		</td>
 	</tr>
@@ -5529,6 +5970,7 @@
 
 				    <br>
 
+				    <!-- Top Part -->
 			    	<div class="row-fluid">
 			    		<div class="span6 well">
 
@@ -5547,7 +5989,7 @@
 							                   data-bind="value: obj.contact_type_id,
 							                   			  disabled: obj.is_pattern, 
 							                              source: contactTypeDS,
-							                              events:{change: loadPattern}"
+							                              events:{change: contactTypeChanges}"
 							                   required data-required-msg="required"
 							                   style="width: 100%;" />									            
 									</div>
@@ -5557,11 +5999,20 @@
 								<div class="span6">	
 									<!-- Group -->
 									<div class="control-group">							
-										<label for="number"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>
-				              			<input id="number" name="number" class="k-textbox"
-					              				data-bind="value: obj.number, disabled: obj.is_pattern" 
-					              				placeholder="e.g. ID0001" required data-required-msg="required"
-					              				style="width: 100%;" />
+										<label for="txtAbbr"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>
+				              			<br>
+				              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
+					              				data-bind="value: obj.abbr, 
+					              						   disabled: obj.is_pattern" 
+					              				placeholder="eg. AB" required data-required-msg="required"
+					              				style="width: 55px;" />
+					              		-
+					              		<input id="txtNumber" name="txtNumber" class="k-textbox"					              			   					                   
+							                   data-bind="value: obj.number, 
+							                   			  disabled: obj.is_pattern, 
+							                   			  events:{change: checkExistingNumber}"
+							                   placeholder="eg. 001" required data-required-msg="required"
+							                   style="width: 125px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->											
@@ -5592,7 +6043,7 @@
 								</div>
 							</div>
 							
-							<div class="row-fluid">
+							<div class="row-fluid" data-bind="visible: isCompany">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">
@@ -5654,21 +6105,21 @@
 						</div>
 					</div>								
 							
-					<!-- // Inner Tabs -->
+					<!-- // Bottom Part -->
 					<div class="row-fluid">								
 						<div class="box-generic">
 						    <!-- //Tabs Heading -->
 						    <div class="tabsbar tabsbar-1">
-						        <ul class="row-fluid row-merge">						            
-						            <li class="span2 glyphicons usd active">
-						            	<a href="#tab1" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.account"></span></a>
+						        <ul class="row-fluid row-merge">
+						        	<li class="span2 glyphicons nameplate_alt active">
+						            	<a href="#tab1" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.info"></span></a>
+						            </li>						            
+						            <li class="span2 glyphicons usd">
+						            	<a href="#tab2" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.account"></span></a>
 						            </li>
 						            <li class="span2 glyphicons credit_card">
-						            	<a href="#tab2" data-toggle="tab"><i></i> Payment</a>
-						            </li>								            
-						            <li class="span2 glyphicons nameplate_alt">
-						            	<a href="#tab3" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.info"></span></a>
-						            </li>								            
+						            	<a href="#tab3" data-toggle="tab"><i></i> Payment</a>
+						            </li>
 						            <li class="span2 glyphicons parents">
 						            	<a href="#tab4" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.agents"></span></a>
 						            </li>						            					            
@@ -5677,8 +6128,84 @@
 						    <!-- // Tabs Heading END -->
 
 						    <div class="tab-content">
-						        <!-- //ACCOUNTING INFO -->
+
+						    	<!-- //GENERAL INFO -->
 						        <div class="tab-pane active" id="tab1">
+					            	<table class="table table-borderless table-condensed cart_total">						            	
+					            		<tr>
+							                <td><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></td>
+							              	<td>
+							              		<input id="customerStatus" name="customerStatus" 
+							              				data-role="dropdownlist"
+									            		data-text-field="name"
+						           						data-value-field="id"
+						           						data-value-primitive="true" 
+									            		data-bind="source: statusList, value: obj.status"
+									            		data-option-label="(--- Select ---)"
+									            		required data-required-msg="required" />
+							              	</td>							              	
+							            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
+							              	<td>
+							              		<input id="registered_date" name="registered_date" 
+								            		data-role="datepicker"			            		
+					            					data-bind="value: obj.registered_date, disabled: obj.is_pattern" 
+					            					data-format="dd-MM-yyyy"
+					            					data-parse-formats="yyyy-MM-dd" 
+					            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
+							              	</td>
+							            </tr>
+							            <tr>
+							                <td><span data-bind="text: lang.lang.gender"></span></td>
+							              	<td><select data-role="dropdownlist" data-bind="source: genders, value: obj.gender"></select></td>							              	
+							            	<td><span data-bind="text: lang.lang.phone"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
+							            </tr>
+							            <tr>
+							            	<td>Country</td>
+							              	<td>
+							              		<input data-role="dropdownlist"
+							              			   data-option-label="(--- Select ---)"									                   
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.country_id,
+									                              source: countryDS" />
+							              	</td>							            								              	
+							            	<td><span data-bind="text: lang.lang.email"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" />							            	
+							            </tr>
+							            <tr>
+							            	<td>City</td>
+							              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." />							              	
+							            	<td>Post Code</td>
+							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" />
+							            </tr>
+							            <tr>
+							            	<td><span data-bind="text: lang.lang.address"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />									            								              	
+							            	<td><span data-bind="text: lang.lang.memo"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>							              	
+							            </tr>									            
+							            <tr>
+							            	<td>
+							            		<label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label>											            
+							            	</td>
+							            	<td>
+							            		<input class="k-textbox" data-bind="value: obj.bill_to" placeholder="bill to ..." />
+							            	</td>
+							            	<td>
+							            		<span data-bind="text: lang.lang.ship_to"></span>										            
+							            	</td>
+							            	<td>
+							            		<input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." />
+							            	</td>
+							            </tr>							            							            							            								            								            			            
+							        </table>
+					        	</div>
+						        <!-- //GENERAL INFO END -->
+
+						        <!-- //ACCOUNTING -->
+						        <div class="tab-pane" id="tab2">
 						        	
 						        	<div class="row-fluid">
 
@@ -5748,7 +6275,7 @@
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.deposit_account_id,
-										                              source: prepaymentDS"
+										                              source: prepaidAccountDS"
 										                   required data-required-msg="required"											                              
 										                   style="width: 100%;" />
 										    </div>
@@ -5761,21 +6288,18 @@
 
 							        <div class="row-fluid">
 
-							        	<div class="span3">
-											<!-- Group -->
-											<div class="control-group">
-												<label for="currency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>
-									            <input id="currency" name="currency" 
-									            	data-role="dropdownlist"
-									            	data-value-primitive="true"
-									                data-text-field="code"
-									                data-value-field="id"
-													data-bind="value: obj.currency_id, source: currencyDS"
-													data-option-label="(--- Select ---)" 
-													required data-required-msg="required" style="width: 100%;" />
-											</div>	
-											<!-- // Group END -->
-										</div>
+							        	<div class="span3">						
+								            <label for="currency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>
+								            <input id="currency" name="currency" 
+								            	data-role="dropdownlist"
+								            	data-template="currency-list-tmpl"
+								            	data-value-primitive="true"
+								                data-text-field="code"
+								                data-value-field="locale"
+												data-bind="value: obj.locale, source: currencyDS"
+												data-option-label="(--- Select ---)" 
+												required data-required-msg="required" style="width: 100%;" />
+								        </div>
 
 										<div class="span3">
 											<!-- Group -->
@@ -5808,10 +6332,10 @@
 
 									</div>
 					        	</div>
-						        <!-- //ACCOUNTING INFO END -->
+						        <!-- //ACCOUNTING END -->
 
-						        <!-- //PAYMENT INFO -->
-						        <div class="tab-pane" id="tab2">
+						        <!-- //PAYMENT -->
+						        <div class="tab-pane" id="tab3">
 						        	
 					            	<table class="table table-borderless table-condensed cart_total">						            	
 					            		<tr>							            			
@@ -5858,69 +6382,7 @@
 							            </tr>									            						            							            								            								            			            
 							        </table>
 					        	</div>
-						        <!-- //PAYMENT INFO END -->
-
-						        <!-- //GENERAL INFO -->
-						        <div class="tab-pane" id="tab3">
-					            	<table class="table table-borderless table-condensed cart_total">						            	
-					            		<tr>
-							                <td><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></td>
-							              	<td>
-							              		<input id="customerStatus" name="customerStatus" 
-							              				data-role="dropdownlist"
-									            		data-text-field="name"
-						           						data-value-field="id"
-						           						data-value-primitive="true" 
-									            		data-bind="source: statusList, value: obj.status"
-									            		data-option-label="(--- Select ---)"
-									            		required data-required-msg="ត្រូវការ ស្ថានភាព" />
-							              	</td>							              	
-							            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
-							              	<td>
-							              		<input id="registered_date" name="registered_date" 
-								            		data-role="datepicker"			            		
-					            					data-bind="value: obj.registered_date" 
-					            					data-format="dd-MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
-							              	</td>
-							            </tr>
-							            <tr>
-							                <td>Business Type</td>
-							              	<td>
-							              		<input data-role="dropdownlist"
-									            		data-text-field="type"
-						           						data-value-field="id"
-						           						data-value-primitive="true" 
-									            		data-bind="source: businessTypeDS, value: obj.business_type_id"
-									            		data-option-label="(--- Select ---)" />
-							              	</td>							              	
-							            	<td>Is Local Business</td>
-							              	<td>
-							              		<input type="checkbox" data-bind="checked: obj.is_local" />
-							              	</td>
-							            </tr>
-							            <tr>
-							                <td><span data-bind="text: lang.lang.email"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" /></td>							              	
-							            	<td><span data-bind="text: lang.lang.phone"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
-							            </tr>									           							            
-							            <tr>
-							            	<td><span data-bind="text: lang.lang.address"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />							              	
-							            	<td><span data-bind="text: lang.lang.memo"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>
-							            </tr>
-							            <tr>
-							            	<td><label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.bill_to" placeholder="bill to ..." />							              	
-							            	<td><span data-bind="text: lang.lang.ship_to"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." /></td>									              	
-							            </tr>							            							            								            								            			            
-							        </table>
-					        	</div>
-						        <!-- //GENERAL INFO END -->
+						        <!-- //PAYMENT END -->						        
 
 						        <!-- //CONTACT PERSON -->
 						        <div class="tab-pane" id="tab4">
@@ -5944,6 +6406,7 @@
 								    </table>
 					        	</div>
 						        <!-- //CONTACT PERSON END -->
+
 						    </div>
 						</div>
 					</div>
@@ -5955,10 +6418,9 @@
 						<span id="notification"></span>
 
 						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
-						<!-- <span id="saveSend" class="btn btn-icon btn-warning glyphicons envelope" style="width: 80px;"><i></i> Save Send</span>										 -->
-						<span id="savePrint" class="btn btn-icon btn-default glyphicons print" data-bind="click: cancel" style="width: 80px;"><i></i> Save Print</span>
-						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>						
+						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
+						<span class="btn btn-icon btn-default glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>					
 					</div>
 					<!-- // Form actions END -->
 
@@ -6157,6 +6619,22 @@
 													   			events:{ change: segmentChanges }"
 													   data-placeholder="Add Segment.."				   
 													   style="width: 100%" /></select>
+											</td>
+										</tr>
+										<tr>
+											<td>Job</td>
+											<td>
+												<input id="ddlJob" name="ddlJob"
+													   data-role="dropdownlist"
+													   data-template="job-list-tmpl"
+													   data-auto-bind="false"				                
+									                   data-value-primitive="true"									                   				   
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.job_id, 
+									                   			source: jobDS"
+									                   data-option-label="Add job..." 
+									                   style="width: 100%" />										
 											</td>
 										</tr>											
 						            </table>
@@ -6445,8 +6923,7 @@
 		<td>
 			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
 					type="text" class="k-textbox" 
-					data-bind="value: description"					 
-					required data-required-msg="required"
+					data-bind="value: description"
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
@@ -6588,6 +7065,22 @@
 						    	<!-- Options Tab content -->
 						        <div class="tab-pane active" id="tab1-4">						            
 						            <table class="table table-borderless table-condensed cart_total">								            							           
+										<tr>
+											<td>Job</td>
+											<td>
+												<input id="ddlJob" name="ddlJob"
+													   data-role="dropdownlist"
+													   data-template="job-list-tmpl"
+													   data-auto-bind="false"				                
+									                   data-value-primitive="true"									                   				   
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.job_id, 
+									                   			source: jobDS"
+									                   data-option-label="Add job..." 
+									                   style="width: 100%" />										
+											</td>
+										</tr>
 										<tr>							            				
 											<td>
 							            		<input data-role="dropdownlist"
@@ -6863,8 +7356,7 @@
 		<td>
 			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
 					type="text" class="k-textbox" 
-					data-bind="value: description"					 
-					required data-required-msg="required"
+					data-bind="value: description"
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
@@ -7263,7 +7755,7 @@
 		<td class="right">
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
-					data-format="n0" 
+					data-format="c" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>			
@@ -7415,7 +7907,7 @@
 														data-text-field="name" 
 							              				data-value-field="id"						              				 
 							              				data-bind="value: obj.account_id,
-							              							source: selectAccountDS"
+							              							source: accountDS"
 							              				data-option-label="Select Account..."
 							              				required data-required-msg="required" 
 							              				style="width: 100%" />
@@ -7484,6 +7976,22 @@
 													   			events:{ change: segmentChanges }"
 													   data-placeholder="Add Segment.."				   
 													   style="width: 100%" /></select>
+											</td>
+										</tr>
+										<tr>
+											<td>Job</td>
+											<td>
+												<input id="ddlJob" name="ddlJob"
+													   data-role="dropdownlist"
+													   data-template="job-list-tmpl"
+													   data-auto-bind="false"				                
+									                   data-value-primitive="true"									                   				   
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.job_id, 
+									                   			source: jobDS"
+									                   data-option-label="Add job..." 
+									                   style="width: 100%" />										
 											</td>
 										</tr>
 										<tr data-bind="invisible: isCash">
@@ -7963,8 +8471,7 @@
 		<td>
 			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
 					type="text" class="k-textbox" 
-					data-bind="value: description"					 
-					required data-required-msg="required"
+					data-bind="value: description"
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
@@ -8032,11 +8539,11 @@
 			<input id="cbbAccounts-#:uid#" name="cbbAccounts-#:uid#"
 				   data-role="combobox"                   
                    data-value-primitive="true"                   
-                   data-template="account-list-tmpl"
+                   data-template="account-list-tmpl"                                     
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
-                              source: accountDS"
+                              source: expenseAccountDS"
                    data-placeholder="Add Account.."
                    data-list-width="400"                    
                    required data-required-msg="required" style="width: 100%" />	
@@ -8293,6 +8800,22 @@
 													   			events:{ change: segmentChanges }"
 													   data-placeholder="Add Segment.."				   
 													   style="width: 100%" /></select>
+											</td>
+										</tr>
+										<tr>
+											<td>Job</td>
+											<td>
+												<input id="ddlJob" name="ddlJob"
+													   data-role="dropdownlist"
+													   data-template="job-list-tmpl"
+													   data-auto-bind="false"				                
+									                   data-value-primitive="true"									                   				   
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.job_id, 
+									                   			source: jobDS"
+									                   data-option-label="Add job..." 
+									                   style="width: 100%" />										
 											</td>
 										</tr>	
 						            </table>						            
@@ -8597,8 +9120,7 @@
 		<td>
 			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
 					type="text" class="k-textbox" 
-					data-bind="value: description"					 
-					required data-required-msg="required"
+					data-bind="value: description"
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
@@ -8746,10 +9268,10 @@
 	            </div>
 	            <!-- // Tab Contact Type content END -->
 
-	            <!-- Tab Payment Method content -->
+	            <!-- PAYMENT METHOD -->
 	            <div class="tab-pane" id="tab2-1">
 	            	<div class="input-append">
-					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Enter new Payment Method here ..." data-bind="value: paymentMethodName">
+					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i> Add Method</button>
 					</div>
 	            	<table class="table table-bordered table-white">
@@ -8765,24 +9287,24 @@
 				                data-bind="source: paymentMethodDS"></tbody>
 	            	</table>			            
 	            </div>
-	            <!-- // Tab Payment Method content END -->
+	            <!-- // PAYMENT METHOD END -->
 
-	            <!-- Tab Payment Term content -->
+	            <!-- PAYMENT TERM -->
 	            <div class="tab-pane" id="tab3-1">
             		<div class="input-append">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New Payment Term ..." data-bind="value: paymentTermName">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Net Due in ..." data-bind="value: paymentTermNetDue">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Discount if paid within ..." data-bind="value: paymentTermDiscountPeriod">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Discount % ..." data-bind="value: paymentTermDiscountPercentage">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="net due ..." data-bind="value: paymentTermNetDue">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="period ..." data-bind="value: paymentTermPeriod">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i> Add Term</button>
 					</div>
 	            	<table class="table table-bordered table-white">
 	            		<thead>
 	            			<tr>
-	            				<th>Term</th>
-	            				<th>Net Due(days)</th>	            				
-	            				<th>Discount if paid within(days)</th>
-	            				<th>Discount %</th>
+	            				<th>Name</th>
+	            				<th>Net Due</th>
+	            				<th>Dis. Period</th>
+	            				<th>Dis. %</th>
 	            				<th></th>
 	            			</tr>
 	            		</thead>
@@ -8792,7 +9314,7 @@
 				                data-bind="source: paymentTermDS"></tbody>
 	            	</table>
 	            </div>
-	            <!-- // Tab Payment Term content END -->
+	            <!-- // PAYMENT TERM END -->
 
 	        </div>
 	    </div>
@@ -8832,14 +9354,16 @@
 <script id="vendorSetting-payment-method-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
-    		 #:name#
+    		#:name#
    		</td>
-   		<td>
+   		<td>   			
    			<div class="edit-buttons">       
 		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-		   	</div>
-		</td>
+		        #if(is_system=="0"){#
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+		        #}#		        
+		   	</div>		   	
+   		</td>
    	</tr>
 </script>
 <script id="vendorSetting-edit-payment-method-template" type="text/x-kendo-tmpl">
@@ -8859,59 +9383,47 @@
 <script id="vendorSetting-payment-term-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
-    		 #:name#
+    		#:name#
    		</td>
    		<td>
-    		 #:net_due#
+    		#:net_due#
    		</td>
    		<td>
-    		 #:discount_period#
+    		#:discount_period#
    		</td>
    		<td>
-    		 #:discount_percentage#
+    		#:discount_percentage#
    		</td>
-   		<td>
-   			#if(is_system=="0"){#
-	   			<div class="edit-buttons">       
-			        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-			   	</div>
-		   	#}#
+   		<td>   			
+   			<div class="edit-buttons">       
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        #if(is_system=="0"){#
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+		        #}#		        
+		   	</div>		   	
    		</td>
    	</tr>
 </script>
 <script id="vendorSetting-edit-payment-term-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget">
-        <table class="table table-borderless table-condensed cart_total">                
-            <tr>
-            	<td>Term:</td>
-            	<td>
-	                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-	                <span data-for="ProductName" class="k-invalid-msg"></span>
-	            </td>
-            </tr>
-            <tr>
-            	<td>Net Due In:</td>
-            	<td>
-	                <input type="text" class="k-textbox" data-bind="value:net_due" name="NetDue" required="required" validationMessage="required" />
-	                <span data-for="term" class="k-invalid-msg"></span>
-	            </td>
-            </tr>
-            <tr>
-            	<td>Discount If Paid Within:</td>
-            	<td>
-	                <input type="text" class="k-textbox" data-bind="value:discount_period" />
-	                <span data-for="percentage" class="k-invalid-msg"></span>
-	            </td>
-            </tr>
-            <tr>
-            	<td>Discount %</td>
-            	<td>
-	                <input type="text" class="k-textbox" data-bind="value:discount_percentage" />
-	                <span data-for="percentage" class="k-invalid-msg"></span>
-	            </td>
-            </tr>               
-        </table>
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+                <span data-for="ProductName" class="k-invalid-msg"></span>
+            </dd>
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:net_due" name="netDue" required="required" validationMessage="required" />
+                <span data-for="netDue" class="k-invalid-msg"></span>
+            </dd>
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:discount_period" name="period" required="required" validationMessage="required" />
+                <span data-for="period" class="k-invalid-msg"></span>
+            </dd>
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:discount_percentage" name="percentage" required="required" validationMessage="required" />
+                <span data-for="percentage" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
         <div class="edit-buttons">
             <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
             <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
@@ -9123,6 +9635,10 @@
 			</div>
 		</div>
 		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>Expenses/ Purchase Overview</h2>
@@ -9147,7 +9663,23 @@
 						</tr>
 					</table>
 				</div>
-				<div id="sale-report-chart">Chart</div>
+				<!-- Graph -->
+				<div class="home-chart">
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+	            <!-- End Graph -->
 			</div>
 			<div class="report-chart">
 				<div class="widget-body receivable-overview" style="background-color: LightGray">
@@ -9178,7 +9710,23 @@
 						</tr>
 					</table>
 				</div>
-				<div id="sale-report-chart">Chart</div>
+				<!-- Graph -->
+				<div class="home-chart">
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+	            <!-- End Graph -->
 			</div>
 		</div>
 	</div>
@@ -9312,22 +9860,19 @@
 						<div class="widget-body alert alert-primary">
 							
 							<div align="center" class="text-large strong" data-bind="text: sale"></div>
-						
-							<br>
-						
 							<table width="100%">
 								<tr align="center">
-									<td>										
+									<td width="33%">										
 										<span data-bind="text: sale_customer"></span>
 										<br>
 										<span>Customer</span>
 									</td>
-									<td>
+									<td width="33%">
 										<span data-bind="text: sale_product"></span>
 										<br>
 										<span>Product</span>
 									</td>
-									<td>
+									<td width="33%">
 										<span data-bind="text: sale_order"></span>
 										<br>
 										<span>Order</span>
@@ -9358,17 +9903,14 @@
 						<div class="widget-body alert-info">
 							
 							<div align="center" class="text-large strong" data-bind="text: order"></div>
-
-							<br>
-						
 							<table width="100%">
 								<tr align="center">
-									<td>										
+									<td width="50%">										
 										<span data-bind="text: order_avg"></span>
 										<br>
 										<span>Average</span>
 									</td>
-									<td>
+									<td width="50%">
 										<span data-bind="text: order_open"></span>
 										<br>
 										<span>Open</span>
@@ -9396,25 +9938,22 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body" style="background-color: LightGray">
+						<div class="widget-body alert-info3" style="background-color: LightGray">
 							
 							<div align="center" class="text-large strong" data-bind="text: ar"></div>
-
-							<br>
-						
 							<table width="100%">
 								<tr align="center">
-									<td>										
+									<td width="33%">										
 										<span data-bind="text: ar_open"></span>
 										<br>
 										<span>Open</span>
 									</td>
-									<td>
+									<td width="33%">
 										<span data-bind="text: ar_customer"></span>
 										<br>
 										<span>Customer</span>
 									</td>
-									<td>
+									<td width="33%">
 										<span data-bind="text: ar_overdue"></span>
 										<br>
 										<span>Overdue</span>
@@ -9438,7 +9977,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th colspan="2">Top 5 Customers</th>				                			                
+				                <th class="center" colspan="2">Top 5 Customers</th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -9451,7 +9990,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>				           
 				            <tr>
-				                <th colspan="2">Top 5 A/R Balance</th>				                			                
+				                <th class="center" colspan="2">Top 5 A/R Balance</th>				                			                
 				            </tr>					        
 				        </thead>
 				        <tbody data-role="listview"
@@ -9464,7 +10003,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>				           
 				            <tr>
-				                <th colspan="2">Top 5 Products</th>				                			                
+				                <th class="center" colspan="2">Top 5 Products</th>				                			                
 				            </tr>					        
 				        </thead>
 				        <tbody data-role="listview"
@@ -9476,49 +10015,68 @@
 			</div>
 
 			<!-- Graph -->
-			<div data-role="chart"
-                 data-legend="{ position: 'top' }"
-                 data-series-defaults="{ type: 'column' }"
-                 data-tooltip='{
-                    visible: true,
-                    format: "{0}%",
-                    template: "#= series.name #: #= value #"
-                 }'                 
-                 data-series="[
-                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
-                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
-                             ]"	                             
-                 data-bind="source: graphDS"
-                 style="height: 250px;" ></div>
+			<div class="home-chart">
+				<div data-role="chart"
+	                 data-legend="{ position: 'top' }"
+	                 data-series-defaults="{ type: 'column' }"
+	                 data-tooltip='{
+	                    visible: true,
+	                    format: "{0}%",
+	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+	                 }'                 
+	                 data-series="[
+	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+	                             ]"	                             
+	                 data-bind="source: graphDS"
+	                 style="height: 250px;" ></div>
             <!-- End Graph -->
-
+            </div>
 		</div>		
 
 	</div>		
 </script>
 <script id="customerDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
 	<tr data-uid="#: uid #">
-		<td>#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>		
 	</tr>
 </script>
 <script id="customerDashBoard-top-ar-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>
 	</tr>
 </script>
 <script id="customerDashBoard-top-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
 		</td>
 	</tr>
@@ -9546,9 +10104,9 @@
 					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
 
 					<div class="table table-condensed" style="height: 580px;"						 
-						 data-role="grid" 
+						 data-role="grid"
+						 data-auto-bind="false"						 
 						 data-bind="source: contactDS"
-						 data-auto-bind="false" 
 						 data-row-template="customerCenter-customer-list-tmpl"
 						 data-columns="[{title: ''}]"
 						 data-selectable=true
@@ -9870,10 +10428,13 @@
 <script id="customerCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
 		<td>
-			<div class="media-body">
-				<span class="strong">
-					#=number# #=fullname#				
-				</span>
+			<div class="media-body strong">				
+				<span>#=abbr##=number#</span>
+				#if(company){#
+					<span>#=company#</span>
+				#}else{#
+					<span>#=surname#</span> <span>#=name#</span>
+				#}#				
 			</div>
 		</td>
 	</tr>
@@ -9907,14 +10468,15 @@
 
 				    <br>
 
+				    <!-- Top Part -->
 			    	<div class="row-fluid">
 			    		<div class="span6 well">									
 							<div class="row-fluid">
 								<div class="span6">														
 									<!-- Group -->
 									<div class="control-group">										
-										<label for="ddlCustomerType"><span data-bind="text: lang.lang.customer_type"></span> <span style="color:red">*</span></label>
-										<input id="ddlCustomerType" name="ddlCustomerType"
+										<label for="ddlContactType"><span data-bind="text: lang.lang.customer_type"></span> <span style="color:red">*</span></label>
+										<input id="ddlContactType" name="ddlContactType"
 												   data-role="dropdownlist"														   										                   
 								                   data-value-primitive="true"
 								                   data-text-field="name"
@@ -9932,16 +10494,20 @@
 								<div class="span6">	
 									<!-- Group -->
 									<div class="control-group">							
-										<label for="txtNumber"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>										
+										<label for="txtAbbr"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>										
+				              			<br>
 				              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
-					              				data-bind="value: obj.abbr, disabled: obj.is_pattern, events:{change: checkExistingNumber}" 
-					              				placeholder="e.g. ABC" required data-required-msg="required"
-					              				style="width: 100%;" />
-					              		<input id="txtNumber" name="txtNumber"
-					              			   data-role="numerictextbox"
-							                   data-format="n0"
-							                   data-spinners="false"						                   
-							                   data-bind="value: obj.number, disabled: obj.is_pattern, events:{change: checkExistingNumber}" />
+					              				data-bind="value: obj.abbr, 
+					              						   disabled: obj.is_pattern" 
+					              				placeholder="eg. AB" required data-required-msg="required"
+					              				style="width: 55px;" />
+					              		-
+					              		<input id="txtNumber" name="txtNumber" class="k-textbox"					              			   					                   
+							                   data-bind="value: obj.number, 
+							                   			  disabled: obj.is_pattern, 
+							                   			  events:{change: checkExistingNumber}"
+							                   placeholder="eg. 001" required data-required-msg="required"
+							                   style="width: 125px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->											
@@ -9953,7 +10519,8 @@
 									<!-- Group -->
 									<div class="control-group">
 										<label for="surname"><span data-bind="text: lang.lang.surname"></span> <span style="color:red">*</span></label>
-					              		<input id="surname" name="surname" class="k-textbox" data-bind="value: obj.surname, disabled: obj.is_pattern" 
+					              		<input id="surname" name="surname" class="k-textbox" 
+					              				data-bind="value: obj.surname, disabled: obj.is_pattern" 
 							              		placeholder="surname ..." required data-required-msg="required"
 							              		style="width: 100%;" />
 									</div>
@@ -9964,7 +10531,8 @@
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="name"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
-							            <input id="name" name="name" class="k-textbox" data-bind="value: obj.name, disabled: obj.is_pattern" 
+							            <input id="name" name="name" class="k-textbox" 
+							            		data-bind="value: obj.name, disabled: obj.is_pattern" 
 							              		placeholder="name ..." required data-required-msg="required"
 							              		style="width: 100%;" />
 									</div>																		
@@ -10032,7 +10600,7 @@
 						</div>
 					</div>								
 							
-					<!-- // Inner Tabs -->
+					<!-- // Bottom Tabs -->
 					<div class="row-fluid">								
 						<div class="box-generic">
 						    <!-- //Tabs Heading -->
@@ -10052,7 +10620,8 @@
 						    <!-- // Tabs Heading END -->
 
 						    <div class="tab-content">
-						    	 <!-- //GENERAL INFO -->
+
+						    	<!-- //GENERAL INFO -->
 						        <div class="tab-pane active" id="tab1">
 					            	<table class="table table-borderless table-condensed cart_total">						            	
 					            		<tr>
@@ -10065,13 +10634,13 @@
 						           						data-value-primitive="true" 
 									            		data-bind="source: statusList, value: obj.status"
 									            		data-option-label="(--- Select ---)"
-									            		required data-required-msg="ត្រូវការ ស្ថានភាព" />
+									            		required data-required-msg="required" />
 							              	</td>							              	
 							            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
 							              	<td>
 							              		<input id="registered_date" name="registered_date" 
 								            		data-role="datepicker"			            		
-					            					data-bind="value: obj.registered_date" 
+					            					data-bind="value: obj.registered_date, disabled: obj.is_pattern" 
 					            					data-format="dd-MM-yyyy"
 					            					data-parse-formats="yyyy-MM-dd" 
 					            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
@@ -10084,10 +10653,30 @@
 							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
 							            </tr>
 							            <tr>
-							            	<td><span data-bind="text: lang.lang.address"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />							              	
+							            	<td>Country</td>
+							              	<td>
+							              		<input data-role="dropdownlist"
+							              			   data-option-label="(--- Select ---)"									                   
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.country_id,
+									                              source: countryDS" />
+							              	</td>							            								              	
 							            	<td><span data-bind="text: lang.lang.email"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" />
+							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" />							            	
+							            </tr>
+							            <tr>
+							            	<td>City</td>
+							              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." />							              	
+							            	<td>Post Code</td>
+							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" />
+							            </tr>
+							            <tr>
+							            	<td><span data-bind="text: lang.lang.address"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />									            								              	
+							            	<td><span data-bind="text: lang.lang.memo"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>							              	
 							            </tr>									            
 							            <tr>
 							            	<td>
@@ -10102,19 +10691,12 @@
 							            	<td>
 							            		<input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." />
 							            	</td>
-							            </tr>
-							            <tr>									            								              	
-							            	<td><span data-bind="text: lang.lang.memo"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>
-							              	<td></td>
-							              	<td></td>
-							            </tr>							            							            								            								            			            
+							            </tr>							            							            							            								            								            			            
 							        </table>
 					        	</div>
 						        <!-- //GENERAL INFO END -->
 
-
-						        <!-- //ACCOUNTING INFO -->
+						        <!-- //ACCOUNTING -->
 						        <div class="tab-pane" id="tab2">
 						        	
 						        	<div class="row-fluid">								        		
@@ -10182,8 +10764,8 @@
 								            	data-template="currency-list-tmpl"
 								            	data-value-primitive="true"
 								                data-text-field="code"
-								                data-value-field="id"
-												data-bind="value: obj.currency_id, source: currencyDS"
+								                data-value-field="locale"
+												data-bind="value: obj.locale, source: currencyDS"
 												data-option-label="(--- Select ---)" 
 												required data-required-msg="required" style="width: 100%;" />
 								        </div>
@@ -10249,8 +10831,7 @@
 										</div>																							
 									</div>
 					        	</div>
-						        <!-- //ACCOUNTING INFO END -->
-						       
+						        <!-- //ACCOUNTING END -->						       
 
 						        <!-- //CONTACT PERSON -->
 						        <div class="tab-pane" id="tab3">
@@ -10285,10 +10866,9 @@
 						<span id="notification"></span>
 
 						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
-						<!-- <span id="saveSend" class="btn btn-icon btn-warning glyphicons envelope" style="width: 80px;"><i></i> Save Send</span>										 -->
-						
+						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>						
 						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+						<span class="btn btn-icon btn-default glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
 					</div>
 					<!-- // Form actions END -->
 
@@ -10527,6 +11107,22 @@
 													   			events:{ change: segmentChanges }"
 													   data-placeholder="Add Segment.."				   
 													   style="width: 100%" /></select>
+											</td>
+										</tr>
+										<tr>
+											<td>Job</td>
+											<td>
+												<input id="ddlJob" name="ddlJob"
+													   data-role="dropdownlist"
+													   data-template="job-list-tmpl"
+													   data-auto-bind="false"				                
+									                   data-value-primitive="true"									                   				   
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.job_id, 
+									                   			source: jobDS"
+									                   data-option-label="Add job..." 
+									                   style="width: 100%" />										
 											</td>
 										</tr>											
 						            </table>
@@ -10815,8 +11411,7 @@
 		<td>
 			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
 					type="text" class="k-textbox" 
-					data-bind="value: description"					 
-					required data-required-msg="required"
+					data-bind="value: description"
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
@@ -11082,6 +11677,22 @@
 													   			events:{ change: segmentChanges }"
 													   data-placeholder="Add Segment.."				   
 													   style="width: 100%" /></select>
+											</td>
+										</tr>
+										<tr>
+											<td>Job</td>
+											<td>
+												<input id="ddlJob" name="ddlJob"
+													   data-role="dropdownlist"
+													   data-template="job-list-tmpl"
+													   data-auto-bind="false"				                
+									                   data-value-primitive="true"									                   				   
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.job_id, 
+									                   			source: jobDS"
+									                   data-option-label="Add job..." 
+									                   style="width: 100%" />										
 											</td>
 										</tr>											
 						            </table>
@@ -11370,8 +11981,7 @@
 		<td>
 			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
 					type="text" class="k-textbox" 
-					data-bind="value: description"					 
-					required data-required-msg="required"
+					data-bind="value: description"
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
@@ -11613,6 +12223,22 @@
 													   			events:{ change: segmentChanges }"
 													   data-placeholder="Add Segment.."				   
 													   style="width: 100%" /></select>
+											</td>
+										</tr>
+										<tr>
+											<td>Job</td>
+											<td>
+												<input id="ddlJob" name="ddlJob"
+													   data-role="dropdownlist"
+													   data-template="job-list-tmpl"
+													   data-auto-bind="false"				                
+									                   data-value-primitive="true"									                   				   
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.job_id, 
+									                   			source: jobDS"
+									                   data-option-label="Add job..." 
+									                   style="width: 100%" />										
 											</td>
 										</tr>											
 						            </table>
@@ -11896,8 +12522,7 @@
 		<td>
 			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
 					type="text" class="k-textbox" 
-					data-bind="value: description"					 
-					required data-required-msg="required"
+					data-bind="value: description"
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
@@ -12387,8 +13012,7 @@
 		<td>
 			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
 					type="text" class="k-textbox" 
-					data-bind="value: description"					 
-					required data-required-msg="required"
+					data-bind="value: description"
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
@@ -12519,6 +13143,22 @@
 						    	<!-- Options Tab content -->
 						        <div class="tab-pane active" id="tab1-4">						            
 						            <table class="table table-borderless table-condensed cart_total">							           							           
+										<tr>
+											<td>Job</td>
+											<td>
+												<input id="ddlJob" name="ddlJob"
+													   data-role="dropdownlist"
+													   data-template="job-list-tmpl"
+													   data-auto-bind="false"				                
+									                   data-value-primitive="true"									                   				   
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.job_id, 
+									                   			source: jobDS"
+									                   data-option-label="Add job..." 
+									                   style="width: 100%" />										
+											</td>
+										</tr>
 										<tr>							            				
 											<td>
 							            		<input data-role="dropdownlist"
@@ -12558,11 +13198,7 @@
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 											
 						        </div>
-						        <!-- // Address Tab content END -->
-
-						        <!-- Info Tab content -->
-						       
-						        <!-- // Info Tab content END -->
+						        <!-- // Address Tab content END -->						        
 
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab3-4">							            	
@@ -12794,8 +13430,7 @@
 		<td>
 			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
 					type="text" class="k-textbox" 
-					data-bind="value: description"					 
-					required data-required-msg="required"
+					data-bind="value: description"
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
@@ -12896,7 +13531,7 @@
 						            </li>						            
 						            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
 						            </li>						            
-						            <li class="span3 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
+						            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i></a>
 						            </li>						            								            
 						        </ul>
 						    </div>
@@ -12953,6 +13588,22 @@
 													   			events:{ change: segmentChanges }"
 													   data-placeholder="Add Segment.."				   
 													   style="width: 100%" /></select>
+											</td>
+										</tr>
+										<tr>
+											<td>Job</td>
+											<td>
+												<input id="ddlJob" name="ddlJob"
+													   data-role="dropdownlist"
+													   data-template="job-list-tmpl"
+													   data-auto-bind="false"				                
+									                   data-value-primitive="true"									                   				   
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.job_id, 
+									                   			source: jobDS"
+									                   data-option-label="Add job..." 
+									                   style="width: 100%" />										
 											</td>
 										</tr>	
 						            </table>						            
@@ -13255,8 +13906,7 @@
 		<td>
 			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
 					type="text" class="k-textbox" 
-					data-bind="value: description"					 
-					required data-required-msg="required"
+					data-bind="value: description"
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>
@@ -13855,7 +14505,7 @@
 		<td class="right">
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
-					data-format="n0" 
+					data-format="c" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>			
@@ -13891,18 +14541,25 @@
 	            <!-- CUSTOMER TYPE -->
 	            <div class="tab-pane active" id="tab1-1">
 	            	<div class="input-append">
-					    <input class="span12" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
+					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
+					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input abbr ..." data-bind="value: contactTypeAbbr">
+					    <select class="span3" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
+			                <option value="0">Not A Company</option>
+			                <option value="1">It Is A Company</option>			                
+			            </select>
 					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i> Add Type</button>
 					</div>
 	            	<table class="table table-bordered table-white">
 	            		<thead>
 	            			<tr>
 	            				<th>Type</th>
+	            				<th>Abbr</th>
+	            				<th>Is Company</th>
 	            				<th></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
+	            				data-auto-bind="false"	            				
 		            			data-edit-template="customerSetting-edit-contact-type-template"
 				                data-template="customerSetting-contact-type-template"
 				                data-bind="source: contactTypeDS"></tbody>
@@ -13966,7 +14623,17 @@
 <script id="customerSetting-contact-type-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
-    		 #:name#
+    		#:name#
+   		</td>
+   		<td>
+    		#:abbr#
+   		</td>
+   		<td>
+    		#if(is_company=="1"){#
+    			Yes
+    		#}else{#
+    			No
+    		#}#
    		</td>
    		<td>   			
    			<div class="edit-buttons">       
@@ -13985,6 +14652,20 @@
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
                 <span data-for="ProductName" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
+                <span data-for="abbr" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
+        <dl>                
+            <dd>
+                <select data-bind="value: is_company" >
+	                <option value="0">Not a company</option>
+	                <option value="1">It is a company</option>			                
+	            </select>
             </dd>               
         </dl>
         <div class="edit-buttons">
@@ -14073,10 +14754,114 @@
     </div>
 </script>
 
+<script id="job" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+
+					<div class="hidden-print">
+				    	<div class="pull-right">
+
+				    		<span class="glyphicons no-js remove_2" 
+								data-bind="click: cancel"><i></i></span>						
+						</div>
+
+				        <h2>JOB</h2>				        				        				        	
+				    </div>			   
+
+				    <br>
+
+				    <div data-role="window"
+		                 data-title="Job"		                 
+		                 data-width="600"
+		                 data-actions="{}"
+		                 data-position="{top: '30%', left: '30%'}"
+		                 data-height="300"
+		                 data-bind="visible: isVisible">
+
+						<table class="table table-bordered table-primary table-striped table-vertical-center">							
+							<tr>
+								<td>Name</td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>Description</td>
+								<td>
+									<input class="k-textbox" placeholder="type description ..." data-bind="value: obj.description" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>Customer</td>
+								<td>
+									<input data-role="combobox"
+										   data-template="contact-list-tmpl"				            			               			   		                   
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.contact_id,
+						                              source: contactDS"
+						                   style="width: 100%;" />
+								</td>
+							</tr>							
+						</table>
+
+						<br>
+
+						<div align="center">
+							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> Save</span>
+							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> Close</span>						
+						</div>
+					</div>
+					
+					<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> Add New Job</button>
+					                                					
+	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
+	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
+	            			<tr>	            				
+	            				<th>NAME</th>
+	            				<th>DESCRIPTION</th>
+	            				<th>CUSTOMER</th>	            					            				
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"			            			
+				                data-template="job-template"
+				                data-bind="source: dataSource"></tbody>
+	            	</table>
+	            </div>	            						
+			</div>
+		</div>
+	</div>
+</script>
+<script id="job-template" type="text/x-kendo-tmpl">                    
+    <tr>    	
+    	<td>#=name#</td>
+    	<td>#=description#</td>
+    	<td>
+    		#if(contact.length>0){#
+    			#if(contact[0].company){#
+    				#=contact[0].company#
+    			#}else{#
+    				#=contact[0].surname# #=contact[0].name#
+    			#}#
+    		#}#
+    	</td>    	
+    	<td>
+    		<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
+    		|
+    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
+    	</td>
+   	</tr>
+</script>
+
 <script id="customerReportCenter" type="text/x-kendo-template">
 	<div class="row-fluid customer-report-center">
+
 		<div class="span7">
-			<div class="row-fluid sale-report">
+			<div class="row-fluid sale-report">				
 				<h2>SALE MANAGEMENT REPORTS</h2>
 				<p>
 					The following reports provide summary and detailed reports in 
@@ -14086,10 +14871,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td width="50%">
-								<h3><a href="#/customer_balance">Sale Summary by Customer</a></h3>
+								<h3><a href="#/sale_summary_customer">Sale Summary by Customer</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a href="#/">Customer Transaction List</a></h3>								
+								<h3><a href="#/customer_transaction_list">Customer Transaction List</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -14109,7 +14894,7 @@
 						</tr>
 						<tr>
 							<td width="50%">
-								<h3><a href="#/">Sale Detail by Customer</a></h3>
+								<h3><a href="#/sale_detail_customer">Sale Detail by Customer</a></h3>
 							</td>
 							<td width="50%">
 								<h3><a href="#/">Deposit Detail by Customer</a></h3>
@@ -14130,7 +14915,7 @@
 
 						<tr>
 							<td width="50%">
-								<h3><a href="#/">Sale Summary by Product/ Services</a></h3>
+								<h3><a href="#/sale_summary_product">Sale Summary by Product/ Services</a></h3>
 							</td>
 							<td width="50%">
 								<h3><a href="#/">Sale Detail by Product/ Services</a></h3>
@@ -14148,6 +14933,14 @@
 								</p>
 							</td>
 						</tr>
+						<tr>
+							<td width="50%">
+								<h3><a href="#/">Sale by Job/Engagement</a></h3>
+							</td>
+							<td width="50%">
+							</td>
+						</tr>
+						
 
 					</table>
 					
@@ -14163,29 +14956,49 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td >
-								<h3><a href="#/">Statement of Profit or Loss</a></h3>
+								<h3><a href="#/">Customer Balance Summary</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Statement of Financial Position</a></h3>								
+								<h3><a href="#/">Customer Balance Detail</a></h3>								
 							</td>						
 						</tr>
 						<tr>
 							<td>
 								<p>
-									Provides the progress of your company’s financial performance, summarized in 
-									a record of income generated and expenses incurred over a given period.
+									Show each customer’s total outstanding balances.
 								</p>
 								
 							</td>
 							<td >
 								<p>
-									Provides the snapshot of your company’s financial position on value and ownership. 
-									It is the relationship of the company’s assets, liabilities and equities as of a 
-									specific date.
+									Lists individual unpaid invoices for each customer
 								</p>
 							</td>
 							
 						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Receivable Aging Summary</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Receivable Aging Detail</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists all unpaid invoices for the current period, 30, 60, 90, 
+									and more than 90 days, grouped by individual customers.
+								</p>
+							</td>
+							<td >
+								<p>
+									Lists individual unpaid invoices, grouped by customer. This includes due date, 
+									outstanding days (aging days), and amount.
+								</p>
+							</td>
+						</tr>
+
 						<tr>
 							<td >
 								<h3><a href="#/">List of invoices to be collected</a></h3>
@@ -14195,7 +15008,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td >
+							<td>
 								<p>
 									Lists all unpaid invoices, grouped by Due today and Overdue.
 								</p>
@@ -14216,7 +15029,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>
+							<td >
 								<p>
 									Shows a chronological list of all your invoices for a selected date range.
 								</p>
@@ -14228,35 +15041,11 @@
 							</td>
 						</tr>
 
-						<tr>
-							<td >
-								<h3><a href="#/">Sale Summary by Product/ Services</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/">Sale Detail by Product/ Services</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<p>
-									Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices. 
-								</p>
-							</td>
-							<td >
-								<p>
-									Lists individual sale transactions by date for each product/ service with a period of time.
-								</p>
-							</td>
-						</tr>
-
 					</table>
 				</div>
 			</div>
 			<div class="row-fluid recevable-report">
 				<h2>OTHER REPORTS/ LISTS</h2>
-				<p>
-					The following reports provide summary and detailed reports.
-				</p>
 				<div class="row-fluid">
 					<table class="table table-borderless table-condensed">
 						<tr>
@@ -14294,6 +15083,10 @@
 			</div>
 		</div>
 		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>SALE OVERVIEW</h2>
@@ -14315,10 +15108,33 @@
 								<br>
 								<span>Order</span>
 							</td>
+							<td >
+								<span>0</span>
+								<br>
+								<span>Sale Order</span>
+							</td>
+
 						</tr>
 					</table>
 				</div>
-				<div id="sale-report-chart">Chart</div>
+				<!-- Graph -->
+				<div class="home-chart">
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+	            <!-- End Graph -->
+	            </div>
 			</div>
 			<div class="report-chart">
 				<div class="widget-body receivable-overview" style="background-color: LightGray">
@@ -14349,11 +15165,997 @@
 						</tr>
 					</table>
 				</div>
-				<div id="sale-report-chart">Chart</div>
+				<!-- Graph -->
+				<div class="home-chart">
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+	            <!-- End Graph -->
+            </div>
 			</div>
 		</div>
 	</div>
 </script>
+<script id="saleSummaryCustomer" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Summary by Customer</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<p>Total Customer</p>
+								<span>7</span>
+							</div>
+
+						</div>
+						<div class="span7">
+							<div class="total-sale">
+								<p>Total Sale</p>
+								<span>121,500.00</sapn>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>CUSTOMER</th>
+							<th>TOTAL SALE</th>
+						</tr>
+						<tr>
+							<td>A S Co.,Ltd</td>
+							<td>13,000.00</td>
+						</tr>
+						<tr>
+							<td>Bon Bon</td>
+							<td>8,500.00</td>
+						</tr>
+						<tr>
+							<td>Ly Channy</td>
+							<td>10,000.00</td>
+						</tr>
+						<tr>
+							<td>Ka Ka</td>
+							<td>15,000.00</td>
+						</tr>
+						<tr>
+							<td>Sok Chan</td>
+							<td>20,000.00</td>
+						</tr>
+						<tr>
+							<td>Yellow Trading</td>
+							<td>20,000.00</td>
+						</tr>
+						<tr>
+							<td>Zoo Image</td>
+							<td>30,000.00</td>
+						</tr>
+						<tr>
+							<th>Total</th>
+							<th>121,500.00</th>
+						</tr>
+					</table>
+
+				</div>		
+			</div>
+		</div>
+	</div>
+	<br>
+	<hr>
+	<br>
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Summary by Customer's Segment</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Segment</p>
+									<span>2</span>
+								</div>
+								<div class="span6">
+									<p>Total Customer</p>
+									<span>7</span>
+								</div>	
+									
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-sale">
+								<p>Total Sale</p>
+								<span>121,500.00</sapn>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>CUSTOMER</th>
+							<th>TOTAL SALE</th>
+						</tr>
+						<tr>
+							<td>Phonm Penh Branch</td>
+							<td>13,000.00</td>
+						</tr>
+						<tr>							
+							<td style="padding-left:30px !important;">A S Co.,Ltd</td>
+							<td style="padding-left:30px !important;">8,500.00</td>
+						</tr>
+						<tr>
+							<td style="padding-left:30px !important;">Bon Bon</td>
+							<td style="padding-left:30px !important;">10,000.00</td>
+						</tr>
+						<tr>
+							<td>Battambang Branch</td>
+							<td>13,000.00</td>
+						</tr>
+						<tr>
+							<td style="padding-left:30px !important;">Bon Bon</td>
+							<td style="padding-left:30px !important;">20,000.00</td>
+						</tr>
+						<tr>
+							<td style="padding-left:30px !important;">Sok Chan</td>
+							<td style="padding-left:30px !important;">25,000.00</td>
+						</tr>
+						<tr>
+							<td style="padding-left:30px !important;">Yellow Trading</td>
+							<td style="padding-left:30px !important;">30,000.00</td>
+						</tr>						
+						<tr>
+							<th>Total</th>
+							<th>121,500.00</th>
+						</tr>
+					</table>
+
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="customerTransactionList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />	
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Customer Transaction List</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span4">
+									<p>Total Customer</p>
+									<span>2</span>
+								</div>
+								<div class="span4">
+									<p>Cash Sale</p>
+									<span>500</span>
+								</div>	
+								<div class="span4">
+									<p>Cash Receipt</p>
+									<span>1,200</span>
+								</div>	
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Total Sale</p>
+									<span>2,700.00</span>
+								</div>
+								<div class="span6">
+									<p>Customer Balance</p>
+									<span>2,200.00</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th></th>
+							<th>Type</th>
+							<th>Date</th>
+							<th>No</th>
+							<th>Memo</th>							
+							<th>Account</th>
+							<th>Amount</th>
+						</tr>
+						<tr>
+							<td>Sovan Tevy</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Invoice</td>
+							<td>7/1/16</td>
+							<td>IV-0001</td>
+							<td>anmsjssd</td>
+							<td>Account Receivable</td>
+							<td>1,000.00</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Cash Sale</td>
+							<td></td>
+							<td>SR-0003</td>
+							<td>anmsjssd</td>
+							<td>Cash on hand</td>
+							<td>500.00</td>							
+						</tr>
+						<tr>
+							<td>Toni</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Invoice</td>
+							<td>7/1/16</td>
+							<td>IV-0015</td>
+							<td>asg</td>
+							<td>Account Receivable</td>
+							<td>1,200.00</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Cash Receipt</td>
+							<td></td>
+							<td>CR-0122</td>
+							<td>ss</td>
+							<td>Cash on hand</td>
+							<td>(1,200.00)</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Deposit</td>
+							<td></td>
+							<td>DS-0123</td>
+							<td>aa</td>
+							<td>Cash on hand</td>
+							<td>(2,100.00)</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Sub-total</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>(2,100.00)</td>							
+						</tr>
+						
+						<tr>
+							<th colspan="4">Total</th>
+							<th colspan="3">(600.00)</th>
+						</tr>
+					</table>
+					
+
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleDetailCustomer" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Detail by Customer</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<p>Total Customers</p>
+								<span></span>
+							</div>
+
+						</div>
+						<div class="span7">
+							<div class="total-sale">
+								<p>Total Sale</p>
+								<span></sapn>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>Type</th>
+							<th>Date</th>
+							<th>No</th>
+							<th>Memo</th>
+							<th>Item/service</th>
+							<th>Qty</th>
+							<th>Price</th>
+							<th>Amount</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th colspan="4">Total</th>
+							<th colspan="4">-</th>
+						</tr>
+					</table>
+
+				</div>		
+			</div>
+		</div>
+	</div>
+	<br>
+	<hr>
+	<br>
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Detail by Customer by Segment</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<p>Total Customers</p>
+								<span></span>
+							</div>
+
+						</div>
+						<div class="span7">
+							<div class="total-sale">
+								<p>Total Sale</p>
+								<span></sapn>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>Type</th>
+							<th>Date</th>
+							<th>Reference</th>
+							<th>Customer</th>
+							<th>Memo</th>
+							<th>Item/service</th>
+							<th>Qty</th>
+							<th>Price</th>
+							<th>Amount</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th colspan="5">Total</th>
+							<th colspan="4">-</th>
+						</tr>
+					</table>
+
+				</div>		
+			</div>
+		</div>
+	</div>	
+</script>
+<script id="saleSummaryProduct" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Summary by Product/Services</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Total Product/services</p>
+									<span>2</span>
+								</div>
+								<div class="span6">
+									<p>AVG Sale</p>
+									<span>600</span>
+								</div>	
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Total Sale</p>
+									<span>1,200.00</span>
+								</div>
+								<div class="span6">
+									<p>Gross Profit Margin</p>
+									<span>50%</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th></th>
+							<th>Qty</th>
+							<th>Amount</th>
+							<th>Sale %</th>
+							<th>AVG Price</th>							
+							<th>Cost</th>
+							<th>Gross Profit Margin</th>
+						</tr>
+						<tr>						
+							<td>Cement</td>
+							<td>100</td>
+							<td>500</td>
+							<td>33%</td>
+							<td>5.00</td>
+							<td>4.00</td>
+							<td>25%</td>
+						</tr>
+						<tr>
+							<td>Window</td>
+							<td>200</td>
+							<td>700</td>
+							<td>67%</td>
+							<td>3.50</td>
+							<td>2</td>
+							<td>75%</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th>Total</th>
+							<th>300.00</th>
+							<th colspan="2">1,200.00</th>
+							<th colspan="2">4.25</th>
+							<th>50%</th>
+						</tr>
+					</table>
+					
+
+				</div>		
+			</div>
+		</div>
+	</div>
+	<br>
+	<hr>
+	<br>
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Summary by Product/Services by Segment</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Total Product/services</p>
+									<span>2</span>
+								</div>
+								<div class="span6">
+									<p>AVG Sale</p>
+									<span>600</span>
+								</div>											
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Total Sale</p>
+									<span>1,200.00</span>
+								</div>
+								<div class="span6">
+									<p>Gross Profit Margin</p>
+									<span>50%</span>
+								</div>	
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th></th>
+							<th>Qty</th>
+							<th>Amount</th>
+							<th>Sale %</th>
+							<th>AVG Price</th>							
+							<th>Cost</th>
+							<th>Gross Profit Margin</th>
+						</tr>
+						<tr>
+							<td>PHNOM PENH BRANCH</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td style="padding-left:30px !important;">Window</td>
+							<td>200</td>
+							<td>700</td>
+							<td>67%</td>
+							<td>3.50</td>
+							<td>2</td>
+							<td>75%</td>
+						</tr>
+						<tr>						
+							<td style="padding-left:30px !important;">Cement</td>
+							<td >100</td>
+							<td>500</td>
+							<td>33%</td>
+							<td>5.00</td>
+							<td>4.00</td>
+							<td>25%</td>
+						</tr>						
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th>Total</th>
+							<th>300.00</th>
+							<th colspan="2">1,200.00</th>
+							<th colspan="2">4.25</th>
+							<th>50%</th>
+						</tr>
+					</table>
+
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+
+
 <script id="customerList" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -14500,6 +16302,963 @@
 			</div><!-- //End div row-fluid-->
 		</div>
 	</div>	
+</script>
+
+<script id="invoiceCustom" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2>INVOICE CUSTOM</h2>
+				    <br>	
+				    <div class="row" style="margin-left:0;">			   				
+						<div class="span4">	
+							<div class="span12">
+								<h2 class="btn btn-block btn-primary">Form Style</h2>
+								<div class="row formstyle">
+									<a class="span4 form-thumb-active" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/inv1_thumb.jpg" />
+									</a>
+									<a class="span4" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/inv2_thumb.jpg" />
+									</a>
+									<a class="span4" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/form-thumb1.jpg" />
+									</a>
+								</div>
+							</div>
+							<div class="span12" style="margin-left:0; margin-top: 10px;">
+								<h2 class="btn btn-block btn-primary">Form Color</h2>
+								<div class="colorPalatte">
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(242, 242, 242)" data-colorval="#bdbdbd" style="background-color: #bdbdbd"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(224, 224, 224)" data-colorval="#636363" style="background-color: #636363"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(204, 204, 204)" data-colorval="#000000" style="background-color: #000000"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(237, 242, 248)" data-colorval="#a6bddb" style="background-color: #a6bddb"></div>
+                                    </div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(228, 231, 236)" data-colorval="#7889a1" style="background-color: #7889a1"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(218, 221, 223)" data-colorval="#48565f" style="background-color: #48565f"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(228, 242, 222)" data-colorval="#79BD58" style="background-color: #79BD58"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(207, 233, 235)" data-colorval="#0e909a" style="background-color: #0e909a"></div>
+                                    </div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(210, 213, 222)" data-colorval="#202e5a" style="background-color: #202e5a"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(234, 242, 213)" data-colorval="#96bc2d" style="background-color: #96bc2d"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(212, 224, 210)" data-colorval="#2a651d" style="background-color: #2a651d"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(204, 217, 221)" data-colorval="#004254" style="background-color: #004254"></div>
+                                    </div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(255, 232, 204)" data-colorval="#ff8c00" style="background-color: #ff8c00"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(230, 204, 210)" data-colorval="#82001d" style="background-color: #82001d"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(225, 208, 215)" data-colorval="#6b1438" style="background-color: #6b1438"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(253, 227, 235)" data-colorval="#f4749b" style="background-color: #f4749b"></div>
+                                    </div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(234, 204, 225)" data-colorval="#950069" style="background-color: #950069"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(221, 212, 220)" data-colorval="#542852" style="background-color: #542852"></div>
+                                    </div>
+                                </div>
+							</div>
+						</div>
+						<div class="span8" style="border:1px solid #eee;margin-bottom:20px;">
+							<div class="inv1 invvisible">
+					        	<div class="head">
+					            	<div class="logo">
+					                	<img src="<?php echo base_url(); ?>assets/invoice/img/logo.png" />
+					                </div>
+					                <div class="cover-name-company">
+					                	<h2>ឈ្មោះក្រុមហ៊ុន​ជា​ភាសា​ខ្មែរ</h2>
+					                    <h3>Company Name</h3>
+					                    <div class="vattin">
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 1%;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+					                    </div>
+					                    <div class="clear">
+					                    	<pre>អាស័យ​ដ្ឋាន៖ ផ្ទះលេខ                    ផ្លូវ                            ឃុំ/សង្កាត់</pre>
+					                        <pre>Address       N<sup>o</sup>                          street                      Commune/Sangkat</pre>
+					                        <pre>ក្រុង/ស្រុក/ខណ្ឌ                            ខេត្ត/រាជធានី                            ទូរស័ព្ទលេខ</pre>
+					                        <pre>Town/District/Khan                     Province/City                         Telephone N<sup>o</sup></pre>
+					                    </div>
+					                </div>
+					            </div>
+					            <div class="content">
+					            	<h1>វិក្កយបត្រ</h1>
+					                <h2>invoice</h2>
+					                <div class="clear">
+					                	<div class="cover-customer">
+					                    	<h5>អតិថិជន​ / Customer :</h5>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+					                                <span>Company name / Customer</span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 62%;">
+					                            	<p style="font-weight:bold">ឡូត ជឿន</p>
+					                            </div>
+					                        </div>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ទូរស័ព្ទ​លេខ</p>
+					                                <span>Telephone N<sup>o</sup></span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 78%;">
+					                            	<p style="font-weight:bold">010 411429</p>
+					                            </div>
+					                        </div>
+					                    </div>
+					                    <div class="cover-inv-number">
+					                    	<div class="clear">
+					                        	<div class="left">
+					                        		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+					                                <span>​​Invoice N<sup>o</sup></span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 42%;">
+					                            	<p style="font-weight:bold">023450</p>
+					                            </div>
+					                        </div>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>កាល​បរិច្ឆេទ៖</p>
+					                                <span>​​Date</span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 57%;">
+					                            	<p style="font-weight:bold">24/Jun/2016</p>
+					                            </div>
+					                        </div>
+					                    </div>
+					                </div>
+					            	<div class="clear">
+					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 1%;">
+					                    	<thead>
+					                            <tr>
+					                                <th>ល.រ<br />N<sup>0</sup></th>
+					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+					                                <th>បរិមាណ<br />Quantity</th>
+					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
+					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+					                            </tr>
+					                        </thead>
+					                        <tbody style="margin-top: 2px">
+					                        	<tr>
+					                            	<td><i>1</i></td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>2</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>3</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>4</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>5</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>6</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>7</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>8</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>9</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>10</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>11</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>12</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>13</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>14</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>15</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
+					                                <td></td>
+					                            </tr>
+					                        </tbody>
+					                    </table>
+					                </div>
+					            </div>
+					            <div class="foot">
+					            	<div class="cover-signature">
+					                	<div class="singature" style="float:left">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+					                    </div>
+					                    <div class="singature" style="float:right">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+					                    </div>
+					                </div>
+					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+					            </div>
+					        </div>
+					        <div class="inv1 invhidden">
+					        	<div class="head">
+					            	<div class="logo">
+					                	<img src="<?php echo base_url(); ?>assets/invoice/img/logo.png" />
+					                </div>
+					                <div class="cover-name-company">
+					                	<h2>ឈ្មោះក្រុមហ៊ុន​ជា​ភាសា​ខ្មែរ</h2>
+					                    <h3>Company Name</h3>
+					                    <div class="vattin">
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 1%;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+					                    </div>
+					                    <div class="clear">
+					                    	<pre>អាស័យ​ដ្ឋាន៖ ផ្ទះលេខ                    ផ្លូវ                            ឃុំ/សង្កាត់</pre>
+					                        <pre>Address       N<sup>o</sup>                          street                      Commune/Sangkat</pre>
+					                        <pre>ក្រុង/ស្រុក/ខណ្ឌ                            ខេត្ត/រាជធានី                            ទូរស័ព្ទលេខ</pre>
+					                        <pre>Town/District/Khan                     Province/City                         Telephone N<sup>o</sup></pre>
+					                    </div>
+					                </div>
+					            </div>
+					            <div class="content">
+					            	<h1>វិក្កយបត្រអាករ</h1>
+					                <h2>invoice</h2>
+					                <div class="clear">
+					                	<div class="cover-customer" style="width: 80%;">
+					                    	<h5>អតិថិជន​ / Customer :</h5>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+					                                <span>Company name / Customer</span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 42%;">
+					                            	<p style="font-weight:bold">ឡូត ជឿន</p>
+					                            </div>
+					                        </div>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ទូរស័ព្ទ​លេខ</p>
+					                                <span>Telephone N<sup>o</sup></span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 52%;">
+					                            	<p style="font-weight:bold">010 411429</p>
+					                            </div>
+					                        </div>
+					                        <div class="vattin">
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 5px;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+					                    </div>
+					                    </div>
+					                    <div class="cover-inv-number" style="width: 20%;">
+					                    	<div style="position: absolute;left:-70%;width:165%; ">
+					                            <div class="clear">
+					                                <div class="left">
+					                                    <p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+					                                    <span>​​Invoice N<sup>o</sup></span>
+					                                </div>
+					                                <div class="left dotted-ruler" style="width: 46%;">
+					                                    <p style="font-weight:bold">023450</p>
+					                                </div>
+					                            </div>
+					                            <div class="clear">
+					                                <div class="left">
+					                                    <p>កាល​បរិច្ឆេទ៖</p>
+					                                    <span>​​Date</span>
+					                                </div>
+					                                <div class="left dotted-ruler" style="width: 59%;">
+					                                    <p style="font-weight:bold">24/Jun/2016</p>
+					                                </div>
+					                            </div>
+					                        </div>
+					                    </div>
+					                </div>
+					            	<div class="clear inv2">
+					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
+					                    	<thead>
+					                            <tr>
+					                                <th>ល.រ<br />N<sup>0</sup></th>
+					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+					                                <th>បរិមាណ<br />Quantity</th>
+					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
+					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+					                            </tr>
+					                        </thead>
+					                        <tbody style="margin-top: 2px">
+					                        	<tr>
+					                            	<td><i>1</i></td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>2</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>3</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>4</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>5</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>6</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>7</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>8</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>9</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>10</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>11</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>12</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>13</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>14</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>15</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​<br />Sub Total</td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០%<br />VAT (10%)</td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​<br />Grand Total</td>
+					                                <td></td>
+					                            </tr>
+					                        </tbody>
+					                    </table>
+					                </div>
+					            </div>
+					            <div class="foot">
+					            	<div class="cover-signature">
+					                	<div class="singature" style="float:left">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+					                    </div>
+					                    <div class="singature" style="float:right">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+					                    </div>
+					                </div>
+					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+					            </div>
+					        </div>
+						</div>
+					</div>
+					<!-- Form actions -->
+					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
+						<span id="notification"></span>
+
+						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
+						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>									
+					</div>
+					<!-- // Form actions END -->
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="invoiceSelect" type="text/x-kendo-template">
+    <div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2>INVOICE SELECT</h2>
+				    <br>	
+				    <div class="row" style="margin-left:0;">			   				
+						<div class="span4">	
+							<div class="span12">
+								<h2 class="btn btn-block btn-primary">Form Style</h2>
+								<div class="row formstyle">
+									<a class="span4 form-thumb-active" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/inv1_thumb.jpg" />
+									</a>
+									<a class="span4" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/inv2_thumb.jpg" />
+									</a>
+									<a class="span4" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/form-thumb1.jpg" />
+									</a>
+								</div>
+							</div>
+							
+						</div>
+						<div class="span8" style="border:1px solid #eee;margin-bottom:20px;">
+							<div class="inv1 invvisible">
+					        	<div class="head">
+					            	<div class="logo">
+					                	<img src="<?php echo base_url(); ?>assets/invoice/img/logo.png" />
+					                </div>
+					                <div class="cover-name-company">
+					                	<h2>ឈ្មោះក្រុមហ៊ុន​ជា​ភាសា​ខ្មែរ</h2>
+					                    <h3>Company Name</h3>
+					                    <div class="vattin">
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 1%;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+					                    </div>
+					                    <div class="clear">
+					                    	<pre>អាស័យ​ដ្ឋាន៖ ផ្ទះលេខ                    ផ្លូវ                            ឃុំ/សង្កាត់</pre>
+					                        <pre>Address       N<sup>o</sup>                          street                      Commune/Sangkat</pre>
+					                        <pre>ក្រុង/ស្រុក/ខណ្ឌ                            ខេត្ត/រាជធានី                            ទូរស័ព្ទលេខ</pre>
+					                        <pre>Town/District/Khan                     Province/City                         Telephone N<sup>o</sup></pre>
+					                    </div>
+					                </div>
+					            </div>
+					            <div class="content">
+					            	<h1>វិក្កយបត្រ</h1>
+					                <h2>invoice</h2>
+					                <div class="clear">
+					                	<div class="cover-customer">
+					                    	<h5>អតិថិជន​ / Customer :</h5>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+					                                <span>Company name / Customer</span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 62%;">
+					                            	<p style="font-weight:bold">ឡូត ជឿន</p>
+					                            </div>
+					                        </div>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ទូរស័ព្ទ​លេខ</p>
+					                                <span>Telephone N<sup>o</sup></span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 78%;">
+					                            	<p style="font-weight:bold">010 411429</p>
+					                            </div>
+					                        </div>
+					                    </div>
+					                    <div class="cover-inv-number">
+					                    	<div class="clear">
+					                        	<div class="left">
+					                        		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+					                                <span>​​Invoice N<sup>o</sup></span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 42%;">
+					                            	<p style="font-weight:bold">023450</p>
+					                            </div>
+					                        </div>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>កាល​បរិច្ឆេទ៖</p>
+					                                <span>​​Date</span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 57%;">
+					                            	<p style="font-weight:bold">24/Jun/2016</p>
+					                            </div>
+					                        </div>
+					                    </div>
+					                </div>
+					            	<div class="clear">
+					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 1%;">
+					                    	<thead>
+					                            <tr>
+					                                <th>ល.រ<br />N<sup>0</sup></th>
+					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+					                                <th>បរិមាណ<br />Quantity</th>
+					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
+					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+					                            </tr>
+					                        </thead>
+					                        <tbody style="margin-top: 2px">
+					                        	<tr>
+					                            	<td><i>1</i></td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>2</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>3</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>4</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>5</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>6</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>7</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>8</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>9</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>10</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>11</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>12</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>13</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>14</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>15</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
+					                                <td></td>
+					                            </tr>
+					                        </tbody>
+					                    </table>
+					                </div>
+					            </div>
+					            <div class="foot">
+					            	<div class="cover-signature">
+					                	<div class="singature" style="float:left">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+					                    </div>
+					                    <div class="singature" style="float:right">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+					                    </div>
+					                </div>
+					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+					            </div>
+					        </div>
+					        <div class="inv1 invhidden">
+					        	<div class="head">
+					            	<div class="logo">
+					                	<img src="<?php echo base_url(); ?>assets/invoice/img/logo.png" />
+					                </div>
+					                <div class="cover-name-company">
+					                	<h2>ឈ្មោះក្រុមហ៊ុន​ជា​ភាសា​ខ្មែរ</h2>
+					                    <h3>Company Name</h3>
+					                    <div class="vattin">
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 1%;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+					                    </div>
+					                    <div class="clear">
+					                    	<pre>អាស័យ​ដ្ឋាន៖ ផ្ទះលេខ                    ផ្លូវ                            ឃុំ/សង្កាត់</pre>
+					                        <pre>Address       N<sup>o</sup>                          street                      Commune/Sangkat</pre>
+					                        <pre>ក្រុង/ស្រុក/ខណ្ឌ                            ខេត្ត/រាជធានី                            ទូរស័ព្ទលេខ</pre>
+					                        <pre>Town/District/Khan                     Province/City                         Telephone N<sup>o</sup></pre>
+					                    </div>
+					                </div>
+					            </div>
+					            <div class="content">
+					            	<h1>វិក្កយបត្រអាករ</h1>
+					                <h2>invoice</h2>
+					                <div class="clear">
+					                	<div class="cover-customer" style="width: 80%;">
+					                    	<h5>អតិថិជន​ / Customer :</h5>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+					                                <span>Company name / Customer</span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 42%;">
+					                            	<p style="font-weight:bold">ឡូត ជឿន</p>
+					                            </div>
+					                        </div>
+					                        <div class="clear">
+					                        	<div class="left">
+					                        		<p>ទូរស័ព្ទ​លេខ</p>
+					                                <span>Telephone N<sup>o</sup></span>
+					                            </div>
+					                            <div class="left dotted-ruler" style="width: 52%;">
+					                            	<p style="font-weight:bold">010 411429</p>
+					                            </div>
+					                        </div>
+					                        <div class="vattin">
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 5px;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+					                    </div>
+					                    </div>
+					                    <div class="cover-inv-number" style="width: 20%;">
+					                    	<div style="position: absolute;left:-70%;width:165%; ">
+					                            <div class="clear">
+					                                <div class="left">
+					                                    <p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+					                                    <span>​​Invoice N<sup>o</sup></span>
+					                                </div>
+					                                <div class="left dotted-ruler" style="width: 46%;">
+					                                    <p style="font-weight:bold">023450</p>
+					                                </div>
+					                            </div>
+					                            <div class="clear">
+					                                <div class="left">
+					                                    <p>កាល​បរិច្ឆេទ៖</p>
+					                                    <span>​​Date</span>
+					                                </div>
+					                                <div class="left dotted-ruler" style="width: 59%;">
+					                                    <p style="font-weight:bold">24/Jun/2016</p>
+					                                </div>
+					                            </div>
+					                        </div>
+					                    </div>
+					                </div>
+					            	<div class="clear inv2">
+					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
+					                    	<thead>
+					                            <tr>
+					                                <th>ល.រ<br />N<sup>0</sup></th>
+					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+					                                <th>បរិមាណ<br />Quantity</th>
+					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
+					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+					                            </tr>
+					                        </thead>
+					                        <tbody style="margin-top: 2px">
+					                        	<tr>
+					                            	<td><i>1</i></td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                                <td>1</td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>2</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>3</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>4</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>5</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>6</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>7</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>8</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>9</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>10</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>11</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>12</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>13</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>14</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td><i>15</i></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​<br />Sub Total</td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០%<br />VAT (10%)</td>
+					                                <td></td>
+					                            </tr>
+					                            <tr>
+					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​<br />Grand Total</td>
+					                                <td></td>
+					                            </tr>
+					                        </tbody>
+					                    </table>
+					                </div>
+					            </div>
+					            <div class="foot">
+					            	<div class="cover-signature">
+					                	<div class="singature" style="float:left">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+					                    </div>
+					                    <div class="singature" style="float:right">
+					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+					                    </div>
+					                </div>
+					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+					            </div>
+					        </div>
+						</div>
+					</div>
+					<!-- Form actions -->
+					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
+						<span id="notification"></span>
+
+						<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>									
+					</div>
+					<!-- // Form actions END -->
+				</div>							
+			</div>
+		</div>
+	</div>
 </script>
 
 
@@ -16335,26 +19094,23 @@
 						
 						<div class="widget-body alert alert-primary" >
 							
-							<div align="center" class="text-large strong" data-bind="text: ar"></div>
-
-							<br>
-						
+							<div align="center" class="text-large strong" data-bind="text: sale"></div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: ar_open"></span>
+										<span data-bind="text: sale_customer"></span>
 										<br>
-										<span>Open</span>
+										<span>Supplier</span>
 									</td>
 									<td>
-										<span data-bind="text: ar_customer"></span>
+										<span data-bind="text: sale_product"></span>
 										<br>
-										<span>Customer</span>
+										<span>Product</span>
 									</td>
 									<td>
-										<span data-bind="text: ar_overdue"></span>
+										<span data-bind="text: sale_order"></span>
 										<br>
-										<span>Overdue</span>
+										<span>Order</span>
 									</td>
 								</tr>
 							</table>
@@ -16380,9 +19136,6 @@
 						<div class="widget-body alert-info" >
 							
 							<div align="center" class="text-large strong" data-bind="text: ar"></div>
-
-							<br>
-						
 							<table width="100%">
 								<tr align="center">
 									<td>										
@@ -16393,12 +19146,12 @@
 									<td>
 										<span data-bind="text: ar_customer"></span>
 										<br>
-										<span>Customer</span>
+										<span>Supplier</span>
 									</td>
 									<td>
 										<span data-bind="text: ar_overdue"></span>
 										<br>
-										<span>Overdue</span>
+										<span>Margin</span>
 									</td>
 								</tr>
 							</table>
@@ -16421,28 +19174,25 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body" style="background-color: LightGray">
+						<div class="widget-body alert-info3" style="background-color: LightGray">
 							
-							<div align="center" class="text-large strong" data-bind="text: ar"></div>
-
-							<br>
-						
+							<div align="center" class="text-large strong" data-bind="text: order"></div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: ar_open"></span>
+										<span data-bind="text: order_open"></span>
 										<br>
 										<span>Open</span>
 									</td>
 									<td>
-										<span data-bind="text: ar_customer"></span>
+										<span data-bind="text: order_open"></span>
 										<br>
-										<span>Customer</span>
+										<span>Supplier</span>
 									</td>
 									<td>
-										<span data-bind="text: ar_overdue"></span>
+										<span data-bind="text: order_avg"></span>
 										<br>
-										<span>Overdue</span>
+										<span>Turnover</span>
 									</td>
 								</tr>
 							</table>
@@ -16459,84 +19209,110 @@
 
 			<!-- Top 5 -->
 			<div class="row-fluid">
-				<div class="span4">
-					<h4>Inventory Turnover Days</h4>					
+				<div class="span4">									
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</th>			                
+				                <th colspan="2" class="center">Inventory Turnover Days</th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                 
-			                 data-template="itemDashBoard-top-customer-template"
+			                 data-template="itemDashboard-top-customer-template"
 			                 data-bind="source: topProductDS"></tbody>			        
 				    </table>			
 				</div>
-				<div class="span4">
-					<h4>Top 5 Suppliers</h4>
+				<div class="span4">					
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</th>		                
+				                <th colspan="2" class="center">Top 5 Suppliers</th>		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                  
-			                 data-template="itemDashBoard-top-ar-template"
+			                 data-template="itemDashboard-top-ar-template"
 			                 data-bind="source: topCustomerDS"></tbody>			        
 				    </table>
 				</div>
-				<div class="span4">
-					<h4>Top 5 Best Selling Products</h4>
+				<div class="span4">					
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;" class="center">#</th>
-				                <th>Name</span></th>			                		                
+				                <th colspan="2" class="center">Top 5 Best Selling Products</th>			                		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"                
-			                 data-template="itemDashBoard-top-product-template"
+			                 data-template="itemDashboard-top-product-template"
 			                 data-bind="source: topProductDS"></tbody>			        
 				    </table>
 				</div>		
 			</div>
 
 			<!-- Graph -->
-			<div>
-				<div id="item-chart" style="height: 250px; "></div>
-			</div>
+			<div class="home-chart">
+				<div data-role="chart"
+	                 data-legend="{ position: 'top' }"
+	                 data-series-defaults="{ type: 'column' }"
+	                 data-tooltip='{
+	                    visible: true,
+	                    format: "{0}%",
+	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+	                 }'                 
+	                 data-series="[
+	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+	                             ]"	                             
+	                 data-bind="source: graphDS"
+	                 style="height: 250px;" ></div>            
+            </div>
+            <!-- End Graph -->
 
 		</div>
 	</div>	
 </script>
-<script id="itemDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
+<script id="itemDashboard-top-customer-template" type="text/x-kendo-tmpl">	
 	<tr data-uid="#: uid #">
-		<td>#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.itemDashBoard.topProductDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(quantity, "n0")# days</span>
 		</td>		
 	</tr>
 </script>
-<script id="itemDashBoard-top-ar-template" type="text/x-kendo-tmpl">
+<script id="itemDashboard-top-ar-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.itemDashBoard.topCustomerDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>
 	</tr>
 </script>
-<script id="itemDashBoard-top-product-template" type="text/x-kendo-tmpl">
+<script id="itemDashboard-top-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		
+		<td style="width: 1%">#:banhji.itemDashBoard.topProductDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
 		</td>
 	</tr>
@@ -16772,9 +19548,9 @@
     	<td>#=kendo.toString(new Date(invoice[0].issued_date), "dd-MM-yyyy")#</td>
     	<td>#=invoice[0].type#</td>
         <td>#=invoice[0].number#</td>
-    	<td>#=kendo.toString(quantity*movement, "n0")#</td>
-    	<td>#=kendo.toString(cost*rate, "c", "locale")#</td>
-    	<td>#=kendo.toString(price*rate, "c", "locale")#</td>  	
+    	<td>#=kendo.toString(quantity, "n0")#</td>
+    	<td>#=kendo.toString(cost, "c", "locale")#</td>
+    	<td>#=kendo.toString(price, "c", "locale")#</td>  	
     </tr>
 </script>
 <script id="item" type="text/x-kendo-template">
@@ -16788,7 +19564,7 @@
 							data-bind="click: cancel"><i></i></span>						
 					</div>
 
-			        <h2>ITEM</h2>			    		   
+			        <h2>INVENTORY FOR SALE</h2>			    		   
 
 				    <br>					
 					
@@ -16838,8 +19614,8 @@
 								<div class="span6">	
 									<!-- Group -->
 									<div class="control-group">							
-										<label for="txtSKU"><span data-bind="text: lang.lang.sku"></span><span style="color:red">*</span></label>
-				              			<input id="txtSKU" name="txtSKU" class="k-textbox"
+										<label for="txtNumber">Number<span style="color:red">*</span></label>
+				              			<input id="txtNumber" name="txtNumber" class="k-textbox"
 					              				data-bind="value: obj.sku, disabled: obj.is_pattern" 
 					              				placeholder="e.g. ID0001" 
 					              				required data-required-msg="required"
@@ -16852,7 +19628,7 @@
 								<div class="span6">						
 									<!-- Group -->
 									<div class="control-group">
-										<label for="txtName"><span data-bind="text: lang.lang.item_number"></span> <span style="color:red">*</span></label>
+										<label for="txtName">Name <span style="color:red">*</span></label>
 					              		<input id="txtName" name="txtName" class="k-textbox" data-bind="value: obj.name, disabled: obj.is_pattern" 
 							              		placeholder="item name..." required data-required-msg="required"
 							              		style="width: 100%;" />
@@ -17898,7 +20674,7 @@
 							data-bind="click: cancel"><i></i></span>						
 					</div>
 
-			        <h2>NON INVENTORY PART</h2>			    		   
+			        <h2>OTHER INVENTORY</h2>			    		   
 
 				    <br>					
 					
@@ -17948,8 +20724,8 @@
 								<div class="span6">	
 									<!-- Group -->
 									<div class="control-group">							
-										<label for="txtSKU"><span data-bind="text: lang.lang.sku"></span><span style="color:red">*</span></label>
-				              			<input id="txtSKU" name="txtSKU" class="k-textbox"
+										<label for="txtNumber"><span data-bind="text: lang.lang.number"></span><span style="color:red">*</span></label>
+				              			<input id="txtNumber" name="txtNumber" class="k-textbox"
 					              				data-bind="value: obj.sku, disabled: obj.is_pattern" 
 					              				placeholder="e.g. ID0001" 
 					              				required data-required-msg="required"
@@ -17962,7 +20738,7 @@
 								<div class="span6">						
 									<!-- Group -->
 									<div class="control-group">
-										<label for="txtName"><span data-bind="text: lang.lang.item_number"></span> <span style="color:red">*</span></label>
+										<label for="txtName"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
 					              		<input id="txtName" name="txtName" class="k-textbox" data-bind="value: obj.name, disabled: obj.is_pattern" 
 							              		placeholder="item name..." required data-required-msg="required"
 							              		style="width: 100%;" />
@@ -18905,7 +21681,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2>General Inventory Setting</h2>
+	<h2>GENERAL ITEM SETTING</h2>
 
 	<br>
 
@@ -18930,33 +21706,34 @@
 	        <div class="tab-content">	            
 
 	            <!-- Tab Category content -->
-	            <div class="tab-pane active" id="tab1-1">
-	            	<input data-role="dropdownlist"
-            			   data-option-label="(--- Select ---)"            			   			                   
-		                   data-value-primitive="true"
-		                   data-auto-bind="false"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: category_sub_of,
-		                              source: subCategoryDS"/>
-
+	            <div class="tab-pane active" id="tab1-1">	            	
 		            <div class="input-append">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: category_code">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="New..." data-bind="value: category_name">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: category_abbr">					    
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: category_code">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New..." data-bind="value: category_name">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: category_abbr">					    
+					    <input class="span2" id="appendedInputButtons"
+					    	   data-role="dropdownlist"					    	   
+			                   data-value-primitive="true"
+			                   data-auto-bind="false"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="value: category_item_type_id,
+			                              source: itemTypeDS" />
 					    <button class="btn btn-default" type="button" data-bind="click: addCategory"><i class="icon-plus"></i> Add Category</button>					  
 					</div>
 		            
 	            	<table class="table table-bordered table-white">
 	            		<thead>
 	            			<tr>	            				            				
-	            				<th>Code</th>	
-	            				<th>Name</th>	
-	            				<th>abbr</th>	            				
+	            				<th>CODE</th>	
+	            				<th>NAME</th>	
+	            				<th>ABBR</th>
+	            				<th>TYPE</th>	            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
-	            		<tbody data-role="listview"	            				
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            				
 		            			data-edit-template="itemSetting-edit-category-template"
 				                data-template="itemSetting-category-template"
 				                data-bind="source: categoryDS"></tbody>
@@ -18966,27 +21743,19 @@
 
 	            <!-- Tab Item Group content -->
 	            <div class="tab-pane" id="tab2-1">
-	            	<input data-role="dropdownlist"
-            			   data-option-label="(--- Select ---)"            			   			                   
-		                   data-value-primitive="true"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: item_group_category_id,
-		                              source: categoryDS"/>
-
-		            <input data-role="dropdownlist"
-            			   data-option-label="(--- Select ---)"            			   			                   
+		            <div class="input-append">
+		            	<input id="appendedInputButtons" class="span2"
+		            	   data-role="dropdownlist"
+            			   data-option-label="(--- Select Category ---)"            			   			                   
 		                   data-value-primitive="true"
 		                   data-auto-bind="false"
 		                   data-text-field="name"
 		                   data-value-field="id"
-		                   data-bind="value: item_group_sub_of,
-		                              source: subItemGroupDS"/>
-
-		            <div class="input-append">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: item_group_code">	
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="New Name..." data-bind="value: item_group_name">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: item_group_abbr">					    
+		                   data-bind="value: item_group_category_id,
+		                              source: categoryDS"/>	
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: item_group_code">	
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New Name..." data-bind="value: item_group_name">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: item_group_abbr">					    
 					    <button class="btn btn-default" type="button" data-bind="click: addItemGroup"><i class="icon-plus"></i> Add Group</button>					  
 					</div>
 		            
@@ -18999,7 +21768,8 @@
 	            				<th></th>
 	            			</tr>
 	            		</thead>
-	            		<tbody data-role="listview"	            				
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            				
 		            			data-edit-template="itemSetting-edit-item-group-template"
 				                data-template="itemSetting-item-group-template"
 				                data-bind="source: itemGroupDS"></tbody>
@@ -19030,15 +21800,6 @@
 
 	            <!-- Tab Brand content -->
 	            <div class="tab-pane" id="tab4-1">
-	            	<input data-role="dropdownlist"
-            			   data-option-label="(--- Measurement ---)"            			   			                   
-		                   data-value-primitive="true"
-		                   data-auto-bind="false"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: brand_sub_of,
-		                              source: subBrandDS"/>
-
 		            <div class="input-append">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: brand_code">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="New Brand..." data-bind="value: brand_name">
@@ -19078,6 +21839,9 @@
    		</td>
    		<td>
     		#:abbr#
+   		</td>
+   		<td>
+    		#:item_type.length>0 ? item_type[0].name : ""#
    		</td>   		
    		<td>   			
    			<div class="edit-buttons">       
@@ -19092,16 +21856,7 @@
 </script>
 <script id="itemSetting-edit-category-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget">
-        <dl>
-        	<dd>
-                <input data-role="dropdownlist"
-        			   data-option-label="(--- Select ---)"        			   		                   
-	                   data-value-primitive="true"	                   
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: sub_of,
-	                              source: subItemGroupDS"/>
-            </dd>                
+        <dl>        	             
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:code" name="code" required="required" validationMessage="required" />
                 <span data-for="code" class="k-invalid-msg"></span>
@@ -19113,6 +21868,14 @@
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
                 <span data-for="abbr" class="k-invalid-msg"></span>
+            </dd>
+            <dd>
+            <input data-role="dropdownlist"
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: item_type_id,
+                              source: itemTypeDS" />
             </dd>               
         </dl>
         <div class="edit-buttons">
@@ -19147,20 +21910,12 @@
                 <input data-role="dropdownlist"
         			   data-option-label="(--- Select ---)"        			   		                   
 	                   data-value-primitive="true"
+	                   data-auto-bind="false"
 	                   data-text-field="name"
 	                   data-value-field="id"
 	                   data-bind="value: category_id,
 	                              source: categoryDS"/>
-            </dd>
-            <dd>
-                <input data-role="dropdownlist"
-        			   data-option-label="(--- Select ---)"        			   		                   
-	                   data-value-primitive="true"	                   
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: sub_of,
-	                              source: subItemGroupDS"/>
-            </dd>                
+            </dd>                         
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:code" name="code" required="required" validationMessage="required" />
                 <span data-for="code" class="k-invalid-msg"></span>
@@ -19183,13 +21938,15 @@
 <script id="itemSetting-measurement-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
-    		 #:name#
+    		#:name#
    		</td>
-   		<td>
-   			<div class="edit-buttons">		        
-	        	<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-	        	<a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>		        
-		   	</div>		   
+   		<td>   			
+   			<div class="edit-buttons">       
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        #if(is_system=="0"){#
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+		        #}#
+		   	</div>		   	
    		</td>
    	</tr>
 </script>
@@ -19253,6 +22010,132 @@
         </div>
     </div>
 </script>
+
+<script id="serviceSetting" type="text/x-kendo-template">
+	<span class="pull-right glyphicons no-js remove_2" 
+			onclick="javascript:window.history.back()"><i></i></span>
+
+	<h2>GENERAL SERVICE SETTING</h2>
+
+	<br>
+
+	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
+
+	    <!-- Tabs Heading -->
+	    <div class="widget-head span3">
+	        <ul>
+	            <li class="active"><a href="#tab1-1" class="glyphicons bookmark" data-toggle="tab"><i></i><span class="strong">Category</span></a>
+	            </li>
+	            <li><a href="#tab2-1" class="glyphicons tag" data-toggle="tab"><i></i><span class="strong">Group</span></a>
+	            </li>
+	            <li><a href="#tab3-1" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong">Measurement</span></a>
+	            </li>	            	            
+	        </ul>
+	    </div>
+	    <!-- // Tabs Heading END -->
+
+	    <div class="widget-body span9">
+	        <div class="tab-content">	            
+
+	            <!-- Tab Category content -->
+	            <div class="tab-pane active" id="tab1-1">	            	
+		            <div class="input-append">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: category_code">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New..." data-bind="value: category_name">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: category_abbr">					    
+					    <input class="span2" id="appendedInputButtons"
+					    	   data-role="dropdownlist"					    	   
+			                   data-value-primitive="true"
+			                   data-auto-bind="false"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="value: category_item_type_id,
+			                              source: itemTypeDS" />
+					    <button class="btn btn-default" type="button" data-bind="click: addCategory"><i class="icon-plus"></i> Add Category</button>					  
+					</div>
+		            
+	            	<table class="table table-bordered table-white">
+	            		<thead>
+	            			<tr>	            				            				
+	            				<th>CODE</th>	
+	            				<th>NAME</th>	
+	            				<th>ABBR</th>
+	            				<th>TYPE</th>	            				
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            				
+		            			data-edit-template="itemSetting-edit-category-template"
+				                data-template="itemSetting-category-template"
+				                data-bind="source: categoryDS"></tbody>
+	            	</table>		            
+	            </div>
+	            <!-- // Tab Category Type content END -->	            
+
+	            <!-- Tab Item Group content -->
+	            <div class="tab-pane" id="tab2-1">
+		            <div class="input-append">
+		            	<input id="appendedInputButtons" class="span2"
+		            	   data-role="dropdownlist"
+            			   data-option-label="(--- Select Category ---)"
+            			   data-auto-bind="false"            			   			                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: item_group_category_id,
+		                              source: categoryDS"/>	
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: item_group_code">	
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New Name..." data-bind="value: item_group_name">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: item_group_abbr">					    
+					    <button class="btn btn-default" type="button" data-bind="click: addItemGroup"><i class="icon-plus"></i> Add Group</button>					  
+					</div>
+		            
+	            	<table class="table table-bordered table-white">
+	            		<thead>
+	            			<tr>	            					            				
+	            				<th>Code</th>	
+	            				<th>Name</th>	
+	            				<th>abbr</th>	            				
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            				
+		            			data-edit-template="itemSetting-edit-item-group-template"
+				                data-template="itemSetting-item-group-template"
+				                data-bind="source: itemGroupDS"></tbody>
+	            	</table>		            
+	            </div>
+	            <!-- // Tab Item Group Type content END -->
+
+	            <!-- Tab Measurement content -->
+	            <div class="tab-pane" id="tab3-1">
+                	<div class="input-append">
+					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Measurement..." data-bind="value: measurement_name">					    
+					    <button class="btn btn-default" type="button" data-bind="click: addMeasurement"><i class="icon-plus"></i> Add Measurement</button>					  
+					</div>
+	            	<table class="table table-bordered table-white">
+	            		<thead>
+	            			<tr>
+	            				<th>Measurement</th>	            				
+	            				<th></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+		            			data-edit-template="itemSetting-edit-measurement-template"
+				                data-template="itemSetting-measurement-template"
+				                data-bind="source: measurementDS"></tbody>
+	            	</table>
+	            </div>
+	            <!-- // Tab Measurement content END -->	                     
+
+	        </div>
+	    </div>
+
+	</div>
+</script>
+
 <script id="itemReportCenter" type="text/x-kendo-template">
 	<div class="row-fluid customer-report-center">
 		<div class="span7">
@@ -19309,40 +22192,6 @@
 								</p>
 							</td>
 						</tr>
-
-						<tr>
-							<td >
-								<h3><a href="#/">Purchase Summary by Product/ Services</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/">Open Purchase Order</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<p>
-									Summarizes total expenses/ purchase for each product/ service within a period of time. 
-								</p>
-							</td>
-							<td >
-								<p>
-									Lists all the open purchase order grouped by suppliers including the original amount as well.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<h3><a href="#/">Purchase Detail by Product/ Services</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<p>
-									Lists individual sale transactions by date for each product/ service with a period of time.
-								</p>
-							</td>
-						</tr>
-
 					</table>
 				</div>
 			</div>
@@ -19452,6 +22301,10 @@
 			</div>
 		</div>
 		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>Inventory Balance</h2>
@@ -20291,19 +23144,26 @@
 			        	<p>
 			        		In here, you can manage your cash information, transactions and reports. Cashflow forecast and other treasury management is coming soon..
 			        	</p>
-			        	<div class="customer-icon">
-				        	<div class="span4">
-					        	<a href="#/customer" class="center">
-					        		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
-					        	</a>
-					        </div>
-					    </div>
+			        	<div class="supplier-icon">
+					       	<div class="span4">
+						       	<a href="#/employee" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/employees.ico" />
+						       	</a>
+						       </div>
+						    <div class="span4">
+						       	<a href="#/item" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/item_service" class="center">
+						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       	</a>
+						    </div>
+						</div>
 			        </td>
 			 	</tr>
 			</table>
-
-			<br>
-
 			<table class="table table-borderless table-condensed table-vertical-center ">
 				<tr>
 					<td class="center">
@@ -20370,9 +23230,6 @@
 						<div class="widget-body alert alert-primary">
 							
 							<div align="center" class="text-large strong" data-bind="text: sale"></div>
-
-							<br>
-						
 							<table width="100%">
 								<tr align="center">
 									<td>										
@@ -20416,9 +23273,6 @@
 						<div class="widget-body alert-info">
 							
 							<div align="center" class="text-large strong" data-bind="text: order"></div>
-
-							<br>
-						
 							<table width="100%">
 								<tr align="center">
 									<td>										
@@ -20454,12 +23308,9 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body" style="background-color: LightGray">
+						<div class="widget-body alert-info3" style="background-color: LightGray">
 							
 							<div align="center" class="text-large strong" data-bind="text: ar"></div>
-
-							<br>
-						
 							<table width="100%">
 								<tr align="center">
 									<td>										
@@ -21699,6 +24550,10 @@
 			</div>
 		</div>
 		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>Cash Balance</h2>
@@ -21735,16 +24590,198 @@
 </script>
 
 
+<!-- ***************************
+*	Report Section       *
+**************************** -->
+<script id="reportDashboard" type="text/x-kendo-template" >
+	<div class="row-fluid">
+		<div class="span12 report-module">
+			<h2>No. of Reports/lists by Module</h2>
+			<ul>
+				<li>
+					<a href="#/customer_report_center">
+						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+					</a>
+					<div class="span12">17</div>
+				</li>
+				<li>
+					<a href="#/employee_report_center">
+						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
+					</a>
+					<div class="span12">6</div>
+				</li>
+				<li>
+					<a href="#/vendor_report_center">
+						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+					</a>
+					<div class="span12">16</div>
+				</li>
+				<li>
+					<a href="#/item_report_center">
+						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+					</a>
+					<div class="span12">12</div>
+				</li>
+				<li>
+					<a href="#/services_report_center">
+						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/services.png" alt="Service">
+					</a>
+					<div class="span12"></div>
+				</li>
+				<li>
+					<a href="#/cash_report_center">
+						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
+					</a>
+					<div class="span12">6</div>
+				</li>
+				<li>
+					<a href="#/accounting_report_center">
+						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
+					</a>
+					<div class="span12">16</div>
+				</li>
+			</ul>
+		</div>
 
+		<div class="span12 capital-management">
+			<h2>How efficient is your working capital management? </h2>
+			<div class="span6">
+				<div class="span6 capital-box">
+					<p class="first-text">Receivable Collection Days</p>
+					<span>30</span>
+					<p class="month">12 months Average</p>
+				</div>
+				<div class="span6 capital-box">
+					<p class="first-text">Payable Payment Days</p>
+					<span>20</span>
+					<p class="month">12 months Average</p>
+				</div>
+				<div class="span6 capital-box">
+					<p class="first-text">Inventory Turnover Days</p>
+					<span>40</span>
+					<p class="month">12 months Average</p>
+				</div>
+				<div class="span6 capital-box">
+					<p class="first-text">Cash Conversion Cycle</p>
+					<span>50</span>
+					<p class="month">12 months Average</p>
+				</div>
+			</div>
+			<div class="span6 ">
+				<div class="capital-chart">
+					Chart
+				</div>				
+			</div>
+		</div>
+
+		<div class="span12 ">
+			<div class="row-fluid cash-payments">
+				<h2>
+					What is your ability to meet your present obligations (settling debts or possibly meet other 
+					unforeseen demand for cash payments)?
+				</h2>
+				<div class="span6">
+					<div class="span6 capital-box">
+						<p class="first-text">Current Ratio</p>
+						<span>3</span>
+						<p class="month">12 months Average</p>
+					</div>
+					<div class="span6 capital-box">
+						<p class="first-text">Quick Ratio</p>
+						<span>1.5</span>
+						<p class="month">12 months Average</p>
+					</div>
+					<div class="span6 capital-box">
+						<p class="first-text">Cash Ratio</p>
+						<span>0.3</span>
+						<p class="month">12 months Average</p>
+					</div>
+					<div class="span6 capital-box">
+						<p class="first-text">Debt Service Coverage Ratio</p>
+						<span>5</span>
+						<p class="month">12 months Average</p>
+					</div>
+				</div>
+
+				<div class="span6 ">
+					<div class="capital-chart">
+						Chart
+					</div>				
+				</div>
+			</div>
+
+			<div class="row-fluid">				
+				<div class="span6 financial-block">
+					<h2>How safe is your long term financial position?</h2>
+					<div class="span6 financial-box">
+						<p class="first-text">Debt/ Equity Ratio</p>
+						<span>3</span>
+						<p class="month">12 months Average</p>
+					</div>
+					<div class="span6 financial-box">
+						<p class="first-text">Debt/ Asset Ratio</p>
+						<span>1.5</span>
+						<p class="month">1.5 months Average</p>
+					</div>
+				</div>
+				<div class="span6 business-block">
+					<h2>How safe is your long term financial position?</h2>
+					<div class="span4 business-box">
+						<p class="first-text">Earning before interest & tax</p>
+						<span>10%</span>
+						<p class="month">12 months Average</p>
+					</div>
+					<div class="span4 business-box">
+						<p class="first-text">Return on Asset</p>
+						<span>2</span>
+						<p class="month">12 months Average</p>
+					</div>
+					<div class="span4 business-box">
+						<p class="first-text">Return on Capital Employed</p>
+						<span>20%</span>
+						<p class="month">12 months Average</p>
+					</div>
+				</div>
+			</div>			
+		</div>
+
+		<div class="span12 revenue">
+			<h2>Revenue Performance</h2>
+			<div class="span3">
+				<div class="revenue-box">
+					<p class="first-text">Gross Margin</p>
+					<span>13%</span>
+					<p class="month">12 months Average</p>
+				</div>
+				<div class="revenue-box">
+					<p class="first-text">Average Sale Growth Rate</p>
+					<span>10%</span>
+					<p class="month">12 months Average</p>
+				</div>
+			</div>
+			<div class="span9">
+				<div class="capital-chart">
+					Chart
+				</div>
+			</div>
+		</div>
+
+		
+
+	</div>
+</script>
 
 
 <!-- ***************************
 *	Template List Section     *
 **************************** -->
 <script id="contact-list-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=number# #=surname# #=name#
-	</span>
+	<span>#=abbr##=number#</span>
+	#if(company){#
+		<span>#=company#</span>
+	#}else{#
+		<span>#=surname#</span> <span>#=name#</span>
+	#}#	
 </script>
 <script id="currency-list-tmpl" type="text/x-kendo-tmpl">
 	<span>
@@ -21754,6 +24791,11 @@
 <script id="segment-list-tmpl" type="text/x-kendo-tmpl">
 	<span>
 		#=name# (#=segment.name#)
+	</span>
+</script>
+<script id="job-list-tmpl" type="text/x-kendo-tmpl">
+	<span>
+		#=number# #=name#
 	</span>
 </script>
 <script id="item-list-tmpl" type="text/x-kendo-tmpl">
@@ -21793,7 +24835,8 @@
   			<ul class='dropdown-menu'>
   				<li><a href='#/account'>New Account</a></li>  				  				
   				<li><a href='#/journal'>Journal</a></li>
-  				<li><a href='#/currency_rate'>Exchange Rate</a></li>  				  				 				  				 				
+  				<li><a href='#/currency_rate'>Exchange Rate</a></li>
+  				<li><a href='#/sale_tax'>Sale Tax</a></li>  				  				 				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/accounting_report_center'>REPORTS</a></li>	  	
@@ -21812,7 +24855,7 @@
   				<li><a href='#/expense'>Expense</a></li>  				 				 				  				 				
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/employees_report_center'>REPORTS</a></li>	  	
+	  	<li><a href='#/employee_report_center'>REPORTS</a></li>	  	
 	  	<li><a href='#/employees_setting' class='glyphicons settings'><i></i></a></li>	  	
 	</ul>
 </script>
@@ -21853,6 +24896,7 @@
   				<li><a href='#/statement'>Statement</a></li>
   				<li><a href='#/cash_receipt'>Receive Payment</a></li>
   				<!-- <li><a href="#/customerInvoiceSent">Invoice Sent To</a></li> -->
+  				<li><a href='#/job'>Job</a></li>
   				<li><a href='#/recurring'>Recurring List</a></li>  				 				  				 				
   			</ul>
 	  	</li>	  	  	
@@ -22293,18 +25337,31 @@
 	};	
 	banhji.userManagement = kendo.observable({
 		lang : langVM,
+		searchText : "",
+		searchType : "contacts",
 		searchContact: function() {
+			this.set("searchType", "contacts");
+
 			$("#search-placeholder").attr('placeholder', "Search Contact");
 		},
 		searchTransaction: function() {
+			this.set("searchType", "transactions");
+
 			$("#search-placeholder").attr('placeholder', "Search Transaction");
 		},
 		searchItem: function() {
+			this.set("searchType", "items");
+
 			$("#search-placeholder").attr('placeholder', "Search Item");
 		},
-		searchBotton: function() {
-			alert('searching ' + $("#search-placeholder").text());
-		},
+		search: function(e) {
+			e.preventDefault();
+			
+			banhji.searchAdvanced.set("searchText", this.get("searchText"));
+			banhji.searchAdvanced.set("searchType", this.get("searchType"));
+			banhji.searchAdvanced.search();
+			banhji.router.navigate('/search_advanced');
+		},				
 		auth : new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -23265,11 +26322,11 @@
 	});
 	banhji.index = kendo.observable({
 		lang 				: langVM,
-		dataSource			: dataStore(apiUrl+"customer_reports/home"),
+		dataSource			: dataStore(apiUrl+"contact_reports/home"),
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "customer_reports/home_graph",
+					url: apiUrl + "contact_reports/home_graph",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -23383,13 +26440,126 @@
 				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
 			});										
 		}
-	});	
+	});
+	banhji.searchAdvanced =  kendo.observable({
+    	lang 				: langVM,    	
+    	contactDS 			: dataStore(apiUrl+"contacts"),
+    	contactTypeDS 		: dataStore(apiUrl+"contacts/type"),
+    	transactionDS 		: dataStore(apiUrl+"transactions"),
+    	itemDS 				: dataStore(apiUrl+"items"),
+    	searchType 			: "",
+    	searchText 			: "",
+    	found 				: 0,
+    	pageLoad 			: function(){			
+																									
+		},
+		search 				: function(){
+			var self = this, 
+			searchText = this.get("searchText");
+			this.set("found", 0);
+
+			if(searchText){
+				this.contactDS.query({
+					filter:[
+						{ field:"number", operator:"like", value: searchText },
+						{ field:"surname", operator:"or_like", value: searchText },
+						{ field:"name", operator:"or_like", value: searchText },
+						{ field:"company", operator:"or_like", value: searchText }
+					],
+					page:1,
+					pageSize: 10
+				}).then(function(){				
+					var found = self.get("found") + self.contactDS.total();
+					self.set("found", found);
+				});
+
+				this.transactionDS.query({
+					filter:[
+						{ field:"number", operator:"like", value: searchText }
+					],
+					page:1,
+					pageSize: 10
+				}).then(function(){
+					var found = self.get("found") + self.transactionDS.total();
+					self.set("found", found);
+				});
+
+				this.itemDS.query({
+					filter:[
+						{ field:"sku", operator:"like", value: searchText },					
+						{ field:"name", operator:"or_like", value: searchText }
+					],
+					page:1,
+					pageSize: 10
+				}).then(function(){
+					var found = self.get("found") + self.itemDS.total();
+					self.set("found", found);
+				});
+			}
+		},
+		selectedContact 	: function(e){
+			var data = e.data, 
+			type = this.contactTypeDS.get(data.contact_type_id);
+			
+			if(type.parent_id==1){
+				banhji.customerCenter.loadContact(data.id);
+				banhji.router.navigate('/customer_center', false);								
+			}else{
+				banhji.vendorCenter.loadContact(data.id);
+				banhji.router.navigate('/vendor_center', false);
+			}
+		},
+		selectedTransaction : function(e){
+			var data = e.data;
+
+			banhji.router.navigate('/'+data.type.toLowerCase()+'/'+data.id);
+		},
+		selectedItem 		: function(e){
+			var data = e.data;
+			banhji.router.navigate('/item/'+e.data.id);
+		}		    	
+    });	
 
 
 	//DAWINE -----------------------------------------------------------------------------------------
 	banhji.source =  kendo.observable({
 		lang 					: langVM,
-		//Setting
+		countryDS				: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "countries",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}				
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},			
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		//Contact
 		contactDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -23402,7 +26572,7 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
@@ -23424,7 +26594,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		customerDS				: new kendo.data.DataSource({
 			transport: {
@@ -23438,14 +26608,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23461,7 +26631,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		supplierDS				: new kendo.data.DataSource({
 			transport: {
@@ -23475,14 +26645,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23498,7 +26668,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		employeeDS				: new kendo.data.DataSource({
 			transport: {
@@ -23512,14 +26682,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23535,7 +26705,43 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
+		}),
+		//Contact Type
+		contactTypeDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts/type",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
 		}),
 		customerTypeDS			: new kendo.data.DataSource({
 			transport: {
@@ -23549,14 +26755,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23571,7 +26777,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		supplierTypeDS			: new kendo.data.DataSource({
 			transport: {
@@ -23585,7 +26791,7 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,	
 							filter: options.filter,
 							sort: options.sort
 						};
@@ -23607,8 +26813,45 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
+		//Job
+		jobDS					: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "jobs",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		//Currency
 		currencyDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -23621,14 +26864,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23643,8 +26886,9 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
+		//Item
 		itemDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -23657,14 +26901,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23679,8 +26923,9 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
-		}),
+			pageSize: 100
+		}),		
+		//Tax Item
 		taxItemDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -23693,14 +26938,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23715,8 +26960,9 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
+		//Account
 		accountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -23729,14 +26975,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,	
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23745,14 +26991,14 @@
 				data: 'results',
 				total: 'count'
 			},
-			//group: { field: "account_type[0].name"},
-			sort: { field:"account_type_id", dir:"asc" },
+			group: { field: "account_type[0].name"},
+			sort:{ field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		cashAccountDS			: new kendo.data.DataSource({
 			transport: {
@@ -23766,14 +27012,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23783,15 +27029,16 @@
 				total: 'count'
 			},
 			filter: [
-					{ field:"account_type_id", value: 10 },
-					{ field:"status", value: 1 }
+				{ field:"account_type_id", value: 10 },
+				{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		//Item Income / Item Revenue / Customer Revenue / Service Revenue Account
 		incomeAccountDS				: new kendo.data.DataSource({
@@ -23806,14 +27053,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23826,12 +27073,54 @@
 					{ field:"account_type_id", operator:"where_in", value: [35,39] },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
+		}),
+		//Expense
+		expenseAccountDS				: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: [
+					{ field:"account_type_id", operator:"where_in", value: [36,37,38,40,41,42,43] },
+					{ field:"status", value: 1 }
+			],
+			sort: { field:"code", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
 		}),
 		ARAccountDS				: new kendo.data.DataSource({
 			transport: {
@@ -23845,14 +27134,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23865,12 +27154,13 @@
 					{ field:"account_type_id", value: 12 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		APAccountDS				: new kendo.data.DataSource({
 			transport: {
@@ -23884,14 +27174,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,	
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23904,12 +27194,13 @@
 					{ field:"account_type_id", operator:"where_in", value: [23,24] },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),		
 		tradeDiscountDS		: new kendo.data.DataSource({
 			transport: {
@@ -23923,14 +27214,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23943,12 +27234,13 @@
 					{ field:"id", value: 72 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		settlementDiscountDS		: new kendo.data.DataSource({
 			transport: {
@@ -23962,14 +27254,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -23982,12 +27274,13 @@
 					{ field:"id", value:99 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		supplierTradeDiscountDS		: new kendo.data.DataSource({
 			transport: {
@@ -24001,14 +27294,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -24021,12 +27314,13 @@
 					{ field:"account_type_id", value: 36 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		supplierSettlementDiscountDS		: new kendo.data.DataSource({
 			transport: {
@@ -24040,14 +27334,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -24060,12 +27354,13 @@
 					{ field:"id", value:109 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		prepaidAccountDS		: new kendo.data.DataSource({
 			transport: {
@@ -24079,14 +27374,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -24099,12 +27394,13 @@
 					{ field:"account_type_id", operator:"where_in", value: [14,21] },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		depositAccountDS		: new kendo.data.DataSource({
 			transport: {
@@ -24118,14 +27414,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -24138,14 +27434,14 @@
 					{ field:"account_type_id", operator:"where_in", value: [25,30] },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
-		}),
-		//ITEM ACCOUNT
+			pageSize: 100
+		}),		
 		cogsAccountDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -24158,14 +27454,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -24178,12 +27474,13 @@
 					{ field:"account_type_id", value: 36 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		inventoryAccountDS		: new kendo.data.DataSource({
 			transport: {
@@ -24197,14 +27494,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,	
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -24217,13 +27514,15 @@
 					{ field:"account_type_id", value: 13 },
 					{ field:"status", value: 1 }
 			],
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
+		//Payment Term, Method, Segment
 		paymentTermDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -24236,14 +27535,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -24257,7 +27556,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
+			pageSize: 100
 		}),
 		paymentMethodDS			: new kendo.data.DataSource({
 			transport: {
@@ -24271,14 +27570,14 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
 					} else {
 						return {models: kendo.stringify(options.models)};
 					}
-				}				
+				}
 			},
 			schema 	: {
 				model: {
@@ -24292,8 +27591,8 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 100			
-		}),		
+			pageSize: 100
+		}),				
 		segmentItemDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -24306,7 +27605,7 @@
 					if(operation === 'read') {
 						return {
 							page: options.page,
-							limit: options.take,								
+							limit: options.take,
 							filter: options.filter,
 							sort: options.sort
 						};
@@ -24327,16 +27626,17 @@
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
-			pageSize: 100			
-		}),		
+			pageSize: 100
+		}),
+		//Recurring
 		frequencyList 			: [
 			{ id: 'Daily', name: 'Day' },
 			{ id: 'Weekly', name: 'Week' },
 			{ id: 'Monthly', name: 'Month' },
-			{ id: 'Annually', name: 'Annual' }		
+			{ id: 'Annually', name: 'Annual' }
 		],
 		monthOptionList 		: [
-			{ id: 'Day', name: 'Day' },		
+			{ id: 'Day', name: 'Day' },
 			{ id: '1st', name: '1st' },
 			{ id: '2nd', name: '2nd' },
 			{ id: '3rd', name: '3rd' },
@@ -24365,7 +27665,7 @@
 			{ id: 5, name: 'Friday' },
 			{ id: 6, name: 'Saturday' }
 		],
-		dayList 				: [					
+		dayList 				: [
 			{ id: 1, name: '1st' },
 			{ id: 2, name: '2nd' },
 			{ id: 3, name: '3rd' },
@@ -24396,14 +27696,14 @@
 			{ id: 28, name: '28th' },
 			{ id: 0, name: 'Last' }
 		],
-		sortList				: [ 
-	 		{ text:"All", value: "all" }, 
-	 		{ text:"Today", value: "today" }, 
-	 		{ text:"This Week", value: "week" }, 
-	 		{ text:"This Month", value: "month" }, 
-	 		{ text:"This Year", value: "year" } 
+		sortList				: [
+	 		{ text:"All", value: "all" },
+	 		{ text:"Today", value: "today" },
+	 		{ text:"This Week", value: "week" },
+	 		{ text:"This Month", value: "month" },
+	 		{ text:"This Year", value: "year" }
 		],
-		statusList 				: [            
+		statusList 				: [
 			{ "id": 1, "name": "Active" },
 			{ "id": 0, "name": "Inactive" },
 			{ "id": 2, "name": "Void" }
@@ -24411,11 +27711,9 @@
 		genderList				: ["M", "F"],
 		user_id					: banhji.userData.id,
 		cash_account_id 		: 10,
-		ap_account_id 			: [23,24],								
-		pageLoad 				: function(){
-			
-		}		         		
+		ap_account_id 			: [23,24]
 	});
+
 	/*********************
 	*  Accounting Section  *
 	**********************/
@@ -25491,10 +28789,73 @@
 			this.dataSource.sort({ field:col, dir:this.get("currentSort") });
 		}		      		
 	});	
+	banhji.trialBalance =  kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "accounting_reports/trial_balance"),		
+		as_of 				: new Date(),		
+		currentSort 		: "asc",							
+		pageLoad 			: function(){
+			
+		},
+		search 				: function(){
+			var as_of = kendo.toString(this.get("as_of"), "yyyy-MM-dd");
+
+			if(as_of){
+				this.dataSource.filter([
+					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:as_of }
+				]);
+			}
+		},
+		sort 				: function(e){
+			var col = "",
+			target = e.currentTarget.innerText;
+
+			if(this.get("currentSort")=="asc"){
+				this.set("currentSort", "desc");
+			}else{
+				this.set("currentSort", "asc");
+			}
+
+			switch(target) {
+			    case "TYPE":
+			        col = "type";
+			        break;
+			    case "DATE":
+			        col = "issued_date";
+			        break;
+			    case "ACCOUNT":
+			        col = "account_id";
+			        break;
+			    default:
+			        //default code block
+			}			
+
+			this.dataSource.sort({ field:col, dir:this.get("currentSort") });
+		},
+		totalDr 			: function() {
+	        var sum = 0;
+
+	        $.each(this.dataSource.data(), function(index, value) {
+	            sum += kendo.parseFloat(value.dr);
+	        });
+
+	        return kendo.toString(sum, "c", banhji.locale);
+	    },
+	    totalCr 			: function() {
+	        var sum = 0;
+
+	        $.each(this.dataSource.data(), function(index, value) {
+	            sum += kendo.parseFloat(value.cr);
+	        });
+
+	        return kendo.toString(sum, "c", banhji.locale);
+	    }		      		
+	});
 	banhji.saleTax =  kendo.observable({
 		lang 				: langVM,		
         dataSource 			: dataStore(apiUrl + "tax_types"),        
         itemDS 	 			: dataStore(apiUrl + "tax_items"),
+        accountDS 			: banhji.source.accountDS,
         typeList			: [ 
 	 		{ id:"Invoice Based", name: "Invoice Based" }, 
 	 		{ id:"Payment Based", name: "Payment Based" },
@@ -25642,11 +29003,11 @@
 	**********************/
 	banhji.employeeDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "customer_reports/customer_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
-		topARDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),
-		graphDS 			: dataStore(apiUrl + 'customer_reports/monthly_sale'),
+		summaryDS 			: dataStore(apiUrl + "contact_reports/customer_summary"),
+		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
+		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),
+		graphDS 			: dataStore(apiUrl + 'contact_reports/monthly_sale'),
 		sale 				: 0,
 		sale_customer 		: 0,
 		sale_product 		: 0,
@@ -25813,7 +29174,7 @@
 					}									
 				});
 				
-				self.set("balance", kendo.toString(balance, "c", obj.currency[0].locale));
+				self.set("balance", kendo.toString(balance, "c", obj.locale));
 				self.set("po", kendo.toString(po, "n0"));
 				self.set("openInvoice", kendo.toString(open, "n0"));
 				self.set("overInvoice", kendo.toString(over, "n0"));
@@ -26985,7 +30346,7 @@
 				obj = self.get("obj");
 		    	
 		    	obj.set("contact_id", view[0].id);		    			    	
-		    	obj.set("locale", view[0].currency[0].locale);				
+		    	obj.set("locale", view[0].locale);				
 				
 				self.setRate();											
 			});
@@ -26996,7 +30357,7 @@
 	    	if(obj.contact_id>0){		    			    	
 		    	contact = this.contactDS.get(obj.contact_id);
 		    			    	
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 
 		    	this.referenceDS.filter([
 		    		{ field:"contact_id", value: obj.contact_id },
@@ -27661,12 +31022,37 @@
 	**********************/
 	banhji.vendorDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "customer_reports/summary"),
-		topCustomerDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
-		topARDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),
-		graphDS 			: dataStore(apiUrl + 'customer_reports/monthly_sale'),
-		purchase 			: 0,
+		summaryDS 			: dataStore(apiUrl + "contact_reports/summary"),
+		topContactDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
+		topAPDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),		
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contact_reports/monthly_sale",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),
+		sale 				: 0,
 		sale_customer 		: 0,
 		sale_product 		: 0,
 		sale_order 			: 0,
@@ -27690,23 +31076,23 @@
 				take: 5
 			}).then(function(){
 				var view = self.summaryDS.view();
-
-				self.set("purchase", kendo.toString(view[0].purchase, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				
+				self.set("purchase", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
 				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
 				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
 
 				self.set("order", kendo.toString(view[0].order, "n0"));
-				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));				
+				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.locale=="km-KH"?"c0":"c", banhji.locale));				
 				self.set("order_open", kendo.toString(view[0].order_open, "n0"));
 
-				self.set("ar", kendo.toString(view[0].ar, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));
+				self.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 				self.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
 				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
 				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
 			});
 
-			this.topCustomerDS.query({
+			this.topContactDS.query({
 				filter: [
 					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
 					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
@@ -27715,7 +31101,7 @@
 				take: 5
 			});
 
-			this.topARDS.query({
+			this.topAPDS.query({
 				filter: [
 					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
 					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
@@ -27731,57 +31117,48 @@
 				],							
 				page: 1,
 				take: 5
-			});
-
-			this.loadGraph();								
-		},
-		loadGraph 			: function(){
-			var self = this, 
-			today = new Date(),
-			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-
-			this.graphDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],
-				page: 1,
-				take: 100
-			}).then(function(e) {
-			    var view = self.graphDS.view();
-			    
-				$('#graph').kendoChart({
-					dataSource: {data: view},												
-					series: [
-						{field: 'sale', categoryField:'month', type: 'line', axis: 'order'}
-					],
-					valueAxes: [
-						{
-		                    name: "order",
-		                    color: "#007eff",
-		                    min: 0,
-		                    majorUnit: 500000,
-		                    max: 1000000
-		                }
-	                ],
-	                categoryAxis: {
-	                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
-	                    axisCrossingValues: [0, 13],
-	                    justified: true
-	                },
-	                tooltip: {
-	                    visible: true,
-	                    format: "{0}",
-	                    template: "#= series.field #: #= value #"
-	                }
-				});
-			});		
+			});										
 		}		
 	});
 	banhji.vendorCenter = kendo.observable({
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
-		contactDS 			: dataStore(apiUrl + 'contacts'),
+		contactDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:2 },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		contactTypeDS		: banhji.source.supplierTypeDS,
 		noteDS 				: dataStore(apiUrl + 'notes'),		
 		currencyDS 			: banhji.source.currencyDS,		
@@ -27801,7 +31178,29 @@
 		openInvoice 		: 0,
 		overInvoice 		: 0,		
 		pageLoad 			: function(){		
-												
+			this.contactDS.fetch();
+			this.transactionDS.fetch();
+			this.summaryDS.fetch();										
+		},
+		loadContact 		: function(id){
+			var self = this;			
+			
+			this.contactDS.query({
+			  	filter:[
+			  		{ field:"id", value:id }
+			  	],
+			  	page: 1,
+			  	take: 50
+			}).then(function(e) {
+			    var view = self.contactDS.data();
+			    
+			    if(view.length>0){
+			    	self.set("obj", view[0]);				    	
+			    	self.loadSummary(view[0].id);
+			    	self.loadTransaction(view[0].id);				    	
+			    	self.loadNote(view[0].id);			    	
+			    }
+			});			
 		},				
 		loadSummary 		: function(id){
 			var self = this, obj = this.get("obj");
@@ -27832,7 +31231,7 @@
 					}									
 				});
 				
-				self.set("balance", kendo.toString(balance, "c", obj.currency[0].locale));
+				self.set("balance", kendo.toString(balance, "c", obj.locale));
 				self.set("po", kendo.toString(po, "n0"));
 				self.set("openInvoice", kendo.toString(open, "n0"));
 				self.set("overInvoice", kendo.toString(over, "n0"));
@@ -28095,96 +31494,42 @@
 		lang 					: langVM,
 		dataSource 				: dataStore(apiUrl + "contacts"),
 		patternDS 				: dataStore(apiUrl + "contacts"),
+		numberDS 				: dataStore(apiUrl + "contacts"),
 		deleteDS 				: dataStore(apiUrl + "transactions"),		
-		existingDS 				: dataStore(apiUrl + "contacts"),
-		businessTypeDS			: dataStore(apiUrl + "businesstypes"),		
-		contactTypeDS  			: banhji.source.supplierTypeDS,
-		contactPersonDS			: dataStore(apiUrl + "contact_persons"),
-		currencyDS 				: banhji.source.currencyDS,		
-		apDS  					: banhji.source.APAccountDS,
-		tradeDiscountDS  		: banhji.source.supplierTradeDiscountDS,
-		settlementDiscountDS  	: banhji.source.supplierSettlementDiscountDS,
-		prepaymentDS  			: banhji.source.prepaidAccountDS,
-		taxItemDS				: dataStore(apiUrl + "tax_items"),
+		existingDS 				: dataStore(apiUrl + "contacts"),		
+		contactPersonDS			: dataStore(apiUrl + "contact_persons"),		
 		paymentTermDS			: dataStore(apiUrl + "payment_terms"),
 		paymentMethodDS			: dataStore(apiUrl + "payment_methods"),
+		taxItemDS				: dataStore(apiUrl + "tax_items"),
+		countryDS 				: banhji.source.countryDS,
+		contactTypeDS  			: banhji.source.supplierTypeDS,
+		currencyDS 		  		: banhji.source.currencyDS,
+		apDS 		  			: banhji.source.APAccountDS,		
+		prepaidAccountDS 		: banhji.source.prepaidAccountDS,
+		tradeDiscountDS 		: banhji.source.supplierTradeDiscountDS,
+		settlementDiscountDS 	: banhji.source.supplierSettlementDiscountDS,
 		genders					: banhji.source.genderList,
 		statusList 				: banhji.source.statusList,
         obj 					: null,       
-		originalNo				: null,		
-		isDuplicateNumber 		: false,		
+		originalNo				: null,	
+		isDuplicateNumber 		: false,
 		isCompany 				: false,
 		isEdit 					: false,
+		contact_type_id 		: 0,						
 		pageLoad 				: function(id, is_pattern){
 			if(id){
 				this.set("isEdit", true);							
 				this.loadObj(id, is_pattern);
 				this.loadContactPerson(id);				
-			}else{				
+			}else{
 				if(this.get("isEdit")){
 					this.set("isEdit", false);
-										
-					this.dataSource.data([]);					
-					
 					this.addEmpty();
 				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
-				}								
+					this.addEmpty();
+				}															
 			}			
 		},
-		//Pattern
-		setPattern 				: function(contact_type_id){
-			var obj = this.get("obj");
-
-			obj.set("contact_type_id", contact_type_id);
-			obj.set("is_pattern", 1);
-		},
-		savePattern 			: function(contact_type_id, contact_id){
-			var data = banhji.vendorSetting.contactTypeDS.get(contact_type_id);
-			data.set("contact_id", contact_id);
-			banhji.vendorSetting.contactTypeDS.sync();			
-			window.history.back();
-		},
-		loadPattern 			: function(){
-			var self = this, obj = self.get("obj"), type = this.contactTypeDS.get(obj.contact_type_id);
-
-			this.patternDS.query({
-				filter: [
-					{ field:"id", value: type.contact_id },
-					{ field:"is_pattern", value: 1 }
-				],
-				page: 1,
-				take: 1
-			}).then(function(data){
-				var view = self.patternDS.view();				
-
-				if(view.length>0){
-					obj.set("account_id", view[0].account_id);
-					obj.set("trade_discount_id", view[0].trade_discount_id);
-					obj.set("settlement_discount_id", view[0].settlement_discount_id);
-					obj.set("deposit_account_id", view[0].deposit_account_id);
-					obj.set("tax_item_id", view[0].tax_item_id);
-					obj.set("currency_id", view[0].currency_id);
-					obj.set("credit_limit", view[0].credit_limit);
-
-					obj.set("payment_term_id", view[0].payment_term_id);
-					obj.set("payment_method_id", view[0].payment_method_id);
-					obj.set("business_type_id", view[0].business_type_id);
-				}else{
-					obj.set("account_id", 0);
-					obj.set("trade_discount_id", 0);
-					obj.set("settlement_discount_id", 0);
-					obj.set("deposit_account_id", 0);
-					obj.set("tax_item_id", 0);
-					obj.set("currency_id", 0);
-					obj.set("credit_limit", 0);
-
-					obj.set("payment_term_id", 0);
-					obj.set("payment_method_id", 0);
-					obj.set("business_type_id", 0);
-				}
-			});
-		},					
 		loadObj 				: function(id, is_pattern){
 			var self = this, para = [];
 
@@ -28195,13 +31540,13 @@
 			}
 
 			this.dataSource.query({
-				filter:para,
+				filter: para,
 				page: 1,
 				pageSize: 100
 			}).then(function(e){
 				var view = self.dataSource.view();
 
-				if(view[0].compnay!==""){
+				if(view[0].company){
 					self.set("isCompany", true);
 				}else{
 					self.set("isCompany", false);
@@ -28209,68 +31554,124 @@
 
 				self.set("obj", view[0]);
 				self.loadMap();
-				self.set("originalNo", view[0].number);											
+				self.set("originalNo", view[0].number);								
 			});
 		},				
+		//Pattern		
+		applyPattern 			: function(contact_id){
+			var self = this, obj = self.get("obj");
+			
+			this.patternDS.query({
+				filter: [
+					{ field:"id", value: contact_id },
+					{ field:"is_pattern", value: 1 }
+				],
+				page: 1,
+				take: 1
+			}).then(function(data){
+				var view = self.patternDS.view();				
+
+				if(view.length>0){
+					obj.set("country_id", view[0].country_id);					
+					obj.set("gender", view[0].gender);
+					obj.set("company", view[0].company);
+					obj.set("vat_no", view[0].vat_no);
+					obj.set("memo", view[0].memo);
+					obj.set("city", view[0].city);
+					obj.set("post_code", view[0].post_code);
+					obj.set("address", view[0].address);
+					obj.set("bill_to", view[0].bill_to);
+					obj.set("ship_to", view[0].ship_to);									
+					obj.set("payment_term_id", view[0].payment_term_id);
+					obj.set("payment_method_id", view[0].payment_method_id);
+					obj.set("credit_limit", view[0].credit_limit);
+					obj.set("locale", view[0].locale);					
+					obj.set("account_id", view[0].account_id);
+					obj.set("ra_id", view[0].ra_id);
+					obj.set("tax_item_id", view[0].tax_item_id);
+					obj.set("deposit_account_id", view[0].deposit_account_id);
+					obj.set("trade_discount_id", view[0].trade_discount_id);
+					obj.set("settlement_discount_id", view[0].settlement_discount_id);					
+				}else{
+					obj.set("country_id", 0);					
+					obj.set("gender", "M");
+					obj.set("company", "");
+					obj.set("vat_no", "");
+					obj.set("memo", "");
+					obj.set("city", "");
+					obj.set("post_code", "");
+					obj.set("address", "");
+					obj.set("bill_to", "");
+					obj.set("ship_to", "");									
+					obj.set("payment_term_id", 0);
+					obj.set("payment_method_id", 0);
+					obj.set("credit_limit", 0);
+					obj.set("locale", "");					
+					obj.set("account_id", 0);
+					obj.set("ra_id", 0);
+					obj.set("tax_item_id", 0);
+					obj.set("deposit_account_id", 0);
+					obj.set("trade_discount_id", 0);
+					obj.set("settlement_discount_id", 0);
+				}
+			});
+		},		
+		savePattern 			: function(contact_type_id, contact_id){
+			var data = banhji.customerSetting.contactTypeDS.get(contact_type_id);
+			data.set("contact_id", contact_id);
+			banhji.customerSetting.contactTypeDS.sync();			
+			window.history.back();
+		},
+		contactTypeChanges 		: function(){
+			var obj = this.get("obj");
+
+			if(obj.contact_type_id){
+				var type = this.contactTypeDS.get(obj.contact_type_id);
+				this.applyPattern(type.contact_id);
+				obj.set("abbr", type.abbr);
+
+				if(type.is_company=="1"){
+					this.set("isCompany", true);
+				}else{
+					this.set("isCompany", false);
+					obj.set("company", "");
+					obj.set("vat_no", "");
+				}
+			}else{
+				this.set("isCompany", false);
+				obj.set("company", "");
+				obj.set("vat_no", "");
+
+				obj.set("country_id", 0);					
+				obj.set("gender", "M");
+				obj.set("company", "");
+				obj.set("vat_no", "");
+				obj.set("memo", "");
+				obj.set("city", "");
+				obj.set("post_code", "");
+				obj.set("address", "");
+				obj.set("bill_to", "");
+				obj.set("ship_to", "");									
+				obj.set("payment_term_id", 0);
+				obj.set("payment_method_id", 0);
+				obj.set("credit_limit", 0);
+				obj.set("locale", "");					
+				obj.set("account_id", 0);
+				obj.set("ra_id", 0);
+				obj.set("tax_item_id", 0);
+				obj.set("deposit_account_id", 0);
+				obj.set("trade_discount_id", 0);
+				obj.set("settlement_discount_id", 0);
+			}
+		},				
+		//Contact Person
 		loadContactPerson		: function(id){
 			this.contactPersonDS.query({
 				filter: { "field":"contact_id", value: id },
 				page: 1,
-				pageSize: 100
+				take: 100
 			});
 		},
-		loadMap 				: function(){
-			var obj = this.get("obj"), lat = kendo.parseFloat(obj.latitute),
-			lng = kendo.parseFloat(obj.longtitute);
-			
-			if(lat && lng){
-				var myLatLng = {lat:lat, lng:lng};
-				var mapOptions = {
-					zoom: 17,					
-					center: myLatLng,
-					mapTypeControl: false,
-					zoomControl: false,
-					scaleControl: false,
-					streetViewControl: false
-				};
-				var map = new google.maps.Map(document.getElementById('map'),mapOptions);
-				var marker = new google.maps.Marker({
-					position: myLatLng,
-					map: map,
-					title: obj.number
-				});
-			} 
-		},
-		copyBillTo 				: function(){
-			var obj = this.get("obj");
-
-			obj.set("ship_to", obj.bill_to);
-		},		    	
-		checkExistingNumber 	: function(){
-			var self = this;	
-			
-			var number = this.get("obj").number;
-			var originalNo = this.get("originalNo");
-			
-			if(number.length>0 && number!==originalNo){
-				this.existingDS.query({
-					filter: { field:"number", value: number },
-					page: 1,
-					pageSize: 100
-				}).then(function(e){
-					var view = self.existingDS.view();
-					
-					if(view.length>0){
-				 		self.set("isDuplicateNumber", true);						
-					}else{
-						self.set("isDuplicateNumber", false);
-					}
-				});							
-			}else{
-				this.set("isDuplicateNumber", false);
-			}			
-		},
-		//Contact Person		
 		addEmptyContactPerson 	: function(){
 			var contact_id = 0;
 			if(this.get("isEdit")){
@@ -28301,73 +31702,145 @@
 
 			this.contactPersonDS.sync();
 		},
+		loadMap 				: function(){
+			var obj = this.get("obj"), lat = kendo.parseFloat(obj.latitute),
+			lng = kendo.parseFloat(obj.longtitute);
+			
+			if(lat && lng){
+				var myLatLng = {lat:lat, lng:lng};
+				var mapOptions = {
+					zoom: 17,					
+					center: myLatLng,
+					mapTypeControl: false,
+					zoomControl: false,
+					scaleControl: false,
+					streetViewControl: false
+				};
+				var map = new google.maps.Map(document.getElementById('map'),mapOptions);
+				var marker = new google.maps.Marker({
+					position: myLatLng,
+					map: map,
+					title: obj.number
+				});
+			} 
+		},
+		copyBillTo 				: function(){
+			var obj = this.get("obj");
+
+			obj.set("ship_to", obj.bill_to);
+		},      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj"),
+			originalNo = this.get("originalNo");			
+			
+			if(obj.number!=="" && obj.number!==originalNo){
+				this.existingDS.query({
+					filter: [
+						{ field:"number", value: obj.number },
+						{ field:"contact_type_id", value: obj.contact_type_id }
+					],
+					page: 1,
+					pageSize: 100
+				}).then(function(e){
+					var view = self.existingDS.view();
+					
+					if(view.length>0){
+				 		self.set("isDuplicateNumber", true);						
+					}else{
+						self.set("isDuplicateNumber", false);
+					}
+				});							
+			}else{
+				this.set("isDuplicateNumber", false);
+			}			
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj");
+
+			this.numberDS.query({
+				filter:[
+					{ field:"parent_id", operator:"where_related", model:"contact_type", value:2 },
+					{ field:"contact_type_id", value:obj.contact_type_id }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.numberDS.view();
+
+				if(view.length>0){
+					var lastNo = kendo.parseInt(view[0].number);
+					if(lastNo){
+						lastNo++;
+						obj.set("number",kendo.toString(lastNo, "00000"));
+					}
+				}
+			});
+		},		
       	addEmpty 				: function(){
+      		var self = this;
       		this.dataSource.data([]);
       		this.contactPersonDS.data([]);
       		this.set("obj", null);
 
-			this.dataSource.add({
-				"company_id" 			: 0,
-				"ebranch_id" 			: 0,
-				"elocation_id"			: 0,
-				"wbranch_id" 			: 0,
-				"wlocation_id" 			: 0,			
-				"currency_id" 			: 0,
-				"user_id" 				: 0,
-				"contact_type_id" 		: 0,							
-				"number"				: "",
-				"enumber"				: "",
-				"wnumber"				: "",
-				"surname"				: "",
-				"name"					: "",
-				"gender"				: "M",
-				"dob"					: "",
-				"pob"					: "",
-				"latitute" 				: "",
-				"longtitute" 			: "",
-				"credit_limit"			: 0,				
-				"id_number"				: "",
-				"phone" 				: "",
-				"email" 				: "",
-				"website" 				: "",			
-				"job"					: "",				
-				"vat_no"				: "",
-				"family_member"			: "",
-				"address" 				: "",
-				"bill_to" 				: "",
-				"ship_to" 				: "",
-				"memo"					: "",				
-				"image_url"				: "",
-				"company"				: "",
-				"company_en"			: "",		
-				"bank_name"				: "",
-				"bank_address"			: "",
-				"bank_account_name"		: "",
-				"bank_account_number"	: "",
-				"name_on_cheque"		: "",				
-				"business_type_id"		: 0,
-				"payment_term_id"		: 0,
-				"payment_method_id"		: 0,
-				"deposit_account_id"	: 0,
-				"trade_discount_id"	 	: 0,
-				"settlement_discount_id": 0,				
-				"account_id"	: 0,
-				"ra_id"					: 0,
-				"tax_item_id"			: 0,				
-				"phase_id"				: 0,
-				"voltage_id"			: 0,
-				"ampere_id"				: 0,
-				"registered_date" 		: new Date(),			
-				"use_electricity"		: 0,
-				"use_water"				: 0,
-				"is_local" 				: 0,
-				"is_pattern" 			: 0,				
-				"status"				: 1							
-			});			
+      		this.patternDS.query({
+      			filter:[
+      				{ field:"id", value:3 },
+      				{ field:"is_pattern", value:1 }
+      			],
+      			page:1,
+      			pageSize:1
+      		}).then(function(){
+      			var view = self.patternDS.view(),
+      			type = self.contactTypeDS.at(0);
 
-			var data = this.dataSource.data();			
-			var obj = data[data.length - 1];			
-			this.set("obj", obj);	
+      			self.dataSource.insert(0, {				
+					"country_id" 			: view[0].country_id,			
+					"user_id" 				: 0,
+					"contact_type_id" 		: 6,							
+					"abbr"					: type.abbr,
+					"number"				: "",				
+					"surname"				: "",
+					"name"					: "",
+					"gender"				: view[0].gender,					
+					"phone" 				: "",
+					"email" 				: "",					
+					"company"				: view[0].company,
+					"vat_no"				: view[0].vat_no,					
+					"memo"					: view[0].memo,
+					"city"					: view[0].city,
+					"post_code"				: view[0].post_code,
+					"address" 				: view[0].address,
+					"bill_to" 				: view[0].bill_to,
+					"ship_to" 				: view[0].ship_to,
+					"latitute" 				: "",
+					"longtitute" 			: "",
+					"credit_limit"			: view[0].credit_limit,
+					"locale" 				: view[0].locale,														
+					"payment_term_id"		: view[0].payment_term_id,
+					"payment_method_id"		: view[0].payment_method_id,									
+					"registered_date" 		: new Date(),
+					"account_id"			: view[0].account_id,
+					"ra_id"					: view[0].ra_id,
+					"tax_item_id"			: view[0].tax_item_id,
+					"deposit_account_id"	: view[0].deposit_account_id,
+					"trade_discount_id"		: view[0].trade_discount_id,
+					"settlement_discount_id": view[0].settlement_discount_id,					
+					"is_pattern" 			: 0,
+					"status"				: 1								
+				});
+
+				var obj = self.dataSource.at(0);				
+				//Pattern
+				if(self.get("contact_type_id")>0){
+					obj.set("contact_type_id", self.get("contact_type_id"));
+					obj.set("is_pattern", 1);
+				}
+
+				self.set("obj", obj);
+				self.generateNumber();
+      		});								
 		},
 		contactSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -28380,60 +31853,55 @@
 		    return dfd;	    		    	
 	    },			
 		save 					: function(){			
-			var self = this, saved = false;
+			var self = this;
 
 			if(this.get("isEdit")){
-				this.dataSource.sync();
-				this.dataSource.bind("requestEnd", function(e){
-					if(e.type=="update"){
-						banhji.vendorCenter.contactDS.fetch();
-					}
-				});
+				this.dataSource.sync();				
 				this.contactPersonDS.sync();
 			}else{
 				this.contactSync().then(function(data){
 					self.saveContactPerson(data[0].id);
-
 					if(data[0].is_pattern){
 						self.savePattern(data[0].contact_type_id, data[0].id);
 					}
 				}).then(function(){
-					self.addEmpty();
-					banhji.vendorCenter.contactDS.fetch();
+					self.addEmpty();										
 				});
-			}						
+			}									
 		},
 		delete 					: function(){
 			var self = this,
-			obj = this.get("obj"),
-			id = obj.id;
+			obj = this.get("obj");
 
-			if (confirm("Are you sure, you want to delete it?")) {				
-				this.deleteDS.query({
-				  	filter: { field: "contact_id", value: id },
-				  	page: 1,
-				  	take: 1
-				}).then(function() {
-					var view = self.deleteDS.view();
+			if(!obj.is_pattern){
+				if (confirm("Are you sure, you want to delete it?")) {				
+					this.deleteDS.query({
+					  	filter: { field: "contact_id", value: obj.id },
+					  	page: 1,
+					  	take: 1
+					}).then(function() {
+						var view = self.deleteDS.view();
 
-					if(view.length>0){
-						alert("Sorry, you can not delete it because it is using now.");
-					}else{
-						var data = self.dataSource.get(id);
-				        self.dataSource.remove(data);
-				        self.save();
+						if(view.length>0){
+							alert("Sorry, you can not delete it because it is using now.");
+						}else{
+							var data = self.dataSource.get(obj.id);
+					        data.set("deleted", 1);
+					        self.save();
 
-				        window.history.back();
-					}
-				});
+					        window.history.back();				        
+						}
+					});								
+		    	}
 	    	}
 		},
 		cancel 					: function(){
 			this.dataSource.cancelChanges();
 			this.contactPersonDS.cancelChanges();
+			this.set("contact_type_id", 0);
 
 			window.history.back();
-		}				
+		}		
 	});
 	banhji.purchaseOrder =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
@@ -28443,7 +31911,8 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		depositDS			: dataStore(apiUrl + "transactions"),		
+		depositDS			: dataStore(apiUrl + "transactions"),
+		jobDS				: dataStore(apiUrl + "jobs"),		
 		balanceDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -28665,7 +32134,8 @@
 		},
 		//Contact
 		loadContact 		: function(id){
-			var self = this;			
+			var self = this;
+			this.jobDS.filter({ field:"contact_id", value:id });			
 
 			this.contactDS.query({    			
 				filter: { field:"id", value: id },
@@ -28677,15 +32147,14 @@
 		    	
 		    	obj.set("contact_id", view[0].id);
 		    	obj.set("payment_method_id", view[0].payment_method_id);		    	
-		    	obj.set("locale", view[0].currency[0].locale);				
+		    	obj.set("locale", view[0].locale);				
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
 				self.setRate();
 				self.setTerm();
 				self.loadDeposit();							
-			});				
-
+			});
 		},
 		loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
@@ -28713,12 +32182,13 @@
 		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
+			this.jobDS.filter({ field:"contact_id", value:obj.contact_id });
 
 	    	if(obj.contact_id>0){		    			    	
 		    	contact = this.contactDS.get(obj.contact_id);		    	
 		    	
 		    	obj.set("payment_method_id", contact.payment_method_id);		    	
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
@@ -28802,12 +32272,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -29033,7 +32502,8 @@
 				contact_id 			: "",
 				payment_method_id	: 0,				
 				reference_id 		: 0,
-				recurring_id 		: "",				
+				recurring_id 		: "",
+				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				seller_id 			: this.get("user_id"), 	    		
 			   	type				: "Purchase_Order",
@@ -29398,7 +32868,8 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		depositDS			: dataStore(apiUrl + "transactions"),		
+		depositDS			: dataStore(apiUrl + "transactions"),
+		jobDS				: dataStore(apiUrl + "jobs"),		
 		balanceDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -29617,7 +33088,8 @@
 		},
 		//Contact
 		loadContact 		: function(id){
-			var self = this;			
+			var self = this;
+			this.jobDS.filter({ field:"contact_id", value:id });			
 
 			this.contactDS.query({    			
 				filter: { field:"id", value: id },
@@ -29629,15 +33101,14 @@
 		    	
 		    	obj.set("contact_id", view[0].id);
 		    	obj.set("payment_term_id", view[0].payment_term_id);		    	
-		    	obj.set("locale", view[0].currency[0].locale);				
+		    	obj.set("locale", view[0].locale);				
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
 				self.setRate();
 				self.setTerm();
 				self.loadDeposit();							
-			});				
-
+			});
 		},
 		loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
@@ -29665,13 +33136,14 @@
 		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
+			this.jobDS.filter({ field:"contact_id", value:obj.contact_id });
 
 	    	if(obj.contact_id>0){		    			    	
 		    	contact = this.contactDS.get(obj.contact_id);		    	
 		    	
 		    	obj.set("payment_term_id", contact.payment_term_id);
 		    	obj.set("vat_id", contact.tax_item_id);
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
@@ -29755,12 +33227,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -29911,7 +33382,8 @@
 				contact_id 			: "",
 				payment_term_id		: 0,				
 				reference_id 		: 0,
-				recurring_id 		: "",				
+				recurring_id 		: "",
+				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				seller_id 			: this.get("user_id"), 	    		
 			   	type				: "GRN",
@@ -30541,12 +34013,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -30647,7 +34118,7 @@
 					sum += value.amount;
 		        });		       	
 
-		        this.set("total", kendo.toString(sum, "c0", obj.locale));		        
+		        this.set("total", kendo.toString(sum, "c", obj.locale));		        
 		        obj.set("amount", sum);		       								    	
 	    	}else{
 	    		this.set("total", 0);		        
@@ -30661,7 +34132,7 @@
 		    	contact = this.contactDS.get(obj.contact_id);		    	
 		    	
 		    	obj.set("account_id", contact.deposit_account_id);
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 		    
 
 		    	this.setRate();		    		    			    	
@@ -30974,7 +34445,8 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		depositDS			: dataStore(apiUrl + "transactions"),		
+		depositDS			: dataStore(apiUrl + "transactions"),
+		jobDS				: dataStore(apiUrl + "jobs"),		
 		balanceDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -31023,8 +34495,8 @@
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactListDS 		: banhji.source.supplierDS,
 		contactDS  			: banhji.source.supplierDS,
-		selectAccountDS  	: banhji.source.accountDS,		
-		accountDS  			: banhji.source.accountDS,
+		accountDS  			: dataStore(apiUrl + "accounts"),		
+		expenseAccountDS  	: banhji.source.expenseAccountDS,
 		itemDS  			: banhji.source.itemDS,
 		taxItemDS  			: new kendo.data.DataSource({
 			transport: {
@@ -31227,7 +34699,8 @@
 		},
 		//Contact
 		loadContact 		: function(id){
-			var self = this;			
+			var self = this;
+			this.jobDS.filter({ field:"contact_id", value:id });			
 
 			this.contactDS.query({    			
 				filter: { field:"id", value: id },
@@ -31240,7 +34713,7 @@
 		    	obj.set("contact_id", view[0].id);
 		    	obj.set("payment_term_id", view[0].payment_term_id);
 		    	obj.set("payment_method_id", view[0].payment_method_id);		    	
-		    	obj.set("locale", view[0].currency[0].locale);				
+		    	obj.set("locale", view[0].locale);				
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
@@ -31274,6 +34747,7 @@
 		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
+			this.jobDS.filter({ field:"contact_id", value:obj.contact_id });
 
 	    	if(obj.contact_id>0){		    			    	
 		    	contact = this.contactDS.get(obj.contact_id);		    	
@@ -31281,7 +34755,7 @@
 		    	obj.set("account_id", contact.account_id);
 		    	obj.set("payment_term_id", contact.payment_term_id);
 		    	obj.set("payment_method_id", contact.payment_method_id);		    	
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
@@ -31365,12 +34839,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -31583,11 +35056,11 @@
 			if(obj.type=="Cash_Purchase"){
 				this.set("isCash", true);				
 
-				this.selectAccountDS.filter({ field:"account_type_id", value: banhji.source.cash_account_id });
+				this.accountDS.filter({ field:"account_type_id", value: banhji.source.cash_account_id });
 			}else{
 				this.set("isCash", false);				
 
-				this.selectAccountDS.filter({ field:"account_type_id", operator:"where_in", value:[23,24] });
+				this.accountDS.filter({ field:"account_type_id", operator:"where_in", value:[23,24] });
 			}			
 		},
 		segmentChanges 		: function(e) {
@@ -31766,7 +35239,8 @@
 				payment_term_id		: 0,
 				payment_method_id	: 0,				
 				reference_id 		: 0,
-				recurring_id 		: "",				
+				recurring_id 		: "",
+				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				seller_id 			: this.get("user_id"), 	    		
 			   	type				: "Cash_Purchase",
@@ -31933,6 +35407,16 @@
 					self.addEmpty();
 				});
 			}
+		},
+		delete 					: function(){
+			var obj = this.get("obj");
+			
+			if (confirm("Are you sure, you want to delete it?")) {				
+		        obj.set("deleted", 1);
+		        this.save();
+
+		        window.history.back();												
+	    	}	    	
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
@@ -32324,7 +35808,8 @@
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
 		returnDS			: dataStore(apiUrl + "transactions"),
-		invoiceDS			: dataStore(apiUrl + "transactions"),		
+		invoiceDS			: dataStore(apiUrl + "transactions"),
+		jobDS				: dataStore(apiUrl + "jobs"),		
 		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.supplierDS,
@@ -32454,7 +35939,8 @@
 		},		
 		//Contact
 		loadContact 		: function(id){
-			var self = this;			
+			var self = this;
+			this.jobDS.filter({ field:"contact_id", value:id });			
 
 			this.contactDS.query({    			
 				filter: { field:"id", value: id },
@@ -32465,7 +35951,7 @@
 				obj = self.get("obj");
 		    	
 		    	obj.set("contact_id", view[0].id);		    		    	
-		    	obj.set("locale", view[0].currency[0].locale);				
+		    	obj.set("locale", view[0].locale);				
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
@@ -32499,11 +35985,12 @@
 		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
+			this.jobDS.filter({ field:"contact_id", value:obj.contact_id });
 
 	    	if(obj.contact_id>0){		    			    	
 		    	contact = this.contactDS.get(obj.contact_id);   	
 		    		    	
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
@@ -32584,12 +36071,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -32850,7 +36336,8 @@
 			this.dataSource.add({				
 				contact_id 			: "",								
 				reference_id 		: "",
-				recurring_id 		: "",				
+				recurring_id 		: "",
+				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				seller_id 			: this.get("user_id"), 	    		
 			   	type				: "Purchase_Return", //Require
@@ -33457,88 +36944,118 @@
 				});
 	    	}	    	
 	    }	 		
+	});
+	banhji.vendorReportCenter = kendo.observable({
+		lang 				: langVM,				
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contact_reports/monthly_sale",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),						
+		pageLoad 			: function(){
+																
+		}		
 	});		
 	banhji.vendorSetting =  kendo.observable({
 		lang 				: langVM,		
-        contactTypeDS 		: dataStore(apiUrl + "contacts/type"),
-        paymentMethodDS		: dataStore(apiUrl + "payment_methods"),
-        paymentTermDS		: dataStore(apiUrl + "payment_terms"),
+        contactTypeDS 		: dataStore(apiUrl+"contacts/type"),
+        paymentMethodDS		: dataStore(apiUrl+"payment_methods"),
+        paymentTermDS		: dataStore(apiUrl+"payment_terms"),      
         contactTypeName 	: "",
+        contactTypeAbbr 	: "",
+        contactTypeCompany 	: 0,
         paymentMethodName 	: "",
         paymentTermName 	: "",
-        paymentTermNetDue 		: "",
-        paymentTermDiscountPeriod : "",
-        paymentTermDiscountPercentage 	: "",
+        paymentTermNetDue	: "",
+        paymentTermPeriod 	: "",
+        paymentTermPercentage 	: "",
         pageLoad 			: function() {
         	
         },	    
         addContactType 		: function(){
-        	var self = this, 
-        	name = this.get("contactTypeName");
+        	var name = this.get("contactTypeName");
 
         	if(name!==""){
 	        	this.contactTypeDS.add({
 	        		parent_id 	: 2,
-	        		contact_id 	: 0,
+	        		name 		: name,
+	        		abbr 		: this.get("contactTypeAbbr"),
+	        		description : "",
+	        		is_company 	: this.get("contactTypeCompany"),
+	        		is_system 	: 0
+	        	});
+
+	        	this.contactTypeDS.sync();
+
+	        	this.set("contactTypeName", "");
+	        	this.set("contactTypeAbbr", "");
+	        	this.set("contactTypeCompany", 0);
+        	}
+        },
+        addPaymentMethod 		: function(){
+        	var name = this.get("paymentMethodName");
+
+        	if(name!==""){
+	        	this.paymentMethodDS.add({	        		
 	        		name 		: name,
 	        		description : "",
 	        		is_system 	: 0
 	        	});
 
-	        	this.contactTypeDS.sync();
-	        	this.contactTypeDS.bind("requestEnd", function(){
-	        		self.set("contactTypeName", "");
-	        	});
-        	}
-        },
-        addPaymentMethod 		: function(){
-        	var self = this, name = this.get("paymentMethodName");
-
-        	if(name!==""){
-	        	this.paymentMethodDS.add({	        		
-	        		name 		: name,
-	        		description : ""
-	        	});
-
 	        	this.paymentMethodDS.sync();
-	        	this.paymentMethodDS.bind("requestEnd", function(){
-	        		self.set("paymentMethodName", "");
-	        	});
+
+	        	this.set("paymentMethodName", "");
         	}
         },
         addPaymentTerm 		: function(){
-        	var self = this, 
-        	name = this.get("paymentTermName"),
-        	netDue = this.get("paymentTermNetDue");
+        	var name = this.get("paymentTermName");
 
-        	if(name!=="" && netDue!==""){
+        	if(name!==""){
 	        	this.paymentTermDS.add({	        		
 	        		name 				: name,
-	        		net_due 			: netDue,
-	        		discount_period 	: this.get("paymentTermDiscountPeriod"),
-	        		discount_percentage : this.get("paymentTermDiscountPercentage"),
+	        		net_due 			: this.get("paymentTermNetDue"),
+	        		discount_period 	: this.get("paymentTermPeriod"),
+	        		discount_percentage : this.get("paymentTermPercentage"),
 	        		is_system 			: 0
 	        	});
 
 	        	this.paymentTermDS.sync();
-	        	this.paymentTermDS.bind("requestEnd", function(){
-	        		self.set("paymentTermName", "");
-	        		self.set("paymentTermNetDue", "");
-	        		self.set("paymentTermDiscountPeriod", "");
-	        		self.set("paymentTermDiscountPercentage", "");
-	        	});
-        	}else{
-        		alert("Term and Net Due are required.");
+
+	        	this.set("paymentTermName", "");
+	        	this.set("paymentTermNetDue", "");
+	        	this.set("paymentTermPeriod", "");
+	        	this.set("paymentTermPercentage", "");
         	}
         },
         goPattern 	: function(e){
         	var data = e.data;        	        	
 
-        	if(kendo.parseInt(data.contact_id)>0){	        	
+        	if(kendo.parseInt(data.contact_id)>0){        		        	
 	        	banhji.router.navigate('/vendor/'+data.contact_id+'/1');   	
         	}else{
         		banhji.router.navigate('/vendor');
-        		banhji.vendor.setPattern(data.id);
+        		banhji.vendor.set("contact_type_id",data.id);
         	}
         }        
     });	
@@ -33549,14 +37066,14 @@
 	**************************/
 	banhji.customerDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "customer_reports/summary"),
-		topCustomerDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
-		topARDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),		
+		summaryDS 			: dataStore(apiUrl + "contact_reports/summary"),
+		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
+		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "customer_reports/monthly_sale",
+					url: apiUrl + "contact_reports/monthly_sale",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -33649,28 +37166,86 @@
 	});
 	banhji.customerCenter = kendo.observable({
 		lang 				: langVM,
-		transactionDS  		: dataStore(apiUrl + 'transactions'),		
-		contactDS  			: dataStore(apiUrl + 'contacts'),			
+		transactionDS  		: dataStore(apiUrl + 'transactions'),
+		contactDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		contactTypeDS  		: banhji.source.customerTypeDS,
-		noteDS 				: dataStore(apiUrl + 'notes'),		
+		noteDS 				: dataStore(apiUrl + 'notes'),
 		currencyDS  		: banhji.source.currencyDS,
-		outstandingDS 		: dataStore(apiUrl + "customer_reports/outstanding"),
+		outstandingDS 		: dataStore(apiUrl + "contact_reports/outstanding"),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
-		edate 				: "",				
+		edate 				: "",
 		obj 				: null,
-		note 				: "",		
-		searchText 			: "",		
+		note 				: "",
+		searchText 			: "",
 		contact_type_id 	: 0,
 		currency_id 		: 0,
 		user_id 			: banhji.source.user_id,
 		balance 			: 0,
 		deposit 			: 0,
 		outInvoice 			: 0,
-		overInvoice 		: 0,		
-		pageLoad 			: function(){		
-												
+		overInvoice 		: 0,
+		pageLoad 			: function(){
+			this.contactDS.fetch();
+			this.transactionDS.fetch();
+			this.outstandingDS.fetch();
+		},
+		loadContact 		: function(id){
+			var self = this;
+			
+			this.contactDS.query({
+			  	filter:[
+			  		{ field:"id", value:id }
+			  	],
+			  	page: 1,
+			  	take: 50
+			}).then(function(e) {
+			    var view = self.contactDS.data();
+			    
+			    if(view.length>0){
+			    	self.set("obj", view[0]);
+			    	self.loadOutStandingInvoice(view[0].id);
+			    	self.loadTransaction(view[0].id);
+			    	self.loadNote(view[0].id);
+			    }
+			});
+			
 		},
 		loadOutStandingInvoice: function(id){
 			var self = this, obj = this.get("obj");
@@ -33682,10 +37257,10 @@
 			}).then(function(e) {
 				var view = self.outstandingDS.view();
 
-				self.set("deposit", kendo.toString(view[0].deposit, obj.currency[0].locale=="km-KH"?"c0":"c", obj.currency[0].locale));
+				self.set("deposit", kendo.toString(view[0].deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
 				self.set("outInvoice", kendo.toString(view[0].open, "n0"));
 				self.set("overInvoice", kendo.toString(view[0].overdue, "n0"));
-				self.set("balance", kendo.toString(view[0].balance, obj.currency[0].locale=="km-KH"?"c0":"c", obj.currency[0].locale));
+				self.set("balance", kendo.toString(view[0].balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
 			});
 		},
 		loadTransaction 	: function(id){
@@ -33748,11 +37323,11 @@
 		},			
 		selectedRow			: function(e){
 			var id = e.data.id,
-			data = e.data;			
+			data = e.data;
 			
-			this.set("obj", data);			
+			this.set("obj", data);
 			this.loadOutStandingInvoice(id);
-			this.loadTransaction(id);			
+			this.loadTransaction(id);
 			this.loadNote(id);
 		},
 		sorterChanges 		: function(){
@@ -33772,14 +37347,14 @@
 				var last = first + 6;
 
 				var firstDayOfWeek = new Date(thisWeek.setDate(first));
-				var lastDayOfWeek = new Date(thisWeek.setDate(last));				
+				var lastDayOfWeek = new Date(thisWeek.setDate(last));
 
 				this.set("sdate", firstDayOfWeek);
 				this.set("edate", lastDayOfWeek);
 				
 			  	break;
 			case "month":
-				var thisMonth = new Date;				  	
+				var thisMonth = new Date;
 				var firstDayOfMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1);
 				var lastDayOfMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 0);
 
@@ -33798,7 +37373,7 @@
 			  	break;
 			default:
 				this.set("sdate", "");
-				this.set("edate", "");					  
+				this.set("edate", "");
 			}
 		},
 		enterSearch 		: function(e){
@@ -33809,18 +37384,18 @@
 		search 				: function(){
 			var self = this, 
 			para = [],
-      		txtSearch = this.get("searchText"),       		
+      		txtSearch = this.get("searchText"),
       		contact_type_id = this.get("contact_type_id"),
-      		currency_id = this.get("currency_id");      		
+      		currency_id = this.get("currency_id");
       		
       		if(txtSearch){
-      			para.push(      				
+      			para.push(
       				{ field: "number", operator: "like", value: txtSearch },
       				{ field: "surname", operator: "or_like", value: txtSearch },
 					{ field: "name", operator: "or_like", value: txtSearch },
 					{ field: "company", operator: "or_like", value: txtSearch }
       			);
-      		}      		
+      		}
 
       		if(contact_type_id){
       			para.push({ field: "contact_type_id", value: contact_type_id });
@@ -33830,7 +37405,7 @@
 
       		if(currency_id){
       			para.push({ field: "currency_id", value: currency_id });
-      		}      		
+      		}
 
       		this.contactDS.filter(para);
       		var loaded = false;
@@ -33839,22 +37414,22 @@
       				loaded = true;
 
       				//Clear search filters
-		      		self.set("searchText", "");		      		
+		      		self.set("searchText", "");
 		      		self.set("contact_type_id", 0);
 		      		self.set("currency_id", 0);
       			}
-      		});      			
+      		});
 		},
 		searchTransaction	: function(){
 			var self = this,
 				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),	        		
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
         		para = [];
 
         	//Dates
-        	if(start && end){        		
+        	if(start && end){
             	para.push({ field:"issued_date >=", value: start });
-            	para.push({ field:"issued_date <=", value: end });            	          	            	
+            	para.push({ field:"issued_date <=", value: end });
             }else if(start){
             	para.push({ field:"issued_date", value: start });
             }else if(end){
@@ -33879,13 +37454,13 @@
 			var obj = this.get("obj");
 
 			banhji.router.navigate('/quote');
-			banhji.quote.loadContact(obj.id);			
+			banhji.quote.loadContact(obj.id);
 		},
 		goDeposit			: function(){
 			var obj = this.get("obj");
 
 			banhji.router.navigate('/customer_deposit');
-			banhji.customerDeposit.loadContact(obj.id);			
+			banhji.customerDeposit.loadContact(obj.id);
 		},
 		goSaleOrder			: function(){
 			var obj = this.get("obj");
@@ -33903,7 +37478,7 @@
 			var obj = this.get("obj");
 
 			banhji.router.navigate('/invoice');
-			banhji.invoice.loadContact(obj.id);					
+			banhji.invoice.loadContact(obj.id);
 		},
 		goGDN				: function(){
 			var obj = this.get("obj");
@@ -33959,18 +37534,20 @@
 			}else{
 				alert("required memo...");
 			}
-		}		
+		}
 	});
 	banhji.customer = kendo.observable({
 		lang 					: langVM,
 		dataSource 				: dataStore(apiUrl + "contacts"),
 		patternDS 				: dataStore(apiUrl + "contacts"),
+		numberDS 				: dataStore(apiUrl + "contacts"),
 		deleteDS 				: dataStore(apiUrl + "transactions"),		
 		existingDS 				: dataStore(apiUrl + "contacts"),		
 		contactPersonDS			: dataStore(apiUrl + "contact_persons"),		
 		paymentTermDS			: dataStore(apiUrl + "payment_terms"),
 		paymentMethodDS			: dataStore(apiUrl + "payment_methods"),
 		taxItemDS				: dataStore(apiUrl + "tax_items"),
+		countryDS 				: banhji.source.countryDS,
 		contactTypeDS  			: banhji.source.customerTypeDS,
 		currencyDS 		  		: banhji.source.currencyDS,
 		arDS 		  			: banhji.source.ARAccountDS,
@@ -33984,22 +37561,20 @@
 		originalNo				: null,	
 		isDuplicateNumber 		: false,
 		isCompany 				: false,
-		isEdit 					: false,						
+		isEdit 					: false,
+		contact_type_id 		: 0,						
 		pageLoad 				: function(id, is_pattern){
 			if(id){
 				this.set("isEdit", true);							
 				this.loadObj(id, is_pattern);
 				this.loadContactPerson(id);				
-			}else{				
+			}else{
 				if(this.get("isEdit")){
 					this.set("isEdit", false);
-										
-					this.dataSource.data([]);					
-					
 					this.addEmpty();
 				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
-				}								
+					this.addEmpty();
+				}															
 			}			
 		},
 		loadObj 				: function(id, is_pattern){
@@ -34018,7 +37593,7 @@
 			}).then(function(e){
 				var view = self.dataSource.view();
 
-				if(view[0].company!==""){
+				if(view[0].company){
 					self.set("isCompany", true);
 				}else{
 					self.set("isCompany", false);
@@ -34029,28 +37604,7 @@
 				self.set("originalNo", view[0].number);								
 			});
 		},				
-		//Pattern
-		setPattern 				: function(contact_type_id){
-			var obj = this.get("obj");
-
-			obj.set("contact_type_id", contact_type_id);
-			obj.set("is_pattern", 1);
-		},
-		initPattern 			: function(){
-			var self = this;
-
-			if(this.contactTypeDS.total()>0){
-				var type = this.contactTypeDS.at(0);
-				this.applyPattern(type.contact_id);
-			}else{
-				this.contactTypeDS.bind("requestEnd", function(e){					
-					if(e.type=="read"){
-						var data = e.response.results;
-						self.applyPattern(data[0].contact_id);
-					}
-				});
-			}
-		},		
+		//Pattern		
 		applyPattern 			: function(contact_id){
 			var self = this, obj = self.get("obj");
 			
@@ -34065,33 +37619,55 @@
 				var view = self.patternDS.view();				
 
 				if(view.length>0){
-					obj.set("account_id", view[0].account_id);
-					obj.set("ra_id", view[0].ra_id);
-					obj.set("trade_discount_id", view[0].trade_discount_id);
-					obj.set("settlement_discount_id", view[0].settlement_discount_id);
-					obj.set("deposit_account_id", view[0].deposit_account_id);
-					obj.set("tax_item_id", view[0].tax_item_id);
-					obj.set("currency_id", view[0].currency_id);
-					obj.set("credit_limit", view[0].credit_limit);
-
+					obj.set("country_id", view[0].country_id);					
+					obj.set("gender", view[0].gender);
+					obj.set("company", view[0].company);
+					obj.set("vat_no", view[0].vat_no);
+					obj.set("memo", view[0].memo);
+					obj.set("city", view[0].city);
+					obj.set("post_code", view[0].post_code);
+					obj.set("address", view[0].address);
+					obj.set("bill_to", view[0].bill_to);
+					obj.set("ship_to", view[0].ship_to);									
 					obj.set("payment_term_id", view[0].payment_term_id);
 					obj.set("payment_method_id", view[0].payment_method_id);
-					obj.set("business_type_id", view[0].business_type_id);
+					obj.set("credit_limit", view[0].credit_limit);
+					obj.set("locale", view[0].locale);					
+					obj.set("account_id", view[0].account_id);
+					obj.set("ra_id", view[0].ra_id);
+					obj.set("tax_item_id", view[0].tax_item_id);
+					obj.set("deposit_account_id", view[0].deposit_account_id);
+					obj.set("trade_discount_id", view[0].trade_discount_id);
+					obj.set("settlement_discount_id", view[0].settlement_discount_id);					
 				}else{
-					obj.set("account_id", 0);
-					obj.set("ra_id", 0);
-					obj.set("trade_discount_id", 0);
-					obj.set("settlement_discount_id", 0);
-					obj.set("deposit_account_id", 0);
-					obj.set("tax_item_id", 0);
-					obj.set("currency_id", 0);
-					obj.set("credit_limit", 0);
-
+					obj.set("country_id", 0);					
+					obj.set("gender", "M");
+					obj.set("company", "");
+					obj.set("vat_no", "");
+					obj.set("memo", "");
+					obj.set("city", "");
+					obj.set("post_code", "");
+					obj.set("address", "");
+					obj.set("bill_to", "");
+					obj.set("ship_to", "");									
 					obj.set("payment_term_id", 0);
 					obj.set("payment_method_id", 0);
-					obj.set("business_type_id", 0);
+					obj.set("credit_limit", 0);
+					obj.set("locale", "");					
+					obj.set("account_id", 0);
+					obj.set("ra_id", 0);
+					obj.set("tax_item_id", 0);
+					obj.set("deposit_account_id", 0);
+					obj.set("trade_discount_id", 0);
+					obj.set("settlement_discount_id", 0);
 				}
 			});
+		},		
+		savePattern 			: function(contact_type_id, contact_id){
+			var data = banhji.customerSetting.contactTypeDS.get(contact_type_id);
+			data.set("contact_id", contact_id);
+			banhji.customerSetting.contactTypeDS.sync();			
+			window.history.back();
 		},
 		contactTypeChanges 		: function(){
 			var obj = this.get("obj");
@@ -34099,26 +37675,41 @@
 			if(obj.contact_type_id){
 				var type = this.contactTypeDS.get(obj.contact_type_id);
 				this.applyPattern(type.contact_id);
-			}else{
-				obj.set("account_id", 0);
-				obj.set("ra_id", 0);
-				obj.set("trade_discount_id", 0);
-				obj.set("settlement_discount_id", 0);
-				obj.set("deposit_account_id", 0);
-				obj.set("tax_item_id", 0);
-				obj.set("currency_id", 0);
-				obj.set("credit_limit", 0);
+				obj.set("abbr", type.abbr);
 
+				if(type.is_company=="1"){
+					this.set("isCompany", true);
+				}else{
+					this.set("isCompany", false);
+					obj.set("company", "");
+					obj.set("vat_no", "");
+				}
+			}else{
+				this.set("isCompany", false);
+				obj.set("company", "");
+				obj.set("vat_no", "");
+
+				obj.set("country_id", 0);					
+				obj.set("gender", "M");
+				obj.set("company", "");
+				obj.set("vat_no", "");
+				obj.set("memo", "");
+				obj.set("city", "");
+				obj.set("post_code", "");
+				obj.set("address", "");
+				obj.set("bill_to", "");
+				obj.set("ship_to", "");									
 				obj.set("payment_term_id", 0);
 				obj.set("payment_method_id", 0);
-				obj.set("business_type_id", 0);
+				obj.set("credit_limit", 0);
+				obj.set("locale", "");					
+				obj.set("account_id", 0);
+				obj.set("ra_id", 0);
+				obj.set("tax_item_id", 0);
+				obj.set("deposit_account_id", 0);
+				obj.set("trade_discount_id", 0);
+				obj.set("settlement_discount_id", 0);
 			}
-		},
-		savePattern 			: function(contact_type_id, contact_id){
-			var data = banhji.customerSetting.contactTypeDS.get(contact_type_id);
-			data.set("contact_id", contact_id);
-			banhji.customerSetting.contactTypeDS.sync();			
-			window.history.back();
 		},				
 		//Contact Person
 		loadContactPerson		: function(id){
@@ -34186,20 +37777,16 @@
 			obj.set("ship_to", obj.bill_to);
 		},      	
 		checkExistingNumber 	: function(){
-			var self = this, para = [], obj = this.get("obj");
-			var originalNo = this.get("originalNo");
-
-			if(obj.abbr!==""){
-				para.push({ field:"abbr", value: obj.abbr });
-			}
-
-			if(obj.number!==""){
-				para.push({ field:"abbr", value: obj.number });
-			}
+			var self = this, para = [], 
+			obj = this.get("obj"),
+			originalNo = this.get("originalNo");			
 			
-			if(number.length>0 && number!==originalNo){
+			if(obj.number!=="" && obj.number!==originalNo){
 				this.existingDS.query({
-					filter: para,
+					filter: [
+						{ field:"number", value: obj.number },
+						{ field:"contact_type_id", value: obj.contact_type_id }
+					],
 					page: 1,
 					pageSize: 100
 				}).then(function(e){
@@ -34214,71 +37801,93 @@
 			}else{
 				this.set("isDuplicateNumber", false);
 			}			
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj");
+
+			this.numberDS.query({
+				filter:[
+					{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
+					{ field:"contact_type_id", value:obj.contact_type_id }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.numberDS.view();
+
+				if(view.length>0){
+					var lastNo = kendo.parseInt(view[0].number);
+					if(lastNo){
+						lastNo++;
+						obj.set("number",kendo.toString(lastNo, "00000"));
+					}
+				}
+			});
 		},		
       	addEmpty 				: function(){
+      		var self = this;
       		this.dataSource.data([]);
       		this.contactPersonDS.data([]);
       		this.set("obj", null);
 
-			this.dataSource.add({
-				"company_id" 			: 0,
-				"ebranch_id" 			: 0,
-				"elocation_id"			: 0,
-				"wbranch_id" 			: 0,
-				"wlocation_id" 			: 0,			
-				"currency_id" 			: 0,
-				"user_id" 				: 0,
-				"contact_type_id" 		: 4,							
-				"abbr"					: "",
-				"number"				: "",
-				"enumber"				: "",
-				"wnumber"				: "",
-				"surname"				: "",
-				"name"					: "",
-				"gender"				: "M",
-				"dob"					: "",
-				"pob"					: "",				
-				"family_member"			: "",
-				"id_number"				: "",
-				"phone" 				: "",
-				"email" 				: "",			
-				"job"					: "",
-				"company"				: "",
-				"company_en"			: "",		
-				"business_type_id"		: 0,
-				"vat_no"				: "",				
-				"image_url"				: "",
-				"memo"					: "",
-				"city"					: "",
-				"post_code"				: "",
-				"address" 				: "",
-				"bill_to" 				: "",
-				"ship_to" 				: "",
-				"latitute" 				: "",
-				"longtitute" 			: "",														
-				"payment_term_id"		: 0,
-				"payment_method_id"		: 0,
-				"credit_limit"			: 0,				
-				"registered_date" 		: new Date(),
-				"account_id"			: 0,
-				"ra_id"					: 0,
-				"tax_item_id"			: 0,
-				"deposit_account_id"	: 0,
-				"trade_discount_id"		: 0,
-				"settlement_discount_id": 0,
-				"phase_id"				: 0,
-				"voltage_id"			: 0,
-				"ampere_id"				: 0,			
-				"use_electricity"		: 0,
-				"use_water"				: 0,
-				"is_pattern" 			: 0,
-				"status"				: 1								
-			});			
+      		this.patternDS.query({
+      			filter:[
+      				{ field:"id", value:1 },
+      				{ field:"is_pattern", value:1 }
+      			],
+      			page:1,
+      			pageSize:1
+      		}).then(function(){
+      			var view = self.patternDS.view(),
+      			type = self.contactTypeDS.at(0);
 
-			var data = this.dataSource.data();			
-			var obj = data[data.length - 1];			
-			this.set("obj", obj);
-			this.initPattern();			
+      			self.dataSource.insert(0, {				
+					"country_id" 			: view[0].country_id,			
+					"user_id" 				: 0,
+					"contact_type_id" 		: 4,							
+					"abbr"					: type.abbr,
+					"number"				: "",				
+					"surname"				: "",
+					"name"					: "",
+					"gender"				: view[0].gender,					
+					"phone" 				: "",
+					"email" 				: "",					
+					"company"				: view[0].company,
+					"vat_no"				: view[0].vat_no,					
+					"memo"					: view[0].memo,
+					"city"					: view[0].city,
+					"post_code"				: view[0].post_code,
+					"address" 				: view[0].address,
+					"bill_to" 				: view[0].bill_to,
+					"ship_to" 				: view[0].ship_to,
+					"latitute" 				: "",
+					"longtitute" 			: "",
+					"credit_limit"			: view[0].credit_limit,
+					"locale" 				: view[0].locale,														
+					"payment_term_id"		: view[0].payment_term_id,
+					"payment_method_id"		: view[0].payment_method_id,									
+					"registered_date" 		: new Date(),
+					"account_id"			: view[0].account_id,
+					"ra_id"					: view[0].ra_id,
+					"tax_item_id"			: view[0].tax_item_id,
+					"deposit_account_id"	: view[0].deposit_account_id,
+					"trade_discount_id"		: view[0].trade_discount_id,
+					"settlement_discount_id": view[0].settlement_discount_id,					
+					"is_pattern" 			: 0,
+					"status"				: 1								
+				});
+
+				var obj = self.dataSource.at(0);				
+				//Pattern
+				if(self.get("contact_type_id")>0){
+					obj.set("contact_type_id", self.get("contact_type_id"));
+					obj.set("is_pattern", 1);
+				}
+
+				self.set("obj", obj);
+				self.generateNumber();
+      		});								
 		},
 		contactSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -34291,15 +37900,10 @@
 		    return dfd;	    		    	
 	    },			
 		save 					: function(){			
-			var self = this, saved = false;
+			var self = this;
 
 			if(this.get("isEdit")){
-				this.dataSource.sync();
-				this.dataSource.bind("requestEnd", function(e){
-					if(e.type=="update"){
-						banhji.customerCenter.contactDS.fetch();
-					}
-				});
+				this.dataSource.sync();				
 				this.contactPersonDS.sync();
 			}else{
 				this.contactSync().then(function(data){
@@ -34308,8 +37912,7 @@
 						self.savePattern(data[0].contact_type_id, data[0].id);
 					}
 				}).then(function(){
-					self.addEmpty();
-					banhji.customerCenter.contactDS.fetch();					
+					self.addEmpty();										
 				});
 			}									
 		},
@@ -34317,29 +37920,32 @@
 			var self = this,
 			obj = this.get("obj");
 
-			if (confirm("Are you sure, you want to delete it?")) {				
-				this.deleteDS.query({
-				  	filter: { field: "contact_id", value: obj.id },
-				  	page: 1,
-				  	take: 1
-				}).then(function() {
-					var view = self.deleteDS.view();
+			if(!obj.is_pattern){
+				if (confirm("Are you sure, you want to delete it?")) {				
+					this.deleteDS.query({
+					  	filter: { field: "contact_id", value: obj.id },
+					  	page: 1,
+					  	take: 1
+					}).then(function() {
+						var view = self.deleteDS.view();
 
-					if(view.length>0){
-						alert("Sorry, you can not delete it because it is using now.");
-					}else{
-						var data = self.dataSource.get(obj.id);
-				        self.dataSource.remove(data);
-				        self.save();
+						if(view.length>0){
+							alert("Sorry, you can not delete it because it is using now.");
+						}else{
+							var data = self.dataSource.get(obj.id);
+					        data.set("deleted", 1);
+					        self.save();
 
-				        window.history.back();				        
-					}
-				});								
+					        window.history.back();				        
+						}
+					});								
+		    	}
 	    	}
 		},
 		cancel 					: function(){
 			this.dataSource.cancelChanges();
 			this.contactPersonDS.cancelChanges();
+			this.set("contact_type_id", 0);
 
 			window.history.back();
 		}		
@@ -34347,12 +37953,14 @@
 	banhji.invoice =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		depositDS			: dataStore(apiUrl + "transactions"),		
+		depositDS			: dataStore(apiUrl + "transactions"),
+		jobDS				: dataStore(apiUrl + "jobs"),		
 		balanceDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -34575,7 +38183,8 @@
 		},
 		//Contact
 		loadContact 		: function(id){
-			var self = this;			
+			var self = this;
+			this.jobDS.filter({ field:"contact_id", value:id });			
 
 			this.contactDS.query({    			
 				filter: { field:"id", value: id },
@@ -34587,7 +38196,7 @@
 		    	
 		    	obj.set("contact_id", view[0].id);
 		    	obj.set("payment_term_id", view[0].payment_term_id);		    	
-		    	obj.set("locale", view[0].currency[0].locale);				
+		    	obj.set("locale", view[0].locale);				
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
@@ -34622,13 +38231,14 @@
 		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
+			this.jobDS.filter({ field:"contact_id", value: obj.contact_id });
 
 	    	if(obj.contact_id>0){		    			    	
-		    	contact = this.contactDS.get(obj.contact_id);		    	
+		    	contact = this.contactDS.get(obj.contact_id);		    	 	
 		    	
 		    	obj.set("payment_term_id", contact.payment_term_id);
 		    	obj.set("vat_id", contact.tax_item_id);
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
@@ -34713,12 +38323,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -34855,7 +38464,7 @@
 			transaction_id = 0, 
 			obj = this.get("obj"), 
 			item = this.itemDS.get(data.item_id),
-			rate = obj.rate / item.item_prices[0].rate;
+			rate = obj.rate / item.item_prices[0].rate;			
 			
 			if(this.get("isEdit")){
 				transaction_id = obj.id;
@@ -34926,7 +38535,7 @@
 		        this.changes();
 	        }	                	        	
 		},					
-		addEmpty 		 	: function(){			
+		addEmpty 		 	: function(){
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.journalLineDS.data([]);
@@ -34942,7 +38551,8 @@
 				contact_id 			: "",
 				payment_term_id		: 0,				
 				reference_id 		: 0,
-				recurring_id 		: "",				
+				recurring_id 		: "",
+				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				seller_id 			: this.get("user_id"), 	    		
 			   	type				: "Invoice",
@@ -35086,6 +38696,32 @@
 					self.addEmpty();
 				});
 			}
+		},
+		delete 					: function(){
+			var self = this, obj = this.get("obj");
+			
+			if (confirm("Are you sure, you want to delete it?")) {				
+		        this.deleteDS.query({
+		        	filter:[
+		        		{ field:"type", value:"Cash_Receipt" },
+		        		{ field:"reference_id", value:obj.id },
+		        	],
+		        	page:1,
+		        	pageSize:1
+		        }).then(function(){
+		        	var view = self.deleteDS.view();
+
+		        	if(view.length>0){
+		        		alert("Sorry, you can not delete it.");
+		        	}else{
+		        		obj.set("deleted", 1);
+				        self.save();
+
+				        window.history.back();
+		        	}
+		        });
+		        												
+	    	}	    	
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
@@ -35511,7 +39147,8 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		depositDS			: dataStore(apiUrl + "transactions"),		
+		depositDS			: dataStore(apiUrl + "transactions"),
+		jobDS				: dataStore(apiUrl + "jobs"),		
 		balanceDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -35734,7 +39371,8 @@
 		},
 		//Contact
 		loadContact 		: function(id){
-			var self = this;			
+			var self = this;
+			this.jobDS.filter({ field:"contact_id", value:id });			
 
 			this.contactDS.query({    			
 				filter: { field:"id", value: id },
@@ -35746,15 +39384,13 @@
 		    	
 		    	obj.set("contact_id", view[0].id);
 		    	obj.set("payment_method_id", view[0].payment_method_id);		    	
-		    	obj.set("locale", view[0].currency[0].locale);				
+		    	obj.set("locale", view[0].locale);				
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
-				self.setRate();
-				self.setTerm();
+				self.setRate();				
 				self.loadDeposit();							
-			});				
-
+			});
 		},
 		loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
@@ -35782,12 +39418,13 @@
 		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
+			this.jobDS.filter({ field:"contact_id", value: obj.contact_id });
 
 	    	if(obj.contact_id>0){		    			    	
-		    	contact = this.contactDS.get(obj.contact_id);		    	
+		    	contact = this.contactDS.get(obj.contact_id);		    			    	
 		    	
 		    	obj.set("payment_method_id", contact.payment_method_id);		    	
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
@@ -35870,13 +39507,12 @@
 		},
 		setRate 			: function(){
 			var self = this, 
-			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
+			obj = this.get("obj"), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -36102,7 +39738,8 @@
 				contact_id 			: "",
 				payment_method_id	: 0,				
 				reference_id 		: 0,
-				recurring_id 		: "",				
+				recurring_id 		: "",
+				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				seller_id 			: this.get("user_id"), 	    		
 			   	type				: "Cash_Sale",
@@ -36249,6 +39886,16 @@
 				});
 			}
 		},
+		delete 					: function(){
+			var obj = this.get("obj");
+			
+			if (confirm("Are you sure, you want to delete it?")) {				
+		        obj.set("deleted", 1);
+		        this.save();
+
+		        window.history.back();												
+	    	}	    	
+		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();			
@@ -36304,8 +39951,10 @@
 				//Inventory
 				if(item.item_type_id==1){
 					//Add cogs list
-					var itemCost = value.quantity*item.cost,
-					cogsID = item.cogs_account_id;				
+					var itemRate = obj.rate / item.item_prices[0].rate,
+					itemCost = value.quantity*item.cost/itemRate,
+					cogsID = item.cogs_account_id;
+
 					if(cogsList[cogsID]===undefined){
 						cogsList[cogsID]={"id": cogsID, "amount": itemCost};						
 					}else{											
@@ -36662,7 +40311,8 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		depositDS			: dataStore(apiUrl + "transactions"),		
+		depositDS			: dataStore(apiUrl + "transactions"),
+		jobDS				: dataStore(apiUrl + "jobs"),		
 		balanceDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -36881,7 +40531,8 @@
 		},
 		//Contact
 		loadContact 		: function(id){
-			var self = this;			
+			var self = this;
+			this.jobDS.filter({ field:"contact_id", value:id });			
 
 			this.contactDS.query({    			
 				filter: { field:"id", value: id },
@@ -36893,15 +40544,14 @@
 		    	
 		    	obj.set("contact_id", view[0].id);
 		    	obj.set("payment_method_id", view[0].payment_method_id);		    	
-		    	obj.set("locale", view[0].currency[0].locale);				
+		    	obj.set("locale", view[0].locale);				
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
 				self.setRate();
 				self.setTerm();
 				self.loadDeposit();							
-			});				
-
+			});
 		},
 		loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
@@ -36929,12 +40579,13 @@
 		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
+			this.jobDS.filter({ field:"contact_id", value: obj.contact_id });
 
 	    	if(obj.contact_id>0){		    			    	
 		    	contact = this.contactDS.get(obj.contact_id);		    	
 		    	
 		    	obj.set("payment_method_id", contact.payment_method_id);		    	
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
@@ -37018,12 +40669,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -37249,7 +40899,8 @@
 				contact_id 			: "",
 				payment_method_id	: 0,				
 				reference_id 		: 0,
-				recurring_id 		: "",				
+				recurring_id 		: "",
+				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				seller_id 			: this.get("user_id"), 	    		
 			   	type				: "Sale_Order",
@@ -37816,7 +41467,7 @@
 		    	
 		    	obj.set("contact_id", view[0].id);
 		    	obj.set("payment_method_id", view[0].payment_method_id);		    	
-		    	obj.set("locale", view[0].currency[0].locale);				
+		    	obj.set("locale", view[0].locale);				
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
@@ -37855,7 +41506,7 @@
 		    	contact = this.contactDS.get(obj.contact_id);		    	
 		    	
 		    	obj.set("payment_method_id", contact.payment_method_id);		    	
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
@@ -37940,12 +41591,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -38545,7 +42195,8 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		depositDS			: dataStore(apiUrl + "transactions"),		
+		depositDS			: dataStore(apiUrl + "transactions"),
+		jobDS				: dataStore(apiUrl + "jobs"),		
 		balanceDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -38766,7 +42417,8 @@
 		},
 		//Contact
 		loadContact 		: function(id){
-			var self = this;			
+			var self = this;
+			this.jobDS.filter({ field:"contact_id", value:id });			
 
 			this.contactDS.query({    			
 				filter: { field:"id", value: id },
@@ -38778,15 +42430,14 @@
 		    	
 		    	obj.set("contact_id", view[0].id);
 		    	obj.set("payment_term_id", view[0].payment_term_id);		    	
-		    	obj.set("locale", view[0].currency[0].locale);				
+		    	obj.set("locale", view[0].locale);				
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
 				self.setRate();
 				self.setTerm();
 				self.loadDeposit();							
-			});				
-
+			});
 		},
 		loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
@@ -38814,13 +42465,14 @@
 		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
+			this.jobDS.filter({ field:"contact_id", value: obj.contact_id });
 
 	    	if(obj.contact_id>0){		    			    	
 		    	contact = this.contactDS.get(obj.contact_id);		    	
 		    	
 		    	obj.set("payment_term_id", contact.payment_term_id);
 		    	obj.set("vat_id", contact.tax_item_id);
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
@@ -38904,12 +42556,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -39060,7 +42711,8 @@
 				contact_id 			: "",
 				payment_term_id		: 0,				
 				reference_id 		: 0,
-				recurring_id 		: "",				
+				recurring_id 		: "",
+				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				seller_id 			: this.get("user_id"), 	    		
 			   	type				: "GDN",
@@ -39618,7 +43270,8 @@
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
 		returnDS			: dataStore(apiUrl + "transactions"),
-		invoiceDS			: dataStore(apiUrl + "transactions"),		
+		invoiceDS			: dataStore(apiUrl + "transactions"),
+		jobDS				: dataStore(apiUrl + "jobs"),		
 		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
@@ -39726,7 +43379,8 @@
 		},		
 		//Contact
 		loadContact 		: function(id){
-			var self = this;			
+			var self = this;
+			this.jobDS.filter({ field:"contact_id", value:id });			
 
 			this.contactDS.query({    			
 				filter: { field:"id", value: id },
@@ -39737,7 +43391,7 @@
 				obj = self.get("obj");
 		    	
 		    	obj.set("contact_id", view[0].id);		    		    	
-		    	obj.set("locale", view[0].currency[0].locale);				
+		    	obj.set("locale", view[0].locale);				
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
@@ -39771,11 +43425,12 @@
 		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
+			this.jobDS.filter({ field:"contact_id", value: obj.contact_id });
 
 	    	if(obj.contact_id>0){		    			    	
 		    	contact = this.contactDS.get(obj.contact_id);   	
 		    		    	
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
@@ -39792,7 +43447,7 @@
 
 				this.referenceDS.filter([
 					{ field: "contact_id", value: obj.contact_id },					
-					{ field: "type", value:"Invoice" }
+					{ field: "type", operator:"where_in", value:["Invoice","Cash_Sale"] }
 				]);				
 			}else{
 				obj.set("reference_id", "");
@@ -39804,11 +43459,12 @@
 			
 			if(obj.reference_id>0){
 				var ref = this.referenceDS.get(obj.reference_id);
-				obj.set("amount_paid", ref.amount_paid);
-
+				
 				if(ref.type=="Cash_Sale"){
+					obj.set("amount_paid", ref.amount);
 					this.set("showReturn", true);
 				}else{
+					obj.set("amount_paid", ref.amount_paid);
 					if(ref.status==0){
 						this.set("showReturn", false);
 
@@ -39856,12 +43512,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -40122,7 +43777,8 @@
 			this.dataSource.add({				
 				contact_id 			: "",								
 				reference_id 		: "",
-				recurring_id 		: "",				
+				recurring_id 		: "",
+				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				seller_id 			: this.get("user_id"), 	    		
 			   	type				: "Sale_Return", //Require
@@ -40870,7 +44526,7 @@
 				}								
 			}
 		},
-		loadObj 			: function(id,is_recurring){
+		loadObj 			: function(id, is_recurring){
 			var self = this, para = [];
 
 			para.push({ field:"id", value: id });
@@ -40887,7 +44543,8 @@
 				var view = self.dataSource.view();
 
 				if(view.length>0){	       
-					self.set("obj", view[0]);					
+					self.set("obj", view[0]);
+					self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));					
 		        }				
 
 				self.lineDS.query({
@@ -40910,7 +44567,7 @@
 		    	
 		    	obj.set("contact_id", view[0].id);
 		    	obj.set("account_id", view[0].deposit_account_id);		    	
-		    	obj.set("locale", view[0].currency[0].locale);				
+		    	obj.set("locale", view[0].locale);				
 				
 				self.setRate();							
 			});
@@ -40964,12 +44621,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -41070,7 +44726,7 @@
 					sum += value.amount;
 		        });		       	
 
-		        this.set("total", kendo.toString(sum, "c0", obj.locale));		        
+		        this.set("total", kendo.toString(sum, "c", obj.locale));		        
 		        obj.set("amount", sum);		       								    	
 	    	}else{
 	    		this.set("total", 0);		        
@@ -41084,7 +44740,7 @@
 		    	contact = this.contactDS.get(obj.contact_id);		    	
 		    	
 		    	obj.set("account_id", contact.deposit_account_id);
-		    	obj.set("locale", contact.currency[0].locale);
+		    	obj.set("locale", contact.locale);
 		    
 
 		    	this.setRate();		    		    			    	
@@ -41391,6 +45047,38 @@
 	    	}	    	
 	    }	    	   
 	});
+	banhji.customerReportCenter = kendo.observable({
+		lang 				: langVM,				
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contact_reports/monthly_sale",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),						
+		pageLoad 			: function(){
+																
+		}		
+	});
 	banhji.customerList = kendo.observable({
 		lang 					: langVM,
 		dataSource 				: dataStore(apiUrl+"contacts"),
@@ -41421,8 +45109,8 @@
 	});
 	banhji.customerBalance = kendo.observable({
 		lang 					: langVM,
-		dataSource 				: dataStore(apiUrl+"customer_reports/balance"),
-		totalDS 				: dataStore(apiUrl+"customer_reports/balance_total"),
+		dataSource 				: dataStore(apiUrl+"contact_reports/balance"),
+		totalDS 				: dataStore(apiUrl+"contact_reports/balance_total"),
 		contactTypeDS			: banhji.source.customerTypeDS,
 		statusList 				: banhji.source.statusList,
 		contact_type_id 		: null,
@@ -41465,17 +45153,17 @@
 	});
 	banhji.customerSetting =  kendo.observable({
 		lang 				: langVM,		
-        contactTypeDS 		: dataStore(apiUrl + "contacts/type"),
-        paymentMethodDS		: dataStore(apiUrl + "payment_methods"),
-        paymentTermDS		: dataStore(apiUrl + "payment_terms"),        
-        
+        contactTypeDS 		: dataStore(apiUrl+"contacts/type"),
+        paymentMethodDS		: dataStore(apiUrl+"payment_methods"),
+        paymentTermDS		: dataStore(apiUrl+"payment_terms"),      
         contactTypeName 	: "",
+        contactTypeAbbr 	: "",
+        contactTypeCompany 	: 0,
         paymentMethodName 	: "",
         paymentTermName 	: "",
         paymentTermNetDue	: "",
         paymentTermPeriod 	: "",
-        paymentTermPercentage 	: "",         
-
+        paymentTermPercentage 	: "",
         pageLoad 			: function() {
         	
         },	    
@@ -41486,11 +45174,17 @@
 	        	this.contactTypeDS.add({
 	        		parent_id 	: 1,
 	        		name 		: name,
+	        		abbr 		: this.get("contactTypeAbbr"),
 	        		description : "",
+	        		is_company 	: this.get("contactTypeCompany"),
 	        		is_system 	: 0
 	        	});
 
 	        	this.contactTypeDS.sync();
+
+	        	this.set("contactTypeName", "");
+	        	this.set("contactTypeAbbr", "");
+	        	this.set("contactTypeCompany", 0);
         	}
         },
         addPaymentMethod 		: function(){
@@ -41504,6 +45198,8 @@
 	        	});
 
 	        	this.paymentMethodDS.sync();
+
+	        	this.set("paymentMethodName", "");
         	}
         },
         addPaymentTerm 		: function(){
@@ -41519,6 +45215,11 @@
 	        	});
 
 	        	this.paymentTermDS.sync();
+
+	        	this.set("paymentTermName", "");
+	        	this.set("paymentTermNetDue", "");
+	        	this.set("paymentTermPeriod", "");
+	        	this.set("paymentTermPercentage", "");
         	}
         },
         goPattern 	: function(e){
@@ -41528,10 +45229,312 @@
 	        	banhji.router.navigate('/customer/'+data.contact_id+'/1');   	
         	}else{
         		banhji.router.navigate('/customer');
-        		banhji.customer.setPattern(data.id);
+        		banhji.customer.set("contact_type_id",data.id);
         	}
         }        
     });
+    banhji.job = kendo.observable({
+		lang 				: langVM,		
+        dataSource 			: dataStore(apiUrl + "jobs"),        
+        contactDS 	 		: banhji.source.customerDS,        
+		obj 				: null,
+		isVisible 			: false,
+		pageLoad 			: function() {
+        	
+        },        
+        addObj 			: function(){		    
+        	this.dataSource.add({	        		
+        		number 				: "",
+        		name 				: "",
+        		description 		: "",
+        		contact_id 			: "",
+        		contact 			: []        		
+        	});
+        	var data = this.dataSource.data();
+			var obj = data[data.length-1];			
+			this.set("obj", obj);	            	
+        },        
+        openWindow			: function(){
+        	this.addObj();
+      		this.set("isVisible", true);      		         	
+      	},
+      	closeWindow 		: function(){	      		
+      		this.dataSource.cancelChanges();
+
+      		this.set("isVisible", false);          	
+      	},
+        save 				: function(){
+        	var self = this;
+        	this.dataSource.sync();
+        	this.dataSource.bind("requestEnd", function(e){
+        		if( e.type == "create" || e.type == "update"){ 
+        			self.set("isVisible", false); 
+        		}
+        	});
+        },
+        edit 				: function(e){
+      		var data = e.data;      		
+      		this.set("obj", data);
+
+      		this.set("isVisible", true);       		
+      	},      	
+      	delete 				: function(e){
+			if (confirm("Are you sure, you want to delete it?")) {        
+		        var data = e.data;
+		        this.dataSource.remove(data);
+		        this.dataSource.sync();		        
+	    	}	    	
+	    },
+	    cancel 			: function(){	      		
+      		this.dataSource.cancelChanges();
+
+      		window.history.back();
+      	},	    
+    });
+    banhji.invoiceSelect =  kendo.observable({
+		dataSource 			: dataStore(apiUrl + "transactions"),		
+		obj 				: null,
+		isEdit 				: false,		
+		user_id				: banhji.source.user_id,
+		pageLoad 			: function(id, is_recurring){
+			if(id){
+				this.set("isEdit", true);
+				this.set("original_total", 0);
+				this.set("original_credit", 0);							
+				this.loadObj(id, is_recurring);
+			}else{				
+				if(this.get("isEdit")){
+					this.set("isEdit", false);
+					this.set("original_total", 0);
+					this.set("original_credit", 0);					
+					this.dataSource.data([]);					
+					
+					this.addEmpty();
+				}else if(this.dataSource.total()==0){
+					this.addEmpty();					
+				}								
+			}
+			//Function write css to header
+			function loadStyle(href){
+			    // avoid duplicates
+			    for(var i = 0; i < document.styleSheets.length; i++){
+			        if(document.styleSheets[i].href == href){
+			            return;
+			        }
+			    }
+			    var head  = document.getElementsByTagName('head')[0];
+			    var link  = document.createElement('link');
+			    link.rel  = 'stylesheet';
+			    link.type = 'text/css';
+			    link.href = href;
+			    head.appendChild(link);
+			}
+			var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
+			loadStyle(Href1);
+			
+		},	 
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=800, height=500'),
+		        doc = win.document.open();
+
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title>Kendo UI Grid</title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" /> <link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" /> ' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style>' +
+		            '</head>' +
+		            '<body><div class="inv1">';
+
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('.inv1').html();
+		    //alert(printableContent);
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    //alert('a');
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();	
+		    },2000)
+		    
+		},   			
+		loadObj 			: function(id, is_recurring){
+			var self = this, para = [];
+
+			para.push({ field:"id", value: id });
+
+			if(is_recurring){
+				para.push({ field:"is_recurring", value: 1 });
+			}			
+
+			this.dataSource.query({    			
+				filter: para,
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.dataSource.view();				
+
+				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
+				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
+		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
+		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));	  			
+								
+				//self.contactDS.filter({ field: "id", value: view[0].contact_id });				
+				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
+				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });				
+				self.depositDS.filter([
+					{ field: "reference_id", value: view[0].id },
+					{ field: "type", value: "Credit" }
+				]);
+
+				self.set("obj", view[0]);
+				self.set("original_total", view[0].amount);
+				self.set("original_credit", view[0].credit);
+
+				self.loadDeposit();				
+			});				
+		},		
+		addEmpty 		 	: function(){			
+			this.dataSource.data([]);			
+
+			this.set("obj", null);				
+
+			this.dataSource.add({				
+				contact_id 			: "",
+				payment_term_id		: 0,				
+				reference_id 		: 0,
+				recurring_id 		: "",				
+				user_id 			: this.get("user_id"),
+				seller_id 			: this.get("user_id"), 	    		
+			   	type				: "Invoice",
+			   	sub_total 			: 0,				   		   					   				   	
+			   	amount				: 0,
+			   	credit_allowed 		: 0,
+			   	credit 				: 0,
+			   	deposit 			: 0,
+			   	discount 			: 0,		   	
+			   	fine 				: 0,
+			   	tax 				: 0,
+			   	rate				: 1,			   	
+			   	locale 				: "km-KH",			   	
+			   	issued_date 		: new Date(),
+			   	due_date 			: new Date(),			   	
+			   	bill_to 			: "",
+			   	ship_to 			: "",
+			   	memo 				: "",
+			   	memo2 				: "",
+			   	status 				: 0,
+			   	segments 			: [],
+			   	is_journal 			: 1,
+			   	//Recurring
+			   	recurring_name 		: "",
+			   	start_date 			: new Date(),
+			   	frequency 			: "Daily",
+			   	month_option 		: "Day",
+			   	interval 			: 1,
+			   	day 				: 1,
+			   	week 				: 0,
+			   	month 				: 0,
+			   	is_recurring 		: 0				
+	    	});		    		
+			
+			var data = this.dataSource.data();
+			var obj = data[data.length-1];			
+			this.set("obj", obj);					
+		},							    
+	    transactionSync 	: function(){
+	    	var dfd = $.Deferred();	        
+
+	    	this.dataSource.sync();
+		    this.dataSource.bind("requestEnd", function(e){			    	
+				dfd.resolve(e.response.results);    				
+		    });
+
+		    return dfd;	    		    	
+	    },	    	    
+		save 				: function(){				
+	    	var self = this, obj = this.get("obj");
+
+	    	//Warning over credit allowed
+	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
+	        	alert("Over credit allowed!");		        	
+	        }
+
+	    	//Update references
+			if(obj.reference_id>0){
+				var ref = this.referenceDS.get(obj.reference_id);
+				ref.set("status", 1);
+				this.referenceDS.sync();
+			} 			
+	    	
+	    	if(this.get("isEdit")){
+	    		this.dataSource.sync();
+
+	    		//Update credit changes
+	    		if(this.get("original_credit") !== obj.credit){	    			
+	    			this.set("original_credit", obj.credit);    			
+
+					var deposit = this.depositDS.at(0);
+					deposit.set("amount", obj.credit*-1);
+
+					this.depositDS.sync();
+	    		}	    		
+
+	    		//Update total changes
+	    		if(this.get("original_total") == obj.amount){
+	    			this.lineDS.sync();	    			
+	    		}else{
+	    			this.set("original_total", obj.amount);
+
+	    			$.each(this.journalLineDS.data(), function(index, value){										
+						value.set("deleted", 1);										
+					});
+
+					this.addJournal(obj.id);
+	    		}	    		
+	    	}else{
+	    		//Add brand new transaction
+				this.transactionSync()
+				.then(function(data){
+					//Deposit
+					if(obj.deposit > 0 || obj.credit > 0){
+						self.saveDeposit(data[0].id);
+					}
+
+					//Journal
+					self.addJournal(data[0].id);
+
+					//Item line
+					$.each(self.lineDS.data(), function(index, value){										
+						value.set("transaction_id", data[0].id);										
+					});
+					self.lineDS.sync();																	
+				}).then(function(){					
+					self.addEmpty();
+				});
+			}
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();
+			this.lineDS.cancelChanges();			
+
+			window.history.back();
+		}    
+	});
 
 
 	/*************************
@@ -42750,7 +46753,8 @@
 		creditDS 			: dataStore(apiUrl + "transactions"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
-		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),						
+		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
+		jobDS				: dataStore(apiUrl + "jobs"),						
 		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
@@ -44146,11 +48150,36 @@
 	**************************/
 	banhji.itemDashBoard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "customer_reports/customer_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "customer_reports/top_customer"),
-		topARDS 			: dataStore(apiUrl + "customer_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "customer_reports/top_product"),
-		graphDS 			: dataStore(apiUrl + 'customer_reports/monthly_sale'),
+		summaryDS 			: dataStore(apiUrl + "contact_reports/summary"),
+		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
+		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contact_reports/monthly_sale",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),
 		sale 				: 0,
 		sale_customer 		: 0,
 		sale_product 		: 0,
@@ -44176,12 +48205,12 @@
 			}).then(function(){
 				var view = self.summaryDS.view();
 				
-				self.set("sale", kendo.toString(view[0].sale, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));
+				self.set("sale", kendo.toString(17205, "n0"));
 				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
 				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
 				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
 
-				self.set("order", kendo.toString(view[0].order, "n0"));
+				self.set("order", kendo.toString(261, "n0"));
 				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));				
 				self.set("order_open", kendo.toString(view[0].order_open, "n0"));
 
@@ -44216,51 +48245,7 @@
 				],							
 				page: 1,
 				take: 5
-			});
-
-			this.loadGraph();								
-		},
-		loadGraph 			: function(){
-			var self = this, 
-			today = new Date(),
-			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-
-			this.graphDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],
-				page: 1,
-				take: 100
-			}).then(function(e) {
-			    var view = self.graphDS.view();
-			    
-				$('#graph').kendoChart({
-					dataSource: {data: view},												
-					series: [
-						{field: 'sale', categoryField:'month', type: 'line', axis: 'order'}
-					],
-					valueAxes: [
-						{
-		                    name: "order",
-		                    color: "#007eff",
-		                    min: 0,
-		                    majorUnit: 500000,
-		                    max: 1000000
-		                }
-	                ],
-	                categoryAxis: {
-	                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
-	                    axisCrossingValues: [0, 13],
-	                    justified: true
-	                },
-	                tooltip: {
-	                    visible: true,
-	                    format: "{0}",
-	                    template: "#= series.field #: #= value #"
-	                }
-				});
-			});		
+			});										
 		}		
 	});
 	banhji.itemCenter = kendo.observable({
@@ -44284,7 +48269,8 @@
 		isCategorySelected	: false,	
 		
 		pageLoad 			: function(){		
-												
+			this.itemDS.fetch();
+			this.movementDS.fetch();										
 		},
 		countPO 		: function(id){
     		var self = this;
@@ -44937,8 +48923,7 @@
 					if(view.length>0){
 						alert("Sorry, you can not delete it because it is using now.");
 					}else{
-						var data = self.dataSource.get(obj.id);
-				        self.dataSource.remove(data);
+						obj.set("deleted",1);
 				        self.save();
 
 				        window.history.back();
@@ -46274,32 +50259,23 @@
 	});
 	banhji.itemSetting =  kendo.observable({
 		lang 				: langVM,		        
-        categoryDS 			: dataStore(apiUrl + "categories"),
-        subCategoryDS 		: dataStore(apiUrl + "categories"),
-        itemGroupDS 		: dataStore(apiUrl + "items/group"),
-        subItemGroupDS		: dataStore(apiUrl + "items/group"),
+        categoryDS 			: dataStore(apiUrl + "categories"),        
+        itemGroupDS 		: dataStore(apiUrl + "items/group"),        
         measurementDS		: dataStore(apiUrl + "measurements"),
         brandDS 			: dataStore(apiUrl + "brands"),
-        subBrandDS			: dataStore(apiUrl + "brands"),        
-
-        category_sub_of 	: 0,
+        itemTypeDS 			: dataStore(apiUrl + "item_types"),        
         category_code 		: "",
         category_name 		: "",
         category_abbr 		: "",
-
-        item_group_category_id 	: 0,
-        item_group_sub_of 	: 0,
+        category_item_type_id : 1,
+        item_group_category_id : 0,       
         item_group_code 	: "",
         item_group_name 	: "",
-        item_group_abbr 	: "",
-
-        measurement_name 	: "",
-
-        brand_sub_of 	 	: 0,
+        item_group_abbr 	: "",        
+        measurement_name 	: "",        
         brand_code 			: "",
         brand_name 			: "",
-        brand_abbr 			: "",
-
+        brand_abbr 			: "",        
         pageLoad 			: function() {
         	
         },        
@@ -46310,23 +50286,20 @@
 
         	if(name!=="" && code!==""){        		
 	        	this.categoryDS.add({	        		
-	        		sub_of 		 	: this.get("category_sub_of"),
+	        		sub_of 		 	: 0,
+	        		item_type_id 	: this.get("category_item_type_id"),
 	        		item_id 		: 0,
 	        		code 			: code,	        		
 	        		name 			: name,
 	        		abbr 			: this.get("category_abbr"),	        		
-	        		is_system 		: 0
+	        		is_system 		: 0,
+	        		item_type 		: []
 	        	});
 
 	        	this.categoryDS.sync();
-	        	this.categoryDS.bind("requestEnd", function(e){
-	        		if(e.type=="create"){
-	        			self.set("category_sub_of", 0);
-	        			self.set("category_code", "");
-	        			self.set("category_name", "");
-	        			self.set("category_abbr", "");
-	        		}
-	        	});
+	        	this.set("category_code", "");
+    			this.set("category_name", "");
+    			this.set("category_abbr", "");
         	}else{
         		alert("required number and name!");
         	}
@@ -46340,7 +50313,7 @@
         	if(category_id>0 && name!=="" && code!==""){        		
 	        	this.itemGroupDS.add({	        		
 	        		category_id	 	: category_id,
-	        		sub_of 		 	: this.get("item_group_sub_of"),
+	        		sub_of 		 	: 0,
 	        		code 			: code,	        		
 	        		name 			: name,
 	        		abbr 			: this.get("item_group_abbr"),	        		
@@ -46348,15 +50321,11 @@
 	        	});
 
 	        	this.itemGroupDS.sync();
-	        	this.itemGroupDS.bind("requestEnd", function(e){
-	        		if(e.type=="create"){
-	        			self.set("item_group_category_id", 0);
-	        			self.set("item_group_sub_of", 0);
-	        			self.set("item_group_code", "");
-	        			self.set("item_group_name", "");
-	        			self.set("item_group_abbr", "");
-	        		}
-	        	});
+	        	
+    			self.set("item_group_category_id", 0);    			
+    			self.set("item_group_code", "");
+    			self.set("item_group_name", "");
+    			self.set("item_group_abbr", "");	        		
         	}else{
         		alert("required category, number, and name!");
         	}
@@ -46368,15 +50337,13 @@
         	if(name!==""){
 	        	this.measurementDS.add({	        		
 	        		name 		: name,
-	        		description : name
+	        		description : name,
+	        		is_system 	: 0
 	        	});
 
 	        	this.measurementDS.sync();
-	        	this.measurementDS.bind("requestEnd", function(e){
-	        		if(e.type=="create"){	        			
-	        			self.set("measurement_name", "");	        			
-	        		}
-	        	});
+	        		        			
+	        	this.set("measurement_name", "");	        		
         	}else{
         		alert("required name");
         	}
@@ -46394,15 +50361,11 @@
 	        		abbr 		: this.get("brand_abbr")
 	        	});
 
-	        	this.brandDS.sync();
-	        	this.brandDS.bind("requestEnd", function(e){
-	        		if(e.type=="create"){	        			
-	        			self.set("brand_sub_of", 0);
-	        			self.set("brand_code", "");
-	        			self.set("brand_name", "");
-	        			self.set("brand_abbr", "");	        			
-	        		}
-	        	});
+	        	this.brandDS.sync();	        	    			
+	        			
+    			this.set("brand_code", "");
+    			this.set("brand_name", "");
+    			this.set("brand_abbr", "");	        		
         	}else{
         		alert("required number and name!");
         	}
@@ -46410,10 +50373,117 @@
         goPattern 	: function(e){
         	var data = e.data;        	        	
 
-        	if(kendo.parseInt(data.contact_id)>0){        		        	
-	        	banhji.router.navigate('/item/'+data.item_id+'/1');   	
+        	if(kendo.parseInt(data.item_id)>0){
+        		if(data.item_type_id==1){        		        	
+	        		banhji.router.navigate('/item/'+data.item_id+'/1');
+	        	}else{
+	        		banhji.router.navigate('/non_inventory_part/'+data.item_id+'/1');
+	        	}   	
         	}else{
-        		banhji.router.navigate('/item');
+        		if(data.item_type_id==1){        		        	
+	        		banhji.router.navigate('/item');
+	        		banhji.item.setPattern(data.id);
+	        	}else{
+	        		banhji.router.navigate('/non_inventory_part');
+	        		banhji.nonInventoryPart.setPattern(data.id);
+	        	}        		
+        	}
+        } 
+    });
+    banhji.serviceSetting =  kendo.observable({
+		lang 				: langVM,		        
+        categoryDS 			: dataStore(apiUrl + "categories"),        
+        itemGroupDS 		: dataStore(apiUrl + "items/group"),        
+        measurementDS		: dataStore(apiUrl + "measurements"),        
+        itemTypeDS 			: dataStore(apiUrl + "item_types"),        
+        category_code 		: "",
+        category_name 		: "",
+        category_abbr 		: "",
+        category_item_type_id : 4,
+        item_group_category_id : 0,       
+        item_group_code 	: "",
+        item_group_name 	: "",
+        item_group_abbr 	: "",        
+        measurement_name 	: "",        
+        pageLoad 			: function() {
+        	
+        },        
+        addCategory 		: function(){
+        	var self = this, 
+        	name = this.get("category_name"),
+        	code = this.get("category_code");
+
+        	if(name!=="" && code!==""){        		
+	        	this.categoryDS.add({	        		
+	        		sub_of 		 	: 0,
+	        		item_type_id 	: this.get("category_item_type_id"),
+	        		item_id 		: 0,
+	        		code 			: code,	        		
+	        		name 			: name,
+	        		abbr 			: this.get("category_abbr"),	        		
+	        		is_system 		: 0,
+	        		item_type 		: []
+	        	});
+
+	        	this.categoryDS.sync();
+	        	this.set("category_code", "");
+    			this.set("category_name", "");
+    			this.set("category_abbr", "");
+        	}else{
+        		alert("required number and name!");
+        	}
+        },
+        addItemGroup 		: function(){
+        	var self = this, 
+        	category_id = this.get("item_group_category_id"),
+        	name = this.get("item_group_name"),
+        	code = this.get("item_group_code");
+
+        	if(category_id>0 && name!=="" && code!==""){        		
+	        	this.itemGroupDS.add({	        		
+	        		category_id	 	: category_id,
+	        		sub_of 		 	: 0,
+	        		code 			: code,	        		
+	        		name 			: name,
+	        		abbr 			: this.get("item_group_abbr"),	        		
+	        		is_system 		: 0
+	        	});
+
+	        	this.itemGroupDS.sync();
+	        	
+    			self.set("item_group_category_id", 0);    			
+    			self.set("item_group_code", "");
+    			self.set("item_group_name", "");
+    			self.set("item_group_abbr", "");	        		
+        	}else{
+        		alert("required category, number, and name!");
+        	}
+        },
+        addMeasurement 		: function(){
+        	var self = this, 
+        	name = this.get("measurement_name");
+
+        	if(name!==""){
+	        	this.measurementDS.add({	        		
+	        		name 		: name,
+	        		description : name,
+	        		is_system 	: 0
+	        	});
+
+	        	this.measurementDS.sync();
+	        		        			
+	        	this.set("measurement_name", "");	        		
+        	}else{
+        		alert("required name");
+        	}
+        },        
+        goPattern 	: function(e){
+        	var data = e.data;        	
+
+        	if(kendo.parseInt(data.item_id)>0){        		       		        	
+	        	banhji.router.navigate('/item_service/'+data.item_id+'/1');	        		
+        	}else{        		       		        	
+	        	banhji.router.navigate('/item_service');	        	   		
         		banhji.item.setPattern(data.id);
         	}
         } 
@@ -47317,6 +51387,20 @@
             this.dataSource.filter(para);
 		}    	
     });
+
+
+
+
+
+    /*************************
+	*	Reports Module Section   *
+	**************************/
+    banhji.reportDashboard = kendo.observable({
+    	lang 				: langVM,    	 	
+    	pageLoad 			: function(id){			
+																						
+		}    	
+    });
 	
 
 	/* views and layout */
@@ -47325,7 +51409,8 @@
 		blank		: new kendo.View('<div></div>'),		
 		index  		: new kendo.Layout("#index", {model: banhji.index}),		
 		menu 		: new kendo.Layout('#menu-tmpl', {model: banhji.userManagement}),
-		
+		searchAdvanced: new kendo.Layout("#searchAdvanced", {model: banhji.searchAdvanced}),
+
 		//Accounting
 		accountingDashboard: new kendo.Layout("#accountingDashboard", {model: banhji.accountingDashboard}),
 		accountingCenter: new kendo.Layout("#accountingCenter", {model: banhji.accountingCenter}),
@@ -47335,6 +51420,7 @@
 		currencyRate: new kendo.Layout("#currencyRate", {model: banhji.currencyRate}),
 		recurring: new kendo.Layout("#recurring", {model: banhji.recurring}),
 		journalReport: new kendo.Layout("#journalReport", {model: banhji.journalReport}),
+		trialBalance: new kendo.Layout("#trialBalance", {model: banhji.trialBalance}),
 		saleTax: new kendo.Layout("#saleTax", {model: banhji.saleTax}),
 		accountingReportCenter: new kendo.Layout("#accountingReportCenter"),
 		accountingSetting: new kendo.Layout("#accountingSetting", {model: banhji.accountingSetting}),
@@ -47345,6 +51431,7 @@
 		employee: new kendo.Layout("#employee", {model: banhji.employee}),
 		cashAdvance: new kendo.Layout("#cashAdvance", {model: banhji.cashAdvance}),
 		expense: new kendo.Layout("#expense", {model: banhji.expense}),
+		employeeReportCenter: new kendo.Layout("#employeeReportCenter"),
 
 		//Vendor
 		vendorDashboard: new kendo.Layout("#vendorDashboard", {model: banhji.vendorDashboard}),
@@ -47356,7 +51443,7 @@
 		purchaseReturn: new kendo.Layout("#purchaseReturn", {model: banhji.purchaseReturn}),
 		vendorDeposit: new kendo.Layout("#vendorDeposit", {model: banhji.vendorDeposit}),		
 		vendorSetting: new kendo.Layout("#vendorSetting", {model: banhji.vendorSetting}),
-		vendorReportCenter: new kendo.Layout("#vendorReportCenter"),
+		vendorReportCenter: new kendo.Layout("#vendorReportCenter", {model: banhji.vendorReportCenter}),
 
 		//Customer
 		customerDashboard: new kendo.Layout("#customerDashboard", {model: banhji.customerDashboard}),
@@ -47370,10 +51457,16 @@
 		saleReturn: new kendo.Layout("#saleReturn", {model: banhji.saleReturn}),		
 		statement: new kendo.Layout("#statement", {model: banhji.statement}),
 		customerDeposit: new kendo.Layout("#customerDeposit", {model: banhji.customerDeposit}),
-		customerReportCenter: new kendo.Layout("#customerReportCenter"),
+		customerReportCenter: new kendo.Layout("#customerReportCenter", {model: banhji.customerReportCenter}),
 		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
 		customerBalance : new kendo.Layout("#customerBalance", {model: banhji.customerBalance}),
 		customerSetting: new kendo.Layout("#customerSetting", {model: banhji.customerSetting}),
+		job: new kendo.Layout("#job", {model: banhji.job}),
+		invoiceSelect: new kendo.Layout("#invoiceSelect", {model: banhji.invoiceSelect}),
+		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.saleSummaryCustomer}),
+		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.saleDetailCustomer}),
+		saleSummaryProduct: new kendo.Layout("#saleSummaryProduct", {model: banhji.saleSummaryProduct}),
+		customerTransactionList: new kendo.Layout("#customerTransactionList", {model: banhji.customerTransactionList}),
 
 		//Cashier
 		cashier: new kendo.Layout("#cashier", {model: banhji.cashier}),
@@ -47394,6 +51487,7 @@
 		itemRecord: new kendo.Layout("#itemRecord", {model: banhji.itemRecord}),
 		itemAdjustment: new kendo.Layout("#itemAdjustment", {model: banhji.itemAdjustment}),
 		itemSetting: new kendo.Layout("#itemSetting", {model: banhji.itemSetting}),
+		serviceSetting: new kendo.Layout("#serviceSetting", {model: banhji.serviceSetting}),
 		itemReportCenter: new kendo.Layout("#itemReportCenter"),
 		inventoryPositionSummary: new kendo.Layout("#inventoryPositionSummary", {model: banhji.inventoryPositionSummary}),
 		inventoryPositionDetail: new kendo.Layout("#inventoryPositionDetail", {model: banhji.inventoryPositionDetail}),
@@ -47414,6 +51508,9 @@
 		cashReportCenter: new kendo.Layout("#cashReportCenter"),
 		cashSetting: new kendo.Layout("#cashSetting", {model: banhji.cashSetting}),
 		
+		//Report
+		reportDashboard: new kendo.Layout("#reportDashboard", {model: banhji.reportDashboard}),
+
 		//Menu
 		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
 		employeeMenu: new kendo.View("#employeeMenu", {model: langVM}),
@@ -47478,6 +51575,23 @@
 		$("#secondary-menu").html("");
 		banhji.index.getLogo();
 		banhji.index.pageLoad();
+	});
+	banhji.router.route("/search_advanced", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{			
+			var vm = banhji.searchAdvanced;
+						
+			banhji.view.layout.showIn("#content", banhji.view.searchAdvanced);
+			
+			if(banhji.pageLoaded["search_advanced"]==undefined){
+				banhji.pageLoaded["search_advanced"] = true;
+		         
+		        vm.contactTypeDS.read();	
+			}
+
+			vm.pageLoad();			
+		}				
 	});	
 	
 	
@@ -48025,6 +52139,22 @@
 			}
 		}		
 	});
+	banhji.router.route("/trial_balance", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.trialBalance);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			var vm = banhji.trial_balance;
+
+			if(banhji.pageLoaded["trial_balance"]==undefined){
+				banhji.pageLoaded["trial_balance"] = true;              
+                						
+			}
+		}		
+	});
 	banhji.router.route("/sale_tax", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -48441,6 +52571,22 @@
 			vm.pageLoad(id,is_recurring);
 		}		
 	});
+	banhji.router.route("/employee_report_center", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.employeeReportCenter);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.employeeMenu);
+
+			//var vm = banhji.customerReportCenter;			
+			
+			if(banhji.pageLoaded["employee_report_center"]==undefined){
+				banhji.pageLoaded["employee_report_center"] = true;				
+								
+			}			
+		}		
+	});
 
 	/*************************
 	*   Vendor Section   *
@@ -48464,7 +52610,7 @@
 			vm.pageLoad();				
 		}
 	});
-	banhji.router.route("/vendor_center", function(){
+	banhji.router.route("/vendor_center(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
@@ -48475,24 +52621,7 @@
 			var vm = banhji.vendorCenter;
 
 			if(banhji.pageLoaded["vendor_center"]==undefined){
-				banhji.pageLoaded["vendor_center"] = true;
-								
-				vm.contactTypeDS.filter({ field:"parent_id", value:2 });
-				
-				vm.contactDS.query({
-				  	filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:2 },
-				  	page: 1,
-				  	take: 50
-				}).then(function(e) {
-				    var view = vm.contactDS.data();
-				    
-				    if(view.length>0){
-				    	vm.set("obj", view[0]);				    	
-				    	vm.loadSummary(view[0].id);
-				    	vm.loadTransaction(view[0].id);				    	
-				    	vm.loadNote(view[0].id);
-				    }
-				});
+				banhji.pageLoaded["vendor_center"] = true;				
 
 				function startChange() {
                     var startDate = start.value(),
@@ -48602,7 +52731,9 @@
                 
                 start.max(end.value());
                 end.min(start.value());				               
-			}				
+			}
+
+			vm.pageLoad(id);				
 		}
 	});
 	banhji.router.route("/vendor(/:id)(/:is_pattern)", function(id, is_pattern){
@@ -49084,59 +53215,12 @@
 			if(banhji.pageLoaded["customers"]==undefined){
 				banhji.pageLoaded["customers"] = true;				
 								               
-			}
-
-			$("#sale-chart").kendoChart({
-               title: {
-                   text: "Monthly Sale Trend"
-               },
-               legend: {
-                   position: "top",
-                   visible: false
-               },
-               seriesDefaults: {
-                   type: "column"
-               },
-               series: [{
-                   name: "Sale Value",
-                   data: [100, 200, 300, 200, 100, 100, 200, 300, 200, 100,500,400],
-                   color: '#496CAD'               
-               }],
-               valueAxis: {
-                   labels: {
-                       format: ""
-                   },
-                   majorGridLines: {
-		                visible: false
-	               },
-                   line: {
-                       visible: true
-                   },
-                   axisCrossingValue: 0
-               },
-               categoryAxis: {
-                   categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct","Nov","Dec"],
-                   majorGridLines: {
-		               visible: false
-	               }, 
-                   line: {
-                       visible: true
-                   },
-                   labels: {
-                       padding: {top: 0}
-                   }
-               },
-               tooltip: {
-                   visible: true,
-                   format: "",
-                   template: "#= series.name #: #= value #"
-               }
-           	});
+			}			
 
 			vm.pageLoad();				
 		}
 	});
-	banhji.router.route("/customer_center", function(){		
+	banhji.router.route("/customer_center(/:id)", function(id){		
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
@@ -49147,25 +53231,7 @@
 			var vm = banhji.customerCenter;
 
 			if(banhji.pageLoaded["customer_center"]==undefined){
-				banhji.pageLoaded["customer_center"] = true;
-				
-							
-				
-				vm.contactDS.query({
-				  	filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
-				  	page: 1,
-				  	take: 50
-				}).then(function(e) {
-				    var view = vm.contactDS.data();
-				    
-				    if(view.length>0){
-				    	vm.set("obj", view[0]);				    	
-				    	vm.loadOutStandingInvoice(view[0].id);
-				    	vm.loadTransaction(view[0].id);				    	
-				    	vm.loadNote(view[0].id);
-				    }
-				});
-
+				banhji.pageLoaded["customer_center"] = true;				
 
 				function startChange() {
                     var startDate = start.value(),
@@ -49274,9 +53340,10 @@
                 });
                 
                 start.max(end.value());
-                end.min(start.value());
-								               
-			}				
+                end.min(start.value());								               
+			}
+
+			vm.pageLoad(id);				
 		}
 	});
 	banhji.router.route("/customer(/:id)(/:is_pattern)", function(id,is_pattern){		
@@ -49301,7 +53368,7 @@
 		        $("#saveNew").click(function(e){				
 					e.preventDefault();
 
-					if(validator.validate()){
+					if(validator.validate() && vm.get("isDuplicateNumber")==false){
 		            	vm.save();		            	
 
 		            	notification.success("Save Successful");			  
@@ -49313,7 +53380,7 @@
 				$("#saveClose").click(function(e){				
 					e.preventDefault();
 
-					if(validator.validate()){
+					if(validator.validate() && vm.get("isDuplicateNumber")==false){
 		            	vm.save();
 		            	window.history.back();
 
@@ -49326,7 +53393,7 @@
 				$("#savePrint").click(function(e){				
 					e.preventDefault();
 
-					if(validator.validate()){
+					if(validator.validate() && vm.get("isDuplicateNumber")==false){
 		            	vm.save();
 		            	window.print();
 
@@ -50100,14 +54167,594 @@
 			
 			if(banhji.pageLoaded["customer_setting"]==undefined){
 				banhji.pageLoaded["customer_setting"] = true;
-
-				vm.contactTypeDS.filter({ field:"parent_id", value: 1 });
+				
+				vm.contactTypeDS.filter({ field:"parent_id", value:1 });
 			}
 
 			vm.pageLoad();			     		
 		}
 	});
+	banhji.router.route("/job", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.job);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);			
+			
+			var vm = banhji.job;
 
+			if(banhji.pageLoaded["job"]==undefined){
+				banhji.pageLoaded["job"] = true;
+														
+			}
+
+			vm.pageLoad();		
+		}		
+	});
+	banhji.router.route("/invoice_select(/:id)", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{						
+			banhji.view.layout.showIn("#content", banhji.view.invoiceSelect);			
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.invoiceSelect;
+			
+			if(banhji.pageLoaded["invoice_select"]==undefined){
+				banhji.pageLoaded["invoice_select"] = true;				        
+
+				var validator = $("#example").kendoValidator().data("kendoValidator");
+				var notification = $("#notification").kendoNotification({				    
+				    autoHideAfter: 5000,
+				    width: 300,				    
+				    height: 50
+				}).data('kendoNotification');
+				
+		        $("#saveNew").click(function(e){				
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();		            	
+
+		            	notification.success("Save Successful");			  
+			        }else{
+			        	notification.error("Warning, please review it again!");			           
+			        }		            
+				});
+				$("#saveClose").click(function(e){				
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();
+		            	window.history.back();
+
+		            	notification.success("Save Successful");			  
+			        }else{
+			        	notification.error("Warning, please review it again!");			           
+			        }		            
+				});				
+			};
+			
+			vm.pageLoad(id);		
+		};	
+	});
+	banhji.router.route("/sale_summary_customer", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleSummaryCustomer);
+			
+			//var vm = banhji.saleSummaryCustomer;
+
+			if(banhji.pageLoaded["saleSummaryCustomer"]==undefined){
+				banhji.pageLoaded["saleSummaryCustomer"] = true;				
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());	
+
+
+
+
+
+			}
+
+			vm.pageLoad();				
+		}
+	});
+	banhji.router.route("/sale_detail_customer", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleDetailCustomer);
+			
+			//var vm = banhji.saleSummaryCustomer;
+
+			if(banhji.pageLoaded["saleDetailCustomer"]==undefined){
+				banhji.pageLoaded["saleDetailCustomer"] = true;				
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());	
+
+
+
+
+
+			}
+
+			vm.pageLoad();				
+		}
+	});
+	banhji.router.route("/sale_summary_product", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleSummaryProduct);
+			
+			//var vm = banhji.saleSummaryCustomer;
+
+			if(banhji.pageLoaded["saleSummaryProduct"]==undefined){
+				banhji.pageLoaded["saleSummaryProduct"] = true;				
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());	
+
+
+
+
+
+			}
+
+			vm.pageLoad();				
+		}
+	});
+	banhji.router.route("/customer_transaction_list", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerTransactionList);
+			
+			//var vm = banhji.saleSummaryCustomer;
+
+			if(banhji.pageLoaded["customerTransactionList"]==undefined){
+				banhji.pageLoaded["customerTransactionList"] = true;				
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());	
+
+
+
+
+
+			}
+
+			vm.pageLoad();				
+		}
+	});
 
 	/*************************
 	*   Cashier Section   *
@@ -50527,7 +55174,7 @@
 			vm.pageLoad();
 		}				
 	});	
-	banhji.router.route("/item_center", function(){
+	banhji.router.route("/item_center(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
@@ -50659,7 +55306,9 @@
                 
                 start.max(end.value());
                 end.min(start.value());			               
-			}				
+			}
+
+			vm.pageLoad(id);				
 		}
 	});
 	banhji.router.route("/item(/:id)(/:is_pattern)", function(id, is_pattern){
@@ -51030,9 +55679,30 @@
 			if(banhji.pageLoaded["item_setting"]==undefined){
 				banhji.pageLoaded["item_setting"] = true;
 				
-				vm.subCategoryDS.filter({ field:"sub_of", value: 0 });
-				vm.subItemGroupDS.filter({ field:"sub_of", value: 0 });
-				vm.subBrandDS.filter({ field:"sub_of", value: 0 });
+				vm.categoryDS.filter({ field:"item_type_id", operator:"where_in", value: [1,2] });
+				vm.itemTypeDS.filter({ field:"id", operator:"where_in", value: [1,2] });
+				vm.itemGroupDS.filter({ field:"id", operator:"where_in", value: [1,2] });
+			}
+
+			vm.pageLoad();			     		
+		}
+	});
+	banhji.router.route("/service_setting", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.serviceSetting);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+
+			var vm = banhji.serviceSetting;
+			
+			if(banhji.pageLoaded["service_setting"]==undefined){
+				banhji.pageLoaded["service_setting"] = true;
+				
+				vm.categoryDS.filter({ field:"item_type_id", operator:"where_in", value: [4,6] });
+				vm.itemTypeDS.filter({ field:"id", operator:"where_in", value: [4,6] });
+				vm.itemGroupDS.filter({ field:"id", operator:"where_in", value: [3,4] });
 			}
 
 			vm.pageLoad();			     		
@@ -51567,6 +56237,25 @@
 		}
 	});
 	
+	/*************************
+	*   Reports Section   *
+	**************************/
+	banhji.router.route("/reports", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.reportDashboard);
+			
+			var vm = banhji.reportDashboard;
+
+			if(banhji.pageLoaded["reports"]==undefined){
+				banhji.pageLoaded["reports"] = true;				
+								               
+			}
+
+			vm.pageLoad();				
+		}
+	});
 
 	$(function() {	
 		banhji.router.start();

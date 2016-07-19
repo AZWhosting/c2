@@ -82,7 +82,7 @@
 
                       <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
 
-                      <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
+                      <input type="password" data-bind="value: password, events:{change:signIn}" placeholder="Password " class="login-email"><br>                    
 
                       <input id="loginBtn" type="button" data-bind="click: signIn" class="btn-login" value="Login"><br><br>
                       <div id="loginInformation"></div>
@@ -273,7 +273,7 @@
                             };
                             localforage.setItem('user', user);
                             $("#loginBtn").val("Redirecting...");
-                            window.location.replace(baseUrl + "demo/");
+                            window.location.replace(baseUrl + "rrd/");
                           } else {
                             console.log('bad');
                           }
@@ -291,7 +291,7 @@
           redirect: function(data) {
               // console.log(data.length > 0);
               if(data.length > 0) {
-                window.location.replace(baseUrl + "demo/");
+                window.location.replace(baseUrl + "rrd/");
               } else {
                 window.location.replace(baseUrl + "app/");
               } 

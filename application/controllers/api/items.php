@@ -1,6 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-
 require APPPATH.'/libraries/REST_Controller.php';
 
 class Items extends REST_Controller {
@@ -97,11 +96,16 @@ class Items extends REST_Controller {
 			foreach ($obj as $value) {
 				$itemPrice = [];				
 				foreach ($value->item_price->get() as $p) {
-					$rate = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$rate->where_related("currency", "locale", $p->locale);
-					$rate->order_by("date", "desc");
-					$rate->limit(1);
-					$rate->get();					
+					$r = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$r->where_related("currency", "locale", $p->locale);
+					$r->order_by("date", "desc");
+					$r->limit(1);
+					$r->get();
+
+					$rate = 1;
+					if($r->exists()){
+						$rate = floatval($r->rate);
+					}					
 
 					$itemPrice[] = array(
 						"id" 			=> $p->id,				
@@ -114,7 +118,7 @@ class Items extends REST_Controller {
 						"amount" 		=> floatval($p->amount),
 						"locale" 		=> $p->locale,
 
-						"rate" 			=> floatval($rate->rate),
+						"rate" 			=> $rate,
 						"measurement" 	=> $p->measurement->get()->name
 					); 
 				}
@@ -1730,26 +1734,29 @@ class Items extends REST_Controller {
 			}									 			
 		}
 
+		$obj->where_in_related("transaction","type",["Invoice","Cash_Sale","Cash_Purchase","Credit_Purchase"]);
+		$obj->where_related("transaction","is_recurring",0);
+		$obj->where_related("transaction","deleted",0);
 		$obj->order_by_related("transaction", "issued_date", "desc");
-				
+
 		//Results
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;							
 
-		if($obj->result_count()>0){
+		if($obj->exists()){
 			foreach ($obj as $value) {
 				if($value->item_id>0){
 					$data["results"][] = array(
 						"id" 			=> $value->id,
 						"item_id" 		=> $value->item_id,
-						"on_hand" 		=> intval($value->on_hand),
-						"quantity" 			=> intval($value->quantity),
+						"on_hand" 		=> floatval($value->on_hand),
+						"quantity" 		=> floatval($value->quantity),
 						"cost" 			=> floatval($value->cost),
 						"price" 		=> floatval($value->price),
 						"amount" 		=> floatval($value->amount),
 						"rate" 			=> floatval($value->rate),
 						"locale" 		=> $value->locale,
-						"movement" 		=> intval($value->movement),											
+						"movement" 		=> $value->movement,
 						
 						"invoice" 		=> $value->transaction->get_raw()->result(),						
 						"item" 			=> $value->item->get_raw()->result()								
