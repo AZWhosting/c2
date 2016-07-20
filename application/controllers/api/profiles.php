@@ -265,6 +265,7 @@ class Profiles extends REST_Controller {
 					'tax_regime' => $u->institute->tax_regime,
 					'year_founded'=>$u->institute->year_founded,
 					'locale' => $u->institute->locale,
+					'zip' => $u->institute->zip_code,
 					'reportCurrency' => array('id'=>$report->id, 'code'=>$report->code, 'country' => $report->country, 'locale' =>$report->locale),
 					'is_local' => $u->institute->is_local,
 					'financial_year' => $u->institute->financial_year,
@@ -362,6 +363,7 @@ class Profiles extends REST_Controller {
 			$company->monetary_id = $req->currency->id;
 			$company->industry_id = $req->industry->id;
 			$company->is_local = $req->is_local;
+			$company->zip_code = $req->zip;
 			$company->financial_year = $req->financial_year;
 			$company->financial_report_date = $req->financial_report_date;
 			if($company->save()) {
@@ -387,6 +389,7 @@ class Profiles extends REST_Controller {
 					'industry' => array('id'=>$industry->id,'type' => $industry->name),
 					'currency' => $currency->exists() ? array('id'=> $currency->id, 'code' => $currency->code, 'country' => $currency->country, 'locale'=>$currency->locale) : array('id'=>null),
 					'country' => array('id' => $country->id, 'name' => $country->name),
+					'zip' => $company->zip_code,
 					'users' => $company->user->count()
 				);
 			}
