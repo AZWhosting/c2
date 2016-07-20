@@ -298,7 +298,6 @@
 		height: 134px;
 	    margin-bottom: 0;
 	    resize: none;
-<<<<<<< HEAD
 	}
 	.well textarea,
 	.tab-pane  textarea,
@@ -308,21 +307,7 @@
 	.table-condensed th, .table-condensed td {
 	    padding: 5px 0 5px 0 !important;
 	}
-	@media (max-width: 2000px){
-		.container {
-		    width: 1170px !important;
-		}
-=======
->>>>>>> refs/remotes/origin/Dawine
-	}
-	.well textarea,
-	.tab-pane  textarea,
-	.row-fluid .span5 textarea{
-		resize: none;
-	}
-	.table-condensed th, .table-condensed td {
-	    padding: 5px 0 5px 0 !important;
-	}
+
 
 </style>
 

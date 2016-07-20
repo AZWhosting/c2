@@ -29,7 +29,8 @@ class Accounts extends REST_Controller {
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
+		$data["groups"] = [];
+		$data["results"] = [];
 		$data["count"] = 0;
 
 		$obj = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
@@ -76,7 +77,9 @@ class Accounts extends REST_Controller {
 	    			$obj->where($value["field"], $value["value"]);	    				    			
 	    		}
 			}									 			
-		}		
+		}
+		
+		$obj->include_related("account_type", "name");		
 		
 		// Results
 		$obj->get_paged_iterated($page, $limit);
@@ -96,8 +99,8 @@ class Accounts extends REST_Controller {
 					"status" 			=> $value->status,
 					"is_system" 		=> $value->is_system,
 
-				   	"account_type" 		=> []//$value->account_type->get_raw()->result()
-				);
+				   	"account_type_name"	=> $value->account_type_name
+				);				
 			}
 		}		
 

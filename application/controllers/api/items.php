@@ -157,8 +157,7 @@ class Items extends REST_Controller {
 				   	"income_account_id" 	=> $value->income_account_id,
 				   	"cogs_account_id"		=> $value->cogs_account_id,
 				   	"inventory_account_id"	=> $value->inventory_account_id,
-				   	"deposit_account_id" 	=> $value->deposit_account_id,
-				   	"transaction_account_id"=> $value->transaction_account_id,			   	
+				   	"deposit_account_id" 	=> $value->deposit_account_id,	   				   	
 				   	"preferred_vendor_id" 	=> $value->preferred_vendor_id,
 				   	"image_url" 			=> $value->image_url,
 				   	"favorite" 				=> $value->favorite=="true"?true:false,
@@ -220,7 +219,6 @@ class Items extends REST_Controller {
 		   	isset($value->cogs_account_id) 			? $obj->cogs_account_id 		= $value->cogs_account_id : "";
 		   	isset($value->inventory_account_id) 	? $obj->inventory_account_id 	= $value->inventory_account_id : "";
 		   	isset($value->deposit_account_id) 		? $obj->deposit_account_id 		= $value->deposit_account_id : "";
-		   	isset($value->transaction_account_id)	? $obj->transaction_account_id 	= $value->transaction_account_id : "";
 		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
 		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
 		   	isset($value->favorite) 				? $obj->favorite 				= $value->favorite : "";
@@ -265,8 +263,7 @@ class Items extends REST_Controller {
 				   	"income_account_id" 	=> $obj->income_account_id,
 				   	"cogs_account_id"		=> $obj->cogs_account_id,
 				   	"inventory_account_id"	=> $obj->inventory_account_id,
-				   	"deposit_account_id" 	=> $obj->deposit_account_id,
-				   	"transaction_account_id"=> $obj->transaction_account_id,			   	
+				   	"deposit_account_id" 	=> $obj->deposit_account_id,				   				   	
 				   	"preferred_vendor_id" 	=> $obj->preferred_vendor_id,
 				   	"image_url" 			=> $obj->image_url,
 				   	"favorite" 				=> $obj->favorite=="true"?true:false,
@@ -325,8 +322,7 @@ class Items extends REST_Controller {
 		   	isset($value->income_account_id) 		? $obj->income_account_id 		= $value->income_account_id : "";
 		   	isset($value->cogs_account_id) 			? $obj->cogs_account_id 		= $value->cogs_account_id : "";
 		   	isset($value->inventory_account_id) 	? $obj->inventory_account_id 	= $value->inventory_account_id : "";
-		   	isset($value->deposit_account_id) 		? $obj->deposit_account_id 		= $value->deposit_account_id : "";
-		   	isset($value->transaction_account_id)	? $obj->transaction_account_id 	= $value->transaction_account_id : "";
+		   	isset($value->deposit_account_id) 		? $obj->deposit_account_id 		= $value->deposit_account_id : "";		   	
 		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
 		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
 		   	isset($value->favorite) 				? $obj->favorite 				= $value->favorite : "";
@@ -372,8 +368,7 @@ class Items extends REST_Controller {
 				   	"income_account_id" 	=> $obj->income_account_id,
 				   	"cogs_account_id"		=> $obj->cogs_account_id,
 				   	"inventory_account_id"	=> $obj->inventory_account_id,
-				   	"deposit_account_id" 	=> $obj->deposit_account_id,
-				   	"transaction_account_id"=> $obj->transaction_account_id,			   	
+				   	"deposit_account_id" 	=> $obj->deposit_account_id,				   				   	
 				   	"preferred_vendor_id" 	=> $obj->preferred_vendor_id,
 				   	"image_url" 			=> $obj->image_url,
 				   	"favorite" 				=> $obj->favorite=="true"?true:false,

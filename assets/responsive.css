@@ -546,7 +546,7 @@ width: 90px !important;
   margin: 0;
 }
 .statement{
-  width: 84%;
+  width: 100%;
   margin: 0 auto;
 }
 .statement table tr td{
@@ -760,13 +760,15 @@ width: 90px !important;
 }
 
 
-
-.span8.dash-accounting .span6.accounting-right,
-.span8.dash-accounting .span6{
-  padding-right: 0;
+.dash-accounting{
+  background: #fff;
+}
+.accounting-management{
+  margin-top: 15px;
+  padding-left: 0;
 }
 .accounting-right{
-  margin-top: 36px;
+  margin-top: 15px;
   text-align: center;
 }
 .accounting-right p{
@@ -801,7 +803,7 @@ width: 90px !important;
     font-weight: 700;
 }
 .account-stement table tr {
-    border-bottom: 3px solid #f4f4f4;
+    border-bottom: 3px solid #fff;
 }
 
 .accounting-management .capital-box {
@@ -851,8 +853,8 @@ width: 90px !important;
 }
 .accounting-management .capital-box:nth-child(4){
   background: #4C4848;
+  margin-bottom: 15px;
 }
-
 .accounting-management table tr td{
   padding: 5px 0 5px 15px;
 }
@@ -894,6 +896,92 @@ width: 90px !important;
   text-align: right;
 }
 
+.accounCetner-textedit{
+  margin-top: 15px;
+  margin-left: 15px;
+  border: 1px solid #ddd;
+  margin-right: 15px;
+  padding: 10px;
+  width: 97%;
+  min-height: 215px;
+  margin-bottom: 15px;
+}
+
+/*.detailsWrapper>.count{
+  font-size: 30px !important;
+  color: #fff;
+}*/
+.accounCetner-textedit table tr{
+  border: 1px solid #ddd;
+  background: #fff;
+}
+.accounCetner-textedit table tr td{
+  padding: 5px 15px;
+}
+.accounCetner-textedit table tr:nth-child(2) td,
+.accounCetner-textedit table tr:nth-child(4) td,
+.accounCetner-textedit table tr:nth-child(6) td{
+  background: #E4EFF9;
+}
+.financial-report{
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.custome-window{
+    height: 300px !important;
+    width: 400px !important;
+}
+
+.custome-window table{
+  width: 100%;
+  padding: 10px;
+}
+.custome-window table tr {
+  border-bottom: 9px solid #fff;
+}
+.custome-window .btn.btn-success.btn-icon.glyphicons.ok_2{
+  margin: 0 0 0 29%;
+}
+
+.item-window{
+    height: 200px !important;
+    width: 400px !important;
+}
+
+.item-window table{
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+.item-window table{
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+.item-window table tr {
+  border-bottom: 9px solid #fff;
+}
+.item-window .btn.btn-success.btn-icon.glyphicons.ok_2{
+  margin: 0 0 0 29%;
+}
+.table-tax table tr{
+  padding: 8px; 
+}
+.table-tax table tr:nth-child(even) td{
+  background: #E4EFF9;
+}
+.hidden-print>.span6{
+  padding-left: 0;
+}
+
+.table-tax table tr td span {
+  cursor: pointer !important;
+}
+.table-segment table tr th{
+  text-align: center;
+}
 
 
 @media only screen 
