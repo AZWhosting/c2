@@ -17,7 +17,7 @@ class Profiles extends REST_Controller {
 			$conn = $institute->connection->get();
 			$this->entity = $conn->server_name;
 			$this->user = $conn->username;
-			$this->pwd = $conn->password;	
+			$this->pwd = $conn->password;
 			$this->_database = $conn->inst_database;
 		}
 	}
@@ -36,7 +36,7 @@ class Profiles extends REST_Controller {
 		if(isset($filters)) {
 			foreach($filters as $f) {
 				$users->where($f['field'], $f['value']);
-			}	
+			}
 		}
 		$users->get_iterated();
 		foreach($users as $user) {
@@ -51,7 +51,7 @@ class Profiles extends REST_Controller {
 			// 			'description'=>$m->description
 			// 		);
 			// 	}
-			// } 
+			// }
 			$data[] = array(
 				'id' => $user->id,
 				'username' 	=> $user->username,
@@ -64,7 +64,7 @@ class Profiles extends REST_Controller {
 				'updated_at'=> $user->updated_at
 			);
 		}
-		
+
 		// if($users->result_count() > 0) {
 			$this->response(array('results'=>$data, 'count'=>1), 200);
 		// } else {
@@ -85,7 +85,7 @@ class Profiles extends REST_Controller {
 			$User->profile_photo_url = $user->profile_photo;
 			$User->usertype_id=$user->usertype->id;
 			$User->save();
-			
+
 			if($User->save()) {
 				$data[] = array(
 					'username' 	=> $User->username,
@@ -109,7 +109,7 @@ class Profiles extends REST_Controller {
 	// return userdata
 	function index_post() {
 		$requested_data = json_decode($this->post('models'));
-		
+
 		foreach($requested_data as $user) {
 			$User = new User(null);
 			$User->username = $user->username;
@@ -242,7 +242,7 @@ class Profiles extends REST_Controller {
 		if(isset($filters)) {
 			foreach($filters as $f) {
 				$user->where($f['field'], $f['value']);
-			}	
+			}
 		}
 		$user->get_paged($offset, $limit);
 
@@ -265,6 +265,7 @@ class Profiles extends REST_Controller {
 					'tax_regime' => $u->institute->tax_regime,
 					'year_founded'=>$u->institute->year_founded,
 					'locale' => $u->institute->locale,
+					'zip' => $u->institute->zip_code,
 					'reportCurrency' => array('id'=>$report->id, 'code'=>$report->code, 'country' => $report->country, 'locale' =>$report->locale),
 					'is_local' => $u->institute->is_local,
 					'financial_year' => $u->institute->financial_year,
@@ -277,7 +278,7 @@ class Profiles extends REST_Controller {
 			} else {
 				$data[] = array();
 			}
-			
+
 		}
 		if(count($data) > 0) {
 			$this->response(array(
@@ -302,6 +303,8 @@ class Profiles extends REST_Controller {
 			$user = new User();
 			$user->where('username', $r->username);
 			$user->get();
+			$modules = new Module();
+			$modules->where('is_core', 'true')->get();
 			$inst = new Institute();
 			$inst->name = $r->name;
 			$inst_year_founded = date('Y');
@@ -312,7 +315,7 @@ class Profiles extends REST_Controller {
 			$inst->industry_id = $r->industry->id;
 			$inst->type_id = $r->type->id;
 			$inst->monetary_id = 3;
-			if($inst->save($user)) {
+			if($inst->save(array($user, $modules->all))) {
 				// fillin dafault data
 				$data[] = array(
 					'id' => $inst->id,
@@ -360,6 +363,7 @@ class Profiles extends REST_Controller {
 			$company->monetary_id = $req->currency->id;
 			$company->industry_id = $req->industry->id;
 			$company->is_local = $req->is_local;
+			$company->zip_code = $req->zip;
 			$company->financial_year = $req->financial_year;
 			$company->financial_report_date = $req->financial_report_date;
 			if($company->save()) {
@@ -385,11 +389,12 @@ class Profiles extends REST_Controller {
 					'industry' => array('id'=>$industry->id,'type' => $industry->name),
 					'currency' => $currency->exists() ? array('id'=> $currency->id, 'code' => $currency->code, 'country' => $currency->country, 'locale'=>$currency->locale) : array('id'=>null),
 					'country' => array('id' => $country->id, 'name' => $country->name),
+					'zip' => $company->zip_code,
 					'users' => $company->user->count()
 				);
 			}
 		}
-		
+
 		if(count($data) > 0) {
 			$this->response(array(
 				'error' => FALSE,
@@ -435,7 +440,7 @@ class Profiles extends REST_Controller {
 		// $request = json_decode($this->post('models'));
 
 		// foreach($request as $d) {
-			
+
 		// }
 	}
 

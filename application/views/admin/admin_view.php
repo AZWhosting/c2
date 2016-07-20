@@ -41,6 +41,9 @@
         float: left;
         padding: 2px;
       }
+       ul.k-listview li > img {
+        width: 98%;
+      }
     </style>
   </head>
 
@@ -161,7 +164,7 @@
           <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
           <div class="count"><span data-bind="text: dataStore.data()[0].users"></span></div>
           <h3>Active Users</h3>
-          <p><a href="#">Add User</a></p>
+          <p><a href="#userlist/new">Add User</a></p>
         </div>
       </div>
       <div class="animated flipInY col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -169,7 +172,7 @@
           <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
           <div class="count"><span data-bind="text: modules.total"></span></div>
           <h3>Subscribed</h3>
-          <p>Modules/Apps</p>
+          <p><a href='#' data-bind="click: getModule">Modules/Apps</a></p>
         </div>
       </div>
       <div class="animated flipInY col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -212,7 +215,7 @@
                     <th>Status</th>
                     <th>Last Login</th>
                     <th>Modules</th>
-                    <th style="width: 30%">Action</th>
+                    <th style="width: 30%">Action <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: refresh"></i></th>
                   </tr>
                 </thead>
                 <tbody data-role="listview" data-bind="source: users" data-template="template-userlist-item-page">
@@ -442,7 +445,6 @@
 
         </td>
         <td style="line-height: 40px;">
-
         </td>
         <td style="line-height: 40px;">
           <button class="btn btn-default btn-xs" data-bind="visible: is_confirmed, events: {click: edit}"><i class="fa fa-pencil"></i> Edit </button>
@@ -671,76 +673,99 @@
     </script>
     <script type="text/x-kendo-template" id="template-createcompany-info-page">
       <div class="col-lg-12">
-        <div class="" role="tabpanel" data-example-id="togglable-tabs">
-          <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Information</a>
-            </li>
-            <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Module</a>
-            </li>
-          </ul>
-          <div id="myTabContent" class="tab-content">
-            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-               <table class="table">
-                  <tbody>
-                    <tr style=="border: 0">
-                      <th scope="row" width="150">Company Name</th>
-                      <td><span data-bind="text: dataStore.data()[0].name"></span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row" width="150">Email</th>
-                      <td><span data-bind="text: dataStore.data()[0].email"></span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">address</th>
-                      <td><span data-bind="text: dataStore.data()[0].address"></span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Fiscal Year</th>
-                      <td><span data-bind="text: dataStore.data()[0].fiscal_date"></span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Year Founded</th>
-                      <td><span data-bind="text: dataStore.data()[0].year_founded"></span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Reporting Currency</th>
-                      <td><span data-bind="text: dataStore.data()[0].reportCurrency.code"></span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Fiscal Report Date</th>
-                      <td><span data-bind="text: dataStore.data()[0].financial_report_date"></span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Country</th>
-                      <td><span data-bind="text: dataStore.data()[0].country.name"></span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Industry</th>
-                      <td><span data-bind="text: dataStore.data()[0].industry.type"></span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row" width="150">Tax Regime</th>
-                      <td><span data-bind="text: dataStore.data()[0].tax_regime"></span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Currency</th>
-                      <td><span data-bind="text: dataStore.data()[0].currency.code"></span></td>
-                    </tr>
-                    <tr><td colspan="2"></td></tr>
-                  </tbody>
-                </table>
-                <button data-bind="click: edit">Edit</button>
+        <table class="table">
+            <thead>
+              <tr>
+                <th colspan="2">General Information</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style=="border: 0">
+                <th scope="row" width="150">Company Name</th>
+                <td><span data-bind="text: dataStore.data()[0].name"></span></td>
+              </tr>
+              <tr>
+                <th scope="row" width="150">Email</th>
+                <td><span data-bind="text: dataStore.data()[0].email"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">address</th>
+                <td><span data-bind="text: dataStore.data()[0].address"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">ZIP Code</th>
+                <td><span data-bind="text: dataStore.data()[0].zip"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">Year Founded</th>
+                <td><span data-bind="text: dataStore.data()[0].year_founded"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">Country</th>
+                <td><span data-bind="text: dataStore.data()[0].country.name"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">Industry</th>
+                <td><span data-bind="text: dataStore.data()[0].industry.type"></span></td>
+              </tr>
+              <tr><td colspan="2"></td></tr>
+            </tbody>
+        </table>
+        <table class="table">
+            <thead>
+              <tr>
+                <th colspan="2">Financial Information</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Fiscal Date</th>
+                <td><span data-bind="text: dataStore.data()[0].fiscal_date"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">Currency</th>
+                <td><span data-bind="text: dataStore.data()[0].currency.code"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">Reporting Currency</th>
+                <td><span data-bind="text: dataStore.data()[0].reportCurrency.code"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">Fiscal Report Date</th>
+                <td><span data-bind="text: dataStore.data()[0].financial_report_date"></span></td>
+              </tr>
+              <tr>
+                <th scope="row" width="150">Tax Regime</th>
+                <td><span data-bind="text: dataStore.data()[0].tax_regime"></span></td>
+              </tr>
+              <tr><td colspan="2"></td></tr>
+            </tbody>
+        </table>
+        <button data-bind="click: edit">Edit</button>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="template-modules-page">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Subscribed Modules</h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="close-link" data-bind="click: close"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
             </div>
-            <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-               <ul data-role="listview" data-bind="source: modules" data-template="template-company-module-list-page" class="row"></ul>
+            <div class="x_content">
+              <ul data-role="listview" data-bind="source: modules" data-template="template-company-module-list-page" class="row"></ul>
             </div>
           </div>
         </div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="template-company-module-list-page">
-      <li class="products col-lg-2">
-        <img src="#=image_url#" alt="#=name#" style="width: 94%">
+      <li class="products">
+        <img src="#=image_url#" alt="#=name#">
       </li>
     </script>
     <script type="text/x-kendo-template" id="template-createcompany-info-edit-page">
@@ -749,7 +774,7 @@
           <thead>
             <tr>
               <th colspan="2">
-                Company Information
+                General Information
               </th>
             </tr>
           </thead>
@@ -766,23 +791,15 @@
             <tr>
             <tr>
               <th scope="row" width="150">Company Name</th>
-              <td><input type="text" data-bind="value: dataStore.data()[0].name" class="form-control col-md-7 col-xs-12"></td>
+              <td><input type="text" data-bind="value: dataStore.data()[0].name" class="form-control col-md-7 col-xs-12 k-input k-textbox"></td>
             </tr>
             <tr>
               <th scope="row" width="150">Email</th>
-              <td><input type="text" data-bind="value: dataStore.data()[0].email" class="form-control col-md-7 col-xs-12"></td>
+              <td><input type="text" data-bind="value: dataStore.data()[0].email" class="form-control col-md-7 col-xs-12 k-input k-textbox"></td>
             </tr>
             <tr>
               <th scope="row">address</th>
-              <td><input type="text" data-bind="value: dataStore.data()[0].address" class="form-control col-md-7 col-xs-12"></td>
-            </tr>
-            <tr>
-              <th scope="row">Fiscal Year</th>
-              <td><input type="text"
-                         data-role="datepicker"
-                         data-bind="value: dataStore.data()[0].fiscal_date"
-                         data-format="dd-MM"
-                         class="form-control col-md-7 col-xs-12"></td>
+              <td><input type="text" data-bind="value: dataStore.data()[0].address" class="k-input k-textbox form-control col-md-7 col-xs-12" style="width: 100%;"></td>
             </tr>
             <tr>
               <th scope="row">Year Founded</th>
@@ -793,17 +810,8 @@
                          data-format="yyyy"
                          class="form-control col-md-7 col-xs-12"></td>
             </tr>
-
             <tr>
-              <th scope="row">Fiscal Report Date</th>
-              <td><input type="text"
-                         data-role="datepicker"
-                         data-format="dd-MM"
-                         data-bind="value: dataStore.data()[0].financial_report_date"
-                         class="form-control col-md-7 col-xs-12"></td>
-            </tr>
-            <tr>
-              <th scope="row">Country</th>
+              <td scope="row">Country</td>
               <td><input type="text" data-role="dropdownlist"
                          data-bind="source: countries, value: dataStore.data()[0].country.id"
                          data-text-field="name"
@@ -819,11 +827,35 @@
                         class="form-control col-md-7 col-xs-12"></td>
             </tr>
             <tr>
-              <th scope="row" width="150">Tax Regime</th>
-              <td><input type="text" data-role="dropdownlist"
-                         data-bind="source: taxRegimes, value: dataStore.data()[0].tax_regime"
-                         data-text-field="value"
-                         data-value-field="id"
+              <td scope="row">Zip Code</td>
+              <td><input type="text" data-bind="value: dataStore.data()[0].zip"></td>
+            </tr>
+            <tr><td colspan="2"></td></tr>
+          </tbody>
+        </table>
+        <table class="table">
+          <thead>
+            <tr>
+              <th colspan="2">
+                Financial Information
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Fiscal Year</th>
+              <td><input type="text"
+                         data-role="datepicker"
+                         data-bind="value: dataStore.data()[0].fiscal_date"
+                         data-format="dd-MM"
+                         class="form-control col-md-7 col-xs-12"></td>
+            </tr>
+            <tr>
+              <th scope="row">Fiscal Report Date</th>
+              <td><input type="text"
+                         data-role="datepicker"
+                         data-format="dd-MM"
+                         data-bind="value: dataStore.data()[0].financial_report_date"
                          class="form-control col-md-7 col-xs-12"></td>
             </tr>
             <tr>
@@ -833,6 +865,22 @@
                         data-text-field="code"
                         data-value-field="id"
                         class="form-control col-md-7 col-xs-12"></td>
+            </tr>
+            <tr>
+              <th scope="row">Reporting Currency</th>
+              <td><input type="text" data-role="dropdownlist"
+                        data-bind="source: currencies, value: dataStore.data()[0].reportCurrency"
+                        data-text-field="code"
+                        data-value-field="id"
+                        class="form-control col-md-7 col-xs-12"></td>
+            </tr>
+            <tr>
+              <th scope="row" width="150">Tax Regime</th>
+              <td><input type="text" data-role="dropdownlist"
+                         data-bind="source: taxRegimes, value: dataStore.data()[0].tax_regime"
+                         data-text-field="value"
+                         data-value-field="id"
+                         class="form-control col-md-7 col-xs-12"></td>
             </tr>
             <tr><td colspan="2"></td></tr>
           </tbody>
@@ -852,21 +900,6 @@
               <img src="<?php echo base_url(); ?>assets/loading.gif" alt="" width="150"><br>
               <span>Please wait...</span>
             </section>
-          </div>
-        </div>
-      </div>
-    </script>
-    <script type="text/x-kendo-template" id="template-modules-page">
-      <div class="row">
-        <divclass="col-md-12 col-sm-12="" col-xs-12"=""></div class="col-md-12"></div>
-          <div class="x_panel" style="width: 94%">
-            <div class="x_title">
-              <h2>Modules</h2>
-              <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-              <div data-role="listview" data-bind="source: dataStore" data-template="template-modules-list-page" style="border: 0"></div>
-            </div>
           </div>
         </div>
       </div>
@@ -964,6 +997,7 @@
     <script>
         var banhji = banhji || {};
         var baseUrl = "<?php echo base_url(); ?>";
+        var institute = null;
         // Initialize aws userpool
         var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
         var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
@@ -1412,6 +1446,12 @@
             }
             fileReader.readAsDataURL(file);
           },
+          refresh: function() {
+            $('#user-spinwhile').addClass('fa-spin');
+            this.users.read().then(function() {
+              $('#user-spinwhile').removeClass('fa-spin');
+            });
+          },
           setCurrent: function(current) {
             this.set('current', current);
           },
@@ -1589,6 +1629,28 @@
           edit: function(e) {
             banhji.router.navigate('userlist/' + e.data.id);
           },
+          addUser: function() {
+           this.users.insert(0, {
+              username: '',
+              first_name: '',
+              last_name: '',
+              email: '',
+              mobile: '',
+              profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+              company: {id: banhji.companyDS.data()[0].id, name:''},
+              role: 2,
+              usertype: 2
+            });
+            this.setCurrent(this.users.at(0));
+            banhji.router.navigate('userlist/new');
+          },
+          editProfile: function(e) {
+            e.preventDefault();
+            banhji.router.navigate('userlist/' + this.get('current').id);
+          },
+          edit: function(e) {
+            banhji.router.navigate('userlist/' + e.data.id);
+          },
           confirm: function(e) {
             e.preventDefault();
 
@@ -1680,6 +1742,12 @@
           industries: banhji.industry,
           currencies: banhji.currencies,
           appSub: 0,
+          getModule: function() {
+            index.showIn('#app-placeholder', modeleView);
+          },
+          close: function() {
+            index.showIn('#app-placeholder', dash);
+          },
           taxRegimes: [
             {id:'small', value: 'Small'},
             {id:'medium', value: 'Medium'},
@@ -1698,13 +1766,14 @@
           },
           edit: function() {
             // e.preventDefault();
-            institute.showIn('#companyInfoPlaceholder', instEdit);
+            index.showIn('#app-placeholder', instEdit);
+            // institute.showIn('#companyInfoPlaceholder', instEdit);
           },
           cancel: function() {
             if(this.dataStore.hasChanges()) {
               this.dataStore.cancelChanges();
             }
-            institute.showIn('#companyInfoPlaceholder', instInfo);
+            index.showIn('#app-placeholder', instInfo);
           },
           save: function() {
             this.dataStore.sync();
@@ -1734,11 +1803,12 @@
         var instEdit = new kendo.View('#template-createcompany-info-edit-page', {model: banhji.company});
         var loading = new kendo.View('#template-waiting-page');
         var unthau = new kendo.View('#template-unauth-page');
-        var modeleView = new kendo.View('#template-modules-page', { model: banhji.module});
+        var modeleView = new kendo.View('#template-modules-page', { model: banhji.company});
         var profile = new kendo.View('#template-profile-page', {model: banhji.users});
         // router initization
         banhji.router = new kendo.Router({
             init: function() {
+                institute = JSON.parse(localStorage.getItem('userData/user')).institute;
                 if(!banhji.companyDS.data()[0]) {
                   banhji.companyDS.fetch(function() {
                     banhji.company.set('data', banhji.companyDS.data()[0]);
@@ -1899,7 +1969,7 @@
           if(banhji.userDS.data().length > 0) {
             index.showIn('#app-placeholder', userlist);
           } else {
-            banhji.userDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
+            banhji.userDS.filter({field: 'id', value: institute.id});
             // layout.showIn("#main-display-container", index);
             index.showIn('#app-placeholder', userlist);
           }
@@ -1917,7 +1987,6 @@
           if(banhji.users.get('current')) {
              index.showIn('#app-placeholder', userForm);
           }
-
           console.log(id);
         });
 
