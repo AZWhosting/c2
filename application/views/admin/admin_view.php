@@ -1428,7 +1428,7 @@
             serverFiltering: true,
             filter: {
               field: 'username',
-              value: userPool.getCurrentUser().username
+              value: userPool.getCurrentUser() == null ? "" : userPool.getCurrentUser().username
             },
             serverPaging: true,
             pageSize: 50
@@ -1808,47 +1808,51 @@
         // router initization
         banhji.router = new kendo.Router({
             init: function() {
-                institute = JSON.parse(localStorage.getItem('userData/user')).institute;
-                if(!banhji.companyDS.data()[0]) {
-                  banhji.companyDS.fetch(function() {
-                    banhji.company.set('data', banhji.companyDS.data()[0]);
-                    banhji.moduleDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
-                    banhji.moduleDS.bind('requestEnd', function(e){
-                      layout.render("#main-display");
-                     });
-                  });
-                }
-                banhji.profileDS.fetch(function(e){
-                  // if(banhji.profileDS.data()[0].role == 1) {
-                    kendo.bind('#main', banhji.aws);
-                    if(userPool.getCurrentUser() == null) {
-                      window.location.replace(baseUrl + "login");
-                    } else {
-                      var cognitoUser = userPool.getCurrentUser();
-                      if(cognitoUser !== null) {
-                        banhji.aws.getImage(banhji.profileDS.data()[0].profile_photo);
-                        cognitoUser.getSession(function(err, result){
-                          if(result) {
-                            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                              IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
-                              Logins: {
-                                'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
-                              }
-                            });
-                          }
-                        });
-                      }
-                    }
-                    banhji.users.modules.filter({
-                        field: 'username',
-                        value: userPool.getCurrentUser().username
+                if(userPool.getCurrentUser()) {
+                  institute = JSON.parse(localStorage.getItem('userData/user')).institute;
+                  if(!banhji.companyDS.data()[0]) {
+                    banhji.companyDS.fetch(function() {
+                      banhji.company.set('data', banhji.companyDS.data()[0]);
+                      banhji.moduleDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
+                      banhji.moduleDS.bind('requestEnd', function(e){
+                        layout.render("#main-display");
+                       });
                     });
-                  // } else {
-                    // redirect
-                  //   layout.showIn("#main-display-container", unthau);
-                  //   window.location.replace(baseUrl + "demo/");
-                  // }
-                });
+                  }
+                  banhji.profileDS.fetch(function(e){
+                    // if(banhji.profileDS.data()[0].role == 1) {
+                      kendo.bind('#main', banhji.aws);
+                      if(userPool.getCurrentUser() == null) {
+                        window.location.replace(baseUrl + "login");
+                      } else {
+                        var cognitoUser = userPool.getCurrentUser();
+                        if(cognitoUser !== null) {
+                          banhji.aws.getImage(banhji.profileDS.data()[0].profile_photo);
+                          cognitoUser.getSession(function(err, result){
+                            if(result) {
+                              AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                                IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
+                                Logins: {
+                                  'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
+                                }
+                              });
+                            }
+                          });
+                        }
+                      }
+                      banhji.users.modules.filter({
+                          field: 'username',
+                          value: userPool.getCurrentUser().username
+                      });
+                    // } else {
+                      // redirect
+                    //   layout.showIn("#main-display-container", unthau);
+                    //   window.location.replace(baseUrl + "demo/");
+                    // }
+                  });
+                } else {
+                  window.location.replace("<?php echo base_url(); ?>login");
+                }                  
             },
             routeMissing: function(e) {
                 // banhji.view.layout.showIn("#layout-view", banhji.view.missing);
@@ -2007,6 +2011,23 @@
         banhji.router.route('profile/:id', function(id) {
           layout.showIn("#main-display-container", profile);
           banhji.users.setCurrent(banhji.users.users.get(id));
+        });
+        window.addEventListener("beforeunload", function (e) {
+          // var confirmationMessage = "\o/";
+
+          // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+          // return confirmationMessage;                            //Webkit, Safari, Chrome
+          var userData = {
+              Username : userPool.getCurrentUser().username,
+              Pool : userPool
+          };
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+          if(cognitoUser != null) {
+              cognitoUser.signOut();
+              // window.location.replace("<?php echo base_url(); ?>login");
+          } else {
+              console.log('No user');
+          }
         });
 
         $(document).ready(function() {
