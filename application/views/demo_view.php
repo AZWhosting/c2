@@ -56460,7 +56460,24 @@
 
 	$(function() {	
 		banhji.router.start();
+		// signout when browser closed
+        window.addEventListener("beforeunload", function (e) {
+          // var confirmationMessage = "\o/";
 
+          // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+          // return confirmationMessage;                            //Webkit, Safari, Chrome
+          var userData = {
+              Username : userPool.getCurrentUser().username,
+              Pool : userPool
+          };
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+          if(cognitoUser != null) {
+              cognitoUser.signOut();
+              // window.location.replace("<?php echo base_url(); ?>login");
+          } else {
+              console.log('No user');
+          }
+        });
 		if(userPool.getCurrentUser() == null){
 			window.location.replace(baseUrl + "login");
 		} else {
