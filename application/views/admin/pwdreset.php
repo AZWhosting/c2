@@ -82,13 +82,14 @@
 
                       <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
 
-                      <input type="password" data-bind="value: password, events:{change:signIn}" placeholder="Password " class="login-email"><br>
+                      <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>
+                      <input type="password" data-bind="value: confirm, events:{change:forgotPassword}" placeholder="Password " class="login-email"><br>
 
-                      <input id="loginBtn" type="button" data-bind="click: signIn" class="btn-login" value="Login"><br><br>
+                      <input id="loginBtn" type="button" data-bind="click: forgotPassword" class="btn-login" value="Reset Password"><br><br>
                       <div id="loginInformation"></div>
                   </form>
               </div>
-              <div><a href="<?php echo base_url(); ?>forgotten">Forgott Password</a></div>
+              <div><a href="<?php echo base_url(); ?>login">Login</a></div>
             </div>
         </div>
     </div>
@@ -237,6 +238,7 @@
         banhji.aws = kendo.observable({
           email: null,
           password: null,
+          confirm: null,
           signIn: function() {
             // var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
             // if(this.get('password').match(decimal) != null)  {
@@ -254,40 +256,33 @@
             var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
             cognitoUser.authenticateUser(authenticationDetails, {
               onSuccess: function (result) {
-                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                  IdentityPoolId : 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
-                  Logins : {
-                      // Change the key below according to the specific region your user pool is in.
-                      'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4': result.getIdToken().getJwtToken()
-                  }
-                });
                 banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username});
-                banhji.companyDS.bind('requestEnd', function(e) {
-                  var res = e.response;
-                  if(res.error) {
-                      // console.log()
-                  } else {
-                    var data = res.results[0];
-                    banhji.profileDS.filter({
-                      field: 'username', value: userPool.getCurrentUser().username
-                    });
-                    banhji.profileDS.bind('requestEnd', function(e){
-                      var id = e.response.results[0].id;
-                      if(e.response.results[0].id) {
-                        var user = {
-                            id: id,
-                            username: userPool.getCurrentUser().username,
-                            institute: data
-                        };
-                        localforage.setItem('user', user);
-                        $("#loginBtn").val("Redirecting...");
-                        window.location.replace(baseUrl + "rrd/");
+                    banhji.companyDS.bind('requestEnd', function(e) {
+                      var res = e.response;
+                      if(res.error) {
+                          // console.log()
                       } else {
-                        console.log('bad');
+                        var data = res.results[0];
+                        banhji.profileDS.filter({
+                          field: 'username', value: userPool.getCurrentUser().username
+                        });
+                        banhji.profileDS.bind('requestEnd', function(e){
+                          var id = e.response.results[0].id;
+                          if(e.response.results[0].id) {
+                            var user = {
+                                id: id,
+                                username: userPool.getCurrentUser().username,
+                                institute: data
+                            };
+                            localforage.setItem('user', user);
+                            $("#loginBtn").val("Redirecting...");
+                            window.location.replace(baseUrl + "rrd/");
+                          } else {
+                            console.log('bad');
+                          }
+                        });
                       }
-                    });
-                  }
-                });
+                  });
               },
               onFailure: function(err) {
                 // layout.showIn("#main-container", loginView);
@@ -304,37 +299,30 @@
                 window.location.replace(baseUrl + "app/");
               }
           },
-          getSession: function() {
-            var cognitoUser = userPool.getCurrentUser();
-
-            if (cognitoUser != null) {
-                cognitoUser.getSession(function(err, result) {
-                    if (result) {
-                       window.location.replace(baseUrl + "rrd/"); 
-                    }
-                });
-            }
-          },
           forgotPassword: function(e) {
             e.preventDefault();
-            var userData = {
-                Username : this.get('email'),
-                Pool : userPool
-            };
-            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-            cognitoUser.forgotPassword({
-                onSuccess: function (result) {
-                    console.log('call result: ' + result);
-                },
-                onFailure: function(err) {
-                    alert(err);
-                },
-                inputVerificationCode() {
-                    var verificationCode = prompt('Please input verification code ' ,'');
-                    var newPassword = prompt('Enter new password ' ,'');
-                    cognitoUser.confirmPassword(verificationCode, newPassword, this);
-                }
-            });
+            if(this.get('password') == this.get('confirm')) {
+              var userData = {
+                  Username : this.get('email'),
+                  Pool : userPool
+              };
+              var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+              cognitoUser.forgotPassword({
+                  onSuccess: function (result) {
+                      console.log('call result: ' + result);
+                  },
+                  onFailure: function(err) {
+                      $('#loginInformation').text(err);
+                  },
+                  inputVerificationCode() {
+                      var verificationCode = prompt('Please input verification code ' ,'');
+                      cognitoUser.confirmPassword(verificationCode, banhji.aws.get('password'), this);
+                      window.location.replace(baseUrl + "login/");
+                  }
+              });
+            } else {
+              $('#loginInformation').text('passwords do not match');
+            }             
           },
           getCurrentUser: function() {
               var cognitoUser = null;
