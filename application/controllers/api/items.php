@@ -167,8 +167,8 @@ class Items extends REST_Controller {
 				   	"status" 				=> $value->status,
 				   	"deleted" 				=> $value->deleted, 					
  					
- 					"category" 				=> $value->category->get()->name,
-				   	"measurement"			=> $value->measurement->get()->name,
+ 					"category" 				=> [],//$value->category->get()->name,
+				   	"measurement"			=> [],//$value->measurement->get()->name,
 				   	"item_prices"			=> $itemPrice
 				);
 			}

@@ -91,9 +91,9 @@ class Accounts extends REST_Controller {
 					"id" 				=> $value->id,		 			
 					"account_type_id" 	=> $value->account_type_id,
 					"sub_of" 			=> $value->sub_of,						
-					"code" 				=> $value->code,
+					"number" 			=> $value->number,
 					"name" 				=> $value->name,
-					"name_local" 		=> $value->name_local,					
+					"name_2" 			=> $value->name_2,					
 					"description" 		=> $value->description,
 					"is_taxable" 		=> $value->is_taxable,
 					"status" 			=> $value->status,
@@ -118,9 +118,9 @@ class Accounts extends REST_Controller {
 			$obj = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->account_type_id) 	? $obj->account_type_id 	= $value->account_type_id : "";
 			isset($value->sub_of) 			? $obj->sub_of 				= $value->sub_of : "";
-			isset($value->code) 			? $obj->code 				= $value->code : "";				
+			isset($value->number) 			? $obj->number 				= $value->number : "";				
 			isset($value->name) 			? $obj->name 				= $value->name : "";
-			isset($value->name_local) 		? $obj->name_local 			= $value->name_local : "";
+			isset($value->name_2) 			? $obj->name_2 				= $value->name_2 : "";
 			isset($value->description) 		? $obj->description 		= $value->description : "";			
 			isset($value->is_taxable) 		? $obj->is_taxable 			= $value->is_taxable : "";			
 			isset($value->status) 			? $obj->status 				= $value->status : "";
@@ -131,9 +131,9 @@ class Accounts extends REST_Controller {
 			   		"id" 				=> $obj->id,		 			
 					"account_type_id" 	=> $obj->account_type_id,
 					"sub_of" 			=> $obj->sub_of,						
-					"code" 				=> $obj->code,
+					"number" 			=> $obj->number,
 					"name" 				=> $obj->name,
-					"name_local" 		=> $obj->name_local,					
+					"name_2" 			=> $obj->name_2,					
 					"description" 		=> $obj->description,
 					"is_taxable" 		=> $obj->is_taxable,
 					"status" 			=> $obj->status,
@@ -160,9 +160,9 @@ class Accounts extends REST_Controller {
 			
 			isset($value->account_type_id) 	? $obj->account_type_id 	= $value->account_type_id : "";
 			isset($value->sub_of) 			? $obj->sub_of 				= $value->sub_of : "";
-			isset($value->code) 			? $obj->code 				= $value->code : "";				
+			isset($value->number) 			? $obj->number 				= $value->number : "";				
 			isset($value->name) 			? $obj->name 				= $value->name : "";
-			isset($value->name_local) 		? $obj->name_local 			= $value->name_local : "";
+			isset($value->name_2) 			? $obj->name_2 				= $value->name_2 : "";
 			isset($value->description) 		? $obj->description 		= $value->description : "";			
 			isset($value->is_taxable) 		? $obj->is_taxable 			= $value->is_taxable : "";			
 			isset($value->status) 			? $obj->status 				= $value->status : "";
@@ -174,9 +174,9 @@ class Accounts extends REST_Controller {
 					"id" 				=> $obj->id,		 			
 					"account_type_id" 	=> $obj->account_type_id,
 					"sub_of" 			=> $obj->sub_of,						
-					"code" 				=> $obj->code,
+					"number" 			=> $obj->number,
 					"name" 				=> $obj->name,
-					"name_local" 		=> $obj->name_local,					
+					"name_2" 			=> $obj->name_2,					
 					"description" 		=> $obj->description,
 					"is_taxable" 		=> $obj->is_taxable,
 					"status" 			=> $obj->status,
@@ -275,7 +275,7 @@ class Accounts extends REST_Controller {
 					"sub_of" 				=> $value->sub_of,
 					"code" 					=> $value->code,
 					"name" 					=> $value->name,
-					"name_local" 			=> $value->name_local,
+					"name_2" 				=> $value->name_2,
 					"nature" 				=> $value->nature,					
 					"cash_flow_source" 		=> $value->cash_flow_source,
 					"financial_statement" 	=> $value->financial_statement,					
@@ -297,7 +297,7 @@ class Accounts extends REST_Controller {
 			$obj->sub_of 				= $value->sub_of;
 			$obj->code 					= $value->code;			
 			$obj->name 					= $value->name;
-			$obj->name_local 			= $value->name_local;
+			$obj->name_2 				= $value->name_2;
 			$obj->nature 				= $value->nature;
 			$obj->cash_flow_source 		= $value->cash_flow_source;
 			$obj->financial_statement 	= $value->financial_statement;
@@ -310,7 +310,7 @@ class Accounts extends REST_Controller {
 					"sub_of" 				=> $obj->sub_of,									
 					"code" 					=> $obj->code,
 					"name" 					=> $obj->name,
-					"name_local" 			=> $obj->name_local,
+					"name_2" 				=> $obj->name_2,
 					"nature" 				=> $obj->nature,					
 					"cash_flow_source" 		=> $obj->cash_flow_source,
 					"financial_statement" 	=> $obj->financial_statement,					
@@ -336,7 +336,7 @@ class Accounts extends REST_Controller {
 			$obj->sub_of 				= $value->sub_of;
 			$obj->code 					= $value->code;			
 			$obj->name 					= $value->name;
-			$obj->name_local 			= $value->name_local;
+			$obj->name_2 				= $value->name_2;
 			$obj->nature 				= $value->nature;
 			$obj->cash_flow_source 		= $value->cash_flow_source;
 			$obj->financial_statement 	= $value->financial_statement;
@@ -349,7 +349,7 @@ class Accounts extends REST_Controller {
 					"sub_of" 				=> $obj->sub_of,									
 					"code" 					=> $obj->code,
 					"name" 					=> $obj->name,
-					"name_local" 			=> $obj->name_local,
+					"name_2" 				=> $obj->name_2,
 					"nature" 				=> $obj->nature,					
 					"cash_flow_source" 		=> $obj->cash_flow_source,
 					"financial_statement" 	=> $obj->financial_statement,					
