@@ -628,7 +628,7 @@
       </div>
       <div class="clearfix"></div>
       <div class="divider"></div>
-      <div class="col-lg-12">Edit Module <br>
+      <div class="col-lg-12"><button data-bind='click: assign'>Assign</button><br>
         <ul data-role="listview" data-bind="source: modules" data-template="template-profile-module-list-page" class="row"></ul>
       </div>
     </script>
@@ -936,6 +936,18 @@
           </div>
         </div>
       </div>
+    </script>
+    <script type="text/x-kendo-template" id="template-assign-module-to-page">
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-lg-6">fjdkslfds</div>
+          <div class="col-lg-6">dfsdfs</div>
+        </div>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="template-modules-users-company-list-page">
+    </script>
+    <script type="text/x-kendo-template" id="template-modules-users-module-list-page">
     </script>
     <script type="text/x-kendo-template" id="template-modules-users-list-page">
       <div class="col-md-55" style="height: 250px;">
@@ -1446,6 +1458,10 @@
             }
             fileReader.readAsDataURL(file);
           },
+          assign : function() {
+            index.showIn('#app-placeholder', userlist);
+            console.log('kdf');
+          },
           refresh: function() {
             $('#user-spinwhile').addClass('fa-spin');
             this.users.read().then(function() {
@@ -1805,6 +1821,7 @@
         var unthau = new kendo.View('#template-unauth-page');
         var modeleView = new kendo.View('#template-modules-page', { model: banhji.company});
         var profile = new kendo.View('#template-profile-page', {model: banhji.users});
+        var assign = new kendo.View('#template-assign-module-to-page');
         // router initization
         banhji.router = new kendo.Router({
             init: function() {
@@ -2017,23 +2034,23 @@
         $(document).ready(function() {
             banhji.router.start();
             // signout when browser closed
-            window.addEventListener("beforeunload", function (e) {
-              // var confirmationMessage = "\o/";
+            // window.addEventListener("beforeunload", function (e) {
+            //   // var confirmationMessage = "\o/";
 
-              // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-              // return confirmationMessage;                            //Webkit, Safari, Chrome
-              var userData = {
-                  Username : userPool.getCurrentUser().username,
-                  Pool : userPool
-              };
-              var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-              if(cognitoUser != null) {
-                  cognitoUser.signOut();
-                  // window.location.replace("<?php echo base_url(); ?>login");
-              } else {
-                  console.log('No user');
-              }
-            });
+            //   // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+            //   // return confirmationMessage;                            //Webkit, Safari, Chrome
+            //   var userData = {
+            //       Username : userPool.getCurrentUser().username,
+            //       Pool : userPool
+            //   };
+            //   var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+            //   if(cognitoUser != null) {
+            //       cognitoUser.signOut();
+            //       // window.location.replace("<?php echo base_url(); ?>login");
+            //   } else {
+            //       console.log('No user');
+            //   }
+            // });
         });
     </script>
     <!-- /bootstrap-wysiwyg -->
