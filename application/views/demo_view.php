@@ -47,7 +47,7 @@
 	</div>
 </script>
 <script type="text/x-kendo-template" id="index">
-	<div class="row">
+	<div class="row-fluid">
 		<div class="span6">
 			<div class="row">
 				<div class="span12" style="padding-left: 0; margin-left: 0; margin-top: 0;">
