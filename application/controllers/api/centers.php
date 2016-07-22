@@ -22,8 +22,117 @@ class Centers extends REST_Controller {
 	}	
 
 	
-	//GET 
-	function index_get() {		
+	//GET ACCOUNTING SUMMARY
+	function accounting_summary_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
+		$deleted = 0;
+
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_related"){
+		    			$obj->where_related($value["model"], $value["field"], $value["value"]);		    				    		
+		    		}else{
+		    			$obj->where($value["field"], $value["value"]);
+		    		}
+	    		}else{	    			
+	    			if($value["field"]=="is_recurring"){
+	    				$is_recurring = $value["value"];
+	    			}else if($value["field"]=="deleted"){
+	    				$deleted = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}	    				    			
+	    		}
+			}									 			
+		}
+				
+		$obj->where("deleted", $deleted);			
+		
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+
+		if($obj->exists()){
+			//Sum dr and cr
+			$sumDr = 0;
+			$sumCr = 0;
+			$account_id = 0;
+			$locale = "";			
+			foreach ($obj as $value) {
+				$account_id = $value->account_id;
+				$locale = $value->locale;
+
+				if($value->dr>0 || $value->cr>0){
+					$sumDr += floatval($value->dr) / floatval($value->rate);
+					$sumCr += floatval($value->cr) / floatval($value->rate);					
+				}
+			}
+			
+			$account = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$account->include_related("account_type", "*");
+			$account->get_by_id($account_id);
+
+			$balance = 0;
+			if($account->account_type_nature=="Dr"){
+				$balance = $sumDr - $sumCr;				
+			}else{				
+				$balance = $sumCr - $sumDr;					
+			}
+
+			$data["results"][] = array(
+				"id" 			=> 0,
+				"balance" 		=> $balance,
+				"locale" 		=> $locale		   	
+			);			
+		}		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET ACCOUNTING
+	function accounting_txn_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
@@ -84,7 +193,9 @@ class Centers extends REST_Controller {
 			}									 			
 		}
 
-		$obj->where("deleted", $deleted);		
+		$obj->include_related("transaction", array("type","issued_date"));
+		$obj->where("deleted", $deleted);
+		$obj->order_by_related("transaction", "issued_date", "desc");		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -104,10 +215,9 @@ class Centers extends REST_Controller {
 				   	"cr" 				=> floatval($value->cr),
 				   	"rate"				=> floatval($value->rate),
 				   	"locale" 			=> $value->locale,
-				   	"deleted"			=> $value->deleted,
 
-				   	"account" 			=> $value->account->get_raw()->result(),
-				   	"contact" 			=> $value->contact->get_raw()->result()
+				   	"type" 				=> $value->transaction_type,
+				   	"issued_date" 		=> $value->transaction_issued_date
 				);
 			}						 			
 		}		

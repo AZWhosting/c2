@@ -745,7 +745,15 @@
 								</div>
 							</div>
 							<div class="select2-container" style="width: 100%;">								
-																
+								<input data-role="combobox"
+					                   data-placeholder="Account Type..."
+					                   data-template="account-type-list-tmpl"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: account_type_id,
+					                              source: accountTypeDS"
+					                   style="width: 100%"
+					            />									
 							</div>
 						</form>					
 					</div>
@@ -821,7 +829,7 @@
 										<span class="glyphicons coins"><i></i></span>										
 										<span class="txt">
 											Balance as of today
-											<span>250,000</span>
+											<span data-bind="text: balance"></span>
 										</span>
 										<div class="clearfix"></div>
 									</div>
@@ -833,8 +841,7 @@
 									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
 										<span class="glyphicons adjust_alt"><i></i></span>
 										<span class="txt">
-
-											<span >15</span>
+											<span data-bind="text: nature"></span>
 											Nature Balance
 										</span>
 										<div class="clearfix"></div>
@@ -844,7 +851,7 @@
 									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice">
 										<span class="glyphicons random"><i></i></span>										
 										<span class="txt">
-											<span >10</span>
+											<span data-bind="text: transactionDS.total"></span>
 											Transactions											
 										</span>										
 										<div class="clearfix"></div>
@@ -907,8 +914,8 @@
 </script>
 <script id="accountingCenter-transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>    	  	
-    	<td>#=kendo.toString(new Date(transaction[0].issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=transaction[0].type#</td>
+    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+    	<td>#=type#</td>
         <td>#=reference_no#</td>
         <td>#=description#</td>
     	<td class="right">    		
@@ -918,7 +925,7 @@
     		#=kendo.toString(cr, locale=="km-KH"?"c0":"c", locale)#
     	</td>    	
     	<td align="center">
-			#if(transaction[0].type==="Invoice"){#
+			#if(type==="Invoice"){#
 				<a href="\#/invoice/#=id#"><i></i> Pay</a>				   	
         	#}#
 		</td>     	
@@ -24668,6 +24675,13 @@
 		#}#
 	</span>
 </script>
+<script id="account-type-list-tmpl" type="text/x-kendo-tmpl">	
+	<span>
+		#=number#				
+	</span>
+	-
+	<span>#=name#</span>
+</script>
 <script id="reference-list-tmpl" type="text/x-kendo-tmpl">
 	<span>#=number# : #=kendo.toString(amount, "c", locale)#</span>
 	<span class="pull-right">
@@ -27743,73 +27757,49 @@
 			page:1,
 			pageSize: 100
 		}),
-		summaryDS  			: dataStore(apiUrl + 'contact_reports/summary'),
-		transactionDS  		: dataStore(apiUrl + 'journal_lines'),		
+		accountTypeDS 		: banhji.source.accountTypeDS,
+		summaryDS  			: dataStore(apiUrl + 'centers/accounting_summary'),
+		transactionDS  		: dataStore(apiUrl + 'centers/accounting_txn'),		
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",				
-		obj 				: null,
-		note 				: "",		
-		searchText 			: "",		
-		contact_type_id 	: 0,
-		currency_id 		: 0,
-		user_id 			: banhji.source.user_id,
+		obj 				: null,			
+		searchText 			: "",
 		balance 			: 0,
-		po 					: 0,
-		openInvoice 		: 0,
-		overInvoice 		: 0,		
+		account_type_id 	: "",
+		nature 				: "",		
+		user_id 			: banhji.source.user_id,				
 		pageLoad 			: function(){		
 											
 		},						
-		loadSummary 		: function(id){
+		loadSummary 		: function(){
 			var self = this, obj = this.get("obj");
 
 			this.summaryDS.query({
 			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", operator:"where_in", value: ["Cash_Purchase","Credit_Purchase", "Purchase_Order"] },
-			  		{ field:"status", value: 0 }
+			  		{ field:"account_id", value: obj.id }
 			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
 			  	page: 1,
 			  	take: 100
 			}).then(function(){
-				var view = self.summaryDS.view(),
-				balance = 0, open = 0, over = 0, po = 0, today = new Date();
-
-				$.each(view, function(index, value){
-					if(value.type=="Purchase_Order"){
-						po++;
-					}else{
-						balance += kendo.parseFloat(value.amount);
-						open++;
-
-						if(new Date(value.due_date)<today){						
-							over++;
-						}
-					}									
-				});
+				var view = self.summaryDS.view();				
 				
-				self.set("balance", kendo.toString(balance, "c", obj.locale));
-				self.set("po", kendo.toString(po, "n0"));
-				self.set("openInvoice", kendo.toString(open, "n0"));
-				self.set("overInvoice", kendo.toString(over, "n0"));
+				if(view.length>0){
+					self.set("balance", kendo.toString(view[0].balance, view[0].locale=="km-KH"?"c0":"c", view[0].locale));					
+				}else{
+					self.set("balance", 0);
+				}
 			});
-		},
-		loadTransaction 	: function(id){
-			this.transactionDS.query({
-			  	filter: { field:"contact_id", value: id },
-			  	sort: { field: "issued_date", dir: "desc" },
-			  	page: 1,
-			  	take: 100
-			});
-		},					
+		},						
 		selectedRow			: function(e){
-			var id = e.data.id,
-			data = e.data;			
+			var data = e.data,
+			type = this.accountTypeDS.get(data.account_type_id);
 			
-			this.set("obj", data);		
+			this.set("nature", type.nature);			
+			this.set("obj", data);
+			this.loadSummary();
+			this.searchTransaction();		
 		},		
 		enterSearch 		: function(e){
 			e.preventDefault();
@@ -27819,19 +27809,25 @@
 		search 				: function(){
 			var self = this, 
 			para = [],
-      		txtSearch = this.get("searchText");      		
+			account_type_id = this.get("account_type_id"),
+      		txtSearch = this.get("searchText");
       		
       		if(txtSearch){
       			para.push(      				
       				{ field: "number", operator: "like", value: txtSearch },      				
 					{ field: "name", operator: "or_like", value: txtSearch }
       			);
+      		}
+
+      		if(account_type_id){
+      			para.push({ field:"account_type_id", value:account_type_id });
       		}      		
 
       		this.dataSource.filter(para);
       		
 			//Clear search filters
-      		this.set("searchText", "");    			  			
+      		this.set("searchText", "");
+      		this.set("account_type_id", "");    			  			
 		},
 		searchTransaction	: function(){
 			var self = this,
@@ -27840,23 +27836,24 @@
 				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
         		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
 
+        	if(obj.id){
+        		para.push({ field:"account_id", value: obj.id });
+        	}
+
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });            	            	
+            	para.push({ field:"issued_date >=", operator:"where_related", model:"transaction", value: start });
+            	para.push({ field:"issued_date <=", operator:"where_related", model:"transaction", value: end });            	            	
             }else if(start){
-            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", operator:"where_related", model:"transaction", value: start });
             }else if(end){
-            	para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related", model:"transaction", value: end });
             }else{
             	
-            }
-
-            para.push({ field:"contact_id", value: obj.id });            
+            }                        
 
             this.transactionDS.query({
-            	filter: para,
-            	sort: { field: "issued_date", dir: "desc" },
+            	filter: para,            	
             	page: 1,
             	take: 100
             });            
