@@ -13,7 +13,7 @@ class Users extends REST_Controller {
 		// 	$conn = $institute->connection->get();
 		// 	// $this->entity = $conn->server_name;
 		// 	// $this->user = $conn->user;
-		// 	// $this->pwd = $conn->password;	
+		// 	// $this->pwd = $conn->password;
 		// 	$this->entity = $conn->inst_database;
 		// }
 	}
@@ -32,7 +32,7 @@ class Users extends REST_Controller {
 		if(isset($filters)) {
 			foreach($filters as $f) {
 				$user->where_related_institute($f['field'], $f['value']);
-			}	
+			}
 		}
 		$user->include_related('institute', array('id', 'name'));
 		$user->get_paged($offset, $limit);
@@ -108,7 +108,7 @@ class Users extends REST_Controller {
 	// return userdata
 	function index_post() {
 		$requested_data = json_decode($this->post('models'));
-		
+
 		foreach($requested_data as $user) {
 			$company = new Institute();
 			$company->where('id', $user->company->id)->get();
@@ -159,7 +159,7 @@ class Users extends REST_Controller {
 					);
 				}
 			}
-				
+
 		}
 		if(count($data) > 0) {
 			$this->response(array('results'=>$data, 'count'=> count($data)), 201);
@@ -169,7 +169,7 @@ class Users extends REST_Controller {
 	}
 	function create_post() {
 		$requested_data = json_decode($this->post('models'));
-		
+
 		foreach($requested_data as $user) {
 			$User = new User();
 			$User->username = $user->username;
@@ -191,7 +191,7 @@ class Users extends REST_Controller {
 					'email' => $User->email,
 					'mobile' => $User->mobile
 				);
-			}				
+			}
 		}
 		if(count($data) > 0) {
 			$this->response(array('results'=>$data, 'count'=> count($data)), 201);
@@ -308,19 +308,21 @@ class Users extends REST_Controller {
 		if(isset($filters)) {
 			foreach($filters as $f) {
 				$user->where($f['field'], $f['value']);
-			}	
+			}
 		}
 		$user->get_paged($offset, $limit);
 		foreach($user as $u) {
-			$u->module->get();
+			$u->module->include_join_fields()->get();
 			foreach($u->module as $m) {
 				$data[] = array(
-					'id' 		=> intval($m->id),
-					'name' 		=> $m->name,
+					'id' 		=> intval($m->join_id),
+					'user'  => intval($u->id),
+					'module' 		=> intval($m->id),
+					'name' 	=> $m->name,
 					'img_url' 	=> $m->image_url,
 					'description'=>$m->description
 				);
-			}				
+			}
 		}
 
 		if(count($data) > 0) {
@@ -335,21 +337,53 @@ class Users extends REST_Controller {
 
 		foreach($requested_data as $d) {
 			$user = new User();
-			$user->where('id', $d->user->id)->get();
+			$user->where('id', $d->user)->get();
 			$module = new Module();
-			$module->where('id', $d->module->id)->get();
+			$module->where('id', $d->module)->get();
 			if($user->save($module)) {
+				$user->module->incldue_join_fields()->get();
 				$data[] = array(
-					'id' 		=> intval($module->id),
+					'id' 		=> intval($user->module->id),
+					'user'  => intval($user->id),
+					'module'=> intval($module->id),
 					'name' 		=> $module->name,
 					'img_url' 	=> $module->image_url,
 					'description'=>$module->description
 				);
 			}
 		}
+		if(count($data) > 0) {
+			$this->response(array('results'=>$data, 'count'=>count($data)), 200);
+		} else {
+			$this->response(array('results'=>$data, 'count'=>0), 200);
+		}
 	}
 
-	function moduels_delete() {}
+	function modules_delete() {
+		$requested_data = json_decode($this->delete('models'));
+		$data = array();
+		foreach($requested_data as $d) {
+			$user = new User();
+			$user->where('id', $d->user)->get();
+			$module = new Module();
+			$module->where('id', $d->module)->get();
+			if($user->delete($module)) {
+				$data[] = array(
+					'id' 		=> null,
+					'user'  => null,
+					'module'=> null,
+					'name' 		=> null,
+					'img_url' 	=> null,
+					'description'=>null
+				);
+			}
+		}
+		if(count($data) > 0) {
+			$this->response(array('results'=>$data, 'count'=>count($data)), 200);
+		} else {
+			$this->response(array('results'=>$data, 'count'=>0), 200);
+		}
+	}
 
 	private function _check_email($email) {
 		$query = $this->login->get_by(array("username"=>$email));

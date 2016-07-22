@@ -940,14 +940,52 @@
     <script type="text/x-kendo-template" id="template-assign-module-to-page">
       <div class="col-lg-12">
         <div class="row">
-          <div class="col-lg-6">fjdkslfds</div>
-          <div class="col-lg-6">dfsdfs</div>
+          <div class="col-lg-6">
+            <table>
+              <thead>
+                <tr>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </thead>
+              <tbody data-role="listview" data-bind="source: cModules" data-template="template-modules-users-company-list-page">
+              </tbody>
+            </table>
+          </div>
+          <div class="col-lg-6">
+            <table style="width: 100%">
+              <thead>
+                <tr>
+                  <td style="width: 90%"></td>
+                  <td><button data-role="button" data-bind="click: saveAssign">Save</button></td>
+                </tr>
+              </thead>
+              <tbody data-role="listview" data-bind="source: modules" data-template="template-modules-users-module-list-page">
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="template-modules-users-company-list-page">
+      <tr>
+        <td>
+          #=name#
+        </td>
+        <td>
+          <button data-bind="click: assignTo">Assign</button>
+        </td>
+      </tr>
     </script>
     <script type="text/x-kendo-template" id="template-modules-users-module-list-page">
+      <tr>
+        <td>
+          #=name#
+        </td>
+        <td>
+          <button data-bind="click: removeFrom">Remove</button>
+        </td>
+      </tr>
     </script>
     <script type="text/x-kendo-template" id="template-modules-users-list-page">
       <div class="col-md-55" style="height: 250px;">
@@ -1400,6 +1438,7 @@
 
         banhji.users = kendo.observable({
           users : banhji.userDS,
+          cModules: banhji.moduleDS,
           modules: new kendo.data.DataSource({
             transport: {
               read  : {
@@ -1449,6 +1488,22 @@
             banhji.router.navigate('profile/' + e.data.id);
           },
           code  : '',
+          saveAssign: function() {
+            this.modules.sync();
+            // console.log(this.modules.data());
+          },
+          assignTo: function(e) {
+            this.modules.add({
+              user: this.get('current').id,
+              module: e.data.id,
+              name: e.data.name,
+              img_url: e.data.image_url
+            });
+            console.log(this.get('current').id);
+          },
+          removeFrom: function(e) {
+            this.modules.remove(e.data);
+          },
           upload: function() {
             var fileChooser = document.getElementById('user-image');
             var file = fileChooser.files[0];
@@ -1459,8 +1514,8 @@
             fileReader.readAsDataURL(file);
           },
           assign : function() {
-            index.showIn('#app-placeholder', userlist);
-            console.log('kdf');
+            // index.showIn('#app-placeholder', userlist);
+            layout.showIn("#main-display-container", assign);
           },
           refresh: function() {
             $('#user-spinwhile').addClass('fa-spin');
@@ -1821,7 +1876,7 @@
         var unthau = new kendo.View('#template-unauth-page');
         var modeleView = new kendo.View('#template-modules-page', { model: banhji.company});
         var profile = new kendo.View('#template-profile-page', {model: banhji.users});
-        var assign = new kendo.View('#template-assign-module-to-page');
+        var assign = new kendo.View('#template-assign-module-to-page', {model: banhji.users});
         // router initization
         banhji.router = new kendo.Router({
             init: function() {
@@ -1869,7 +1924,7 @@
                   });
                 } else {
                   window.location.replace("<?php echo base_url(); ?>login");
-                }                  
+                }
             },
             routeMissing: function(e) {
                 // banhji.view.layout.showIn("#layout-view", banhji.view.missing);
@@ -2026,10 +2081,11 @@
         });
 
         banhji.router.route('profile/:id', function(id) {
+          layout.showIn("#main-display-container", index);
           layout.showIn("#main-display-container", profile);
           banhji.users.setCurrent(banhji.users.users.get(id));
         });
-        
+
 
         $(document).ready(function() {
             banhji.router.start();
