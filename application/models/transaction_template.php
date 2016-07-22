@@ -1,16 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Segment extends DataMapper {
-	
-	protected $created_field = 'created_at';
-	protected $updated_field = 'updated_at';
-	
-	public $has_many = array(		
-		'segmentitem' => array(
-			'class' => 'segmentitem',
-			'other_field' => 'segment'
-		)
-	);
+class Transaction_template extends DataMapper {	
+	protected $created_field = "created_at";
+	protected $updated_field = "updated_at";	
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
 		$this->db_params = array(
@@ -31,5 +23,5 @@ class Segment extends DataMapper {
 	}
 }
 
-/* End of file segment.php */
-/* Location: ./application/models/segment.php */
+/* End of file transaction_template.php */
+/* Location: ./application/models/transaction_template.php */
