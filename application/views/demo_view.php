@@ -767,59 +767,45 @@
 							<div class="accounCetner-textedit">
 							<table width="100%">
 								<tr>
-									<td width="40%">
-										Account Code:
-									</td>
+									<td width="40%">Account Code:</td>
 									<td width="60%">
-										
+										<span data-bind="text: obj.number"></span>
 									</td>
 								</tr>
 								<tr>
+									<td>Account Title</td>
 									<td>
-										Account Title
-									</td>
-									<td>
-										
+										<span data-bind="text: obj.name"></span>
 									</td>
 								</tr>
 								<tr>
+									<td>Sub of account:</td>
 									<td>
-										Sub of account:
-									</td>
-									<td>
-										
+										<span data-bind="text: obj.sub_of_id"></span>
 									</td>
 								</tr>
 								<tr>
+									<td>Account Type:</td>
 									<td>
-										Account Type:
-									</td>
-									<td>
-										
+										<span data-bind="text: obj.account_type_id"></span>
 									</td>
 								</tr>
 								<tr>
+									<td>Currency:</td>
 									<td>
-										Currency:
-									</td>
-									<td>
-										
+										<span data-bind="text: obj.locale"></span>
 									</td>
 								</tr>
 								<tr>
+									<td>Description:</td>
 									<td>
-										Description:
-									</td>
-									<td>
-										
+										<span data-bind="text: obj.description"></span>
 									</td>
 								</tr>
 								<tr>
+									<td>Taxable:</td>
 									<td>
-										Taxable:
-									</td>
-									<td>
-										
+										<span data-bind="text: obj.is_taxable"></span>
 									</td>
 								</tr>
 							</table>
@@ -828,7 +814,7 @@
 							</div>
 						</div>
 
-						<div class="span6">
+						<div class="span6 account-center">
 							<div class="row-fluid">
 								<div class="span12" >
 									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style=" width: 425px; height:114px; background:#424242; margin-left:0;">
@@ -898,14 +884,15 @@
 								<th>Date</th>
 								<th>Type</th>								
 								<th>Reference No</th>
-								<th>Amount</th>
-								<th>Status</th>
-								<th>Action</th>
+								<th>Description</th>
+								<th>Dr</th>
+								<th>Cr</th>
+								<th></th>
 							</tr>
 						</thead>	            		
 	            		<tbody data-role="listview"
 	            				data-auto-bind="false"	            					            					            					            			
-				                data-template="cashCenter-transaction-tmpl"
+				                data-template="accountingCenter-transaction-tmpl"
 				                data-bind="source: transactionDS" >
 				        </tbody>
 	            	</table>
@@ -920,68 +907,19 @@
 </script>
 <script id="accountingCenter-transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>    	  	
-    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=type#</td>
-        <td>
-        	#if(type=="Invoice" || type=="Cash_Sale" || type=="Quote" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return"){#
-				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>						
-			#}else{#
-				#=number#
-			#}#        	
-        </td>
-    	<td class="right">
-    		#if(type=="GDN"){#
-    			#=kendo.toString(amount, "n0")#
-    		#}else{#
-    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
-    		#}#
+    	<td>#=kendo.toString(new Date(transaction[0].issued_date), "dd-MM-yyyy")#</td>
+    	<td>#=transaction[0].type#</td>
+        <td>#=reference_no#</td>
+        <td>#=description#</td>
+    	<td class="right">    		
+    		#=kendo.toString(dr, locale=="km-KH"?"c0":"c", locale)#    		
     	</td>
-    	<td>        	
-        	#if(type==="Invoice"){#
-        		#if(status==="0" || status==="2") {#
-        			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
-					#if(dueDate < toDay) {#
-						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
-					#} else {#
-						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
-					#}#
-				#} else {#
-					Paid
-				#}#
-        	#}else if(type==="Sale_Order" || type==="GDN"){#
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Done        			
-        		#}#
-        	#}else if(type==="Quote"){#        		
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Approved        			
-        		#}#
-        	#}#			
-		</td>    	
+    	<td class="right">
+    		#=kendo.toString(cr, locale=="km-KH"?"c0":"c", locale)#
+    	</td>    	
     	<td align="center">
-			#if(type==="Invoice"){#
-				<a href="\#/invoice/#=id#"><i></i> Send</a>
-
-				#if(status==="0" || status==="2"){#					
-					| <a href="\#/cashier/#=id#"><i></i> Pay</a>
-				#}#        	
-			#}else if(type==="Sale_Order"){#
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}else if(type==="Quote"){#
-        		<a href="\#/quote/#=id#"><i></i> Send</a>        		
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}else if(type==="GDN"){#        		
-        		#if(status==="0"){#
-        			
-        		#}#
+			#if(transaction[0].type==="Invoice"){#
+				<a href="\#/invoice/#=id#"><i></i> Pay</a>				   	
         	#}#
 		</td>     	
     </tr>
@@ -990,7 +928,7 @@
 	<tr data-bind="click: selectedRow">
 		<td>
 			<div class="media-body">
-				#if(sub_of>0){#
+				#if(sub_of_id>0){#
 					&nbsp;&nbsp;
 					<span>
 						#=number#				
@@ -1042,14 +980,15 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="ddlType">Type<span style="color:red">*</span></label>
+								<label for="ddlType">Account Type<span style="color:red">*</span></label>
 								<input id="ddlType" name="ddlType" 
 									   data-role="dropdownlist"					                   
 					                   data-value-primitive="true"
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: obj.account_type_id,
-					                              source: accountTypeDS"
+					                              source: accountTypeDS,
+					                              events:{change:typeChanges}"
 					                   data-option-label="Select Type..."
 					                   required data-required-msg="required" style="width: 100%;" />
 							</div>
@@ -1058,7 +997,7 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="txtNumber">Number<span style="color:red">*</span></label>
+								<label for="txtNumber">Account Code<span style="color:red">*</span></label>
 								<input id="txtNumber" name="txtNumber" 
 										class="k-textbox"
 										data-bind="value: obj.number"										
@@ -1072,7 +1011,7 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="txtName">Name<span style="color:red">*</span></label>
+								<label for="txtName">Account Name<span style="color:red">*</span></label>
 								<input id="txtName" name="txtName" 
 										class="k-textbox"
 										data-bind="value: obj.name"										
@@ -1097,14 +1036,14 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="ddlSubOf">Sub Of</label>
+								<label for="ddlSubOf">Sub Of Account</label>
 								<input id="ddlSubOf" name="ddlSubOf" 
 									   data-role="dropdownlist"
 									   data-template="account-list-tmpl"					                   
 					                   data-value-primitive="true"
 					                   data-text-field="name"
 					                   data-value-field="id"
-					                   data-bind="value: obj.sub_of,
+					                   data-bind="value: obj.sub_of_id,
 					                              source: subAccountDS"
 					                   data-option-label="Select Sub Account..."
 					                   style="width: 100%;" />
@@ -1152,7 +1091,7 @@
 
 				    <br>
 
-				    <div class="row well">
+				    <div class="row well" data-bind="visible: showBank">
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
@@ -27004,7 +26943,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter:{ field: "sub_of", value:0 },
+			filter:{ field: "sub_of_id", value:0 },
 			sort:{ field:"number", dir:"asc" },
 			batch: true,			
 			serverFiltering: true,
@@ -27040,7 +26979,8 @@
 				},				
 				data: 'results',
 				total: 'count'
-			},			
+			},
+			filter:{ field:"number <>", value:"" },			
 			batch: true,			
 			serverFiltering: true,
 			serverSorting: true,
@@ -27795,7 +27735,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			sort:{ field:"code", dir:"asc" },
+			sort:{ field:"number", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27803,6 +27743,7 @@
 			page:1,
 			pageSize: 100
 		}),
+		summaryDS  			: dataStore(apiUrl + 'contact_reports/summary'),
 		transactionDS  		: dataStore(apiUrl + 'journal_lines'),		
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
@@ -27868,10 +27809,7 @@
 			var id = e.data.id,
 			data = e.data;			
 			
-			this.set("obj", data);			
-			this.loadSummary(id);
-			this.loadTransaction(id);			
-			this.loadNote(id);
+			this.set("obj", data);		
 		},		
 		enterSearch 		: function(e){
 			e.preventDefault();
@@ -27881,41 +27819,19 @@
 		search 				: function(){
 			var self = this, 
 			para = [],
-      		txtSearch = this.get("searchText"),       		
-      		contact_type_id = this.get("contact_type_id"),
-      		currency_id = this.get("currency_id");      		
+      		txtSearch = this.get("searchText");      		
       		
       		if(txtSearch){
       			para.push(      				
-      				{ field: "number", operator: "like", value: txtSearch },
-      				{ field: "surname", operator: "or_like", value: txtSearch },
-					{ field: "name", operator: "or_like", value: txtSearch },
-					{ field: "company", operator: "or_like", value: txtSearch }
+      				{ field: "number", operator: "like", value: txtSearch },      				
+					{ field: "name", operator: "or_like", value: txtSearch }
       			);
       		}      		
 
-      		if(contact_type_id){
-      			para.push({ field: "contact_type_id", value: contact_type_id });
-      		}else{
-      			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 2 });
-      		}
-
-      		if(currency_id){
-      			para.push({ field: "currency_id", value: currency_id });
-      		}      		
-
-      		this.contactDS.filter(para);
-      		var loaded = false;
-      		this.contactDS.bind("requestEnd", function(){
-      			if(loaded==false){
-      				loaded = true;
-
-      				//Clear search filters
-		      		self.set("searchText", "");		      		
-		      		self.set("contact_type_id", 0);
-		      		self.set("currency_id", 0);
-      			}
-      		});      			
+      		this.dataSource.filter(para);
+      		
+			//Clear search filters
+      		this.set("searchText", "");    			  			
 		},
 		searchTransaction	: function(){
 			var self = this,
@@ -27947,94 +27863,145 @@
 		}				
 	});
 	banhji.account =  kendo.observable({
-    	lang 				: langVM,    	
+    	lang 				: langVM,
     	dataSource 			: dataStore(apiUrl + "accounts"),
     	accountTypeDS 		: banhji.source.accountTypeDS,
-    	subAccountDS 		: banhji.source.subAccountDS,
+    	subAccountDS		: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:{ field: "sub_of_id", value:0 },
+			sort:{ field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 1000
+		}),
     	currencyDS 			: banhji.source.currencyDS,
-    	statusList 			: banhji.source.statusList,    	
+    	statusList 			: banhji.source.statusList,
     	obj 	 			: null,
-    	isEdit 				: false,    	
-    	pageLoad 			: function(id){			
+    	isEdit 				: false,
+    	showBank 			: false,
+    	pageLoad 			: function(id){
 			if(id){
-				this.set("isEdit", true);							
-				this.loadObj(id);				
+				this.set("isEdit", true);
+				this.loadObj(id);
 			}else{				
 				if(this.get("isEdit")){
 					this.set("isEdit", false);
 					
-					this.dataSource.data([]);					
+					this.dataSource.data([]);
 					
 					this.addEmpty();
 				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
-				}								
-			}  																							
+					this.addEmpty();
+				}
+			}
 		},
     	loadObj 			: function(id){
     		var self = this;
 
-    		this.dataSource.query({    			
+    		this.dataSource.query({
 				filter: { field:"id", value: id }
 			}).then(function(e){
 				var view = self.dataSource.view();
 						    	
 		    	self.set("obj", view[0]);
 			});
+    	},
+    	typeChanges 		: function(){    		
+    		var obj = this.get("obj");
+    		this.set("showBank", false);
+
+    		if(obj.account_type_id){
+    			if(obj.account_type_id==10){
+    				this.set("showBank", true);
+    			}
+    			this.subAccountDS.filter({ field:"account_type_id", value:obj.account_type_id });
+    		}
     	},    	 	   	
-      	addEmpty 			: function(){      		
+      	addEmpty 			: function(){
       		this.dataSource.data([]);
       		this.set("obj", null);
 
       		this.dataSource.insert(0,{
       			account_type_id 		: 0,
-      			sub_of 					: 0,
+      			sub_of_id 				: 0,
       			number 					: "",
       			name 					: "",
       			name_2 					: "",
       			description				: "",
+      			bank_name 				: "",
+      			bank_account_number 	: "",
+      			locale 					: "km-KH",
       			is_taxable 				: 0,
-      			status 					: 1,      			
-      			is_system				: 0      			
+      			status 					: 1,
+      			is_system				: 0
 			});      		
 
-			var obj = this.dataSource.at(0);			
-			this.set("obj", obj);			
+			var obj = this.dataSource.at(0);
+			this.set("obj", obj);
       	},
       	objSync 			: function(){
 	    	var dfd = $.Deferred();	        
 
 	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.dataSource.bind("requestEnd", function(e){
+				dfd.resolve(e.response.results);
 		    });
 
-		    return dfd;	    		    	
+		    return dfd;
 	    },
       	cancel 				: function(e){
       		e.preventDefault();
 
       		this.dataSource.cancelChanges();
-      		window.history.back();      		
+      		window.history.back();
       	},      	
       	save 				: function(){
       		var self = this;
 
       		if(this.get("isEdit")){
-      			this.dataSource.sync();      			
+      			this.dataSource.sync();
       		}else{
-	      		this.objSync().then(function(data){	      		
+	      		this.objSync().then(function(data){
 	      			self.addEmpty();
 	      		});
-      		}      		      		
-      	},      	
+      		}
+      	},
       	delete 				: function(){
-			if (confirm("Are you sure, you want to delete it?")) {        
+			if (confirm("Are you sure, you want to delete it?")) {
 		        var obj = this.dataSource.at(0);
 		        this.dataSource.remove(obj);
 		        this.dataSource.sync();
 		        window.history.back();
-	    	}	    	
+	    	}
 	    }
     });
     banhji.txnItem =  kendo.observable({

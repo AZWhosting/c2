@@ -29,6 +29,10 @@ class Item extends DataMapper {
 			'class' => 'contact',
 			'other_field' => 'item'
 		),		
+		'account' => array(
+			'class' => 'account',
+			'other_field' => 'item'
+		),
 		'income_account' => array(
 			'class' => 'account',
 			'other_field' => 'income'

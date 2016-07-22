@@ -1220,7 +1220,13 @@ width: 90px !important;
     text-align: right;
     line-height: 15px;
 }
+.account-center .widget-stats.widget-stats-5 {
+    padding: 20px 15px;
+}
+.account-center .widget-stats.widget-stats-5 .txt{
+  font-size: 15px;
 
+}
 
 
 @media only screen 

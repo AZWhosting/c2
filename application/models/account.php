@@ -9,7 +9,7 @@ class Account extends DataMapper {
 			'class' => "account_type",
 			'other_field' => 'account'
 		),		
-		'parent' => array(
+		'sub_of' => array(
 			'class' => "account",
 			'other_field' => 'account'
 		)
@@ -23,32 +23,15 @@ class Account extends DataMapper {
 		'account_line' => array(
 			'class' => "account_line",
 			'other_field' => 'account'
-		),
-		'entry' => array(
-			'class' => 'entry',
-			'other_field' => 'account'
-		),
-		'contact',
-		'income' => array(
-			'class' => 'item',
-			'other_field' => 'income_account'
-		),
-		'cogs' => array(
-			'class' => 'item',
-			'other_field' => 'cogs_account'
-		),
-		'inventory' => array(
-			'class' => 'item',
-			'other_field' => 'inventory_account'
-		),
+		),		
 		'account' => array(
 			'class' => 'account',
-			'other_field' => 'parent'
+			'other_field' => 'sub_of'
 		),
 		'contact' => array(
 			'class' => 'contact',
-			'other_field' => 'contact_account'
-		),
+			'other_field' => 'account'
+		),		
 		'trade_discount' => array(
 			'class' => 'contact',
 			'other_field' => 'trade_discount'
@@ -60,11 +43,22 @@ class Account extends DataMapper {
 		'deposit' => array(
 			'class' => 'contact',
 			'other_field' => 'deposit_account'
-		),
-		'bill',
+		),		
 		'item' => array(
-			'class' => 'bill_line',
+			'class' => 'item',
 			'other_field' => 'account'
+		),
+		'income' => array(
+			'class' => 'item',
+			'other_field' => 'income_account'
+		),
+		'cogs' => array(
+			'class' => 'item',
+			'other_field' => 'cogs_account'
+		),
+		'inventory' => array(
+			'class' => 'item',
+			'other_field' => 'inventory_account'
 		), 
 		'tax_item' => array(
 			'class' => 'tax_item',
