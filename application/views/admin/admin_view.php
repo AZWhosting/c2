@@ -940,11 +940,16 @@
     <script type="text/x-kendo-template" id="template-assign-module-to-page">
       <div class="col-lg-12">
         <div class="row">
+          <div class="col-lg-12">
+            <i class="fa fa-close pull-right" data-bind="click: backToProfile"></i>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-lg-6">
-            <table>
+            <table class="table">
               <thead>
                 <tr>
-                  <td></td>
+                  <td>Company Subscribed Modules</td>
                   <td></td>
                 </tr>
               </thead>
@@ -953,11 +958,12 @@
             </table>
           </div>
           <div class="col-lg-6">
-            <table style="width: 100%">
+            <table style="width: 100%" class="table">
               <thead>
                 <tr>
-                  <td style="width: 90%"></td>
-                  <td><button data-role="button" data-bind="click: saveAssign">Save</button></td>
+                  <td style="width: 90%">User Access Modules</td>
+                  <td><i class="fa fa-save" data-bind="click: saveAssign" style="cursor: pointer;"></i>&nbsp;
+                  <i class="fa fa-eraser" data-bind="click: cancelAssign" style="cursor: pointer;"></i></td>
                 </tr>
               </thead>
               <tbody data-role="listview" data-bind="source: modules" data-template="template-modules-users-module-list-page">
@@ -973,7 +979,7 @@
           #=name#
         </td>
         <td>
-          <button data-bind="click: assignTo">Assign</button>
+          <i class="fa fa-hand-o-right" data-bind="click: assignTo"></i>
         </td>
       </tr>
     </script>
@@ -983,7 +989,7 @@
           #=name#
         </td>
         <td>
-          <button data-bind="click: removeFrom">Remove</button>
+          <i class="fa fa-trash" data-bind="click: removeFrom"></i>
         </td>
       </tr>
     </script>
@@ -1488,18 +1494,36 @@
             banhji.router.navigate('profile/' + e.data.id);
           },
           code  : '',
+          backToProfile: function() {
+            layout.showIn("#main-display-container", index);
+            layout.showIn("#main-display-container", profile);
+          },
           saveAssign: function() {
             this.modules.sync();
-            // console.log(this.modules.data());
+            this.modules.bind('requestEnd', function(e){
+              if(e.response.results) {
+                layout.showIn("#main-display-container", index);
+                layout.showIn("#main-display-container", profile);
+              }
+            });
           },
           assignTo: function(e) {
-            this.modules.add({
-              user: this.get('current').id,
-              module: e.data.id,
-              name: e.data.name,
-              img_url: e.data.image_url
-            });
-            console.log(this.get('current').id);
+            var existed = false;
+            for(var i = 0; i < this.modules.data().length; i++) {
+              if(e.data.id == this.modules.data()[i].module) {
+                existed = true;
+                alert('User already is assigned to this module');
+                break;
+              }
+            }
+            if(existed === false) {
+              this.modules.add({
+                user: this.get('current').id,
+                module: e.data.id,
+                name: e.data.name,
+                img_url: e.data.image_url
+              });
+            }           
           },
           removeFrom: function(e) {
             this.modules.remove(e.data);
@@ -1600,6 +1624,11 @@
               this.users.cancelChanges();
             }
             banhji.router.navigate('userlist');
+          },
+          cancelAssign: function() {
+            if(this.modules.hasChanges()) {
+              this.modules.cancelChanges();
+            }
           },
           showFormEdit: function(e) {
             this.setCurrent(e.data);
