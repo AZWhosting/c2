@@ -785,6 +785,37 @@ class Banhji extends REST_Controller {
 		}
 	}
 
+	// public function all_get() {
+	// 	$myDB = new Connection();
+	// 	$myDB->where('created_on >', '2016-07-17')->get();
+
+	// 	foreach($myDB as $database) {
+			// ALTER TABLE `accounts` CHANGE COLUMN `sub_of` `sub_of_id` INT(11) NULL DEFAULT NULL AFTER `account_type_id`;
+			// ALTER TABLE `accounts` CHANGE COLUMN `code` `number` VARCHAR(10) NOT NULL DEFAULT '' AFTER `sub_of_id`;
+			// ALTER TABLE `accounts` CHANGE COLUMN `name_local` `name_2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `name`;
+			// ALTER TABLE `accounts` ADD COLUMN `bank_name` varchar(50) NOT NULL AFTER `description`;
+			// ALTER TABLE `accounts` ADD COLUMN `bank_account_number` varchar(50) NOT NULL AFTER `bank_name`;
+			// ALTER TABLE `accounts` ADD COLUMN `locale` varchar(50) NOT NULL AFTER `bank_account_number`;
+			// ALTER TABLE `account_types` CHANGE COLUMN `sub_of` `sub_of_id` INT(11) NULL DEFAULT NULL AFTER `id`;
+			// ALTER TABLE `account_types` CHANGE COLUMN `code` `number` VARCHAR(10) NOT NULL DEFAULT '' AFTER `sub_of_id`;
+			// ALTER TABLE `account_types` CHANGE COLUMN `name_local` `name_2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `name`;
+	// 		$this->db->query('use ' . $database->inst_database);
+	// 		$this->db->query("ALTER TABLE `accounts` CHANGE COLUMN `sub_of` `sub_of_id` INT(11) NULL DEFAULT NULL AFTER `account_type_id`;");
+	// 		$this->db->query("ALTER TABLE `accounts` CHANGE COLUMN `code` `number` VARCHAR(10) NOT NULL DEFAULT '' AFTER `sub_of_id`;");
+	// 		$this->db->query("ALTER TABLE `accounts` CHANGE COLUMN `name_local` `name_2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `name`;");
+	// 		$this->db->query(" ALTER TABLE `accounts` ADD COLUMN `bank_name` varchar(50) NOT NULL AFTER `description`;");
+	// 		$this->db->query("ALTER TABLE `accounts` ADD COLUMN `bank_account_number` varchar(50) NOT NULL AFTER `bank_name`;");
+	// 		$this->db->query("ALTER TABLE `accounts` ADD COLUMN `locale` varchar(50) NOT NULL AFTER `bank_account_number`;");
+	// 		$this->db->query("ALTER TABLE `account_types` CHANGE COLUMN `sub_of` `sub_of_id` INT(11) NULL DEFAULT NULL AFTER `id`;");
+	// 		$this->db->query("ALTER TABLE `account_types` CHANGE COLUMN `code` `number` VARCHAR(10) NOT NULL DEFAULT '' AFTER `sub_of_id`;");
+	// 		$this->db->query("ALTER TABLE `account_types` CHANGE COLUMN `name_local` `name_2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `name`;");
+	// 		$data[] = array(
+	// 			'database' => $database->inst_database
+	// 		);
+	// 	}
+	// 	$this->response(array('results' => $data), 200);
+	// }
+
 	private function _install($data_name) {
 		$data = 'use ' . $data_name;
 		$this->db->query("$data");
