@@ -193,7 +193,7 @@ class Centers extends REST_Controller {
 			}									 			
 		}
 
-		$obj->include_related("transaction", array("type","issued_date"));
+		$obj->include_related("transaction", array("number","type","issued_date"));
 		$obj->where("deleted", $deleted);
 		$obj->order_by_related("transaction", "issued_date", "desc");		
 		
@@ -216,6 +216,7 @@ class Centers extends REST_Controller {
 				   	"rate"				=> floatval($value->rate),
 				   	"locale" 			=> $value->locale,
 
+				   	"number" 			=> $value->transaction_number,
 				   	"type" 				=> $value->transaction_type,
 				   	"issued_date" 		=> $value->transaction_issued_date
 				);

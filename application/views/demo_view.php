@@ -819,7 +819,7 @@
 						<div class="span6 account-center">
 							<div class="row-fluid">
 								<div class="span12" >
-									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style=" width: 425px; height:114px; background:#424242; margin-left:0;">
+									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadTransaction" style=" width: 425px; height:114px; background:#424242; margin-left:0;">
 										<span class="glyphicons coins"><i></i></span>										
 										<span class="txt">
 											Balance as of today
@@ -832,7 +832,7 @@
 							
 							<div class="row-fluid">
 								<div class="span6">
-									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
+									<div class="widget-stats widget-stats-info widget-stats-5">
 										<span class="glyphicons adjust_alt"><i></i></span>
 										<span class="txt">
 											<span data-bind="text: nature"></span>
@@ -842,10 +842,10 @@
 									</div>
 								</div>
 								<div class="span6">
-									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice">
+									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadTransaction">
 										<span class="glyphicons random"><i></i></span>										
 										<span class="txt">
-											<span data-bind="text: transactionDS.total"></span>
+											<span data-bind="text: totalTxn"></span>
 											Transactions											
 										</span>										
 										<div class="clearfix"></div>
@@ -856,27 +856,23 @@
 		          	</div>
 					
 					<div>
-						<input data-role="dropdownlist"                   
-					           data-value-primitive="true"
-					           data-text-field="text"
-					           data-value-field="value"
-					           data-bind="value: sorter,
-					                      source: sortList,                              
-					                      events: { change: sorterChanges }" />
+						<input id="sorter" name="sorter"
+				    	   data-role="dropdownlist"                   
+				           data-value-primitive="true"
+				           data-text-field="text"
+				           data-value-field="value"
+				           data-bind="value: sorter,
+				                      source: sortList" />
+				                                   
+				        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+				        
+				       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />
 
-						<input data-role="datepicker"
-							   data-format="dd-MM-yyyy"
-					           data-bind="value: sdate,
-					                      events: { change: dateChanges }"
-					           placeholder="From ..." >
-
-					    <input data-role="datepicker"
-					    	   data-format="dd-MM-yyyy"
-					           data-bind="value: edate,
-					                      events: { change: dateChanges }"
-					           placeholder="To ..." >
-					    
-					    <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+			            <button id="search" type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
 
 					<table class="table table-bordered table-striped table-white">
@@ -910,7 +906,13 @@
     <tr>    	  	
     	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
     	<td>#=type#</td>
-        <td>#=reference_no#</td>
+        <td>
+        	#if(type=="Invoice" || type=="Cash_Sale" || type=="Quote" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return" || type=="Journal"){#
+				<a href="\#/#=type.toLowerCase()#/#=transaction_id#"><i></i> #=number#</a>						
+			#}else{#
+				#=number#
+			#}#        	
+        </td>
         <td>#=description#</td>
     	<td class="right">    		
     		#=kendo.toString(dr, locale=="km-KH"?"c0":"c", locale)#    		
@@ -28031,13 +28033,58 @@
 		obj 				: null,			
 		searchText 			: "",
 		balance 			: 0,
-		account_type_id 	: "",
+		totalTxn 			: 0,		
 		subName 			: "",
 		typeName 			: "",		
 		nature 				: "",		
 		user_id 			: banhji.source.user_id,				
-		pageLoad 			: function(){		
-											
+		pageLoad 			: function(id){			
+			if(id){
+				this.loadObj(id);
+			}
+		},
+		loadObj 			: function(id){
+			var self = this;
+
+			this.dataSource.bind("requestEnd", function(e){
+				if(e.type=="read"){
+					var data = e.response.results;
+					
+					$.each(data, function(index, value){
+						if(value.id==id){
+							if(value.sub_of_id>0){
+								self.set("subName", value.name);
+							}else{
+								self.set("subName", "");
+							}
+
+							self.set("obj", value);
+							self.loadSummary();
+							self.searchTransaction();
+
+							return false;
+						}
+					});
+
+					//Sub Account
+					var obj = self.get("obj");
+					if(obj.sub_of_id>0){
+						$.each(data, function(index, value){
+							if(value.id==obj.sub_of_id){								
+								self.set("subName", value.name);								
+
+								return false;
+							}						
+						});
+					}else{
+						self.set("subName", "");
+					}
+
+					var type = self.accountTypeDS.get(obj.account_type_id);
+					self.set("typeName", type.name);
+					self.set("nature", type.nature);					
+				}
+			});
 		},						
 		loadSummary 		: function(){
 			var self = this, obj = this.get("obj");
@@ -28053,11 +28100,13 @@
 				
 				if(view.length>0){
 					self.set("balance", kendo.toString(view[0].balance, view[0].locale=="km-KH"?"c0":"c", view[0].locale));					
+					self.set("totalTxn", self.summaryDS.total());
 				}else{
 					self.set("balance", 0);
+					self.set("totalTxn", 0);
 				}
 			});
-		},						
+		},								
 		selectedRow			: function(e){
 			var data = e.data,
 			sub = this.dataSource.get(data.sub_of_id),
@@ -28127,6 +28176,30 @@
             	
             }                        
 
+            this.transactionDS.query({
+            	filter: para,            	
+            	page: 1,
+            	take: 100
+            });            
+		},
+		loadTransaction	 	: function(){
+			var self = this,
+				para = [],
+				obj = this.get("obj"),
+				today = new Date(),				
+        		end = kendo.toString(new Date(), "yyyy-MM-dd");
+
+        	var fiscalYear = new Date(banhji.institute.fiscal_year);
+        	fiscalYear.setFullYear(today.getFullYear());
+			var	start = kendo.toString(fiscalYear, "yyyy-MM-dd");
+
+        	if(obj.id){
+        		para.push({ field:"account_id", value: obj.id });
+        	}
+    	
+        	para.push({ field:"issued_date >=", operator:"where_related", model:"transaction", value: start });
+        	para.push({ field:"issued_date <=", operator:"where_related", model:"transaction", value: end });            	            	
+            
             this.transactionDS.query({
             	filter: para,            	
             	page: 1,
@@ -52190,11 +52263,11 @@
 			// vm.pageLoad();			
 		}				
 	});
-	banhji.router.route("/accounting_center", function(){
+	banhji.router.route("/accounting_center(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{			
-			// var vm = banhji.accountingCenter;
+			var vm = banhji.accountingCenter;
 						
 			banhji.view.layout.showIn("#content", banhji.view.accountingCenter);			
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
@@ -52203,10 +52276,117 @@
 			if(banhji.pageLoaded["accounting_center"]==undefined){
 				banhji.pageLoaded["accounting_center"] = true;		         
 
-		               	
+		        function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}					
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					vm.set("sdate", sdate);
+					vm.set("edate", edate);
+					// start.value(sdate);
+					// end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());       	
 			}
 
-			// vm.pageLoad();			
+			vm.pageLoad(id);			
 		}				
 	});
 	banhji.router.route("/account(/:id)", function(id){
