@@ -1523,7 +1523,7 @@
                 name: e.data.name,
                 img_url: e.data.image_url
               });
-            }           
+            }
           },
           removeFrom: function(e) {
             this.modules.remove(e.data);

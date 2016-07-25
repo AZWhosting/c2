@@ -4,10 +4,10 @@ class Segment extends DataMapper {
 	
 	protected $created_field = 'created_at';
 	protected $updated_field = 'updated_at';
-	public $has_many = array(
-		'structure',
-		'segmentlist' => array(
-			'class' => 'segmentlist',
+	
+	public $has_many = array(		
+		'segmentitem' => array(
+			'class' => 'segmentitem',
 			'other_field' => 'segment'
 		)
 	);

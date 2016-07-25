@@ -47,7 +47,7 @@
 	</div>
 </script>
 <script type="text/x-kendo-template" id="index">
-	<div class="row">
+	<div class="row-fluid">
 		<div class="span6">
 			<div class="row">
 				<div class="span12" style="padding-left: 0; margin-left: 0; margin-top: 0;">
@@ -745,7 +745,15 @@
 								</div>
 							</div>
 							<div class="select2-container" style="width: 100%;">								
-																
+								<input data-role="combobox"
+					                   data-placeholder="Account Type..."
+					                   data-template="account-type-list-tmpl"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: account_type_id,
+					                              source: accountTypeDS"
+					                   style="width: 100%"
+					            />									
 							</div>
 						</form>					
 					</div>
@@ -767,59 +775,45 @@
 							<div class="accounCetner-textedit">
 							<table width="100%">
 								<tr>
-									<td width="40%">
-										Account Code:
-									</td>
+									<td width="40%">Account Code:</td>
 									<td width="60%">
-										
+										<span data-bind="text: obj.number"></span>
 									</td>
 								</tr>
 								<tr>
+									<td>Account Title</td>
 									<td>
-										Account Title
-									</td>
-									<td>
-										
+										<span data-bind="text: obj.name"></span>
 									</td>
 								</tr>
 								<tr>
+									<td>Sub of account:</td>
 									<td>
-										Sub of account:
-									</td>
-									<td>
-										
+										<span data-bind="text: obj.sub_of_id"></span>
 									</td>
 								</tr>
 								<tr>
+									<td>Account Type:</td>
 									<td>
-										Account Type:
-									</td>
-									<td>
-										
+										<span data-bind="text: obj.account_type_id"></span>
 									</td>
 								</tr>
 								<tr>
+									<td>Currency:</td>
 									<td>
-										Currency:
-									</td>
-									<td>
-										
+										<span data-bind="text: obj.locale"></span>
 									</td>
 								</tr>
 								<tr>
+									<td>Description:</td>
 									<td>
-										Description:
-									</td>
-									<td>
-										
+										<span data-bind="text: obj.description"></span>
 									</td>
 								</tr>
 								<tr>
+									<td>Taxable:</td>
 									<td>
-										Taxable:
-									</td>
-									<td>
-										
+										<span data-bind="text: obj.is_taxable"></span>
 									</td>
 								</tr>
 							</table>
@@ -828,14 +822,14 @@
 							</div>
 						</div>
 
-						<div class="span6">
+						<div class="span6 account-center">
 							<div class="row-fluid">
 								<div class="span12" >
 									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style=" width: 425px; height:114px; background:#424242; margin-left:0;">
 										<span class="glyphicons coins"><i></i></span>										
 										<span class="txt">
 											Balance as of today
-											<span>250,000</span>
+											<span data-bind="text: balance"></span>
 										</span>
 										<div class="clearfix"></div>
 									</div>
@@ -847,8 +841,7 @@
 									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
 										<span class="glyphicons adjust_alt"><i></i></span>
 										<span class="txt">
-
-											<span >15</span>
+											<span data-bind="text: nature"></span>
 											Nature Balance
 										</span>
 										<div class="clearfix"></div>
@@ -858,7 +851,7 @@
 									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice">
 										<span class="glyphicons random"><i></i></span>										
 										<span class="txt">
-											<span >10</span>
+											<span data-bind="text: transactionDS.total"></span>
 											Transactions											
 										</span>										
 										<div class="clearfix"></div>
@@ -898,14 +891,15 @@
 								<th>Date</th>
 								<th>Type</th>								
 								<th>Reference No</th>
-								<th>Amount</th>
-								<th>Status</th>
-								<th>Action</th>
+								<th>Description</th>
+								<th>Dr</th>
+								<th>Cr</th>
+								<th></th>
 							</tr>
 						</thead>	            		
 	            		<tbody data-role="listview"
 	            				data-auto-bind="false"	            					            					            					            			
-				                data-template="cashCenter-transaction-tmpl"
+				                data-template="accountingCenter-transaction-tmpl"
 				                data-bind="source: transactionDS" >
 				        </tbody>
 	            	</table>
@@ -922,66 +916,17 @@
     <tr>    	  	
     	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
     	<td>#=type#</td>
-        <td>
-        	#if(type=="Invoice" || type=="Cash_Sale" || type=="Quote" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return"){#
-				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>						
-			#}else{#
-				#=number#
-			#}#        	
-        </td>
-    	<td class="right">
-    		#if(type=="GDN"){#
-    			#=kendo.toString(amount, "n0")#
-    		#}else{#
-    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
-    		#}#
+        <td>#=reference_no#</td>
+        <td>#=description#</td>
+    	<td class="right">    		
+    		#=kendo.toString(dr, locale=="km-KH"?"c0":"c", locale)#    		
     	</td>
-    	<td>        	
-        	#if(type==="Invoice"){#
-        		#if(status==="0" || status==="2") {#
-        			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
-					#if(dueDate < toDay) {#
-						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
-					#} else {#
-						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
-					#}#
-				#} else {#
-					Paid
-				#}#
-        	#}else if(type==="Sale_Order" || type==="GDN"){#
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Done        			
-        		#}#
-        	#}else if(type==="Quote"){#        		
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Approved        			
-        		#}#
-        	#}#			
-		</td>    	
+    	<td class="right">
+    		#=kendo.toString(cr, locale=="km-KH"?"c0":"c", locale)#
+    	</td>    	
     	<td align="center">
 			#if(type==="Invoice"){#
-				<a href="\#/invoice/#=id#"><i></i> Send</a>
-
-				#if(status==="0" || status==="2"){#					
-					| <a href="\#/cashier/#=id#"><i></i> Pay</a>
-				#}#        	
-			#}else if(type==="Sale_Order"){#
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}else if(type==="Quote"){#
-        		<a href="\#/quote/#=id#"><i></i> Send</a>        		
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}else if(type==="GDN"){#        		
-        		#if(status==="0"){#
-        			
-        		#}#
+				<a href="\#/invoice/#=id#"><i></i> Pay</a>				   	
         	#}#
 		</td>     	
     </tr>
@@ -990,10 +935,10 @@
 	<tr data-bind="click: selectedRow">
 		<td>
 			<div class="media-body">
-				#if(sub_of>0){#
+				#if(sub_of_id>0){#
 					&nbsp;&nbsp;
 					<span>
-						#=code#				
+						#=number#				
 					</span>
 					-
 					<span>
@@ -1005,7 +950,7 @@
 					</span>
 				#}else{#
 					<span class="strong">
-						#=code#				
+						#=number#				
 					</span>
 					-
 					<span class="strong">
@@ -1023,261 +968,194 @@
 
 <script id="account" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background ">
 			<div class="container-960">					
 				<div id="example" class="k-content">				
 						
 				    <div class="hidden-print">
 				    	<div class="pull-right">
-
 				    		<span class="glyphicons no-js remove_2" 
 								data-bind="click: cancel"><i></i></span>						
 						</div>
 
-				        <h2>NEW ACCOUNT</h2>				        				        				        	
+				        <h2>ACCOUNT</h2>				        				        				        	
 				    </div>			   
 
-				    <br>					
-						
-			    	<div class="row">
-			    		<div class="span12 new-account">
-			    			<div class="span6">
-				    			<tabel>
-				    				<tr>
-				    					<td>
-				    						 Acc. Name in English
-				    					</td>
-				    					<td>
-				    						<input name="" vaule="" type="text" />
-				    					</td>
-				    				</tr>
-				    			</table>
-				    		</div>
-				    		<div class="span6">
-				    			<tabel>
-				    				<tr>
-				    					<td>
-				    						Acc. Name in Non-Local Language
-				    					</td>
-				    					<td>
-				    						<input name="" vaule="" type="text" />
-				    					</td>
-				    				</tr>
-				    			</table>
-				    		</div>
-			    		</div>
+				    <br>
 
-			    		
-
-					</div>								
-							
-					<!-- // Inner Tabs -->
-					<div class="row-fluid">								
-						<div class="box-generic">
-						    <!-- //Tabs Heading -->
-						    <div class="tabsbar tabsbar-1">
-						        <ul class="row-fluid row-merge">						            
-						            <li class="span2 glyphicons usd active">
-						            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.accounting"></span></span></a>
-						            </li>
-						            <li class="span2 glyphicons circle_info">
-						            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.info"></span></span></a>
-						            </li>
-						            <li class="span2 glyphicons old_man">
-						            	<a href="#tab3" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.vendor"></span></span></a>
-						            </li>
-						            <li class="span2 glyphicons user">
-						            	<a href="#tab4" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.customer"></span></span></a>
-						            </li>						            					            						            					            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
-
-						    <div class="tab-content">
-						        <!-- //ACCOUNTING INFO -->
-						        <div class="tab-pane active" id="tab1">
-						        	<div class="row-fluid">						            	
-										<div class="span4">
-											<label for="ddlIncome"><span data-bind="text: lang.lang.income_account"></span><span style="color:red">*</span></label>
-											<input id="ddlIncome" name="ddlIncome"
-												data-bind="value: obj.income_account_id" 
-												required data-required-msg="required" style="width: 100%;" />
-										</div>
-										<div class="span4">
-											<label for="ddlCogs"><span data-bind="text: lang.lang.cost_of_good_sold_account"></span><span style="color:red">*</span></label>
-											<input id="ddlCogs" name="ddlCogs"
-												data-bind="value: obj.cogs_account_id" 
-												required data-required-msg="required" style="width: 100%;" />
-										</div>
-										<div class="span4">
-											<label for="ddlInventory"><span data-bind="text: lang.lang.inventory_account"></span><span style="color:red">*</span></label>
-											<input id="ddlInventory" name="ddlInventory"
-												data-bind="value: obj.inventory_account_id" 
-												required data-required-msg="required" style="width: 100%;" />	
-										</div>												
-							        </div>							        
-					        	</div>
-						        <!-- //ACCOUNTING INFO END -->						        
-						        
-						        <!-- //INFO -->
-						        <div class="tab-pane" id="tab2">
-
-						        	<div class="row-fluid">
-
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtSerialNumber"><span data-bind="text: lang.lang.model"></span></label>
-						              			<input data-role="dropdownlist"
-						              			   data-option-label="(--- Select ---)"								                  
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.brand_id,
-								                              source: brandDS"
-								                   style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtMeasurement"><span data-bind="text: lang.lang.measurement"></span></label>
-						              			<input id="txtMeasurement" name="txtMeasurement" class="k-textbox"
-							              				data-bind="value: obj.measurements" 
-							              				placeholder="e.g. 4x6mn"
-							              				style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span3">
-											<!-- Group -->
-											<div class="control-group">
-									            <input type="checkbox" data-bind="checked: obj.favorite" />	<span data-bind="text: lang.lang.favorite"></span>
-											</div>																		
-											<!-- // Group END -->
-										</div>										
-
-						        	</div>						        	
-
-							        <div class="row-fluid">										
-
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtInternationalCode"><span data-bind="text: lang.lang.international_code"></span></label>
-						              			<input id="txtInternationalCode" name="txtInternationalCode" class="k-textbox"
-							              				data-bind="value: obj.international_code" 
-							              				placeholder="e.g. INT0001"
-							              				style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtColorCode"><span data-bind="text: lang.lang.color"></span></label>
-						              			<input id="txtColorCode" name="txtColorCode" class="k-textbox"
-							              				data-bind="value: obj.color_code" 
-							              				placeholder="e.g. VID0001"
-							              				style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtIMEI"><span data-bind="text: lang.lang.imei"></span></label>
-						              			<input id="txtIMEI" name="txtIMEI" class="k-textbox"
-							              				data-bind="value: obj.IMIE" 
-							              				placeholder="e.g. IMEI0001"
-							              				style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtSerialNumber"><span data-bind="text: lang.lang.serial_number"></span></label>
-						              			<input id="txtSerialNumber" name="txtSerialNumber" class="k-textbox"
-							              				data-bind="value: obj.serial_number" 
-							              				placeholder="e.g. 0001"
-							              				style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>
-												
-							        </div>							       
-
-					        	</div>
-						        <!-- //INFO END -->
-
-						        <!-- //VENDOR -->
-						        <div class="tab-pane" id="tab3">
-						        						       
-						        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemVendor"><i></i> <span data-bind="text: lang.lang.new_vendor_item"></span></span>
-								        	
-						        	<table class="table table-bordered table-white">
-								        <thead>
-								            <tr>
-								                <th><span data-bind="text: lang.lang.name"></span></th>
-								                <th><span data-bind="text: lang.lang.item_code"></span></th>								                
-								                <th width="20px"></th>										               
-								            </tr>
-								        </thead>
-								        <tbody data-role="listview"										        		
-								        		data-auto-bind="false"										        						        		 
-								        		data-template="item-vendor-row-tmpl" 
-								        		data-bind="source: itemVendorDS">
-								        </tbody>										        						        
-								    </table>
-
-					        	</div>
-						        <!-- //VENDOR END -->
-
-						        <!-- //CUSTOMER -->
-						        <div class="tab-pane" id="tab4">
-						        					       
-						        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemCustomer"><i></i> <span data-bind="text: lang.lang.new_customer_item"></span></span>
-								        	
-						        	<table class="table table-bordered table-white">
-								        <thead>
-								            <tr>
-								                <th><span data-bind="text: lang.lang.name"></span></th>
-								                <th><span data-bind="text: lang.lang.item_code"></span></th>								                
-								                <th width="20px"></th>										               
-								            </tr>
-								        </thead>
-								        <tbody data-role="listview"										        		
-								        		data-auto-bind="false"										        						        		 
-								        		data-template="item-customer-row-tmpl" 
-								        		data-bind="source: itemCustomerDS">
-								        </tbody>										        						        
-								    </table>
-
-					        	</div>
-						        <!-- //CUSTOMER END -->
-						    </div>
+				    <div class="row">
+				    	<div class="span6">														
+							<!-- Group -->
+							<div class="control-group">										
+								<label for="ddlType">Account Type<span style="color:red">*</span></label>
+								<input id="ddlType" name="ddlType" 
+									   data-role="dropdownlist"					                   
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: obj.account_type_id,
+					                              source: accountTypeDS,
+					                              events:{change:typeChanges}"
+					                   data-option-label="Select Type..."
+					                   required data-required-msg="required" style="width: 100%;" />
+							</div>
+							<!-- // Group END -->
 						</div>
-					</div>					
+				    	<div class="span6">														
+							<!-- Group -->
+							<div class="control-group">										
+								<label for="txtNumber">Account Code<span style="color:red">*</span></label>
+								<input id="txtNumber" name="txtNumber" 
+										class="k-textbox"
+										data-bind="value: obj.number"										
+										required data-required-msg="required" style="width: 100%;">								
+							</div>
+							<!-- // Group END -->
+						</div>
+				    </div>
 
-					<br>											
-							
-					<!-- Form actions -->
-					<div align="center">
+				    <div class="row">
+				    	<div class="span6">														
+							<!-- Group -->
+							<div class="control-group">										
+								<label for="txtName">Account Name<span style="color:red">*</span></label>
+								<input id="txtName" name="txtName" 
+										class="k-textbox"
+										data-bind="value: obj.name"										
+										required data-required-msg="required" style="width: 100%;">
+							</div>
+							<!-- // Group END -->
+						</div>
+				    	<div class="span6">														
+							<!-- Group -->
+							<div class="control-group">										
+								<label for="txtNonLocalName">Non-Local Name</label>
+								<input id="txtNonLocalName" name="txtNonLocalName" 
+										class="k-textbox"
+										data-bind="value: obj.name_2"
+										style="width: 100%;">
+							</div>
+							<!-- // Group END -->
+						</div>
+				    </div>
+
+				    <div class="row">
+				    	<div class="span6">														
+							<!-- Group -->
+							<div class="control-group">										
+								<label for="ddlSubOf">Sub Of Account</label>
+								<input id="ddlSubOf" name="ddlSubOf" 
+									   data-role="dropdownlist"
+									   data-template="account-list-tmpl"					                   
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: obj.sub_of_id,
+					                              source: subAccountDS"
+					                   data-option-label="Select Sub Account..."
+					                   style="width: 100%;" />
+							</div>
+							<!-- // Group END -->
+						</div>
+				    	<div class="span6">														
+							<!-- Group -->
+							<div class="control-group">										
+								<label for="ddlStatus">Status<span style="color:red">*</span></label>
+								<input id="ddlStatus" name="ddlStatus" 
+									   data-role="dropdownlist"									   				                   
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: obj.status,
+					                              source: statusList"
+					                   data-option-label="Select Status..."
+					                   required data-required-msg="required" style="width: 100%;" />
+							</div>
+							<!-- // Group END -->
+						</div>
+				    </div>
+
+				    <div class="row">
+				    	<div class="span6">														
+							<!-- Group -->
+							<div class="control-group">										
+								<label><input type="checkbox" data-bind="checked: obj.is_taxable" /> Taxable</label>								
+							</div>
+							<!-- // Group END -->
+						</div>
+				    	<div class="span6">														
+							<!-- Group -->
+							<div class="control-group">										
+								<label for="txtDescription">Description</label>
+								<input id="txtDescription" name="txtDescription" 
+										class="k-textbox"
+										data-bind="value: obj.description" 
+										style="height: 50px; width: 100%;">
+							</div>
+							<!-- // Group END -->
+						</div>				    	
+				    </div>
+
+				    <br>
+
+				    <div class="row well" data-bind="visible: showBank">
+				    	<div class="span6">														
+							<!-- Group -->
+							<div class="control-group">										
+								<label for="txtBankName">Bank Name</label>
+								<input id="txtBankName" name="txtBankName" 
+										class="k-textbox"
+										data-bind="value: obj.bank_name"
+										style="width: 100%;">
+							</div>
+							<!-- // Group END -->
+						</div>
+				    	<div class="span6">														
+							<!-- Group -->
+							<div class="control-group">										
+								<label for="txtBankAccountNumber">Bank Account No.</label>
+								<input id="txtBankAccountNumber" name="txtBankAccountNumber" 
+										class="k-textbox"
+										data-bind="value: obj.bank_account_number"
+										style="width: 100%;">
+							</div>
+							<!-- // Group END -->
+						</div>
+
+						<br>
+
+				    	<div class="span6">														
+							<!-- Group -->
+							<div class="control-group">										
+								<label for="ddlCurrency">Currency</label>
+								<input id="ddlCurrency" name="ddlCurrency" 
+									   data-role="dropdownlist"
+									   data-template="currency-list-tmpl"					                   
+					                   data-value-primitive="true"
+					                   data-text-field="code"
+					                   data-value-field="locale"
+					                   data-bind="value: obj.locale,
+					                              source: currencyDS"
+					                   data-option-label="Select Currency..."
+					                   style="width: 100%;" />
+							</div>
+							<!-- // Group END -->
+						</div>
+				    </div>
+
+				    <br>
+
+				    <!-- Form actions -->
+					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
 						<span id="notification"></span>
 
-						<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-						<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-						<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
+						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
+						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>						
+						<span class="btn btn-icon btn-default glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
 					</div>
-					<!-- // Form actions END -->
-
+					<!-- // Form actions END -->						
+			    	
 				</div>							
 			</div>
 		</div>
@@ -2847,7 +2725,7 @@
 <script id="chartOfAccount-template" type="text/x-kendo-tmpl">	
 	<tr>
 		<td style="color: black;">
-			#=code#
+			#=number#
 		</td>		
 		<td style="color: black;">
 			#=name#
@@ -3113,58 +2991,32 @@
 			    </div>			   
 
 			    <br>
-			    <div id="saleTax-window" class="custome-window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
-						<table>
+			    <div id="window" class="custome-window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
+						<table>							
 							<tr>
-								<td width="50%">Tax System</td>
-								<td width="50%">
-									<input data-role="dropdownlist"				            			               			   		                   
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: obj.tax_system,
-					                              source: typeList"
-					                   style="width: 100%;" />
+								<td>NAME</td>
+								<td>
+									<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
 								</td>
 							</tr>
 							<tr>
-								<td>Tax Registration No.</td>
+								<td>CODE LENGTH</td>
 								<td>
-									<input class="k-textbox" placeholder="type number ..." data-bind="value: obj.number" style="width: 100%;">
+									<input class="k-textbox" placeholder="Code Length..." data-bind="value: obj.code_length" style="width: 100%;">
 								</td>
 							</tr>
 							<tr>
-								<td>Agency</td>
+								<td>STATUS</td>
 								<td>
-									<input class="k-textbox" placeholder="type agency ..." data-bind="value: obj.agency" style="width: 100%;">
+									<input data-role="dropdownlist"						                   
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.status,
+						                              source: statusList"
+						                   style="width: 100%;" />
 								</td>
-							</tr>
-							<tr>
-								<td>Name</td>
-								<td>
-									<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
-								</td>
-							</tr>
-							<tr>
-								<td>Last End Date</td>
-								<td>
-									<input data-role="datepicker"
-										data-format="dd-MM-yyyy"
-										data-parse-formats="yyyy-MM-dd" 
-										data-bind="value: obj.end_date"
-										style="width: 100%;" />
-								</td>
-							</tr>
-							<tr>
-								<td>Last Submission Date</td>
-								<td>
-									<input data-role="datepicker"
-										data-format="dd-MM-yyyy"
-										data-parse-formats="yyyy-MM-dd" 
-										data-bind="value: obj.submission_date"
-										style="width: 100%;" />
-							</td>
-							</tr>
+							</tr>							
 						</table>
 
 						<br>
@@ -3178,14 +3030,14 @@
 		            	<table class="table table-condensed">
 		            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
 		            			<tr>
-		            				<th>CODE</th>
 		            				<th>NAME</th>
-		            					            				
+		            				<th>CODE</th>
+		            				<th>STATUS</th>		            					            				
 		            				<th></th>
 		            			</tr>
 		            		</thead>
 		            		<tbody data-role="listview"			            			
-					                data-template="saleTax-type-template"
+					                data-template="segment-template"
 					                data-bind="source: dataSource"></tbody>
 		            	</table>
 	            	</div>
@@ -3194,34 +3046,39 @@
             	<div id="item-window" class=" item-window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
 					<table>
 						<tr>
-							<td>Item Name</td>
+							<td>CODE</td>
+							<td>
+								<input class="k-textbox" placeholder="type code ..." data-bind="value: item.code" style="width: 100%;">
+							</td>
+						</tr>
+						<tr>
+							<td>NAME</td>
 							<td>
 								<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
 							</td>
 						</tr>
 						<tr>
-							<td>Item Rate</td>
+							<td>STATUS</td>
 							<td>
-								<input data-role="numerictextbox"
-				                   data-format="p"
-				                   data-min="0"
-				                   data-max="0.99"
-				                   data-step="0.1"                   
-				                   data-bind="value: item.rate"
-				                   style="width: 100%;">
+								<input data-role="dropdownlist"						                   
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: item.status,
+						                              source: statusList"
+						                   style="width: 100%;" />
 							</td>
 						</tr>
 						<tr>
-							<td>Account</td>
+							<td>SEGMENT</td>
 							<td>
 								<input data-role="dropdownlist"
-					                   data-option-label="Select Account..."
-					                   data-template="account-list-tmpl"
+					                   data-option-label="Select Segment..."
 					                   data-value-primitive="true"					                   
 					                   data-text-field="name"
 					                   data-value-field="id"
-					                   data-bind="value: item.account_id,
-					                              source: accountDS"
+					                   data-bind="value: item.segment_id,
+					                              source: dataSource"
 					                   style="width: 100%" />
 							</td>
 						</tr>
@@ -3234,21 +3091,22 @@
 					<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i>Close</span>  
 				</div>
 
-				<h3>Test</h3>
+				<h3 data-bind="text: objName"></h3>
 
 				<div class="row-fluid">
 	            	<div class="span8">		                	
 					    <table class="table table-bordered table-white">
 		            		<thead>
 		            			<tr>
-		            				<th>Name</th>
-		            				<th>Rate</th>
-		            				<th>Account</th>		            					            				
+		            				<th>CODE</th>
+		            				<th>NAME</th>
+		            				<th>SEGMENT</th>
+		            				<th>STATUS</th>		            					            				
 		            				<th></th>
 		            			</tr>
 		            		</thead>
 		            		<tbody data-role="listview"			            				
-					                data-template="saleTax-item-template"
+					                data-template="segment-item-template"
 					                data-auto-bind="false"
 					                data-bind="source: itemDS"></tbody>
 		            	</table>
@@ -3258,6 +3116,35 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="segment-template" type="text/x-kendo-tmpl">                    
+    <tr>    	
+    	<td>#=name#</td>
+    	<td>#=code_length#</td>
+    	<td>#=status#</td>    	
+    	<td>
+    		<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
+    		|
+    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
+    		|
+    		<span data-bind="click: view"><i class="icon-view"></i> View Item</span>
+    		|
+    		<span data-bind="click: addItem"><i class="icon-plus icon-white"></i> Add Item</span>
+    	</td>
+   	</tr>
+</script>
+<script id="segment-item-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>#=code#</td>
+    	<td>#=name#</td>
+    	<td>#=segment[0].name#</td>
+    	<td>#=status#</td>     	 		
+   		<td>
+    		<span data-bind="click: editItem"><i class="icon-edit"></i> Edit</span>
+    		|
+    		<span data-bind="click: deleteItem"><i class="icon-remove"></i> Delete</span>
+    	</td>
+   	</tr>
 </script>
 
 
@@ -4702,7 +4589,7 @@
 </script>
 <script id="cashAdvance-account-list-tmpl" type="text/x-kendo-tmpl">
 	<span>
-		#=code# #=name#
+		#=number# #=name#
 	</span>
 </script>
 <script id="cashAdvance-contact-list-tmpl" type="text/x-kendo-tmpl">
@@ -4712,7 +4599,7 @@
 </script>
 <script id="cashAdvance-segment-tmpl" type="text/x-kendo-tmpl">
 	<span>
-		#=name# (#=segment.name#)
+		#=name# (#=segment[0].name#)
 	</span>
 </script>
 
@@ -18107,7 +17994,7 @@
 </script>
 <script id="cashTransaction-account-list-tmpl" type="text/x-kendo-tmpl">
 	<span>
-		#=code# #=name#
+		#=number# #=name#
 	</span>
 </script>
 <script id="cashTransaction-contact-list-tmpl" type="text/x-kendo-tmpl">
@@ -18117,7 +18004,7 @@
 </script>
 <script id="cashTransaction-segment-tmpl" type="text/x-kendo-tmpl">
 	<span>
-		#=name# (#=segment.name#)
+		#=name# (#=segment[0].name#)
 	</span>
 </script>
 
@@ -24764,7 +24651,7 @@
 </script>
 <script id="segment-list-tmpl" type="text/x-kendo-tmpl">
 	<span>
-		#=name# (#=segment.name#)
+		#=name# (#=segment[0].name#)
 	</span>
 </script>
 <script id="job-list-tmpl" type="text/x-kendo-tmpl">
@@ -24777,7 +24664,7 @@
 </script>
 <script id="account-list-tmpl" type="text/x-kendo-tmpl">	
 	<span>
-		#=code#				
+		#=number#				
 	</span>
 	-
 	<span>
@@ -24787,6 +24674,13 @@
 			#=name#
 		#}#
 	</span>
+</script>
+<script id="account-type-list-tmpl" type="text/x-kendo-tmpl">	
+	<span>
+		#=number#				
+	</span>
+	-
+	<span>#=name#</span>
 </script>
 <script id="reference-list-tmpl" type="text/x-kendo-tmpl">
 	<span>#=number# : #=kendo.toString(amount, "c", locale)#</span>
@@ -26569,7 +26463,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			group: { field: "contact_type" },
+			// group: { field: "contact_type" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -26606,7 +26500,7 @@
 				total: 'count'
 			},
 			filter: { field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
-			group: { field: "contact_type" },
+			// group: { field: "contact_type" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -26643,7 +26537,7 @@
 				total: 'count'
 			},
 			filter: { field:"parent_id", operator:"where_related", model:"contact_type", value:2 },
-			group: { field: "contact_type" },
+			// group: { field: "contact_type" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -26680,7 +26574,7 @@
 				total: 'count'
 			},
 			filter: { field:"parent_id", operator:"where_related", model:"contact_type", value:3 },
-			group: { field: "contact_type" },
+			// group: { field: "contact_type" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -26952,7 +26846,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			group: { field: "category"},
+			// group: { field: "category"},
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27027,7 +26921,80 @@
 				total: 'count'
 			},
 			//group:{ field: "account_type_name" },
-			sort:{ field:"code", dir:"asc" },
+			sort:{ field:"number", dir:"asc" },
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 1000
+		}),
+		subAccountDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,	
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},			
+			schema 	: {
+				model: {
+					id: 'id'
+				},				
+				data: 'results',
+				total: 'count'
+			},
+			filter:{ field: "sub_of_id", value:0 },
+			sort:{ field:"number", dir:"asc" },
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 1000
+		}),
+		accountTypeDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts/type",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,	
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},			
+			schema 	: {
+				model: {
+					id: 'id'
+				},				
+				data: 'results',
+				total: 'count'
+			},
+			filter:{ field:"number <>", value:"" },			
 			batch: true,			
 			serverFiltering: true,
 			serverSorting: true,
@@ -27237,7 +27204,7 @@
 			page:1,
 			pageSize: 100
 		}),		
-		tradeDiscountDS		: new kendo.data.DataSource({
+		tradeDiscountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -27631,7 +27598,7 @@
 		segmentItemDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "segments/items",
+					url: apiUrl + "segments/item",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -27656,7 +27623,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			group: { field: "segment.name"},
+			group: { field: "segment[0].name"},
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27782,7 +27749,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			sort:{ field:"code", dir:"asc" },
+			sort:{ field:"number", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27790,75 +27757,49 @@
 			page:1,
 			pageSize: 100
 		}),
-		transactionDS  		: dataStore(apiUrl + 'journal_lines'),		
+		accountTypeDS 		: banhji.source.accountTypeDS,
+		summaryDS  			: dataStore(apiUrl + 'centers/accounting_summary'),
+		transactionDS  		: dataStore(apiUrl + 'centers/accounting_txn'),		
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",				
-		obj 				: null,
-		note 				: "",		
-		searchText 			: "",		
-		contact_type_id 	: 0,
-		currency_id 		: 0,
-		user_id 			: banhji.source.user_id,
+		obj 				: null,			
+		searchText 			: "",
 		balance 			: 0,
-		po 					: 0,
-		openInvoice 		: 0,
-		overInvoice 		: 0,		
+		account_type_id 	: "",
+		nature 				: "",		
+		user_id 			: banhji.source.user_id,				
 		pageLoad 			: function(){		
 											
 		},						
-		loadSummary 		: function(id){
+		loadSummary 		: function(){
 			var self = this, obj = this.get("obj");
 
 			this.summaryDS.query({
 			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", operator:"where_in", value: ["Cash_Purchase","Credit_Purchase", "Purchase_Order"] },
-			  		{ field:"status", value: 0 }
+			  		{ field:"account_id", value: obj.id }
 			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
 			  	page: 1,
 			  	take: 100
 			}).then(function(){
-				var view = self.summaryDS.view(),
-				balance = 0, open = 0, over = 0, po = 0, today = new Date();
-
-				$.each(view, function(index, value){
-					if(value.type=="Purchase_Order"){
-						po++;
-					}else{
-						balance += kendo.parseFloat(value.amount);
-						open++;
-
-						if(new Date(value.due_date)<today){						
-							over++;
-						}
-					}									
-				});
+				var view = self.summaryDS.view();				
 				
-				self.set("balance", kendo.toString(balance, "c", obj.locale));
-				self.set("po", kendo.toString(po, "n0"));
-				self.set("openInvoice", kendo.toString(open, "n0"));
-				self.set("overInvoice", kendo.toString(over, "n0"));
+				if(view.length>0){
+					self.set("balance", kendo.toString(view[0].balance, view[0].locale=="km-KH"?"c0":"c", view[0].locale));					
+				}else{
+					self.set("balance", 0);
+				}
 			});
-		},
-		loadTransaction 	: function(id){
-			this.transactionDS.query({
-			  	filter: { field:"contact_id", value: id },
-			  	sort: { field: "issued_date", dir: "desc" },
-			  	page: 1,
-			  	take: 100
-			});
-		},					
+		},						
 		selectedRow			: function(e){
-			var id = e.data.id,
-			data = e.data;			
+			var data = e.data,
+			type = this.accountTypeDS.get(data.account_type_id);
 			
-			this.set("obj", data);			
-			this.loadSummary(id);
-			this.loadTransaction(id);			
-			this.loadNote(id);
+			this.set("nature", type.nature);			
+			this.set("obj", data);
+			this.loadSummary();
+			this.searchTransaction();		
 		},		
 		enterSearch 		: function(e){
 			e.preventDefault();
@@ -27868,41 +27809,25 @@
 		search 				: function(){
 			var self = this, 
 			para = [],
-      		txtSearch = this.get("searchText"),       		
-      		contact_type_id = this.get("contact_type_id"),
-      		currency_id = this.get("currency_id");      		
+			account_type_id = this.get("account_type_id"),
+      		txtSearch = this.get("searchText");
       		
       		if(txtSearch){
       			para.push(      				
-      				{ field: "number", operator: "like", value: txtSearch },
-      				{ field: "surname", operator: "or_like", value: txtSearch },
-					{ field: "name", operator: "or_like", value: txtSearch },
-					{ field: "company", operator: "or_like", value: txtSearch }
+      				{ field: "number", operator: "like", value: txtSearch },      				
+					{ field: "name", operator: "or_like", value: txtSearch }
       			);
-      		}      		
-
-      		if(contact_type_id){
-      			para.push({ field: "contact_type_id", value: contact_type_id });
-      		}else{
-      			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 2 });
       		}
 
-      		if(currency_id){
-      			para.push({ field: "currency_id", value: currency_id });
+      		if(account_type_id){
+      			para.push({ field:"account_type_id", value:account_type_id });
       		}      		
 
-      		this.contactDS.filter(para);
-      		var loaded = false;
-      		this.contactDS.bind("requestEnd", function(){
-      			if(loaded==false){
-      				loaded = true;
-
-      				//Clear search filters
-		      		self.set("searchText", "");		      		
-		      		self.set("contact_type_id", 0);
-		      		self.set("currency_id", 0);
-      			}
-      		});      			
+      		this.dataSource.filter(para);
+      		
+			//Clear search filters
+      		this.set("searchText", "");
+      		this.set("account_type_id", "");    			  			
 		},
 		searchTransaction	: function(){
 			var self = this,
@@ -27911,162 +27836,169 @@
 				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
         		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
 
+        	if(obj.id){
+        		para.push({ field:"account_id", value: obj.id });
+        	}
+
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });            	            	
+            	para.push({ field:"issued_date >=", operator:"where_related", model:"transaction", value: start });
+            	para.push({ field:"issued_date <=", operator:"where_related", model:"transaction", value: end });            	            	
             }else if(start){
-            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date", operator:"where_related", model:"transaction", value: start });
             }else if(end){
-            	para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", operator:"where_related", model:"transaction", value: end });
             }else{
             	
-            }
-
-            para.push({ field:"contact_id", value: obj.id });            
+            }                        
 
             this.transactionDS.query({
-            	filter: para,
-            	sort: { field: "issued_date", dir: "desc" },
+            	filter: para,            	
             	page: 1,
             	take: 100
             });            
 		}				
 	});
 	banhji.account =  kendo.observable({
-    	lang 				: langVM,    	
+    	lang 				: langVM,
     	dataSource 			: dataStore(apiUrl + "accounts"),
-    	accountTypeDS 		: dataStore(apiUrl + "acccounts/type"),    	
+    	accountTypeDS 		: banhji.source.accountTypeDS,
+    	subAccountDS		: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:{ field: "sub_of_id", value:0 },
+			sort:{ field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 1000
+		}),
+    	currencyDS 			: banhji.source.currencyDS,
+    	statusList 			: banhji.source.statusList,
     	obj 	 			: null,
-    	isEdit 				: false,    	
-    	pageLoad 			: function(id){			
+    	isEdit 				: false,
+    	showBank 			: false,
+    	pageLoad 			: function(id){
 			if(id){
-				this.set("isEdit", true);							
-				this.loadObj(id);				
+				this.set("isEdit", true);
+				this.loadObj(id);
 			}else{				
 				if(this.get("isEdit")){
 					this.set("isEdit", false);
 					
-					this.dataSource.data([]);					
+					this.dataSource.data([]);
 					
 					this.addEmpty();
 				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
-				}								
-			}  																							
+					this.addEmpty();
+				}
+			}
 		},
     	loadObj 			: function(id){
     		var self = this;
 
-    		this.dataSource.query({    			
+    		this.dataSource.query({
 				filter: { field:"id", value: id }
 			}).then(function(e){
 				var view = self.dataSource.view();
 						    	
 		    	self.set("obj", view[0]);
 			});
+    	},
+    	typeChanges 		: function(){    		
+    		var obj = this.get("obj");
+    		this.set("showBank", false);
+
+    		if(obj.account_type_id){
+    			if(obj.account_type_id==10){
+    				this.set("showBank", true);
+    			}
+    			this.subAccountDS.filter({ field:"account_type_id", value:obj.account_type_id });
+    		}
     	},    	 	   	
-      	addEmpty 			: function(){      		
+      	addEmpty 			: function(){
       		this.dataSource.data([]);
       		this.set("obj", null);
 
-      		this.dataSource.add({
-      			company_id 				: 0,
-      			contact_id 				: "",
-      			currency_id 			: 0,
-      			category_id 			: 0,
-      			item_type_id 			: 1,      			      			
-      			category_id 			: 0,
-      			item_group_id 			: 0,
-      			item_sub_group_id 		: 0,
-      			brand_id 				: 0,
-      			measurement_id			: 0,
-      			main_id 				: 0,
-      			sku 					: "",
-      			international_code 		: "",
-      			IMEI 					: "",
-      			serial_number 			: "",
-      			supplier_code 			: "",
-      			color_code 				: "",
+      		this.dataSource.insert(0,{
+      			account_type_id 		: 0,
+      			sub_of_id 				: 0,
+      			number 					: "",
       			name 					: "",
+      			name_2 					: "",
       			description				: "",
-      			measurements 			: "",
-      			catalogs 				: [],
-      			cost 					: 0,
-      			price 					: 0,
-      			amount 					: 0,
-      			rate 					: 1,
-      			on_hand					: 0,      			      			     			
-      			order_point 			: 0,
-      			income_account_id 		: 0,
-      			cogs_account_id  		: 0,
-      			inventory_account_id 	: 0,
-      			deposit_account_id 		: 0,
-      			transaction_account_id 	: 0,
-      			preferred_vendor_id 	: 0,
-      			image_url 				: "",      			
-      			favorite 				: false,
-      			is_catalog 				: 0,
-      			is_assemble 			: 0,
+      			bank_name 				: "",
+      			bank_account_number 	: "",
+      			locale 					: "km-KH",
+      			is_taxable 				: 0,
       			status 					: 1,
-      			deleted 				: 0
+      			is_system				: 0
 			});      		
 
-			var data = this.dataSource.data();
-			var obj = data[data.length - 1];
-      						
-			this.set("obj", obj);			
+			var obj = this.dataSource.at(0);
+			this.set("obj", obj);
       	},
       	objSync 			: function(){
 	    	var dfd = $.Deferred();	        
 
 	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.dataSource.bind("requestEnd", function(e){
+				dfd.resolve(e.response.results);
 		    });
 
-		    return dfd;	    		    	
+		    return dfd;
 	    },
       	cancel 				: function(e){
       		e.preventDefault();
 
       		this.dataSource.cancelChanges();
-      		window.history.back();      		
+      		window.history.back();
       	},      	
       	save 				: function(){
       		var self = this;
 
       		if(this.get("isEdit")){
       			this.dataSource.sync();
-      			this.itemVendorDS.sync();
-      			this.itemCustomerDS.sync();
       		}else{
 	      		this.objSync().then(function(data){
-	      			$.each(self.itemVendorDS.data(), function(index, value){
-	      				value.set("item_id", data[0].id);
-	      			});
-
-	      			$.each(self.itemCustomerDS.data(), function(index, value){
-	      				value.set("item_id", data[0].id);
-	      			});
-
-	      			self.itemVendorDS.sync();
-	      			self.itemCustomerDS.sync();
-	      		}).then(function(){	      			
-	      			self.itemVendorDS.data([]);
-	      			self.itemCustomerDS.data([]);
-
 	      			self.addEmpty();
 	      		});
-      		}      		      		
-      	},      	
+      		}
+      	},
       	delete 				: function(){
-			if (confirm("Are you sure, you want to delete it?")) {        
+			if (confirm("Are you sure, you want to delete it?")) {
 		        var obj = this.dataSource.at(0);
 		        this.dataSource.remove(obj);
 		        this.dataSource.sync();
 		        window.history.back();
-	    	}	    	
+	    	}
 	    }
     });
     banhji.txnItem =  kendo.observable({
@@ -28464,7 +28396,7 @@
 				for(var i = 0; i < dataArr.length - 1; i++) {
 					var current = this.segmentItemDS.get(dataArr[i]);
 					var last = this.segmentItemDS.get(dataArr[lastIndex]);
-					if(current.segment.id === last.segment.id) {
+					if(current.segment_id === last.segment_id) {
 						dataArr.splice(lastIndex, 1);
 						break;
 					}
@@ -29111,6 +29043,133 @@
 		        this.itemDS.sync();
 		        banhji.itemCenter.itemDS.fetch();
 	    	}	    	
+	    }
+    });
+	banhji.segment =  kendo.observable({
+		lang 				: langVM,
+        dataSource 			: dataStore(apiUrl + "segments"),
+        itemDS 	 			: dataStore(apiUrl + "segments/item"),
+        statusList 			: banhji.source.statusList,
+		obj 				: null,
+		item 				: null,
+		objName 			: "",
+		pageLoad 			: function() {
+        },        
+        addObj 			: function(){		    
+        	this.dataSource.add({
+        		code_length			: "",
+        		name 				: "",
+        		status 				: 1
+        	});
+        	var data = this.dataSource.data();
+			var obj = data[data.length-1];
+			this.set("obj", obj);	            	
+        },
+        addItem				: function(e){
+		    var data = e.data;
+
+        	this.itemDS.add({
+        		segment_id 		: data.id,
+        		code 			: "",
+        		status 			: 1,        		
+        		segment 		: [{name: ""}]
+        	});
+        	var data = this.itemDS.data();
+			var obj = data[data.length-1];
+			this.set("item", obj);
+			this.openWindowItem();	            	
+        },
+        openWindow			: function(){
+      		this.addObj();
+
+         	var window = $("#window").data("kendoWindow");
+          	window.title("Segment");
+          	window.center().open();
+      	},
+      	closeWindow 		: function(){
+      		this.dataSource.cancelChanges();
+
+      		var window = $("#window").data("kendoWindow");
+          	window.close();
+      	},      	
+        loadItem 			: function(e){
+	        var d = e.data;
+
+	        this.set("selectedType", true);
+	        this.set("tax_type_id", d.id);
+	        this.set("selectedTypeName", d.name);
+	        
+	        this.itemDS.query({
+	        	filter: { field:"segment_id", value: d.id },
+	        	page: 1,
+	        	take: 100
+	        });  	
+        },
+        save 				: function(){
+        	var self = this;
+        	this.dataSource.sync();
+        	this.dataSource.bind("requestEnd", function(e){
+        		if( e.type == "create" || e.type == "update"){ 
+        			var window = $("#window").data("kendoWindow");
+          			window.close(); 
+        		}
+        	});
+        },
+        edit 				: function(e){
+      		var data = e.data;
+      		this.set("obj", data);
+
+      		var window = $("#window").data("kendoWindow");
+          	window.title("Segment");
+          	window.center().open();
+      	},      	
+      	delete 				: function(e){
+			if (confirm("Are you sure, you want to delete it?")) {
+		        var data = e.data;
+		        this.dataSource.remove(data);
+		        this.dataSource.sync();		        
+	    	}	    	
+	    },
+	    view 				: function(e){
+	    	var data = e.data;
+	    	this.set("objName", data.name);
+	    	this.itemDS.filter({ field: "segment_id", value: data.id});
+	    },
+	    openWindowItem		: function(){
+         	var window = $("#item-window").data("kendoWindow");
+          	window.title("Item Type");
+          	window.center().open();
+      	},
+      	closeWindowItem 	: function(){
+      		this.itemDS.cancelChanges();
+
+      		var window = $("#item-window").data("kendoWindow");
+          	window.close();          	
+      	},
+      	saveItem 				: function(){
+        	var self = this;
+        	this.itemDS.sync();
+        	this.itemDS.bind("requestEnd", function(e){
+        		if( e.type == "create" || e.type == "update"){ 
+        			var window = $("#item-window").data("kendoWindow");
+          			window.close(); 
+        		}
+        	});
+        },
+        editItem 				: function(e){
+      		var data = e.data;
+      		this.set("obj", data);
+
+      		var window = $("#item-window").data("kendoWindow");
+          	window.title("Item Type");
+          	window.center().open();
+      	}, 
+      	deleteItem 				: function(e){
+			if (confirm("Are you sure, you want to delete it?")) {
+		        var data = e.data;
+		        this.itemDS.remove(data);
+		        this.itemDS.sync();
+	    	}
 	    }
     });
 
@@ -30057,7 +30116,7 @@
 				for(var i = 0; i < dataArr.length - 1; i++) {
 					var current = this.segmentItemDS.get(dataArr[i]);
 					var last = this.segmentItemDS.get(dataArr[lastIndex]);
-					if(current.segment.id === last.segment.id) {
+					if(current.segment_id === last.segment_id) {
 						dataArr.splice(lastIndex, 1);
 						break;
 					}
@@ -30071,7 +30130,7 @@
 				for(var i = 0; i < dataArr.length - 1; i++) {
 					var current = this.segmentItemDS.get(dataArr[i]);
 					var last = this.segmentItemDS.get(dataArr[lastIndex]);
-					if(current.segment.id === last.segment.id) {
+					if(current.segment_id === last.segment_id) {
 						dataArr.splice(lastIndex, 1);
 						break;
 					}
@@ -30622,7 +30681,7 @@
 				for(var i = 0; i < dataArr.length - 1; i++) {
 					var current = this.segmentItemDS.get(dataArr[i]);
 					var last = this.segmentItemDS.get(dataArr[lastIndex]);
-					if(current.segment.id === last.segment.id) {
+					if(current.segment_id === last.segment_id) {
 						dataArr.splice(lastIndex, 1);
 						break;
 					}
@@ -30636,7 +30695,7 @@
 				for(var i = 0; i < dataArr.length - 1; i++) {
 					var current = this.segmentItemDS.get(dataArr[i]);
 					var last = this.segmentItemDS.get(dataArr[lastIndex]);
-					if(current.segment.id === last.segment.id) {
+					if(current.segment_id === last.segment_id) {
 						dataArr.splice(lastIndex, 1);
 						break;
 					}
@@ -51765,7 +51824,7 @@
 			var vm = banhji.account;
 						
 			banhji.view.layout.showIn("#content", banhji.view.account);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+			// kendo.fx($("#slide-form")).slideIn("down").play();
 
 			if(banhji.pageLoaded["account"]==undefined){
 				banhji.pageLoaded["account"] = true;		         
@@ -51800,20 +51859,7 @@
 			        }else{
 			        	notification.error("Warning, please review it again!");			           
 			        }		            
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-		            	window.print();
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});	        	
+				});				      	
 			}
 
 			vm.pageLoad(id);			
@@ -56461,40 +56507,40 @@
 	$(function() {	
 		banhji.router.start();
 		// signout when browser closed
-        window.addEventListener("beforeunload", function (e) {
-          // var confirmationMessage = "\o/";
+  //       window.addEventListener("beforeunload", function (e) {
+  //         // var confirmationMessage = "\o/";
 
-          // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-          // return confirmationMessage;                            //Webkit, Safari, Chrome
-          var userData = {
-              Username : userPool.getCurrentUser().username,
-              Pool : userPool
-          };
-          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-          if(cognitoUser != null) {
-              cognitoUser.signOut();
-              // window.location.replace("<?php echo base_url(); ?>login");
-          } else {
-              console.log('No user');
-          }
-        });
-		if(userPool.getCurrentUser() == null){
-			window.location.replace(baseUrl + "login");
-		} else {
-			var cognitoUser = userPool.getCurrentUser();
-	        if(cognitoUser !== null) {
-	            banhji.aws.getImage();
-	            cognitoUser.getSession(function(err, result){
-	              if(result) {
-	                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-	                  IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
-	                  Logins: {
-	                    'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
-	                  }
-	                });
-	              }
-	            });
-	        }						
-		}
+  //         // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+  //         // return confirmationMessage;                            //Webkit, Safari, Chrome
+  //         var userData = {
+  //             Username : userPool.getCurrentUser().username,
+  //             Pool : userPool
+  //         };
+  //         var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+  //         if(cognitoUser != null) {
+  //             cognitoUser.signOut();
+  //             // window.location.replace("<?php echo base_url(); ?>login");
+  //         } else {
+  //             console.log('No user');
+  //         }
+  //       });
+		// if(userPool.getCurrentUser() == null){
+		// 	window.location.replace(baseUrl + "login");
+		// } else {
+		// 	var cognitoUser = userPool.getCurrentUser();
+	 //        if(cognitoUser !== null) {
+	 //            banhji.aws.getImage();
+	 //            cognitoUser.getSession(function(err, result){
+	 //              if(result) {
+	 //                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+	 //                  IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
+	 //                  Logins: {
+	 //                    'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
+	 //                  }
+	 //                });
+	 //              }
+	 //            });
+	 //        }						
+		// }
 	});
 </script>

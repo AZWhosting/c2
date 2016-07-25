@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Invoice_custom extends DataMapper {	
+class Transaction_template extends DataMapper {	
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";	
 
@@ -23,5 +23,5 @@ class Invoice_custom extends DataMapper {
 	}
 }
 
-/* End of file invoice_custom.php */
-/* Location: ./application/models/invoice_custom.php */
+/* End of file transaction_template.php */
+/* Location: ./application/models/transaction_template.php */

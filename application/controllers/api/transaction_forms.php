@@ -3,7 +3,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Invoice_customs extends REST_Controller {
+class Transaction_forms extends REST_Controller {
 	public $_database;
 	public $server_host;
 	public $server_user;
@@ -31,7 +31,7 @@ class Invoice_customs extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		$obj = new Invoice_custom(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Transaction_form(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -85,10 +85,9 @@ class Invoice_customs extends REST_Controller {
 				//Results				
 				$data["results"][] = array(
 					"id" 			=> $value->id,					
-					"user_id" 		=> $value->user_id,
 					"type" 			=> $value->type,
 					"name" 	 		=> $value->name,
-					"color" 		=> $value->color	
+					"image_url" 	=> $value->image_url	
 				);
 			}
 		}
@@ -102,19 +101,17 @@ class Invoice_customs extends REST_Controller {
 		$models = json_decode($this->post('models'));
 
 		foreach ($models as $value) {
-			$obj = new Invoice_custom(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-			$obj->user_id 		= $value->user_id;
+			$obj = new Transaction_form(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 			$obj->type 			= $value->type;
 			$obj->name 			= $value->name;
-			$obj->color 		= $value->color;	
+			$obj->image_url 	= $value->image_url;
 						
 			if($obj->save()){
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
-					"user_id" 		=> $obj->user_id,
 					"type" 			=> $obj->type,
 					"name" 	 		=> $obj->name,
-					"color" 		=> $obj->color
+					"image_url" 	=> $obj->image_url
 				);
 			}
 		}
@@ -130,21 +127,19 @@ class Invoice_customs extends REST_Controller {
 		$data["count"] = 0;
 
 		foreach ($models as $value) {			
-			$obj = new Invoice_custom(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Transaction_form(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
-
-			$obj->user_id 		= $value->user_id;
+			
 			$obj->type 			= $value->type;
 			$obj->name 			= $value->name;
-			$obj->color 		= $value->color;			
+			$obj->image_url 	= $value->image_url;			
 
 			if($obj->save()){				
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
-					"user_id" 		=> $obj->user_id,
 					"type" 			=> $obj->type,
 					"name" 	 		=> $obj->name,
-					"color" 		=> $obj->color
+					"image_url" 	=> $obj->image_url
 				);		
 			}
 		}
@@ -158,7 +153,7 @@ class Invoice_customs extends REST_Controller {
 		$models = json_decode($this->delete('models'));
 
 		foreach ($models as $key => $value) {
-			$obj = new Invoice_custom(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Transaction_form(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
 			
 			$data["results"][] = array(

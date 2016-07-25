@@ -13,6 +13,10 @@ class Contact extends DataMapper {
 			'class' => 'contact_type',
 			'other_field' => 'contact'
 		),				
+		'account' => array(
+			'class' => 'account',
+			'other_field' => 'contact'
+		),
 		'trade_discount' => array(
 			'class' => 'account',
 			'other_field' => 'trade_discount'

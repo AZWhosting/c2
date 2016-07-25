@@ -27,9 +27,8 @@ class Accounts extends REST_Controller {
 	function index_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");		
-		$data["groups"] = [];
 		$data["results"] = [];
 		$data["count"] = 0;
 
@@ -88,18 +87,21 @@ class Accounts extends REST_Controller {
 		if($obj->exists()){
 			foreach ($obj as $value) {				
 				$data["results"][] = array(
-					"id" 				=> $value->id,		 			
-					"account_type_id" 	=> $value->account_type_id,
-					"sub_of" 			=> $value->sub_of,						
-					"code" 				=> $value->code,
-					"name" 				=> $value->name,
-					"name_local" 		=> $value->name_local,					
-					"description" 		=> $value->description,
-					"is_taxable" 		=> $value->is_taxable,
-					"status" 			=> $value->status,
-					"is_system" 		=> $value->is_system,
+					"id" 					=> $value->id,		 			
+					"account_type_id" 		=> $value->account_type_id,
+					"sub_of_id" 			=> $value->sub_of_id,						
+					"number" 				=> $value->number,
+					"name" 					=> $value->name,
+					"name_2" 				=> $value->name_2,					
+					"description" 			=> $value->description,
+					"bank_name" 			=> $value->bank_name,
+					"bank_account_number" 	=> $value->bank_account_number,
+					"locale" 				=> $value->locale,
+					"is_taxable" 			=> $value->is_taxable,
+					"status" 				=> $value->status,
+					"is_system" 			=> $value->is_system,
 
-				   	"account_type_name"	=> $value->account_type_name
+				   	"account_type_name"		=> $value->account_type_name
 				);				
 			}
 		}		
@@ -116,30 +118,36 @@ class Accounts extends REST_Controller {
 		
 		foreach ($models as $value) {
 			$obj = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			isset($value->account_type_id) 	? $obj->account_type_id 	= $value->account_type_id : "";
-			isset($value->sub_of) 			? $obj->sub_of 				= $value->sub_of : "";
-			isset($value->code) 			? $obj->code 				= $value->code : "";				
-			isset($value->name) 			? $obj->name 				= $value->name : "";
-			isset($value->name_local) 		? $obj->name_local 			= $value->name_local : "";
-			isset($value->description) 		? $obj->description 		= $value->description : "";			
-			isset($value->is_taxable) 		? $obj->is_taxable 			= $value->is_taxable : "";			
-			isset($value->status) 			? $obj->status 				= $value->status : "";
-			isset($value->is_system) 		? $obj->is_system 			= $value->is_system : "";
+			isset($value->account_type_id) 		? $obj->account_type_id 	= $value->account_type_id : "";
+			isset($value->sub_of_id) 			? $obj->sub_of_id 			= $value->sub_of_id : "";
+			isset($value->number) 				? $obj->number 				= $value->number : "";				
+			isset($value->name) 				? $obj->name 				= $value->name : "";
+			isset($value->name_2) 				? $obj->name_2 				= $value->name_2 : "";
+			isset($value->description) 			? $obj->description 		= $value->description : "";
+			isset($value->bank_name) 			? $obj->bank_name 			= $value->bank_name : "";
+			isset($value->bank_account_number) 	? $obj->bank_account_number = $value->bank_account_number : "";
+			isset($value->locale) 				? $obj->locale 				= $value->locale : "";			
+			isset($value->is_taxable) 			? $obj->is_taxable 			= $value->is_taxable : "";			
+			isset($value->status) 				? $obj->status 				= $value->status : "";
+			isset($value->is_system) 			? $obj->is_system 			= $value->is_system : "";
 
 	   		if($obj->save()){
 			   	$data["results"][] = array(
-			   		"id" 				=> $obj->id,		 			
-					"account_type_id" 	=> $obj->account_type_id,
-					"sub_of" 			=> $obj->sub_of,						
-					"code" 				=> $obj->code,
-					"name" 				=> $obj->name,
-					"name_local" 		=> $obj->name_local,					
-					"description" 		=> $obj->description,
-					"is_taxable" 		=> $obj->is_taxable,
-					"status" 			=> $obj->status,
-					"is_system" 		=> $obj->is_system,
+			   		"id" 					=> $obj->id,		 			
+					"account_type_id" 		=> $obj->account_type_id,
+					"sub_of_id" 			=> $obj->sub_of_id,						
+					"number" 				=> $obj->number,
+					"name" 					=> $obj->name,
+					"name_2" 				=> $obj->name_2,					
+					"description" 			=> $obj->description,
+					"bank_name" 			=> $obj->bank_name,
+					"bank_account_number" 	=> $obj->bank_account_number,
+					"locale" 				=> $obj->locale,
+					"is_taxable" 			=> $obj->is_taxable,
+					"status" 				=> $obj->status,
+					"is_system" 			=> $obj->is_system,
 
-				   	"account_type" 		=> $obj->account_type->get_raw()->result()
+				   	"account_type" 			=> $obj->account_type->get_raw()->result()
 			   	);
 		    }	
 		}
@@ -158,31 +166,37 @@ class Accounts extends REST_Controller {
 			$obj = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 			
-			isset($value->account_type_id) 	? $obj->account_type_id 	= $value->account_type_id : "";
-			isset($value->sub_of) 			? $obj->sub_of 				= $value->sub_of : "";
-			isset($value->code) 			? $obj->code 				= $value->code : "";				
-			isset($value->name) 			? $obj->name 				= $value->name : "";
-			isset($value->name_local) 		? $obj->name_local 			= $value->name_local : "";
-			isset($value->description) 		? $obj->description 		= $value->description : "";			
-			isset($value->is_taxable) 		? $obj->is_taxable 			= $value->is_taxable : "";			
-			isset($value->status) 			? $obj->status 				= $value->status : "";
-			isset($value->is_system) 		? $obj->is_system 			= $value->is_system : "";
+			isset($value->account_type_id) 		? $obj->account_type_id 	= $value->account_type_id : "";
+			isset($value->sub_of_id) 			? $obj->sub_of_id 			= $value->sub_of_id : "";
+			isset($value->number) 				? $obj->number 				= $value->number : "";				
+			isset($value->name) 				? $obj->name 				= $value->name : "";
+			isset($value->name_2) 				? $obj->name_2 				= $value->name_2 : "";
+			isset($value->description) 			? $obj->description 		= $value->description : "";
+			isset($value->bank_name) 			? $obj->bank_name 			= $value->bank_name : "";
+			isset($value->bank_account_number) 	? $obj->bank_account_number = $value->bank_account_number : "";
+			isset($value->locale) 				? $obj->locale 				= $value->locale : "";			
+			isset($value->is_taxable) 			? $obj->is_taxable 			= $value->is_taxable : "";			
+			isset($value->status) 				? $obj->status 				= $value->status : "";
+			isset($value->is_system) 			? $obj->is_system 			= $value->is_system : "";
 
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
-					"id" 				=> $obj->id,		 			
-					"account_type_id" 	=> $obj->account_type_id,
-					"sub_of" 			=> $obj->sub_of,						
-					"code" 				=> $obj->code,
-					"name" 				=> $obj->name,
-					"name_local" 		=> $obj->name_local,					
-					"description" 		=> $obj->description,
-					"is_taxable" 		=> $obj->is_taxable,
-					"status" 			=> $obj->status,
-					"is_system" 		=> $obj->is_system,
+					"id" 					=> $obj->id,		 			
+					"account_type_id" 		=> $obj->account_type_id,
+					"sub_of_id" 			=> $obj->sub_of_id,						
+					"number" 				=> $obj->number,
+					"name" 					=> $obj->name,
+					"name_2" 				=> $obj->name_2,					
+					"description" 			=> $obj->description,
+					"bank_name" 			=> $obj->bank_name,
+					"bank_account_number" 	=> $obj->bank_account_number,
+					"locale" 				=> $obj->locale,
+					"is_taxable" 			=> $obj->is_taxable,
+					"status" 				=> $obj->status,
+					"is_system" 			=> $obj->is_system,
 
-				   	"account_type" 		=> $obj->account_type->get_raw()->result()
+				   	"account_type" 			=> $obj->account_type->get_raw()->result()
 				);						
 			}
 		}
@@ -272,10 +286,10 @@ class Accounts extends REST_Controller {
 			foreach ($obj as $value) {				
 		 		$data["results"][] = array(
 		 			"id" 					=> $value->id,									
-					"sub_of" 				=> $value->sub_of,
-					"code" 					=> $value->code,
+					"sub_of_id" 			=> $value->sub_of_id,
+					"number" 				=> $value->number,
 					"name" 					=> $value->name,
-					"name_local" 			=> $value->name_local,
+					"name_2" 				=> $value->name_2,
 					"nature" 				=> $value->nature,					
 					"cash_flow_source" 		=> $value->cash_flow_source,
 					"financial_statement" 	=> $value->financial_statement,					
@@ -294,23 +308,24 @@ class Accounts extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Account_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->sub_of 				= $value->sub_of;
-			$obj->code 					= $value->code;			
-			$obj->name 					= $value->name;
-			$obj->name_local 			= $value->name_local;
-			$obj->nature 				= $value->nature;
-			$obj->cash_flow_source 		= $value->cash_flow_source;
-			$obj->financial_statement 	= $value->financial_statement;
-			$obj->is_system 			= $value->is_system;
 			
+			isset($value->sub_of_id) 			? $obj->sub_of_id 			= $value->sub_of_id : "";
+			isset($value->number) 				? $obj->number 				= $value->number : "";				
+			isset($value->name) 				? $obj->name 				= $value->name : "";
+			isset($value->name_2) 				? $obj->name_2 				= $value->name_2 : "";
+			isset($value->nature) 				? $obj->nature 				= $value->nature : "";			
+			isset($value->cash_flow_source) 	? $obj->cash_flow_source 	= $value->cash_flow_source : "";			
+			isset($value->financial_statement) 	? $obj->financial_statement = $value->financial_statement : "";
+			isset($value->is_system) 			? $obj->is_system 			= $value->is_system : "";
+
 			if($obj->save()){
 				//Respsone
 				$data["results"][] = array(					
 					"id" 					=> $obj->id,
-					"sub_of" 				=> $obj->sub_of,									
-					"code" 					=> $obj->code,
+					"sub_of_id" 			=> $obj->sub_of_id,									
+					"number" 				=> $obj->number,
 					"name" 					=> $obj->name,
-					"name_local" 			=> $obj->name_local,
+					"name_2" 				=> $obj->name_2,
 					"nature" 				=> $obj->nature,					
 					"cash_flow_source" 		=> $obj->cash_flow_source,
 					"financial_statement" 	=> $obj->financial_statement,					
@@ -333,23 +348,23 @@ class Accounts extends REST_Controller {
 			$obj = new Account_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			$obj->sub_of 				= $value->sub_of;
-			$obj->code 					= $value->code;			
-			$obj->name 					= $value->name;
-			$obj->name_local 			= $value->name_local;
-			$obj->nature 				= $value->nature;
-			$obj->cash_flow_source 		= $value->cash_flow_source;
-			$obj->financial_statement 	= $value->financial_statement;
-			$obj->is_system 			= $value->is_system;
+			isset($value->sub_of_id) 			? $obj->sub_of_id 			= $value->sub_of_id : "";
+			isset($value->number) 				? $obj->number 				= $value->number : "";				
+			isset($value->name) 				? $obj->name 				= $value->name : "";
+			isset($value->name_2) 				? $obj->name_2 				= $value->name_2 : "";
+			isset($value->nature) 				? $obj->nature 				= $value->nature : "";			
+			isset($value->cash_flow_source) 	? $obj->cash_flow_source 	= $value->cash_flow_source : "";			
+			isset($value->financial_statement) 	? $obj->financial_statement = $value->financial_statement : "";
+			isset($value->is_system) 			? $obj->is_system 			= $value->is_system : "";
 
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
 					"id" 					=> $obj->id,
-					"sub_of" 				=> $obj->sub_of,									
-					"code" 					=> $obj->code,
+					"sub_of_id" 			=> $obj->sub_of_id,									
+					"number" 				=> $obj->number,
 					"name" 					=> $obj->name,
-					"name_local" 			=> $obj->name_local,
+					"name_2" 				=> $obj->name_2,
 					"nature" 				=> $obj->nature,					
 					"cash_flow_source" 		=> $obj->cash_flow_source,
 					"financial_statement" 	=> $obj->financial_statement,					

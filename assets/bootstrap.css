@@ -2519,7 +2519,7 @@ input[type="search"] {
 }
 input[type="radio"],
 input[type="checkbox"] {
-  margin: 4px 0 0;
+  margin: 3px 0 0;
   margin-top: 1px \9;
   line-height: normal;
 }
@@ -3528,7 +3528,7 @@ tbody.collapse.in {
   display: none;
   float: left;
   min-width: 160px;
-  padding: 5px 0;
+  padding: 1px 0 6px;
   margin: 2px 0 0;
   font-size: 14px;
   text-align: left;
@@ -3541,6 +3541,7 @@ tbody.collapse.in {
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
           box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  line-height: 6px;
 }
 .dropdown-menu.pull-right {
   right: 0;
