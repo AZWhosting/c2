@@ -53,6 +53,9 @@ pre {
 	height: 141px;
 	background: url(img/logo.png) no-repeat left top;	
 }
+.inv1 .head .logo img {
+	width: 100%;
+}
 .inv1 .cover-name-company {
 	width: 75%;
 	height: 100%;
@@ -81,7 +84,7 @@ pre {
 	text-align: center;
 	color: #000;
 	font-family: 'Moul', cursive;
-	font-size: 14px;
+	font-size: 16px;
 }
 .inv1 .content h2 {
 	font-family: 'Moul', Arial;
@@ -130,6 +133,7 @@ pre {
 	font-weight: bold;
 	border: 1px solid #000;
 	background-color: rgb(242, 242, 242);
+	text-align: center;
 }
 .inv1 td {
 	text-align: center;
@@ -182,7 +186,7 @@ pre {
 	padding: 1px 2px;
 	font-size: 10px;
 	line-height: 10px;
-	border: 1px solid #000;
+	font-weight: bold;
 	float: left;
 	margin-left: 0.8%;
 }
@@ -203,8 +207,8 @@ pre {
 }
 .formstyle a.form-thumb-active {
 	-webkit-box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
--moz-box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
-box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
+    -moz-box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
+    box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
 	border: none;
 }
 .invhidden {
@@ -238,3 +242,23 @@ box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
 	padding: 10px 20px;
 	background: #eee;
 	font-size: 18px;}
+.tableRow div {
+	height: 30px;
+}
+.formstyle {
+	margin-right: 0;
+}
+.selectType {
+	margin-bottom: 10px;
+	padding-left:0;
+	padding-right: 0;
+}
+.selectType, .selectType .k-dropdown-wrap {
+	border-radius: 0!important;
+}
+.formVisible {
+	display: block;
+}
+.formHidden {
+	display: none;
+}

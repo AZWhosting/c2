@@ -97,7 +97,7 @@ class Accounts extends REST_Controller {
 					"bank_name" 			=> $value->bank_name,
 					"bank_account_number" 	=> $value->bank_account_number,
 					"locale" 				=> $value->locale,
-					"is_taxable" 			=> $value->is_taxable,
+					"is_taxable" 			=> intval($value->is_taxable),
 					"status" 				=> $value->status,
 					"is_system" 			=> $value->is_system,
 
@@ -143,7 +143,7 @@ class Accounts extends REST_Controller {
 					"bank_name" 			=> $obj->bank_name,
 					"bank_account_number" 	=> $obj->bank_account_number,
 					"locale" 				=> $obj->locale,
-					"is_taxable" 			=> $obj->is_taxable,
+					"is_taxable" 			=> intval($obj->is_taxable),
 					"status" 				=> $obj->status,
 					"is_system" 			=> $obj->is_system,
 
@@ -192,7 +192,7 @@ class Accounts extends REST_Controller {
 					"bank_name" 			=> $obj->bank_name,
 					"bank_account_number" 	=> $obj->bank_account_number,
 					"locale" 				=> $obj->locale,
-					"is_taxable" 			=> $obj->is_taxable,
+					"is_taxable" 			=> intval($obj->is_taxable),
 					"status" 				=> $obj->status,
 					"is_system" 			=> $obj->is_system,
 

@@ -54,7 +54,7 @@
 					<ul id="module-image">
 						<li style="text-align:center;">
 							<a href="#/customers">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+								<img title="Add Txn Item" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.customer"></span></span>
 						</li>
@@ -752,7 +752,8 @@
 					                   data-value-field="id"
 					                   data-bind="value: account_type_id,
 					                              source: accountTypeDS"
-					                   style="width: 100%" />									
+					                   style="width: 100%"
+					            />									
 							</div>
 						</form>					
 					</div>
@@ -776,27 +777,33 @@
 								<tr>
 									<td width="40%">Account Code:</td>
 									<td width="60%">
-										<span class="strong" data-bind="text: obj.number"></span>
+										<span data-bind="text: obj.number"></span>
 									</td>
 								</tr>
 								<tr>
 									<td>Account Title</td>
 									<td>
-										<span class="strong" data-bind="text: obj.name"></span>
+										<span data-bind="text: obj.name"></span>
 									</td>
 								</tr>
 								<tr>
 									<td>Sub of account:</td>
 									<td>
-										<span data-bind="text: subName"></span>
+										<span data-bind="text: obj.sub_of_id"></span>
 									</td>
 								</tr>
 								<tr>
 									<td>Account Type:</td>
 									<td>
-										<span data-bind="text: typeName"></span>
+										<span data-bind="text: obj.account_type_id"></span>
 									</td>
-								</tr>								
+								</tr>
+								<tr>
+									<td>Currency:</td>
+									<td>
+										<span data-bind="text: obj.locale"></span>
+									</td>
+								</tr>
 								<tr>
 									<td>Description:</td>
 									<td>
@@ -1115,7 +1122,26 @@
 							</div>
 							<!-- // Group END -->
 						</div>
-						
+
+						<br>
+
+				    	<div class="span6">														
+							<!-- Group -->
+							<div class="control-group">										
+								<label for="ddlCurrency">Currency</label>
+								<input id="ddlCurrency" name="ddlCurrency" 
+									   data-role="dropdownlist"
+									   data-template="currency-list-tmpl"					                   
+					                   data-value-primitive="true"
+					                   data-text-field="code"
+					                   data-value-field="locale"
+					                   data-bind="value: obj.locale,
+					                              source: currencyDS"
+					                   data-option-label="Select Currency..."
+					                   style="width: 100%;" />
+							</div>
+							<!-- // Group END -->
+						</div>
 				    </div>
 
 				    <br>
@@ -14361,8 +14387,6 @@
 	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Payment Method</span></a>
 	            </li>
 	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Payment Term</span></a>
-	            </li>
-	            <li><a href="#tab4-1" class="glyphicons list" data-toggle="tab"><i></i><span class="strong">Custom Forms</span></a>
 	            </li>	                        
 	        </ul>
 	    </div>
@@ -14447,31 +14471,6 @@
 	            	</table>
 	            </div>
 	            <!-- // PAYMENT TERM END -->
-
-	            <!-- Tab Invocice Custom content -->
-	            <div class="tab-pane" id="tab4-1">
-            		
-	            	<table class="table table-bordered table-white">
-	            		<thead>
-	            			<tr>
-	            				<th>Name</th>
-	            				<th>Form Type</th>
-	            				<th>Last Edited</th>
-	            				<th>Action</th>
-	            			</tr>
-	            		</thead>
-	            		<tbody>
-	            			<tr>
-	            				<td><a href="#/invoice_custom">Standard</td>
-	            				<td>Quotation</td>
-	            				<td>12/12/2016</td>
-	            				<td><a href="#/invoice_custom">Edit</td>
-	            			</tr>
-	            		</tbody>
-	            	</table>
-	            	<span id="addNew" class="btn-icon btn-primary glyphicons ok_2" style="width: 110px;"><i></i>Add New</span>
-	            </div>
-	            <!-- // Tab Invoice Custom content END -->
 
 	        </div>
 	    </div>
@@ -14755,7 +14754,7 @@
 								<h3><a href="#/sale_detail_customer">Sale Detail by Customer</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a href="#/">Deposit Detail by Customer</a></h3>
+								<h3><a href="#/deposit_detail_customer">Deposit Detail by Customer</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -14776,7 +14775,7 @@
 								<h3><a href="#/sale_summary_product">Sale Summary by Product/ Services</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a href="#/">Sale Detail by Product/ Services</a></h3>
+								<h3><a href="#/sale_detail_product">Sale Detail by Product/ Services</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -16012,6 +16011,287 @@
 		</div>
 	</div>
 </script>
+<script id="depositDetailCustomer" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />	
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Deposit Detail By Customer</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">								
+								<p>Number of Customer Deposit</p>
+								<span>5</span>								
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">								
+								<p>Customer Deposit Balance</p>
+								<span>5</span>								
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th></th>
+							<th>Type</th>
+							<th>Date</th>
+							<th>No</th>
+							<th>Memo</th>							
+							<th>Account</th>
+							<th>Amount</th>
+						</tr>
+						<tr>
+							<td>Sovan Tevy</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Invoice</td>
+							<td>7/1/16</td>
+							<td>IV-0001</td>
+							<td>anmsjssd</td>
+							<td>Account Receivable</td>
+							<td>1,000.00</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Cash Sale</td>
+							<td></td>
+							<td>SR-0003</td>
+							<td>anmsjssd</td>
+							<td>Cash on hand</td>
+							<td>500.00</td>							
+						</tr>
+						<tr>
+							<td>Toni</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Invoice</td>
+							<td>7/1/16</td>
+							<td>IV-0015</td>
+							<td>asg</td>
+							<td>Account Receivable</td>
+							<td>1,200.00</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Cash Receipt</td>
+							<td></td>
+							<td>CR-0122</td>
+							<td>ss</td>
+							<td>Cash on hand</td>
+							<td>(1,200.00)</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Deposit</td>
+							<td></td>
+							<td>DS-0123</td>
+							<td>aa</td>
+							<td>Cash on hand</td>
+							<td>(2,100.00)</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Sub-total</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>(2,100.00)</td>							
+						</tr>
+						
+						<tr>
+							<th colspan="4">Total</th>
+							<th colspan="3">(600.00)</th>
+						</tr>
+					</table>
+					
+
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleDetailProduct" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Detail by Product/Service</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Total Product/services</p>
+									<span>1</span>
+								</div>
+								<div class="span6">
+									<p>Total Sale</p>
+									<span>100</span>
+								</div>	
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Number of Product Sale</p>
+									<span>-</span>
+								</div>
+								<div class="span6">
+									<p>Qty on Hand</p>
+									<span>-</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>Type</th>
+							<th>Date</th>
+							<th>No</th>
+							<th>Memo</th>
+							<th>Item/service</th>							
+							<th>Qty</th>
+							<th>Price</th>
+							<th>Amount</th>
+						</tr>
+						<tr>
+							<td>Product Name</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th colspan="7">Total</th>
+							<th colspan="5">-</th>
+						</tr>
+					</table>
+					
+
+				</div>		
+			</div>
+		</div>
+	</div>	
+</script>
 
 
 <script id="customerList" type="text/x-kendo-template">
@@ -16171,31 +16451,55 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
-			        <h2>CUSTOM FORMS</h2>
+			        <h2>INVOICE CUSTOM</h2>
 				    <br>	
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span4">	
-							<select class="span12 selectType" id="dropdown" data-option-label="Select Type..." data-role="dropdownlist" data-auto-bind="false" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.type, source: selectType, events:{change: onChange}" ></select>
-							<div class="span12" style="margin-bottom: 10px;">
-								<input type="text" id="formName" name="formName" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
-							</div>
 							<div class="span12">
 								<h2 class="btn btn-block btn-primary">Form Style</h2>
 								<div class="row formstyle">
-									<div data-role="listview"
-										 data-selectable="true"
-						                 data-template="invoiceCustom-txn-form-template"
-						                 data-bind="source: txnFormDS"
-						                 style="height: 150px; overflow: auto">
-						            </div>
-						        </div>
+									<a class="span4 form-thumb-active" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/inv1_thumb.jpg" />
+									</a>
+									<a class="span4" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/inv2_thumb.jpg" />
+									</a>
+									<a class="span4" onclick="fsClick($(this).index());">
+										<img src="<?php echo base_url(); ?>assets/invoice/img/form-thumb1.jpg" />
+									</a>
+								</div>
 							</div>
 							<div class="span12" style="margin-left:0; margin-top: 10px;">
 								<h2 class="btn btn-block btn-primary">Form Color</h2>
 								<div class="colorPalatte">
-									<div class="span12" style="margin-top: 15px;">
-										<div data-selectable="true" data-bind="value: obj.color, events: { change : colorCC }" data-tile-size='{ width: 60, height: 35 }' data-role="colorpalette" data-columns="6" data-palette='[ "#ffffff", "#000000", "#eeece1", "#1f497d", "#4f81bd", "#c0504d", "#9bbb59", "#dbeef3", "#8064a2", "#f79646", "#f2f2f2", "#7f7f7f", "#ddd9c3", "#c6d9f0", "#dbe5f1", "#f2dcdb", "#ebf1dd", "#e5e0ec"]'></div>
-                                	</div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(242, 242, 242)" data-colorval="#bdbdbd" style="background-color: #bdbdbd"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(224, 224, 224)" data-colorval="#636363" style="background-color: #636363"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(204, 204, 204)" data-colorval="#000000" style="background-color: #000000"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(237, 242, 248)" data-colorval="#a6bddb" style="background-color: #a6bddb"></div>
+                                    </div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(228, 231, 236)" data-colorval="#7889a1" style="background-color: #7889a1"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(218, 221, 223)" data-colorval="#48565f" style="background-color: #48565f"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(228, 242, 222)" data-colorval="#79BD58" style="background-color: #79BD58"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(207, 233, 235)" data-colorval="#0e909a" style="background-color: #0e909a"></div>
+                                    </div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(210, 213, 222)" data-colorval="#202e5a" style="background-color: #202e5a"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(234, 242, 213)" data-colorval="#96bc2d" style="background-color: #96bc2d"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(212, 224, 210)" data-colorval="#2a651d" style="background-color: #2a651d"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(204, 217, 221)" data-colorval="#004254" style="background-color: #004254"></div>
+                                    </div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(255, 232, 204)" data-colorval="#ff8c00" style="background-color: #ff8c00"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(230, 204, 210)" data-colorval="#82001d" style="background-color: #82001d"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(225, 208, 215)" data-colorval="#6b1438" style="background-color: #6b1438"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(253, 227, 235)" data-colorval="#f4749b" style="background-color: #f4749b"></div>
+                                    </div>
+                                    <div class="tableRow">
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(234, 204, 225)" data-colorval="#950069" style="background-color: #950069"></div>
+                                        <div class="colorBox span3" data-bind="click: colorCC" data-colorse="rgb(221, 212, 220)" data-colorval="#542852" style="background-color: #542852"></div>
+                                    </div>
                                 </div>
 							</div>
 						</div>
@@ -16203,19 +16507,19 @@
 							<div class="inv1 invvisible">
 					        	<div class="head">
 					            	<div class="logo">
-					                	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+					                	<img src="<?php echo base_url(); ?>assets/invoice/img/logo.png" />
 					                </div>
 					                <div class="cover-name-company">
-					                	<h2 ></h2>
-					                    <h3 data-bind="text: company.name"></h3>
+					                	<h2>ឈ្មោះក្រុមហ៊ុន​ជា​ភាសា​ខ្មែរ</h2>
+					                    <h3>Company Name</h3>
 					                    <div class="vattin">
-					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 1%;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
 					                    </div>
 					                    <div class="clear">
-					                    	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
-					                        <pre>Address      </pre>
-					                        <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: obj.contact[0].phone"></span></pre>
-					                        <pre>Telephone N<sup>o</sup></pre>
+					                    	<pre>អាស័យ​ដ្ឋាន៖ ផ្ទះលេខ                    ផ្លូវ                            ឃុំ/សង្កាត់</pre>
+					                        <pre>Address       N<sup>o</sup>                          street                      Commune/Sangkat</pre>
+					                        <pre>ក្រុង/ស្រុក/ខណ្ឌ                            ខេត្ត/រាជធានី                            ទូរស័ព្ទលេខ</pre>
+					                        <pre>Town/District/Khan                     Province/City                         Telephone N<sup>o</sup></pre>
 					                    </div>
 					                </div>
 					            </div>
@@ -16231,7 +16535,7 @@
 					                                <span>Company name / Customer</span>
 					                            </div>
 					                            <div class="left dotted-ruler" style="width: 62%;">
-					                            	<p style="font-weight:bold"><span data-bind="text: obj.contact[0].surname"></span><span data-bind="text: obj.contact[0].name"></span></p>
+					                            	<p style="font-weight:bold">ឡូត ជឿន</p>
 					                            </div>
 					                        </div>
 					                        <div class="clear">
@@ -16240,7 +16544,7 @@
 					                                <span>Telephone N<sup>o</sup></span>
 					                            </div>
 					                            <div class="left dotted-ruler" style="width: 78%;">
-					                            	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+					                            	<p style="font-weight:bold">010 411429</p>
 					                            </div>
 					                        </div>
 					                    </div>
@@ -16405,19 +16709,19 @@
 					        <div class="inv1 invhidden">
 					        	<div class="head">
 					            	<div class="logo">
-					                	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+					                	<img src="<?php echo base_url(); ?>assets/invoice/img/logo.png" />
 					                </div>
 					                <div class="cover-name-company">
-					                	<h2 ></h2>
-					                    <h3 data-bind="text: company.name"></h3>
+					                	<h2>ឈ្មោះក្រុមហ៊ុន​ជា​ភាសា​ខ្មែរ</h2>
+					                    <h3>Company Name</h3>
 					                    <div class="vattin">
-					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
+					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 1%;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
 					                    </div>
 					                    <div class="clear">
-					                    	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
-					                        <pre>Address      </pre>
-					                        <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: obj.contact[0].phone"></span></pre>
-					                        <pre>Telephone N<sup>o</sup></pre>
+					                    	<pre>អាស័យ​ដ្ឋាន៖ ផ្ទះលេខ                    ផ្លូវ                            ឃុំ/សង្កាត់</pre>
+					                        <pre>Address       N<sup>o</sup>                          street                      Commune/Sangkat</pre>
+					                        <pre>ក្រុង/ស្រុក/ខណ្ឌ                            ខេត្ត/រាជធានី                            ទូរស័ព្ទលេខ</pre>
+					                        <pre>Town/District/Khan                     Province/City                         Telephone N<sup>o</sup></pre>
 					                    </div>
 					                </div>
 					            </div>
@@ -16631,11 +16935,6 @@
 			</div>
 		</div>
 	</div>
-</script>
-<script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
-	<a class="span4 form-thumb-active" data-bind="click: selectedForm" style="padding-right: 0;">
-    	<img src="<?php echo base_url(); ?>assets/invoice/img/#= image_url #.jpg" alt="#: name # image" />
-    </a>
 </script>
 <script id="invoiceSelect" type="text/x-kendo-template">
     <div id="slide-form">
@@ -27017,7 +27316,7 @@
 				{ field:"account_type_id", value: 10 },
 				{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27058,7 +27357,7 @@
 					{ field:"account_type_id", operator:"where_in", value: [35,39] },
 					{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27099,7 +27398,7 @@
 					{ field:"account_type_id", operator:"where_in", value: [36,37,38,40,41,42,43] },
 					{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27139,7 +27438,7 @@
 					{ field:"account_type_id", value: 12 },
 					{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27179,7 +27478,7 @@
 					{ field:"account_type_id", operator:"where_in", value: [23,24] },
 					{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27219,7 +27518,7 @@
 					{ field:"id", value: 72 },
 					{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27259,7 +27558,7 @@
 					{ field:"id", value:99 },
 					{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27299,7 +27598,7 @@
 					{ field:"account_type_id", value: 36 },
 					{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27339,7 +27638,7 @@
 					{ field:"id", value:109 },
 					{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27379,7 +27678,7 @@
 					{ field:"account_type_id", operator:"where_in", value: [14,21] },
 					{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27419,7 +27718,7 @@
 					{ field:"account_type_id", operator:"where_in", value: [25,30] },
 					{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27459,7 +27758,7 @@
 					{ field:"account_type_id", value: 36 },
 					{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27499,7 +27798,7 @@
 					{ field:"account_type_id", value: 13 },
 					{ field:"status", value: 1 }
 			],
-			sort: { field:"number", dir:"asc" },
+			sort: { field:"code", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -27751,8 +28050,6 @@
 		searchText 			: "",
 		balance 			: 0,
 		account_type_id 	: "",
-		subName 			: "",
-		typeName 			: "",		
 		nature 				: "",		
 		user_id 			: banhji.source.user_id,				
 		pageLoad 			: function(){		
@@ -27779,18 +28076,9 @@
 		},						
 		selectedRow			: function(e){
 			var data = e.data,
-			sub = this.dataSource.get(data.sub_of_id),
 			type = this.accountTypeDS.get(data.account_type_id);
 			
-			if(data.sub_of_id>0){
-				this.set("subName", sub.name);
-			}else{
-				this.set("subName", "");
-			}
-
-			this.set("typeName", type.name);
-			this.set("nature", type.nature);
-
+			this.set("nature", type.nature);			
 			this.set("obj", data);
 			this.loadSummary();
 			this.searchTransaction();		
@@ -45464,120 +45752,6 @@
       		window.history.back();
       	},	    
     });
-    banhji.invoiceCustom =  kendo.observable({
-		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
-		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
-		obj 				: null,
-		company 			: banhji.institute,
-		isEdit 				: false,
-		onChange			: function(e) {
-								var Index = this.get("selectedTypeId");
-								var In = Index - 1;
-								$('.formVisible').addClass('formHidden').removeClass('formVisible');
-								$('.coverFormstyle').eq(In).addClass('formVisible').removeClass('formHidden');
-					        },
-		selectType			: [
-							    { id: 1, name: "Quotation" },
-							    { id: 2, name: "Sale Order" },
-							    { id: 3, name: "Deposit" },
-							    { id: 4, name: "Cash Sale" },
-							    { id: 5, name: "Invoice" },
-							    { id: 6, name: "Cash Receipt" },
-							    { id: 7, name: "Delivery Note" },
-							    { id: 8, name: "Sale Return" },
-							    { id: 9, name: "Statement" }
-							  ]	,
-		user_id				: banhji.source.user_id,
-		pageLoad 			: function(id, is_recurring){
-			if(id){
-				this.set("isEdit", true);
-				this.loadObj(id);
-			}else{				
-				if(this.get("isEdit")){
-					this.set("isEdit", false);								
-					this.dataSource.data([]);					
-					
-					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
-				}								
-			}
-		},
-		colorCC 			: function(e){
-			var Color = e.value;
-			var tS = '';
-			if(Color == '#000000' || Color =='#1f497d') tS = '#fff'; 
-			else tS = '#333';
-			$('.inv1 th').css({'background-color': e.value, 'color': tS});
-		},
-		selectedForm 		: function(e){
-			var Index = $(e.currentTarget).index();
-			$('.form-thumb-active').removeClass('form-thumb-active');
-			$('.formstyle .span4').eq(Index).addClass('form-thumb-active');
-			$('.invvisible').removeClass('invvisible').addClass('invhidden');
-			$('.inv1').eq(Index).addClass('invvisible').removeClass('invhidden');
-			var data = e.data, obj = this.get("obj");
-			obj.set("transaction_form_id", data.id);
-		},	    			
-		loadObj 			: function(id){
-			var self = this;				
-
-			this.dataSource.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				take: 100
-			}).then(function(e){
-				var view = self.dataSource.view();
-				
-				self.set("obj", view[0]);				
-			});			
-
-		},		
-		addEmpty 		 	: function(){			
-			this.dataSource.data([]);			
-
-			this.set("obj", null);				
-
-			this.dataSource.insert(0,{				
-				user_id			: banhji.source.user_id,
-				transaction_form_id : 0,
-				type 			: null,
-				name 			: "",
-				color  			: null
-	    	});		
-			
-			var obj = this.dataSource.at(0);			
-			this.set("obj", obj);					
-		},							    
-	    transactionSync 	: function(){
-	    	var dfd = $.Deferred();	        
-
-	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
-		    });
-
-		    return dfd;	    		    	
-	    },	    	    
-		save 				: function(){				
-	    	var self = this, obj = this.get("obj");
-	    	
-	    	if(this.get("isEdit")){
-	    		this.dataSource.sync();	    		
-	    	}else{
-	    		//Add brand new transaction
-				this.transactionSync()
-				.then(function(data){
-					self.addEmpty();													
-				});
-			}
-		},
-		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-
-			window.history.back();
-		}    
-	});
     banhji.invoiceSelect =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),		
 		obj 				: null,
@@ -51751,12 +51925,15 @@
 		customerBalance : new kendo.Layout("#customerBalance", {model: banhji.customerBalance}),
 		customerSetting: new kendo.Layout("#customerSetting", {model: banhji.customerSetting}),
 		job: new kendo.Layout("#job", {model: banhji.job}),
-		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
 		invoiceSelect: new kendo.Layout("#invoiceSelect", {model: banhji.invoiceSelect}),
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.saleSummaryCustomer}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.saleDetailCustomer}),
 		saleSummaryProduct: new kendo.Layout("#saleSummaryProduct", {model: banhji.saleSummaryProduct}),
 		customerTransactionList: new kendo.Layout("#customerTransactionList", {model: banhji.customerTransactionList}),
+		depositDetailCustomer: new kendo.Layout("#depositDetailCustomer", {model: banhji.depositDetailCustomer}),
+		saleDetailProduct : new kendo.Layout("#saleDetailProduct", {model: banhji.saleDetailProduct}),
+
+
 
 		//Cashier
 		cashier: new kendo.Layout("#cashier", {model: banhji.cashier}),
@@ -52540,7 +52717,35 @@
 			if(banhji.pageLoaded["segment"]==undefined){
 				banhji.pageLoaded["segment"] = true;
 														
-			}		
+			}
+		$("#ddlIncome").kendoDropDownList({
+		            optionLabel: "(--- Select ---)",
+		            valuePrimitive: true,
+		            dataTextField: "name",
+		            dataValueField: "id",		            
+		            template: '#=code# #=name#',
+		            dataSource: {
+		                transport: {
+							read: {
+								url: apiUrl + "accounts",
+								headers: {
+									"Entity": getDB()
+								},
+								type: "GET",
+								dataType: "json"
+							}
+						},
+						schema 	: {
+							model: {
+								id: 'id'
+							},
+							data: 'results',
+							total: 'count'
+						},
+						serverFiltering: true,
+						filter: { field:"account_type_id", value: 20 }
+					}
+		        }).data("kendoDropDownList");
 		}		
 	});
 	
@@ -54520,72 +54725,6 @@
 			vm.pageLoad();		
 		}		
 	});
-	banhji.router.route("/invoice_custom(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.invoiceCustom);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.invoiceCustom;
-			
-			if(banhji.pageLoaded["invoice_custom"]==undefined){
-				banhji.pageLoaded["invoice_custom"] = true;
-
-				//Function write css to header
-				function loadStyle(href){
-				    // avoid duplicates
-				    for(var i = 0; i < document.styleSheets.length; i++){
-				        if(document.styleSheets[i].href == href){
-				            return;
-				        }
-				    }
-				    var head  = document.getElementsByTagName('head')[0];
-				    var link  = document.createElement('link');
-				    link.rel  = 'stylesheet';
-				    link.type = 'text/css';
-				    link.href = href;
-				    head.appendChild(link);
-				}
-				var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
-				loadStyle(Href1);	
-
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-				
-
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});				
-			};
-			
-			vm.pageLoad(id);		
-		};	
-	});
 	banhji.router.route("/invoice_select(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -55149,6 +55288,266 @@
 			vm.pageLoad();				
 		}
 	});
+	banhji.router.route("/deposit_detail_customer", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.depositDetailCustomer);
+			
+			//var vm = banhji.saleSummaryCustomer;
+
+			if(banhji.pageLoaded["depositDetailCustomer"]==undefined){
+				banhji.pageLoaded["depositDetailCustomer"] = true;				
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());	
+
+
+
+
+
+			}
+
+			vm.pageLoad();				
+		}
+	});
+	banhji.router.route("/sale_detail_product", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleDetailProduct);
+			
+			//var vm = banhji.saleSummaryCustomer;
+
+			if(banhji.pageLoaded["saleDetailProduct"]==undefined){
+				banhji.pageLoaded["saleDetailProduct"] = true;				
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());	
+
+
+
+
+
+			}
+
+			vm.pageLoad();				
+		}
+	});
+
+
 
 	/*************************
 	*   Cashier Section   *
@@ -55212,7 +55611,7 @@
 						serverFiltering: true,
 						filter: { field:"account_type_id", value: 6 }
 					},
-					template: '#=number# #=name#'             
+					template: '#=code# #=name#'             
 		        }).data("kendoDropDownList");
 
 		        var validator = $("#example").kendoValidator().data("kendoValidator");
@@ -55277,7 +55676,7 @@
 						serverFiltering: true,
 						filter: { field:"account_type_id", value: 6 }
 					},
-					template: '#=number# #=name#'             
+					template: '#=code# #=name#'             
 		        }).data("kendoDropDownList");
 
 				var validator = $("#example").kendoValidator().data("kendoValidator");

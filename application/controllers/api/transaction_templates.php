@@ -84,11 +84,12 @@ class Transaction_templates extends REST_Controller {
 			foreach ($obj as $value) {				
 				//Results				
 				$data["results"][] = array(
-					"id" 			=> $value->id,					
-					"user_id" 		=> $value->user_id,
-					"type" 			=> $value->type,
-					"name" 	 		=> $value->name,
-					"color" 		=> $value->color	
+					"id" 					=> $value->id,
+					"transaction_form_id" 	=> $value->transaction_form_id,					
+					"user_id" 				=> $value->user_id,
+					"type" 					=> $value->type,
+					"name" 	 				=> $value->name,
+					"color" 				=> $value->color	
 				);
 			}
 		}
@@ -103,18 +104,20 @@ class Transaction_templates extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-			$obj->user_id 		= $value->user_id;
-			$obj->type 			= $value->type;
-			$obj->name 			= $value->name;
-			$obj->color 		= $value->color;	
+			$obj->transaction_form_id 		= $value->transaction_form_id;
+			$obj->user_id 					= $value->user_id;
+			$obj->type 						= $value->type;
+			$obj->name 						= $value->name;
+			$obj->color 					= $value->color;	
 						
 			if($obj->save()){
 				$data["results"][] = array(
-					"id" 			=> $obj->id,					
-					"user_id" 		=> $obj->user_id,
-					"type" 			=> $obj->type,
-					"name" 	 		=> $obj->name,
-					"color" 		=> $obj->color
+					"id" 					=> $obj->id,
+					"transaction_form_id" 	=> $obj->transaction_form_id,					
+					"user_id" 				=> $obj->user_id,
+					"type" 					=> $obj->type,
+					"name" 	 				=> $obj->name,
+					"color" 				=> $obj->color
 				);
 			}
 		}
@@ -133,18 +136,20 @@ class Transaction_templates extends REST_Controller {
 			$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			$obj->user_id 		= $value->user_id;
-			$obj->type 			= $value->type;
-			$obj->name 			= $value->name;
-			$obj->color 		= $value->color;			
+			$obj->transaction_form_id 		= $value->transaction_form_id;
+			$obj->user_id 					= $value->user_id;
+			$obj->type 						= $value->type;
+			$obj->name 						= $value->name;
+			$obj->color 					= $value->color;			
 
 			if($obj->save()){				
 				$data["results"][] = array(
-					"id" 			=> $obj->id,					
-					"user_id" 		=> $obj->user_id,
-					"type" 			=> $obj->type,
-					"name" 	 		=> $obj->name,
-					"color" 		=> $obj->color
+					"id" 					=> $obj->id,
+					"transaction_form_id" 	=> $obj->transaction_form_id,					
+					"user_id" 				=> $obj->user_id,
+					"type" 					=> $obj->type,
+					"name" 	 				=> $obj->name,
+					"color" 				=> $obj->color
 				);		
 			}
 		}

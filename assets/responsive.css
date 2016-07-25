@@ -668,7 +668,10 @@ width: 90px !important;
 .widget-employees [class*="span"].listWrapper > .innerAll:first-of-type {
   padding: 11px;
   width: 100%;
-  height: 56px;
+  height: 99px;
+}
+.k-widget.k-combobox.k-header .k-dropdown-wrap.k-state-default{
+  border-radius: 0 !important;
 }
 .k-grid-header-wrap table tr .k-header{
   display: none;
