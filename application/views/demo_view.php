@@ -54,25 +54,25 @@
 					<ul id="module-image">
 						<li style="text-align:center;">
 							<a href="#/customers">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+								<img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.customer"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/employees">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
+								<img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.employee"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/vendors">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+								<img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.vendor"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/inventories">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+								<img title="Inventories" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.inventory"></span></span>
 						</li>
@@ -80,25 +80,25 @@
 					<ul id="module-image">
 						<li style="text-align:center;">
 							<a href="#/cash">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
+								<img title="Cash" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000">Cash MGT.</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/accounting">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
+								<img title="Accounting" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.accounting"></span></span>
 							</a>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/reports">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Reports">
+								<img title="Reports" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Reports">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.report"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.png" alt="Admin">
+								<img title="Setting" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.png" alt="Admin">
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings"></span></span>
 							</a>
 						</li>
@@ -3146,17 +3146,17 @@
 			        	<div class="supplier-icon">
 					       	<div class="span4">
 						       	<a href="#/employee" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/employees.ico" />
+						       		<img title="Add Employee" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/employees.ico" />
 						       	</a>
 						       </div>
 						    <div class="span4">
 						       	<a href="#/item" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
 						       	</a>
 						    </div>
 						    <div class="span4">
 						       	<a href="#/item_service" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
 						       	</a>
 						    </div>
 						</div>
@@ -3168,19 +3168,19 @@
 				<tr>
 					<td class="center">
 						<a href="#/cash_advance">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_advance.png" width="110" height="200" />
+							<img title="Add Cash Advance" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_advance.png" width="110" height="200" />
 							Advance
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/expense">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/expense.png" width="110" height="200" />
+							<img title="Add Expense" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/expense.png" width="110" height="200" />
 							Expense
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/cash_transaction">				
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />						
+							<img title="Add Cash Transaction" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />						
 							Cash Tnx.
 						</a>					
 					</td>					
@@ -5111,17 +5111,17 @@
 			        	<div class="supplier-icon">
 					       	<div class="span4">
 						       	<a href="#/vendor" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
+						       		<img title="Add Suppliers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
 						       	</a>
 						       </div>
 						    <div class="span4">
 						       	<a href="#/item" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
 						       	</a>
 						    </div>
 						    <div class="span4">
 						       	<a href="#/item_service" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
 						       	</a>
 						    </div>
 						</div>
@@ -5133,19 +5133,19 @@
 				<tr>
 					<td class="center">
 						<a href="#/purchase_order">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase_order.png" width="110" height="200" />
+							<img title="Add Purchase Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase_order.png" width="110" height="200" />
 							PO
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/grn">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/received_note.png" width="110" height="200" />
+							<img title="Add Received Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/received_note.png" width="110" height="200" />
 							GRN
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/vendor_deposit">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/supplier_deposit.png" width="110" height="200" />
+							<img title="Add Supplier Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/supplier_deposit.png" width="110" height="200" />
 							Deposit
 						</a>						
 					</td>					
@@ -5153,19 +5153,19 @@
 				<tr>
 					<td class="center">
 						<a href="#/purchase">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase.png" width="110" height="200" />
+							<img title="Add Purchase" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase.png" width="110" height="200" />
 							Purchase
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/purchase_return">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase_return.png" width="110" height="200" />
+							<img title="Add Purchase Return" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase_return.png" width="110" height="200" />
 							Pur.Return
 						</a>
 					</td>
 					<td class="center">						
 						<a href="#/cash_payment">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_payment.png" width="110" height="200" />
+							<img title="Add Cash Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_payment.png" width="110" height="200" />
 							PayBill
 						</a>						
 					</td>										
@@ -9588,17 +9588,17 @@
 			        	<div class="supplier-icon">
 					       	<div class="span4">
 						       	<a href="#/customer" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+						       		<img title="Add Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
 						       	</a>
 						       </div>
 						    <div class="span4">
 						       	<a href="#/item" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
 						       	</a>
 						    </div>
 						    <div class="span4">
 						       	<a href="#/item_service" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
 						       	</a>
 						    </div>
 						</div>
@@ -9609,19 +9609,19 @@
 				<tr>
 					<td class="center">
 						<a href="#/quote">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png" width="110" height="200" />
+							<img title="Add Quote" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png" width="110" height="200" />
 							Quotation
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/sale_order">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_order.png" width="110" height="200" />
+							<img title="Add Sale Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_order.png" width="110" height="200" />
 							Sale Order
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/customer_deposit">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png" width="110" height="200" />
+							<img title="Add Customer Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png" width="110" height="200" />
 							Deposit
 						</a>						
 					</td>					
@@ -9629,19 +9629,19 @@
 				<tr>
 					<td class="center">
 						<a href="#/cash_sale">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_receipt.png" width="110" height="200" />
+							<img title="Add Cash Sale" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_receipt.png" width="110" height="200" />
 							Cash Sale
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/invoice">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/invoice.png" width="110" height="200" />
+							<img title="Add Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/invoice.png" width="110" height="200" />
 							Invoice
 						</a>
 					</td>
 					<td class="center">						
 						<a href="#/cash_receipt">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
+							<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
 							Cash Receipt
 						</a>						
 					</td>										
@@ -9649,19 +9649,19 @@
 				<tr>				
 					<td class="center">
 						<a href="#/gdn">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png" width="110" height="200" />
+							<img title="Add Delivery Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png" width="110" height="200" />
 							Delivery Note
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/sale_return">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_return.png" width="110" height="200" />
+							<img title="Add Sale Return" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_return.png" width="110" height="200" />
 							Sale Return
 						</a>
 					</td>				
 					<td class="center">
 						<a href="#/statement">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/statement.png" width="110" height="200" />
+							<img title="Add Statement" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/statement.png" width="110" height="200" />
 							Statement
 						</a>
 					</td>
@@ -14755,7 +14755,7 @@
 								<h3><a href="#/sale_detail_customer">Sale Detail by Customer</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a href="#/">Deposit Detail by Customer</a></h3>
+								<h3><a href="#/deposit_detail_customer">Deposit Detail by Customer</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -14776,7 +14776,7 @@
 								<h3><a href="#/sale_summary_product">Sale Summary by Product/ Services</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a href="#/">Sale Detail by Product/ Services</a></h3>
+								<h3><a href="#/sale_detail_product">Sale Detail by Product/ Services</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -16011,6 +16011,287 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="depositDetailCustomer" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />	
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Deposit Detail By Customer</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">								
+								<p>Number of Customer Deposit</p>
+								<span>5</span>								
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">								
+								<p>Customer Deposit Balance</p>
+								<span>5</span>								
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th></th>
+							<th>Type</th>
+							<th>Date</th>
+							<th>No</th>
+							<th>Memo</th>							
+							<th>Account</th>
+							<th>Amount</th>
+						</tr>
+						<tr>
+							<td>Sovan Tevy</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Invoice</td>
+							<td>7/1/16</td>
+							<td>IV-0001</td>
+							<td>anmsjssd</td>
+							<td>Account Receivable</td>
+							<td>1,000.00</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Cash Sale</td>
+							<td></td>
+							<td>SR-0003</td>
+							<td>anmsjssd</td>
+							<td>Cash on hand</td>
+							<td>500.00</td>							
+						</tr>
+						<tr>
+							<td>Toni</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Invoice</td>
+							<td>7/1/16</td>
+							<td>IV-0015</td>
+							<td>asg</td>
+							<td>Account Receivable</td>
+							<td>1,200.00</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Cash Receipt</td>
+							<td></td>
+							<td>CR-0122</td>
+							<td>ss</td>
+							<td>Cash on hand</td>
+							<td>(1,200.00)</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Deposit</td>
+							<td></td>
+							<td>DS-0123</td>
+							<td>aa</td>
+							<td>Cash on hand</td>
+							<td>(2,100.00)</td>							
+						</tr>
+						<tr>
+							<td></td>						
+							<td>Sub-total</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>(2,100.00)</td>							
+						</tr>
+						
+						<tr>
+							<th colspan="4">Total</th>
+							<th colspan="3">(600.00)</th>
+						</tr>
+					</table>
+					
+
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleDetailProduct" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<div class="box-search">	
+						<div class="hidden-print">
+					    	<input id="sorter" name="sorter"
+					    	   data-role="dropdownlist"                   
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList" />
+					                                   
+					        <input id="sdate" name="sdate"						           
+					           data-bind="value: sdate"
+					           placeholder="From ..." />
+					        
+					       	<input id="edate" name="edate"						           
+					           data-bind="value: edate"
+					           placeholder="To ..." />						        	                    	            	
+					  		
+					  		<button id="search" type="button" data-role="button">Segment</button>					    	
+					    </div>
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Detail by Product/Service</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Total Product/services</p>
+									<span>1</span>
+								</div>
+								<div class="span6">
+									<p>Total Sale</p>
+									<span>100</span>
+								</div>	
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Number of Product Sale</p>
+									<span>-</span>
+								</div>
+								<div class="span6">
+									<p>Qty on Hand</p>
+									<span>-</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>Type</th>
+							<th>Date</th>
+							<th>No</th>
+							<th>Memo</th>
+							<th>Item/service</th>							
+							<th>Qty</th>
+							<th>Price</th>
+							<th>Amount</th>
+						</tr>
+						<tr>
+							<td>Product Name</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th colspan="7">Total</th>
+							<th colspan="5">-</th>
+						</tr>
+					</table>
+					
+
+				</div>		
+			</div>
+		</div>
+	</div>	
 </script>
 
 
@@ -18851,17 +19132,17 @@
 			        	<div class="supplier-icon">
 						    <div class="span4">
 						       	<a href="#/item" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
 						       	</a>
 						    </div>
 						    <div class="span4">
 						       	<a href="#/non_inventory_part" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/non_inventory_parts.ico" />
+						       		<img title="Add Non Inventory Parts" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/non_inventory_parts.ico" />
 						       	</a>
 						    </div>
 						    <div class="span4">
 						       	<a href="#/item_service" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
 						       	</a>
 						    </div>
 						</div>
@@ -18871,40 +19152,40 @@
 			<table class="table table-borderless table-condensed table-vertical-center ">
 				<tr>
 					<td class="center">
-						<a href="#/quote">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/received_note.png" width="110" height="200" />
+						<a href="#/grn">
+							<img title="Add Received Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/received_note.png" width="110" height="200" />
 							Received Note
 						</a>						
 					</td>
 					<td class="center">
-						<a href="#/sale_order">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png" width="110" height="200" />
+						<a href="#/gdn">
+							<img title="Add Delivery Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png" width="110" height="200" />
 							Delivery Note
 						</a>
 					</td>
 					<td class="center">
-						<a href="#/customer_deposit">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/adjustment.png" width="110" height="200" />
+						<a href="#/item_adjustment">
+							<img title="Add Adjustment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/adjustment.png" width="110" height="200" />
 							Adjustment
 						</a>						
 					</td>					
 				</tr>
 				<tr>
 					<td class="center">
-						<a href="#/cash_sale">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/internal_usage.png" width="110" height="200" />
+						<a href="#/">
+							<img title="Add Internal Usage" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/internal_usage.png" width="110" height="200" />
 							Internal Usage
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/item_assembly">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/build_assembly.png" width="110" height="200" />
+							<img title="Add Build Assembly" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/build_assembly.png" width="110" height="200" />
 							Build Assembly
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/item_catalog">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/catalog.png" width="110" height="200" />
+							<img title="Add Catalog" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/catalog.png" width="110" height="200" />
 							Catalog
 						</a>
 					</td>
@@ -22991,17 +23272,17 @@
 			        	<div class="supplier-icon">
 					       	<div class="span4">
 						       	<a href="#/employee" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/employees.ico" />
+						       		<img title="Add Employee" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/employees.ico" />
 						       	</a>
 						       </div>
 						    <div class="span4">
 						       	<a href="#/item" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
 						       	</a>
 						    </div>
 						    <div class="span4">
 						       	<a href="#/item_service" class="center">
-						       		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
 						       	</a>
 						    </div>
 						</div>
@@ -23012,19 +23293,19 @@
 				<tr>
 					<td class="center">
 						<a href="#/cash_transaction">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png" width="110" height="200" />
+							<img title="Add Cash Transaction" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />
 							C.Transaction
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/cash_receipt">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
+							<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
 							C.Receipt
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/cash_payment">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png" width="110" height="200" />
+							<img title="Add Cash Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_payment.png" width="110" height="200" />
 							C.Payment
 						</a>						
 					</td>					
@@ -23032,19 +23313,19 @@
 				<tr>
 					<td class="center">
 						<a href="#/cash_advance">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_receipt.png" width="110" height="200" />
+							<img title="Add Cash Advance" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_advance.png" width="110" height="200" />
 							C.Advance
 						</a>
 					</td>
 					<td class="center">						
 						<a href="#/expense">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
+							<img title="Add Expense" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/expense.png" width="110" height="200" />
 							Expense
 						</a>						
 					</td>
 					<td class="center">						
-						<a href="#/">
-							<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
+						<a href="#/currency_rate">
+							<img title="Add Exchange Rate Record" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/currency_record.png" width="110" height="200" />
 							Ex.Rate Record
 						</a>						
 					</td>										
@@ -24444,43 +24725,43 @@
 			<ul>
 				<li>
 					<a href="#/customer_report_center">
-						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+						<img title="Report Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
 					</a>
 					<div class="span12">17</div>
 				</li>
 				<li>
 					<a href="#/employee_report_center">
-						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
+						<img title="Report Employee" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
 					</a>
 					<div class="span12">6</div>
 				</li>
 				<li>
 					<a href="#/vendor_report_center">
-						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+						<img title="Report Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
 					</a>
 					<div class="span12">16</div>
 				</li>
 				<li>
 					<a href="#/item_report_center">
-						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+						<img title="Report Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
 					</a>
 					<div class="span12">12</div>
 				</li>
 				<li>
 					<a href="#/services_report_center">
-						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/services.png" alt="Service">
+						<img title="Report Services" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/services.png" alt="Service">
 					</a>
 					<div class="span12"></div>
 				</li>
 				<li>
 					<a href="#/cash_report_center">
-						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
+						<img title="Report Cash" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
 					</a>
 					<div class="span12">6</div>
 				</li>
 				<li>
 					<a href="#/accounting_report_center">
-						<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
+						<img title="Report Accounting" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
 					</a>
 					<div class="span12">16</div>
 				</li>
@@ -51757,6 +52038,8 @@
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.saleDetailCustomer}),
 		saleSummaryProduct: new kendo.Layout("#saleSummaryProduct", {model: banhji.saleSummaryProduct}),
 		customerTransactionList: new kendo.Layout("#customerTransactionList", {model: banhji.customerTransactionList}),
+		depositDetailCustomer: new kendo.Layout("#depositDetailCustomer", {model: banhji.depositDetailCustomer}),
+		saleDetailProduct : new kendo.Layout("#saleDetailProduct", {model: banhji.saleDetailProduct}),
 
 		//Cashier
 		cashier: new kendo.Layout("#cashier", {model: banhji.cashier}),
@@ -55030,6 +55313,264 @@
 
 			if(banhji.pageLoaded["customerTransactionList"]==undefined){
 				banhji.pageLoaded["customerTransactionList"] = true;				
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());	
+
+
+
+
+
+			}
+
+			vm.pageLoad();				
+		}
+	});
+	banhji.router.route("/deposit_detail_customer", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.depositDetailCustomer);
+			
+			//var vm = banhji.saleSummaryCustomer;
+
+			if(banhji.pageLoaded["depositDetailCustomer"]==undefined){
+				banhji.pageLoaded["depositDetailCustomer"] = true;				
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());	
+
+
+
+
+
+			}
+
+			vm.pageLoad();				
+		}
+	});
+	banhji.router.route("/sale_detail_product", function(){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleDetailProduct);
+			
+			//var vm = banhji.saleSummaryCustomer;
+
+			if(banhji.pageLoaded["saleDetailProduct"]==undefined){
+				banhji.pageLoaded["saleDetailProduct"] = true;				
 				
 				function startChange() {
                     var startDate = start.value(),
