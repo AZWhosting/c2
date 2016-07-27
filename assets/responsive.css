@@ -361,7 +361,7 @@ width: 50% !important;
  
   text-transform: uppercase;
   text-align: center;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 800;
   color: #fff;
   border: none;
@@ -650,9 +650,9 @@ width: 90px !important;
   padding: 5px;
   margin-right: 5px
 }
-.tab-pane.active .k-widget.k-dropdown.k-header{
+/*.tab-pane.active .k-widget.k-dropdown.k-header{
   margin-bottom: 10px;
-}
+}*/
 
 .row-fluid>.control-group{
   padding: 0 15px;
@@ -1230,6 +1230,78 @@ width: 90px !important;
   font-size: 15px;
 
 }
+
+.journal_report_tab_title ul li:first-child{
+  width: 12%;
+}
+.journal_report_tab_title ul li{
+  width: 12%;
+}
+.journal_report_tab_title ul li:last-child{
+  width: 16%;
+}
+.btn.btn-success.btn-icon.glyphicons.notes{
+  width: 112px !important;
+  text-align: right;
+  color: #fff !important;
+}
+.k-picker-wrap.k-state-default #sdate,
+.k-picker-wrap.k-state-default #edate{
+  border: none !important;
+}
+.tab-pane .span3{
+  padding-left: 0;
+}
+.tab-pane #savePrint{
+  background: #e7e7e7;
+  color: #333;
+  border: none;
+  width: 80px !important;
+}
+.tab-pane .pdf{
+  width: 130px !important;
+  background: #e7e7e7;
+  color: #333;
+  border: none;
+}
+.tab-pane .execl{
+  width: 150px !important;
+  background: #e7e7e7;
+  color: #333;
+  border: none;
+}
+
+.journal_block>.span4:first-child {
+  background: #bbbbbb;
+}
+.journal_block>.span4 {
+  padding: 10px;
+  background: #5cc7dd;
+  text-align: center;
+  color: #fff;
+}
+.journal_block>.span4:last-child {
+  background: #496cad;
+}
+.journal_block>.span4 p{
+  font-size: 15px;
+}
+.journal_block>.span4 span{
+    font-size: 50px;
+    font-weight: 800;
+}
+.journal_block{
+  margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
 
 
 @media only screen 

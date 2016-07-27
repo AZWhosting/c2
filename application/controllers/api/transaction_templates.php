@@ -89,7 +89,9 @@ class Transaction_templates extends REST_Controller {
 					"user_id" 				=> $value->user_id,
 					"type" 					=> $value->type,
 					"name" 	 				=> $value->name,
-					"color" 				=> $value->color	
+					"color" 				=> $value->color,
+					"created_at" 			=> $value->created_at,
+					"updated_at" 			=> $value->updated_at	
 				);
 			}
 		}
@@ -117,7 +119,9 @@ class Transaction_templates extends REST_Controller {
 					"user_id" 				=> $obj->user_id,
 					"type" 					=> $obj->type,
 					"name" 	 				=> $obj->name,
-					"color" 				=> $obj->color
+					"color" 				=> $obj->color,
+					"created_at" 			=> $obj->created_at,
+					"updated_at" 			=> $obj->updated_at
 				);
 			}
 		}
@@ -149,7 +153,9 @@ class Transaction_templates extends REST_Controller {
 					"user_id" 				=> $obj->user_id,
 					"type" 					=> $obj->type,
 					"name" 	 				=> $obj->name,
-					"color" 				=> $obj->color
+					"color" 				=> $obj->color,
+					"created_at" 			=> $obj->created_at,
+					"updated_at" 			=> $obj->updated_at
 				);		
 			}
 		}

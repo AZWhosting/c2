@@ -7,6 +7,7 @@ class Contact_reports extends REST_Controller {
 	public $server_host;
 	public $server_user;
 	public $server_pwd;
+	public $fiscalDate;
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
@@ -18,6 +19,7 @@ class Contact_reports extends REST_Controller {
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
 			$this->_database = $conn->inst_database;
+			$this->fiscalDate = new DateTime(date("Y",strtotime("-1 year")) ."-". $institute->fiscal_date);
 		}
 	}
 
@@ -210,6 +212,7 @@ class Contact_reports extends REST_Controller {
 		$order = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$product = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$creditSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		// //Sort
 		// if(!empty($sort) && isset($sort)){					
@@ -230,6 +233,7 @@ class Contact_reports extends REST_Controller {
     				$order->where($value["field"], $value["value"]);
     				$ar->where($value["field"], $value["value"]);
     				$product->where_related("transaction", $value["field"], $value["value"]);
+    				$creditSale->where($value["field"], $value["value"]);
     			}	    		
 			}									 			
 		}
@@ -339,8 +343,27 @@ class Contact_reports extends REST_Controller {
 
 				$arCustomerCount++;
 			}			
-		}		
+		}
 
+		//Credit Sale			
+		$creditSale->where_in("type", "Invoice");
+		$creditSale->where("is_recurring", $is_recurring);		
+		$creditSale->where("deleted", $deleted);		
+		$creditSale->get_iterated();
+		
+		$creditSaleAmount = 0;		
+		foreach($creditSale as $value) {			
+			$creditSaleAmount += floatval($value->amount) / floatval($value->rate);									
+		}		
+		
+	    $startDate = $this->fiscalDate;
+		$endDate = new DateTime();
+		$totalDay = $endDate->diff($startDate)->format("%a");
+		
+		$collectionDay = 0;
+		if($creditSaleAmount>0){
+			$collectionDay = ($arAmount / $creditSaleAmount) * $totalDay;
+		}
 		//Results
 		$data["results"][] = array(
 			'id' 				=> 0,
@@ -351,10 +374,11 @@ class Contact_reports extends REST_Controller {
 			'order' 			=> $order->result_count(),
 			'order_avg' 		=> $orderAvg,
 			'order_open'		=> $orderOpen,			
-			'ar' 				=> floatval($arAmount),
+			'ar' 				=> $arAmount,
 			'ar_open' 			=> $arOpen,
 			'ar_customer' 		=> $arCustomerCount,
-			'ar_overdue' 		=> $arOverDue
+			'ar_overdue' 		=> $arOverDue,
+			'collection_day' 	=> $collectionDay
 		);		
 
 		//Response Data		
