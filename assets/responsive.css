@@ -353,33 +353,31 @@ width: 50% !important;
 }
 .saleSummaryCustomer .table.table-borderless.table-condensed  tr th{
   border: none;
+   background: #1E4E78;
 }
-.saleSummaryCustomer .table.table-borderless.table-condensed tr th{
- background: #1E4E78;
-}
-.saleSummaryCustomer .table.table-borderless.table-condensed tr:first-child th{
- 
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:first-child th{ 
   text-transform: uppercase;
-  text-align: center;
   font-size: 15px;
   font-weight: 800;
   color: #fff;
   border: none;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:first-child th:first-child{
+  padding-left: 10px !important; 
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed tr:first-child th:last-child{
+  padding-right: 10px !important; 
 }
 .saleSummaryCustomer .table.table-borderless.table-condensed tr:last-child th{
-
   text-transform: uppercase;
   font-size: 15px;
   color: #fff;
   font-weight: 800;
   border: none;
-}
-.saleSummaryCustomer .table.table-borderless.table-condensed tr:last-child th:first-child{
-  text-align: center;
 }
 .saleSummaryCustomer .table.table-borderless.table-condensed tr:last-child th:last-child{
   text-align: right;
-  padding-right: 20px !important;
+  padding-right: 10px !important;
 }
 .saleSummaryCustomer .table.table-borderless.table-condensed tr td{
   padding-left: 5px;
@@ -394,8 +392,7 @@ width: 50% !important;
   padding-left: 10px !important;
 }
 .saleSummaryCustomer .table.table-borderless.table-condensed tr td:last-child{
-  text-align: right;
-  padding-right: 20px !important;
+  padding-right: 10px !important;
 }
 .btn.btn-icon.btn-success.glyphicons.share{
   width: 125px !important;
@@ -1263,12 +1260,14 @@ width: 90px !important;
   background: #e7e7e7;
   color: #333;
   border: none;
+  padding: 4px 12px !important;
 }
 .tab-pane .execl{
   width: 150px !important;
   background: #e7e7e7;
   color: #333;
   border: none;
+  padding: 4px 12px !important;
 }
 
 .journal_block>.span4:first-child {
@@ -1305,7 +1304,12 @@ width: 90px !important;
 .saleSummaryCustomer .box-generic{
    padding: 15px 15px 0;
 }
-
+.tab-pane .pdf .fa-file-pdf-o,
+.tab-pane .execl .fa-file-excel-o{
+  float: left;
+  text-align: left;
+  line-height: 18px;
+}
 
 
 

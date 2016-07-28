@@ -7,6 +7,7 @@ class Accounting_reports extends REST_Controller {
 	public $server_host;
 	public $server_user;
 	public $server_pwd;
+	public $fiscalDate;
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
@@ -18,6 +19,7 @@ class Accounting_reports extends REST_Controller {
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
 			$this->_database = $conn->inst_database;
+			$this->fiscalDate = date(date("Y",strtotime("-1 year")) ."-". $institute->fiscal_date);
 		}
 	}
 	
@@ -143,60 +145,62 @@ class Accounting_reports extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$is_recurring = 0;
-		$deleted = 0;
-
-		$balanceSheet = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$profitLoss = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-		$retainEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$deleted = 0;		
 		
+		$balanceSheet = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$prevPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$currPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$retainEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {
 	    		if(!empty($value["operator"]) && isset($value["operator"])){
 		    		if($value["operator"]=="where_related"){
 		    			$balanceSheet->where_related($value["model"], $value["field"], $value["value"]);
-		    			$profitLoss->where_related($value["model"], $value["field"], $value["value"]);
-		    			$retainEarning->where_related($value["model"], $value["field"], $value["value"]);		    				    		
+		    			$currPL->where_related($value["model"], $value["field"], $value["value"]);		    			
+		    			$retainEarning->where_related($value["model"], $value["field"], $value["value"]);		    				    				    		
 		    		}	    				    			
 	    		}
 			}									 			
 		}
 		
+		//BALANCE SHEET (from begining to as of)
 		$balanceSheet->include_related("account", array("number","name"));
 		$balanceSheet->include_related("account/account_type", array("name","nature"));		
 		$balanceSheet->where_related("account", "account_type_id >=", 10);
 		$balanceSheet->where_related("account", "account_type_id <=", 33);
 		$balanceSheet->where_related("transaction", "is_recurring", $is_recurring);
 		$balanceSheet->where_related("transaction", "deleted", $deleted);
-		$balanceSheet->where("deleted", $deleted);			
-				
-		//Results
+		$balanceSheet->where("deleted", $deleted);		
 		$balanceSheet->get_iterated();
 		
-		//Sum dr and cr
-		$sumDr = 0;
-		$sumCr = 0;			
+		//Sum dr and cr					
 		$accountList = [];
 		foreach ($balanceSheet as $value) {
-			if($value->dr>0 || $value->cr>0){
-				$sumDr += floatval($value->dr) / floatval($value->rate);
-				$sumCr += floatval($value->cr) / floatval($value->rate);
-
-				//Group customer
-				if(isset($accountList[$value->account_id])){					
-					$accountList[$value->account_id]["dr"] 		+= $sumDr;
-					$accountList[$value->account_id]["cr"] 		+= $sumCr;
-				} else {
-					$accountList[$value->account_id]["number"] 	= $value->account_number;
-					$accountList[$value->account_id]["name"] 	= $value->account_name;
-					$accountList[$value->account_id]["type"] 	= $value->account_account_type_name;
-					$accountList[$value->account_id]["nature"] 	= $value->account_account_type_nature;
-					$accountList[$value->account_id]["dr"] 		= $sumDr;
-					$accountList[$value->account_id]["cr"] 		= $sumCr;
-				}
+			$dr = 0;
+			$cr = 0;
+			if($value->dr>0){
+				$dr = floatval($value->dr) / floatval($value->rate);
 			}
-		}
+			if($value->cr>0){
+				$cr = floatval($value->cr) / floatval($value->rate);
+			}
 
+			//Group
+			if(isset($accountList[$value->account_id])){					
+				$accountList[$value->account_id]["dr"] 		+= $dr;
+				$accountList[$value->account_id]["cr"] 		+= $cr;
+			} else {
+				$accountList[$value->account_id]["number"] 	= $value->account_number;
+				$accountList[$value->account_id]["name"] 	= $value->account_name;
+				$accountList[$value->account_id]["type"] 	= $value->account_account_type_name;
+				$accountList[$value->account_id]["nature"] 	= $value->account_account_type_nature;
+				$accountList[$value->account_id]["dr"] 		= $dr;
+				$accountList[$value->account_id]["cr"] 		= $cr;
+			}			
+		}
+		
 		//Calculate by account nature
 		foreach ($accountList as $key => $value) {
 			if($value["nature"]=="Dr"){
@@ -216,6 +220,138 @@ class Accounting_reports extends REST_Controller {
 			   	"cr" 			=> $cr
 			);
 		}
+		//END BALANCE SHEET
+
+
+		//CURRENT PROFIT AND LOSS (from fiscal date to as of)
+		$currPL->include_related("account", array("number","name"));
+		$currPL->include_related("account/account_type", array("name","nature"));		
+		$currPL->where_related("account", "account_type_id >=", 35);
+		$currPL->where_related("account", "account_type_id <=", 43);
+		$currPL->where_related("transaction", "issued_date >", $this->fiscalDate);
+		$currPL->where_related("transaction", "is_recurring", $is_recurring);
+		$currPL->where_related("transaction", "deleted", $deleted);		
+		$currPL->where("deleted", $deleted);
+		$currPL->get_iterated();
+
+		//Sum dr and cr					
+		$accountList = [];		
+		foreach ($currPL as $value) {
+			$dr = 0;
+			$cr = 0;
+			if($value->dr>0){
+				$dr = floatval($value->dr) / floatval($value->rate);
+			}
+			if($value->cr>0){
+				$cr = floatval($value->cr) / floatval($value->rate);
+			}			
+
+			//Group
+			if(isset($accountList[$value->account_id])){					
+				$accountList[$value->account_id]["dr"] 		+= $dr;
+				$accountList[$value->account_id]["cr"] 		+= $cr;
+			} else {
+				$accountList[$value->account_id]["number"] 	= $value->account_number;
+				$accountList[$value->account_id]["name"] 	= $value->account_name;
+				$accountList[$value->account_id]["type"] 	= $value->account_account_type_name;
+				$accountList[$value->account_id]["nature"] 	= $value->account_account_type_nature;
+				$accountList[$value->account_id]["dr"] 		= $dr;
+				$accountList[$value->account_id]["cr"] 		= $cr;
+			}			
+		}		
+		
+		//Calculate by account nature
+		foreach ($accountList as $key => $value) {
+			if($value["nature"]=="Dr"){
+				$dr = $value["dr"] - $value["cr"];
+				$cr = 0;
+			}else{
+				$dr = 0;
+				$cr = $value["cr"] - $value["dr"];					
+			}
+
+			$data["results"][] = array(
+				"id" 			=> $key,
+				"number" 		=> $value["number"],
+				"name" 			=> $value["name"],				
+			   	"type" 			=> $value["type"],
+			   	"dr" 			=> $dr,
+			   	"cr" 			=> $cr
+			);
+		}
+		//END CURRENT PROFIT AND LOSS
+
+
+		//RETAINED EARNING = Profit Loss + Retained Earning
+		//PREVIOUSE PROFIT AND LOSS (from begining to fiscal date) Cr - Dr				
+		$prevPL->where_related("account", "account_type_id >=", 35);
+		$prevPL->where_related("account", "account_type_id <=", 43);
+		$prevPL->where_related("transaction", "issued_date <=", $this->fiscalDate);
+		$prevPL->where_related("transaction", "is_recurring", $is_recurring);
+		$prevPL->where_related("transaction", "deleted", $deleted);		
+		$prevPL->where("deleted", $deleted);
+		$prevPL->get_iterated();
+
+		//Sum dr and cr
+		$sumDr = 0;
+		$sumCr = 0;		
+		foreach ($prevPL as $value) {			
+			if($value->dr>0){
+				$sumDr += floatval($value->dr) / floatval($value->rate);
+			}
+			if($value->cr>0){
+				$sumCr += floatval($value->cr) / floatval($value->rate);
+			}		
+		}
+		$prevPLAmount = $sumCr - $sumDr;
+		//END PREVIOUSE PROFIT AND LOSS
+		
+
+		//RETAINED EARNING (from begining to as of)
+		$retainEarning->include_related("account", array("number","name"));
+		$retainEarning->include_related("account/account_type", array("name","nature"));		
+		$retainEarning->where("account_id", 70);		
+		$retainEarning->where_related("transaction", "is_recurring", $is_recurring);
+		$retainEarning->where_related("transaction", "deleted", $deleted);		
+		$retainEarning->where("deleted", $deleted);
+		$retainEarning->get_iterated();
+		
+		//Sum dr and cr
+		$retainEarningId = 0;
+		$retainEarningNumber = "";
+		$retainEarningName = "";
+		$retainEarningType = "";
+		$sumDr = 0;
+		$sumCr = 0;		
+		foreach ($retainEarning as $value) {
+			$retainEarningId = $value->account_id;
+			$retainEarningNumber = $value->account_number;
+			$retainEarningName = $value->account_name;
+			$retainEarningType = $value->account_account_type_name;
+
+			if($value->dr>0){
+				$sumDr += floatval($value->dr) / floatval($value->rate);
+			}
+			if($value->cr>0){
+				$sumCr += floatval($value->cr) / floatval($value->rate);
+			}		
+		}
+		$retainEarningAmount = $sumCr - $sumDr;
+		//END RETAINED EARNING
+		
+
+		//Total Retain Earning
+		$totalRetainEarning = $prevPLAmount + $retainEarningAmount;
+		
+		$data["results"][] = array(
+			"id" 			=> $retainEarningId,
+			"number" 		=> $retainEarningNumber,
+			"name" 			=> $retainEarningName,				
+		   	"type" 			=> $retainEarningType,
+		   	"dr" 			=> 0,
+		   	"cr" 			=> $totalRetainEarning
+		);
+		
 				
 		$data["count"] = count($data["results"]);
 

@@ -2398,109 +2398,106 @@
 					<br>
 					<br>
 					<div class="row-fluid">
-						<div class="box-generic">	
-						    <!-- //Tabs Heading -->
-						    <div class="tabsbar tabsbar-1 journal_report_tab_title">
-						        <ul class="row-fluid row-merge ">						            
-						            <li class="span2 glyphicons nameplate_alt active">
-						            	<a href="#tab1" data-toggle="tab"><i></i> Date</a>
-						            </li>								            
-						            <li class="span2 glyphicons filter">
-						            	<a href="#tab2" data-toggle="tab"><i></i>Filters</a>
-						            </li>
-						            <li class="span2 glyphicons print">
-						            	<a href="#tab3" data-toggle="tab"><i></i>Print/Export</a>
-						            </li>						            					            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								
+								<div class="widget-body">
+									<div class="tab-content">
+								    	<!-- //GENERAL INFO -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"                   
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
+										           placeholder="From ..." />
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
+										           placeholder="To ..." />
 
-						    <div class="tab-content">
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+								        
+										<!-- //ACCOUNTING -->
+								        <div class="tab-pane" id="tab-2">
+								        	
+								        	<div class="row-fluid">								        		
+								            	<div class="span3">
+													<label for="ddlAR"><span ></span>Filtered by</label>
+													<input id="ddlAR" name="ddlAR"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.account_id,
+										                              source: arDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />													
+												</div>
+												<div class="span3">
+													<label for="ddlRA"><span ></span>Sorted By</label>
+													<input id="ddlRA" name="ddlRA"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.ra_id,
+										                              source: raDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />
+										         										
+												</div>
+																																		
+											</div>
+							        	</div>
 
-						    	<!-- //GENERAL INFO -->
-						        <div class="tab-pane active" id="tab1">
-						        	<input id="sorter" name="sorter"
-							    	   data-role="dropdownlist"                   
-							           data-value-primitive="true"
-							           data-text-field="text"
-							           data-value-field="value"
-							           data-bind="value: sorter,
-							                      source: sortList" />
-					            	
-							        <input id="sdate" name="sdate"						           
-								           data-bind="value: sdate"
-								           placeholder="From ..." />
-							        
-							       	<input id="edate" name="edate"						           
-								           data-bind="value: edate"
-								           placeholder="To ..." />
-
-						            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
-					        	</div>
-						        <!-- //GENERAL INFO END -->
-
-						        <!-- //ACCOUNTING -->
-						        <div class="tab-pane" id="tab2">
-						        	
-						        	<div class="row-fluid">								        		
-						            	<div class="span3">
-											<label for="ddlAR"><span ></span>Filtered by</label>
-											<input id="ddlAR" name="ddlAR"
-												   data-role="dropdownlist"
-												   data-template="account-list-tmpl"										                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.account_id,
-								                              source: arDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />													
-										</div>
-										<div class="span3">
-											<label for="ddlRA"><span ></span>Sorted By</label>
-											<input id="ddlRA" name="ddlRA"
-												   data-role="dropdownlist"
-												   data-template="account-list-tmpl"										                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.ra_id,
-								                              source: raDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />
-								         										
-										</div>
-																																
-									</div>
-					        	</div>
-						        <!-- //ACCOUNTING END -->						       
-
-						        <!-- //CONTACT PERSON -->
-						        <div class="tab-pane" id="tab3">
-						        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-						        	<span id="" class="btn btn-icon btn-default glyphicons download_alt pdf" data-bind="click: cancel" style="width: 80px;">
-						        		<i></i>
-						        		Print as PDF
-						        	</span>
-						        	<span id="" class="btn btn-icon btn-default glyphicons download_alt execl" data-bind="click: cancel" style="width: 80px;">
-						        		<i></i>
-						        		Export to Excel
-						        	</span>
-					        	</div>
-						        <!-- //CONTACT PERSON END -->
-						    </div>
+								        <div class="tab-pane" id="tab-3">
+								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								        <!-- //ACCOUNTING END -->
+								       
+								    </div>
+								</div>
+							</div>
 						</div>
+						<!-- // Tabs END -->
+						
 					</div>
 
-
-			    	
 					<div class="block-title">
 						<h3>ABC Co., Ltd</h3>
 						<h2>JOURNAL ENTRY REPORTS</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
-
-					<br>
 
 					<div class="row-fluid journal_block">
 						<div class="span4">
@@ -2536,9 +2533,9 @@
 			                <th>TXN#</th>
 			                <th>TXN DESCRIPTION</th>
 			                <th>ACCOUNT</th>                		                
-			                <th>DEBITS (Dr)</th>
-			                <th>CREDITS (Cr)</th>
-			                <th><span class="glyphicons paperclip"></span></th>		                
+			                <th class="right">DEBITS (Dr)</th>
+			                <th class="right">CREDITS (Cr)</th>
+			                <th><i class="icon-paper-clip"></i></th>		                
 			            </tr> 
 				        <tbody data-role="listview"
 				        		data-template="journalReport-template"			        		
@@ -2606,7 +2603,8 @@
 			#if(line[i].cr>0){#
 				#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.institute.locale)#
 			#}#
-		</td>		
+		</td>
+		<td class="right"><i class="icon-paper-clip"></i></td>  			
     </tr>    
     #}# 
     <tr>
@@ -2620,7 +2618,8 @@
     	</td>
     	<td class="right strong" style="border-top-color: black; color: black;">
     		#=kendo.toString(sumCr, "c0", banhji.institute.locale)#
-    	</td>    	
+    	</td>
+    	<td class="right"><i class="icon-paper-clip"></i></td>  	
     </tr>  
 </script>
 
@@ -2633,99 +2632,101 @@
 							onclick="javascript: window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
-						<div class="box-generic">	
-						    <!-- //Tabs Heading -->
-						    <div class="tabsbar tabsbar-1 journal_report_tab_title">
-						        <ul class="row-fluid row-merge ">						            
-						            <li class="span2 glyphicons nameplate_alt active">
-						            	<a href="#tab1" data-toggle="tab"><i></i> Date</a>
-						            </li>								            
-						            <li class="span2 glyphicons filter">
-						            	<a href="#tab2" data-toggle="tab"><i></i>Filters</a>
-						            </li>
-						            <li class="span2 glyphicons print">
-						            	<a href="#tab3" data-toggle="tab"><i></i>Print/Export</a>
-						            </li>						            					            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								
+								<div class="widget-body">
+									<div class="tab-content">
+								    	<!-- //GENERAL INFO -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"                   
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
+										           placeholder="From ..." />
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
+										           placeholder="To ..." />
 
-						    <div class="tab-content">
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+								        
+										<!-- //ACCOUNTING -->
+								        <div class="tab-pane" id="tab-2">
+								        	
+								        	<div class="row-fluid">								        		
+								            	<div class="span3">
+													<label for="ddlAR"><span ></span>Filtered by</label>
+													<input id="ddlAR" name="ddlAR"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.account_id,
+										                              source: arDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />													
+												</div>
+												<div class="span3">
+													<label for="ddlRA"><span ></span>Sorted By</label>
+													<input id="ddlRA" name="ddlRA"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.ra_id,
+										                              source: raDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />
+										         										
+												</div>
+																																		
+											</div>
+							        	</div>
 
-						    	<!-- //GENERAL INFO -->
-						        <div class="tab-pane active" id="tab1">
-						        	<input id="sorter" name="sorter"
-							    	   data-role="dropdownlist"                   
-							           data-value-primitive="true"
-							           data-text-field="text"
-							           data-value-field="value"
-							           data-bind="value: sorter,
-							                      source: sortList" />
-					            	
-							        <input id="sdate" name="sdate"						           
-								           data-bind="value: sdate"
-								           placeholder="From ..." />
-							        
-							       	<input id="edate" name="edate"						           
-								           data-bind="value: edate"
-								           placeholder="To ..." />
-
-						            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
-					        	</div>
-						        <!-- //GENERAL INFO END -->
-
-						        <!-- //ACCOUNTING -->
-						        <div class="tab-pane" id="tab2">
-						        	
-						        	<div class="row-fluid">								        		
-						            	<div class="span3">
-											<label for="ddlAR"><span ></span>Filtered by</label>
-											<input id="ddlAR" name="ddlAR"
-												   data-role="dropdownlist"
-												   data-template="account-list-tmpl"										                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.account_id,
-								                              source: arDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />													
-										</div>
-										<div class="span3">
-											<label for="ddlRA"><span ></span>Sorted By</label>
-											<input id="ddlRA" name="ddlRA"
-												   data-role="dropdownlist"
-												   data-template="account-list-tmpl"										                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.ra_id,
-								                              source: raDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />
-								         										
-										</div>
-																																
-									</div>
-					        	</div>
-						        <!-- //ACCOUNTING END -->						       
-
-						        <!-- //CONTACT PERSON -->
-						        <div class="tab-pane" id="tab3">
-						        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-						        	<span id="" class="btn btn-icon btn-default glyphicons download_alt pdf" data-bind="click: cancel" style="width: 80px;">
-						        		<i></i>
-						        		Print as PDF
-						        	</span>
-						        	<span id="" class="btn btn-icon btn-default glyphicons download_alt execl" data-bind="click: cancel" style="width: 80px;">
-						        		<i></i>
-						        		Export to Excel
-						        	</span>
-					        	</div>
-						        <!-- //CONTACT PERSON END -->
-						    </div>
+								        <div class="tab-pane" id="tab-3">
+								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								        <!-- //ACCOUNTING END -->
+								       
+								    </div>
+								</div>
+							</div>
 						</div>
+						<!-- // Tabs END -->
+						
 					</div>
 			    	
 					<div class="block-title">
@@ -2734,8 +2735,6 @@
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
 
-					<br>
-
 					<table class="table table-borderless table-condensed ">
 						<tr>
 							<th>Type</th>
@@ -2743,9 +2742,10 @@
 							<th>TXN #</th>
 							<th>TXN Description</th>							
 							<th>Account</th>
-							<th>Debit</th>
-							<th>Credit</th>
-							<th>Balance</th>
+							<th class="right">Debit</th>
+							<th class="right">Credit</th>
+							<th class="center">Balance</th>
+							<th><i class="icon-paper-clip"></i></th>
 						</tr>
 						<tr>
 							<td>10100 Cash & Cash Equivalent</td>
@@ -2756,6 +2756,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
+							<th><i class="icon-paper-clip"></i></th>
 						</tr>
 						<tr>						
 							<td>Invoice</td>
@@ -2764,8 +2765,9 @@
 							<td>anmsjssd</td>
 							<td>Account Receivable</td>
 							<td>1,000.00</td>
-							<td></td>
-							<td></td>							
+							<td>1,000.00</td>
+							<td>Account Receivable</td>
+							<th><i class="icon-paper-clip"></i></th>						
 						</tr>
 						<tr>					
 							<td>Cash Sale</td>
@@ -2775,7 +2777,8 @@
 							<td>Cash on hand</td>
 							<td>500.00</td>	
 							<td></td>
-							<td></td>						
+							<td></td>
+							<th><i class="icon-paper-clip"></i></th>						
 						</tr>
 						<tr>
 							<td>Toni</td>
@@ -2786,6 +2789,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
+							<th><i class="icon-paper-clip"></i></th>
 						</tr>
 						<tr>						
 							<td>Invoice</td>
@@ -2795,7 +2799,8 @@
 							<td>Account Receivable</td>
 							<td>1,200.00</td>
 							<td></td>
-							<td></td>						
+							<td></td>
+							<th><i class="icon-paper-clip"></i></th>						
 						</tr>
 						<tr>												
 							<td>Cash Receipt</td>
@@ -2805,7 +2810,8 @@
 							<td>Cash on hand</td>
 							<td>(1,200.00)</td>
 							<td></td>
-							<td></td>						
+							<td></td>
+							<th><i class="icon-paper-clip"></i></th>					
 						</tr>
 						<tr>					
 							<td>Deposit</td>
@@ -2815,7 +2821,8 @@
 							<td>Cash on hand</td>
 							<td>(2,100.00)</td>
 							<td></td>
-							<td></td>							
+							<td></td>
+							<th><i class="icon-paper-clip"></i></th>						
 						</tr>
 						<tr>						
 							<td>Sub-total</td>
@@ -2825,12 +2832,13 @@
 							<td></td>
 							<td>(2,100.00)</td>
 							<td></td>
-							<td></td>						
+							<td></td>
+							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						
 						<tr>
 							<th colspan="4">Total</th>
-							<th colspan="4">(600.00)</th>
+							<th colspan="5">(600.00)</th>
 						</tr>
 					</table>					  
 
@@ -2850,99 +2858,98 @@
 							onclick="javascript: window.history.back()"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">
-						<div class="box-generic">	
-						    <!-- //Tabs Heading -->
-						    <div class="tabsbar tabsbar-1 journal_report_tab_title">
-						        <ul class="row-fluid row-merge ">						            
-						            <li class="span2 glyphicons nameplate_alt active">
-						            	<a href="#tab1" data-toggle="tab"><i></i> Date</a>
-						            </li>								            
-						            <li class="span2 glyphicons filter">
-						            	<a href="#tab2" data-toggle="tab"><i></i>Filters</a>
-						            </li>
-						            <li class="span2 glyphicons print">
-						            	<a href="#tab3" data-toggle="tab"><i></i>Print/Export</a>
-						            </li>						            					            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
+					<div class="row-fluid">	
+					    <!-- //Tabs Heading -->
+					    <div class="tabsbar tabsbar-1 journal_report_tab_title">
+					        <ul class="row-fluid row-merge ">						            
+					            <li class="span2 glyphicons calendar active">
+					            	<a href="#tab1" data-toggle="tab"><i></i> Date</a>
+					            </li>								            
+					            <li class="span2 glyphicons filter">
+					            	<a href="#tab2" data-toggle="tab"><i></i>Filters</a>
+					            </li>
+					            <li class="span2 glyphicons print">
+					            	<a href="#tab3" data-toggle="tab"><i></i>Print/Export</a>
+					            </li>						            					            
+					        </ul>
+					    </div>
+					    <!-- // Tabs Heading END -->
 
-						    <div class="tab-content">
+					    <div class="tab-content">
 
-						    	<!-- //GENERAL INFO -->
-						        <div class="tab-pane active" id="tab1">
-						        	<input id="sorter" name="sorter"
-							    	   data-role="dropdownlist"                   
-							           data-value-primitive="true"
-							           data-text-field="text"
-							           data-value-field="value"
-							           data-bind="value: sorter,
-							                      source: sortList" />
-					            	
-							        <input id="sdate" name="sdate"						           
-								           data-bind="value: sdate"
-								           placeholder="From ..." />
-							        
-							       	<input id="edate" name="edate"						           
-								           data-bind="value: edate"
-								           placeholder="To ..." />
+					    	<!-- //GENERAL INFO -->
+					        <div class="tab-pane active" id="tab1">
+					        	<input id="sorter" name="sorter"
+						    	   data-role="dropdownlist"                   
+						           data-value-primitive="true"
+						           data-text-field="text"
+						           data-value-field="value"
+						           data-bind="value: sorter,
+						                      source: sortList" />
+				            	
+						        <input id="sdate" name="sdate"						           
+							           data-bind="value: sdate"
+							           placeholder="From ..." />
+						        
+						       	<input id="edate" name="edate"						           
+							           data-bind="value: edate"
+							           placeholder="To ..." />
 
-						            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
-					        	</div>
-						        <!-- //GENERAL INFO END -->
+					            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
+				        	</div>
+					        <!-- //GENERAL INFO END -->
 
-						        <!-- //ACCOUNTING -->
-						        <div class="tab-pane" id="tab2">
-						        	
-						        	<div class="row-fluid">								        		
-						            	<div class="span3">
-											<label for="ddlAR"><span ></span>Filtered by</label>
-											<input id="ddlAR" name="ddlAR"
-												   data-role="dropdownlist"
-												   data-template="account-list-tmpl"										                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.account_id,
-								                              source: arDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />													
-										</div>
-										<div class="span3">
-											<label for="ddlRA"><span ></span>Grouped By</label>
-											<input id="ddlRA" name="ddlRA"
-												   data-role="dropdownlist"
-												   data-template="account-list-tmpl"										                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.ra_id,
-								                              source: raDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />
-								         										
-										</div>
-																																
+					        <!-- //ACCOUNTING -->
+					        <div class="tab-pane" id="tab2">
+					        	
+					        	<div class="row-fluid">								        		
+					            	<div class="span3">
+										<label for="ddlAR"><span ></span>Filtered by</label>
+										<input id="ddlAR" name="ddlAR"
+											   data-role="dropdownlist"
+											   data-template="account-list-tmpl"										                   
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.account_id,
+							                              source: arDS"
+							                   data-option-label="(--- Select ---)"
+							                   required data-required-msg="required" style="width: 100%;" />													
 									</div>
-					        	</div>
-						        <!-- //ACCOUNTING END -->						       
+									<div class="span3">
+										<label for="ddlRA"><span ></span>Grouped By</label>
+										<input id="ddlRA" name="ddlRA"
+											   data-role="dropdownlist"
+											   data-template="account-list-tmpl"										                   
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.ra_id,
+							                              source: raDS"
+							                   data-option-label="(--- Select ---)"
+							                   required data-required-msg="required" style="width: 100%;" />
+							         										
+									</div>
+																															
+								</div>
+				        	</div>
+					        <!-- //ACCOUNTING END -->						       
 
-						        <!-- //CONTACT PERSON -->
-						        <div class="tab-pane" id="tab3">
-						        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-						        	<span id="" class="btn btn-icon btn-default glyphicons download_alt pdf" data-bind="click: cancel" style="width: 80px;">
-						        		<i></i>
-						        		Print as PDF
-						        	</span>
-						        	<span id="" class="btn btn-icon btn-default glyphicons download_alt execl" data-bind="click: cancel" style="width: 80px;">
-						        		<i></i>
-						        		Export to Excel
-						        	</span>
-					        	</div>
-						        <!-- //CONTACT PERSON END -->
-						    </div>
-						</div>
+					        <!-- //CONTACT PERSON -->
+					        <div class="tab-pane" id="tab3">
+					        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
+					        	<span id="" class="btn btn-icon btn-default glyphicons download_alt pdf" data-bind="click: cancel" style="width: 80px;">
+					        		<i></i>
+					        		Print as PDF
+					        	</span>
+					        	<span id="" class="btn btn-icon btn-default glyphicons download_alt execl" data-bind="click: cancel" style="width: 80px;">
+					        		<i></i>
+					        		Export to Excel
+					        	</span>
+				        	</div>
+					        <!-- //CONTACT PERSON END -->
+					    </div>
+						
 					</div>
 					<div class="block-title">
 						<h3>ABC Co., Ltd</h3>
@@ -2982,107 +2989,108 @@
 							onclick="javascript: window.history.back()"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">
-						<div class="box-generic">	
-						    <!-- //Tabs Heading -->
-						    <div class="tabsbar tabsbar-1 journal_report_tab_title">
-						        <ul class="row-fluid row-merge ">						            
-						            <li class="span2 glyphicons nameplate_alt active">
-						            	<a href="#tab1" data-toggle="tab"><i></i> Date</a>
-						            </li>								            
-						            <li class="span2 glyphicons filter">
-						            	<a href="#tab2" data-toggle="tab"><i></i>Filters</a>
-						            </li>
-						            <li class="span2 glyphicons print">
-						            	<a href="#tab3" data-toggle="tab"><i></i>Print/Export</a>
-						            </li>						            					            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
+					
+					<div class="row-fluid">	
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								
+								<div class="widget-body">
+									<div class="tab-content">
+								    	<!-- //GENERAL INFO -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"                   
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
+										           placeholder="From ..." />
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
+										           placeholder="To ..." />
 
-						    <div class="tab-content">
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+								        
+										<!-- //ACCOUNTING -->
+								        <div class="tab-pane" id="tab-2">
+								        	
+								        	<div class="row-fluid">								        		
+								            	<div class="span3">
+													<label for="ddlAR"><span ></span>Filtered by</label>
+													<input id="ddlAR" name="ddlAR"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.account_id,
+										                              source: arDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />													
+												</div>
+												<div class="span3">
+													<label for="ddlRA"><span ></span>Grouped By</label>
+													<input id="ddlRA" name="ddlRA"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.ra_id,
+										                              source: raDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />
+										         										
+												</div>
+																																		
+											</div>
+							        	</div>
 
-						    	<!-- //GENERAL INFO -->
-						        <div class="tab-pane active" id="tab1">
-						        	<input id="sorter" name="sorter"
-							    	   data-role="dropdownlist"                   
-							           data-value-primitive="true"
-							           data-text-field="text"
-							           data-value-field="value"
-							           data-bind="value: sorter,
-							                      source: sortList" />
-					            	
-							        <input id="sdate" name="sdate"						           
-								           data-bind="value: sdate"
-								           placeholder="From ..." />
-							        
-							       	<input id="edate" name="edate"						           
-								           data-bind="value: edate"
-								           placeholder="To ..." />
-
-						            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
-					        	</div>
-						        <!-- //GENERAL INFO END -->
-
-						        <!-- //ACCOUNTING -->
-						        <div class="tab-pane" id="tab2">
-						        	
-						        	<div class="row-fluid">								        		
-						            	<div class="span3">
-											<label for="ddlAR"><span ></span>Filtered by</label>
-											<input id="ddlAR" name="ddlAR"
-												   data-role="dropdownlist"
-												   data-template="account-list-tmpl"										                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.account_id,
-								                              source: arDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />													
-										</div>
-										<div class="span3">
-											<label for="ddlRA"><span ></span>Grouped By</label>
-											<input id="ddlRA" name="ddlRA"
-												   data-role="dropdownlist"
-												   data-template="account-list-tmpl"										                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.ra_id,
-								                              source: raDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />
-								         										
-										</div>
-																																
-									</div>
-					        	</div>
-						        <!-- //ACCOUNTING END -->						       
-
-						        <!-- //CONTACT PERSON -->
-						        <div class="tab-pane" id="tab3">
-						        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-						        	<span id="" class="btn btn-icon btn-default glyphicons download_alt pdf" data-bind="click: cancel" style="width: 80px;">
-						        		<i></i>
-						        		Print as PDF
-						        	</span>
-						        	<span id="" class="btn btn-icon btn-default glyphicons download_alt execl" data-bind="click: cancel" style="width: 80px;">
-						        		<i></i>
-						        		Export to Excel
-						        	</span>
-					        	</div>
-						        <!-- //CONTACT PERSON END -->
-						    </div>
+								        <div class="tab-pane" id="tab-3">
+								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								        <!-- //ACCOUNTING END -->
+								       
+								    </div>
+								</div>
+							</div>
 						</div>
+						<!-- // Tabs END -->
+						
 					</div>
+
 					<div class="block-title">
 						<h3>ABC Co., Ltd</h3>
 						<h2>TRANSACTION LIST BY DATE</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
-
-					<br>
 
 					<table class="table table-borderless table-condensed ">
 						<tr>
@@ -3091,7 +3099,7 @@
 							<th>TXN #</th>
 							<th>TXN Description</th>							
 							<th>Name</th>
-							<th>Attach File</th>
+							<th><i class="icon-paper-clip"></i></th>
 						</tr>
 						<tr>
 							<td>10100 Cash & Cash Equivalent</td>
@@ -3099,7 +3107,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td></td>
+							<td><i class="icon-paper-clip"></i></td>
 						</tr>
 						<tr>						
 							<td>Invoice</td>
@@ -3107,7 +3115,7 @@
 							<td>IV-0001</td>
 							<td>anmsjssd</td>
 							<td>Account Receivable</td>
-							<td>1,000.00</td>							
+							<td><i class="icon-paper-clip"></i></td>				
 						</tr>
 						<tr>					
 							<td>Cash Sale</td>
@@ -3115,7 +3123,7 @@
 							<td>SR-0003</td>
 							<td>anmsjssd</td>
 							<td>Cash on hand</td>
-							<td>500.00</td> 					
+							<td><i class="icon-paper-clip"></i></td>					
 						</tr>
 						<tr>
 							<td>Toni</td>
@@ -3123,7 +3131,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td></td>
+							<td><i class="icon-paper-clip"></i></td>
 						</tr>
 						<tr>						
 							<td>Invoice</td>
@@ -3131,7 +3139,7 @@
 							<td>IV-0015</td>
 							<td>asg</td>
 							<td>Account Receivable</td>
-							<td>1,200.00</td>					
+							<td><i class="icon-paper-clip"></i></td>					
 						</tr>
 						<tr>												
 							<td>Cash Receipt</td>
@@ -3139,7 +3147,7 @@
 							<td>CR-0122</td>
 							<td>ss</td>
 							<td>Cash on hand</td>
-							<td>(1,200.00)</td>						
+							<td><i class="icon-paper-clip"></i></td>					
 						</tr>
 						<tr>					
 							<td>Deposit</td>
@@ -3147,7 +3155,7 @@
 							<td>DS-0123</td>
 							<td>aa</td>
 							<td>Cash on hand</td>
-							<td>(2,100.00)</td>						
+							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						<tr>						
 							<td>Sub-total</td>
@@ -3155,15 +3163,14 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td>(2,100.00)</td>						
+							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						
 						<tr>
 							<th colspan="3">Total</th>
 							<th colspan="3">(600.00)</th>
 						</tr>
-					</table>					  
-
+					</table>
 				</div>
 			</div>						
 		</div>
@@ -3179,86 +3186,87 @@
 							onclick="javascript: window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
-						<div class="box-generic">	
-						    <!-- //Tabs Heading -->
-						    <div class="tabsbar tabsbar-1 journal_report_tab_title">
-						        <ul class="row-fluid row-merge ">						            
-						            <li class="span2 glyphicons filter active">
-						            	<a href="#tab1" data-toggle="tab"><i></i> Filters</a>
-						            </li>								            
-						            <li class="span2 glyphicons print">
-						            	<a href="#tab1" data-toggle="tab"><i></i>Print/Export</a>
-						            </li>						            					            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons filter" href="#tab-1" data-toggle="tab"><i></i>Filter</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								
+								<div class="widget-body">
+									<div class="tab-content">
+								    	<!-- //GENERAL INFO -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											<div class="row-fluid">								        		
+								            	<div class="span3">
+													<label for="ddlAR"><span ></span>Filtered by</label>
+													<input id="ddlAR" name="ddlAR"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.account_id,
+										                              source: arDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />													
+												</div>
+												<div class="span3">
+													<label for="ddlRA"><span ></span>Grouped By</label>
+													<input id="ddlRA" name="ddlRA"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.ra_id,
+										                              source: raDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />
+										         										
+												</div>
+																																		
+											</div>
+							
+							        	</div>
+								        <!-- //GENERAL INFO END -->
 
-						    <div class="tab-content">
-
-						    	<!-- //GENERAL INFO -->
-						        <div class="tab-pane active" id="tab1">
-						        	<div class="row-fluid">								        		
-						            	<div class="span3">
-											<label for="ddlAR"><span ></span>Filtered by</label>
-											<input id="ddlAR" name="ddlAR"
-												   data-role="dropdownlist"
-												   data-template="account-list-tmpl"										                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.account_id,
-								                              source: arDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />													
-										</div>
-										<div class="span3">
-											<label for="ddlRA"><span ></span>Grouped By</label>
-											<input id="ddlRA" name="ddlRA"
-												   data-role="dropdownlist"
-												   data-template="account-list-tmpl"										                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.ra_id,
-								                              source: raDS"
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />
-								         										
-										</div>
-																																
-									</div>
-					        	</div>
-						        <!-- //GENERAL INFO END -->
-
-						        <!-- //ACCOUNTING -->
-						        <div class="tab-pane" id="tab2">
-						        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-						        	<span id="" class="btn btn-icon btn-default glyphicons download_alt pdf" data-bind="click: cancel" style="width: 80px;">
-						        		<i></i>
-						        		Print as PDF
-						        	</span>
-						        	<span id="" class="btn btn-icon btn-default glyphicons download_alt execl" data-bind="click: cancel" style="width: 80px;">
-						        		<i></i>
-						        		Export to Excel
-						        	</span>
-						        
-					        	</div>
-
-
-						    </div>
+								        <!-- //ACCOUNTING -->
+								        <div class="tab-pane" id="tab-2">
+								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								        <!-- //ACCOUNTING END -->
+								       
+								    </div>
+								</div>
+							</div>
 						</div>
+						<!-- // Tabs END -->
+						
 					</div>
-
-
 			    	
 					<div class="block-title">
 						<h3>ABC Co., Ltd</h3>
 						<h2>RECENT TRANSACTION LIST</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
-
-					<br>
 
 					<table class="table table-borderless table-condensed ">
 						<tr>
@@ -3270,7 +3278,7 @@
 							<th>TXN Description</th>							
 							<th>Name</th>
 							<th>Amount</th>
-							<th>Attach File</th>
+							<th><i class="icon-paper-clip"></i></th>
 						</tr>
 						<tr>
 							<td>10100 Cash </td>
@@ -3281,7 +3289,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td></td>
+							<td><i class="icon-paper-clip"></i></td>
 						</tr>
 						<tr>						
 							<td>Invoice</td>
@@ -3292,7 +3300,7 @@
 							<td>1,000.00</td>
 							<td></td>
 							<td></td>
-							<td></td>						
+							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						<tr>					
 							<td>Cash Sale</td>
@@ -3303,7 +3311,7 @@
 							<td>500.00</td> 
 							<td></td>
 							<td></td>
-							<td></td>					
+							<td><i class="icon-paper-clip"></i></td>					
 						</tr>
 						<tr>
 							<td>Toni</td>
@@ -3314,7 +3322,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td></td>
+							<td><i class="icon-paper-clip"></i></td>
 						</tr>
 						<tr>						
 							<td>Invoice</td>
@@ -3325,7 +3333,7 @@
 							<td>1,200.00</td>
 							<td></td>
 							<td></td>
-							<td></td>					
+							<td><i class="icon-paper-clip"></i></td>					
 						</tr>
 						<tr>												
 							<td>Cash Receipt</td>
@@ -3336,7 +3344,7 @@
 							<td>(1,200.00)</td>
 							<td></td>
 							<td></td>
-							<td></td>					
+							<td><i class="icon-paper-clip"></i></td>					
 						</tr>
 						<tr>					
 							<td>Deposit</td>
@@ -3347,7 +3355,7 @@
 							<td>(2,100.00)</td>
 							<td></td>
 							<td></td>
-							<td></td>					
+							<td><i class="icon-paper-clip"></i></td>					
 						</tr>
 						<tr>						
 							<td>Sub-total</td>
@@ -3358,7 +3366,7 @@
 							<td>(2,100.00)</td>
 							<td></td>
 							<td></td>
-							<td></td>				
+							<td><i class="icon-paper-clip"></i></td>				
 						</tr>
 						
 						<tr>
@@ -3384,51 +3392,52 @@
 					<br>
 					<br>
 					<div class="row-fluid">
-						<div class="box-generic">	
-						    <!-- //Tabs Heading -->
-						    <div class="tabsbar tabsbar-1 journal_report_tab_title">
-						        <ul class="row-fluid row-merge ">						            
-						            <li class="span2 glyphicons nameplate_alt active">
-						            	<a href="#tab1" data-toggle="tab"><i></i> Date</a>
-						            </li>								            
-						            <li class="span2 glyphicons filter">
-						            	<a href="#tab2" data-toggle="tab"><i></i>Print/Export</a>
-						            </li>					            					            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
+						<!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">	
+							    <!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+							    <!-- // Tabs Heading END -->
+								<div class="widget-body">
+								    <div class="tab-content">
 
-						    <div class="tab-content">
+								    	<!-- //GENERAL INFO -->
+								          <div class="tab-pane active" id="tab-1">									
+									        
+									       	<input data-role="datepicker"
+								                   data-bind="value: as_of">
 
-						    	<!-- //GENERAL INFO -->
-						        <div class="tab-pane active" id="tab1">									
-							        
-							       	<input data-role="datepicker"
-						                   data-bind="value: as_of">
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+								        <!-- //GENERAL INFO END -->
 
-						            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-					
-					        	</div>
-						        <!-- //GENERAL INFO END -->
+								        <!-- //ACCOUNTING -->
+								        <div class="tab-pane" id="tab-2">
+								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								        <!-- //ACCOUNTING END -->						       
 
-						        <!-- //ACCOUNTING -->
-						        <div class="tab-pane" id="tab2">
-						        	
-						        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-						        	<span id="" class="btn btn-icon btn-default glyphicons download_alt pdf" data-bind="click: cancel" style="width: 80px;">
-						        		<i></i>
-						        		Print as PDF
-						        	</span>
-						        	<span id="" class="btn btn-icon btn-default glyphicons download_alt execl" data-bind="click: cancel" style="width: 80px;">
-						        		<i></i>
-						        		Export to Excel
-						        	</span>
-					        	</div>
-						        <!-- //ACCOUNTING END -->						       
-
-						       
-						    </div>
+								       
+								    </div>
+								</div>
+							</div>
 						</div>
+					
 					</div>
 
 					<div class="block-title">
@@ -3436,8 +3445,6 @@
 						<h2>TRIAL BALANCE</h2>
 						<p data-bind="text: displayDate"></p>
 					</div>
-
-					<br>
 
 					<div class="row-fluid journal_block">
 						<div class="span4">
@@ -3460,14 +3467,14 @@
 						</div>
 					</div>
 
-					<table class="table table-borderless table-condensed ">
+					<table class="table table-borderless table-condensed">
 						<thead>
 				            <tr>
 				                <th>CODE</th>
 				                <th>NAME</th>
 				                <th>TYPE</th>
-				                <th>DEBIT</th>
-				                <th>CREDIT</th>
+				                <th class="right">DEBIT</th>
+				                <th class="right">CREDIT</th>
 				            </tr>
 				        </thead>
 				        <tbody data-template="trialBalance-template" data-bind="source: dataSource"></tbody>

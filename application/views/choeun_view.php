@@ -17520,12 +17520,12 @@
         	<div class="clear">
             	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 1%;">
                 	<thead>
-                        <tr data-bind="style: {backgroundColor: obj.color}">
-                            <th>ល.រ<br />N<sup>0</sup></th>
-                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-                            <th>បរិមាណ<br />Quantity</th>
-                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
-                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        <tr>
+                            <th data-bind="style: {backgroundColor: obj.color}">ល.រ<br />N<sup>0</sup></th>
+                            <th data-bind="style: {backgroundColor: obj.color}">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">បរិមាណ<br />Quantity</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃ​ទំនិញ<br />Amount</th>
                         </tr>
                     </thead>
                     <tbody style="margin-top: 2px">
@@ -17687,7 +17687,7 @@
                             <span>Company name / Customer</span>
                         </div>
                         <div class="left dotted-ruler" style="width: 42%;">
-                        	<p style="font-weight:bold">ឡូត ជឿន</p>
+                        	<p style="font-weight:bold"></p>
                         </div>
                     </div>
                     <div class="clear">
@@ -17696,7 +17696,7 @@
                             <span>Telephone N<sup>o</sup></span>
                         </div>
                         <div class="left dotted-ruler" style="width: 52%;">
-                        	<p style="font-weight:bold">010 411429</p>
+                        	<p style="font-weight:bold"></p>
                         </div>
                     </div>
                     <div class="vattin">
@@ -17711,7 +17711,7 @@
                                 <span>​​Invoice N<sup>o</sup></span>
                             </div>
                             <div class="left dotted-ruler" style="width: 46%;">
-                                <p style="font-weight:bold">023450</p>
+                                <p style="font-weight:bold">123456</p>
                             </div>
                         </div>
                         <div class="clear">
@@ -17720,7 +17720,7 @@
                                 <span>​​Date</span>
                             </div>
                             <div class="left dotted-ruler" style="width: 59%;">
-                                <p style="font-weight:bold">24/Jun/2016</p>
+                                <p style="font-weight:bold"><?php echo date('d/M/Y'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -17730,119 +17730,19 @@
             	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
                 	<thead>
                         <tr>
-                            <th>ល.រ<br />N<sup>0</sup></th>
-                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-                            <th>បរិមាណ<br />Quantity</th>
-                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
-                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">ល.រ<br />N<sup>0</sup></th>
+                            <th data-bind="style: {backgroundColor: obj.color}">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">បរិមាណ<br />Quantity</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃ​ទំនិញ<br />Amount</th>
                         </tr>
                     </thead>
-                    <tbody style="margin-top: 2px">
-                    	<tr>
-                        	<td><i>1</i></td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                        	<td><i>2</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>3</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>4</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>5</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>6</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>7</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>8</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>9</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>10</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>11</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>12</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>13</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>14</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>15</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                    <tbody style="margin-top: 2px" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoicePreview-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​<br />Sub Total</td>
                             <td></td>
@@ -17855,7 +17755,7 @@
                         	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​<br />Grand Total</td>
                             <td></td>
                         </tr>
-                    </tbody>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -17888,108 +17788,8 @@
 					</div>
 				    <br>	
 				    <div class="row" style="margin-left:0;">
-						<div class="span10" style="border:1px solid #eee;margin: 0 auto;float: none;margin-bottom: 40px;">
-							<div class="inv1 invvisible">
-					        	<div class="head">
-					            	<div class="logo">
-					                	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
-					                </div>
-					                <div class="cover-name-company">
-					                    <h3>Company Name</h3>
-					                    <div class="vattin">
-					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
-					                    </div>
-					                    <div class="clear">
-					                    	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
-					                        <pre>Address      </pre>
-					                        <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: obj.contact[0].phone"></span></pre>
-					                        <pre>Telephone N<sup>o</sup></pre>
-					                    </div>
-					                </div>
-					            </div>
-					            <div class="content">
-					            	<h1>វិក្កយបត្រ</h1>
-					                <h2>invoice</h2>
-					                <div class="clear">
-					                	<div class="cover-customer">
-					                    	<h5>អតិថិជន​ / Customer :</h5>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
-					                                <span>Company name / Customer</span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 62%;">
-					                            	<p style="font-weight:bold"><span data-bind="text: obj.contact[0].surname"></span><span data-bind="text: obj.contact[0].name"></span></p>
-					                            </div>
-					                        </div>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>ទូរស័ព្ទ​លេខ</p>
-					                                <span>Telephone N<sup>o</sup></span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 78%;">
-					                            	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
-					                            </div>
-					                        </div>
-					                    </div>
-					                    <div class="cover-inv-number">
-					                    	<div class="clear">
-					                        	<div class="left">
-					                        		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
-					                                <span>​​Invoice N<sup>o</sup></span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 42%;">
-					                            	<p style="font-weight:bold" data-bind="text: obj.number"></p>
-					                            </div>
-					                        </div>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>កាល​បរិច្ឆេទ៖</p>
-					                                <span>​​Date</span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 57%;">
-					                            	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
-					                            </div>
-					                        </div>
-					                    </div>
-					                </div>
-					            	<div class="clear">
-					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 1%;">
-					                    	<thead>
-					                            <tr>
-					                                <th>ល.រ<br />N<sup>0</sup></th>
-					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-					                                <th>បរិមាណ<br />Quantity</th>
-					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
-					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
-					                            </tr>
-					                        </thead>
-					                        <tbody data-role="listview"
-													 data-auto-bind="false"
-									                 data-template="invoicePreview-lineDS-template"
-									                 data-bind="source: lineDS">
-									        </tbody>
-									        <tfoot>
-					                            <tr>
-					                            	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
-					                                <td data-bind="text: lineDS.amount"></td>
-					                            </tr>
-					                        </tfoot>
-					                    </table>
-					                </div>
-					            </div>
-					            <div class="foot">
-					            	<div class="cover-signature">
-					                	<div class="singature" style="float:left">
-					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
-					                    </div>
-					                    <div class="singature" style="float:right">
-					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
-					                    </div>
-					                </div>
-					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-					            </div>
-					        </div>
+						<div class="span10" id="invPreviewContent" style="border:1px solid #eee;margin: 0 auto;float: none;margin-bottom: 40px;">
+							
 						</div>
 					</div>
 					<!-- Form actions -->
@@ -46495,15 +46295,14 @@
 					this.addEmpty();					
 				}								
 			}
-			$('.formstyle div a').addClass('form-thumb-active');
-			banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm1);
+			
 		},
 		colorCC 			: function(e){
 			var Color = e.value;
 			var tS = '';
 			if(Color == '#000000' || Color =='#1f497d') tS = '#fff'; 
 			else tS = '#333';
-			$('.inv1 thead tr').css({'background-color': e.value, 'color': tS});
+			$('.inv1 thead tr th').css({'background-color': e.value, 'color': tS});
 		},
 		selectedForm 		: function(e){
 			var Index = $(e.currentTarget).index();
@@ -46525,10 +46324,14 @@
 				take: 100
 			}).then(function(e){
 				var view = self.dataSource.view();
-				
-				self.set("obj", view[0]);				
-			});			
+				self.set("obj", view[0]);	
 
+				banhji.invoiceForm.set("obj", view[0]);	
+				var Index = view[0].transaction_form_id;
+				if(Index == 1) Active = banhji.view.invoiceForm1;	
+				else if(Index == 2) Active = banhji.view.invoiceForm2;
+				banhji.view.invoiceCustom.showIn('#invFormContent', Active);
+			});		
 		},		
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);			
@@ -46578,25 +46381,13 @@
 	});
 	banhji.invoiceForm =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
-		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
 		obj 				: null,
-		company 			: banhji.institute,
-		isEdit 				: false,
-		
+		company 			: banhji.institute,		
+		lineDS 				: dataStore(apiUrl + "transactions/line"),
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
-			if(id){
-				this.set("isEdit", true);
+			if(id){				
 				this.loadObj(id);
-			}else{				
-				if(this.get("isEdit")){
-					this.set("isEdit", false);								
-					this.dataSource.data([]);					
-					
-					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
-				}								
 			}
 		},	    			
 		loadObj 			: function(id){
@@ -46611,7 +46402,6 @@
 				
 				self.set("obj", view[0]);				
 			});			
-			//banhji.invoiceForm1.
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();		
@@ -46621,9 +46411,9 @@
 	});
     banhji.invoicePreview =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS 				: dataStore(apiUrl + "transactions/line"),
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
 		obj 				: null,
+		invTmp 				: null,
 		isEdit 				: false,		
 		user_id				: banhji.source.user_id,
 		company 			: banhji.institute,
@@ -46662,9 +46452,7 @@
 		            '</html>';
 		    
 		    printableContent = $('.inv1').html();
-		    //alert(printableContent);
 		    doc.write(htmlStart + printableContent + htmlEnd);
-		    //alert('a');
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();	
@@ -46682,15 +46470,30 @@
 				var view = self.dataSource.view();			
 
 				self.set("obj", view[0]);
-				self.txnTemplateDS.filter({ field:"id", value: view[0].transaction_template_id });							
+				self.loadObjTemplate(view[0].transaction_template_id);
+				banhji.invoiceForm.lineDS.filter({ field:"transaction_id", value: id });
 			});
+			
 
-			this.lineDS.filter({ field:"transaction_id", value: id });
+		},
+		loadObjTemplate 			: function(id){
+			var self = this;					
+
+			this.txnTemplateDS.query({    			
+				filter: { field:"id", value: id },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.txnTemplateDS.view();
+				var obj = banhji.invoiceForm.get("obj");
+				console.log(obj);
+				//obj.set("color", view[0].color);
+				if(view[0].transaction_form_id == 1) banhji.view.invoicePreview.showIn('#invPreviewContent', banhji.view.invoiceForm1);
+				else if(view[0].transaction_form_id == 2) banhji.view.invoicePreview.showIn('#invPreviewContent', banhji.view.invoiceForm2);
+			});
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
-			this.lineDS.cancelChanges();			
-
 			window.history.back();
 		}    
 	});

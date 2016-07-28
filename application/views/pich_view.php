@@ -3393,7 +3393,7 @@
 									<div class="widget-head">
 										<ul>
 											<li class="active"><a class="glyphicons nameplate_alt" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-											<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+											<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 										</ul>
 									</div>
 									<!-- // Tabs Heading END -->
@@ -3427,17 +3427,14 @@
 									        <div class="tab-pane" id="tab-2">
 									        	
 									        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-									        	<span id="" class="btn btn-icon btn-default glyphicons download_alt pdf" data-bind="click: cancel" style="width: 80px;">
-									        		<i></i>
+									        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+									        		<i class="fa fa-file-pdf-o"></i>
 									        		Print as PDF
 									        	</span>
 									        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
 									        		<i class="fa fa-file-excel-o"></i>
 									        		Export to Excel
 									        	</span>
-
-									        	
-
 								        	</div>
 									        <!-- //ACCOUNTING END -->
 									       
@@ -3454,8 +3451,6 @@
 						<h2>TRIAL BALANCE</h2>
 						<p id="strDate"></p>
 					</div>
-
-					<br>
 
 					<div class="row-fluid journal_block">
 						<div class="span4">
@@ -3484,8 +3479,8 @@
 				                <th>CODE</th>
 				                <th>NAME</th>
 				                <th>TYPE</th>
-				                <th>DEBIT</th>
-				                <th>CREDIT</th>
+				                <th >DEBIT</th>
+				                <th class="right">CREDIT</th>
 				            </tr>
 				        </thead>
 				        <tbody data-template="trialBalance-template" data-bind="source: dataSource"></tbody>
