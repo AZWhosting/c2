@@ -872,7 +872,7 @@
 					           data-bind="value: edate"
 					           placeholder="To ..." />
 
-			            <button id="search" type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+			            <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
 
 					<table class="table table-bordered table-striped table-white">
@@ -3392,7 +3392,7 @@
 						            	<a href="#tab1" data-toggle="tab"><i></i> Date</a>
 						            </li>								            
 						            <li class="span2 glyphicons filter">
-						            	<a href="#tab3" data-toggle="tab"><i></i>Print/Export</a>
+						            	<a href="#tab2" data-toggle="tab"><i></i>Print/Export</a>
 						            </li>					            					            
 						        </ul>
 						    </div>
@@ -3401,24 +3401,13 @@
 						    <div class="tab-content">
 
 						    	<!-- //GENERAL INFO -->
-						        <div class="tab-pane active" id="tab1">
-						        	<input id="sorter" name="sorter"
-							    	   data-role="dropdownlist"                   
-							           data-value-primitive="true"
-							           data-text-field="text"
-							           data-value-field="value"
-							           data-bind="value: sorter,
-							                      source: sortList" />
-					            	
-							        <input id="sdate" name="sdate"						           
-								           data-bind="value: sdate"
-								           placeholder="From ..." />
+						        <div class="tab-pane active" id="tab1">									
 							        
-							       	<input id="edate" name="edate"						           
-								           data-bind="value: edate"
-								           placeholder="To ..." />
+							       	<input data-role="datepicker"
+						                   data-bind="value: as_of">
 
-						            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
+						            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+					
 					        	</div>
 						        <!-- //GENERAL INFO END -->
 
@@ -3443,9 +3432,9 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>TRIAL BALANCE</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
+						<p data-bind="text: displayDate"></p>
 					</div>
 
 					<br>
@@ -3455,88 +3444,34 @@
 							<p>
 								Account
 							</p>
-							<span>
-								200
-							</span>
+							<span data-bind="text: dataSource.total"></span>
 						</div>
 						<div class="span4">
 							<p>
 								Total Dr. Balance
 							</p>
-							<span>
-								200
-							</span>
+							<span data-bind="text: totalDr"></span>
 						</div>
 						<div class="span4">
 							<p>
 								Total Cr. Balance
 							</p>
-							<span>
-								200
-							</span>
+							<span data-bind="text: totalCr"></span>
 						</div>
 					</div>
 
 					<table class="table table-borderless table-condensed ">
-						<tr>
-							<th>Account</th>
-							<th>Name</th>
-							<th>Debit</th>
-							<th>Credit</th>
-						</tr>
-						<tr>
-							<td>10100 Cash & Cash Equivalent</td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>						
-							<td>Invoice</td>
-							<td>7/1/16</td>
-							<td>IV-0001</td>
-							<td>anmsjssd</td>							
-						</tr>
-						<tr>					
-							<td>Cash Sale</td>
-							<td></td>
-							<td>SR-0003</td>
-							<td>anmsjssd</td>					
-						</tr>
-						<tr>
-							<td>Toni</td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>						
-							<td>Invoice</td>
-							<td>7/1/16</td>
-							<td>IV-0015</td>
-							<td>asg</td>						
-						</tr>
-						<tr>												
-							<td>Cash Receipt</td>
-							<td></td>
-							<td>CR-0122</td>
-							<td>ss</td>						
-						</tr>
-						<tr>					
-							<td>Deposit</td>
-							<td></td>
-							<td>DS-0123</td>
-							<td>aa</td>							
-						</tr>
-						<tr>						
-							<td>Sub-total</td>
-							<td></td>
-							<td></td>
-							<td></td>					
-						</tr>
-						
-						<tr>
-							<th colspan="2">Total</th>
-							<th colspan="2">(600.00)</th>
-						</tr>
+						<thead>
+				            <tr>
+				                <th>CODE</th>
+				                <th>NAME</th>
+				                <th>TYPE</th>
+				                <th>DEBIT</th>
+				                <th>CREDIT</th>
+				            </tr>
+				        </thead>
+				        <tbody data-template="trialBalance-template" data-bind="source: dataSource"></tbody>
+				        <tfoot data-template="trialBalance-footer-template" data-bind="source: this"></tfoot>
 					</table>					  
 		        </div>		        
 			</div>							
@@ -3553,22 +3488,22 @@
 		</td>
 		<td style="color: black;">
 			#=type#
-		</td>				
+		</td>						
 		<td class="right" style="color: black;">
 			#if(dr!==0){#
-				#=kendo.toString(dr, "c0", banhji.locale)#
+				#=kendo.toString(dr, "c", banhji.locale)#
 			#}#
 		</td>
 		<td class="right" style="color: black;">
 			#if(cr!==0){#
-				#=kendo.toString(cr, "c0", banhji.locale)#
+				#=kendo.toString(cr, "c", banhji.locale)#
 			#}#
 		</td>		
     </tr>    
 </script>
 <script id="trialBalance-footer-template" type="text/x-kendo-template">
     <tr>
-        <td>TOTAL:</td>
+        <td>TOTAL:</td>        
         <td></td>
         <td></td>        
         <td class="right">
@@ -6369,7 +6304,13 @@
 								</div>
 							</div>
 							<div class="select2-container" style="width: 100%;">								
-																
+								<input data-role="combobox"
+					                   data-placeholder="Supplier Type..."					                   
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: contact_type_id,
+					                              source: contactTypeDS"
+					                   style="width: 100%" />									
 							</div>
 						</form>					
 					</div>
@@ -6378,8 +6319,7 @@
 
 					<div class="table table-condensed" style="height: 580px;"						 
 						 data-role="grid" 
-						 data-bind="source: contactDS"
-						 data-auto-bind="false" 
+						 data-bind="source: contactDS"						  
 						 data-row-template="vendorCenter-vendor-list-tmpl"
 						 data-columns="[{title: ''}]"
 						 data-selectable=true
@@ -6400,18 +6340,12 @@
 							            	<span data-bind="text: obj.surname"></span>
 							            	<span data-bind="text: obj.name"></span>
 							            </li>
-							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons riflescope"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
-							            </li>
-							            <li class="glyphicons edit"><span data-bind="click: goEditContact"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons user_add"><a href="#/vendor"><i></i></a>
+							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-3"><i></i></span>
 							            </li>							            							            
+							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-3"><i></i></span>
+							            </li>							            
+							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-3"><i></i></span>
+							            </li>
 							        </ul>
 							        <div class="clearfix"></div>
 							        <!-- // Tabs END -->
@@ -6422,8 +6356,8 @@
 							    <div class="widget-body">
 							        <div class="tab-content">							           
 
-							            <!-- INVOICE Tab content -->
-							            <div id="tab1-4" class="tab-pane active box-generic">
+							            <!-- TRANSACTIONS Tab content -->
+							            <div id="tab1-3" class="tab-pane active box-generic">
 							            	<table class="table table-borderless table-condensed cart_total cash-table">
 								            	<tr>
 								            		<td width="50%">
@@ -6451,37 +6385,10 @@
 								            	</tr>								            	
 							            	</table>
 							            </div>
-							            <!-- // INVOICE Tab content END -->
-
-							            <!-- SEARCH Tab content -->
-							            <div id="tab2-4" class="tab-pane box-generic">
-							                <input data-role="dropdownlist"
-							                	   data-auto-bind="false"
-						            			   data-option-label="(--- Vendor Type ---)"					            			   		                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: contact_type_id,
-								                              source: contactTypeDS"
-								                   style="width: 100%"/>
-
-							                <input data-role="dropdownlist"
-						            			   data-option-label="(--- Currency ---)"					            			   		                   
-								                   data-value-primitive="true"
-								                   data-text-field="code"
-								                   data-value-field="id"
-								                   data-bind="value: currency_id,
-								                              source: currencyDS"
-								                   style="width: 100%"/>
-
-								            <br><br>
-								            <span class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search"></span></span>
-								            <br>
-							            </div>
-							            <!-- // SEARCH Tab content END -->							            
+							            <!-- // TRANSACTIONS Tab content END -->							            						            
 
 							            <!-- INFO Tab content -->
-							            <div id="tab3-4" class="tab-pane box-generic">
+							            <div id="tab2-3" class="tab-pane box-generic">
 							            	<div class="row-fluid">
 								            	<div class="span6">
 										
@@ -6519,7 +6426,7 @@
 							            <!-- // INFO Tab content END -->
 
 							            <!-- NOTE Tab content -->
-							            <div id="tab4-4" class="tab-pane box-generic">
+							            <div id="tab3-3" class="tab-pane box-generic">
 
 										    <div class="chat-controls">															
 												<form class="margin-none">
@@ -6605,7 +6512,7 @@
 					           data-bind="value: edate"
 					           placeholder="To ..." />
 
-			            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
+			            <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
 
 					<table class="table table-bordered table-striped table-white">
@@ -10864,7 +10771,13 @@
 								</div>
 							</div>
 							<div class="select2-container" style="width: 100%;">								
-																
+								<input data-role="combobox"
+					                   data-placeholder="Customer Type..."					                   
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: contact_type_id,
+					                              source: contactTypeDS"
+					                   style="width: 100%" />									
 							</div>
 						</form>					
 					</div>
@@ -11097,7 +11010,7 @@
 					           data-bind="value: edate"
 					           placeholder="To ..." />
 
-			            <button id="search" type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+			            <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
 
 					<table class="table table-bordered table-striped table-white">
@@ -31217,22 +31130,57 @@
 		}		      		
 	});	
 	banhji.trialBalance =  kendo.observable({
-		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "accounting_reports/trial_balance"),		
+		lang 				: langVM,		
+		dataSource			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "accounting_reports/trial_balance",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort:{ field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,			
+			page:1,
+			pageSize: 100
+		}),
+		sortList			: banhji.source.sortList,
 		as_of 				: new Date(),		
-		currentSort 		: "asc",							
+		currentSort 		: "asc",
+		company 			: banhji.institute,							
 		pageLoad 			: function(){
-			
 		},
-		search 				: function(){
-			var as_of = kendo.toString(this.get("as_of"), "yyyy-MM-dd");
+		displayDate 		: function(){
+			var d = "",
+			asOf = this.get("as_of");
 
-			if(as_of){
-				this.dataSource.filter([
-					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:as_of }
-				]);
+			if(asOf){
+				d = "As Of " + kendo.toString(asOf, "dd-MM-yyyy");
 			}
-		},
+
+			return d;
+		},		
 		sort 				: function(e){
 			var col = "",
 			target = e.currentTarget.innerText;
@@ -31259,6 +31207,15 @@
 
 			this.dataSource.sort({ field:col, dir:this.get("currentSort") });
 		},
+		search 				: function(){
+			var as_of = kendo.toString(this.get("as_of"), "yyyy-MM-dd");
+
+			if(as_of){
+				this.dataSource.filter([
+					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:as_of }
+				]);
+			}
+		},		
 		totalDr 			: function() {
 	        var sum = 0;
 
@@ -33752,7 +33709,6 @@
 		}),
 		contactTypeDS		: banhji.source.supplierTypeDS,
 		noteDS 				: dataStore(apiUrl + 'notes'),		
-		currencyDS 			: banhji.source.currencyDS,		
 		summaryDS 			: dataStore(apiUrl + "transactions"),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
@@ -33761,17 +33717,38 @@
 		obj 				: null,
 		note 				: "",		
 		searchText 			: "",		
-		contact_type_id 	: 0,
-		currency_id 		: 0,
+		contact_type_id 	: null,		
 		user_id 			: banhji.source.user_id,
 		balance 			: 0,
 		po 					: 0,
 		openInvoice 		: 0,
 		overInvoice 		: 0,		
-		pageLoad 			: function(){		
-			this.contactDS.fetch();
-			this.transactionDS.fetch();
-			this.summaryDS.fetch();										
+		pageLoad 			: function(id){
+			if(id){
+				this.loadObj(id);
+			}
+
+			//Refresh
+			if(this.contactDS.total()>0){
+				this.contactDS.fetch();
+			}
+			if(this.transactionDS.total()>0){
+				this.transactionDS.fetch();
+			}
+			if(this.summaryDS.total()>0){
+				this.summaryDS.fetch();
+			}								
+		},
+		loadObj 			: function(id){
+			var self = this;
+
+			this.dataSource.bind("requestEnd", function(e){
+				if(e.type=="read"){
+					var data = e.response.results;
+					
+								
+				}
+			});
 		},
 		loadContact 		: function(id){
 			var self = this;			
@@ -33895,53 +33872,7 @@
 			this.loadSummary(id);
 			this.loadTransaction(id);			
 			this.loadNote(id);
-		},
-		sorterChanges 		: function(){
-			var value = this.get("sorter");
-
-			switch(value){
-			case "today":
-				var today = new Date();
-				
-				this.set("sdate", today);
-				this.set("edate", today);
-			  					
-			  	break;
-			case "week":
-			  	var thisWeek = new Date;
-				var first = thisWeek.getDate() - thisWeek.getDay(); 
-				var last = first + 6;
-
-				var firstDayOfWeek = new Date(thisWeek.setDate(first));
-				var lastDayOfWeek = new Date(thisWeek.setDate(last));				
-
-				this.set("sdate", firstDayOfWeek);
-				this.set("edate", lastDayOfWeek);
-				
-			  	break;
-			case "month":
-				var thisMonth = new Date;				  	
-				var firstDayOfMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1);
-				var lastDayOfMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 0);
-
-				this.set("sdate", firstDayOfMonth);
-				this.set("edate", lastDayOfMonth);
-
-			  	break;
-			case "year":
-				var thisYear = new Date();
-			  	var firstDayOfYear = new Date(thisYear.getFullYear(), 0, 1);
-				var lastDayOfYear = new Date(thisYear.getFullYear(), 11, 31);
-
-				this.set("sdate", firstDayOfYear);
-				this.set("edate", lastDayOfYear);
-
-			  	break;
-			default:
-				this.set("sdate", "");
-				this.set("edate", "");					  
-			}
-		},
+		},		
 		enterSearch 		: function(e){
 			e.preventDefault();
 
@@ -33951,8 +33882,7 @@
 			var self = this, 
 			para = [],
       		txtSearch = this.get("searchText"),       		
-      		contact_type_id = this.get("contact_type_id"),
-      		currency_id = this.get("currency_id");      		
+      		contact_type_id = this.get("contact_type_id");      		
       		
       		if(txtSearch){
       			para.push(      				
@@ -33965,26 +33895,13 @@
 
       		if(contact_type_id){
       			para.push({ field: "contact_type_id", value: contact_type_id });
-      		}else{
-      			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 2 });
-      		}
-
-      		if(currency_id){
-      			para.push({ field: "currency_id", value: currency_id });
-      		}      		
+      		}      		     		
 
       		this.contactDS.filter(para);
-      		var loaded = false;
-      		this.contactDS.bind("requestEnd", function(){
-      			if(loaded==false){
-      				loaded = true;
-
-      				//Clear search filters
-		      		self.set("searchText", "");		      		
-		      		self.set("contact_type_id", 0);
-		      		self.set("currency_id", 0);
-      			}
-      		});      			
+      		
+			//Clear search filters
+      		this.set("searchText", "");		      		
+      		this.set("contact_type_id", null);		       			
 		},
 		searchTransaction	: function(){
 			var self = this,
@@ -39805,7 +39722,7 @@
 		obj 				: null,
 		note 				: "",
 		searchText 			: "",
-		contact_type_id 	: 0,
+		contact_type_id 	: null,
 		currency_id 		: 0,
 		user_id 			: banhji.source.user_id,
 		balance 			: 0,
@@ -55006,12 +54923,14 @@
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
 			
-			var vm = banhji.trial_balance;
+			var vm = banhji.trialBalance;
 
 			if(banhji.pageLoaded["trial_balance"]==undefined){
-				banhji.pageLoaded["trial_balance"] = true;              
+				banhji.pageLoaded["trial_balance"] = true;                
                 						
 			}
+
+			vm.pageLoad();
 		}		
 	});
 	banhji.router.route("/chart_of_account", function(){
@@ -56218,8 +56137,10 @@
 											  
 					}
 
-					start.value(sdate);
-					end.value(edate);
+					vm.set("sdate", sdate);
+					vm.set("edate", edate);
+					// start.value(sdate);
+					// end.value(edate);
 					
 					start.max(end.value());
                 	end.min(start.value());
@@ -56828,8 +56749,10 @@
 											  
 					}
 
-					start.value(sdate);
-					end.value(edate);
+					vm.set("sdate", sdate);
+					vm.set("edate", edate);
+					// start.value(sdate);
+					// end.value(edate);
 					
 					start.max(end.value());
                 	end.min(start.value());

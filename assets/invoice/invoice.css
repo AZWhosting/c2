@@ -132,8 +132,11 @@ pre {
 	font-size: 10px;
 	font-weight: bold;
 	border: 1px solid #000;
-	background-color: rgb(242, 242, 242);
 	text-align: center;
+	color:#000;
+}
+.inv1 thead tr {
+	background-color: rgb(242, 242, 242);
 }
 .inv1 td {
 	text-align: center;

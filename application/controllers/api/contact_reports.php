@@ -379,7 +379,9 @@ class Contact_reports extends REST_Controller {
 			'ar_customer' 		=> $arCustomerCount,
 			'ar_overdue' 		=> $arOverDue,
 			'collection_day' 	=> $collectionDay
-		);		
+		);
+
+		$data["count"] = count($data["results"]);		
 
 		//Response Data		
 		$this->response($data, 200);	
