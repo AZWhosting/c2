@@ -316,6 +316,7 @@ class Profiles extends REST_Controller {
 			$inst->type_id = $r->type->id;
 			$inst->monetary_id = 3;
 			if($inst->save(array($user, $modules->all))) {
+				$user->save($modules->all);
 				// fillin dafault data
 				$data[] = array(
 					'id' => $inst->id,
