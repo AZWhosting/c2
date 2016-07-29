@@ -748,6 +748,7 @@
 								<input data-role="combobox"
 					                   data-placeholder="Account Type..."
 					                   data-template="account-type-list-tmpl"
+					                   data-value-primitive="true"
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: account_type_id,
@@ -2181,10 +2182,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td >
-								<h3><a href="#/">Statement of Profit or Loss</a></h3>
+								<h3><a href="#/statement_profit_loss">Statement of Profit or Loss</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Statement of Financial Position</a></h3>								
+								<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -2756,7 +2757,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<th><i class="icon-paper-clip"></i></th>
+							<td><i class="icon-paper-clip"></i></td>
 						</tr>
 						<tr>						
 							<td>Invoice</td>
@@ -2767,7 +2768,7 @@
 							<td>1,000.00</td>
 							<td>1,000.00</td>
 							<td>Account Receivable</td>
-							<th><i class="icon-paper-clip"></i></th>						
+							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						<tr>					
 							<td>Cash Sale</td>
@@ -2778,7 +2779,7 @@
 							<td>500.00</td>	
 							<td></td>
 							<td></td>
-							<th><i class="icon-paper-clip"></i></th>						
+							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						<tr>
 							<td>Toni</td>
@@ -2800,7 +2801,7 @@
 							<td>1,200.00</td>
 							<td></td>
 							<td></td>
-							<th><i class="icon-paper-clip"></i></th>						
+							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						<tr>												
 							<td>Cash Receipt</td>
@@ -2811,7 +2812,7 @@
 							<td>(1,200.00)</td>
 							<td></td>
 							<td></td>
-							<th><i class="icon-paper-clip"></i></th>					
+							<td><i class="icon-paper-clip"></i></td>					
 						</tr>
 						<tr>					
 							<td>Deposit</td>
@@ -2822,7 +2823,7 @@
 							<td>(2,100.00)</td>
 							<td></td>
 							<td></td>
-							<th><i class="icon-paper-clip"></i></th>						
+							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						<tr>						
 							<td>Sub-total</td>
@@ -2836,7 +2837,7 @@
 							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						
-						<tr>
+						<tr class="bg-total">
 							<th colspan="4">Total</th>
 							<th colspan="5">(600.00)</th>
 						</tr>
@@ -3408,7 +3409,7 @@
 
 								    	<!-- //GENERAL INFO -->
 								          <div class="tab-pane active" id="tab-1">									
-									        
+									        As of:
 									       	<input data-role="datepicker"
 								                   data-bind="value: as_of">
 
@@ -3509,7 +3510,7 @@
     </tr>    
 </script>
 <script id="trialBalance-footer-template" type="text/x-kendo-template">
-    <tr>
+    <tr class="bg-total">
         <td>TOTAL:</td>        
         <td></td>
         <td></td>        
@@ -3588,6 +3589,81 @@
 			#=account_type.length>0 ? account_type[0].name : ""#
 		</td>				
     </tr>    
+</script>
+
+<script id="statementProfitLoss" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryStatement">
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+					<div class="block-title">
+						<h3>Company is Name</h3>
+						<h2>Statement of Profit or Loss</h2>
+						<p>for the year ended 31 December 2016</p>
+					</div>
+			    
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<th></th>
+							<th>Note</th>
+							<th class="right">2016</th>
+							<th class="right">2015</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="right">KHR</td>
+							<td class="right">KHR</td>
+						</tr>
+						<tr>
+							<td>Revenue</td>
+							<td>10</td>
+							<td class="right">680,000</td>
+							<td class="right">525,000</td>
+						</tr>
+						<tr>
+							<td>Cost</td>
+							<td></td>
+							<td class="right">(400,000)</td>
+							<td class="right">(300,000)</td>
+						</tr>
+						<tr class="bold-border">
+							<td>Gross Profit</td>
+							<td></td>
+							<td class="right">280,000</td>
+							<td class="right">225,000</td>
+						</tr>
+					</table>
+
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+
+<script id="statementFinancialPosition" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryCustomer">
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+					<div class="block-title">
+						<h3>Company is Name</h3>
+						<h2>Statement of Financial Position</h2>
+						<p>for the year ended 31 December 2016</p>
+					</div>
+			    		  
+		        </div>		        
+			</div>							
+		</div>
+	</div>
 </script>
 
 <script id="accountingSetting" type="text/x-kendo-template">
@@ -6312,6 +6388,7 @@
 							</div>
 							<div class="select2-container" style="width: 100%;">								
 								<input data-role="combobox"
+									   data-value-primitive="true"
 					                   data-placeholder="Supplier Type..."					                   
 					                   data-text-field="name"
 					                   data-value-field="id"
@@ -10779,7 +10856,8 @@
 							</div>
 							<div class="select2-container" style="width: 100%;">								
 								<input data-role="combobox"
-					                   data-placeholder="Customer Type..."					                   
+					                   data-placeholder="Customer Type..."
+					                   data-value-primitive="true"					                   
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: contact_type_id,
@@ -26899,9 +26977,7 @@
 	</span>
 </script>
 <script id="segment-list-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=name# (#=segment[0].name#)
-	</span>
+	<span>#=code#</span> <span>#=name#</span>
 </script>
 <script id="job-list-tmpl" type="text/x-kendo-tmpl">
 	<span>
@@ -29140,7 +29216,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		//Account
+		//Accounting
 		accountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -29872,7 +29948,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			group: { field: "segment[0].name"},
+			// group: { field: "segment[0].name"},
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -29972,7 +30048,7 @@
 			return fiscalDate;
 		}
 	});
-
+	
 	/*********************
 	*  Accounting Section  *
 	**********************/
@@ -30593,13 +30669,12 @@
 		},			
 		setRate 			: function(){
 			var self = this, 
-			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
+			obj = this.get("obj"),			
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -32376,12 +32451,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -32857,12 +32931,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -33903,7 +33976,7 @@
       		if(contact_type_id){
       			para.push({ field: "contact_type_id", value: contact_type_id });
       		}      		     		
-
+      		
       		this.contactDS.filter(para);
       		
 			//Clear search filters
@@ -39900,8 +39973,7 @@
 			var self = this, 
 			para = [],
       		txtSearch = this.get("searchText"),
-      		contact_type_id = this.get("contact_type_id"),
-      		currency_id = this.get("currency_id");
+      		contact_type_id = this.get("contact_type_id");
       		
       		if(txtSearch){
       			para.push(
@@ -39916,11 +39988,7 @@
       			para.push({ field: "contact_type_id", value: contact_type_id });
       		}else{
       			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 1 });
-      		}
-
-      		if(currency_id){
-      			para.push({ field: "currency_id", value: currency_id });
-      		}
+      		}      		
 
       		this.contactDS.filter(para);
       		var loaded = false;
@@ -48979,13 +49047,12 @@
 		},			
 		setRate 			: function(){
 			var self = this, 
-			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
+			obj = this.get("obj"), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -54101,8 +54168,8 @@
 		transactionListDate: new kendo.Layout("#transactionListDate", {model: banhji.transactionListDate}),
 		recentTransactionsList: new kendo.Layout("#recentTransactionsList", {model: banhji.recentTransactionsList}),
 		recurringJournalList: new kendo.Layout("#recurringJournalList", {model: banhji.recurringJournalList}),
-
-
+		statementProfitLoss: new kendo.Layout("#statementProfitLoss", {model: banhji.statementProfitLoss}),
+		statementFinancialPosition: new kendo.Layout("#statementFinancialPosition", {model: banhji.statementFinancialPosition}),
 
 		//Employee
 		employeeDashboard: new kendo.Layout("#employeeDashboard", {model: banhji.employeeDashboard}),
@@ -55639,6 +55706,301 @@
 			}
 		}		
 	});
+	banhji.router.route("/statement_profit_loss", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.statementProfitLoss);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			var vm = banhji.journalReport;
+
+			if(banhji.pageLoaded["statement_profit_loss"]==undefined){
+				banhji.pageLoaded["statement_profit_loss"] = true;
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());				
+
+				$("#search").click(function(e){
+		        	e.preventDefault();
+
+		        	var para = [],		        	
+					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
+					edate = kendo.toString(end.value(), "yyyy-MM-dd");
+					
+		        	//Dates
+		        	if(start.value() && end.value()){        		
+		            	para.push({ field:"issued_date >=", value: sdate });
+		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
+		            }else if(start.value()){
+		            	para.push({ field:"issued_date", value: sdate });
+		            }else if(end.value()){
+		            	para.push({ field:"issued_date <=", value: edate });
+		            }else{
+		            	
+		            }
+
+		            vm.dataSource.filter(para);		            
+		        });								
+						
+			}
+		}		
+	});	
+	banhji.router.route("/statement_financial_position", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.statementFinancialPosition);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			var vm = banhji.journalReport;
+
+			if(banhji.pageLoaded["statement_financial_position"]==undefined){
+				banhji.pageLoaded["statement_financial_position"] = true;
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());				
+
+				$("#search").click(function(e){
+		        	e.preventDefault();
+
+		        	var para = [],		        	
+					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
+					edate = kendo.toString(end.value(), "yyyy-MM-dd");
+					
+		        	//Dates
+		        	if(start.value() && end.value()){        		
+		            	para.push({ field:"issued_date >=", value: sdate });
+		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
+		            }else if(start.value()){
+		            	para.push({ field:"issued_date", value: sdate });
+		            }else if(end.value()){
+		            	para.push({ field:"issued_date <=", value: edate });
+		            }else{
+		            	
+		            }
+
+		            vm.dataSource.filter(para);		            
+		        });								
+						
+			}
+		}		
+	});
+
 
 	/*************************
 	*   Employee Section   *
@@ -60954,7 +61316,6 @@
 	 //                });
 	 //              }
 	 //            });
-	 //        }						
-		// }
+	 //                                        
 	});
 </script>

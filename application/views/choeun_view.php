@@ -17451,6 +17451,34 @@
 		</div>
 	</div>
 </script>
+<script id="invoiceForm" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2>PREVIEW FORM</h2>
+				    <br>	
+				    <div class="row" style="margin-left:0;">			   				
+						<div class="span10" id="invFormContent" style="border:1px solid #ccc; margin: 0 auto;">	
+						</div>
+					</div>
+					<!-- Form actions -->
+					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
+						<span id="notification"></span>
+
+						<span id="savePrint" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+						<span id="savePDF" class="btn btn-icon btn-success glyphicons power" data-bind="click: savePDF" style="width: 80px;"><i></i> Save PDF</span>									
+					</div>
+					<!-- // Form actions END -->
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
 <script id="invoiceForm1" type="text/x-kendo-template">
 	<div class="inv1">
     	<div class="head">
@@ -17687,7 +17715,7 @@
                             <span>Company name / Customer</span>
                         </div>
                         <div class="left dotted-ruler" style="width: 42%;">
-                        	<p style="font-weight:bold"></p>
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].company"></p>
                         </div>
                     </div>
                     <div class="clear">
@@ -17696,11 +17724,11 @@
                             <span>Telephone N<sup>o</sup></span>
                         </div>
                         <div class="left dotted-ruler" style="width: 52%;">
-                        	<p style="font-weight:bold"></p>
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
                         </div>
                     </div>
                     <div class="vattin">
-                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 5px;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
                 </div>
                 </div>
                 <div class="cover-inv-number" style="width: 20%;">
@@ -17711,7 +17739,7 @@
                                 <span>​​Invoice N<sup>o</sup></span>
                             </div>
                             <div class="left dotted-ruler" style="width: 46%;">
-                                <p style="font-weight:bold">123456</p>
+                                <p style="font-weight:bold" data-bind="text: obj.number"></p>
                             </div>
                         </div>
                         <div class="clear">
@@ -17720,7 +17748,7 @@
                                 <span>​​Date</span>
                             </div>
                             <div class="left dotted-ruler" style="width: 59%;">
-                                <p style="font-weight:bold"><?php echo date('d/M/Y'); ?></p>
+                                <p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
                             </div>
                         </div>
                     </div>
@@ -17739,17 +17767,17 @@
                     </thead>
                     <tbody style="margin-top: 2px" data-role="listview"
 										 data-auto-bind="false"
-						                 data-template="invoicePreview-lineDS-template"
+						                 data-template="invoiceForm-lineDS-template"
 						                 data-bind="source: lineDS">
                     </tbody>
                     <tfoot>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​<br />Sub Total</td>
-                            <td></td>
+                            <td data-bind="text: obj.sub_total"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០%<br />VAT (10%)</td>
-                            <td></td>
+                            <td data-bind="text: obj.tax"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​<br />Grand Total</td>
@@ -17777,37 +17805,9 @@
     	<img src="<?php echo base_url(); ?>assets/invoice/img/#= image_url #.jpg" alt="#: name # image" />
     </a>
 </script>
-<script id="invoicePreview" type="text/x-kendo-template">
-    <div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
-					</div>
-				    <br>	
-				    <div class="row" style="margin-left:0;">
-						<div class="span10" id="invPreviewContent" style="border:1px solid #eee;margin: 0 auto;float: none;margin-bottom: 40px;">
-							
-						</div>
-					</div>
-					<!-- Form actions -->
-					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-						<span id="notification"></span>
-
-						<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>									
-					</div>
-					<!-- // Form actions END -->
-				</div>							
-			</div>
-		</div>
-	</div>
-</script>
-<script id="invoicePreview-lineDS-template" type="text/x-kendo-template">
+<script id="invoiceForm-lineDS-template" type="text/x-kendo-template">
 	<tr>
-		<td><i>#= id#</i></td>
+		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
 		<td>#= description#</td>
 		<td>#= quantity#</td>
 		<td>#= price#</td>
@@ -46380,45 +46380,14 @@
 		}    
 	});
 	banhji.invoiceForm =  kendo.observable({
-		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
+		dataSource 			: dataStore(apiUrl + "transactions"),
+		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
 		obj 				: null,
 		company 			: banhji.institute,		
 		lineDS 				: dataStore(apiUrl + "transactions/line"),
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
 			if(id){				
-				this.loadObj(id);
-			}
-		},	    			
-		loadObj 			: function(id){
-			var self = this;				
-
-			this.dataSource.query({    			
-				filter: { field:"id", value: id },
-				page: 1,
-				take: 100
-			}).then(function(e){
-				var view = self.dataSource.view();
-				
-				self.set("obj", view[0]);				
-			});			
-		},
-		cancel 				: function(){
-			this.dataSource.cancelChanges();		
-
-			window.history.back();
-		}    
-	});
-    banhji.invoicePreview =  kendo.observable({
-		dataSource 			: dataStore(apiUrl + "transactions"),
-		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
-		obj 				: null,
-		invTmp 				: null,
-		isEdit 				: false,		
-		user_id				: banhji.source.user_id,
-		company 			: banhji.institute,
-		pageLoad 			: function(id, is_recurring){
-			if(id){										
 				this.loadObj(id);
 			}
 		},	 
@@ -46433,7 +46402,7 @@
 		            '<html>' +
 		            '<head>' +
 		            '<meta charset="utf-8" />' +
-		            '<title>Kendo UI Grid</title>' +
+		            '<title></title>' +
 		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" /> <link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" /> ' +
 		            '<style>' +
 		            'html { font: 11pt sans-serif; }' +
@@ -46458,26 +46427,69 @@
 		    	win.print();	
 		    },2000)
 		    
-		},   			
-		loadObj 			: function(id){
-			var self = this;					
+		},	    
+		savePDF				: function(e){
 
+			kendo.pdf.defineFont({
+	            "Content"             : "<?php echo base_url(); ?>assets/fonts/KhmerOSBattambang-Regular.ttf"
+	        });
+	        
+			var draw = kendo.drawing;
+
+	        draw.drawDOM($(".inv1"), {
+	            avoidLinks: true,
+	            paperSize: "A4"
+	        })
+	        .then(function(root) {
+	        	var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" /> <link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" /> ' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style>' +
+		            '</head>' +
+		            '<body><div class="inv1">';
+
+			    var htmlEnd =
+			            '</div></body>' +
+			            '</html>';
+			    var htmlMain = htmlStart + root + htmlEnd;
+			    console.log(root);
+	            return draw.exportPDF(htmlMain);
+	        })
+	        .done(function(data) {
+			    
+	            kendo.saveAs({
+	                dataURI: data,
+	                fileName: "1.pdf"
+	            });
+	        });
+		},		
+		loadObj 			: function(id){
+			var self = this;				
 			this.dataSource.query({    			
 				filter: { field:"id", value: id },
 				page: 1,
 				take: 100
 			}).then(function(e){
-				var view = self.dataSource.view();			
-
+				var view = self.dataSource.view();				
 				self.set("obj", view[0]);
-				self.loadObjTemplate(view[0].transaction_template_id);
-				banhji.invoiceForm.lineDS.filter({ field:"transaction_id", value: id });
+				self.loadObjTemplate(view[0].transaction_template_id);				
 			});
-			
-
+				
 		},
 		loadObjTemplate 			: function(id){
-			var self = this;					
+			var self = this, obj = this.get('obj');					
 
 			this.txnTemplateDS.query({    			
 				filter: { field:"id", value: id },
@@ -46485,19 +46497,24 @@
 				take: 100
 			}).then(function(e){
 				var view = self.txnTemplateDS.view();
-				var obj = banhji.invoiceForm.get("obj");
-				console.log(obj);
-				//obj.set("color", view[0].color);
-				if(view[0].transaction_form_id == 1) banhji.view.invoicePreview.showIn('#invPreviewContent', banhji.view.invoiceForm1);
-				else if(view[0].transaction_form_id == 2) banhji.view.invoicePreview.showIn('#invPreviewContent', banhji.view.invoiceForm2);
+				var txNID = view[0].transaction_form_id;
+				
+				obj.set("color", view[0].color);
+
+				if(txNID == 1){
+					banhji.view.invoiceForm.showIn("#invFormContent", banhji.view.invoiceForm1);
+				} else if(txNID == 2){
+					banhji.view.invoiceForm.showIn("#invFormContent", banhji.view.invoiceForm2);
+				}
+				self.lineDS.filter({ field:"transaction_id", value: id });	
 			});
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();
+			this.dataSource.cancelChanges();		
+
 			window.history.back();
 		}    
 	});
-
 
 	/*************************
 	*	Cashier Section   *
@@ -52436,7 +52453,7 @@
 		invoiceForm1: new kendo.Layout("#invoiceForm1", {model: banhji.invoiceForm}),
 		invoiceForm2: new kendo.Layout("#invoiceForm2", {model: banhji.invoiceForm}),
 
-		invoicePreview: new kendo.Layout("#invoicePreview", {model: banhji.invoicePreview}),
+		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.saleSummaryCustomer}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.saleDetailCustomer}),
 		saleSummaryProduct: new kendo.Layout("#saleSummaryProduct", {model: banhji.saleSummaryProduct}),
@@ -55967,17 +55984,17 @@
 			vm.pageLoad(id);		
 		};	
 	});
-	banhji.router.route("/invoice_preview(/:id)", function(id){
+	banhji.router.route("/invoice_form(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.invoicePreview);			
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.invoiceForm);			
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.invoicePreview;
+			var vm = banhji.invoiceForm;
 			
-			if(banhji.pageLoaded["invoice_preview"]==undefined){
-				banhji.pageLoaded["invoice_preview"] = true;				        
+			if(banhji.pageLoaded["invoice_form"]==undefined){
+				banhji.pageLoaded["invoice_form"] = true;				        
 
 				//Function write css to header
 				function loadStyle(href){
