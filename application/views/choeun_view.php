@@ -46464,11 +46464,10 @@
 			            '</div></body>' +
 			            '</html>';
 			    var htmlMain = htmlStart + root + htmlEnd;
-			    console.log(root);
+
 	            return draw.exportPDF(htmlMain);
 	        })
 	        .done(function(data) {
-			    
 	            kendo.saveAs({
 	                dataURI: data,
 	                fileName: "1.pdf"
