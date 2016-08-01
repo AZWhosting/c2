@@ -13984,15 +13984,13 @@
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
 						        <ul class="row-fluid row-merge">
-						        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i> </a>
+						        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i> </a>
 						            </li>
-						            <li class="span1 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i> </a>
-						            </li>
-						            <li class="span1 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i> </a>
-						            </li>
-						            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+						            <li class="span1 glyphicons adress_book"><a href="#tab2-4" data-toggle="tab"><i></i> </a>
 						            </li>						            
-						            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
+						            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
+						            </li>						            
+						            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i> Recuring</a>
 						            </li>						            								            
 						        </ul>
 						    </div>
@@ -14001,9 +13999,33 @@
 						    <div class="tab-content">
 
 						    	<!-- Options Tab content -->
-						        <div class="tab-pane active" id="tab1-5">						            
-						            <table class="table table-borderless table-condensed cart_total">							            
-										
+						        <div class="tab-pane active" id="tab1-4">						            
+						            <table class="table table-borderless table-condensed cart_total">										
+							            <tr>
+											<td>
+												Balance
+												<span data-bind="text: balance"></span>
+											</td>
+											<td>
+												Credit Allowed
+												<span data-format="n" data-bind="text: obj.credit_allowed"></span>
+											</td>
+										</tr>										
+										<tr>
+											<td>Sale Rep</td>
+											<td>
+												<input id="cbbEmployee" name="cbbEmployee"
+													   data-role="combobox"											                    
+									                   data-value-primitive="true"
+									                   data-template="contact-list-tmpl"
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.employee_id,
+									                              source: employeeDS"
+									                   data-placeholder="Type Name.."                    
+									                   required data-required-msg="required" style="width: 100%" />
+											</td>
+										</tr>
 							            <tr>
 							            	<td>Valid Until</td>
 							            	<td>
@@ -14015,38 +14037,7 @@
 														required data-required-msg="required"
 														style="width:100%;" />
 							            	</td>
-							            </tr>											
-						            </table>						            
-						        </div>
-						        <!-- // Options Tab content END -->
-
-						        <!-- Address Tab content -->
-						        <div class="tab-pane" id="tab2-5">
-						        	Billing Address
-									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
-									
-									Shipping Address
-									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
-											
-						        </div>
-						        <!-- // Address Tab content END -->
-
-						        <!-- Info Tab content -->
-						        <div class="tab-pane" id="tab3-5">
-						        	
-									<table class="table table-borderless table-condensed cart_total">
-										<tr>
-											<td>Balance</td>
-											<td>
-												<span data-bind="text: balance"></span>
-											</td>
-										</tr>
-										<tr>
-											<td>Credit Allowed</td>
-											<td>												
-												<span data-format="n" data-bind="text: obj.credit_allowed"></span>
-											</td>
-										</tr>							            					            	
+							            </tr>
 										<tr>
 											<td>Segments</td>
 											<td>
@@ -14062,13 +14053,23 @@
 													   style="width: 100%" /></select>
 											</td>
 										</tr>											
-						            </table>
+						            </table>						            
+						        </div>
+						        <!-- // Options Tab content END -->
+
+						        <!-- Address Tab content -->
+						        <div class="tab-pane" id="tab2-4">
+						        	Billing Address
+									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
+									
+									Shipping Address
+									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 											
 						        </div>
-						        <!-- // Info Tab content END -->
+						        <!-- // Address Tab content END -->						        
 
 						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab4-5">							            	
+						        <div class="tab-pane" id="tab3-4">							            	
 						            
 						            <input name="files"
 						                   type="file"
@@ -14079,7 +14080,7 @@
 						        <!-- // Attach Tab content END -->						        
 
 						        <!-- Recuring Tab content -->
-						        <div class="tab-pane" id="tab5-5">							            	
+						        <div class="tab-pane" id="tab4-4">							            	
 						            
 						            <div class="span5">
 
@@ -14296,7 +14297,7 @@
 				<div class="box-generic" align="right" style="background-color: #0B0B3B;">
 					<span id="notification"></span>
 
-					<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
+					<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
 					<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
 					<!-- <span id="saveSend" class="btn btn-icon btn-warning glyphicons envelope" style="width: 80px;"><i></i> Save Send</span>										 -->
 					<span id="savePrint" class="btn btn-icon btn-default glyphicons print" data-bind="click: cancel" style="width: 80px;"><i></i> Save Print</span>
@@ -28852,6 +28853,43 @@
 				total: 'count'
 			},
 			filter: { field:"parent_id", operator:"where_related", model:"contact_type", value:3 },
+			// group: { field: "contact_type" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		saleRepDS				: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field:"contact_type_id", value:10 },
 			// group: { field: "contact_type" },
 			batch: true,
 			serverFiltering: true,
@@ -43805,6 +43843,7 @@
 	banhji.quote =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),		
@@ -43857,6 +43896,7 @@
 		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
+		employeeDS  		: banhji.source.saleRepDS,
 		itemDS  			: banhji.source.itemDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
@@ -44278,14 +44318,23 @@
 			data = e.data,
 			transaction_id = 0, 
 			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id),
-			rate = obj.rate / item.item_prices[0].rate;
+			item = this.itemDS.get(data.item_id);
 			
 			if(this.get("isEdit")){
 				transaction_id = obj.id;
 			}
 			
-			if(data.item_id>0){		        
+			if(data.item_id>0){
+				var price = 0,
+				rate = 1,
+				measurement_id = 0;
+
+				if(item.item_type_id=="1" || item.item_type_id=="4"){
+					var rate = obj.rate / item.item_prices[0].rate;
+					price = item.item_prices[0].price*rate;
+					measurement_id = item.item_prices[0].measurement_id;
+				}
+
 		        if(item.is_catalog=="1"){
 		        	this.catalogDS.query({
 		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
@@ -44323,15 +44372,16 @@
 
 			        this.changes();		     
 		        }else{
-		        	data.set("measurement_id", item.item_prices[0].measurement_id);		        	
+		        	data.set("measurement_id", measurement_id);		        	
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", item.item_prices[0].price*rate);			        		        
-			        data.set("rate", obj.rate);
+			        data.set("price", price);			        		        
+			        data.set("rate", rate);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
-		    	}		        
+		    	}
+		    			        
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -44368,7 +44418,7 @@
 				reference_id 		: 0,
 				recurring_id 		: "",				
 				user_id 			: this.get("user_id"),
-				seller_id 			: this.get("user_id"), 	    		
+				employee_id 		: "", 	    		
 			   	type				: "Quote",
 			   	sub_total 			: 0,
 			   	account_id 			: 0,				   		   					   				   	
@@ -44467,41 +44517,11 @@
 	    	
 	    	if(this.get("isEdit")){
 	    		this.dataSource.sync();
-
-	    		//Update credit changes
-	    		if(this.get("original_credit") !== obj.credit){	    			
-	    			this.set("original_credit", obj.credit);    			
-
-					var deposit = this.depositDS.at(0);
-					deposit.set("amount", obj.credit*-1);
-
-					this.depositDS.sync();
-	    		}	    		
-
-	    		//Update total changes
-	    		if(this.get("original_total") == obj.amount){
-	    			this.lineDS.sync();	    			
-	    		}else{
-	    			this.set("original_total", obj.amount);
-
-	    			$.each(this.journalLineDS.data(), function(index, value){										
-						value.set("deleted", 1);										
-					});
-
-					this.addJournal(obj.id);
-	    		}	    		
+	    		this.lineDS.sync();	    		   		
 	    	}else{
 	    		//Add brand new transaction
 				this.transactionSync()
 				.then(function(data){
-					//Deposit
-					if(obj.deposit > 0 || obj.credit > 0){
-						self.saveDeposit(data[0].id);
-					}
-
-					//Journal
-				
-
 					//Item line
 					$.each(self.lineDS.data(), function(index, value){										
 						value.set("transaction_id", data[0].id);										
@@ -44517,6 +44537,32 @@
 			this.lineDS.cancelChanges();			
 
 			window.history.back();
+		},
+		delete 					: function(){
+			var self = this, obj = this.get("obj");
+			
+			if (confirm("Are you sure, you want to delete it?")) {				
+		        this.deleteDS.query({
+		        	filter:[
+		        		{ field:"type", operator:"where_in", value:["Sale_Order","Invoice","Cash_Sale"] },
+		        		{ field:"reference_id", value:obj.id },
+		        	],
+		        	page:1,
+		        	pageSize:1
+		        }).then(function(){
+		        	var view = self.deleteDS.view();
+
+		        	if(view.length>0){
+		        		alert("Sorry, you can not delete it.");
+		        	}else{
+		        		obj.set("deleted", 1);
+				        self.dataSource.sync();
+
+				        window.history.back();
+		        	}
+		        });
+		        												
+	    	}	    	
 		},	 
 		//Recurring
 		loadRecurring 		: function(){
