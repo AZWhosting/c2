@@ -1119,7 +1119,7 @@ width: 90px !important;
   margin-right: 15px;
   padding: 10px;
   width: 97%;
-  min-height: 215px;
+  min-height: 240px;
   margin-bottom: 15px;
 }
 
@@ -1344,7 +1344,9 @@ width: 90px !important;
     font-size: 15px;
 }
 .saleSummaryStatement table{
-  width: 100%
+  width: 100%;
+  border-spacing: 5px;
+  border-collapse: separate;
 }
 
 .saleSummaryStatement table tr td{
@@ -1369,8 +1371,25 @@ width: 90px !important;
 .saleSummaryStatement table tr .paddingLeft40{
   padding-left: 40px;
 }
-
-
+.saleSummaryStatement table tr .under-bottom{
+  border-bottom: 3px #333 double;
+}
+.saleSummaryStatement table tr .fontBig{
+  font-size: 15px;
+}
+.saleSummaryStatement table tr .bigBorderbottom{
+  border-bottom: 3px #333 solid;
+}
+.saleSummaryStatement table tr .bigBordertop{
+  border-top: 3px #333 solid;
+}
+.accounCetner-textedit .btn.btn-primary.btn-icon.glyphicons.edit.pull-right{
+  margin-top: 10px;
+  margin-bottom: 0;
+  width: 80px;
+  text-align: right;
+  color: #fff;
+}
 
 
 @media only screen 

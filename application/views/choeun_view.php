@@ -17546,7 +17546,7 @@
                 </div>
             </div>
         	<div class="clear">
-            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 1%;">
+            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
                 	<thead>
                         <tr>
                             <th data-bind="style: {backgroundColor: obj.color}">ល.រ<br />N<sup>0</sup></th>
@@ -17556,117 +17556,17 @@
                             <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃ​ទំនិញ<br />Amount</th>
                         </tr>
                     </thead>
-                    <tbody style="margin-top: 2px">
-                    	<tr>
-                        	<td><i>1</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>2</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>3</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>4</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>5</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>6</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>7</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>8</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>9</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>10</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>11</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>12</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>13</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>14</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td><i>15</i></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
                             <td></td>
                         </tr>
-                    </tbody>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -17765,7 +17665,7 @@
                             <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃ​ទំនិញ<br />Amount</th>
                         </tr>
                     </thead>
-                    <tbody style="margin-top: 2px" data-role="listview"
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
 										 data-auto-bind="false"
 						                 data-template="invoiceForm-lineDS-template"
 						                 data-bind="source: lineDS">
@@ -46285,7 +46185,10 @@
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
-			}else{				
+				
+			}else{	
+				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm1);		
+				this.addRowLineDS();
 				if(this.get("isEdit")){
 					this.set("isEdit", false);								
 					this.dataSource.data([]);					
@@ -46295,7 +46198,19 @@
 					this.addEmpty();					
 				}								
 			}
-			
+		},
+		addRowLineDS			: function(e){
+			banhji.invoiceForm.lineDS.data([]);
+			for (var i = 0; i < 15; i++) { 
+				banhji.invoiceForm.lineDS.add({				
+					id			: i,
+					description : '',
+					quantity 	: '',
+					price 		: '',
+					amount 		: ''
+
+		    	});	
+		    }
 		},
 		colorCC 			: function(e){
 			var Color = e.value;
@@ -46311,27 +46226,33 @@
 			var Active;
 			if(Index == 0) Active = banhji.view.invoiceForm1;	
 			else if(Index == 1) Active = banhji.view.invoiceForm2;
+
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);	
+			this.addRowLineDS();
+
 			var data = e.data, obj = this.get("obj");
 			obj.set("transaction_form_id", data.id);
 		},	    			
 		loadObj 			: function(id){
-			var self = this;				
-
+			var self = this;			
 			this.dataSource.query({    			
 				filter: { field:"id", value: id },
 				page: 1,
 				take: 100
 			}).then(function(e){
 				var view = self.dataSource.view();
-				self.set("obj", view[0]);	
-
+				self.set("obj", view[0]);
 				banhji.invoiceForm.set("obj", view[0]);	
 				var Index = view[0].transaction_form_id;
 				if(Index == 1) Active = banhji.view.invoiceForm1;	
 				else if(Index == 2) Active = banhji.view.invoiceForm2;
 				banhji.view.invoiceCustom.showIn('#invFormContent', Active);
-			});		
+				var Color = view[0].color, tS = '';
+				if(Color == '#000000' || Color =='#1f497d') tS = '#fff'; 
+				else tS = '#333';
+				$('.inv1 thead tr th').css({'color': tS});
+				self.addRowLineDS();
+			});	
 		},		
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);			
@@ -46430,9 +46351,7 @@
 		},	    
 		savePDF				: function(e){
 
-			kendo.pdf.defineFont({
-	            "Content"             : "<?php echo base_url(); ?>assets/fonts/KhmerOSBattambang-Regular.ttf"
-	        });
+			
 	        
 			var draw = kendo.drawing;
 
@@ -46465,7 +46384,7 @@
 			            '</html>';
 			    var htmlMain = htmlStart + root + htmlEnd;
 
-	            return draw.exportPDF(htmlMain);
+	            return draw.exportPDF(root);
 	        })
 	        .done(function(data) {
 	            kendo.saveAs({
@@ -52451,8 +52370,8 @@
 		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
 		invoiceForm1: new kendo.Layout("#invoiceForm1", {model: banhji.invoiceForm}),
 		invoiceForm2: new kendo.Layout("#invoiceForm2", {model: banhji.invoiceForm}),
-
 		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),
+		
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.saleSummaryCustomer}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.saleDetailCustomer}),
 		saleSummaryProduct: new kendo.Layout("#saleSummaryProduct", {model: banhji.saleSummaryProduct}),

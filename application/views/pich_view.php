@@ -748,6 +748,7 @@
 								<input data-role="combobox"
 					                   data-placeholder="Account Type..."
 					                   data-template="account-type-list-tmpl"
+					                   data-value-primitive="true"
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: account_type_id,
@@ -2226,10 +2227,10 @@
 
 						<tr>
 							<td >
-								<h3><a href="#/">Statement of Cash Flow</a></h3>
+								<h3><a href="#/statement_cash_flow">Statement of Cash Flow</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Statement of Changes in Equity</a></h3>
+								<h3><a href="#/statement_changes_equity">Statement of Changes in Equity</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -3597,8 +3598,6 @@
 				<div id="example" class="k-content saleSummaryStatement">
 					<span class="glyphicons no-js remove_2 pull-right" 
 							onclick="javascript: window.history.back()"><i></i></span>
-					<br>
-					<br>
 					<div class="block-title">
 						<h3>Company is Name</h3>
 						<h2>Statement of Profit or Loss</h2>
@@ -3697,7 +3696,6 @@
 		</div>
 	</div>
 </script>
-
 <script id="statementFinancialPosition" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">
@@ -3705,8 +3703,6 @@
 				<div id="example" class="k-content saleSummaryStatement">
 					<span class="glyphicons no-js remove_2 pull-right" 
 							onclick="javascript: window.history.back()"><i></i></span>
-					<br>
-					<br>
 					<div class="block-title">
 						<h3>Company is Name</h3>
 						<h2>Statement of Financial Position</h2>
@@ -3747,7 +3743,7 @@
 						<tr>
 							<td class="paddingLeft40">Building & Structure</td>
 							<td>1</td>
-							<td class="right">9848345</td>
+							<td class="right">9,848,345</td>
 						</tr>
 						<tr>
 							<td class="paddingLeft40">Electrical Systems, Machineries and Improvement</td>
@@ -3762,31 +3758,693 @@
 						<tr>
 							<td class="paddingLeft40">Furniture, Fixtures & Fittings</td>
 							<td>1</td>
-							<td class="right">663429</td>
+							<td class="right">663,429</td>
 						</tr>
 						<tr>
 							<td class="paddingLeft40">Computer and Related Equipment</td>
 							<td>1</td>
-							<td class="right">286688</td>
+							<td class="right">286,688</td>
 						</tr>
 						<tr>
 							<td class="paddingLeft40">Equipments, Electricles Device & Tools</td>
 							<td>1</td>
-							<td class="right">779835</td>
+							<td class="right">779,835</td>
 						</tr>
 						<tr>
 							<td class="paddingLeft40">Heavy Machinaries</td>
 							<td>1</td>
 							<td class="right">341505</td>
 						</tr>
-						
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Completed Investment Properties</td>
+							<td>2</td>
+							<td class="right">3,701,848</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">I​nvestment Properties under-construction</td>
+							<td>2</td>
+							<td class="right">10,087,257</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Investment in Subsidiaries</td>
+							<td>3</td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Non-Current Asset</i></td>
+							<td>3</td>
+							<td class="right bold-border border-bottom">152,712,466</td>
+						</tr>
+						<tr>
+							<td class="bold">Current Assets</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Inventory</td>
+							<td>4</td>
+							<td class="right bold-border border-bottom">389,142,635</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Raw Material</td>
+							<td>4</td>
+							<td class="right">175,561,951</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Working-in-progress</td>
+							<td>4</td>
+							<td class="right">80,575,454</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Finished goods</td>
+							<td>4</td>
+							<td class="right">205,523,139</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Operating Equipment</td>
+							<td>6</td>
+							<td class="right">142,635</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Trade Receivables</td>
+							<td>7</td>
+							<td class="right">142,635</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Properties Sale Receivable</td>
+							<td>7</td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Installment Payment Scheme</td>
+							<td>7</td>
+							<td class="right">205,523,139</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Mortgage Payment Scheme</td>
+							<td>7</td>
+							<td class="right">9,003,967</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">AR from Related Parties</td>
+							<td>6</td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Other receivables</td>
+							<td>7</td>
+							<td class="right">34,859</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Interest Receivable</td>
+							<td>7</td>
+							<td class="right">138,835</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Prepayment & Deposit</td>
+							<td>8</td>
+							<td class="right">3,741,185</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Cash and Cash Equivalent</td>
+							<td>9</td>
+							<td class="right">7,359,195</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Current Assets</i></td>
+							<td>9</td>
+							<td class="right bold-border border-bottom">419,215,778</td>
+						</tr>
+						<tr>
+							<td class="bold">TOTAL ASSETS</td>
+							<td></td>
+							<td class="right bold under-bottom">571,928,244</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="bold">EQUITY & LIABILITIES</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Shareholders Equity</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Share Capital</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Retained Earning</td>
+							<td></td>
+							<td ></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Shareholders Equity</i></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Non-Current Liabilities</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Interest Bearing Loans and Borrowing</td>
+							<td><a href="">10</a></td>
+							<td class="right">36,445,536</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Long term Loan based on Customer Portfolio</td>
+							<td><a href="">10</a></td>
+							<td class="right">60,334,222</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Long term loan from Related Parties</td>
+							<td><a href="">11</a></td>
+							<td class="right">9,429,028</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Land Purchase Payable</td>
+							<td><a href="">12</a></td>
+							<td class="right">150,595,772</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Deposit for Sale of Properties inventory</td>
+							<td><a href="">13</a></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Installment Payment Scheme</td>
+							<td><a href=""></a></td>
+							<td class="right">95,979,147</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Mortgage Payment Scheme</td>
+							<td><a href=""></a></td>
+							<td class="right">76,736,253</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Other Deposit</td>
+							<td><a href=""></a></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Non-Current Liabilities</i></td>
+							<td><a href=""></a></td>
+							<td class="right bold">429,519,958</td>
+						</tr>
+						<tr>
+							<td>Current Liabilities</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Trade Payable</td>
+							<td><a href="">14</a></td>
+							<td class="right">5,720,691</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Short term Bank Borrowing (OD)</td>
+							<td><a href="">9</a></td>
+							<td class="right">7,645,991</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Current Customer Deposit & Prepayment</td>
+							<td><a href="">13</a></td>
+							<td class="right">11,837,636</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Accrued Expenses (including bonus)</td>
+							<td><a href="">15</a></td>
+							<td class="right">280,607</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Salary Payable</td>
+							<td><a href="">16</a></td>
+							<td class="right">1,074,153</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Interest Payable</td>
+							<td><a href=""></a></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">General Provision</td>
+							<td><a href=""></a></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Current Tax Payable</td>
+							<td><a href=""></a></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Current Liabilities</i></td>
+							<td><a href=""></a></td>
+							<td class="right bold-border border-bottom">126,558,805</td>
+						</tr>
+						<tr>
+							<td class="bold">Total Liabilities</td>
+							<td><a href=""></a></td>
+							<td class="right bold border-bottom">556,078,762</td>
+						</tr>
+						<tr>
+							<td class="bold fontBig">Total Liabilities</td>
+							<td><a href=""></a></td>
+							<td class="right bold under-bottom">556,078,762</td>
+						</tr>
 					</table>
-
 		        </div>		        
 			</div>							
 		</div>
 	</div>
 </script>
+<script id="statementCashFlow" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryStatement">
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<div class="block-title">
+						<h3>Company is Name</h3>
+						<h2>Statement of Cash Flow</h2>
+						<p>for the year ended 31 December 2016</p>
+					</div>
+			    
+					<table width="100%">
+						<tr>
+							<th></th>
+							<th>Note</th>
+							<th class="right">12/31/2016</th>
+						</tr>
+						<tr>
+							<td class="bold fontBig">OPERATING ACTIVITIES</td>
+							<td class="right"></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td>Profit before tax</td>
+							<td class="right"></td>
+							<td class="right">46,471</td>
+						</tr>
+						<tr>
+							<td class="bold">Adjustment to reconcile profit before tax to net cash flows</td>
+							<td></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Depreciation of property, plant, and equipment</td>
+							<td></td>
+							<td class="right">36,049</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Amortization and impairment of intangible assets</td>
+							<td></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Allowance/ (Reversal of allowance)</td>
+							<td></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Gain from bargain purchase</td>
+							<td></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Gain on disposal of property, plant and equipment</td>
+							<td></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Gain on disposal of investment properties</td>
+							<td></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Finance Costs</td>
+							<td></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Interest income</td>
+							<td></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="bold">Operating profit before working capital changes</td>
+							<td></td>
+							<td class="right bold-border border-bottom">82,520</td>
+						</tr>
+						<tr>
+							<td class="bold">Changes in working capital</td>
+							<td></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Decrease/ (Increase) in receivables</td>
+							<td></td>
+							<td class="center">(17,573)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Decrease/ (Increase) in prepayment and accrued income</td>
+							<td></td>
+							<td class="center">(7,095)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Decrease/ (increase) in development properties for sale</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Decrease/ (Increase) in inventory</td>
+							<td></td>
+							<td class="right">(16,176)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">(Decrease)/ Increase in trade, other payables and accruals</td>
+							<td></td>
+							<td class="center">186,183</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Movement in customer deposits</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="bold">Cash generated from/ (used in) operations</td>
+							<td></td>
+							<td class="right bold">145,338</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Income tax paid</td>
+							<td></td>
+							<td class="right bold">1,370</td>
+						</tr>
+						<tr>
+							<td class="bold bold-border border-bottom">Net cash generated from/ (used in) operating activities</td>
+							<td class="bold-border border-bottom"></td>
+							<td class="right bold-border border-bottom">226,488</td>
+						</tr>
+						<tr>
+							<td class="bold fontBig">INVESTING ACTIVITIES</td>
+							<td class="right"></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Capital injection</td>
+							<td></td>
+							<td class="center">472,472</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Purchase of property, plant and equipment</td>
+							<td></td>
+							<td class="center">(217,210)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Proceeds from disposal of investment property</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Proceeds from disposal of property, plant, and equipment</td>
+							<td></td>
+							<td class="center">18,777</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Investment in Property_Land</td>
+							<td></td>
+							<td class="center">(55,000)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Investment in Property_Building</td>
+							<td></td>
+							<td class="center">(2,000)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Investment in subsidiaries</td>
+							<td></td>
+							<td class="center">(203,000)</td>
+						</tr>
+						<tr>
+							<td class="bold bold-border border-bottom">Net cash generated from/ (used in) operating activities</td>
+							<td class="bold-border border-bottom"></td>
+							<td class="right bold-border border-bottom">14,038</td>
+						</tr>
+						<tr>
+							<td class="bold fontBig">FINANCING ACTIVITIES</td>
+							<td class="right"></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Proceeds from borrowing</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Repayment of borrowing</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Proceeds from issue of share capital</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Dividends paid to share holders</td>
+							<td></td>
+							<td class="center">(331,061)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Interest received</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Interest paid</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="bold-border">Net cash generated from/ (used in)financing activities</td>
+							<td class="right bold-border"></td>
+							<td class="right bold-border">(331,061)</td>
+						</tr>
+						<tr>
+							<td class="bold-border">Net increase in cash and cash equivalents</td>
+							<td class="right bold-border"></td>
+							<td class="right bold-border">(90,534)</td>
+						</tr>
+						<tr>
+							<td class="bold">Cash and cash equivalents at the beginning of the period</td>
+							<td class="right"></td>
+							<td class="right">690,892</td>
+						</tr>
+						<tr>
+							<td class="bold-border border-bottom">Cash and cash equivalents at 31 December 2016</td>
+							<td class="right bold-border border-bottom"></td>
+							<td class="right bold-border border-bottom">600,358</td>
+						</tr>
+						<tr>
+							<td class=""></td>
+							<td class="right"></td>
+							<td class="right">600,358</td>
+						</tr>
+
+					</table>
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="statementChangesEquity" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryStatement">
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<div class="block-title">
+						<h3>Company is Name</h3>
+						<h2>Statement Changes Equity</h2>
+						<p>for the year ended 31 December 2016</p>
+					</div>
+			    
+					<table width="100%">
+						<tr>
+							<th></th>
+							<th class="center">Share Retained</th>
+							<th class="center">Capital Earning</th>
+							<th class="center">Total</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td class="center bold">USD</td>
+							<td class="center bold">USD</td>
+							<td class="center bold">USD</td>
+						</tr>
+						<tr>
+							<td>Balance as at 01 January 2015</td>
+							<td class="right">1,000,000</td>
+							<td class="right">84,202</td>
+							<td class="right">1,084,202</td>
+						</tr>
+						<tr>
+							<td>Capital injection</td>
+							<td class="right">1,000,000</td>
+							<td class="right">-</td>
+							<td class="right">1,000,000</td>
+						</tr>
+						<tr>
+							<td>Net profit during the year of 2015</td>
+							<td class="right bigBorderbottom">-</td>
+							<td class="right bigBorderbottom">80,481</td>
+							<td class="right bigBorderbottom">80,481</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="bold">Balance as at 31 December 2015</td>
+							<td class="right bold bigBordertop under-bottom">2,000,000</td>
+							<td class="right bold bigBordertop under-bottom">164,683</td>
+							<td class="right bold bigBordertop under-bottom">2,164,683</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Balance as at 01 January 2016</td>
+							<td class="right">2,000,000</td>
+							<td class="right">164,683</td>
+							<td class="right">2,164,683</td>
+						</tr>
+						<tr>
+							<td>Capital injection</td>
+							<td class="right">-</td>
+							<td class="right"></td>
+							<td class="right">0</td>
+						</tr>
+						<tr>
+							<td>Realized profit inter-company sale</td>
+							<td class="right"></td>
+							<td class="right">0</td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td>Net profit during the year of 2016</td>
+							<td class="right bigBorderbottom">-</td>
+							<td class="right bigBorderbottom">-327,700</td>
+							<td class="right bigBorderbottom">-327,700</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="bold">Balance as at 31 December 2016</td>
+							<td class="right bold bigBordertop under-bottom">2,000,000</td>
+							<td class="right bold bigBordertop under-bottom">-163,017</td>
+							<td class="right bold bigBordertop under-bottom">1,836,983</td>
+						</tr>
+					</table>
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+
 
 <script id="accountingSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
@@ -6510,6 +7168,7 @@
 							</div>
 							<div class="select2-container" style="width: 100%;">								
 								<input data-role="combobox"
+									   data-value-primitive="true"
 					                   data-placeholder="Supplier Type..."					                   
 					                   data-text-field="name"
 					                   data-value-field="id"
@@ -10346,7 +11005,7 @@
 						</tr>
 						<tr>
 							<td >
-								<h3><a href="#/">Expenses/Purchase Detail by Customer</a></h3>
+								<h3><a href="#/">Expenses/Purchase Detail by Supplier</a></h3>
 							</td>
 							<td >
 								<h3><a href="#/">Deposit Detail by Supplier</a></h3>
@@ -10977,7 +11636,8 @@
 							</div>
 							<div class="select2-container" style="width: 100%;">								
 								<input data-role="combobox"
-					                   data-placeholder="Customer Type..."					                   
+					                   data-placeholder="Customer Type..."
+					                   data-value-primitive="true"					                   
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: contact_type_id,
@@ -30068,7 +30728,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			group: { field: "segment[0].name"},
+			// group: { field: "segment[0].name"},
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -30168,7 +30828,7 @@
 			return fiscalDate;
 		}
 	});
-
+	
 	/*********************
 	*  Accounting Section  *
 	**********************/
@@ -32571,12 +33231,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -33052,12 +33711,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -34098,7 +34756,7 @@
       		if(contact_type_id){
       			para.push({ field: "contact_type_id", value: contact_type_id });
       		}      		     		
-
+      		
       		this.contactDS.filter(para);
       		
 			//Clear search filters
@@ -40095,8 +40753,7 @@
 			var self = this, 
 			para = [],
       		txtSearch = this.get("searchText"),
-      		contact_type_id = this.get("contact_type_id"),
-      		currency_id = this.get("currency_id");
+      		contact_type_id = this.get("contact_type_id");
       		
       		if(txtSearch){
       			para.push(
@@ -40111,11 +40768,7 @@
       			para.push({ field: "contact_type_id", value: contact_type_id });
       		}else{
       			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 1 });
-      		}
-
-      		if(currency_id){
-      			para.push({ field: "currency_id", value: currency_id });
-      		}
+      		}      		
 
       		this.contactDS.filter(para);
       		var loaded = false;
@@ -49174,13 +49827,12 @@
 		},			
 		setRate 			: function(){
 			var self = this, 
-			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
+			obj = this.get("obj"), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -54298,6 +54950,8 @@
 		recurringJournalList: new kendo.Layout("#recurringJournalList", {model: banhji.recurringJournalList}),
 		statementProfitLoss: new kendo.Layout("#statementProfitLoss", {model: banhji.statementProfitLoss}),
 		statementFinancialPosition: new kendo.Layout("#statementFinancialPosition", {model: banhji.statementFinancialPosition}),
+		statementChangesEquity: new kendo.Layout("#statementChangesEquity", {model: banhji.statementChangesEquity}),
+		statementCashFlow: new kendo.Layout("#statementCashFlow", {model: banhji.statementCashFlow}),
 
 		//Employee
 		employeeDashboard: new kendo.Layout("#employeeDashboard", {model: banhji.employeeDashboard}),
@@ -56128,7 +56782,301 @@
 			}
 		}		
 	});
+	banhji.router.route("/statement_changes_equity", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.statementChangesEquity);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			var vm = banhji.journalReport;
 
+			if(banhji.pageLoaded["statement_changes_equity"]==undefined){
+				banhji.pageLoaded["statement_changes_equity"] = true;
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());				
+
+				$("#search").click(function(e){
+		        	e.preventDefault();
+
+		        	var para = [],		        	
+					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
+					edate = kendo.toString(end.value(), "yyyy-MM-dd");
+					
+		        	//Dates
+		        	if(start.value() && end.value()){        		
+		            	para.push({ field:"issued_date >=", value: sdate });
+		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
+		            }else if(start.value()){
+		            	para.push({ field:"issued_date", value: sdate });
+		            }else if(end.value()){
+		            	para.push({ field:"issued_date <=", value: edate });
+		            }else{
+		            	
+		            }
+
+		            vm.dataSource.filter(para);		            
+		        });								
+						
+			}
+		}		
+	});
+	banhji.router.route("/statement_cash_flow", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.statementCashFlow);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			var vm = banhji.journalReport;
+
+			if(banhji.pageLoaded["statement_cash_flow"]==undefined){
+				banhji.pageLoaded["statement_cash_flow"] = true;
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());				
+
+				$("#search").click(function(e){
+		        	e.preventDefault();
+
+		        	var para = [],		        	
+					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
+					edate = kendo.toString(end.value(), "yyyy-MM-dd");
+					
+		        	//Dates
+		        	if(start.value() && end.value()){        		
+		            	para.push({ field:"issued_date >=", value: sdate });
+		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
+		            }else if(start.value()){
+		            	para.push({ field:"issued_date", value: sdate });
+		            }else if(end.value()){
+		            	para.push({ field:"issued_date <=", value: edate });
+		            }else{
+		            	
+		            }
+
+		            vm.dataSource.filter(para);		            
+		        });								
+						
+			}
+		}		
+	});
+	
 
 	/*************************
 	*   Employee Section   *
@@ -61391,7 +62339,7 @@
 	/*************************
 	*   Reports Section   *
 	**************************/
-	banhji.router.route("/reports", function(){		
+banhji.router.route("/reports", function(){		
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
@@ -61445,5 +62393,5 @@
 	 //              }
 	 //            });
 	 //
-	});
+	 });
 </script>
