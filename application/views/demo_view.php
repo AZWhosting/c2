@@ -355,7 +355,12 @@
 						 data-auto-bind="false"
 						 data-selectable="true"				                 
 		                 data-template="searchAdvanced-item-template"
-		                 data-bind="source: itemDS"></div>					
+		                 data-bind="source: itemDS"></div>
+		            <div data-role="listview"
+						 data-auto-bind="false"
+						 data-selectable="true"				                 
+		                 data-template="searchAdvanced-account-template"
+		                 data-bind="source: accountDS"></div>					
 					<!-- End Result -->
 
 				</div>							
@@ -375,7 +380,7 @@
 							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/contact.ico" 
 							style="width: 100px; height: 100px;">
 						<div class="media-body">
-							<h5><a href="">#=surname# #=name#</a></h5>							
+							<h5>#=surname# #=name#</h5>							
 							<span>#=abbr# #=number#</span>							
 							<br>
 							<span>#=company#</span>
@@ -403,7 +408,7 @@
 							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/transaction.ico" 
 							style="width: 100px; height: 100px;">
 						<div class="media-body">
-							<h5><a href="">#=number#</a></h5>
+							<h5>#=number#</h5>
 							<span>#=amount#</span>
 							<br>
 							<span>#=issued_date#</span>					
@@ -428,10 +433,33 @@
 							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/item.ico" 
 							style="width: 100px; height: 100px;">
 						<div class="media-body">
-							<h5><a href="">#=name#</a></h5>
+							<h5>#=name#</h5>
 							<span>#=sku#</span>
 							<br>
 							<span>#=on_hand#</span>					
+						</div>
+					</div>
+					<!-- // Media item END -->
+						
+				</div>
+			</div>
+		</dt>											
+	</dl>	
+</script>
+<script id="searchAdvanced-account-template" type="text/x-kendo-template">
+	<dl data-bind="click: selectedAccount">			
+		<dt>
+			<div class="widget widget-heading-simple widget-body-multiple widget-offers">
+				<div class="widget-body">
+					
+					<!-- Media item -->
+					<div class="media">
+						<img class="media-object pull-left thumb hidden-tablet hidden-phone" 
+							src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/journal.ico" 
+							style="width: 100px; height: 100px;">
+						<div class="media-body">
+							<h5>#=name#</h5>
+							<span>#=number#</span>				
 						</div>
 					</div>
 					<!-- // Media item END -->
@@ -748,6 +776,7 @@
 								<input data-role="combobox"
 					                   data-placeholder="Account Type..."
 					                   data-template="account-type-list-tmpl"
+					                   data-value-primitive="true"
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: account_type_id,
@@ -812,7 +841,8 @@
 								</tr>
 							</table>
 
-								
+							<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i>Edit</span>
+
 							</div>
 						</div>
 
@@ -2181,10 +2211,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td >
-								<h3><a href="#/">Statement of Profit or Loss</a></h3>
+								<h3><a href="#/statement_profit_loss">Statement of Profit or Loss</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Statement of Financial Position</a></h3>								
+								<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -2226,10 +2256,10 @@
 
 						<tr>
 							<td >
-								<h3><a href="#/">Statement of Cash Flow</a></h3>
+								<h3><a href="#/statement_cash_flow">Statement of Cash Flow</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Statement of Changes in Equity</a></h3>
+								<h3><a href="#/statement_changes_equity">Statement of Changes in Equity</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -2756,7 +2786,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<th><i class="icon-paper-clip"></i></th>
+							<td><i class="icon-paper-clip"></i></td>
 						</tr>
 						<tr>						
 							<td>Invoice</td>
@@ -2767,7 +2797,7 @@
 							<td>1,000.00</td>
 							<td>1,000.00</td>
 							<td>Account Receivable</td>
-							<th><i class="icon-paper-clip"></i></th>						
+							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						<tr>					
 							<td>Cash Sale</td>
@@ -2778,7 +2808,7 @@
 							<td>500.00</td>	
 							<td></td>
 							<td></td>
-							<th><i class="icon-paper-clip"></i></th>						
+							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						<tr>
 							<td>Toni</td>
@@ -2800,7 +2830,7 @@
 							<td>1,200.00</td>
 							<td></td>
 							<td></td>
-							<th><i class="icon-paper-clip"></i></th>						
+							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						<tr>												
 							<td>Cash Receipt</td>
@@ -2811,7 +2841,7 @@
 							<td>(1,200.00)</td>
 							<td></td>
 							<td></td>
-							<th><i class="icon-paper-clip"></i></th>					
+							<td><i class="icon-paper-clip"></i></td>					
 						</tr>
 						<tr>					
 							<td>Deposit</td>
@@ -2822,7 +2852,7 @@
 							<td>(2,100.00)</td>
 							<td></td>
 							<td></td>
-							<th><i class="icon-paper-clip"></i></th>						
+							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						<tr>						
 							<td>Sub-total</td>
@@ -2836,7 +2866,7 @@
 							<td><i class="icon-paper-clip"></i></td>						
 						</tr>
 						
-						<tr>
+						<tr class="bg-total">
 							<th colspan="4">Total</th>
 							<th colspan="5">(600.00)</th>
 						</tr>
@@ -3408,7 +3438,7 @@
 
 								    	<!-- //GENERAL INFO -->
 								          <div class="tab-pane active" id="tab-1">									
-									        
+									        As of:
 									       	<input data-role="datepicker"
 								                   data-bind="value: as_of">
 
@@ -3509,7 +3539,7 @@
     </tr>    
 </script>
 <script id="trialBalance-footer-template" type="text/x-kendo-template">
-    <tr>
+    <tr class="bg-total">
         <td>TOTAL:</td>        
         <td></td>
         <td></td>        
@@ -3589,6 +3619,661 @@
 		</td>				
     </tr>    
 </script>
+
+<script id="statementProfitLoss" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryStatement">
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<div class="block-title">
+						<h3>Company is Name</h3>
+						<h2>Statement of Profit or Loss</h2>
+						<p>for the year ended 31 December 2016</p>
+					</div>
+			    
+					<table width="100%">
+						<tr>
+							<th></th>
+							<th>Note</th>
+							<th class="right">2016</th>
+							<th class="pull-right">2015</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="right">KHR</td>
+							<td class="right">KHR</td>
+						</tr>
+						<tr>
+							<td>Revenue</td>
+							<td>10</td>
+							<td class="right">680,000</td>
+							<td class="right">525,000</td>
+						</tr>
+						<tr>
+							<td>Cost</td>
+							<td></td>
+							<td class="right">(400,000)</td>
+							<td class="right">(300,000)</td>
+						</tr>
+						<tr>
+							<td class="bold">Gross Profit</td>
+							<td></td>
+							<td class="right bold-border">280,000</td>
+							<td class="right bold-border">225,000</td>
+						</tr>
+						<tr>
+							<td>Distribution costs</td>
+							<td></td>
+							<td class="right">(8,580)</td>
+							<td class="right">(5,830)</td>
+						</tr>
+						<tr>
+							<td>Administrative Expense</td>
+							<td></td>
+							<td class="right">(50,000)</td>
+							<td class="right">(40,000)</td>
+						</tr>
+						<tr>
+							<td>Finance Costs</td>
+							<td>11</td>
+							<td class="right">(22,300)</td>
+							<td class="right">(19,700)</td>
+						</tr>
+						<tr>
+							<td>Share of profit of associate</td>
+							<td>12</td>
+							<td class="right">42,100</td>
+							<td class="right">38,560</td>
+						</tr>
+						<tr>
+							<td class="bold">Profit before Tax</td>
+							<td>13</td>
+							<td class="right bold-border">241,220</td>
+							<td class="right bold-border">198,030</td>
+						</tr>
+						<tr>
+							<td>Income tax expense</td>
+							<td>14</td>
+							<td class="right">(60,305)</td>
+							<td class="right">(47,508)</td>
+						</tr>
+						<tr>
+							<td class="bold">Profit for the year from continuing operations</td>
+							<td></td>
+							<td class="right bold-border">180,915</td>
+							<td class="right bold-border">150,522</td>
+						</tr>
+						<tr>
+							<td>Loss for the year discoutinued operations</td>
+							<td>15</td>
+							<td class="right">(24,780)</td>
+							<td class="right">(2,000)</td>
+						</tr>
+						<tr>
+							<td class="bold">Profit for the year</td>
+							<td></td>
+							<td class="right bold-border border-bottom">156,135</td>
+							<td class="right bold-border border-bottom">148,522</td>
+						</tr>
+					</table>
+
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="statementFinancialPosition" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryStatement">
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<div class="block-title">
+						<h3>Company is Name</h3>
+						<h2>Statement of Financial Position</h2>
+						<p>for the year ended 31 December 2016</p>
+					</div>
+			    	
+					<table width="100%">
+						<tr>
+							<th></th>
+							<th>Note</th>
+							<th class="right">2016</th>
+						</tr>
+						<tr>
+							<td class="bold">ASSET</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="bold">Non-Current Asset</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Properties, Plants, & Equipment</td>
+							<td>1</td>
+							<td class="right bold-border border-bottom">138,923,361</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Freehold Land</td>
+							<td>1</td>
+							<td class="right">123,670,644</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Building & Structure</td>
+							<td>1</td>
+							<td class="right">9,848,345</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Electrical Systems, Machineries and Improvement</td>
+							<td>1</td>
+							<td class="right">838,559</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Automobiles & Vehicles</td>
+							<td>1</td>
+							<td class="right">123,670,644</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Furniture, Fixtures & Fittings</td>
+							<td>1</td>
+							<td class="right">663,429</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Computer and Related Equipment</td>
+							<td>1</td>
+							<td class="right">286,688</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Equipments, Electricles Device & Tools</td>
+							<td>1</td>
+							<td class="right">779,835</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Heavy Machinaries</td>
+							<td>1</td>
+							<td class="right">341505</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Completed Investment Properties</td>
+							<td>2</td>
+							<td class="right">3,701,848</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">I​nvestment Properties under-construction</td>
+							<td>2</td>
+							<td class="right">10,087,257</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Investment in Subsidiaries</td>
+							<td>3</td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Non-Current Asset</i></td>
+							<td>3</td>
+							<td class="right bold-border border-bottom">152,712,466</td>
+						</tr>
+						<tr>
+							<td class="bold">Current Assets</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Inventory</td>
+							<td>4</td>
+							<td class="right bold-border border-bottom">389,142,635</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Raw Material</td>
+							<td>4</td>
+							<td class="right">175,561,951</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Working-in-progress</td>
+							<td>4</td>
+							<td class="right">80,575,454</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Finished goods</td>
+							<td>4</td>
+							<td class="right">205,523,139</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Operating Equipment</td>
+							<td>6</td>
+							<td class="right">142,635</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Trade Receivables</td>
+							<td>7</td>
+							<td class="right">142,635</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Properties Sale Receivable</td>
+							<td>7</td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Installment Payment Scheme</td>
+							<td>7</td>
+							<td class="right">205,523,139</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Mortgage Payment Scheme</td>
+							<td>7</td>
+							<td class="right">9,003,967</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">AR from Related Parties</td>
+							<td>6</td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Other receivables</td>
+							<td>7</td>
+							<td class="right">34,859</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Interest Receivable</td>
+							<td>7</td>
+							<td class="right">138,835</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Prepayment & Deposit</td>
+							<td>8</td>
+							<td class="right">3,741,185</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Cash and Cash Equivalent</td>
+							<td>9</td>
+							<td class="right">7,359,195</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Current Assets</i></td>
+							<td>9</td>
+							<td class="right bold-border border-bottom">419,215,778</td>
+						</tr>
+						<tr>
+							<td class="bold">TOTAL ASSETS</td>
+							<td></td>
+							<td class="right bold-border under-bottom">571,928,244</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="bold">EQUITY & LIABILITIES</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Shareholders Equity</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Share Capital</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Retained Earning</td>
+							<td></td>
+							<td ></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Shareholders Equity</i></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Non-Current Liabilities</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Interest Bearing Loans and Borrowing</td>
+							<td><a href="">10</a></td>
+							<td class="right">36,445,536</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Long term Loan based on Customer Portfolio</td>
+							<td><a href="">10</a></td>
+							<td class="right">60,334,222</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Long term loan from Related Parties</td>
+							<td><a href="">11</a></td>
+							<td class="right">9,429,028</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Land Purchase Payable</td>
+							<td><a href="">12</a></td>
+							<td class="right">150,595,772</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Deposit for Sale of Properties inventory</td>
+							<td><a href="">13</a></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Installment Payment Scheme</td>
+							<td><a href=""></a></td>
+							<td class="right">95,979,147</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Mortgage Payment Scheme</td>
+							<td><a href=""></a></td>
+							<td class="right">76,736,253</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Other Deposit</td>
+							<td><a href=""></a></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Non-Current Liabilities</i></td>
+							<td><a href=""></a></td>
+							<td class="right bold">429,519,958</td>
+						</tr>
+						<tr>
+							<td>Current Liabilities</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Trade Payable</td>
+							<td><a href="">14</a></td>
+							<td class="right">5,720,691</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Short term Bank Borrowing (OD)</td>
+							<td><a href="">9</a></td>
+							<td class="right">7,645,991</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Current Customer Deposit & Prepayment</td>
+							<td><a href="">13</a></td>
+							<td class="right">11,837,636</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Accrued Expenses (including bonus)</td>
+							<td><a href="">15</a></td>
+							<td class="right">280,607</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Salary Payable</td>
+							<td><a href="">16</a></td>
+							<td class="right">1,074,153</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Interest Payable</td>
+							<td><a href=""></a></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">General Provision</td>
+							<td><a href=""></a></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Current Tax Payable</td>
+							<td><a href=""></a></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Current Liabilities</i></td>
+							<td><a href=""></a></td>
+							<td class="right bold-border border-bottom">126,558,805</td>
+						</tr>
+						<tr>
+							<td class="bold">Total Liabilities</td>
+							<td><a href=""></a></td>
+							<td class="right bold-border border-bottom">556,078,762</td>
+						</tr>
+						<tr>
+							<td class="bold fontBig">Total Liabilities</td>
+							<td><a href=""></a></td>
+							<td class="right bold-border under-bottom">556,078,762</td>
+						</tr>
+					</table>
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="statementCashFlow" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryStatement">
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<div class="block-title">
+						<h3>Company is Name</h3>
+						<h2>Statement of Cash Flow</h2>
+						<p>for the year ended 31 December 2016</p>
+					</div>
+			    
+					<table width="100%">
+						<tr>
+							<th></th>
+							<th>Note</th>
+							<th class="right">2016</th>
+							<th class="pull-right">2015</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="right">KHR</td>
+							<td class="right">KHR</td>
+						</tr>
+						<tr>
+							<td>Revenue</td>
+							<td>10</td>
+							<td class="right">680,000</td>
+							<td class="right">525,000</td>
+						</tr>
+						<tr>
+							<td>Cost</td>
+							<td></td>
+							<td class="right">(400,000)</td>
+							<td class="right">(300,000)</td>
+						</tr>
+						<tr>
+							<td class="bold">Gross Profit</td>
+							<td></td>
+							<td class="right bold-border">280,000</td>
+							<td class="right bold-border">225,000</td>
+						</tr>
+						<tr>
+							<td>Distribution costs</td>
+							<td></td>
+							<td class="right">(8,580)</td>
+							<td class="right">(5,830)</td>
+						</tr>
+						<tr>
+							<td>Administrative Expense</td>
+							<td></td>
+							<td class="right">(50,000)</td>
+							<td class="right">(40,000)</td>
+						</tr>
+						<tr>
+							<td>Finance Costs</td>
+							<td>11</td>
+							<td class="right">(22,300)</td>
+							<td class="right">(19,700)</td>
+						</tr>
+						<tr>
+							<td>Share of profit of associate</td>
+							<td>12</td>
+							<td class="right">42,100</td>
+							<td class="right">38,560</td>
+						</tr>
+						<tr>
+							<td class="bold">Profit before Tax</td>
+							<td>13</td>
+							<td class="right bold-border">241,220</td>
+							<td class="right bold-border">198,030</td>
+						</tr>
+						<tr>
+							<td>Income tax expense</td>
+							<td>14</td>
+							<td class="right">(60,305)</td>
+							<td class="right">(47,508)</td>
+						</tr>
+						<tr>
+							<td class="bold">Profit for the year from continuing operations</td>
+							<td></td>
+							<td class="right bold-border">180,915</td>
+							<td class="right bold-border">150,522</td>
+						</tr>
+						<tr>
+							<td>Loss for the year discoutinued operations</td>
+							<td>15</td>
+							<td class="right">(24,780)</td>
+							<td class="right">(2,000)</td>
+						</tr>
+						<tr>
+							<td class="bold">Profit for the year</td>
+							<td></td>
+							<td class="right bold-border border-bottom">156,135</td>
+							<td class="right bold-border border-bottom">148,522</td>
+						</tr>
+					</table>
+
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="statementChangesEquity" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryStatement">
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<div class="block-title">
+						<h3>Company is Name</h3>
+						<h2>Statement Changes Equity</h2>
+						<p>for the year ended 31 December 2016</p>
+					</div>
+			    
+					<table width="100%">
+						<tr>
+							<th></th>
+							<th class="center">Share</th>
+							<th class="center">Retained</th>
+							<th class="right"></th>
+						</tr>
+						<tr>
+							<td></td>
+							<td class="center bold">Capital</td>
+							<td class="center bold">Earning</td>
+							<td class="center bold">Total</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td class="center bold">USD</td>
+							<td class="center bold">USD</td>
+							<td class="center bold">USD</td>
+						</tr>
+						<tr>
+							<td>Balance as at 01 January 2015</td>
+							<td class="right">1,000,000</td>
+							<td class="right">84,202</td>
+							<td class="right">1,084,202</td>
+						</tr>
+						<tr>
+							<td>Capital injection</td>
+							<td class="right">1,000,000</td>
+							<td class="right">-</td>
+							<td class="right">1,000,000</td>
+						</tr>
+						<tr>
+							<td>Net profit during the year of 2015</td>
+							<td class="right">-</td>
+							<td class="right bigBorderbottom">80,481</td>
+							<td class="right bigBorderbottom">80,481</td>
+						</tr>
+						
+					</table>
+
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+
 
 <script id="accountingSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
@@ -6312,6 +6997,7 @@
 							</div>
 							<div class="select2-container" style="width: 100%;">								
 								<input data-role="combobox"
+									   data-value-primitive="true"
 					                   data-placeholder="Supplier Type..."					                   
 					                   data-text-field="name"
 					                   data-value-field="id"
@@ -10148,7 +10834,7 @@
 						</tr>
 						<tr>
 							<td >
-								<h3><a href="#/">Expenses/Purchase Detail by Customer</a></h3>
+								<h3><a href="#/">Expenses/Purchase Detail by Supplier</a></h3>
 							</td>
 							<td >
 								<h3><a href="#/">Deposit Detail by Supplier</a></h3>
@@ -10779,7 +11465,8 @@
 							</div>
 							<div class="select2-container" style="width: 100%;">								
 								<input data-role="combobox"
-					                   data-placeholder="Customer Type..."					                   
+					                   data-placeholder="Customer Type..."
+					                   data-value-primitive="true"					                   
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: contact_type_id,
@@ -11118,11 +11805,7 @@
 		<td>
 			<div class="media-body strong">				
 				<span>#=abbr##=number#</span>
-				#if(company){#
-					<span>#=company#</span>
-				#}else{#
-					<span>#=surname#</span> <span>#=name#</span>
-				#}#				
+				<span>#=name#</span>
 			</div>
 		</td>
 	</tr>
@@ -11203,54 +11886,52 @@
 							</div>
 							
 							<div class="row-fluid">
-								<div class="span6">						
+								<div class="span12">	
 									<!-- Group -->
-									<div class="control-group">
-										<label for="surname"><span data-bind="text: lang.lang.surname"></span> <span style="color:red">*</span></label>
-					              		<input id="surname" name="surname" class="k-textbox" 
-					              				data-bind="value: obj.surname, disabled: obj.is_pattern" 
-							              		placeholder="surname ..." required data-required-msg="required"
+									<div class="control-group">								
+										<label for="fullname">Full Name <span style="color:red">*</span></label>
+							            <input id="fullname" name="fullname" class="k-textbox" 
+							            		data-bind="value: obj.name, 
+							            					disabled: obj.is_pattern,
+							            					attr: { placeholder: phFullname }" 
+							              		required data-required-msg="required"
 							              		style="width: 100%;" />
-									</div>
+									</div>																		
+									<!-- // Group END -->
+								</div>
+							</div>
+
+							<div class="row-fluid">
+								<div class="span6">	
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="customerStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
+							            <input id="customerStatus" name="customerStatus" 
+							              				data-role="dropdownlist"
+									            		data-text-field="name"
+						           						data-value-field="id"
+						           						data-value-primitive="true" 
+									            		data-bind="source: statusList, value: obj.status"
+									            		data-option-label="(--- Select ---)"
+									            		required data-required-msg="required" style="width: 100%;" />
+									</div>																		
 									<!-- // Group END -->
 								</div>
 
 								<div class="span6">	
 									<!-- Group -->
 									<div class="control-group">								
-										<label for="name"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
-							            <input id="name" name="name" class="k-textbox" 
-							            		data-bind="value: obj.name, disabled: obj.is_pattern" 
-							              		placeholder="name ..." required data-required-msg="required"
-							              		style="width: 100%;" />
+										<label for="registeredDate"><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></label>
+							            <input id="registeredDate" name="registeredDate" 
+								            		data-role="datepicker"			            		
+					            					data-bind="value: obj.registered_date, disabled: obj.is_pattern" 
+					            					data-format="dd-MM-yyyy"
+					            					data-parse-formats="yyyy-MM-dd" 
+					            					placeholder="dd-MM-yyyy" required data-required-msg="required" style="width: 100%;" />
 									</div>																		
 									<!-- // Group END -->
 								</div>
-							</div>
-							
-							<div class="row-fluid" data-bind="visible: isCompany">
-								<div class="span6">
-									<!-- Group -->
-									<div class="control-group">
-										<label for="companyName"><span data-bind="text: lang.lang.organization_name"></span> <span style="color:red">*</span></label>
-										<input id="companyName" name="companyName" class="k-textbox" data-bind="disabled: obj.is_pattern, enabled: isCompany, value: obj.company"									
-												placeholder="e.g. PCG & Partner"
-												style="width: 100%;" />	
-									</div>
-									<!-- // Group END -->
-								</div>
-
-								<div class="span6">	
-									<!-- Group -->
-									<div class="control-group">
-										<label for="vatNo">VAT Number</label>								
-					            		<input id="vatNo" name="vatNo" class="k-textbox" data-bind="disabled: obj.is_pattern, enabled: isCompany, value: obj.vat_no" 
-												placeholder="e.g. 01234567897"
-												style="width: 100%;" />												
-									</div>					
-									<!-- // Group END -->
-								</div>
-							</div>																
+							</div>																					
 						</div>
 						<div class="span6">
 							<div class="row-fluid">	
@@ -11311,34 +11992,15 @@
 
 						    	<!-- //GENERAL INFO -->
 						        <div class="tab-pane active" id="tab1">
-					            	<table class="table table-borderless table-condensed cart_total">						            	
-					            		<tr>
-							                <td><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></td>
-							              	<td>
-							              		<input id="customerStatus" name="customerStatus" 
-							              				data-role="dropdownlist"
-									            		data-text-field="name"
-						           						data-value-field="id"
-						           						data-value-primitive="true" 
-									            		data-bind="source: statusList, value: obj.status"
-									            		data-option-label="(--- Select ---)"
-									            		required data-required-msg="required" />
-							              	</td>							              	
-							            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
-							              	<td>
-							              		<input id="registered_date" name="registered_date" 
-								            		data-role="datepicker"			            		
-					            					data-bind="value: obj.registered_date, disabled: obj.is_pattern" 
-					            					data-format="dd-MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
-							              	</td>
-							            </tr>
+					            	<table class="table table-borderless table-condensed cart_total">					            		
 							            <tr>
-							                <td><span data-bind="text: lang.lang.gender"></span></td>
-							              	<td><select data-role="dropdownlist" data-bind="source: genders, value: obj.gender"></select></td>							              	
+							                <td>VAT Number</td>
+							              	<td>
+					            				<input class="k-textbox" data-bind="value: obj.vat_no" 
+													placeholder="e.g. 01234567897" style="width: 100%;" />									
+							              	</td>							              	
 							            	<td><span data-bind="text: lang.lang.phone"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" style="width: 100%;" /></td>
 							            </tr>
 							            <tr>
 							            	<td>Country</td>
@@ -11349,35 +12011,33 @@
 									                   data-text-field="name"
 									                   data-value-field="id"
 									                   data-bind="value: obj.country_id,
-									                              source: countryDS" />
+									                              source: countryDS" style="width: 100%;" />
 							              	</td>							            								              	
 							            	<td><span data-bind="text: lang.lang.email"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" />							            	
+							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" style="width: 100%;" />							            	
 							            </tr>
 							            <tr>
 							            	<td>City</td>
-							              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." />							              	
+							              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." style="width: 100%;" />							              	
 							            	<td>Post Code</td>
-							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" />
-							            </tr>
+							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" style="width: 100%;" />
+							            </tr>							            
 							            <tr>
 							            	<td><span data-bind="text: lang.lang.address"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />									            								              	
+							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." style="width: 100%;" />									            								              	
 							            	<td><span data-bind="text: lang.lang.memo"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>							              	
+							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." style="width: 100%;" /></td>							              	
 							            </tr>									            
 							            <tr>
 							            	<td>
-							            		<label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label>											            
+							            		<label for="txtBillTo" data-bind="click: copyBillTo">Billed To <i class="icon-share"></i></label>											            
 							            	</td>
 							            	<td>
-							            		<input class="k-textbox" data-bind="value: obj.bill_to" placeholder="bill to ..." />
+							            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="billed to ..."></textarea>
 							            	</td>
+							            	<td>Delivered To</td>
 							            	<td>
-							            		<span data-bind="text: lang.lang.ship_to"></span>										            
-							            	</td>
-							            	<td>
-							            		<input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." />
+							            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="delivered to ..."></textarea>
 							            	</td>
 							            </tr>							            							            							            								            								            			            
 							        </table>
@@ -13324,15 +13984,13 @@
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
 						        <ul class="row-fluid row-merge">
-						        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i> </a>
+						        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i> </a>
 						            </li>
-						            <li class="span1 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i> </a>
-						            </li>
-						            <li class="span1 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i> </a>
-						            </li>
-						            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+						            <li class="span1 glyphicons adress_book"><a href="#tab2-4" data-toggle="tab"><i></i> </a>
 						            </li>						            
-						            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
+						            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
+						            </li>						            
+						            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i> Recuring</a>
 						            </li>						            								            
 						        </ul>
 						    </div>
@@ -13341,9 +13999,33 @@
 						    <div class="tab-content">
 
 						    	<!-- Options Tab content -->
-						        <div class="tab-pane active" id="tab1-5">						            
-						            <table class="table table-borderless table-condensed cart_total">							            
-										
+						        <div class="tab-pane active" id="tab1-4">						            
+						            <table class="table table-borderless table-condensed cart_total">										
+							            <tr>
+											<td>
+												Balance
+												<span data-bind="text: balance"></span>
+											</td>
+											<td>
+												Credit Allowed
+												<span data-format="n" data-bind="text: obj.credit_allowed"></span>
+											</td>
+										</tr>										
+										<tr>
+											<td>Sale Rep</td>
+											<td>
+												<input id="cbbEmployee" name="cbbEmployee"
+													   data-role="combobox"											                    
+									                   data-value-primitive="true"
+									                   data-template="contact-list-tmpl"
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.employee_id,
+									                              source: employeeDS"
+									                   data-placeholder="Type Name.."                    
+									                   required data-required-msg="required" style="width: 100%" />
+											</td>
+										</tr>
 							            <tr>
 							            	<td>Valid Until</td>
 							            	<td>
@@ -13355,54 +14037,7 @@
 														required data-required-msg="required"
 														style="width:100%;" />
 							            	</td>
-							            </tr>											
-						            </table>						            
-						        </div>
-						        <!-- // Options Tab content END -->
-
-						        <!-- Address Tab content -->
-						        <div class="tab-pane" id="tab2-5">
-						        	Billing Address
-									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
-									
-									Shipping Address
-									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
-											
-						        </div>
-						        <!-- // Address Tab content END -->
-
-						        <!-- Info Tab content -->
-						        <div class="tab-pane" id="tab3-5">
-						        	
-									<table class="table table-borderless table-condensed cart_total">
-										<tr>
-											<td>Balance</td>
-											<td>
-												<span data-bind="text: balance"></span>
-											</td>
-										</tr>
-										<tr>
-											<td>Credit Allowed</td>
-											<td>												
-												<span data-format="n" data-bind="text: obj.credit_allowed"></span>
-											</td>
-										</tr>							            
-							            <tr>
-											<td>Currency</td>
-											<td>
-												<input id="cbbCurrency" name="cbbCurrency"
-													   data-role="combobox"				                
-									                   data-value-primitive="true"
-									                   data-template="currency-list-tmpl"				   
-									                   data-text-field="code"
-									                   data-value-field="locale"
-									                   data-bind="value: obj.locale, 
-									                   			source: currencyDS, 
-									                   			events: {change : setRate}"
-									                   placeholder="Add currency..." 
-									                   required data-required-msg="required" style="width: 100%" />										
-											</td>
-										</tr>						            	
+							            </tr>
 										<tr>
 											<td>Segments</td>
 											<td>
@@ -13418,13 +14053,23 @@
 													   style="width: 100%" /></select>
 											</td>
 										</tr>											
-						            </table>
+						            </table>						            
+						        </div>
+						        <!-- // Options Tab content END -->
+
+						        <!-- Address Tab content -->
+						        <div class="tab-pane" id="tab2-4">
+						        	Billing Address
+									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
+									
+									Shipping Address
+									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 											
 						        </div>
-						        <!-- // Info Tab content END -->
+						        <!-- // Address Tab content END -->						        
 
 						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab4-5">							            	
+						        <div class="tab-pane" id="tab3-4">							            	
 						            
 						            <input name="files"
 						                   type="file"
@@ -13435,7 +14080,7 @@
 						        <!-- // Attach Tab content END -->						        
 
 						        <!-- Recuring Tab content -->
-						        <div class="tab-pane" id="tab5-5">							            	
+						        <div class="tab-pane" id="tab4-4">							            	
 						            
 						            <div class="span5">
 
@@ -13606,7 +14251,7 @@
 								<div class="well">
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
 									<br>						
-									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for internal ..."></textarea>
+									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
 								</div>
 							</div>
 							<div class="span6">
@@ -13636,21 +14281,7 @@
 									<td class="right strong">
 										<span data-format="n" data-bind="text: obj.deposit"></span>
 									</td>
-								</tr>
-								<tr>
-									<td class="right">
-										Credits:
-										<span class="strong" data-format="n" data-bind="text: total_credit"></span>										
-									</td>
-									<td class="right strong">
-										<input data-role="numerictextbox"
-							                   data-format="n"
-							                   data-min="0"							                                      
-							                   data-bind="value: obj.credit,
-							                              events: { change: changes }"
-							                   style="width: 100%;">
-									</td>
-								</tr>								
+								</tr>															
 								<tr>
 									<td class="right"><h4>Total:</h4></td>
 									<td class="right strong"><h4 data-bind="text: total"></h4></td>
@@ -13666,7 +14297,7 @@
 				<div class="box-generic" align="right" style="background-color: #0B0B3B;">
 					<span id="notification"></span>
 
-					<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
+					<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
 					<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
 					<!-- <span id="saveSend" class="btn btn-icon btn-warning glyphicons envelope" style="width: 80px;"><i></i> Save Send</span>										 -->
 					<span id="savePrint" class="btn btn-icon btn-default glyphicons print" data-bind="click: cancel" style="width: 80px;"><i></i> Save Print</span>
@@ -18426,6 +19057,7 @@
 	</div>	
 </script>
 
+
 <script id="invoiceCustom" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -18465,424 +19097,8 @@
                                 </div>
 							</div>
 						</div>
-						<div class="span8" style="border:1px solid #eee;margin-bottom:20px;">
-							<div class="inv1 invvisible">
-					        	<div class="head">
-					            	<div class="logo">
-					                	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
-					                </div>
-					                <div class="cover-name-company">
-					                	<h2 ></h2>
-					                    <h3 data-bind="text: company.name"></h3>
-					                    <div class="vattin">
-					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
-					                    </div>
-					                    <div class="clear">
-					                    	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
-					                        <pre>Address      </pre>
-					                        <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: obj.contact[0].phone"></span></pre>
-					                        <pre>Telephone N<sup>o</sup></pre>
-					                    </div>
-					                </div>
-					            </div>
-					            <div class="content">
-					            	<h1>វិក្កយបត្រ</h1>
-					                <h2>invoice</h2>
-					                <div class="clear">
-					                	<div class="cover-customer">
-					                    	<h5>អតិថិជន​ / Customer :</h5>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
-					                                <span>Company name / Customer</span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 62%;">
-					                            	<p style="font-weight:bold"><span data-bind="text: obj.contact[0].surname"></span><span data-bind="text: obj.contact[0].name"></span></p>
-					                            </div>
-					                        </div>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>ទូរស័ព្ទ​លេខ</p>
-					                                <span>Telephone N<sup>o</sup></span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 78%;">
-					                            	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
-					                            </div>
-					                        </div>
-					                    </div>
-					                    <div class="cover-inv-number">
-					                    	<div class="clear">
-					                        	<div class="left">
-					                        		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
-					                                <span>​​Invoice N<sup>o</sup></span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 42%;">
-					                            	<p style="font-weight:bold">123456</p>
-					                            </div>
-					                        </div>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>កាល​បរិច្ឆេទ៖</p>
-					                                <span>​​Date</span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 57%;">
-					                            	<p style="font-weight:bold"><?php echo date('d/M/Y'); ?></p>
-					                            </div>
-					                        </div>
-					                    </div>
-					                </div>
-					            	<div class="clear">
-					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 1%;">
-					                    	<thead>
-					                            <tr>
-					                                <th>ល.រ<br />N<sup>0</sup></th>
-					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-					                                <th>បរិមាណ<br />Quantity</th>
-					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
-					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
-					                            </tr>
-					                        </thead>
-					                        <tbody style="margin-top: 2px">
-					                        	<tr>
-					                            	<td><i>1</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>2</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>3</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>4</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>5</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>6</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>7</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>8</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>9</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>10</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>11</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>12</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>13</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>14</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>15</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
-					                                <td></td>
-					                            </tr>
-					                        </tbody>
-					                    </table>
-					                </div>
-					            </div>
-					            <div class="foot">
-					            	<div class="cover-signature">
-					                	<div class="singature" style="float:left">
-					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
-					                    </div>
-					                    <div class="singature" style="float:right">
-					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
-					                    </div>
-					                </div>
-					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-					            </div>
-					        </div>
-					        <div class="inv1 invhidden">
-					        	<div class="head">
-					            	<div class="logo">
-					                	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
-					                </div>
-					                <div class="cover-name-company">
-					                	<h2 ></h2>
-					                    <h3 data-bind="text: company.name"></h3>
-					                    <div class="vattin">
-					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
-					                    </div>
-					                    <div class="clear">
-					                    	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
-					                        <pre>Address      </pre>
-					                        <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: obj.contact[0].phone"></span></pre>
-					                        <pre>Telephone N<sup>o</sup></pre>
-					                    </div>
-					                </div>
-					            </div>
-					            <div class="content">
-					            	<h1>វិក្កយបត្រអាករ</h1>
-					                <h2>invoice</h2>
-					                <div class="clear">
-					                	<div class="cover-customer" style="width: 80%;">
-					                    	<h5>អតិថិជន​ / Customer :</h5>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
-					                                <span>Company name / Customer</span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 42%;">
-					                            	<p style="font-weight:bold">ឡូត ជឿន</p>
-					                            </div>
-					                        </div>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>ទូរស័ព្ទ​លេខ</p>
-					                                <span>Telephone N<sup>o</sup></span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 52%;">
-					                            	<p style="font-weight:bold">010 411429</p>
-					                            </div>
-					                        </div>
-					                        <div class="vattin">
-					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 5px;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
-					                    </div>
-					                    </div>
-					                    <div class="cover-inv-number" style="width: 20%;">
-					                    	<div style="position: absolute;left:-70%;width:165%; ">
-					                            <div class="clear">
-					                                <div class="left">
-					                                    <p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
-					                                    <span>​​Invoice N<sup>o</sup></span>
-					                                </div>
-					                                <div class="left dotted-ruler" style="width: 46%;">
-					                                    <p style="font-weight:bold">023450</p>
-					                                </div>
-					                            </div>
-					                            <div class="clear">
-					                                <div class="left">
-					                                    <p>កាល​បរិច្ឆេទ៖</p>
-					                                    <span>​​Date</span>
-					                                </div>
-					                                <div class="left dotted-ruler" style="width: 59%;">
-					                                    <p style="font-weight:bold">24/Jun/2016</p>
-					                                </div>
-					                            </div>
-					                        </div>
-					                    </div>
-					                </div>
-					            	<div class="clear inv2">
-					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
-					                    	<thead>
-					                            <tr>
-					                                <th>ល.រ<br />N<sup>0</sup></th>
-					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-					                                <th>បរិមាណ<br />Quantity</th>
-					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
-					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
-					                            </tr>
-					                        </thead>
-					                        <tbody style="margin-top: 2px">
-					                        	<tr>
-					                            	<td><i>1</i></td>
-					                                <td>1</td>
-					                                <td>1</td>
-					                                <td>1</td>
-					                                <td>1</td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>2</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>3</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>4</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>5</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>6</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>7</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>8</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>9</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>10</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>11</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>12</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>13</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>14</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>15</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​<br />Sub Total</td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០%<br />VAT (10%)</td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​<br />Grand Total</td>
-					                                <td></td>
-					                            </tr>
-					                        </tbody>
-					                    </table>
-					                </div>
-					            </div>
-					            <div class="foot">
-					            	<div class="cover-signature">
-					                	<div class="singature" style="float:left">
-					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
-					                    </div>
-					                    <div class="singature" style="float:right">
-					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
-					                    </div>
-					                </div>
-					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-					            </div>
-					        </div>
+						<div class="span8" id="invFormContent" style="border:1px solid #eee;margin-bottom:20px;">
+
 						</div>
 					</div>
 					<!-- Form actions -->
@@ -18898,13 +19114,8 @@
 		</div>
 	</div>
 </script>
-<script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
-	<a class="span4 form-thumb-active" data-bind="click: selectedForm" style="padding-right: 0;">
-    	<img src="<?php echo base_url(); ?>assets/invoice/img/#= image_url #.jpg" alt="#: name # image" />
-    </a>
-</script>
-<script id="invoiceSelect" type="text/x-kendo-template">
-    <div id="slide-form">
+<script id="invoiceForm" type="text/x-kendo-template">
+	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">					
 				<div id="example" class="k-content">
@@ -18912,458 +19123,259 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
-			        <h2>INVOICE SELECT</h2>
+			        <h2>PREVIEW FORM</h2>
 				    <br>	
 				    <div class="row" style="margin-left:0;">			   				
-						<div class="span4">	
-							<div class="span12">
-								<h2 class="btn btn-block btn-primary">Form Style</h2>
-								<div class="row formstyle">
-									<a class="span4 form-thumb-active" onclick="fsClick($(this).index());">
-										<img src="<?php echo base_url(); ?>assets/invoice/img/inv1_thumb.jpg" />
-									</a>
-									<a class="span4" onclick="fsClick($(this).index());">
-										<img src="<?php echo base_url(); ?>assets/invoice/img/inv2_thumb.jpg" />
-									</a>
-									<a class="span4" onclick="fsClick($(this).index());">
-										<img src="<?php echo base_url(); ?>assets/invoice/img/form-thumb1.jpg" />
-									</a>
-								</div>
-							</div>
-							
-						</div>
-						<div class="span8" style="border:1px solid #eee;margin-bottom:20px;">
-							<div class="inv1 invvisible">
-					        	<div class="head">
-					            	<div class="logo">
-					                	<img src="<?php echo base_url(); ?>assets/invoice/img/logo.png" />
-					                </div>
-					                <div class="cover-name-company">
-					                	<h2>ឈ្មោះក្រុមហ៊ុន​ជា​ភាសា​ខ្មែរ</h2>
-					                    <h3>Company Name</h3>
-					                    <div class="vattin">
-					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 1%;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
-					                    </div>
-					                    <div class="clear">
-					                    	<pre>អាស័យ​ដ្ឋាន៖ ផ្ទះលេខ                    ផ្លូវ                            ឃុំ/សង្កាត់</pre>
-					                        <pre>Address       N<sup>o</sup>                          street                      Commune/Sangkat</pre>
-					                        <pre>ក្រុង/ស្រុក/ខណ្ឌ                            ខេត្ត/រាជធានី                            ទូរស័ព្ទលេខ</pre>
-					                        <pre>Town/District/Khan                     Province/City                         Telephone N<sup>o</sup></pre>
-					                    </div>
-					                </div>
-					            </div>
-					            <div class="content">
-					            	<h1>វិក្កយបត្រ</h1>
-					                <h2>invoice</h2>
-					                <div class="clear">
-					                	<div class="cover-customer">
-					                    	<h5>អតិថិជន​ / Customer :</h5>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
-					                                <span>Company name / Customer</span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 62%;">
-					                            	<p style="font-weight:bold">ឡូត ជឿន</p>
-					                            </div>
-					                        </div>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>ទូរស័ព្ទ​លេខ</p>
-					                                <span>Telephone N<sup>o</sup></span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 78%;">
-					                            	<p style="font-weight:bold">010 411429</p>
-					                            </div>
-					                        </div>
-					                    </div>
-					                    <div class="cover-inv-number">
-					                    	<div class="clear">
-					                        	<div class="left">
-					                        		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
-					                                <span>​​Invoice N<sup>o</sup></span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 42%;">
-					                            	<p style="font-weight:bold">023450</p>
-					                            </div>
-					                        </div>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>កាល​បរិច្ឆេទ៖</p>
-					                                <span>​​Date</span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 57%;">
-					                            	<p style="font-weight:bold">24/Jun/2016</p>
-					                            </div>
-					                        </div>
-					                    </div>
-					                </div>
-					            	<div class="clear">
-					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 1%;">
-					                    	<thead>
-					                            <tr>
-					                                <th>ល.រ<br />N<sup>0</sup></th>
-					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-					                                <th>បរិមាណ<br />Quantity</th>
-					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
-					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
-					                            </tr>
-					                        </thead>
-					                        <tbody style="margin-top: 2px">
-					                        	<tr>
-					                            	<td><i>1</i></td>
-					                                <td>1</td>
-					                                <td>1</td>
-					                                <td>1</td>
-					                                <td>1</td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>2</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>3</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>4</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>5</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>6</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>7</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>8</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>9</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>10</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>11</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>12</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>13</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>14</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>15</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
-					                                <td></td>
-					                            </tr>
-					                        </tbody>
-					                    </table>
-					                </div>
-					            </div>
-					            <div class="foot">
-					            	<div class="cover-signature">
-					                	<div class="singature" style="float:left">
-					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
-					                    </div>
-					                    <div class="singature" style="float:right">
-					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
-					                    </div>
-					                </div>
-					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-					            </div>
-					        </div>
-					        <div class="inv1 invhidden">
-					        	<div class="head">
-					            	<div class="logo">
-					                	<img src="<?php echo base_url(); ?>assets/invoice/img/logo.png" />
-					                </div>
-					                <div class="cover-name-company">
-					                	<h2>ឈ្មោះក្រុមហ៊ុន​ជា​ភាសា​ខ្មែរ</h2>
-					                    <h3>Company Name</h3>
-					                    <div class="vattin">
-					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 1%;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
-					                    </div>
-					                    <div class="clear">
-					                    	<pre>អាស័យ​ដ្ឋាន៖ ផ្ទះលេខ                    ផ្លូវ                            ឃុំ/សង្កាត់</pre>
-					                        <pre>Address       N<sup>o</sup>                          street                      Commune/Sangkat</pre>
-					                        <pre>ក្រុង/ស្រុក/ខណ្ឌ                            ខេត្ត/រាជធានី                            ទូរស័ព្ទលេខ</pre>
-					                        <pre>Town/District/Khan                     Province/City                         Telephone N<sup>o</sup></pre>
-					                    </div>
-					                </div>
-					            </div>
-					            <div class="content">
-					            	<h1>វិក្កយបត្រអាករ</h1>
-					                <h2>invoice</h2>
-					                <div class="clear">
-					                	<div class="cover-customer" style="width: 80%;">
-					                    	<h5>អតិថិជន​ / Customer :</h5>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
-					                                <span>Company name / Customer</span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 42%;">
-					                            	<p style="font-weight:bold">ឡូត ជឿន</p>
-					                            </div>
-					                        </div>
-					                        <div class="clear">
-					                        	<div class="left">
-					                        		<p>ទូរស័ព្ទ​លេខ</p>
-					                                <span>Telephone N<sup>o</sup></span>
-					                            </div>
-					                            <div class="left dotted-ruler" style="width: 52%;">
-					                            	<p style="font-weight:bold">010 411429</p>
-					                            </div>
-					                        </div>
-					                        <div class="vattin">
-					                    	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p> <span style=" margin-left: 5px;">1</span><span>2</span><span>3</span><span>4</span><span style="border:none;padding: 0px;margin-top:1px;font-size: 10px;">-</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
-					                    </div>
-					                    </div>
-					                    <div class="cover-inv-number" style="width: 20%;">
-					                    	<div style="position: absolute;left:-70%;width:165%; ">
-					                            <div class="clear">
-					                                <div class="left">
-					                                    <p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
-					                                    <span>​​Invoice N<sup>o</sup></span>
-					                                </div>
-					                                <div class="left dotted-ruler" style="width: 46%;">
-					                                    <p style="font-weight:bold">023450</p>
-					                                </div>
-					                            </div>
-					                            <div class="clear">
-					                                <div class="left">
-					                                    <p>កាល​បរិច្ឆេទ៖</p>
-					                                    <span>​​Date</span>
-					                                </div>
-					                                <div class="left dotted-ruler" style="width: 59%;">
-					                                    <p style="font-weight:bold">24/Jun/2016</p>
-					                                </div>
-					                            </div>
-					                        </div>
-					                    </div>
-					                </div>
-					            	<div class="clear inv2">
-					                	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
-					                    	<thead>
-					                            <tr>
-					                                <th>ល.រ<br />N<sup>0</sup></th>
-					                                <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-					                                <th>បរិមាណ<br />Quantity</th>
-					                                <th>ថ្លៃឯកតា​<br />Unit Price</th>
-					                                <th>ថ្លៃ​ទំនិញ<br />Amount</th>
-					                            </tr>
-					                        </thead>
-					                        <tbody style="margin-top: 2px">
-					                        	<tr>
-					                            	<td><i>1</i></td>
-					                                <td>1</td>
-					                                <td>1</td>
-					                                <td>1</td>
-					                                <td>1</td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>2</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>3</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>4</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>5</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>6</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>7</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>8</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>9</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>10</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>11</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>12</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>13</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>14</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td><i>15</i></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​<br />Sub Total</td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០%<br />VAT (10%)</td>
-					                                <td></td>
-					                            </tr>
-					                            <tr>
-					                            	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​<br />Grand Total</td>
-					                                <td></td>
-					                            </tr>
-					                        </tbody>
-					                    </table>
-					                </div>
-					            </div>
-					            <div class="foot">
-					            	<div class="cover-signature">
-					                	<div class="singature" style="float:left">
-					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
-					                    </div>
-					                    <div class="singature" style="float:right">
-					                    	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
-					                    </div>
-					                </div>
-					                <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-					            </div>
-					        </div>
+						<div class="span10" id="invFormContent" style="border:1px solid #ccc; margin: 0 auto;">	
 						</div>
 					</div>
 					<!-- Form actions -->
 					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
 						<span id="notification"></span>
 
-						<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>									
+						<span id="savePrint" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+						<span id="savePDF" class="btn btn-icon btn-success glyphicons power" data-bind="click: savePDF" style="width: 80px;"><i></i> Save PDF</span>									
 					</div>
 					<!-- // Form actions END -->
 				</div>							
 			</div>
 		</div>
 	</div>
+</script>
+<script id="invoiceForm1" type="text/x-kendo-template">
+	<div class="inv1">
+    	<div class="head">
+        	<div class="logo">
+            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+            </div>
+            <div class="cover-name-company">
+            	<h2 ></h2>
+                <h3 data-bind="text: company.name"></h3>
+                <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
+                </div>
+                <div class="clear">
+                	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
+                    <pre>Address      </pre>
+                    <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: obj.contact[0].phone"></span></pre>
+                    <pre>Telephone N<sup>o</sup></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+        	<h1>វិក្កយបត្រ</h1>
+            <h2>invoice</h2>
+            <div class="clear">
+            	<div class="cover-customer">
+                	<h5>អតិថិជន​ / Customer :</h5>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+                            <span>Company name / Customer</span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ</p>
+                            <span>Telephone N<sup>o</sup></span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 78%;">
+                        	<p style="font-weight:bold"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+                            <span>​​Invoice N<sup>o</sup></span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold">123456</p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ៖</p>
+                            <span>​​Date</span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold"><?php echo date('d/M/Y'); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
+                	<thead>
+                        <tr>
+                            <th data-bind="style: {backgroundColor: obj.color}">ល.រ<br />N<sup>0</sup></th>
+                            <th data-bind="style: {backgroundColor: obj.color}">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">បរិមាណ<br />Quantity</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm2" type="text/x-kendo-template">
+	<div class="inv1">
+    	<div class="head">
+        	<div class="logo">
+            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+            </div>
+            <div class="cover-name-company">
+            	<h2 ></h2>
+                <h3 data-bind="text: company.name"></h3>
+                <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
+                </div>
+                <div class="clear">
+                	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
+                    <pre>Address      </pre>
+                    <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: obj.contact[0].phone"></span></pre>
+                    <pre>Telephone N<sup>o</sup></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+        	<h1>វិក្កយបត្រអាករ</h1>
+            <h2>invoice</h2>
+            <div class="clear">
+            	<div class="cover-customer" style="width: 80%;">
+                	<h5>អតិថិជន​ / Customer :</h5>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+                            <span>Company name / Customer</span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].company"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ</p>
+                            <span>Telephone N<sup>o</sup></span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 52%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                    <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+                </div>
+                </div>
+                <div class="cover-inv-number" style="width: 20%;">
+                	<div style="position: absolute;left:-70%;width:165%; ">
+                        <div class="clear">
+                            <div class="left">
+                                <p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+                                <span>​​Invoice N<sup>o</sup></span>
+                            </div>
+                            <div class="left dotted-ruler" style="width: 46%;">
+                                <p style="font-weight:bold" data-bind="text: obj.number"></p>
+                            </div>
+                        </div>
+                        <div class="clear">
+                            <div class="left">
+                                <p>កាល​បរិច្ឆេទ៖</p>
+                                <span>​​Date</span>
+                            </div>
+                            <div class="left dotted-ruler" style="width: 59%;">
+                                <p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear inv2">
+            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
+                	<thead>
+                        <tr>
+                            <th data-bind="style: {backgroundColor: obj.color}">ល.រ<br />N<sup>0</sup></th>
+                            <th data-bind="style: {backgroundColor: obj.color}">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">បរិមាណ<br />Quantity</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​<br />Sub Total</td>
+                            <td data-bind="text: obj.sub_total"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០%<br />VAT (10%)</td>
+                            <td data-bind="text: obj.tax"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​<br />Grand Total</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
+	<a class="span4" data-bind="click: selectedForm" style="padding-right: 0;">
+    	<img src="<?php echo base_url(); ?>assets/invoice/img/#= image_url #.jpg" alt="#: name # image" />
+    </a>
+</script>
+<script id="invoiceForm-lineDS-template" type="text/x-kendo-template">
+	<tr>
+		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
+		<td>#= description#</td>
+		<td>#= quantity#</td>
+		<td>#= price#</td>
+		<td>#= amount#</td>
+	</tr>
 </script>
 
 
@@ -26886,12 +26898,8 @@
 *	Template List Section     *
 **************************** -->
 <script id="contact-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=abbr##=number#</span>
-	#if(company){#
-		<span>#=company#</span>
-	#}else{#
-		<span>#=surname#</span> <span>#=name#</span>
-	#}#	
+	<span>#=abbr##=number#</span>	
+	<span>#=name#</span>	
 </script>
 <script id="currency-list-tmpl" type="text/x-kendo-tmpl">
 	<span>
@@ -26899,9 +26907,7 @@
 	</span>
 </script>
 <script id="segment-list-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=name# (#=segment[0].name#)
-	</span>
+	<span>#=code#</span> <span>#=name#</span>
 </script>
 <script id="job-list-tmpl" type="text/x-kendo-tmpl">
 	<span>
@@ -28571,6 +28577,7 @@
     	contactTypeDS 		: dataStore(apiUrl+"contacts/type"),
     	transactionDS 		: dataStore(apiUrl+"transactions"),
     	itemDS 				: dataStore(apiUrl+"items"),
+    	accountDS 			: dataStore(apiUrl+"accounts"),
     	searchType 			: "",
     	searchText 			: "",
     	found 				: 0,
@@ -28619,9 +28626,23 @@
 					var found = self.get("found") + self.itemDS.total();
 					self.set("found", found);
 				});
+
+				this.accountDS.query({
+					filter:[
+						{ field:"number", operator:"like", value: searchText },					
+						{ field:"name", operator:"or_like", value: searchText }
+					],
+					page:1,
+					pageSize: 10
+				}).then(function(){
+					var found = self.get("found") + self.accountDS.total();
+					self.set("found", found);
+				});
 			}
 		},
 		selectedContact 	: function(e){
+			e.preventDefault();
+
 			var data = e.data, 
 			type = this.contactTypeDS.get(data.contact_type_id);
 			
@@ -28634,14 +28655,23 @@
 			}
 		},
 		selectedTransaction : function(e){
-			var data = e.data;
+			e.preventDefault();
 
+			var data = e.data;
 			banhji.router.navigate('/'+data.type.toLowerCase()+'/'+data.id);
 		},
 		selectedItem 		: function(e){
+			e.preventDefault();
+
 			var data = e.data;
 			banhji.router.navigate('/item/'+e.data.id);
-		}		    	
+		},
+		selectedAccount 		: function(e){
+			e.preventDefault();
+
+			var data = e.data;
+			banhji.router.navigate('/accounting_center/'+e.data.id);
+		}
     });	
 
 
@@ -28823,6 +28853,43 @@
 				total: 'count'
 			},
 			filter: { field:"parent_id", operator:"where_related", model:"contact_type", value:3 },
+			// group: { field: "contact_type" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		saleRepDS				: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field:"contact_type_id", value:10 },
 			// group: { field: "contact_type" },
 			batch: true,
 			serverFiltering: true,
@@ -29095,7 +29162,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			// group: { field: "category"},
+			group: { field: "item_type"},
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -29140,7 +29207,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		//Account
+		//Accounting
 		accountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -29972,7 +30039,7 @@
 			return fiscalDate;
 		}
 	});
-
+	
 	/*********************
 	*  Accounting Section  *
 	**********************/
@@ -30032,6 +30099,17 @@
 		pageLoad 			: function(id){			
 			if(id){
 				this.loadObj(id);
+			}
+
+			//Refresh
+			if(this.dataSource.total()>0){
+				this.dataSource.fetch();
+			}
+			if(this.summaryDS.total()>0){
+				this.summaryDS.fetch();
+			}
+			if(this.transactionDS.total()>0){
+				this.transactionDS.fetch();
 			}
 		},
 		loadObj 			: function(id){
@@ -30192,6 +30270,10 @@
             	page: 1,
             	take: 100
             });            
+		},
+		goEdit 				: function(){
+			var obj = this.get("obj");
+			banhji.router.navigate('/account/'+obj.id);
 		}				
 	});
 	banhji.account =  kendo.observable({
@@ -30593,13 +30675,12 @@
 		},			
 		setRate 			: function(){
 			var self = this, 
-			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
+			obj = this.get("obj"),			
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -32376,12 +32457,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -32857,12 +32937,11 @@
 		setRate 			: function(){
 			var self = this, 
 			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -33903,7 +33982,7 @@
       		if(contact_type_id){
       			para.push({ field: "contact_type_id", value: contact_type_id });
       		}      		     		
-
+      		
       		this.contactDS.filter(para);
       		
 			//Clear search filters
@@ -39900,8 +39979,7 @@
 			var self = this, 
 			para = [],
       		txtSearch = this.get("searchText"),
-      		contact_type_id = this.get("contact_type_id"),
-      		currency_id = this.get("currency_id");
+      		contact_type_id = this.get("contact_type_id");
       		
       		if(txtSearch){
       			para.push(
@@ -39916,11 +39994,7 @@
       			para.push({ field: "contact_type_id", value: contact_type_id });
       		}else{
       			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 1 });
-      		}
-
-      		if(currency_id){
-      			para.push({ field: "currency_id", value: currency_id });
-      		}
+      		}      		
 
       		this.contactDS.filter(para);
       		var loaded = false;
@@ -40075,7 +40149,7 @@
         obj 					: null,       
 		originalNo				: null,	
 		isDuplicateNumber 		: false,
-		isCompany 				: false,
+		phFullname 				: "Customer Name ...",
 		isEdit 					: false,
 		contact_type_id 		: 0,						
 		pageLoad 				: function(id, is_pattern){
@@ -40193,20 +40267,12 @@
 				obj.set("abbr", type.abbr);
 
 				if(type.is_company=="1"){
-					this.set("isCompany", true);
+					this.set("phFullname", "Company Name ...");
 				}else{
-					this.set("isCompany", false);
-					obj.set("company", "");
-					obj.set("vat_no", "");
-				}
+					this.set("phFullname", "Customer Name ...");
+				}				
 			}else{
-				this.set("isCompany", false);
-				obj.set("company", "");
-				obj.set("vat_no", "");
-
-				obj.set("country_id", 0);					
-				obj.set("gender", "M");
-				obj.set("company", "");
+				obj.set("country_id", 0);							
 				obj.set("vat_no", "");
 				obj.set("memo", "");
 				obj.set("city", "");
@@ -40360,7 +40426,7 @@
       			self.dataSource.insert(0, {				
 					"country_id" 			: view[0].country_id,			
 					"user_id" 				: 0,
-					"contact_type_id" 		: 4,							
+					"contact_type_id" 		: 4, //General Customer							
 					"abbr"					: type.abbr,
 					"number"				: "",				
 					"surname"				: "",
@@ -43066,8 +43132,7 @@
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
-				self.setRate();
-				self.setTerm();
+				self.setRate();				
 				self.loadDeposit();							
 			});
 		},
@@ -43778,6 +43843,7 @@
 	banhji.quote =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),		
@@ -43830,6 +43896,7 @@
 		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
+		employeeDS  		: banhji.source.saleRepDS,
 		itemDS  			: banhji.source.itemDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
@@ -44251,14 +44318,23 @@
 			data = e.data,
 			transaction_id = 0, 
 			obj = this.get("obj"), 
-			item = this.itemDS.get(data.item_id),
-			rate = obj.rate / item.item_prices[0].rate;
+			item = this.itemDS.get(data.item_id);
 			
 			if(this.get("isEdit")){
 				transaction_id = obj.id;
 			}
 			
-			if(data.item_id>0){		        
+			if(data.item_id>0){
+				var price = 0,
+				rate = 1,
+				measurement_id = 0;
+
+				if(item.item_type_id=="1" || item.item_type_id=="4"){
+					var rate = obj.rate / item.item_prices[0].rate;
+					price = item.item_prices[0].price*rate;
+					measurement_id = item.item_prices[0].measurement_id;
+				}
+
 		        if(item.is_catalog=="1"){
 		        	this.catalogDS.query({
 		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
@@ -44296,15 +44372,16 @@
 
 			        this.changes();		     
 		        }else{
-		        	data.set("measurement_id", item.item_prices[0].measurement_id);		        	
+		        	data.set("measurement_id", measurement_id);		        	
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", item.item_prices[0].price*rate);			        		        
-			        data.set("rate", obj.rate);
+			        data.set("price", price);			        		        
+			        data.set("rate", rate);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
-		    	}		        
+		    	}
+		    			        
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -44341,7 +44418,7 @@
 				reference_id 		: 0,
 				recurring_id 		: "",				
 				user_id 			: this.get("user_id"),
-				seller_id 			: this.get("user_id"), 	    		
+				employee_id 		: "", 	    		
 			   	type				: "Quote",
 			   	sub_total 			: 0,
 			   	account_id 			: 0,				   		   					   				   	
@@ -44440,41 +44517,11 @@
 	    	
 	    	if(this.get("isEdit")){
 	    		this.dataSource.sync();
-
-	    		//Update credit changes
-	    		if(this.get("original_credit") !== obj.credit){	    			
-	    			this.set("original_credit", obj.credit);    			
-
-					var deposit = this.depositDS.at(0);
-					deposit.set("amount", obj.credit*-1);
-
-					this.depositDS.sync();
-	    		}	    		
-
-	    		//Update total changes
-	    		if(this.get("original_total") == obj.amount){
-	    			this.lineDS.sync();	    			
-	    		}else{
-	    			this.set("original_total", obj.amount);
-
-	    			$.each(this.journalLineDS.data(), function(index, value){										
-						value.set("deleted", 1);										
-					});
-
-					this.addJournal(obj.id);
-	    		}	    		
+	    		this.lineDS.sync();	    		   		
 	    	}else{
 	    		//Add brand new transaction
 				this.transactionSync()
 				.then(function(data){
-					//Deposit
-					if(obj.deposit > 0 || obj.credit > 0){
-						self.saveDeposit(data[0].id);
-					}
-
-					//Journal
-				
-
 					//Item line
 					$.each(self.lineDS.data(), function(index, value){										
 						value.set("transaction_id", data[0].id);										
@@ -44490,6 +44537,32 @@
 			this.lineDS.cancelChanges();			
 
 			window.history.back();
+		},
+		delete 					: function(){
+			var self = this, obj = this.get("obj");
+			
+			if (confirm("Are you sure, you want to delete it?")) {				
+		        this.deleteDS.query({
+		        	filter:[
+		        		{ field:"type", operator:"where_in", value:["Sale_Order","Invoice","Cash_Sale"] },
+		        		{ field:"reference_id", value:obj.id },
+		        	],
+		        	page:1,
+		        	pageSize:1
+		        }).then(function(){
+		        	var view = self.deleteDS.view();
+
+		        	if(view.length>0){
+		        		alert("Sorry, you can not delete it.");
+		        	}else{
+		        		obj.set("deleted", 1);
+				        self.dataSource.sync();
+
+				        window.history.back();
+		        	}
+		        });
+		        												
+	    	}	    	
 		},	 
 		//Recurring
 		loadRecurring 		: function(){
@@ -47875,7 +47948,10 @@
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
-			}else{				
+				
+			}else{	
+				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm1);		
+				this.addRowLineDS();
 				if(this.get("isEdit")){
 					this.set("isEdit", false);								
 					this.dataSource.data([]);					
@@ -47886,35 +47962,60 @@
 				}								
 			}
 		},
+		addRowLineDS			: function(e){
+			banhji.invoiceForm.lineDS.data([]);
+			for (var i = 0; i < 15; i++) { 
+				banhji.invoiceForm.lineDS.add({				
+					id			: i,
+					description : '',
+					quantity 	: '',
+					price 		: '',
+					amount 		: ''
+
+		    	});	
+		    }
+		},
 		colorCC 			: function(e){
 			var Color = e.value;
 			var tS = '';
 			if(Color == '#000000' || Color =='#1f497d') tS = '#fff'; 
 			else tS = '#333';
-			$('.inv1 th').css({'background-color': e.value, 'color': tS});
+			$('.inv1 thead tr th').css({'background-color': e.value, 'color': tS});
 		},
 		selectedForm 		: function(e){
 			var Index = $(e.currentTarget).index();
 			$('.form-thumb-active').removeClass('form-thumb-active');
 			$('.formstyle .span4').eq(Index).addClass('form-thumb-active');
-			$('.invvisible').removeClass('invvisible').addClass('invhidden');
-			$('.inv1').eq(Index).addClass('invvisible').removeClass('invhidden');
+			var Active;
+			if(Index == 0) Active = banhji.view.invoiceForm1;	
+			else if(Index == 1) Active = banhji.view.invoiceForm2;
+
+			banhji.view.invoiceCustom.showIn('#invFormContent', Active);	
+			this.addRowLineDS();
+
 			var data = e.data, obj = this.get("obj");
 			obj.set("transaction_form_id", data.id);
 		},	    			
 		loadObj 			: function(id){
-			var self = this;				
-
+			var self = this;			
 			this.dataSource.query({    			
 				filter: { field:"id", value: id },
 				page: 1,
 				take: 100
 			}).then(function(e){
 				var view = self.dataSource.view();
-				
-				self.set("obj", view[0]);				
-			});			
-
+				self.set("obj", view[0]);
+				banhji.invoiceForm.set("obj", view[0]);	
+				var Index = view[0].transaction_form_id;
+				if(Index == 1) Active = banhji.view.invoiceForm1;	
+				else if(Index == 2) Active = banhji.view.invoiceForm2;
+				banhji.view.invoiceCustom.showIn('#invFormContent', Active);
+				var Color = view[0].color, tS = '';
+				if(Color == '#000000' || Color =='#1f497d') tS = '#fff'; 
+				else tS = '#333';
+				$('.inv1 thead tr th').css({'color': tS});
+				self.addRowLineDS();
+			});	
 		},		
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);			
@@ -47962,47 +48063,17 @@
 			window.history.back();
 		}    
 	});
-    banhji.invoiceSelect =  kendo.observable({
-		dataSource 			: dataStore(apiUrl + "transactions"),		
+	banhji.invoiceForm =  kendo.observable({
+		dataSource 			: dataStore(apiUrl + "transactions"),
+		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
 		obj 				: null,
-		isEdit 				: false,		
+		company 			: banhji.institute,		
+		lineDS 				: dataStore(apiUrl + "transactions/line"),
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
-			if(id){
-				this.set("isEdit", true);
-				this.set("original_total", 0);
-				this.set("original_credit", 0);							
-				this.loadObj(id, is_recurring);
-			}else{				
-				if(this.get("isEdit")){
-					this.set("isEdit", false);
-					this.set("original_total", 0);
-					this.set("original_credit", 0);					
-					this.dataSource.data([]);					
-					
-					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
-				}								
+			if(id){				
+				this.loadObj(id);
 			}
-			//Function write css to header
-			function loadStyle(href){
-			    // avoid duplicates
-			    for(var i = 0; i < document.styleSheets.length; i++){
-			        if(document.styleSheets[i].href == href){
-			            return;
-			        }
-			    }
-			    var head  = document.getElementsByTagName('head')[0];
-			    var link  = document.createElement('link');
-			    link.rel  = 'stylesheet';
-			    link.type = 'text/css';
-			    link.href = href;
-			    head.appendChild(link);
-			}
-			var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
-			loadStyle(Href1);
-			
 		},	 
 		printGrid			: function() {
 			var gridElement = $('#grid'),
@@ -48015,7 +48086,7 @@
 		            '<html>' +
 		            '<head>' +
 		            '<meta charset="utf-8" />' +
-		            '<title>Kendo UI Grid</title>' +
+		            '<title></title>' +
 		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" /> <link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" /> ' +
 		            '<style>' +
 		            'html { font: 11pt sans-serif; }' +
@@ -48034,174 +48105,93 @@
 		            '</html>';
 		    
 		    printableContent = $('.inv1').html();
-		    //alert(printableContent);
 		    doc.write(htmlStart + printableContent + htmlEnd);
-		    //alert('a');
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();	
 		    },2000)
 		    
-		},   			
-		loadObj 			: function(id, is_recurring){
-			var self = this, para = [];
+		},	    
+		savePDF				: function(e){
 
-			para.push({ field:"id", value: id });
+			
+	        
+			var draw = kendo.drawing;
 
-			if(is_recurring){
-				para.push({ field:"is_recurring", value: 1 });
-			}			
+	        draw.drawDOM($(".inv1"), {
+	            avoidLinks: true,
+	            paperSize: "A4"
+	        })
+	        .then(function(root) {
+	        	var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" /> <link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" /> ' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style>' +
+		            '</head>' +
+		            '<body><div class="inv1">';
 
+			    var htmlEnd =
+			            '</div></body>' +
+			            '</html>';
+			    var htmlMain = htmlStart + root + htmlEnd;
+
+	            return draw.exportPDF(root);
+	        })
+	        .done(function(data) {
+	            kendo.saveAs({
+	                dataURI: data,
+	                fileName: "1.pdf"
+	            });
+	        });
+		},		
+		loadObj 			: function(id){
+			var self = this;				
 			this.dataSource.query({    			
-				filter: para,
+				filter: { field:"id", value: id },
 				page: 1,
 				take: 100
 			}).then(function(e){
 				var view = self.dataSource.view();				
-
-				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
-				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
-		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
-		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));	  			
-								
-				//self.contactDS.filter({ field: "id", value: view[0].contact_id });				
-				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
-				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });				
-				self.depositDS.filter([
-					{ field: "reference_id", value: view[0].id },
-					{ field: "type", value: "Credit" }
-				]);
-
 				self.set("obj", view[0]);
-				self.set("original_total", view[0].amount);
-				self.set("original_credit", view[0].credit);
+				self.loadObjTemplate(view[0].transaction_template_id);				
+			});
+				
+		},
+		loadObjTemplate 			: function(id){
+			var self = this, obj = this.get('obj');					
 
-				self.loadDeposit();				
-			});				
-		},		
-		addEmpty 		 	: function(){			
-			this.dataSource.data([]);			
+			this.txnTemplateDS.query({    			
+				filter: { field:"id", value: id },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.txnTemplateDS.view();
+				var txNID = view[0].transaction_form_id;
+				
+				obj.set("color", view[0].color);
 
-			this.set("obj", null);				
-
-			this.dataSource.add({				
-				contact_id 			: "",
-				payment_term_id		: 0,				
-				reference_id 		: 0,
-				recurring_id 		: "",				
-				user_id 			: this.get("user_id"),
-				seller_id 			: this.get("user_id"), 	    		
-			   	type				: "Invoice",
-			   	sub_total 			: 0,				   		   					   				   	
-			   	amount				: 0,
-			   	credit_allowed 		: 0,
-			   	credit 				: 0,
-			   	deposit 			: 0,
-			   	discount 			: 0,		   	
-			   	fine 				: 0,
-			   	tax 				: 0,
-			   	rate				: 1,			   	
-			   	locale 				: "km-KH",			   	
-			   	issued_date 		: new Date(),
-			   	due_date 			: new Date(),			   	
-			   	bill_to 			: "",
-			   	ship_to 			: "",
-			   	memo 				: "",
-			   	memo2 				: "",
-			   	status 				: 0,
-			   	segments 			: [],
-			   	is_journal 			: 1,
-			   	//Recurring
-			   	recurring_name 		: "",
-			   	start_date 			: new Date(),
-			   	frequency 			: "Daily",
-			   	month_option 		: "Day",
-			   	interval 			: 1,
-			   	day 				: 1,
-			   	week 				: 0,
-			   	month 				: 0,
-			   	is_recurring 		: 0				
-	    	});		    		
-			
-			var data = this.dataSource.data();
-			var obj = data[data.length-1];			
-			this.set("obj", obj);					
-		},							    
-	    transactionSync 	: function(){
-	    	var dfd = $.Deferred();	        
-
-	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
-		    });
-
-		    return dfd;	    		    	
-	    },	    	    
-		save 				: function(){				
-	    	var self = this, obj = this.get("obj");
-
-	    	//Warning over credit allowed
-	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
-	        	alert("Over credit allowed!");		        	
-	        }
-
-	    	//Update references
-			if(obj.reference_id>0){
-				var ref = this.referenceDS.get(obj.reference_id);
-				ref.set("status", 1);
-				this.referenceDS.sync();
-			} 			
-	    	
-	    	if(this.get("isEdit")){
-	    		this.dataSource.sync();
-
-	    		//Update credit changes
-	    		if(this.get("original_credit") !== obj.credit){	    			
-	    			this.set("original_credit", obj.credit);    			
-
-					var deposit = this.depositDS.at(0);
-					deposit.set("amount", obj.credit*-1);
-
-					this.depositDS.sync();
-	    		}	    		
-
-	    		//Update total changes
-	    		if(this.get("original_total") == obj.amount){
-	    			this.lineDS.sync();	    			
-	    		}else{
-	    			this.set("original_total", obj.amount);
-
-	    			$.each(this.journalLineDS.data(), function(index, value){										
-						value.set("deleted", 1);										
-					});
-
-					this.addJournal(obj.id);
-	    		}	    		
-	    	}else{
-	    		//Add brand new transaction
-				this.transactionSync()
-				.then(function(data){
-					//Deposit
-					if(obj.deposit > 0 || obj.credit > 0){
-						self.saveDeposit(data[0].id);
-					}
-
-					//Journal
-					self.addJournal(data[0].id);
-
-					//Item line
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("transaction_id", data[0].id);										
-					});
-					self.lineDS.sync();																	
-				}).then(function(){					
-					self.addEmpty();
-				});
-			}
+				if(txNID == 1){
+					banhji.view.invoiceForm.showIn("#invFormContent", banhji.view.invoiceForm1);
+				} else if(txNID == 2){
+					banhji.view.invoiceForm.showIn("#invFormContent", banhji.view.invoiceForm2);
+				}
+				self.lineDS.filter({ field:"transaction_id", value: id });	
+			});
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();
-			this.lineDS.cancelChanges();			
+			this.dataSource.cancelChanges();		
 
 			window.history.back();
 		}    
@@ -48979,13 +48969,12 @@
 		},			
 		setRate 			: function(){
 			var self = this, 
-			obj = this.get("obj"),
-			currency_id = banhji.currency.getCurrencyID(obj.locale), 
+			obj = this.get("obj"), 
 			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
 			
 			this.currencyRateDS.query({
 				filter: [
-					{ field:"currency_id", value: currency_id },
+					{ field:"locale", value: obj.locale },
 					{ field:"date <=", value: date }
 				],
 				sort: { field:"date", dir:"desc" },
@@ -54101,8 +54090,10 @@
 		transactionListDate: new kendo.Layout("#transactionListDate", {model: banhji.transactionListDate}),
 		recentTransactionsList: new kendo.Layout("#recentTransactionsList", {model: banhji.recentTransactionsList}),
 		recurringJournalList: new kendo.Layout("#recurringJournalList", {model: banhji.recurringJournalList}),
-
-
+		statementProfitLoss: new kendo.Layout("#statementProfitLoss", {model: banhji.statementProfitLoss}),
+		statementFinancialPosition: new kendo.Layout("#statementFinancialPosition", {model: banhji.statementFinancialPosition}),
+		statementChangesEquity: new kendo.Layout("#statementChangesEquity", {model: banhji.statementChangesEquity}),
+		statementCashFlow: new kendo.Layout("#statementCashFlow", {model: banhji.statementCashFlow}),
 
 		//Employee
 		employeeDashboard: new kendo.Layout("#employeeDashboard", {model: banhji.employeeDashboard}),
@@ -54142,7 +54133,10 @@
 		customerSetting: new kendo.Layout("#customerSetting", {model: banhji.customerSetting}),
 		job: new kendo.Layout("#job", {model: banhji.job}),
 		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
-		invoiceSelect: new kendo.Layout("#invoiceSelect", {model: banhji.invoiceSelect}),
+		invoiceForm1: new kendo.Layout("#invoiceForm1", {model: banhji.invoiceForm}),
+		invoiceForm2: new kendo.Layout("#invoiceForm2", {model: banhji.invoiceForm}),
+		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),
+		
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.saleSummaryCustomer}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.saleDetailCustomer}),
 		saleSummaryProduct: new kendo.Layout("#saleSummaryProduct", {model: banhji.saleSummaryProduct}),
@@ -55639,6 +55633,595 @@
 			}
 		}		
 	});
+	banhji.router.route("/statement_profit_loss", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.statementProfitLoss);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			var vm = banhji.journalReport;
+
+			if(banhji.pageLoaded["statement_profit_loss"]==undefined){
+				banhji.pageLoaded["statement_profit_loss"] = true;
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());				
+
+				$("#search").click(function(e){
+		        	e.preventDefault();
+
+		        	var para = [],		        	
+					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
+					edate = kendo.toString(end.value(), "yyyy-MM-dd");
+					
+		        	//Dates
+		        	if(start.value() && end.value()){        		
+		            	para.push({ field:"issued_date >=", value: sdate });
+		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
+		            }else if(start.value()){
+		            	para.push({ field:"issued_date", value: sdate });
+		            }else if(end.value()){
+		            	para.push({ field:"issued_date <=", value: edate });
+		            }else{
+		            	
+		            }
+
+		            vm.dataSource.filter(para);		            
+		        });								
+						
+			}
+		}		
+	});	
+	banhji.router.route("/statement_financial_position", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.statementFinancialPosition);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			var vm = banhji.journalReport;
+
+			if(banhji.pageLoaded["statement_financial_position"]==undefined){
+				banhji.pageLoaded["statement_financial_position"] = true;
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());				
+
+				$("#search").click(function(e){
+		        	e.preventDefault();
+
+		        	var para = [],		        	
+					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
+					edate = kendo.toString(end.value(), "yyyy-MM-dd");
+					
+		        	//Dates
+		        	if(start.value() && end.value()){        		
+		            	para.push({ field:"issued_date >=", value: sdate });
+		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
+		            }else if(start.value()){
+		            	para.push({ field:"issued_date", value: sdate });
+		            }else if(end.value()){
+		            	para.push({ field:"issued_date <=", value: edate });
+		            }else{
+		            	
+		            }
+
+		            vm.dataSource.filter(para);		            
+		        });								
+						
+			}
+		}		
+	});
+	banhji.router.route("/statement_changes_equity", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.statementChangesEquity);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			var vm = banhji.journalReport;
+
+			if(banhji.pageLoaded["statement_changes_equity"]==undefined){
+				banhji.pageLoaded["statement_changes_equity"] = true;
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());				
+
+				$("#search").click(function(e){
+		        	e.preventDefault();
+
+		        	var para = [],		        	
+					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
+					edate = kendo.toString(end.value(), "yyyy-MM-dd");
+					
+		        	//Dates
+		        	if(start.value() && end.value()){        		
+		            	para.push({ field:"issued_date >=", value: sdate });
+		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
+		            }else if(start.value()){
+		            	para.push({ field:"issued_date", value: sdate });
+		            }else if(end.value()){
+		            	para.push({ field:"issued_date <=", value: edate });
+		            }else{
+		            	
+		            }
+
+		            vm.dataSource.filter(para);		            
+		        });								
+						
+			}
+		}		
+	});
+	banhji.router.route("/statement_cash_flow", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.statementCashFlow);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
+			
+			var vm = banhji.journalReport;
+
+			if(banhji.pageLoaded["statement_cash_flow"]==undefined){
+				banhji.pageLoaded["statement_cash_flow"] = true;
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());				
+
+				$("#search").click(function(e){
+		        	e.preventDefault();
+
+		        	var para = [],		        	
+					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
+					edate = kendo.toString(end.value(), "yyyy-MM-dd");
+					
+		        	//Dates
+		        	if(start.value() && end.value()){        		
+		            	para.push({ field:"issued_date >=", value: sdate });
+		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
+		            }else if(start.value()){
+		            	para.push({ field:"issued_date", value: sdate });
+		            }else if(end.value()){
+		            	para.push({ field:"issued_date <=", value: edate });
+		            }else{
+		            	
+		            }
+
+		            vm.dataSource.filter(para);		            
+		        });								
+						
+			}
+		}		
+	});
+	
 
 	/*************************
 	*   Employee Section   *
@@ -57688,48 +58271,35 @@
 			vm.pageLoad(id);		
 		};	
 	});
-	banhji.router.route("/invoice_select(/:id)", function(id){
+	banhji.router.route("/invoice_form(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.invoiceSelect);			
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.invoiceForm);			
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.invoiceSelect;
+			var vm = banhji.invoiceForm;
 			
-			if(banhji.pageLoaded["invoice_select"]==undefined){
-				banhji.pageLoaded["invoice_select"] = true;				        
+			if(banhji.pageLoaded["invoice_form"]==undefined){
+				banhji.pageLoaded["invoice_form"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-				
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});				
+				//Function write css to header
+				function loadStyle(href){
+				    // avoid duplicates
+				    for(var i = 0; i < document.styleSheets.length; i++){
+				        if(document.styleSheets[i].href == href){
+				            return;
+				        }
+				    }
+				    var head  = document.getElementsByTagName('head')[0];
+				    var link  = document.createElement('link');
+				    link.rel  = 'stylesheet';
+				    link.type = 'text/css';
+				    link.href = href;
+				    head.appendChild(link);
+				}
+				var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
+				loadStyle(Href1);			
 			};
 			
 			vm.pageLoad(id);		
@@ -60954,7 +61524,6 @@
 	 //                });
 	 //              }
 	 //            });
-	 //        }						
-		// }
+	 //                                        
 	});
 </script>

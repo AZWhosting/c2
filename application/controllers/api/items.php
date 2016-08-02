@@ -85,6 +85,7 @@ class Items extends REST_Controller {
 			}									 			
 		}
 
+		$obj->include_related("item_type", "name");
 		$obj->where("is_pattern", $is_pattern);
 		$obj->where("deleted", $deleted);			
 		
@@ -167,7 +168,7 @@ class Items extends REST_Controller {
 				   	"status" 				=> $value->status,
 				   	"deleted" 				=> $value->deleted, 					
  					
- 					"category" 				=> [],//$value->category->get()->name,
+ 					"item_type" 			=> $value->item_type_name,
 				   	"measurement"			=> [],//$value->measurement->get()->name,
 				   	"item_prices"			=> $itemPrice
 				);

@@ -1119,7 +1119,7 @@ width: 90px !important;
   margin-right: 15px;
   padding: 10px;
   width: 97%;
-  min-height: 215px;
+  min-height: 240px;
   margin-bottom: 15px;
 }
 
@@ -1310,8 +1310,86 @@ width: 90px !important;
   text-align: left;
   line-height: 18px;
 }
+.saleSummaryCustomer .table.table-borderless.table-condensed{
+  margin-bottom: 0;
+}
+.saleSummaryCustomer .table.table-borderless.table-condensed .bg-total td{
+  background: #1C2633 !important;
+  font-weight: 700;
+  color:#fff; 
+  font-size: 20px; 
+}
+.margin-bottom-none .table{
+  margin-bottom: 0;
+}
+.span9.detailsWrapper div>span,
+.span9.detailsWrapper div>button{
+  margin-bottom: 15px;
+}
 
+.saleSummaryStatement .block-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.saleSummaryStatement .block-title h3 {
+    font-size: 15px;
+}
+.saleSummaryStatement .block-title h2 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: -10px;
+    margin-bottom: 0;
+}
+.saleSummaryStatement .block-title p {
+    font-size: 15px;
+}
+.saleSummaryStatement table{
+  width: 100%;
+  border-spacing: 5px;
+  border-collapse: separate;
+}
 
+.saleSummaryStatement table tr td{
+  padding: 5px 0 5px 0;
+}
+.saleSummaryStatement table tr .bold{
+    font-weight: 700;
+}
+.saleSummaryStatement table tr .bold-border{
+  font-weight: 700;
+  border-top: 1px #333 solid;
+}
+.saleSummaryStatement table tr .right{
+  text-align: right;
+}
+.saleSummaryStatement table tr .border-bottom{
+  border-bottom: 1px #333 solid;
+}
+.saleSummaryStatement table tr .paddingLeft20{
+  padding-left: 20px;
+}
+.saleSummaryStatement table tr .paddingLeft40{
+  padding-left: 40px;
+}
+.saleSummaryStatement table tr .under-bottom{
+  border-bottom: 3px #333 double;
+}
+.saleSummaryStatement table tr .fontBig{
+  font-size: 15px;
+}
+.saleSummaryStatement table tr .bigBorderbottom{
+  border-bottom: 3px #333 solid;
+}
+.saleSummaryStatement table tr .bigBordertop{
+  border-top: 3px #333 solid;
+}
+.accounCetner-textedit .btn.btn-primary.btn-icon.glyphicons.edit.pull-right{
+  margin-top: 10px;
+  margin-bottom: 0;
+  width: 80px;
+  text-align: right;
+  color: #fff;
+}
 
 
 @media only screen 

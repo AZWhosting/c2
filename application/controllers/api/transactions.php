@@ -129,7 +129,7 @@ class Transactions extends REST_Controller {
 					"account_id" 				=> $value->account_id,
 					"tax_item_id" 				=> $value->tax_item_id,					
 					"user_id" 					=> $value->user_id,
-					"seller_id" 				=> $value->seller_id,
+					"employee_id" 				=> $value->employee_id,
 				   	"number" 					=> $value->number,
 				   	"reference_no" 				=> $value->reference_no,
 				   	"type" 						=> $value->type,
@@ -231,7 +231,7 @@ class Transactions extends REST_Controller {
 			isset($value->account_id) 				? $obj->account_id 					= $value->account_id : "";
 			isset($value->tax_item_id) 				? $obj->tax_item_id 				= $value->tax_item_id : "";			
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
-			isset($value->seller_id) 				? $obj->seller_id 					= $value->seller_id : "";
+			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
 			isset($value->number) 					? $obj->number 						= $value->number : $obj->number = $number;		   	
 		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
@@ -318,7 +318,7 @@ class Transactions extends REST_Controller {
 					"account_id" 				=> $obj->account_id,
 					"tax_item_id" 				=> $obj->tax_item_id,					
 					"user_id" 					=> $obj->user_id,
-					"seller_id" 				=> $obj->seller_id,				   			   						   
+					"employee_id" 				=> $obj->employee_id,				   			   						   
 				   	"number" 					=> $obj->number,
 				   	"reference_no" 				=> $obj->reference_no,
 				   	"type" 						=> $obj->type,
@@ -395,7 +395,7 @@ class Transactions extends REST_Controller {
 			isset($value->account_id) 				? $obj->account_id 					= $value->account_id : "";
 			isset($value->tax_item_id) 				? $obj->tax_item_id 				= $value->tax_item_id : "";			
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
-			isset($value->seller_id) 				? $obj->seller_id 					= $value->seller_id : "";
+			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
 			isset($value->number) 					? $obj->number 						= $value->number : "";
 		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
@@ -483,7 +483,7 @@ class Transactions extends REST_Controller {
 					"account_id" 				=> $obj->account_id,
 					"tax_item_id" 				=> $obj->tax_item_id,					
 					"user_id" 					=> $obj->user_id,
-					"seller_id" 				=> $obj->seller_id,				   			   						   
+					"employee_id" 				=> $obj->employee_id,				   			   						   
 				   	"number" 					=> $obj->number,
 				   	"reference_no" 				=> $obj->reference_no,
 				   	"type" 						=> $obj->type,

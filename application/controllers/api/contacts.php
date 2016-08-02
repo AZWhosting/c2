@@ -103,11 +103,6 @@ class Contacts extends REST_Controller {
 		
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
-				$fullname = $value->surname.' '.$value->name;
-				if($value->company){
-					$fullname = $value->company;
-				}			
-
 		 		$data["results"][] = array(
 		 			"id" 						=> $value->id,		 			
 					"company_id" 				=> $value->company_id,
@@ -173,8 +168,7 @@ class Contacts extends REST_Controller {
 					"is_local" 					=> $value->is_local,
 					"is_pattern" 				=> intval($value->is_pattern),
 					"status" 					=> $value->status,
-
-					"fullname" 					=> $fullname,					
+								
 					"contact_type"				=> $value->contact_type_name
 		 		);
 			}
