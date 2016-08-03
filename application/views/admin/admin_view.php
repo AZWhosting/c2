@@ -445,41 +445,41 @@
                             </div>
                             <div class="col-xs-12 col-sm-8 col-lg-8">
                                 <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
-                                    <div class="form-group">
+                                    <div class="form-group" style="float: left; width: 100%; ">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Username <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="email" id="username" required="required" data-bind="value: current.username" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" style="float: left; width: 100%; ">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Password <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="password" id="password" required="required" data-bind="value: current.password" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" style="float: left; width: 100%; ">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" id="first-name" data-bind="value: current.first_name" required="required" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" style="float: left; width: 100%; ">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" id="last-name" data-bind="value: current.last_name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" style="float: left; width: 100%; ">
                                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input id="email" data-bind="value: current.email" class="form-control col-md-7 col-xs-12" type="email" name="middle-name">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" style="float: left; width: 100%; ">
                                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Phone</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input id="phone" data-bind="value: current.mobile" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
@@ -487,7 +487,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="type" class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="user-dropdown">
                                             <input id="type"
                                                data-role="dropdownlist"
                                                data-bind="source: userTypes, value: current.usertype"
@@ -495,7 +495,7 @@
                                                data-value-field="id"
                                                class="form-control col-md-7 col-xs-12"
                                                type="text"
-                                               name="middle-name">
+                                               name="middle-name" style="width: 100%; ">
                                         </div>
                                     </div>
                                     <div class="ln_solid"></div>
@@ -523,7 +523,7 @@
                                 <input type="file" id="user-image" data-bind="events: {change: upload}" class="form-control col-md-7 col-xs-12">
                             </div>                            
                             <div class="col-xs-12 col-sm-8 col-lg-8">
-                                <div style="float: left; width: 100%; " id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                                <div style="margin-bottom: 15px; float: left; width: 100%;" id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Username <span class="required">*</span>
                                         </label>
@@ -567,7 +567,7 @@
                                 </div>
                                 <div class="form-group" style="float: left; width: 100%; ">
                                     <label for="type" class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="user-dropdown">
                                         <input id="type"
                                            data-role="dropdownlist"
                                            data-bind="source: userTypes, value: current.usertype"
@@ -575,7 +575,7 @@
                                            data-value-field="id"
                                            class="form-control col-md-7 col-xs-12"
                                            type="text"
-                                           name="middle-name">
+                                           name="middle-name" style="width:100%; ">
                                     </div>
                                 </div>
                                 <div class="ln_solid"></div>

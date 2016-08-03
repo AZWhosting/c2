@@ -18104,7 +18104,201 @@
         </div>
     </div>
 </script>
+<script id="invoiceForm5" type="text/x-kendo-template">
+	<div class="inv1 quotation">
+        <div class="content clear">
+        	<table class="span12">
+        		<tbody>
+        			<tr>
+        				<td style="border-top: none;border-left: none" width="500" colspan="2" rowspan="3">
+        					<h2>GOODS DELIVERED NOTE </h2>
+	        			</td>
+	        			<td width="120">
+	        				<b>Date</b>
+	        			</td>
+	        			<td>&nbsp;</td>
+        			</tr>
+        			<tr>
+	        			<td ><b>Quotation Form #</b></td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td><b>Requisition #</b></td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td width="150"><b>Customer Name:</b></td>
+	        			<td ></td>
+	        			<td ><b>Date of contact:</b></td>
+	        			<td ></td>
+	        		</tr>
+	        		<tr>
+	        			<td width="150"><b>Contact Information:</b></td>
+	        			<td ></td>
+	        			<td ><b>Time of contact:</b></td>
+	        			<td ></td>
+	        		</tr>
+	        		<tr>
+	        			<td width="150"><b>Validity Date</b></td>
+	        			<td ></td>
+	        			<td ><b>Date price provided </b></td>
+	        			<td ></td>
+	        		</tr>
+        		</tbody>
+        	</table>
+        	<table class="span12" style="margin-top: 5px;">
+        		<thead>
+        			<tr>
+	        			<th>
+	        				No
+	        			</th>
+	        			<th width="70">
+	        				Item<br>Code
+	        			</th>
+	        			<th width="">
+	        				Description
+	        			</th>
+	        			<th width="30">
 
+	        			</th>
+	        			<th width="40">
+	        				UM
+	        			</th>
+	        			<th width="40">
+	        				QTY
+	        			</th>
+	        			<th width="80">
+	        				Unit Price
+	        			</th>
+	        			<th width="70">
+	        				Extended<br>Price
+	        			</th>
+	        		</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        		</tbody>
+        		<tfoot>
+        			
+        			<tr>
+        				<td style="text-align:right;padding-right:10px;" colspan="7"><b>Total</b></td>
+        				<td></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<div class="span12 clear" style="margin-top: 10px">
+	        	<p><b>Additional Specifications </b></p>
+	        	<table class="span12" style="margin-top:10px;">
+	        		<tr>
+	        			<td colspan="3">
+	        			<br><br><br><br>
+	        			</td>
+	        		</tr>
+	        		<tr>
+	        			<td colspan="3"><b>Prepared By:<br>Position:<br>Date:</b></td>
+	        		</tr>
+	        		<tr>
+	        			<td rowspan="2">This form is used only when official quotation from supplier is not feasible.<td>
+	        			<td>&nbsp;</td>
+	        		</tr>
+	        		<tr>
+	        			<td width="80">&nbsp;</td>
+	        			<td width="80">&nbsp;</td>
+	        		</tr>
+	        	</table>
+	        </div>
+        </div>
+    </div>
+</script>
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
 	<a class="span4" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
     	<img src="<?php echo base_url(); ?>assets/invoice/img/#= image_url #.jpg" alt="#: name # image" />
@@ -46635,6 +46829,7 @@
 				case 2: Active = banhji.view.invoiceForm3; break;
 				case 3: Active = banhji.view.invoiceForm4; break;
 			}
+
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);	
 			this.addRowLineDS();
 
@@ -52780,6 +52975,7 @@
 		invoiceForm2: new kendo.Layout("#invoiceForm2", {model: banhji.invoiceForm}),
 		invoiceForm3: new kendo.Layout("#invoiceForm3", {model: banhji.invoiceForm}),
 		invoiceForm4: new kendo.Layout("#invoiceForm4", {model: banhji.invoiceForm}),
+		invoiceForm5: new kendo.Layout("#invoiceForm4", {model: banhji.invoiceForm}),
 		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),
 		
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.saleSummaryCustomer}),

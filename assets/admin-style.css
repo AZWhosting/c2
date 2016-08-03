@@ -98,3 +98,10 @@
     box-sizing: border-box !important;
     -webkit-box-sizing: border-box !important;
 }
+.user-dropdown{
+	border: 1px solid rgba(197, 214, 222, .7);
+    width: 45.5%;
+    float: left;
+    margin-left: 15px;
+    border-radius: 5px;
+}
