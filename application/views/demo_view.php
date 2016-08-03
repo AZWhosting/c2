@@ -2877,139 +2877,6 @@
 		</div>
 	</div>
 </script>
-
-<script id="recurringJournalList" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content saleSummaryCustomer">				
-						
-				    <span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
-					<br>
-					<br>
-					<div class="row-fluid">	
-					    <!-- //Tabs Heading -->
-					    <div class="tabsbar tabsbar-1 journal_report_tab_title">
-					        <ul class="row-fluid row-merge ">						            
-					            <li class="span2 glyphicons calendar active">
-					            	<a href="#tab1" data-toggle="tab"><i></i> Date</a>
-					            </li>								            
-					            <li class="span2 glyphicons filter">
-					            	<a href="#tab2" data-toggle="tab"><i></i>Filters</a>
-					            </li>
-					            <li class="span2 glyphicons print">
-					            	<a href="#tab3" data-toggle="tab"><i></i>Print/Export</a>
-					            </li>						            					            
-					        </ul>
-					    </div>
-					    <!-- // Tabs Heading END -->
-
-					    <div class="tab-content">
-
-					    	<!-- //GENERAL INFO -->
-					        <div class="tab-pane active" id="tab1">
-					        	<input id="sorter" name="sorter"
-						    	   data-role="dropdownlist"                   
-						           data-value-primitive="true"
-						           data-text-field="text"
-						           data-value-field="value"
-						           data-bind="value: sorter,
-						                      source: sortList" />
-				            	
-						        <input id="sdate" name="sdate"						           
-							           data-bind="value: sdate"
-							           placeholder="From ..." />
-						        
-						       	<input id="edate" name="edate"						           
-							           data-bind="value: edate"
-							           placeholder="To ..." />
-
-					            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
-				        	</div>
-					        <!-- //GENERAL INFO END -->
-
-					        <!-- //ACCOUNTING -->
-					        <div class="tab-pane" id="tab2">
-					        	
-					        	<div class="row-fluid">								        		
-					            	<div class="span3">
-										<label for="ddlAR"><span ></span>Filtered by</label>
-										<input id="ddlAR" name="ddlAR"
-											   data-role="dropdownlist"
-											   data-template="account-list-tmpl"										                   
-							                   data-value-primitive="true"
-							                   data-text-field="name"
-							                   data-value-field="id"
-							                   data-bind="value: obj.account_id,
-							                              source: arDS"
-							                   data-option-label="(--- Select ---)"
-							                   required data-required-msg="required" style="width: 100%;" />													
-									</div>
-									<div class="span3">
-										<label for="ddlRA"><span ></span>Grouped By</label>
-										<input id="ddlRA" name="ddlRA"
-											   data-role="dropdownlist"
-											   data-template="account-list-tmpl"										                   
-							                   data-value-primitive="true"
-							                   data-text-field="name"
-							                   data-value-field="id"
-							                   data-bind="value: obj.ra_id,
-							                              source: raDS"
-							                   data-option-label="(--- Select ---)"
-							                   required data-required-msg="required" style="width: 100%;" />
-							         										
-									</div>
-																															
-								</div>
-				        	</div>
-					        <!-- //ACCOUNTING END -->						       
-
-					        <!-- //CONTACT PERSON -->
-					        <div class="tab-pane" id="tab3">
-					        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-					        	<span id="" class="btn btn-icon btn-default glyphicons download_alt pdf" data-bind="click: cancel" style="width: 80px;">
-					        		<i></i>
-					        		Print as PDF
-					        	</span>
-					        	<span id="" class="btn btn-icon btn-default glyphicons download_alt execl" data-bind="click: cancel" style="width: 80px;">
-					        		<i></i>
-					        		Export to Excel
-					        	</span>
-				        	</div>
-					        <!-- //CONTACT PERSON END -->
-					    </div>
-						
-					</div>
-					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
-						<h2>Recurring Journal List</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<br>			   
-				   
-					<!-- Item List -->
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>
-				            <tr>
-				                <th style="width: 1%;">No.</th>
-				                <th style="width: 30%">NAME</th>
-				                <th class="center" style="width: 10%">TYPE</th>
-				                <th class="center">START DATE</th>
-				                <th class="center">FREQUENCY</th>
-				                <th></th>			                			                
-				            </tr> 
-				        </thead>
-				        <tbody></tbody>			        
-				    </table>											
-
-				</div>							
-			</div>
-		</div>
-	</div>
-</script>
-
 <script id="transactionListDate" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">
@@ -3206,7 +3073,6 @@
 		</div>
 	</div>
 </script>
-
 <script id="recentTransactionsList" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">
@@ -3410,7 +3276,6 @@
 		</div>
 	</div>
 </script>
-
 <script id="trialBalance" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">
@@ -3554,55 +3419,130 @@
 
 <script id="chartOfAccount" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="container-fluid">					
-			<div id="example" class="k-content">
-
-		    	<div class="hidden-print well">
-		    		<span class="glyphicons no-js remove_2 pull-right" 
+		<div class="customer-background ">
+			<div class="container-960">						
+				<div id="example" class="k-content saleSummaryCustomer">
+					<span class="glyphicons no-js remove_2 pull-right" 
 							onclick="javascript: window.history.back()"><i></i></span>
-		            
-					<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
-					|					
-				    <span class="btn-group dropdown">
-				        <button class="dropdown-toggle" data-toggle="dropdown">Sort <span class="caret"></span></button>
-				        <ul class="dropdown-menu">
-				            <li>
-				            	<span class="btn btn-block btn-primary" data-bind="click: sort">TYPE</span>				            	
-				            </li>
-				            <li>
-				            	<span class="btn btn-block btn-info" data-bind="click: sort">DATE</span>
-				            </li>
-				            <li>
-				            	<span class="btn btn-block btn-primary" data-bind="click: sort">ACCOUNT</span>
-				            </li>				            			           				            				            
-				        </ul>
-				    </span>
-									
-		    	</div>						
+					<br>
+					<br>
+					
+					<div class="row-fluid">	
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								
+								<div class="widget-body">
+									<div class="tab-content">
+								    	<!-- //GENERAL INFO -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"                   
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
+										           placeholder="From ..." />
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
+										           placeholder="To ..." />
 
-				<div align="center">
-					<h3>CHART OF ACCOUNT</h3>
-					<span id="strDate"></span>
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+								        
+										<!-- //ACCOUNTING -->
+								        <div class="tab-pane" id="tab-2">
+								        	
+								        	<div class="row-fluid">								        		
+								            	<div class="span3">
+													<label for="ddlAR"><span ></span>Filtered by</label>
+													<input id="ddlAR" name="ddlAR"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.account_id,
+										                              source: arDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />													
+												</div>
+												<div class="span3">
+													<label for="ddlRA"><span ></span>Grouped By</label>
+													<input id="ddlRA" name="ddlRA"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.ra_id,
+										                              source: raDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />
+										         										
+												</div>
+																																		
+											</div>
+							        	</div>
+
+								        <div class="tab-pane" id="tab-3">
+								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								        <!-- //ACCOUNTING END -->								       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Chart of Account</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				                <th class="center">NUMBER</th>
+				                <th class="center">NAME</th>
+				                <th class="center">TYPE</th>			                
+				            </tr> 
+				        </thead>
+				        <tbody data-role="listview"
+				        		data-template="chartOfAccount-template"			        		
+				        		data-bind="source: dataSource"></tbody> 
+				    </table>
+		            <div data-role="pager" data-bind="source: dataSource"></div>					  
+
 				</div>
-
-				<br>
-
-				<table class="table table-bordered table-primary table-striped table-vertical-center">
-			        <thead>
-			            <tr>
-			                <th class="center">NUMBER</th>
-			                <th class="center">NAME</th>
-			                <th class="center">TYPE</th>			                
-			            </tr> 
-			        </thead>
-			        <tbody data-role="listview"
-			        		data-template="chartOfAccount-template"			        		
-			        		data-bind="source: dataSource"></tbody> 
-			    </table>
-
-	            <div data-role="pager" data-bind="source: dataSource"></div>					  
-
-			</div>							
+			</div>						
 		</div>
 	</div>
 </script>
@@ -3962,7 +3902,7 @@
 						<tr>
 							<td class="bold">TOTAL ASSETS</td>
 							<td></td>
-							<td class="right bold-border under-bottom">571,928,244</td>
+							<td class="right bold under-bottom">571,928,244</td>
 						</tr>
 						<tr>
 							<td></td>
@@ -4097,12 +4037,12 @@
 						<tr>
 							<td class="bold">Total Liabilities</td>
 							<td><a href=""></a></td>
-							<td class="right bold-border border-bottom">556,078,762</td>
+							<td class="right bold border-bottom">556,078,762</td>
 						</tr>
 						<tr>
 							<td class="bold fontBig">Total Liabilities</td>
 							<td><a href=""></a></td>
-							<td class="right bold-border under-bottom">556,078,762</td>
+							<td class="right bold under-bottom">556,078,762</td>
 						</tr>
 					</table>
 		        </div>		        
@@ -4127,89 +4067,225 @@
 						<tr>
 							<th></th>
 							<th>Note</th>
-							<th class="right">2016</th>
-							<th class="pull-right">2015</th>
+							<th class="right">12/31/2016</th>
 						</tr>
 						<tr>
+							<td class="bold fontBig">OPERATING ACTIVITIES</td>
+							<td class="right"></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td>Profit before tax</td>
+							<td class="right"></td>
+							<td class="right">46,471</td>
+						</tr>
+						<tr>
+							<td class="bold">Adjustment to reconcile profit before tax to net cash flows</td>
 							<td></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Depreciation of property, plant, and equipment</td>
 							<td></td>
-							<td class="right">KHR</td>
-							<td class="right">KHR</td>
+							<td class="right">36,049</td>
 						</tr>
 						<tr>
-							<td>Revenue</td>
-							<td>10</td>
-							<td class="right">680,000</td>
-							<td class="right">525,000</td>
-						</tr>
-						<tr>
-							<td>Cost</td>
+							<td class="paddingLeft20">Amortization and impairment of intangible assets</td>
 							<td></td>
-							<td class="right">(400,000)</td>
-							<td class="right">(300,000)</td>
+							<td class="right">-</td>
 						</tr>
 						<tr>
-							<td class="bold">Gross Profit</td>
+							<td class="paddingLeft20">Allowance/ (Reversal of allowance)</td>
 							<td></td>
-							<td class="right bold-border">280,000</td>
-							<td class="right bold-border">225,000</td>
+							<td class="right">-</td>
 						</tr>
 						<tr>
-							<td>Distribution costs</td>
+							<td class="paddingLeft20">Gain from bargain purchase</td>
 							<td></td>
-							<td class="right">(8,580)</td>
-							<td class="right">(5,830)</td>
+							<td class="right">-</td>
 						</tr>
 						<tr>
-							<td>Administrative Expense</td>
+							<td class="paddingLeft20">Gain on disposal of property, plant and equipment</td>
 							<td></td>
-							<td class="right">(50,000)</td>
-							<td class="right">(40,000)</td>
+							<td class="right">-</td>
 						</tr>
 						<tr>
-							<td>Finance Costs</td>
-							<td>11</td>
-							<td class="right">(22,300)</td>
-							<td class="right">(19,700)</td>
-						</tr>
-						<tr>
-							<td>Share of profit of associate</td>
-							<td>12</td>
-							<td class="right">42,100</td>
-							<td class="right">38,560</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit before Tax</td>
-							<td>13</td>
-							<td class="right bold-border">241,220</td>
-							<td class="right bold-border">198,030</td>
-						</tr>
-						<tr>
-							<td>Income tax expense</td>
-							<td>14</td>
-							<td class="right">(60,305)</td>
-							<td class="right">(47,508)</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit for the year from continuing operations</td>
+							<td class="paddingLeft20">Gain on disposal of investment properties</td>
 							<td></td>
-							<td class="right bold-border">180,915</td>
-							<td class="right bold-border">150,522</td>
+							<td class="right">-</td>
 						</tr>
 						<tr>
-							<td>Loss for the year discoutinued operations</td>
-							<td>15</td>
-							<td class="right">(24,780)</td>
-							<td class="right">(2,000)</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit for the year</td>
+							<td class="paddingLeft20">Finance Costs</td>
 							<td></td>
-							<td class="right bold-border border-bottom">156,135</td>
-							<td class="right bold-border border-bottom">148,522</td>
+							<td class="right">-</td>
 						</tr>
-					</table>
+						<tr>
+							<td class="paddingLeft20">Interest income</td>
+							<td></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="bold">Operating profit before working capital changes</td>
+							<td></td>
+							<td class="right bold-border border-bottom">82,520</td>
+						</tr>
+						<tr>
+							<td class="bold">Changes in working capital</td>
+							<td></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Decrease/ (Increase) in receivables</td>
+							<td></td>
+							<td class="center">(17,573)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Decrease/ (Increase) in prepayment and accrued income</td>
+							<td></td>
+							<td class="center">(7,095)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Decrease/ (increase) in development properties for sale</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Decrease/ (Increase) in inventory</td>
+							<td></td>
+							<td class="right">(16,176)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">(Decrease)/ Increase in trade, other payables and accruals</td>
+							<td></td>
+							<td class="center">186,183</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Movement in customer deposits</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="bold">Cash generated from/ (used in) operations</td>
+							<td></td>
+							<td class="right bold">145,338</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Income tax paid</td>
+							<td></td>
+							<td class="right bold">1,370</td>
+						</tr>
+						<tr>
+							<td class="bold bold-border border-bottom">Net cash generated from/ (used in) operating activities</td>
+							<td class="bold-border border-bottom"></td>
+							<td class="right bold-border border-bottom">226,488</td>
+						</tr>
+						<tr>
+							<td class="bold fontBig">INVESTING ACTIVITIES</td>
+							<td class="right"></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Capital injection</td>
+							<td></td>
+							<td class="center">472,472</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Purchase of property, plant and equipment</td>
+							<td></td>
+							<td class="center">(217,210)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Proceeds from disposal of investment property</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Proceeds from disposal of property, plant, and equipment</td>
+							<td></td>
+							<td class="center">18,777</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Investment in Property_Land</td>
+							<td></td>
+							<td class="center">(55,000)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Investment in Property_Building</td>
+							<td></td>
+							<td class="center">(2,000)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Investment in subsidiaries</td>
+							<td></td>
+							<td class="center">(203,000)</td>
+						</tr>
+						<tr>
+							<td class="bold bold-border border-bottom">Net cash generated from/ (used in) operating activities</td>
+							<td class="bold-border border-bottom"></td>
+							<td class="right bold-border border-bottom">14,038</td>
+						</tr>
+						<tr>
+							<td class="bold fontBig">FINANCING ACTIVITIES</td>
+							<td class="right"></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Proceeds from borrowing</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Repayment of borrowing</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Proceeds from issue of share capital</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Dividends paid to share holders</td>
+							<td></td>
+							<td class="center">(331,061)</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Interest received</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Interest paid</td>
+							<td></td>
+							<td class="center">-</td>
+						</tr>
+						<tr>
+							<td class="bold-border">Net cash generated from/ (used in)financing activities</td>
+							<td class="right bold-border"></td>
+							<td class="right bold-border">(331,061)</td>
+						</tr>
+						<tr>
+							<td class="bold-border">Net increase in cash and cash equivalents</td>
+							<td class="right bold-border"></td>
+							<td class="right bold-border">(90,534)</td>
+						</tr>
+						<tr>
+							<td class="bold">Cash and cash equivalents at the beginning of the period</td>
+							<td class="right"></td>
+							<td class="right">690,892</td>
+						</tr>
+						<tr>
+							<td class="bold-border border-bottom">Cash and cash equivalents at 31 December 2016</td>
+							<td class="right bold-border border-bottom"></td>
+							<td class="right bold-border border-bottom">600,358</td>
+						</tr>
+						<tr>
+							<td class=""></td>
+							<td class="right"></td>
+							<td class="right">600,358</td>
+						</tr>
 
+					</table>
 		        </div>		        
 			</div>							
 		</div>
@@ -4231,15 +4307,9 @@
 					<table width="100%">
 						<tr>
 							<th></th>
-							<th class="center">Share</th>
-							<th class="center">Retained</th>
-							<th class="right"></th>
-						</tr>
-						<tr>
-							<td></td>
-							<td class="center bold">Capital</td>
-							<td class="center bold">Earning</td>
-							<td class="center bold">Total</td>
+							<th class="center">Share Retained</th>
+							<th class="center">Capital Earning</th>
+							<th class="center">Total</th>
 						</tr>
 						<tr>
 							<td></td>
@@ -4261,19 +4331,220 @@
 						</tr>
 						<tr>
 							<td>Net profit during the year of 2015</td>
-							<td class="right">-</td>
+							<td class="right bigBorderbottom">-</td>
 							<td class="right bigBorderbottom">80,481</td>
 							<td class="right bigBorderbottom">80,481</td>
 						</tr>
-						
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="bold">Balance as at 31 December 2015</td>
+							<td class="right bold bigBordertop under-bottom">2,000,000</td>
+							<td class="right bold bigBordertop under-bottom">164,683</td>
+							<td class="right bold bigBordertop under-bottom">2,164,683</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Balance as at 01 January 2016</td>
+							<td class="right">2,000,000</td>
+							<td class="right">164,683</td>
+							<td class="right">2,164,683</td>
+						</tr>
+						<tr>
+							<td>Capital injection</td>
+							<td class="right">-</td>
+							<td class="right"></td>
+							<td class="right">0</td>
+						</tr>
+						<tr>
+							<td>Realized profit inter-company sale</td>
+							<td class="right"></td>
+							<td class="right">0</td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td>Net profit during the year of 2016</td>
+							<td class="right bigBorderbottom">-</td>
+							<td class="right bigBorderbottom">-327,700</td>
+							<td class="right bigBorderbottom">-327,700</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="bold">Balance as at 31 December 2016</td>
+							<td class="right bold bigBordertop under-bottom">2,000,000</td>
+							<td class="right bold bigBordertop under-bottom">-163,017</td>
+							<td class="right bold bigBordertop under-bottom">1,836,983</td>
+						</tr>
 					</table>
-
 		        </div>		        
 			</div>							
 		</div>
 	</div>
 </script>
+<script id="recurringJournalList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content saleSummaryCustomer">				
+						
+				    <span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">	
+					  	 <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								
+								<div class="widget-body">
+									<div class="tab-content">
+								    	<!-- //GENERAL INFO -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"                   
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
+										           placeholder="From ..." />
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
+										           placeholder="To ..." />
 
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+								        
+										<!-- //ACCOUNTING -->
+								        <div class="tab-pane" id="tab-2">
+								        	
+								        	<div class="row-fluid">								        		
+								            	<div class="span3">
+													<label for="ddlAR"><span ></span>Filtered by</label>
+													<input id="ddlAR" name="ddlAR"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.account_id,
+										                              source: arDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />													
+												</div>
+												<div class="span3">
+													<label for="ddlRA"><span ></span>Grouped By</label>
+													<input id="ddlRA" name="ddlRA"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.ra_id,
+										                              source: raDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />
+										         										
+												</div>
+																																		
+											</div>
+							        	</div>
+
+								        <div class="tab-pane" id="tab-3">
+								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								        <!-- //ACCOUNTING END -->
+								       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->				
+					</div>
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Recurring Journal List</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<br>			   
+				   
+					<!-- Item List -->
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				                <th style="width: 1%;">No.</th>
+				                <th style="width: 30%">NAME</th>
+				                <th class="center" style="width: 10%">TYPE</th>
+				                <th class="center">START DATE</th>
+				                <th class="center">FREQUENCY</th>
+				                <th></th>			                			                
+				            </tr> 
+				        </thead>
+				        <tbody></tbody>			        
+				    </table>											
+
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
 
 <script id="accountingSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 

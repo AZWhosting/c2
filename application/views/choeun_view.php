@@ -17421,7 +17421,7 @@
 										 data-selectable="true"
 						                 data-template="invoiceCustom-txn-form-template"
 						                 data-bind="source: txnFormDS"
-						                 style="height: 150px; overflow: auto">
+						                 style="overflow: auto">
 						            </div>
 						        </div>
 							</div>
@@ -17700,8 +17700,413 @@
         </div>
     </div>
 </script>
+<script id="invoiceForm3" type="text/x-kendo-template">
+	<div class="inv1 sale-order">
+    	<div class="head">
+        	<h1>Sale Order</h1>
+        	<div class="span12">
+        		<div class="span10" style="text-align:right;">
+        			Date :<br>
+        			SONo :
+        		</div>
+        		<div class="span2" style="text-align:left;padding-left: 10px;">
+        			<?php echo date('d/M/Y'); ?><br>
+        			123456
+        		</div>
+        	</div>
+        </div>
+        <div class="content clear">
+        	<table class="span12">
+        		<thead>
+        			<tr>
+	        			<th colspan="2">
+	        				CUSTOMER INFORMATION
+	        			</th>
+	        			<th colspan="2">
+	        				DELIVERED TO ADDRESS
+	        			</th>
+	        		</tr>
+        		</thead>
+        		<tbody>
+        			<tr style="height: 100px">
+        				<td colspan="2">
+	        			</td>
+	        			<td colspan="2">
+	        			</td>
+        			</tr>
+        			<tr>
+	        			<td class="span3">TERM OF PAYMENT</td>
+	        			<td class="span3"></td>
+	        			<td class="span3">DELIVERY DATE</td>
+	        			<td class="span3"></td>
+	        		</tr>
+	        		<tr>
+	        			<td class="span3">MODE OF PAYMENT</td>
+	        			<td class="span3"></td>
+	        			<td class="span3">TERM OF DELIVERY</td>
+	        			<td class="span3"></td>
+	        		</tr>
+        		</tbody>
+        	</table>
+        	<table class="span12" style="margin-top: 5px;">
+        		<thead>
+        			<tr>
+	        			<th>
+	        				Item <br>Code
+	        			</th>
+	        			<th>
+	        				Description
+	        			</th>
+	        			<th width="70">
+	        				Required<br>Date
+	        			</th>
+	        			<th width="40">
+	        				UM
+	        			</th>
+	        			<th width="40">
+	        				QTY
+	        			</th>
+	        			<th width="100">
+	        				Unit Price
+	        			</th>
+	        			<th width="70">
+	        				Total
+	        			</th>
+	        		</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        		</tbody>
+        		<tfoot>
+        			<tr>
+        				<td colspan="4" rowspan="4" style="text-align:left;padding-left:20px;">
+	        				<b>Note:</b><br>
+	        				<ol>
+								<li>Please notify us immediately if you are unable to deliver as specified.</li>
+								<li>Check will be used to settled this order if the settled amount is equal to or greater than 500 USD</li>
+								<li>Please send all correspondence to address above.</li>
+							</ol>
+        				</td>
+        				<td style="text-align:left;padding-left:20px;" colspan="2"><b>SUB TOTAL</b></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td style="text-align:left;padding-left:20px;" colspan="2"><b>VAT​(10%) if applicable</b></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td style="text-align:left;padding-left:20px;" colspan="2"><b>Other charges</b></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td style="text-align:left;padding-left:20px;" colspan="2"><b>Total</b></td>
+        				<td></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<div class="span12 clear" style="margin-top: 15px">
+	        	<div class="span6">
+	        		<div class="span6">
+	        			<p>Approved by: </p>
+	        			<p style="margin-top: 40px;padding-top: 5px;width: 80%;border-top: 1px solid #000;">Name:<br>Date:<p>
+	        		</div>
+	        		<div class="span6">
+	        			<p>Recieved by: </p>
+	        			<p style="margin-top: 40px;padding-top: 5px;width: 80%;border-top: 1px solid #000;">Name:<br>Date:<p>
+	        		</div>
+	        	</div>
+	        	<div class="span6">
+	        		<table class="span12">
+	        			<tr>
+	        				<thead><th>I hereto accept the terms and conditions in the contract and purchase order:</th></thead>
+	        			</tr>
+	        			<tr><td>Customer Name:</td></tr>
+	        			<tr><td>Position:</td></tr>
+	        			<tr><td>Date:</td></tr>
+	        		</table>
+	        	</div>
+	        </div>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm4" type="text/x-kendo-template">
+	<div class="inv1 quotation">
+        <div class="content clear">
+        	<table class="span12">
+        		<tbody>
+        			<tr>
+        				<td style="border-top: none;border-left: none" width="500" colspan="2" rowspan="3">
+        					<h2>Quotation Form</h2>
+	        			</td>
+	        			<td width="120">
+	        				<b>Date</b>
+	        			</td>
+	        			<td>&nbsp;</td>
+        			</tr>
+        			<tr>
+	        			<td ><b>Quotation Form #</b></td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td><b>Requisition #</b></td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td width="150"><b>Customer Name:</b></td>
+	        			<td ></td>
+	        			<td ><b>Date of contact:</b></td>
+	        			<td ></td>
+	        		</tr>
+	        		<tr>
+	        			<td width="150"><b>Contact Information:</b></td>
+	        			<td ></td>
+	        			<td ><b>Time of contact:</b></td>
+	        			<td ></td>
+	        		</tr>
+	        		<tr>
+	        			<td width="150"><b>Validity Date</b></td>
+	        			<td ></td>
+	        			<td ><b>Date price provided </b></td>
+	        			<td ></td>
+	        		</tr>
+        		</tbody>
+        	</table>
+        	<table class="span12" style="margin-top: 5px;">
+        		<thead>
+        			<tr>
+	        			<th>
+	        				No
+	        			</th>
+	        			<th width="70">
+	        				Item<br>Code
+	        			</th>
+	        			<th width="">
+	        				Description
+	        			</th>
+	        			<th width="30">
+
+	        			</th>
+	        			<th width="40">
+	        				UM
+	        			</th>
+	        			<th width="40">
+	        				QTY
+	        			</th>
+	        			<th width="80">
+	        				Unit Price
+	        			</th>
+	        			<th width="70">
+	        				Extended<br>Price
+	        			</th>
+	        		</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        		</tbody>
+        		<tfoot>
+        			
+        			<tr>
+        				<td style="text-align:right;padding-right:10px;" colspan="7"><b>Total</b></td>
+        				<td></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<div class="span12 clear" style="margin-top: 10px">
+	        	<p><b>Additional Specifications </b></p>
+	        	<table class="span12" style="margin-top:10px;">
+	        		<tr>
+	        			<td colspan="3">
+	        			<br><br><br><br>
+	        			</td>
+	        		</tr>
+	        		<tr>
+	        			<td colspan="3"><b>Prepared By:<br>Position:<br>Date:</b></td>
+	        		</tr>
+	        		<tr>
+	        			<td rowspan="2">This form is used only when official quotation from supplier is not feasible.<td>
+	        			<td>&nbsp;</td>
+	        		</tr>
+	        		<tr>
+	        			<td width="80">&nbsp;</td>
+	        			<td width="80">&nbsp;</td>
+	        		</tr>
+	        	</table>
+	        </div>
+        </div>
+    </div>
+</script>
+
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
-	<a class="span4" data-bind="click: selectedForm" style="padding-right: 0;">
+	<a class="span4" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
     	<img src="<?php echo base_url(); ?>assets/invoice/img/#= image_url #.jpg" alt="#: name # image" />
     </a>
 </script>
@@ -46224,9 +46629,12 @@
 			$('.form-thumb-active').removeClass('form-thumb-active');
 			$('.formstyle .span4').eq(Index).addClass('form-thumb-active');
 			var Active;
-			if(Index == 0) Active = banhji.view.invoiceForm1;	
-			else if(Index == 1) Active = banhji.view.invoiceForm2;
-
+			switch(Index) {
+				case 0: Active = banhji.view.invoiceForm1; break;
+				case 1: Active = banhji.view.invoiceForm2; break;
+				case 2: Active = banhji.view.invoiceForm3; break;
+				case 3: Active = banhji.view.invoiceForm4; break;
+			}
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);	
 			this.addRowLineDS();
 
@@ -52370,6 +52778,8 @@
 		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
 		invoiceForm1: new kendo.Layout("#invoiceForm1", {model: banhji.invoiceForm}),
 		invoiceForm2: new kendo.Layout("#invoiceForm2", {model: banhji.invoiceForm}),
+		invoiceForm3: new kendo.Layout("#invoiceForm3", {model: banhji.invoiceForm}),
+		invoiceForm4: new kendo.Layout("#invoiceForm4", {model: banhji.invoiceForm}),
 		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),
 		
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.saleSummaryCustomer}),
