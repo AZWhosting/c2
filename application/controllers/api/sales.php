@@ -112,7 +112,7 @@ class Sales extends REST_Controller {
 					}else{
 						$customers[$fullname]['amount']= floatval($value->amount);
 					}	
-					$total += floatval($value->amount);		 		
+					$total += floatval($value->amount)/ floatval($value->rate);		 		
 				}
 			}
 			foreach ($customers as $key => $value) {
@@ -218,7 +218,7 @@ class Sales extends REST_Controller {
 					}else{
 						$customers[$fullname][]= $value;
 					}	
-					$total += floatval($value->amount);		 		
+					$total += floatval($value->amount)/ floatval($value->rate);		 		
 				}
 			}
 			foreach ($customers as $key => $value) {	

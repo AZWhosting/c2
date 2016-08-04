@@ -16654,7 +16654,7 @@
 					<div class="block-title">
 						<h3>ABC Co., Ltd</h3>
 						<h2>Sale Summary by Customer is Segment</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
+						<p>From</p><span id="today-date" data-bind="text: sdate"><p>to</p><span id="today-date" data-bind="text: edate">
 					</div>
 
 					<div class="row-fluid">
