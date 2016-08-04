@@ -187,7 +187,7 @@ class Transactions extends REST_Controller {
 	//POST
 	function index_post() {
 		$models = json_decode($this->post('models'));				
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
 				
 		$number = "";
@@ -274,7 +274,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->print_count) 				? $obj->print_count 				= $value->print_count : "";
 		   	isset($value->printed_by) 				? $obj->printed_by 					= $value->printed_by : "";
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";		   		   	
-
+		   	
 	   		if($obj->save()){
 	   			// Cash Receipt/Payment Update Invoice status
 	   			$amount_paid = 0;

@@ -80,7 +80,7 @@
                                         <div class="profile-card-location">
                                             Confirm: <span>True</span>
                                         </div>
-                                        <button type="button" class="btn goto-banhji">Banhji App</button>                                    
+                                        <button type="button" class="btn goto-banhji">BanhJi App</button>                                    
                                     </div><!--.profile-card-->
 
                                     <div class="profile-statistic tbl">
@@ -114,6 +114,62 @@
                             </div><!--.col- -->
 
                             <div class="col-xs-12 col-md-8 col-lg-9">
+
+                                <section class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="widget widget-3">                    
+                                            <!-- Widget heading -->
+                                            <div class="widget-head">
+                                                <h4 class="heading">
+                                                    <span class="glyphicon glyphicon-user"><i></i></span>
+                                                    User</h4>
+                                            </div>
+                                            <!-- // Widget heading END -->                                            
+                                            <div class="widget-body alert alert-primary" style="background: #496cad;">                                                
+                                                <div align="center" class="text-large strong" data-bind="text: sale">10</div>
+                                                <a  style="color: #fff;" href="#userlist/new">Add User</a>                                               
+                                            </div>
+                                            <!-- // Widget footer END -->                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                       <div class="widget widget-3">                    
+                                            <!-- Widget heading -->
+                                            <div class="widget-head">
+                                                <h4 class="heading">
+                                                    <span class="glyphicon glyphicon-user"><i></i></span>
+                                                    Module
+                                                </h4>
+                                            </div>
+                                            <!-- // Widget heading END -->                                            
+                                            <div class="widget-body alert" style="color: #333; background: #d9edf7;">                                                
+                                                <div align="center"  class="text-large strong" data-bind="text: sale">10</div>
+                                                <a  href="#" data-bind="click: getModule">Modules/Apps</a>
+                                            </div>
+                                            <!-- // Widget footer END -->                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="widget widget-3">                    
+                                            <!-- Widget heading -->
+                                            <div class="widget-head">
+                                                <h4 class="heading">
+                                                    <span class="glyphicon glyphicon-user"><i></i></span>
+                                                    User Join in
+                                                </h4>
+                                            </div>
+                                            <!-- // Widget heading END -->                                            
+                                            <div class="widget-body alert"style="color: #333; background: LightGray">                                                
+                                                <div align="center" class="text-large strong" data-bind="text: sale">10</div>
+                                                <a style="color: #fff;" href="#" data-bind="click: getModule">the last 30 days</a>
+                                            </div>
+                                            <!-- // Widget footer END -->                                            
+                                        </div>
+                                    </div>
+                                </section>
+
                                 <section class="box-typical user-module">
                                     <div class="col-xs-3 col-md-2 col-lg-2">
                                         <div>
@@ -172,14 +228,6 @@
                                              <span><span>Report</span></span>
                                         </div>
                                     </div>
-                                     <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/inventories">
-                                                <img title="Inventories" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.png" alt="Inventory">
-                                            </a>
-                                             <span><span>Settings</span></span>
-                                        </div>
-                                    </div>
                                 </section> 
 
                                 <section class="tabs-section">
@@ -187,25 +235,20 @@
                                         <ul class="nav" role="tablist">
                                             <li class="nav-item">
                                                 <a class="nav-link active" href="#tabs-4-tab-1" role="tab" data-toggle="tab">
-                                                    General Info
+                                                    Company Info
                                                 </a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#tabs-4-tab-2" role="tab" data-toggle="tab">                                                    
-                                                    Financial Info
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#tabs-4-tab-3" role="tab" data-toggle="tab">
                                                     Users
                                                 </a>
                                             </li>
-                                           
                                         </ul>
                                     </div><!--.tabs-section-nav-->
 
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1">
+                                            <header class="box-typical-header-sm">General Info</header>
                                             <article class="profile-info-item">
                                                 <table >
                                                     <tr>
@@ -224,9 +267,9 @@
                                                         <td>Parkway Square 1st Floor Room 1.1</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>AIP Code</td>
+                                                        <td>ZIP Code</td>
                                                         <td>:</td>
-                                                        <td>info@banhji.com</td>
+                                                        <td>54879</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Year Founded</td>
@@ -245,9 +288,8 @@
                                                     </tr>
                                                 </table>
                                             </article>
-                                        </div><!--.tab-pane-->
-
-                                        <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2">
+                                            <div class="divider"></div>
+                                            <header class="box-typical-header-sm">Financial Info</header>
                                             <article class="profile-info-item">
                                                 <table >
                                                     <tr>
@@ -256,7 +298,7 @@
                                                         <td>12-31</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Currency</td>
+                                                        <td>Base Currency</td>
                                                         <td>:</td>
                                                         <td>KHR</td>
                                                     </tr>
@@ -273,22 +315,29 @@
                                                     <tr>
                                                         <td>Tax Regime</td>
                                                         <td>:</td>
-                                                        <td>small</td>
-                                                    </tr>                                                   
+                                                        <td>Small</td>
+                                                    </tr>
                                                 </table>
                                             </article>
                                         </div><!--.tab-pane-->
 
-                                        <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3">
+                                        <div style="overflow-y: hidden;" role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2">
                                             <article class="profile-info-item user">
-                                                <table >
+                                                <div class="" style="margin-bottom: 10px;">
+                                                    <button data-bind="click: addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
+                                                        Create user
+                                                    </button>
+                                                    &nbsp;&nbsp;
+                                                    <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: refresh"></i>
+                                                </div>
+                                                <table class="clo-xs-12">
                                                     <tr>
                                                         <th>Photo</th>
                                                         <th>Full Name</th>
                                                         <th>Email</th>
                                                         <th>Role</th>
                                                         <th>Last Login</th>
-                                                        <th>Action</th>
+                                                        <th></th>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -301,13 +350,16 @@
                                                         <td>Admin</td>
                                                         <td>-</td>
                                                         <td>
-                                                            <button type="button" class="tabledit-edit-button btn btn-sm btn-default" style="float: none;">
-                                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
-                                                            </button>
-                                                            &nbsp;&nbsp;
-                                                            <button type="button" class="tabledit-edit-button btn btn-sm btn-default" style="float: none;">
-                                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;Password
-                                                            </button>
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Action
+                                                                </button>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-edit"></span>Edit</a>
+                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Password</a>
+                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>View More</a>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -321,15 +373,41 @@
                                                         <td>Admin</td>
                                                         <td>-</td>
                                                         <td>
-                                                            <button type="button" class="tabledit-edit-button btn btn-sm btn-default" style="float: none;">
-                                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
-                                                            </button>
-                                                            &nbsp;&nbsp;
-                                                            <button type="button" class="tabledit-edit-button btn btn-sm btn-default" style="float: none;">
-                                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;Password
-                                                            </button>
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Action
+                                                                </button>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-edit"></span>Edit</a>
+                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Password</a>
+                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>View More</a>
+                                                                </div>
+                                                            </div>
                                                         </td>
-                                                    </tr>                                                                                                  
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="#">
+                                                                <img src="<?php echo base_url()?>assets/img/photo-64-2.jpg" alt="">
+                                                            </a>
+                                                        </td>
+                                                        <td>Sokdararith Prak</td>
+                                                        <td>rith@banhji.com</td>
+                                                        <td>Admin</td>
+                                                        <td>-</td>
+                                                        <td>
+                                                           <div class="btn-group">
+                                                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Action
+                                                                </button>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-edit"></span>Edit</a>
+                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Password</a>
+                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>View More</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>                                                                                                    
                                                 </table>
                                             </article>
                                         </div><!--.tab-pane-->

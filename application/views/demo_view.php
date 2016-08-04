@@ -14287,10 +14287,10 @@
 								</tr>																															
 							</table>
 
-							<div class="strong" style="width: 90%; padding: 10px;" align="center"
+							<div class="strong" style="width: 100%; padding: 10px;" align="center"
 								data-bind="style: {
 								        backgroundColor: bgColor}">
-								<div align="left">AMOUNT DUE</div>
+								<div align="left">AMOUNT QUOTED</div>
 								<h2 data-bind="text: total" align="right"></h2>
 
 							</div>
@@ -14591,11 +14591,9 @@
 										<span data-bind="text: discount"></span>
                    					</td>
 								</tr>								
-								<tr data-bind="visible: showDeposit">
-									<td class="right">Deposit:</td>
-									<td class="right strong">
-										<span data-format="n" data-bind="text: obj.deposit"></span>
-									</td>
+								<tr>
+									<td class="right">Total Tax:</td>
+									<td class="right strong"><span data-bind="text: tax"></span></td>
 								</tr>															
 								<tr>
 									<td class="right"><h4>Total:</h4></td>
@@ -14609,14 +14607,27 @@
 				</div>	           
 				
 				<!-- Form actions -->
-				<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-					<span id="notification"></span>
+				<div class="box-generic" style="background-color: #0B0B3B;">
+					<div id="ntf1" data-role="notification"></div>
 
-					<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
-					<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
-					<!-- <span id="saveSend" class="btn btn-icon btn-warning glyphicons envelope" style="width: 80px;"><i></i> Save Send</span>										 -->
-					<span id="savePrint" class="btn btn-icon btn-default glyphicons print" data-bind="click: cancel" style="width: 80px;"><i></i> Save Print</span>
-					<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+					<div class="row">
+						<div class="span6">
+							<input data-role="dropdownlist"
+				                   data-value-primitive="true"
+				                   data-text-field="name"
+				                   data-value-field="id"
+				                   data-bind="value: obj.transaction_template_id,
+				                              source: txnTemplateDS"
+				                   data-option-label="Select template..." />
+						</div>
+						<div class="span6" align="right">
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>																	
+							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> Save Print</span>
+							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+						</div>
+					</div>
 				</div>
 				<!-- // Form actions END -->								
 
@@ -27274,6 +27285,19 @@
 		#}#
 	</span>
 </script>
+<script id="errorTemplate" type="text/x-kendo-template">
+    <div class="wrong-pass">
+        <img style="float: left; cursor: pointer;" src="http://demos.telerik.com/kendo-ui/content/web/notification/error-icon.png" />        
+        <h3>#= message #</h3>
+    </div>
+</script>
+
+<script id="successTemplate" type="text/x-kendo-template">
+    <div class="upload-success">
+        <img src="http://demos.telerik.com/kendo-ui/content/web/notification/success-icon.png" />
+        <h3>#= message #</h3>
+    </div>
+</script>
 
 
 
@@ -30428,6 +30452,9 @@
 		user_id					: banhji.userData.id,
 		cash_account_id 		: 10,
 		ap_account_id 			: [23,24],
+		amtDueColor 			: "#D5DBDB",
+		successMessage 			: "Saved Successful!",
+		errorMessage 			: "Warning, please review it again!",
 		getFiscalDate 			: function(){
 			today = new Date(),
 			year = new Date(),
@@ -40899,7 +40926,7 @@
 			this.contactPersonDS.cancelChanges();
 			this.set("contact_type_id", 0);
 
-			window.history.back();
+			banhji.userManagement.removeMultiTask("customer");
 		}		
 	});	
 	banhji.invoice =  kendo.observable({
@@ -42720,12 +42747,17 @@
 		        this.changes();
 	        }		        
 		},							    
-	    transactionSync 	: function(){
+	    objSync 			: function(){
 	    	var dfd = $.Deferred();	        
 
 	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
 		    });
 
 		    return dfd;	    		    	
@@ -43289,6 +43321,8 @@
 		showDay 			: false,
 		obj 				: null,
 		isEdit 				: false,
+		saveClose 			: false,
+		savePrint 			: false,
 		bolReference 		: false,
 		showDiscount 		: false,
 		sub_total 			: 0,		
@@ -43855,77 +43889,56 @@
 		        this.changes();
 	        }		        
 		},							    
-	    transactionSync 	: function(){
+	    objSync 			: function(){
 	    	var dfd = $.Deferred();	        
 
 	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
 		    });
 
 		    return dfd;	    		    	
 	    },	    	    
 		save 				: function(){				
-	    	var self = this, obj = this.get("obj");
-
-	    	//Warning over credit allowed
-	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
-	        	alert("Over credit allowed!");		        	
-	        }
-
-	    	//Update references
-			if(obj.reference_id>0){
-				var ref = this.referenceDS.get(obj.reference_id);
-				ref.set("status", 1);
-				this.referenceDS.sync();
-			} 			
+	    	var self = this;    	
 	    	
-	    	if(this.get("isEdit")){
-	    		this.dataSource.sync();
-
-	    		//Update credit changes
-	    		if(this.get("original_credit") !== obj.credit){	    			
-	    			this.set("original_credit", obj.credit);    			
-
-					var deposit = this.depositDS.at(0);
-					deposit.set("amount", obj.credit*-1);
-
-					this.depositDS.sync();
-	    		}	    		
-
-	    		//Update total changes
-	    		if(this.get("original_total") == obj.amount){
-	    			this.lineDS.sync();	    			
-	    		}else{
-	    			this.set("original_total", obj.amount);
-
-	    			$.each(this.journalLineDS.data(), function(index, value){										
-						value.set("deleted", 1);										
-					});
-
-					this.addJournal(obj.id);
-	    		}	    		
-	    	}else{
-	    		//Add brand new transaction
-				this.transactionSync()
-				.then(function(data){
-					//Deposit
-					if(obj.deposit > 0 || obj.credit > 0){
-						self.saveDeposit(data[0].id);
-					}
-
-					//Journal
-				
-
+    		//Save Obj
+			this.objSync()
+			.then(function(data){ //Success								
+				if(self.get("isEdit")==false){
 					//Item line
 					$.each(self.lineDS.data(), function(index, value){										
 						value.set("transaction_id", data[0].id);										
 					});
-					self.lineDS.sync();																	
-				}).then(function(){					
+				}
+				self.lineDS.sync();
+
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+
+					window.history.back();
+				}else if(self.get("savePrint")){
+					//Save Print					
+					self.set("savePrint", false);
+
+					banhji.router.navigate("/invoice_form/"+result[0].id);
+				}else{
+					//Save New
 					self.addEmpty();
-				});
-			}
+				}
+			});
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
@@ -44139,19 +44152,28 @@
 	banhji.quote =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
-		journalLineDS		: dataStore(apiUrl + "journal_lines"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),		
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),		
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		depositDS			: dataStore(apiUrl + "transactions"),		
-		balanceDS  			: new kendo.data.DataSource({
+		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "transactions/amount_sum",
+					url: apiUrl + "transaction_templates",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
 				}
 			},
 			schema 	: {
@@ -44160,68 +44182,42 @@
 				},
 				data: 'results',
 				total: 'count'
-			},								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
-		totalDepositDS  	: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transactions/amount_sum",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
 			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},								
-			batch: true,			
+			filter: { field: "type", value:"Quote" },
+			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
 			pageSize: 100
 		}),
-		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
 		employeeDS  		: banhji.source.saleRepDS,
 		itemDS  			: banhji.source.itemDS,
 		taxItemDS 			: banhji.source.customerTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
-		assemblyDS			: dataStore(apiUrl + "items/assembly"),
-		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),
+		assemblyDS			: dataStore(apiUrl + "items/assembly"),		
 		segmentItemDS		: banhji.source.segmentItemDS,		
 		frequencyList 		: banhji.source.frequencyList,
 		monthOptionList 	: banhji.source.monthOptionList,
 		monthList 			: banhji.source.monthList,
 		weekDayList 		: banhji.source.weekDayList,
 		dayList 			: banhji.source.dayList,			    
-	    bgColor 			: "#D5DBDB",
-	    item 				: null,
-	    showDeposit 		: false,	    
+	    amtDueColor 		: banhji.source.amtDueColor,	    	    
 		showMonthOption 	: false,
 		showMonth 			: false,
 		showWeek 			: false,
 		showDay 			: false,
 		obj 				: null,
 		isEdit 				: false,
-		bolReference 		: false,
+		saveClose 			: false,
+		savePrint 			: false,
+		saveRecurring 		: false,		
 		showDiscount 		: false,
 		sub_total 			: 0,		
 		discount 			: 0,
-		balance 			: 0,
-		total_credit		: 0,
-		total 				: 0,
-		original_total 		: 0,
-		original_credit 	: 0,
+		balance 			: 0,		
+		total 				: 0,		
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
 			if(id){
@@ -44700,57 +44696,47 @@
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
-			this.journalLineDS.data([]);
 
 			this.set("obj", null);
 			this.set("sub_total", 0);
 			this.set("tax", 0);
 			this.set("discount", 0);			
-			this.set("fine", 0);	
 			this.set("total", 0);				
 
-			this.dataSource.add({				
-				contact_id 			: "",
-				payment_method_id	: 0,				
-				reference_id 		: 0,
-				recurring_id 		: "",				
-				user_id 			: this.get("user_id"),
-				employee_id 		: "", 	    		
-			   	type				: "Quote",
-			   	sub_total 			: 0,
-			   	account_id 			: 0,				   		   					   				   	
-			   	amount				: 0,
-			   	credit_allowed 		: 0,
-			   	credit 				: 0,
-			   	deposit 			: 0,
-			   	discount 			: 0,		   	
-			   	fine 				: 0,
-			   	tax 				: 0,
-			   	check_no 			: "",
-			   	rate				: 1,			   	
-			   	locale 				: "km-KH",			   	
-			   	issued_date 		: new Date(),
-			   	due_date 			: new Date(),			   	
-			   	bill_to 			: "",
-			   	ship_to 			: "",
-			   	memo 				: "",
-			   	memo2 				: "",
-			   	status 				: 0,
-			   	segments 			: [],
+			this.dataSource.insert(0,{				
+				contact_id 				: "",				
+				transaction_template_id : 0,				
+				recurring_id 			: "",				
+				user_id 				: this.get("user_id"),
+				employee_id 			: "", 	    		
+			   	type					: "Quote",
+			   	sub_total 				: 0,			   			   	
+			   	amount					: 0,
+			   	discount 				: 0,
+			   	tax 					: 0,
+			   	rate					: 1,			   	
+			   	locale 					: "km-KH",			   	
+			   	issued_date 			: new Date(),
+			   	due_date 				: new Date(),			   	
+			   	bill_to 				: "",
+			   	ship_to 				: "",
+			   	memo 					: "",
+			   	memo2 					: "",
+			   	status 					: 0,
+			   	segments 				: [],
 			   	//Recurring
-			   	recurring_name 		: "",
-			   	start_date 			: new Date(),
-			   	frequency 			: "Daily",
-			   	month_option 		: "Day",
-			   	interval 			: 1,
-			   	day 				: 1,
-			   	week 				: 0,
-			   	month 				: 0,
-			   	is_recurring 		: 0				
+			   	recurring_name 			: "",
+			   	start_date 				: new Date(),
+			   	frequency 				: "Daily",
+			   	month_option 			: "Day",
+			   	interval 				: 1,
+			   	day 					: 1,
+			   	week 					: 0,
+			   	month 					: 0,
+			   	is_recurring 			: 0				
 	    	});		    		
 			
-			var data = this.dataSource.data();
-			var obj = data[data.length-1];			
+			var obj = this.dataSource.at(0);					
 			this.set("obj", obj);
 
 			this.addRow();
@@ -44774,8 +44760,7 @@
 				discount 			: 0,
 				fine 				: 0,
 				rate				: obj.rate,
-				locale				: obj.locale,							
-				movement 			: -1,
+				locale				: obj.locale
 
 				item_prices 		: []
 			});																	
@@ -44787,12 +44772,17 @@
 		        this.changes();
 	        }		        
 		},							    
-	    transactionSync 	: function(){
+	    objSync 			: function(){
 	    	var dfd = $.Deferred();	        
 
 	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
 		    });
 
 		    return dfd;	    		    	
@@ -44800,34 +44790,67 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
 
-	    	//Warning over credit allowed
-	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
-	        	alert("Over credit allowed!");		        	
-	        }
+	    	//Recurring
+	    	if(this.get("saveRecurring")){
+	    		this.set("saveRecurring", false);
 
-	    	//Update references
-			if(obj.reference_id>0){
-				var ref = this.referenceDS.get(obj.reference_id);
-				ref.set("status", 1);
-				this.referenceDS.sync();
-			} 			
+	    		if(this.get("isEdit")){
+		    		if(obj.is_recurring=="0"){ //Add brand new recurring from existing transaction	    			
+		    			this.addNewRecurring();
+
+		    			this.recurringSync()
+						.then(function(data){ //Success
+							$.each(self.recurringLineDS.data(), function(index, value){										
+								value.set("transaction_id", data[0].id);						
+							});
+							self.recurringLineDS.sync();
+
+							return data;			
+						}, function(reason) { //Error
+							$("#ntf1").data("kendoNotification").error(reason);
+						}).then(function(result){
+							$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+							self.addEmpty();
+						});
+		    		}
+		    	}else{
+	    			obj.set("is_recurring", 1);
+		    	}
+	    	}	    	
 	    	
-	    	if(this.get("isEdit")){
-	    		this.dataSource.sync();
-	    		this.lineDS.sync();	    		   		
-	    	}else{
-	    		//Add brand new transaction
-				this.transactionSync()
-				.then(function(data){
+    		//Save Obj
+			this.objSync()
+			.then(function(data){ //Success								
+				if(self.get("isEdit")==false){
 					//Item line
 					$.each(self.lineDS.data(), function(index, value){										
 						value.set("transaction_id", data[0].id);										
 					});
-					self.lineDS.sync();																	
-				}).then(function(){					
+				}
+				self.lineDS.sync();
+
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+
+					window.history.back();
+				}else if(self.get("savePrint")){
+					//Save Print					
+					self.set("savePrint", false);
+
+					banhji.router.navigate("/invoice_form/"+result[0].id);
+				}else{
+					//Save New
 					self.addEmpty();
-				});
-			}
+				}
+			});			
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
@@ -44861,7 +44884,7 @@
 		        });
 		        												
 	    	}	    	
-		},	 
+		},		 
 		//Recurring
 		loadRecurring 		: function(){
 			var obj = this.get("obj");
@@ -44880,29 +44903,36 @@
 			if(obj.recurring_id){
 				var recur = this.recurringDS.get(obj.recurring_id);				
 				
+				obj.set("employee_id", recur.employee_id);//Sale Rep
 				obj.set("segments", recur.segments);
-				obj.set("amount", recur.amount);
+				obj.set("sub_total", recur.sub_total);
+				obj.set("amount", recur.amount);				
 				obj.set("discount", recur.discount);
-				obj.set("fine", recur.fine);
+				obj.set("tax", recur.tax);				
 				obj.set("rate", recur.rate);
 				obj.set("locale", recur.locale);					
 				obj.set("memo", recur.memo);
 				obj.set("memo2", recur.memo2);
-
-				var locale = recur.locale;
-				this.set("total", kendo.toString(recur.amount, locale=="km-KH"?"c0":"c", locale));
+				obj.set("bill_to", recur.bill_to);
+				obj.set("ship_to", recur.ship_to);
+				
+				this.set("sub_total", kendo.toString(recur.sub_total, recur.locale=="km-KH"?"c0":"c", recur.locale));
+				this.set("discount", kendo.toString(recur.discount, recur.locale=="km-KH"?"c0":"c", recur.locale));
+				this.set("tax", kendo.toString(recur.tax, recur.locale=="km-KH"?"c0":"c", recur.locale));
+				this.set("total", kendo.toString(recur.amount, recur.locale=="km-KH"?"c0":"c", recur.locale));
 
 				this.recurringLineDS.query({
 					filter: { field:"transaction_id", value:recur.id },
 					page: 1,
 					take: 100
 				}).then(function(){
-					var line = self.recurringLineDS.view();
+					var view = self.recurringLineDS.view();
 					self.lineDS.data([]);
 
-					$.each(line, function(index, value){
+					$.each(view, function(index, value){
 						self.lineDS.add({					
-							transaction_id 		: 0,							
+							transaction_id 		: 0,
+							tax_item_id 		: value.tax_item_id,							
 							item_id 			: value.item_id,									
 							description 		: value.description,							
 							quantity 			: value.quantity,
@@ -44910,8 +44940,7 @@
 							amount 	 			: value.amount,									
 							rate				: value.rate,
 							locale				: value.locale,
-							has_vat 			: value.has_vat,
-
+							
 							item_prices 		: value.item_prices
 						});
 					});
@@ -44994,39 +45023,46 @@
 		addNewRecurring 	: function(){
 			var self = this, obj = this.get("obj");
 
-			this.recurringDS.add({				
-				user_id 			: obj.user_id, 	    			    		
-			   	type				: obj.type,			   				   				   		   					   				   	
-			   	amount				: obj.amount,
-			   	discount 			: obj.discount,
-			   	fine 				: obj.fine,
-			   	rate				: obj.rate,			   	
-			   	locale 				: obj.locale,					   		   	   	
-			   	memo 				: obj.memo,
-			   	memo2 				: obj.memo2,
-			   	segments 			: obj.segments,
-			   	recurring_name 		: obj.recurring_name,
-			   	start_date 			: obj.start_date,
-			   	frequency 			: obj.frequency,
-			   	month_option 		: obj.month_option,
-			   	interval 			: obj.interval,
-			   	day 				: obj.day,
-			   	week 				: obj.week,
-			   	month 				: obj.month,
-			   	is_recurring 		: 1			
+			this.recurringDS.add({
+				contact_id 				: obj.contact_id,
+				transaction_template_id : obj.transaction_template_id,				
+				user_id 				: this.get("user_id"),
+				employee_id 			: obj.employee_id,
+			   	type					: obj.type,			   				   				   		   					   				   	
+			   	amount					: obj.amount,
+			   	discount 				: obj.discount,
+			   	tax 					: obj.tax,
+			   	rate					: obj.rate,			   	
+			   	locale 					: obj.locale,
+			   	bill_to 				: obj.bill_to,
+			   	ship_to 				: obj.ship_to,				   		   	   	
+			   	memo 					: obj.memo,
+			   	memo2 					: obj.memo2,
+			   	segments 				: obj.segments,
+			   	recurring_name 			: obj.recurring_name,
+			   	start_date 				: obj.start_date,
+			   	frequency 				: obj.frequency,
+			   	month_option 			: obj.month_option,
+			   	interval 				: obj.interval,
+			   	day 					: obj.day,
+			   	week 					: obj.week,
+			   	month 					: obj.month,
+			   	is_recurring 			: 1			
 	    	});
 
 	    	$.each(this.lineDS.data(), function(index, value){
 	    		self.recurringLineDS.add({					
-					transaction_id 		: 0,					
+					transaction_id 		: 0,
+					measurement_id 		: value.measurement_id,
+					tax_item_id 		: value.tax_item_id,					
 					item_id 			: value.item_id,								
-					description 		: value.description,													
+					description 		: value.description,
+					quantity 			: value.quantity,
+					price 				: value.price,													
 					amount 	 			: value.amount,
-					discount 			: value.discount,
-					fine 				: value.fine,						
+					discount 			: value.discount,				
 					rate				: value.rate,
-					locale				: value.locale,
-					has_vat 			: value.has_vat
+					locale				: value.locale
 				});
 	    	});
 		},
@@ -45034,47 +45070,17 @@
 	    	var dfd = $.Deferred();	        
 
 	    	this.recurringDS.sync();
-		    this.recurringDS.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.recurringDS.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.recurringDS.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
 		    });
 
 		    return dfd;	    		    	
-	    },
-		saveRecurring 		: function(){
-	    	var self = this, obj = this.get("obj");
-
-	    	if(this.get("isEdit")){
-	    		if(obj.is_recurring=="0"){ //Add brand new recurring from existing transaction	    			
-	    			this.addNewRecurring();
-
-	    			this.recurringSync()
-					.then(function(data){
-						$.each(self.recurringLineDS.data(), function(index, value){										
-							value.set("transaction_id", data[0].id);						
-						});
-
-						self.recurringLineDS.sync();			
-					}).then(function(){					
-						self.addEmpty();
-					});
-	    		}else{
-	    			this.save();
-	    		}
-	    	}else{ //Add brand new recurring
-	    		obj.set("is_recurring", 1);
-	    		
-	    		this.transactionSync()
-				.then(function(data){
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("transaction_id", data[0].id);								
-					});
-
-					self.lineDS.sync();							
-				}).then(function(){					
-					self.addEmpty();
-				});
-	    	}	    	
-	    }	 		
+	    }
 	});
 	banhji.gdn =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
@@ -57435,7 +57441,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 			
 			var vm = banhji.customerDashboard;
-			banhji.userManagement.addMultiTask("Customer Home","customers",null);
+			banhji.userManagement.addMultiTask("Customer Dashboard","customers",null);
 			if(banhji.pageLoaded["customers"]==undefined){
 				banhji.pageLoaded["customers"] = true;				
 								               
@@ -57865,21 +57871,14 @@
 				banhji.pageLoaded["quote"] = true;				        
 
 				var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-				
+												
 		        $("#saveNew").click(function(e){				
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
+		            	vm.save();		            				  
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
@@ -57887,25 +57886,21 @@
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
+						vm.set("saveClose", true);
+		            	vm.save();		            	
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
 				});
 
 				$("#savePrint").click(function(e){				
 					e.preventDefault();
-
+					
 					if(validator.validate()){
-		            	vm.save();
-		            	window.print();
-
-		            	notification.success("Save Successful");			  
+						vm.set("savePrint", true);
+		            	vm.save();       				  
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
@@ -57913,12 +57908,11 @@
 					e.preventDefault();
 
 					if(validator.validate() && vm.validateRecurring()){
-		            	vm.saveRecurring();
-		            	
-		            	notification.success("Save Successful");			  
+		            	vm.set("saveRecurring", true);
+		            	vm.save();
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
 				});
 			}
 
@@ -58079,7 +58073,7 @@
 			banhji.view.layout.showIn("#content", banhji.view.statement);					
 			
 			var vm = banhji.statement;
-			banhji.userManagement.addMultiTask("Statement","statement",vm);
+			banhji.userManagement.addMultiTask("Statement","statement",null);
 			if(banhji.pageLoaded["statement"]==undefined){
 				banhji.pageLoaded["statement"] = true;
 
@@ -58341,7 +58335,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
 			var vm = banhji.customerReportCenter;			
-			
+			banhji.userManagement.addMultiTask("Customer Report Center","customer_report_center",null);
 			if(banhji.pageLoaded["customer_report_center"]==undefined){
 				banhji.pageLoaded["customer_report_center"] = true;				
 								
@@ -58359,7 +58353,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
 			var vm = banhji.customerList;			
-			
+			banhji.userManagement.addMultiTask("Customer List","customer_list",null);
 			if(banhji.pageLoaded["customer_list"]==undefined){
 				banhji.pageLoaded["customer_list"] = true;				
 				
@@ -58375,7 +58369,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
 			var vm = banhji.customerBalance;			
-			
+			banhji.userManagement.addMultiTask("Customer Balance","customer_balance",null);
 			if(banhji.pageLoaded["customer_balance"]==undefined){
 				banhji.pageLoaded["customer_balance"] = true;				
 				
@@ -58392,7 +58386,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
 			var vm = banhji.customerSetting;
-			
+			banhji.userManagement.addMultiTask("Customer Setting","customer_setting",null);
 			if(banhji.pageLoaded["customer_setting"]==undefined){
 				banhji.pageLoaded["customer_setting"] = true;
 				
@@ -61760,6 +61754,12 @@
 	 //                });
 	 //              }
 	 //            });
-	 //                                        
+	 //
 	});
 </script>
+
+
+
+
+
+

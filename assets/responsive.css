@@ -1399,6 +1399,21 @@ width: 90px !important;
   cursor: pointer;
 }
 
+
+
+.wrong-pass {
+    width: 270px;
+    height: 37px;
+    background-color: #ffcdd2;
+    border-color: #ffcdd2;
+    padding: 20px;
+}
+.wrong-pass h3 {
+    font-size: 15px;
+    float: right;
+}
+
+
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px)

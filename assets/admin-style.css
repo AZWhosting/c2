@@ -57,7 +57,50 @@ body{
     background: #41619b;
 }
 
-
+.widget {
+    background: #ffffff;
+    margin: 0 auto 15px;
+    position: relative;
+}
+.widget.widget-3 .widget-head {
+    height: 36px;
+    line-height: 36px;
+    position: relative;
+    padding: 0 15px 0 0;
+    overflow: hidden;
+}
+.widget.widget-3 .widget-head .heading {
+    display: block;
+    text-align: center;
+    float: none;
+    line-height: 36px;
+    height: 36px;
+    text-transform: uppercase;
+    font-size: 12pt;
+}
+.widget.widget-3 .widget-head .heading .glyphicons {
+    vertical-align: middle;
+    width: 35px;
+    height: 36px;
+    padding: 0;
+}
+.widget.widget-3 .widget-body {
+    border-bottom: 1px solid #efefef;
+    border-radius: 0;
+    color: #fff;
+}
+.widget-body>div {
+    margin-bottom: 15px;
+    font-size: 40px;
+    font-weight: 600;
+}
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+}
+.alert{
+    border: none;
+}
 
 
 /* User*/
@@ -132,13 +175,20 @@ body{
 }
 .profile-info-item table{
     width: 100%;
-    margin-top: 5px;
+    margin-top: 15px;
 }
 .profile-info-item table tr td{
     padding: 5px;
 }
 .profile-info-item table tr td:first-child{
     padding-left: 15px;
+    width: 25%;
+}
+.profile-info-item table tr td:nth-child(2){
+    width: 2%;
+}
+.profile-info-item table tr td:nth-child(3){
+    width: 40%;
 }
 .profile-info-item table tr:nth-child(2n+1) td {
     background: #F2F2F2;
@@ -157,4 +207,21 @@ body{
 .user table tr td{
     border: 1px solid #ddd; 
     padding: 5px;
+}
+.user table tr td:last-child{
+    text-align: center;
+}
+.user table tr td .btn.btn-grey, .btn.dropdown-toggle, .btn.dropdown-toggle:focus{
+    font-size: 13px;
+    padding: 4px 4px 2px 9px;
+}
+
+.user table tr td .btn-group.open .btn.btn-grey, 
+.btn-group.open .btn.dropdown-toggle, 
+.btn-group.open .btn.dropdown-toggle:focus, 
+.dropdown.open .btn.btn-grey, 
+.dropdown.open .btn.dropdown-toggle, 
+.dropdown.open .btn.dropdown-toggle:focus{
+    background: #41619b;
+    border-color: #41619b;
 }
