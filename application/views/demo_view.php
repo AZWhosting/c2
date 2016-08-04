@@ -44425,14 +44425,14 @@
 			}
 			
 			if(data.item_id>0){
-				var price = 0,
-				rate = 1,
-				measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = 0;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
-					var rate = obj.rate / item.item_prices[0].rate;
-					price = item.item_prices[0].price*rate;
-					measurement_id = item.item_prices[0].measurement_id;
+					if(item.item_prices.length>0){
+						rate = obj.rate / item.item_prices[0].rate;
+						price = item.item_prices[0].price*rate;						
+						measurement_id = item.item_prices[0].measurement_id;
+					}					
 				}
 
 		        if(item.is_catalog=="1"){
@@ -44702,6 +44702,8 @@
 					{ field:"contact_id", value:obj.contact_id },
 					{ field:"is_recurring", value:1 }
 				]);
+			}else{
+				this.recurringDS.data([]);
 			}
 		},		
 		applyRecurring 		: function(){
