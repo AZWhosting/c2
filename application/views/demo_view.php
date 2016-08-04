@@ -44760,7 +44760,7 @@
 				discount 			: 0,
 				fine 				: 0,
 				rate				: obj.rate,
-				locale				: obj.locale
+				locale				: obj.locale,
 
 				item_prices 		: []
 			});																	
