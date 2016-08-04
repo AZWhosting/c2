@@ -35,10 +35,6 @@
                             </div>                        
                             <img class="hidden-sm hidden-md hidden-lg" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="">
                         </a>
-
-                        <button class="hamburger hamburger--htla">
-                            <span>toggle menu</span>
-                        </button>
                         
                         <div class="site-header-content">
                             <div class="site-header-content-in">
@@ -58,944 +54,244 @@
                                     </div>
                                 </div><!--.site-header-shown-->
                 
-                                <div class="mobile-menu-right-overlay"></div>
-
-                                <div class="site-header-collapsed">
-                                    <div class="site-header-collapsed-in">
-
-                                        <div class="dropdown dropdown-typical menu-dashboard">
-                                            <a href="#">
-                                                <i class="font-icon font-icon-dashboard"></i>
-                                                <span class="lbl">Dashboard</span>              
-                                            </a>
-                                        </div>
-                                        
-                                        <div class="dropdown dropdown-typical menu-company">
-                                            <a href="#company">
-                                                <i class="font-icon font-icon-user"></i>
-                                                <span class="lbl">Company Profile</span>
-                                            </a>
-                                        </div>      
-
-                                        <div class="dropdown dropdown-typical menu-user">
-                                            <a href="#userlist">
-                                                <i class="font-icon font-icon-contacts"></i>
-                                                <span class="lbl">Users</span>
-                                            </a>                                           
-                                        </div>
-
-                                    </div><!--.site-header-collapsed-in-->
-                                </div><!--.site-header-collapsed-->
+                               
                             </div><!--site-header-content-in-->
                         </div><!--.site-header-content-->
 
                     </div><!--.container-fluid-->
                 </header><!--.site-header-->
 
-                <nav class="side-menu hidden-lg hidden-md">
-                    <ul class="side-menu-list">
-                        <li class="grey">
-                            <a href="<?php echo base_url(); ?>admin" class="<?php if($this->uri->segment(1)=="admin"){echo "active";}?>">
-                                <i class="font-icon font-icon-dashboard"></i>
-                                <span class="lbl">Dashboard</span>
-                            </a>
-                        </li>
-                         <li class="blue">
-                            <a href="#company" class="<?php if($this->uri->segment(1)=="company"){echo "active";}?>">
-                                <i class="font-icon font-icon-user"></i>
-                                <span class="lbl">Company Profile</span>
-                            </a>
-                        </li>
-                         <li class="red">
-                            <a href="#userlist" class="<?php if($this->uri->segment(1)=="userlist"){echo "active";}?>">
-                                <i class="font-icon font-icon-contacts"></i>
-                                <span class="lbl">Users</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav><!--.side-menu-->
 
-                <div class="page-content" role="main">
-                    <div class="container" id="main-display">                       
+                <div class="page-content">
+                    <div class="container" >
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <section class="box-typical">
+                                    <div class="profile-card">
+                                        <div class="profile-card-photo">
+                                            <img src="<?php echo base_url()?>assets/img/photo-220-1.jpg">
+                                        </div>
+                                        <div class="profile-card-name">
+                                            <span>Sreypoch</span>&nbsp;<span>Som</span>
+                                        </div>
+                                        <div class="profile-card-status">
+                                            Registered Email: <span><a href="mailto:somsreypoch@gmail.com">somsreypoch@gmail.com</a></span>
+                                        </div>
+                                        <div class="profile-card-location">
+                                            Confirm: <span>True</span>
+                                        </div>
+                                        <button type="button" class="btn goto-banhji">Banhji App</button>                                    
+                                    </div><!--.profile-card-->
+
+                                    <div class="profile-statistic tbl">
+                                        <div class="tbl-row">
+                                            <div class="tbl-cell">
+                                                <b>200</b>
+                                                Assign Module
+                                            </div>
+                                            <div class="tbl-cell">
+                                                <b>1.9M</b>
+                                                Followers
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <ul class="profile-links-list">
+                                        <li class="nowrap">
+                                            <i class="font-icon font-icon-fb-fill"></i>
+                                            <a href="#">facebook.com/example</a>
+                                        </li>
+                                        <li class="nowrap">
+                                            <i class="font-icon font-icon-in-fill"></i>
+                                            <a href="#">linked.in/example</a>
+                                        </li>
+                                        <li class="nowrap">
+                                            <i class="font-icon font-icon-tw-fill"></i>
+                                            <a href="#">twitter.com/example</a>
+                                        </li>                                       
+                                    </ul>
+                                </section><!--.box-typical-->                    
+                            </div><!--.col- -->
+
+                            <div class="col-md-9 col-lg-9">
+                                <section class="box-typical user-module">
+                                    <div class="col-xs-3 col-md-2 col-lg-2">
+                                        <div>
+                                            <a href="#/customers">
+                                                <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+                                            </a>
+                                            <span><span>Customer</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 col-md-2 col-lg-2">
+                                        <div>
+                                            <a href="#/employees">
+                                                <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
+                                            </a>
+                                            <span><span>Employee</span></span>
+                                        </div>
+                                    </div>
+                                     <div class="col-xs-3 col-md-2 col-lg-2">
+                                        <div>
+                                            <a href="#/vendors">
+                                                <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+                                            </a>
+                                             <span><span>Supplier</span></span>
+                                        </div>
+                                    </div>
+                                     <div class="col-xs-3 col-md-2 col-lg-2">
+                                        <div>
+                                            <a href="#/inventories">
+                                                <img title="Inventories" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+                                            </a>
+                                             <span><span>Inventory</span></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3 col-md-2 col-lg-2">
+                                        <div>
+                                            <a href="#/customers">
+                                                <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Customer">
+                                            </a>
+                                            <span><span>Cash MGT.</span></span>
+                                        </div>
+                                    </div>
+                                     <div class="col-xs-3 col-md-2 col-lg-2">
+                                        <div>
+                                            <a href="#/employees">
+                                                <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Employee">
+                                            </a>
+                                            <span><span>Accounting</span></span>
+                                        </div>
+                                    </div>
+                                     <div class="col-xs-3 col-md-2 col-lg-2">
+                                        <div>
+                                            <a href="#/vendors">
+                                                <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Vendor">
+                                            </a>
+                                             <span><span>Report</span></span>
+                                        </div>
+                                    </div>
+                                     <div class="col-xs-3 col-md-2 col-lg-2">
+                                        <div>
+                                            <a href="#/inventories">
+                                                <img title="Inventories" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.png" alt="Inventory">
+                                            </a>
+                                             <span><span>Settings</span></span>
+                                        </div>
+                                    </div>
+                                </section> 
+
+                                <section class="tabs-section">
+                                    <div class="tabs-section-nav tabs-section-nav-inline">
+                                        <ul class="nav" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#tabs-4-tab-1" role="tab" data-toggle="tab">
+                                                    General Info
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#tabs-4-tab-2" role="tab" data-toggle="tab">                                                    
+                                                    Financial Info
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#tabs-4-tab-3" role="tab" data-toggle="tab">
+                                                    Users
+                                                </a>
+                                            </li>
+                                           
+                                        </ul>
+                                    </div><!--.tabs-section-nav-->
+
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1">
+                                            <article class="profile-info-item">
+                                                <table >
+                                                    <tr>
+                                                        <td>Company Name</td>
+                                                        <td>:</td>
+                                                        <td>PCG & Partners</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Email</td>
+                                                        <td>:</td>
+                                                        <td>info@banhji.com</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Address</td>
+                                                        <td>:</td>
+                                                        <td>Parkway Square 1st Floor Room 1.1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>AIP Code</td>
+                                                        <td>:</td>
+                                                        <td>info@banhji.com</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Year Founded</td>
+                                                        <td>:</td>
+                                                        <td>2015</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Country</td>
+                                                        <td>:</td>
+                                                        <td>Cambodia</td>
+                                                    </tr>
+                                                     <tr>
+                                                        <td>Industry</td>
+                                                        <td>:</td>
+                                                        <td>Manufacture of textiles</td>
+                                                    </tr>
+                                                </table>
+                                            </article>
+                                        </div><!--.tab-pane-->
+                                        <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2">
+                                            <article class="profile-info-item">
+                                                <table >
+                                                    <tr>
+                                                        <td>Fiscal Date</td>
+                                                        <td>:</td>
+                                                        <td>12-31</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Currency</td>
+                                                        <td>:</td>
+                                                        <td>KHR</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Reporting Currency</td>
+                                                        <td>:</td>
+                                                        <td>USD</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Fiscal Report Date</td>
+                                                        <td>:</td>
+                                                        <td>01-01</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Tax Regime</td>
+                                                        <td>:</td>
+                                                        <td>small</td>
+                                                    </tr>                                                   
+                                                </table>
+                                            </article>
+                                        </div><!--.tab-pane-->
+                                        <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3">
+                                            User
+                                        </div><!--.tab-pane-->
+                                    </div><!--.tab-content-->
+                                </section><!--.tabs-section-->
+                               
+                            </div><!--.col- -->
+
+                        </div><!--.row-->                    
                     </div>
                 </div>
             </div>
         </div>
 
-        <!--.Load template-->
-        <script type="text/x-kendo-template" id="template-layout-page">
-            <div id="main-display-container"></div>
-        </script>
-        <script type="text/x-kendo-template" id="template-admin-page">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-5" style="margin-bottom: 20px;">
-                    <img class="logo-company" data-bind="attr: {src: data.logo}" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/default_logo.png">
-                    <a href="#" style="position: absolute; right: 10%; bottom: 5%; z-index: 1" data-bind="click: edit">Edit Company</a>                
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-6" style="margin-bottom: 20px;">
-                    <h2 style="font-size: 2.5em; margin-top: -7px; margin-bottom: 0; padding: 0;" data-bind="text: data.name">PCG &amp; Partners</h2>
-                    <h4 style="font-size: 1.5em; padding: 0; margin-bottom: 3px;">Company Registration No.</h4>
-                    <h4 style="font-size: 1.5em; padding: 0; margin-bottom: 0;">VAT Tin: <span data-bind="text: data.vat_number">56546456</span></h4>
-                </div>
-            </div>
-            <div class="line"></div>
-            <div id="app-placeholder"></div>          
-        </script>
-        <script type="text/x-kendo-template" id="template-dashboard">
-            <div class="row">
-                <!--Chart-->
-                <div class="col-xl-6">
-                    Chart
-                </div>
-
-                <!--Module-->
-                <div class="col-xl-6">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <article class="statistic-box red">
-                                <div>
-                                    <div class="number">26</div>
-                                    <div class="caption"><div>Active Users</div></div>
-                                    <p><a href="#userlist/new">Add User</a></p>
-                                </div>
-                            </article>
-                        </div><!--.col-->
-                        <div class="col-sm-6">
-                            <article class="statistic-box purple">
-                                <div>
-                                    <div class="number">12</div>
-                                    <div class="caption"><div>Subscribed</div></div>
-                                    <p><a href="#" data-bind="click: getModule">Modules/Apps</a></p>
-                                </div>
-                            </article>
-                        </div><!--.col-->
-                        <div class="col-sm-6">
-                            <article class="statistic-box yellow">
-                                <div>
-                                    <div class="number">104</div>
-                                    <div class="caption"><div>User join in</div></div>
-                                    <p>the last 30 days</p>
-                                </div>
-                            </article>
-                        </div><!--.col-->
-                       
-                    </div><!--.row-->
-                </div><!--.col-->
-            </div><!--.row-->
-        </script>
-        <script type="text/x-kendo-template" id="template-userlist-page">
-            <div class="custom card-user-grid">
-                <p>
-                    <button data-bind="click: addUser" data-role="button">Create user</button>
-                    <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: refresh"></i>
-                </p>                
-                <div class="row " style="border: none;" data-role="listview" data-bind="source: users" data-template="template-userlist-item-page"></div>               
-            </div><!--.card-user-grid-->
-          
-            <div id="userForm" style="display: none">
-                <div class="row">
-                    <divclass="col-md-12 col-sm-12 col-xs-12"></div>
-                        <div class="x_panel" style="width: 94%">
-                            <div class="x_title">
-                                <h2>Create User</h2>
-                                <div class="clearfix"></div>
-                            </div>
-                        <div class="x_content">
-                        <br>
-                        <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Profile Picture <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="file" id="image" class="form-control col-md-7 col-xs-12"><button id="upload-profile" data-bind="click: upload">Upload</button>
-                                    <div id="results"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Username <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="email" id="username" required="required" data-bind="value: current.username" class="form-control col-md-7 col-xs-12">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Password <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="password" id="password" required="required" data-bind="value: current.password" class="form-control col-md-7 col-xs-12">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="first-name" data-bind="value: current.first_name" required="required" class="form-control col-md-7 col-xs-12">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="last-name" data-bind="value: current.last_name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="email" data-bind="value: current.email" class="form-control col-md-7 col-xs-12" type="email" name="middle-name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Phone</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="phone" data-bind="value: current.mobile" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="type" class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="type"
-                                        data-role="dropdownlist"
-                                        data-bind="source: userTypes, value: current.usertype"
-                                        data-text-field="name"
-                                        data-value-field="id"
-                                        class="form-control col-md-7 col-xs-12"
-                                        type="text"
-                                        name="middle-name">
-                                </div>
-                            </div>
-                            <div class="ln_solid"></div>
-                                <div class="form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <button type="submit" class="btn btn-primary">Cancel</button>
-                                        <button type="submit" id="userCreate" class="btn btn-success">Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                      </div>
-                    </div>
-                </div>
-            </div>
-            <div id="userFormEdit" style="display: none">
-                <div class="row">
-                    <divclass="col-md-12 col-sm-12 col-xs-12"></div>
-                        <div class="x_panel" style="width: 94%">
-                            <div class="x_title">
-                                <h2>Edit User</h2>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="x_content">
-                            <br>
-                            <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Profile Picture <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="file" id="image" class="form-control col-md-7 col-xs-12"><button id="upload-profile" data-bind="click: upload">Upload</button>
-                                        <div id="results"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Username <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="email" id="username" data-bind="value: current.username" disabled="true" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="first-name" data-bind="value: current.first_name" required="required" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="last-name" data-bind="value: current.last_name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="email" data-bind="value: current.email" class="form-control col-md-7 col-xs-12" type="email" name="middle-name">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Phone</label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="phone" data-bind="value: current.mobile" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="type" class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="type"
-                                        data-role="dropdownlist"
-                                        data-bind="source: userTypes"
-                                        data-text-field="name"
-                                        data-value-field="id"
-                                        class="form-control col-md-7 col-xs-12"
-                                        type="text"
-                                        name="middle-name">
-                                    </div>
-                                </div>
-                                <div class="ln_solid"></div>
-                                  <div class="form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <button data-bind="" class="btn btn-primary">Cancel</button>
-                                        <button type="submit" class="btn btn-success" id="userEdit">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="userFormConfirm" style="display: none">
-                <div class="row">
-                  <divclass="col-md-12 col-sm-12 col-xs-12"></div>
-                    <div class="x_panel" style="width: 94%">
-                        <div class="x_title">
-                            <h2>Edit User</h2>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <br>
-                            <div id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Code <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="code" data-bind="value: code" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-                                <div class="ln_solid"></div>
-                                <div class="form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                         <button class="btn btn-primary">Cancel</button>
-                                        <button id="userConfirm" class="btn btn-success">Confirm</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-userlist-item-page">
-            <div class="col-xs-12 col-sm-4 col-md-4 col-xl-3">
-                <article class="card-user box-typical">
-                    <div class="card-user-action float-right">
-                        <div class="dropdown dropdown-user-menu">
-                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="glyphicon glyphicon-option-vertical"></span>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" data-bind="visible: is_confirmed, events: {click: edit}">
-                                    <i class="fa fa-pencil"></i>&nbsp;
-                                    Edit
-                                </a>
-                                <a class="dropdown-item" data-bind="visible: is_confirmed, events: {click: showModule}">
-                                    <i class="fa fa-pencil"></i>&nbsp;
-                                   Password
-                                </a>
-                                <a class="dropdown-item" data-bind="invisible: is_confirmed, events: {click: showConfirm}">
-                                    <i class="fa fa-folder"></i>&nbsp;
-                                   Confirm
-                                </a>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-user-photo">
-                        <img src="#=profile_photo#" alt="" class='avatar'>
-                    </div>
-                    <div class="card-user-name">
-                        # var x = username.substring(0,2); #
-                        #=x.toUpperCase()#
-                    </div>
-                    <div class="card-user-status">
-                        #=last_name#&nbsp;#=first_name#
-                    </div>
-                    <div class="card-user-status">
-                        # if(role == 1) {#
-                            Admin
-                        #} else {#
-                            User
-                        #}#
-                    </div>
-                    <a href="mailto:" style="float:left; width:100%;" target="_blank">#=email#</a>
-                    <a class="btn btn-rounded" data-bind="events: {click: getProfile}">View More</a>                   
-                </article><!--.card-user-->
-            </div>
-        </script> 
-
-        <script type="text/x-kendo-template" id="template-userlist-form-page">
-            <div class="col-md-12 col-sm-12 col-xs-12"></div>
-                <div class="x_panel" style="width: 94%">
-                    <div class="x_content">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4 col-lg-4">
-                                <img data-bind="attr: {src: current.profile_photo}" style="width: 100%;">
-                                <h3>Profile Picture</h3>
-                                <input type="file" id="user-image" data-bind="events: {change: upload}" class="form-control col-md-7 col-xs-12">
-                            </div>
-                            <div class="col-xs-12 col-sm-8 col-lg-8">
-                                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
-                                    <div class="form-group" style="float: left; width: 100%; ">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Username <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="email" id="username" required="required" data-bind="value: current.username" class="form-control col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="float: left; width: 100%; ">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Password <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="password" id="password" required="required" data-bind="value: current.password" class="form-control col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="float: left; width: 100%; ">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="first-name" data-bind="value: current.first_name" required="required" class="form-control col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="float: left; width: 100%; ">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="last-name" data-bind="value: current.last_name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="float: left; width: 100%; ">
-                                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="email" data-bind="value: current.email" class="form-control col-md-7 col-xs-12" type="email" name="middle-name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="float: left; width: 100%; ">
-                                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Phone</label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="phone" data-bind="value: current.mobile" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="type" class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
-                                        <div class="user-dropdown">
-                                            <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: userTypes, value: current.usertype"
-                                               data-text-field="name"
-                                               data-value-field="id"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text"
-                                               name="middle-name" style="width: 100%; ">
-                                        </div>
-                                    </div>
-                                    <div class="ln_solid"></div>
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button data-bind="click: cancel" class="btn btn-primary">Cancel</button>
-                                            <button data-bind="click: save" id="userCreate" class="btn btn-success">Submit</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-userlist-form-new-page">
-            <div class="col-md-12 col-sm-12 col-xs-12"></div>
-                <div class="x_panel" style="width: 94%">
-                    <div class="x_content">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4 col-lg-4">
-                                <img data-bind="attr: {src: current.profile_photo}" style="width: 100%;">
-                                <h3>Profile Picture</h3>
-                                <input type="file" id="user-image" data-bind="events: {change: upload}" class="form-control col-md-7 col-xs-12">
-                            </div>                            
-                            <div class="col-xs-12 col-sm-8 col-lg-8">
-                                <div style="margin-bottom: 15px; float: left; width: 100%;" id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Username <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="email" id="username" required="required" data-bind="value: current.username" class="form-control col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group" style="float: left; width: 100%; ">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Password <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="password" id="password" required="required" data-bind="value: current.password" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="float: left; width: 100%; ">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="first-name" data-bind="value: current.first_name" required="required" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="float: left; width: 100%; ">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="last-name" data-bind="value: current.last_name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="float: left; width: 100%; ">
-                                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="email" data-bind="value: current.email" class="form-control col-md-7 col-xs-12" type="email" name="middle-name">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="float: left; width: 100%; ">
-                                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Phone</label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="phone" data-bind="value: current.mobile" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="float: left; width: 100%; ">
-                                    <label for="type" class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
-                                    <div class="user-dropdown">
-                                        <input id="type"
-                                           data-role="dropdownlist"
-                                           data-bind="source: userTypes, value: current.usertype"
-                                           data-text-field="name"
-                                           data-value-field="id"
-                                           class="form-control col-md-7 col-xs-12"
-                                           type="text"
-                                           name="middle-name" style="width:100%; ">
-                                    </div>
-                                </div>
-                                <div class="ln_solid"></div>
-                                <div class="form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <button data-bind="click: cancel" class="btn btn-primary">Cancel</button>
-                                        <button data-bind="click: save" class="btn btn-success">Submit</button>
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-profile-page">
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <img data-bind="attr: {src: current.profile_photo}" class="img-circle profile_img" width="100" height="170" style="margin-top: 0">
-                        <br><a data-bind="click: editProfile">Edit</a>
-                    </div>
-                    <div class="col-lg-8" style="padding-top: 30px;">
-                        <h2 style="font-size: 3.5em; margin-top: -8px; padding: 0;"><span data-bind="text: current.last_name"></span>&nbsp;<span data-bind="text: current.first_name"></span></h2>
-                        <h4 style="font-size: 1.5em; padding: 0; margin-top: -2px;">Registered Email: <span data-bind="text: current.email"></span></h4>
-                        <h4 style="font-size: 1.5em; padding: 0; margin-top: -2px;">Confirm: <span data-bind="text: current.is_confirmed"></span></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="divider"></div>
-            <div class="col-lg-12"><button data-bind='click: assign'>Assign</button><br>
-                <ul data-role="listview" data-bind="source: modules" data-template="template-profile-module-list-page" class="row"></ul>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-profile-module-list-page">
-            <li class="products">
-                <img src="#=img_url#" alt="#=name#">
-             </li>
-        </script>
-        <script type="text/x-kendo-template" id="template-createcompany-page">
-            <div class="col-md-12">
-                <div class="x_panel">
-                    <div class="x_content">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <img data-bind="attr: {src: dataStore.data()[0].logo}" width="100">
-                            </div>
-                            <div class="col-sm-10">
-                                <h2 data-bind="text: dataStore.data()[0].name"></h2>
-                                <span data-bind="text: dataStore.data()[0].industry.type"></span><br>
-                                <span data-bind="text: dataStore.data()[0].users"></span> (employees)
-                            <div>
-                            <a href="#" data-bind="click: edit">Edit</a>
-                          <!-- /CONTENT MAIL -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- info -->
-                <div class="x_panel">
-                    <div class="x_content">
-                        <div class="row" id="companyInfoPlaceholder">
-                          <!-- CONTENT MAIL -->
-
-                          <!-- /CONTENT MAIL -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-createcompany-info-page">
-            <div class="col-lg-12">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th colspan="2">General Information</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style=="border: 0">
-                            <th scope="row" width="150">Company Name</th>
-                            <td><span data-bind="text: dataStore.data()[0].name"></span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" width="150">Email</th>
-                            <td><span data-bind="text: dataStore.data()[0].email"></span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">address</th>
-                            <td><span data-bind="text: dataStore.data()[0].address"></span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">ZIP Code</th>
-                            <td><span data-bind="text: dataStore.data()[0].zip"></span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Year Founded</th>
-                            <td><span data-bind="text: dataStore.data()[0].year_founded"></span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Country</th>
-                            <td><span data-bind="text: dataStore.data()[0].country.name"></span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Industry</th>
-                            <td><span data-bind="text: dataStore.data()[0].industry.type"></span></td>
-                        </tr>
-                        <tr><td colspan="2"></td></tr>
-                    </tbody>
-                </table>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th colspan="2">Financial Information</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Fiscal Date</th>
-                            <td><span data-bind="text: dataStore.data()[0].fiscal_date"></span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Currency</th>
-                            <td><span data-bind="text: dataStore.data()[0].currency.code"></span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Reporting Currency</th>
-                            <td><span data-bind="text: dataStore.data()[0].reportCurrency.code"></span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Fiscal Report Date</th>
-                            <td><span data-bind="text: dataStore.data()[0].financial_report_date"></span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" width="150">Tax Regime</th>
-                            <td><span data-bind="text: dataStore.data()[0].tax_regime"></span></td>
-                        </tr>
-                        <tr><td colspan="2"></td></tr>
-                    </tbody>
-                </table>
-                <button data-bind="click: edit">Edit</button>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-modules-page">
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Subscribed Modules</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="close-link" data-bind="click: close"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <ul data-role="listview" data-bind="source: modules" data-template="template-company-module-list-page" class="row"></ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-company-module-list-page">
-            <li class="products">
-                <img src="#=image_url#" alt="#=name#">
-            </li>
-        </script>
-        <script type="text/x-kendo-template" id="template-createcompany-info-edit-page">
-            <div class="col-sm-12">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th colspan="2">
-                                General Information
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row" width="150">
-                                </th>
-                            <td>
-                                <input type="file" id="companyLogo" class="form-control col-md-7 col-xs-12">
-                                <button id="logoUpload" data-bind="click: upload">Upload</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" width="150">Company Name</th>
-                            <td><input type="text" data-bind="value: dataStore.data()[0].name" class="form-control col-md-7 col-xs-12 k-input k-textbox"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" width="150">Email</th>
-                            <td><input type="text" data-bind="value: dataStore.data()[0].email" class="form-control col-md-7 col-xs-12 k-input k-textbox"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">address</th>
-                            <td><input type="text" data-bind="value: dataStore.data()[0].address" class="k-input k-textbox form-control col-md-7 col-xs-12" style="width: 100%;"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Year Founded</th>
-                            <td>
-                                <input type="text"
-                                    data-role="datepicker"
-                                    data-depth="year"
-                                    data-bind="value: dataStore.data()[0].year_founded"
-                                    data-format="yyyy"
-                                    class="form-control col-md-7 col-xs-12">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Country</td>
-                            <td>
-                                <input type="text" data-role="dropdownlist"
-                                    data-bind="source: countries, value: dataStore.data()[0].country.id"
-                                    data-text-field="name"
-                                    data-value-field="id"
-                                    class="form-control col-md-7 col-xs-12">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Industry</th>
-                            <td>
-                                <input type="text" data-role="dropdownlist"
-                                    data-bind="source: industries, value: dataStore.data()[0].industry.id"
-                                    data-text-field="name"
-                                    data-value-field="id"
-                                    class="form-control col-md-7 col-xs-12">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Zip Code</td>
-                            <td><input type="text" data-bind="value: dataStore.data()[0].zip"></td>
-                        </tr>
-                        <tr><td colspan="2"></td></tr>
-                    </tbody>
-                </table>
-                <table class="table">
-              <thead>
-                <tr>
-                  <th colspan="2">
-                    Financial Information
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Fiscal Year</th>
-                  <td><input type="text"
-                             data-role="datepicker"
-                             data-bind="value: dataStore.data()[0].fiscal_date"
-                             data-format="dd-MM"
-                             class="form-control col-md-7 col-xs-12"></td>
-                </tr>
-                <tr>
-                  <th scope="row">Fiscal Report Date</th>
-                  <td><input type="text"
-                             data-role="datepicker"
-                             data-format="dd-MM"
-                             data-bind="value: dataStore.data()[0].financial_report_date"
-                             class="form-control col-md-7 col-xs-12"></td>
-                </tr>
-                <tr>
-                  <th scope="row">Currency</th>
-                  <td><input type="text" data-role="dropdownlist"
-                            data-bind="source: currencies, value: dataStore.data()[0].currency"
-                            data-text-field="code"
-                            data-value-field="id"
-                            class="form-control col-md-7 col-xs-12"></td>
-                </tr>
-                <tr>
-                  <th scope="row">Reporting Currency</th>
-                  <td><input type="text" data-role="dropdownlist"
-                            data-bind="source: currencies, value: dataStore.data()[0].reportCurrency"
-                            data-text-field="code"
-                            data-value-field="id"
-                            class="form-control col-md-7 col-xs-12"></td>
-                </tr>
-                <tr>
-                  <th scope="row" width="150">Tax Regime</th>
-                  <td><input type="text" data-role="dropdownlist"
-                             data-bind="source: taxRegimes, value: dataStore.data()[0].tax_regime"
-                             data-text-field="value"
-                             data-value-field="id"
-                             class="form-control col-md-7 col-xs-12"></td>
-                </tr>
-                <tr><td colspan="2"></td></tr>
-              </tbody>
-                </table>
-                <button data-bind="click: save">Save</button>
-                <button data-bind="click: cancel">Cancel</button>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-waiting-page">
-            <div class="nav-md">
-                <a class="hiddenanchor" id="toregister"></a>
-                <a class="hiddenanchor" id="tologin"></a>
-                <div id="wrapper">
-                    <div id="waiting" class=" form">
-                        <section class="login_content">
-                            <img src="<?php echo base_url(); ?>assets/loading.gif" alt="" width="150"><br>
-                            <span>Please wait...</span>
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-modules-list-page">
-            <div class="col-md-55" style="height: 250px;">
-                <div class="thumbnail">
-                    <div class="image view view-first">
-                        <img style="width: 100%; display: block;" src="#=image_url#" alt="image">
-                        <div class="mask">
-                            <p>#=name#</p>
-                            <div class="tools tools-bottom">
-                                <a href="\#/#=href#"><i class="fa fa-link"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="caption">
-                        <div>#=description#</div>
-                    </div>
-                </div>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-modules-users-page">
-            <div class="row">
-                <divclass="col-md-12 col-sm-12="" col-xs-12"=""></div class="col-md-12"></div>
-                    <div class="x_panel" style="width: 94%">
-                        <div class="x_title">
-                            <h2>Modules</h2>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <div data-role="listview" data-bind="source: modules" data-template="template-modules-users-list-page" style="border: 0"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-assign-module-to-page">
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <i class="fa fa-close pull-right" data-bind="click: backToProfile"></i>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                  <td>Company Subscribed Modules</td>
-                                  <td></td>
-                                </tr>
-                            </thead>
-                            <tbody data-role="listview" data-bind="source: cModules" data-template="template-modules-users-company-list-page">
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-lg-6">
-                        <table style="width: 100%" class="table">
-                            <thead>
-                                <tr>
-                                  <td style="width: 90%">User Access Modules</td>
-                                  <td><i class="fa fa-save" data-bind="click: saveAssign" style="cursor: pointer;"></i>&nbsp;
-                                  <i class="fa fa-eraser" data-bind="click: cancelAssign" style="cursor: pointer;"></i></td>
-                                </tr>
-                            </thead>
-                            <tbody data-role="listview" data-bind="source: modules" data-template="template-modules-users-module-list-page">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-modules-users-company-list-page">
-            <tr>
-                <td>
-                    #=name#
-                </td>
-                <td>
-                    <i class="fa fa-hand-o-right" data-bind="click: assignTo"></i>
-                </td>
-            </tr>
-        </script>
-        <script type="text/x-kendo-template" id="template-modules-users-module-list-page">
-            <tr>
-                <td>
-                    #=name#
-                </td>
-                <td>
-                    <i class="fa fa-trash" data-bind="click: removeFrom"></i>
-                </td>
-            </tr>
-        </script>
-        <script type="text/x-kendo-template" id="template-modules-users-list-page">
-            <div class="col-md-55" style="height: 250px;">
-                <div class="thumbnail">
-                    <div class="image view view-first">
-                        <img style="width: 100%; display: block;" src="#=img_url#" alt="image">
-                        <div class="mask">
-                            <p>#=name#</p>
-                            <div class="tools tools-bottom">
-                            <i class="fa fa-link"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="caption">
-                    <div><p data-bind="text: description"></p></div>
-                </div>
-            </div>
-        </script>
-        <script type="text/x-kendo-template" id="template-unauth-page">
-            <div class="col-md-55" style="height: 250px;">
-                <h1>Unauthorized Page</h1>
-                <a href="<?php echo base_url(); ?>rrd/">Banhji Application</a>
-            </div>
-        </script>
+        
 
         <!-- cognito -->
         <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
@@ -1040,7 +336,7 @@
         <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/js/kendo.all.min.js"></script>
 
         <!-- kendoui-->
-        <script>
+        <!--<script>
             var banhji = banhji || {};
             var baseUrl = "<?php echo base_url(); ?>";
             var institute = null;
@@ -2127,105 +1423,8 @@
                 //   }
                 // });
             });
-        </script>
-
-        <!-- Chart-->
-        <!--<script>
-            $(document).ready(function() {
-                $('.panel').lobiPanel({
-                    sortable: true
-                });
-
-                google.charts.load('current', {'packages':['corechart']});
-                google.charts.setOnLoadCallback(drawChart);
-                function drawChart() {
-                    var dataTable = new google.visualization.DataTable();
-                    dataTable.addColumn('string', 'Day');
-                    dataTable.addColumn('number', 'Values');
-                    // A column for custom tooltip content
-                    dataTable.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});
-                    dataTable.addRows([
-                        ['MON',  130, ' '],
-                        ['TUE',  130, '130'],
-                        ['WED',  180, '180'],
-                        ['THU',  175, '175'],
-                        ['FRI',  200, '200'],
-                        ['SAT',  170, '170'],
-                        ['SUN',  250, '250'],
-                        ['MON',  220, '220'],
-                        ['TUE',  220, ' ']
-                    ]);
-
-                    var options = {
-                        height: 314,
-                        legend: 'none',
-                        areaOpacity: 0.18,
-                        axisTitlesPosition: 'out',
-                        hAxis: {
-                            title: '',
-                            textStyle: {
-                                color: '#fff',
-                                fontName: 'Proxima Nova',
-                                fontSize: 11,
-                                bold: true,
-                                italic: false
-                            },
-                            textPosition: 'out'
-                        },
-                        vAxis: {
-                            minValue: 0,
-                            textPosition: 'out',
-                            textStyle: {
-                                color: '#fff',
-                                fontName: 'Proxima Nova',
-                                fontSize: 11,
-                                bold: true,
-                                italic: false
-                            },
-                            baselineColor: '#16b4fc',
-                            ticks: [0,25,50,75,100,125,150,175,200,225,250,275,300,325,350],
-                            gridlines: {
-                                color: '#1ba0fc',
-                                count: 15
-                            },
-                        },
-                        lineWidth: 2,
-                        colors: ['#fff'],
-                        curveType: 'function',
-                        pointSize: 5,
-                        pointShapeType: 'circle',
-                        pointFillColor: '#f00',
-                        backgroundColor: {
-                            fill: '#008ffb',
-                            strokeWidth: 0,
-                        },
-                        chartArea:{
-                            left:0,
-                            top:0,
-                            width:'100%',
-                            height:'100%'
-                        },
-                        fontSize: 11,
-                        fontName: 'Proxima Nova',
-                        tooltip: {
-                            trigger: 'selection',
-                            isHtml: true
-                        }
-                    };
-
-                    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-                    chart.draw(dataTable, options);
-                }
-                $(window).resize(function(){
-                    drawChart();
-                    setTimeout(function(){
-                    }, 1000);
-                });
-
-                $('.panel').on('dragged.lobiPanel', function(ev, lobiPanel){
-                    $('.dahsboard-column').matchHeight();
-                });
-            });
         </script>-->
+
+        
     </body>
 </html>

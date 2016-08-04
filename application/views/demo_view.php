@@ -33,6 +33,11 @@
 			</ul> 
 			<ul class="topnav pull-right">
 				<li role="presentation" class="dropdown">
+			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i> <span class="caret"></span></a>
+		  			<ul class="dropdown-menu" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
+		  			</ul>
+			  	</li>
+				<li role="presentation" class="dropdown">
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>] <span class="caret"></span></a>
 		  			<ul class="dropdown-menu">  				  				
 		  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
@@ -40,11 +45,21 @@
 						<li class="divider"></li>	
 						<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li> 				
 		  			</ul>
-			  	</li>
-				
+			  	</li>				
 			</ul>
 		</div>
 	</div>
+</script>
+<script id="multiTaskList-row-template" type="text/x-kendo-template">	
+    <li>
+    	<a href="\#/#=url#">
+    		#=name#
+    		<span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
+    			<i></i>
+    		</span>
+    	</a>
+
+    </li>	
 </script>
 <script type="text/x-kendo-template" id="index">
 	<div class="row-fluid">
@@ -1877,64 +1892,72 @@
 			    </div>			   
 
 			    <br>
-			    <div id="saleTax-window" class="custome-window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
-						<table>
-							<tr>
-								<td width="50%">Tax System</td>
-								<td width="50%">
-									<input data-role="dropdownlist"				            			               			   		                   
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: obj.tax_system,
-					                              source: typeList"
-					                   style="width: 100%;" />
-								</td>
-							</tr>
-							<tr>
-								<td>Tax Registration No.</td>
-								<td>
-									<input class="k-textbox" placeholder="type number ..." data-bind="value: obj.number" style="width: 100%;">
-								</td>
-							</tr>
-							<tr>
-								<td>Agency</td>
-								<td>
-									<input class="k-textbox" placeholder="type agency ..." data-bind="value: obj.agency" style="width: 100%;">
-								</td>
-							</tr>
-							<tr>
-								<td>Name</td>
-								<td>
-									<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
-								</td>
-							</tr>
-							<tr>
-								<td>Last End Date</td>
-								<td>
-									<input data-role="datepicker"
-										data-format="dd-MM-yyyy"
-										data-parse-formats="yyyy-MM-dd" 
-										data-bind="value: obj.end_date"
-										style="width: 100%;" />
-								</td>
-							</tr>
-							<tr>
-								<td>Last Submission Date</td>
-								<td>
-									<input data-role="datepicker"
-										data-format="dd-MM-yyyy"
-										data-parse-formats="yyyy-MM-dd" 
-										data-bind="value: obj.submission_date"
-										style="width: 100%;" />
+
+			    <!-- Tax Type Window -->
+			    <div data-role="window"
+		                 data-title="Tax Type"		                 
+		                 data-width="260"
+		                 data-height="250"
+		                 data-actions="{}"
+		                 data-position="{top: '30%', left: '30%'}"
+		                 data-bind="visible: windowVisible">
+		    		<table>
+						<tr>
+							<td width="50%">Tax System</td>
+							<td width="50%">
+								<input data-role="dropdownlist"				            			               			   		                   
+				                   data-value-primitive="true"
+				                   data-text-field="name"
+				                   data-value-field="id"
+				                   data-bind="value: obj.tax_system,
+				                              source: typeList"
+				                   style="width: 100%;" />
 							</td>
-							</tr>
-						</table>
+						</tr>
+						<tr>
+							<td>Tax Registration No.</td>
+							<td>
+								<input class="k-textbox" placeholder="type number ..." data-bind="value: obj.number" style="width: 100%;">
+							</td>
+						</tr>
+						<tr>
+							<td>Agency</td>
+							<td>
+								<input class="k-textbox" placeholder="type agency ..." data-bind="value: obj.agency" style="width: 100%;">
+							</td>
+						</tr>
+						<tr>
+							<td>Name</td>
+							<td>
+								<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
+							</td>
+						</tr>
+						<tr>
+							<td>Last End Date</td>
+							<td>
+								<input data-role="datepicker"
+									data-format="dd-MM-yyyy"
+									data-parse-formats="yyyy-MM-dd" 
+									data-bind="value: obj.end_date"
+									style="width: 100%;" />
+							</td>
+						</tr>
+						<tr>
+							<td>Last Submission Date</td>
+							<td>
+								<input data-role="datepicker"
+									data-format="dd-MM-yyyy"
+									data-parse-formats="yyyy-MM-dd" 
+									data-bind="value: obj.submission_date"
+									style="width: 100%;" />
+						</td>
+						</tr>
+					</table>
 
-						<br>
+					<br>
 
-						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
-						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
+					<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
+					<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
 				</div>
 						
                 <div class="row-fluid">
@@ -1957,9 +1980,15 @@
 		            	</table>
 	            	</div>
 
-
-            	<div id="item-window" class=" item-window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
-					<table>
+	            <!-- Item Window -->
+	            <div data-role="window"
+		                 data-title="Tax Item"		                 
+		                 data-width="250"
+		                 data-height="170"
+		                 data-actions="{}"
+		                 data-position="{top: '30%', left: '30%'}"
+		                 data-bind="visible: windowItemVisible">
+            		<table>
 						<tr>
 							<td>Item Name</td>
 							<td>
@@ -2069,7 +2098,7 @@
 			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back();"><i></i></span>						
 					</div>
 
-			        <h2>RECURING TRANSACTION LISTS</h2>				        				        				        	
+			        <h2>RECURRING TRANSACTION LISTS</h2>				        				        				        	
 			    </div>
 
 			    <br>			   
@@ -2079,7 +2108,8 @@
 			        <thead>
 			            <tr>
 			                <th style="width: 1%;">No.</th>
-			                <th style="width: 30%">NAME</th>
+			                <th>TEMPLATE NAME</th>
+			                <th>NAME</th>
 			                <th class="center" style="width: 10%">TYPE</th>
 			                <th class="center">START DATE</th>
 			                <th class="center">FREQUENCY</th>
@@ -2102,11 +2132,12 @@
 			#:banhji.recurring.dataSource.indexOf(data)+1#			
 		</td>		
 		<td>#=recurring_name#</td>
+		<td>#=contact.length>0?contact[0].name:""#</td>
 		<td class="center">#=type#</td>		
 		<td class="center">#=kendo.toString(start_date, "dd-MMMM-yyyy")#</td>
 		<td class="center">#=frequency#</td>
 		<td class="right">
-			<span class="btn btn-success btn-icon glyphicons notes" data-bind="click: goToTemplate" style="width: 80px;"><i></i> Template</span>
+			<span class="btn btn-success btn-icon glyphicons edit" data-bind="click: goToTemplate" style="width: 80px;"><i></i> Edit</span>
 			<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete" style="width: 80px;"><i></i> Delete</span>
 		</td>
     </tr>   
@@ -4801,38 +4832,46 @@
 			    </div>			   
 
 			    <br>
-			    <div id="window" class="custome-window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
-						<table>							
-							<tr>
-								<td>NAME</td>
-								<td>
-									<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
-								</td>
-							</tr>
-							<tr>
-								<td>CODE LENGTH</td>
-								<td>
-									<input class="k-textbox" placeholder="Code Length..." data-bind="value: obj.code_length" style="width: 100%;">
-								</td>
-							</tr>
-							<tr>
-								<td>STATUS</td>
-								<td>
-									<input data-role="dropdownlist"						                   
-						                   data-value-primitive="true"
-						                   data-text-field="name"
-						                   data-value-field="id"
-						                   data-bind="value: obj.status,
-						                              source: statusList"
-						                   style="width: 100%;" />
-								</td>
-							</tr>							
-						</table>
 
-						<br>
+			    <!-- Window -->
+			    <div data-role="window"
+		                 data-title="Segment"		                 
+		                 data-width="250"
+		                 data-height="170"
+		                 data-actions="{}"
+		                 data-position="{top: '30%', left: '30%'}"
+		                 data-bind="visible: windowVisible">
+			    	<table>							
+						<tr>
+							<td>NAME</td>
+							<td>
+								<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
+							</td>
+						</tr>
+						<tr>
+							<td>CODE LENGTH</td>
+							<td>
+								<input class="k-textbox" placeholder="Code Length..." data-bind="value: obj.code_length" style="width: 100%;">
+							</td>
+						</tr>
+						<tr>
+							<td>STATUS</td>
+							<td>
+								<input data-role="dropdownlist"						                   
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: obj.status,
+					                              source: statusList"
+					                   style="width: 100%;" />
+							</td>
+						</tr>							
+					</table>
 
-						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
-						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
+					<br>
+
+					<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
+					<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
 				</div>
 						
                 <div class="row-fluid">
@@ -4852,9 +4891,15 @@
 		            	</table>
 	            	</div>
 
-
-            	<div id="item-window" class=" item-window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
-					<table>
+	            <!-- Item Window -->
+	            <div data-role="window"
+		                 data-title="Segment Item"		                 
+		                 data-width="250"
+		                 data-height="190"
+		                 data-actions="{}"
+		                 data-position="{top: '30%', left: '30%'}"		                 
+		                 data-bind="visible: windowItemVisible">
+            		<table>
 						<tr>
 							<td>CODE</td>
 							<td>
@@ -6007,11 +6052,16 @@
 									<td>Currency</td>
 									<td>
 										<input id="cbbCurrency" name="cbbCurrency"
-												data-bind="value: obj.locale,
-							                              events:{change:setRate}" 
-							                    placeholder="Select currency ..." 
-							                    required data-required-msg="required" 
-							                    style="width: 100%;" />
+													   data-role="combobox"				                
+									                   data-value-primitive="true"
+									                   data-template="currency-list-tmpl"				   
+									                   data-text-field="code"
+									                   data-value-field="locale"
+									                   data-bind="value: obj.locale, 
+									                   			source: currencyDS, 
+									                   			events: {change : setRate}"
+									                   placeholder="Add currency..." 
+									                   required data-required-msg="required" style="width: 100%" />
 									</td>
 								</tr>
 								<tr>
@@ -12528,7 +12578,7 @@
 			<div id="example" class="k-content">					
 			    
 		    	<div class="hidden-print pull-right">
-		    		<span class="glyphicons no-js remove_2" 
+		    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>						
 				</div>
 
@@ -13088,7 +13138,7 @@
 			<div id="example" class="k-content">					
 			    
 		    	<div class="hidden-print pull-right">
-		    		<span class="glyphicons no-js remove_2" 
+		    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()" 
 						data-bind="click: cancel"><i></i></span>						
 				</div>
 
@@ -13658,7 +13708,7 @@
 			<div id="example" class="k-content">					
 			    
 		    	<div class="hidden-print pull-right">
-		    		<span class="glyphicons no-js remove_2" 
+		    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>						
 				</div>
 
@@ -14189,7 +14239,7 @@
 			<div id="example" class="k-content">					
 			    
 		    	<div class="hidden-print pull-right">
-		    		<span class="glyphicons no-js remove_2" 
+		    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()" 
 						data-bind="click: cancel"><i></i></span>						
 				</div>
 
@@ -14270,15 +14320,15 @@
 						    <div class="tab-content">
 
 						    	<!-- Options Tab content -->
-						        <div class="tab-pane" id="tab1-4">						            
+						        <div class="tab-pane active" id="tab1-4">						            
 						            <table class="table table-borderless table-condensed cart_total">										
 							            <tr>
 											<td>
-												Balance
+												Balance:
 												<span data-bind="text: balance"></span>
 											</td>
 											<td>
-												Credit Allowed
+												Credit Allowed:
 												<span data-format="n" data-bind="text: obj.credit_allowed"></span>
 											</td>
 										</tr>										
@@ -14351,7 +14401,7 @@
 						        <!-- // Attach Tab content END -->						        
 
 						        <!-- Recuring Tab content -->
-						        <div class="tab-pane active" id="tab4-4">
+						        <div class="tab-pane" id="tab4-4">
 						        	<table width="100%">
 							        	<tr>
 							        		<td>
@@ -14475,7 +14525,8 @@
 			                <th style="width: 20%;">QUANTITY</th>
 			                <th style="width: 13%;">PRICE</th>
 			                <th style="width: 1%;" data-bind="visible: showDiscount">DISCOUNT</th>			                
-			                <th style="width: 10%;">AMOUNT</th>			                			                			                			                
+			                <th style="width: 10%;">AMOUNT</th>
+			                <th style="width: 11%;">TAX</th>			                			                			                			                
 			            </tr> 
 			        </thead>
 			        <tbody data-role="listview" 
@@ -14633,6 +14684,16 @@
 		</td>				
 		<td class="right">
 			<span data-format="n" data-bind="text: amount"></span> 						
+		</td>
+		<td>
+			<input id="ccbTaxItem-#:uid#" name="ccbTaxItem-#:uid#"
+				   data-role="combobox"                   			   
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: tax_item_id, 
+                   			  source: taxItemDS,
+                   			  events:{ change: changes }"
+                   style="width: 100%" />			
 		</td>						
     </tr>   
 </script>
@@ -14643,7 +14704,7 @@
 			<div id="example" class="k-content">					
 			    
 		    	<div class="hidden-print pull-right">
-		    		<span class="glyphicons no-js remove_2" 
+		    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>						
 				</div>
 
@@ -15041,7 +15102,7 @@
 			<div id="example" class="k-content">					
 			    
 		    	<div class="hidden-print pull-right">
-		    		<span class="glyphicons no-js remove_2" 
+		    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>						
 				</div>
 
@@ -15704,7 +15765,7 @@
 			<div id="example" class="k-content">					
 			    
 		    	<div class="hidden-print pull-right">
-		    		<span class="glyphicons no-js remove_2" 
+		    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>						
 				</div>
 
@@ -27280,18 +27341,18 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/customer'><span data-bind="text: lang.new_customer"></span></a></li>  				  				
-  				<li><a href='#/quote'>Quote</a></li>  				
-  				<li><a href='#/sale_order'>Sale Order</a></li>
-  				<li><a href='#/gdn'>Goods Delivery Note</a></li>
-  				<li><a href='#/customer_deposit'>Deposit</a></li>
-  				<li><a href='#/cash_sale'>Cash Sale</a></li>  				
-  				<li><a href='#/invoice'><span data-bind="text: lang.invoice"></span></a></li>
-  				<li><a href='#/statement'>Statement</a></li>
+  				<li><a href='#/customer'>Add New Customer</a></li>  				  				
+  				<li><a href='#/quote'>Add Quote</a></li>  				
+  				<li><a href='#/sale_order'>Add Sale Order</a></li>
+  				<li><a href='#/gdn'>Add Goods Delivery Note</a></li>
+  				<li><a href='#/customer_deposit'>Receive Customer Deposit</a></li>
+  				<li><a href='#/cash_sale'>Make Cash Sale</a></li>  				
+  				<li><a href='#/invoice'>Create Invoice</span></a></li>
+  				<li><a href='#/statement'>Prepare Statement</a></li>
   				<li><a href='#/cash_receipt'>Receive Payment</a></li>
   				<!-- <li><a href="#/customerInvoiceSent">Invoice Sent To</a></li> -->
-  				<li><a href='#/job'>Job</a></li>
-  				<li><a href='#/recurring'>Recurring List</a></li>  				 				  				 				
+  				<li><a href='#/job'>Add Job</a></li>
+  				<li><a href='#/customer_recurring'>Customer Recurring List</a></li>  				 				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/customer_report_center'>REPORTS</a></li>	  	
@@ -27731,6 +27792,7 @@
 	};	
 	banhji.userManagement = kendo.observable({
 		lang : langVM,
+		multiTaskList 		: [],
 		searchText : "",
 		searchType : "contacts",
 		searchContact: function() {
@@ -27755,6 +27817,41 @@
 			banhji.searchAdvanced.set("searchType", this.get("searchType"));
 			banhji.searchAdvanced.search();
 			banhji.router.navigate('/search_advanced');
+		},
+		removeLink 			: function(e){
+			e.preventDefault();
+
+			var data = e.data;
+			if(data.vm){
+				data.vm.cancel();
+			}			
+
+			this.multiTaskList.splice(index, 1);
+		},
+		removeMultiTask		: function(url){
+			var self = this;
+
+			$.each(this.multiTaskList, function(index, value){
+				if(value.url==url){
+					self.multiTaskList.splice(index, 1);
+
+					return false;
+				}
+			});
+		},
+		addMultiTask 		: function(name, url, vm){
+			var isExisting = false;
+			$.each(this.multiTaskList, function(index, value){
+				if(value.url==url){
+					isExisting = true;
+
+					return false;
+				}
+			});
+
+			if(isExisting==false){
+				this.multiTaskList.push({ name:name, url:url, vm:vm });
+			}
 		},				
 		auth : new kendo.data.DataSource({
 			transport: {
@@ -29463,7 +29560,42 @@
 				data: 'results',
 				total: 'count'
 			},
-			group: { field: "category"},
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		customerTaxDS				: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "tax_items",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.take,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field: "tax_type_id", operator:"where_in", value:[1,3] },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -31424,7 +31556,9 @@
 			{ id:"GDN", name:"GDN" }
 		],											
 		pageLoad 			: function(){
-			
+			if(this.dataSource.total()>0){
+				this.dataSource.fetch();
+			}
 		},
 		goToTemplate 		: function(e){
 			var data = e.data;			
@@ -31635,11 +31769,11 @@
 		obj 				: null,
 		item 				: null,
 		taxName 			: "",
+		windowVisible 		: false,
+		windowItemVisible 	: false,
 		pageLoad 			: function() {
-        	
         },        
         addType 			: function(){
-		    
         	this.dataSource.add({
         		number 				: "",
         		name 				: "",
@@ -31651,40 +31785,53 @@
         	var data = this.dataSource.data();
 			var obj = data[data.length-1];
 			this.set("obj", obj);
-	            	
-        },
-        addItem				: function(e){
-		    var data = e.data;
-
-        	this.itemDS.add({
-        		tax_type_id 		: data.id,
-        		account_id 			: "",
-        		name 				: "",
-        		rate 				: "",
-        		is_system 			: "",
-        		account 			: [{name: ""}]
-        	});
-        	var data = this.itemDS.data();
-			var obj = data[data.length-1];
-			this.set("item", obj);
-			this.openWindowItem();
-	            	
         },
         openWindow			: function(){
       		this.addType();
 
-         	var window = $("#saleTax-window").data("kendoWindow");
-          	window.title("Tax Type");
-          	window.center().open();
+         	this.set("windowVisible", true);
       	},
       	closeWindow 		: function(){
       		this.dataSource.cancelChanges();
 
-      		var window = $("#saleTax-window").data("kendoWindow");
-          	window.close();
+      		this.set("windowVisible", false);
       	},
-      	
-        loadItem 			: function(e){
+        save 				: function(){
+        	var self = this;
+        	this.dataSource.sync();
+        	this.dataSource.bind("requestEnd", function(e){
+        		if( e.type == "create" || e.type == "update"){ 
+        			this.set("windowVisible", false); 
+        		}
+        	});
+        },
+        edit 				: function(e){
+      		var data = e.data;      		
+      		this.set("obj", data);
+
+      		this.set("windowVisible", true);       		
+      	},      	
+      	delete 				: function(e){
+			if (confirm("Are you sure, you want to delete it?")) {
+		        var data = e.data;
+		        this.dataSource.remove(data);
+		        this.dataSource.sync();
+	    	}	    	
+	    },
+	    view 				: function(e){
+	    	var data = e.data;
+	    	this.set("taxName", data.name);
+	    	this.itemDS.filter({ field: "tax_type_id", value: data.id});
+	    },
+	    openWindowItem		: function(){
+         	this.set("windowItemVisible", true);
+      	},
+      	closeWindowItem 	: function(){	      		
+      		this.itemDS.cancelChanges();
+
+      		this.set("windowItemVisible", false);
+      	},
+      	loadItem 			: function(e){
 	        var d = e.data;
 
 	        this.set("selectedType", true);
@@ -31697,75 +31844,42 @@
 	        	take: 100
 	        });  	
         },
-        save 				: function(){
-        	var self = this;
-        	this.dataSource.sync();
-        	this.dataSource.bind("requestEnd", function(e){
-        		if( e.type == "create" || e.type == "update"){ 
-        			var window = $("#saleTax-window").data("kendoWindow");
-          			window.close(); 
-        		}
+      	addItem				: function(e){
+		    var data = e.data;
+
+        	this.itemDS.add({
+        		tax_type_id 		: data.id,
+        		account_id 			: 0,
+        		name 				: "",
+        		rate 				: "",
+        		is_system 			: "",
+        		account 			: [{name: ""}]
         	});
+        	var data = this.itemDS.data();
+			var obj = data[data.length-1];
+			this.set("item", obj);
+			this.openWindowItem();
         },
-        edit 				: function(e){
-      		var data = e.data;      		
-      		this.set("obj", data);
-
-      		var window = $("#saleTax-window").data("kendoWindow");
-          	window.title("Tax Type");          	
-          	window.center().open();       		
-      	},      	
-      	delete 				: function(e){
-			if (confirm("Are you sure, you want to delete it?")) {
-		        var data = e.data;
-		        this.dataSource.remove(data);
-		        this.dataSource.sync();
-		        banhji.itemCenter.dataSource.fetch();
-	    	}	    	
-	    },
-	    view 				: function(e){
-	    	var data = e.data;
-	    	this.set("taxName", data.name);
-	    	this.itemDS.filter({ field: "tax_type_id", value: data.id});
-
-	    },
-	    openWindowItem		: function(){
-      		
-
-         	var window = $("#item-window").data("kendoWindow");
-          	window.title("Item Type");          	
-          	window.center().open();         	
-      	},
-      	closeWindowItem 	: function(){	      		
-      		this.itemDS.cancelChanges();
-
-      		var window = $("#item-window").data("kendoWindow");          	         	
-          	window.close();          	
-      	},
       	saveItem 				: function(){
         	var self = this;
         	this.itemDS.sync();
         	this.itemDS.bind("requestEnd", function(e){
         		if( e.type == "create" || e.type == "update"){ 
-        			var window = $("#item-window").data("kendoWindow");          	         	
-          			window.close(); 
+        			this.set("windowItemVisible", false);
         		}
         	});
         },
         editItem 				: function(e){
       		var data = e.data;      		
-      		this.set("obj", data);
+      		this.set("item", data);
 
-      		var window = $("#item-window").data("kendoWindow");
-          	window.title("Item Type");          	
-          	window.center().open();       		
+      		this.set("windowItemVisible", true);
       	}, 
       	deleteItem 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {        
 		        var data = e.data;
 		        this.itemDS.remove(data);
 		        this.itemDS.sync();
-		        banhji.itemCenter.itemDS.fetch();
 	    	}	    	
 	    }
     });
@@ -31777,9 +31891,11 @@
 		obj 				: null,
 		item 				: null,
 		objName 			: "",
+		windowVisible 		: false,
+		windowItemVisible 	: false,
 		pageLoad 			: function() {
         },        
-        addObj 			: function(){		    
+        addObj 				: function(){		    
         	this.dataSource.add({
         		code_length			: "",
         		name 				: "",
@@ -31789,53 +31905,22 @@
 			var obj = data[data.length-1];
 			this.set("obj", obj);	            	
         },
-        addItem				: function(e){
-		    var data = e.data;
-
-        	this.itemDS.add({
-        		segment_id 		: data.id,
-        		code 			: "",
-        		status 			: 1,        		
-        		segment 		: [{name: ""}]
-        	});
-        	var data = this.itemDS.data();
-			var obj = data[data.length-1];
-			this.set("item", obj);
-			this.openWindowItem();	            	
-        },
         openWindow			: function(){
       		this.addObj();
 
-         	var window = $("#window").data("kendoWindow");
-          	window.title("Segment");
-          	window.center().open();
+         	this.set("windowVisible", true);
       	},
       	closeWindow 		: function(){
       		this.dataSource.cancelChanges();
 
-      		var window = $("#window").data("kendoWindow");
-          	window.close();
-      	},      	
-        loadItem 			: function(e){
-	        var d = e.data;
-
-	        this.set("selectedType", true);
-	        this.set("tax_type_id", d.id);
-	        this.set("selectedTypeName", d.name);
-	        
-	        this.itemDS.query({
-	        	filter: { field:"segment_id", value: d.id },
-	        	page: 1,
-	        	take: 100
-	        });  	
-        },
+      		this.set("windowVisible", false);
+      	},
         save 				: function(){
         	var self = this;
         	this.dataSource.sync();
         	this.dataSource.bind("requestEnd", function(e){
         		if( e.type == "create" || e.type == "update"){ 
-        			var window = $("#window").data("kendoWindow");
-          			window.close(); 
+        			this.set("windowVisible", false);
         		}
         	});
         },
@@ -31843,9 +31928,7 @@
       		var data = e.data;
       		this.set("obj", data);
 
-      		var window = $("#window").data("kendoWindow");
-          	window.title("Segment");
-          	window.center().open();
+      		this.set("windowVisible", true);
       	},      	
       	delete 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
@@ -31860,33 +31943,54 @@
 	    	this.itemDS.filter({ field: "segment_id", value: data.id});
 	    },
 	    openWindowItem		: function(){
-         	var window = $("#item-window").data("kendoWindow");
-          	window.title("Item Type");
-          	window.center().open();
+         	this.set("windowItemVisible", true);
       	},
       	closeWindowItem 	: function(){
       		this.itemDS.cancelChanges();
 
-      		var window = $("#item-window").data("kendoWindow");
-          	window.close();          	
+      		this.set("windowItemVisible", false);
       	},
+      	loadItem 			: function(e){
+	        var d = e.data;
+
+	        this.set("selectedType", true);
+	        this.set("tax_type_id", d.id);
+	        this.set("selectedTypeName", d.name);
+	        
+	        this.itemDS.query({
+	        	filter: { field:"segment_id", value: d.id },
+	        	page: 1,
+	        	take: 100
+	        });  	
+        },
+      	addItem				: function(e){
+		    var data = e.data;
+
+        	this.itemDS.add({
+        		segment_id 		: data.id,
+        		code 			: "",
+        		status 			: 1,        		
+        		segment 		: [{name: ""}]
+        	});
+        	var data = this.itemDS.data();
+			var obj = data[data.length-1];
+			this.set("item", obj);
+			this.openWindowItem();	            	
+        },
       	saveItem 				: function(){
         	var self = this;
         	this.itemDS.sync();
         	this.itemDS.bind("requestEnd", function(e){
         		if( e.type == "create" || e.type == "update"){ 
-        			var window = $("#item-window").data("kendoWindow");
-          			window.close(); 
+        			this.set("windowItemVisible", false);
         		}
         	});
         },
         editItem 				: function(e){
       		var data = e.data;
-      		this.set("obj", data);
+      		this.set("item", data);
 
-      		var window = $("#item-window").data("kendoWindow");
-          	window.title("Item Type");
-          	window.center().open();
+      		this.set("windowItemVisible", true);
       	}, 
       	deleteItem 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
@@ -40855,31 +40959,7 @@
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
 		itemDS  			: banhji.source.itemDS,
-		taxItemDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "tax_items",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"tax_type_id", value: 1}
-			],					
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
+		taxItemDS  			: banhji.source.customerTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
 		paymentTermDS 		: dataStore(apiUrl + "payment_terms"),
@@ -41575,7 +41655,7 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();			
 
-			window.history.back();
+			banhji.userManagement.removeMultiTask("invoice");
 		},
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
@@ -42046,31 +42126,7 @@
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
 		itemDS  			: banhji.source.itemDS,
-		taxItemDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "tax_items",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"tax_type_id", value: 1}
-			],					
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
+		taxItemDS  			: banhji.source.customerTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
 		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),
@@ -42748,7 +42804,7 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();			
 
-			window.history.back();
+			banhji.userManagement.removeMultiTask("cash_sale");
 		},
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
@@ -43209,31 +43265,7 @@
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
 		itemDS  			: banhji.source.itemDS,
-		taxItemDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "tax_items",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"tax_type_id", value: 1}
-			],					
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
+		taxItemDS  			: banhji.source.customerTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
 		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),
@@ -43897,10 +43929,8 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();			
 
-			window.history.back();
+			banhji.userManagement.removeMultiTask("sale_order");
 		},
-	    //Journal	        
-	 
 		//Recurring		
 		applyRecurring 		: function(){
 			var self = this, obj = this.get("obj");
@@ -44162,6 +44192,7 @@
 		contactDS  			: banhji.source.customerDS,
 		employeeDS  		: banhji.source.saleRepDS,
 		itemDS  			: banhji.source.itemDS,
+		taxItemDS 			: banhji.source.customerTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
 		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),
@@ -44800,7 +44831,8 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();			
 
-			window.history.back();
+			banhji.userManagement.removeMultiTask("quote");
+			// window.history.back();
 		},
 		delete 					: function(){
 			var self = this, obj = this.get("obj");
@@ -45100,31 +45132,6 @@
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
 		itemDS  			: banhji.source.itemDS,
-		taxItemDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "tax_items",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"tax_type_id", value: 1}
-			],					
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
 		paymentTermDS 		: dataStore(apiUrl + "payment_terms"),
@@ -45715,7 +45722,7 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();			
 
-			window.history.back();
+			banhji.userManagement.removeMultiTask("gdn");
 		},
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
@@ -46131,31 +46138,7 @@
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
 		itemDS  			: banhji.source.itemDS,
-		taxItemDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "tax_items",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter: [
-					{ field:"tax_type_id", value: 1}
-			],					
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
+		taxItemDS  			: banhji.source.customerTaxDS,
 		accountDS  			: banhji.source.cashAccountDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),		
@@ -46782,7 +46765,7 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();			
 
-			window.history.back();
+			banhji.userManagement.removeMultiTask("sale_return");
 		},
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
@@ -47659,7 +47642,7 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			
-			window.history.back();
+			banhji.userManagement.removeMultiTask("customer_deposit");
 		},
 		addJournal 			: function(transaction_id){
 	    	var self = this,
@@ -48134,7 +48117,6 @@
 		obj 				: null,
 		isVisible 			: false,
 		pageLoad 			: function() {
-        	
         },        
         addObj 			: function(){		    
         	this.dataSource.add({	        		
@@ -48183,7 +48165,7 @@
       		this.dataSource.cancelChanges();
 
       		window.history.back();
-      	},	    
+      	}	    
     });
     banhji.invoiceCustom =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
@@ -56701,38 +56683,7 @@
 				vm.recurringDS.filter([
 					{ field:"type", value:"Cash_Advance" },
 					{ field:"is_recurring", value:1 }
-				]);				            		
- 
-				var currency = $("#cbbCurrency").kendoComboBox({
-                    dataTextField: "code",
-                    dataValueField: "locale",
-                    valuePrimitive: true,
-                    height: 400,
-                    template:"#=code# - #=country#",
-                    dataSource: {
-                    	transport: {
-							read 	: {
-								url: apiUrl+"currencies",
-								type: "GET",
-								headers: {
-									"Entity": getDB(),
-									"User": banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id
-								},
-								dataType: 'json'
-							}							
-						},
-						schema 	: {
-							model: {
-								id: 'id'
-							},
-							data: 'results',
-							total: 'count'
-						},						
-						group: { field: "group" },						
-						page: 1,						
-						take: 100
-                    }
-                }).data("kendoComboBox");					
+				]);								
    
 				var validator = $("#example").kendoValidator().data("kendoValidator");
 				var notification = $("#notification").kendoNotification({				    
@@ -57484,7 +57435,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 			
 			var vm = banhji.customerDashboard;
-
+			banhji.userManagement.addMultiTask("Customer Home","customers",null);
 			if(banhji.pageLoaded["customers"]==undefined){
 				banhji.pageLoaded["customers"] = true;				
 								               
@@ -57502,7 +57453,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 			
 			var vm = banhji.customerCenter;
-
+			banhji.userManagement.addMultiTask("Customer Center","customer_center",vm);
 			if(banhji.pageLoaded["customer_center"]==undefined){
 				banhji.pageLoaded["customer_center"] = true;				
 
@@ -57624,12 +57575,12 @@
 	banhji.router.route("/customer(/:id)(/:is_pattern)", function(id,is_pattern){		
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
-		}else{			
-			var vm = banhji.customer;
-						
+		}else{						
 			banhji.view.layout.showIn("#content", banhji.view.customer);			
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
+			var vm = banhji.customer;
+			banhji.userManagement.addMultiTask("Customer","customer",vm);
 			if(banhji.pageLoaded["customer"]==undefined){
 				banhji.pageLoaded["customer"] = true;		         
 
@@ -57690,7 +57641,7 @@
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
 			var vm = banhji.invoice;
-			
+			banhji.userManagement.addMultiTask("Invoice","invoice",vm);
 			if(banhji.pageLoaded["invoice"]==undefined){
 				banhji.pageLoaded["invoice"] = true;				        
 
@@ -57763,7 +57714,7 @@
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
 			var vm = banhji.cashSale;
-			
+			banhji.userManagement.addMultiTask("Cash Sale","cash_sale",vm);
 			if(banhji.pageLoaded["cash_sale"]==undefined){
 				banhji.pageLoaded["cash_sale"] = true;				        
 
@@ -57836,7 +57787,7 @@
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
 			var vm = banhji.saleOrder;
-			
+			banhji.userManagement.addMultiTask("Sale Order","sale_order",vm);
 			if(banhji.pageLoaded["sale_order"]==undefined){
 				banhji.pageLoaded["sale_order"] = true;				        
 
@@ -57909,7 +57860,7 @@
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
 			var vm = banhji.quote;
-			
+			banhji.userManagement.addMultiTask("Quote","quote",vm);
 			if(banhji.pageLoaded["quote"]==undefined){
 				banhji.pageLoaded["quote"] = true;				        
 
@@ -57982,7 +57933,7 @@
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
 			var vm = banhji.gdn;
-			
+			banhji.userManagement.addMultiTask("GDN","gdn",vm);
 			if(banhji.pageLoaded["gdn"]==undefined){
 				banhji.pageLoaded["gdn"] = true;				        
 
@@ -58055,7 +58006,7 @@
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
 			var vm = banhji.saleReturn;
-			
+			banhji.userManagement.addMultiTask("Sale Return","sale_return",vm);
 			if(banhji.pageLoaded["sale_return"]==undefined){
 				banhji.pageLoaded["sale_return"] = true;				        
 
@@ -58128,7 +58079,7 @@
 			banhji.view.layout.showIn("#content", banhji.view.statement);					
 			
 			var vm = banhji.statement;
-
+			banhji.userManagement.addMultiTask("Statement","statement",vm);
 			if(banhji.pageLoaded["statement"]==undefined){
 				banhji.pageLoaded["statement"] = true;
 
@@ -58316,7 +58267,7 @@
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
 			var vm = banhji.customerDeposit;
-			
+			banhji.userManagement.addMultiTask("Customer Deposit","customer_deposit",vm);
 			if(banhji.pageLoaded["customer_deposit"]==undefined){
 				banhji.pageLoaded["customer_deposit"] = true;				        
 
@@ -60245,6 +60196,27 @@
 
 			vm.pageLoad();				
 		}
+	});
+	banhji.router.route("/customer_recurring", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{						
+			banhji.view.layout.showIn("#content", banhji.view.recurring);			
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.recurring;
+			
+			if(banhji.pageLoaded["recurring"]==undefined){
+				banhji.pageLoaded["recurring"] = true;   
+				
+				vm.dataSource.filter([
+					{ field:"is_recurring", value: 1 },
+					{ field:"type", operator:"where_in", value: ["Quote","Sale_Order","Deposit","Cash_Sale","Invoice","Cash_Receipt","GDN","Sale_Return"] }
+				]);	 		
+			}
+
+			vm.pageLoad();					
+		}		
 	});
 
 
