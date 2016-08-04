@@ -94,20 +94,7 @@ body{
     width: 16.3%;
     text-align: center;
 }
-@media only screen 
-and (min-device-width : 375px) 
-and (max-device-width : 667px) {
-    .user-module .col-lg-2{
-        margin-right: 2px;
-        width: 24.5%;
-    }
-    .user-module .col-lg-2:nth-child(4){
-        margin-right: 0;
-    }
-    .user-module .col-lg-2:nth-child(6){
-        margin-right: 2px;
-    }
-}
+
 .user-module .col-lg-2>div{
     width: 100%;
     float: left;
@@ -119,6 +106,18 @@ and (max-device-width : 667px) {
 }
 .user-module .col-lg-2:nth-child(6){
     margin-right: 0;
+}
+@media only screen (max-width : 480px) {
+    .user-module .col-lg-2{
+        margin-right: 2px;
+        width: 24.5%;
+    }
+    .user-module .col-lg-2:nth-child(4){
+        margin-right: 0;
+    }
+    .user-module .col-lg-2:nth-child(6){
+        margin-right: 2px;
+    }
 }
 
 
@@ -133,6 +132,7 @@ and (max-device-width : 667px) {
 }
 .profile-info-item table{
     width: 100%;
+    margin-top: 5px;
 }
 .profile-info-item table tr td{
     padding: 5px;
@@ -142,4 +142,19 @@ and (max-device-width : 667px) {
 }
 .profile-info-item table tr:nth-child(2n+1) td {
     background: #F2F2F2;
+}
+.profile-info-item{
+    padding-left: 0;
+}
+.user table{
+    border: 1px solid #ddd;
+}
+.user table tr th{
+    background: #F2F2F2;
+    text-align: center;
+}
+.user table tr th,
+.user table tr td{
+    border: 1px solid #ddd; 
+    padding: 5px;
 }

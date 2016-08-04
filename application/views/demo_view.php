@@ -27821,8 +27821,10 @@
 		removeLink 			: function(e){
 			e.preventDefault();
 
-			var data = e.data;
-			if(data.vm){
+			var data = e.data,
+			index = this.multiTaskList.indexOf(data);
+			
+			if(data.vm!==null){				
 				data.vm.cancel();
 			}			
 
@@ -32752,7 +32754,7 @@
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),		
-		contactDS 			: banhji.source.contactDS,				
+		contactDS 			: banhji.source.employeeDS,				
 		currencyDS 			: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		paymentMethodDS		: banhji.source.paymentMethodDS,
@@ -56676,9 +56678,7 @@
 			var vm = banhji.cashAdvance;
 			
 			if(banhji.pageLoaded["cash_advance"]==undefined){
-				banhji.pageLoaded["cash_advance"] = true;
-				
-				vm.contactDS.filter({ field:"contact_type_id", value:3 });
+				banhji.pageLoaded["cash_advance"] = true;				
 
 				vm.recurringDS.filter([
 					{ field:"type", value:"Cash_Advance" },
@@ -57453,7 +57453,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 			
 			var vm = banhji.customerCenter;
-			banhji.userManagement.addMultiTask("Customer Center","customer_center",vm);
+			banhji.userManagement.addMultiTask("Customer Center","customer_center",null);
 			if(banhji.pageLoaded["customer_center"]==undefined){
 				banhji.pageLoaded["customer_center"] = true;				
 

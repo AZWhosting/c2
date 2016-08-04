@@ -65,7 +65,7 @@
                 <div class="page-content">
                     <div class="container" >
                         <div class="row">
-                            <div class="col-md-3 col-lg-3">
+                            <div class="col-xs-12 col-md-4 col-lg-3">
                                 <section class="box-typical">
                                     <div class="profile-card">
                                         <div class="profile-card-photo">
@@ -113,7 +113,7 @@
                                 </section><!--.box-typical-->                    
                             </div><!--.col- -->
 
-                            <div class="col-md-9 col-lg-9">
+                            <div class="col-xs-12 col-md-8 col-lg-9">
                                 <section class="box-typical user-module">
                                     <div class="col-xs-3 col-md-2 col-lg-2">
                                         <div>
@@ -246,6 +246,7 @@
                                                 </table>
                                             </article>
                                         </div><!--.tab-pane-->
+
                                         <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2">
                                             <article class="profile-info-item">
                                                 <table >
@@ -277,8 +278,60 @@
                                                 </table>
                                             </article>
                                         </div><!--.tab-pane-->
+
                                         <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3">
-                                            User
+                                            <article class="profile-info-item user">
+                                                <table >
+                                                    <tr>
+                                                        <th>Photo</th>
+                                                        <th>Full Name</th>
+                                                        <th>Email</th>
+                                                        <th>Role</th>
+                                                        <th>Last Login</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="#">
+                                                                <img src="<?php echo base_url()?>assets/img/photo-64-2.jpg" alt="">
+                                                            </a>
+                                                        </td>
+                                                        <td>Sokdararith Prak</td>
+                                                        <td>rith@banhji.com</td>
+                                                        <td>Admin</td>
+                                                        <td>-</td>
+                                                        <td>
+                                                            <button type="button" class="tabledit-edit-button btn btn-sm btn-default" style="float: none;">
+                                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
+                                                            </button>
+                                                            &nbsp;&nbsp;
+                                                            <button type="button" class="tabledit-edit-button btn btn-sm btn-default" style="float: none;">
+                                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;Password
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="#">
+                                                                <img src="<?php echo base_url()?>assets/img/photo-64-2.jpg" alt="">
+                                                            </a>
+                                                        </td>
+                                                        <td>Sokdararith Prak</td>
+                                                        <td>rith@banhji.com</td>
+                                                        <td>Admin</td>
+                                                        <td>-</td>
+                                                        <td>
+                                                            <button type="button" class="tabledit-edit-button btn btn-sm btn-default" style="float: none;">
+                                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
+                                                            </button>
+                                                            &nbsp;&nbsp;
+                                                            <button type="button" class="tabledit-edit-button btn btn-sm btn-default" style="float: none;">
+                                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;Password
+                                                            </button>
+                                                        </td>
+                                                    </tr>                                                                                                  
+                                                </table>
+                                            </article>
                                         </div><!--.tab-pane-->
                                     </div><!--.tab-content-->
                                 </section><!--.tabs-section-->
