@@ -8,7 +8,7 @@ class Account extends DataMapper {
 		'account_type' => array(
 			'class' => "account_type",
 			'other_field' => 'account'
-		),		
+		),
 		'parent' => array(
 			'class' => "account",
 			'other_field' => 'account'
@@ -18,6 +18,10 @@ class Account extends DataMapper {
 	public $has_many = array(
 		'journal_line' => array(
 			'class' => "journal_line",
+			'other_field' => 'account'
+		),
+		'transaction' => array(
+			'class' => 'transaction',
 			'other_field' => 'account'
 		),
 		'account_line' => array(
@@ -65,14 +69,14 @@ class Account extends DataMapper {
 		'item' => array(
 			'class' => 'bill_line',
 			'other_field' => 'account'
-		), 
+		),
 		'tax_item' => array(
 			'class' => 'tax_item',
 			'other_field' => 'account'
 		)
 	);
 
-	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
+	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {
 		$this->db_params = array(
 				'dbdriver' => 'mysql',
 				'pconnect' => true,

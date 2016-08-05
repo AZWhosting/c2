@@ -1,48 +1,52 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Transaction extends DataMapper {    
+class Transaction extends DataMapper {
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";
 
 	public $has_one = array(
 		'company' => array(
-            'class' => 'company',
-            'other_field' => 'transaction'
-        ),
-        'location' => array(
-            'class' => 'location',
-            'other_field' => 'transaction'
-        ),
-        'contact' => array(
-            'class' => 'contact',
-            'other_field' => 'transaction'
-        ),       
-        'payment_term' => array(
-            'class' => 'payment_term',
-            'other_field' => 'transaction'
-        ),
-        'payment_method' => array(
-            'class' => 'payment_method',
-            'other_field' => 'transaction'
-        ),        
-        'recurring' => array(
-            'class' => 'recurring',
-            'other_field' => 'transaction'
-        ),
-        'reference' => array(
-            'class' => 'transaction',
-            'other_field' => 'transaction'
-        ),
-        'job' => array(
-            'class' => 'job',
-            'other_field' => 'transaction'
-        )
+          'class' => 'company',
+          'other_field' => 'transaction'
+      ),
+			'account' => array(
+				'class' => 'account',
+				'other_field' => 'transaction'
+			),
+      'location' => array(
+          'class' => 'location',
+          'other_field' => 'transaction'
+      ),
+      'contact' => array(
+          'class' => 'contact',
+          'other_field' => 'transaction'
+      ),
+      'payment_term' => array(
+          'class' => 'payment_term',
+          'other_field' => 'transaction'
+      ),
+      'payment_method' => array(
+          'class' => 'payment_method',
+          'other_field' => 'transaction'
+      ),
+      'recurring' => array(
+          'class' => 'recurring',
+          'other_field' => 'transaction'
+      ),
+      'reference' => array(
+          'class' => 'transaction',
+          'other_field' => 'transaction'
+      ),
+      'job' => array(
+          'class' => 'job',
+          'other_field' => 'transaction'
+      )
 	);
 	public $has_many = array(
         'transaction' => array(
             'class' => 'transaction',
             'other_field' => 'reference'
-        ),		
+        ),
 		'item_line' => array(
             'class' => 'item_line',
             'other_field' => 'transaction'
@@ -54,7 +58,7 @@ class Transaction extends DataMapper {
         'winvoice_line' => array(
             'class' => 'winvoice_line',
             'other_field' => 'transaction'
-        ),        
+        ),
         'journal_line' => array(
             'class' => 'journal_line',
             'other_field' => 'transaction'
@@ -65,7 +69,7 @@ class Transaction extends DataMapper {
         )
 	);
 
-	public function __construct($id = null, $server_name = null, $server_username = null, $server_password = null, $db = null) {   
+	public function __construct($id = null, $server_name = null, $server_username = null, $server_password = null, $db = null) {
         $this->db_params = array(
                 'dbdriver' => 'mysql',
                 'pconnect' => true,
