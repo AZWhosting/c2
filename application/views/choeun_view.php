@@ -17409,7 +17409,7 @@
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span4">	
 							<div class="span12">
-								<select class="span12 selectType" id="dropdown" data-option-label="Select Type..." data-role="dropdownlist" data-auto-bind="false" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.type, source: selectType, events:{change: onChange}" ></select>
+								<select class="span12 selectType" id="dropdown" data-role="dropdownlist" data-auto-bind="false" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.type, source: selectType, events:{change: onChange}" ></select>
 							</div>
 							<div class="span12" style="margin-bottom: 10px;">
 								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
@@ -17511,7 +17511,7 @@
                             <span>Company name / Customer</span>
                         </div>
                         <div class="left dotted-ruler" style="width: 62%;">
-                        	<p style="font-weight:bold"></p>
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].company"></p>
                         </div>
                     </div>
                     <div class="clear">
@@ -17520,7 +17520,7 @@
                             <span>Telephone N<sup>o</sup></span>
                         </div>
                         <div class="left dotted-ruler" style="width: 78%;">
-                        	<p style="font-weight:bold"></p>
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
                         </div>
                     </div>
                 </div>
@@ -17531,7 +17531,7 @@
                             <span>​​Invoice N<sup>o</sup></span>
                         </div>
                         <div class="left dotted-ruler" style="width: 42%;">
-                        	<p style="font-weight:bold">123456</p>
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
                         </div>
                     </div>
                     <div class="clear">
@@ -17540,7 +17540,7 @@
                             <span>​​Date</span>
                         </div>
                         <div class="left dotted-ruler" style="width: 57%;">
-                        	<p style="font-weight:bold"><?php echo date('d/M/Y'); ?></p>
+                        	<p style="font-weight:bold" data-bind="text: obj.issu"></p>
                         </div>
                     </div>
                 </div>
@@ -17564,7 +17564,7 @@
                     <tfoot>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
-                            <td></td>
+                            <td data-bind="text: obj.amount"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -17629,7 +17629,7 @@
                     </div>
                     <div class="vattin">
                 	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
-                </div>
+                	</div>
                 </div>
                 <div class="cover-inv-number" style="width: 20%;">
                 	<div style="position: absolute;left:-70%;width:165%; ">
@@ -17681,7 +17681,7 @@
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​<br />Grand Total</td>
-                            <td></td>
+                            <td data-bind="text: obj.amount"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -17706,12 +17706,12 @@
         	<h1>Sale Order</h1>
         	<div class="span12">
         		<div class="span10" style="text-align:right;">
-        			Date :<br>
-        			SONo :
+        			Date : <br>
+        			SONo : 
         		</div>
         		<div class="span2" style="text-align:left;padding-left: 10px;">
-        			<?php echo date('d/M/Y'); ?><br>
-        			123456
+        			<p data-bind="text: obj.issued_date"></p>
+        			<p data-bind="text: obj.number"></p>
         		</div>
         	</div>
         </div>
@@ -18110,38 +18110,34 @@
         	<table class="span12">
         		<tbody>
         			<tr>
-        				<td style="border-top: none;border-left: none" width="500" colspan="2" rowspan="3">
+        				<td class="main-color" width="300" colspan="4" rowspan="3">
         					<h2>GOODS DELIVERED NOTE </h2>
 	        			</td>
 	        			<td width="120">
-	        				<b>Date</b>
+	        				<b>GDN #</b>
 	        			</td>
-	        			<td>&nbsp;</td>
+	        			<td width="100">&nbsp;</td>
         			</tr>
         			<tr>
-	        			<td ><b>Quotation Form #</b></td>
+	        			<td ><b>Date</b></td>
 	        			<td></td>
 	        		</tr>
 	        		<tr>
-	        			<td><b>Requisition #</b></td>
+	        			<td><b>SO/ CONTRACT #</b></td>
 	        			<td></td>
 	        		</tr>
 	        		<tr>
-	        			<td width="150"><b>Customer Name:</b></td>
-	        			<td ></td>
-	        			<td ><b>Date of contact:</b></td>
-	        			<td ></td>
-	        		</tr>
-	        		<tr>
-	        			<td width="150"><b>Contact Information:</b></td>
-	        			<td ></td>
-	        			<td ><b>Time of contact:</b></td>
+	        			<td width="90"><b>Name</b></td>
+	        			<td width="80"></td>
+	        			<td width="90"><b>CODE</b></td>
+	        			<td width="80"></td>
+	        			<td ><b>CUSTOMER<br>INVOICE #</b></td>
 	        			<td ></td>
 	        		</tr>
 	        		<tr>
-	        			<td width="150"><b>Validity Date</b></td>
-	        			<td ></td>
-	        			<td ><b>Date price provided </b></td>
+	        			<td ><b>ADDRESS</b></td>
+	        			<td colspan="3"></td>
+	        			<td><b>DELIVERY NOTE #</b></td>
 	        			<td ></td>
 	        		</tr>
         		</tbody>
@@ -18149,30 +18145,25 @@
         	<table class="span12" style="margin-top: 5px;">
         		<thead>
         			<tr>
-	        			<th>
-	        				No
-	        			</th>
-	        			<th width="70">
+	        			<th rowspan="2" width="70">
 	        				Item<br>Code
 	        			</th>
-	        			<th width="">
-	        				Description
+	        			<th rowspan="2">
+	        				DESCRIPTION
 	        			</th>
-	        			<th width="30">
-
+	        			<th rowspan="2">
+	        				INSPECTION<br>CRITERIA
 	        			</th>
-	        			<th width="40">
-	        				UM
+	        			<th colspan="5">
+	        				QUANTITY
 	        			</th>
-	        			<th width="40">
-	        				QTY
-	        			</th>
-	        			<th width="80">
-	        				Unit Price
-	        			</th>
-	        			<th width="70">
-	        				Extended<br>Price
-	        			</th>
+	        		</tr>
+	        		<tr>
+	        			<th><b style="font-size:10px">ORDERED</b></th>
+	        			<th><b style="font-size:10px">RECEIVED</b></th>
+	        			<th><b style="font-size:10px">INSPECTED</b></th>
+	        			<th><b style="font-size:10px">ACCEPTED</b></th>
+	        			<th><b style="font-size:10px">REJECTED</b></th>
 	        		</tr>
         		</thead>
         		<tbody>
@@ -18270,32 +18261,1674 @@
         		<tfoot>
         			
         			<tr>
-        				<td style="text-align:right;padding-right:10px;" colspan="7"><b>Total</b></td>
-        				<td></td>
+        				<td style="text-align:center;color:#fff;background:#000" colspan="8">Goods/ Materials received are delivered correctly in term of quantity, quality and other specifications according to the specified SO.</td>
         			</tr>
         		</tfoot>
         	</table>
         	<div class="span12 clear" style="margin-top: 10px">
-	        	<p><b>Additional Specifications </b></p>
-	        	<table class="span12" style="margin-top:10px;">
+	        	<div class="span6" style="padding-left: 30px;">
+	        		<strong>
+	        			Delivered By:<br>
+	        			Received By:<br>
+	        			Inspected By:
+	        		</strong>
+	        	</div>
+	        	<div class="span6" style="padding-left: 30px;">
+	        		<strong>
+	        			Date/ Time:<br>
+	        			Date/ Time:<br>
+	        			Date/ Time:
+	        		</strong>
+	        	</div>
+	        	<table class="span12" style="margin-top: 10px;">
 	        		<tr>
-	        			<td colspan="3">
-	        			<br><br><br><br>
+	        			<td width="280">
+	        				<b>Sample Lot</b><br><br>
+	        				<p>Lot Size:_______________<span style="float:right;padding-right:10px;">Delivery Damage</span></p>
+	        				<p><span style="float:right;padding-right:10px;">Markings/Finish</span></p><br>
+	        				<p>Sample Qty:____________<span style="float:right;padding-right:10px;">Attributes</span></p><br>
 	        			</td>
-	        		</tr>
-	        		<tr>
-	        			<td colspan="3"><b>Prepared By:<br>Position:<br>Date:</b></td>
-	        		</tr>
-	        		<tr>
-	        			<td rowspan="2">This form is used only when official quotation from supplier is not feasible.<td>
-	        			<td>&nbsp;</td>
-	        		</tr>
-	        		<tr>
-	        			<td width="80">&nbsp;</td>
-	        			<td width="80">&nbsp;</td>
+	        			<td>
+	        				<b>Conformance/Discrepancies to Specifications</b><br><br>
+	        			</td>
 	        		</tr>
 	        	</table>
 	        </div>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm6" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b> +855 23 6666 979</p>
+        			<p><b>Email: </b> info@pro-cg.com</p>
+        			<p><b>Website: </b> www.pro-cg.com</p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span3" style="margin-right: 15px;">
+        			<b>Customer Information</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        		<div class="span3">
+        		<b>Delivered to</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title">Sale Order</p>
+        			<p><b>Sale Order Date :</b></p>
+        			<p><b>Sale Order Date :</b></p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title">
+        		<div class="span3">TERM OF PAYMENT</div>
+        		<div class="span3">MODE OF PAYMENT</div>
+        		<div class="span3">DELIVERY DATE</div>
+        		<div class="span3">SALE REP</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr>
+        				<th width="90">CODE</th>
+        				<th>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>QTY</th>
+        				<th>UNIT PRICE</th>
+        				<th width="80">Total</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        		</tbody>
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="120">PREPARED BY</td><td width="100"></td>
+        			<td>POSITION</td><td width="100"></td>
+        			<td>DATE</td><td width="80"></td>
+        		</tr>
+        		<tr>
+        			<td>REVIEWED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>APROVED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>ACCEPTED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm7" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b> +855 23 6666 979</p>
+        			<p><b>Email: </b> info@pro-cg.com</p>
+        			<p><b>Website: </b> www.pro-cg.com</p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span3" style="margin-right: 15px;">
+        			<b>Customer Information</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        		<div class="span3">
+        		<b>Delivered to</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title">Sale Order</p>
+        			<p><b>Sale Order Date :</b></p>
+        			<p><b>Sale Order Date :</b></p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title">
+        		<div class="span3">TERM OF PAYMENT</div>
+        		<div class="span3">MODE OF PAYMENT</div>
+        		<div class="span3">DELIVERY DATE</div>
+        		<div class="span3">SALE REP</div>
+        	</div>
+        	<table class="span12" style="border-left: none;border-bottom: none;">
+        		<thead>
+        			<tr>
+        				<th width="90">CODE</th>
+        				<th>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>QTY</th>
+        				<th>UNIT PRICE</th>
+        				<th width="80">Total</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        		</tbody>
+        		<tfoot>
+        			<tr style="border-left:none">
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="120">PREPARED BY</td><td width="100"></td>
+        			<td>POSITION</td><td width="100"></td>
+        			<td>DATE</td><td width="80"></td>
+        		</tr>
+        		<tr>
+        			<td>REVIEWED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>APROVED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>ACCEPTED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm8" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5" style="margin-right: 30px;">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" >
+        			<p><b>Tel: </b> +855 23 6666 979</p>
+        			<p><b>Email: </b> info@pro-cg.com</p>
+        			<p><b>Website: </b> www.pro-cg.com</p>
+        		</div>
+        	</div>
+        	<div class="span12 clear" style="margin: 20px 0;">
+        		<div class="span4" style="margin-right:45px;">
+        			<p class="form-title" style="margin-bottom: 15px;">Sale Order</p>
+        			<p><b>Sale Order Date :</b></p>
+        			<p><b>Sale Order Date :</b></p>
+        			<div class="span12 main-color order-price"><p>TOTAL ORDER <span>$500,000.00</span></p></div>
+        		</div>
+        		<div class="span3" style="margin-right: 26px;">
+        			<b>Customer Information</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        		<div class="span3">
+        			<b>Delivered to</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title">
+        		<div class="span3">TERM OF PAYMENT</div>
+        		<div class="span3">MODE OF PAYMENT</div>
+        		<div class="span3">DELIVERY DATE</div>
+        		<div class="span3">SALE REP</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr>
+        				<th width="200">ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th width="80">QTY</th>
+        				<th width="80">UNIT PRICE</th>
+        				<th width="100">Total</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        		</tbody>
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;" colspan="2"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="2"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="2"></td>
+        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="120">PREPARED BY</td><td width="100"></td>
+        			<td>POSITION</td><td width="100"></td>
+        			<td>DATE</td><td width="80"></td>
+        		</tr>
+        		<tr>
+        			<td>REVIEWED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>APROVED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>ACCEPTED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm9" type="text/x-kendo-template">
+	<div class="inv1 pcg-border pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5" style="margin-right: 30px;">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" >
+        			<p><b>Tel: </b> +855 23 6666 979</p>
+        			<p><b>Email: </b> info@pro-cg.com</p>
+        			<p><b>Website: </b> www.pro-cg.com</p>
+        		</div>
+        	</div>
+        	<div class="span12 clear" style="margin: 20px 0;">
+        		<div class="span4" style="margin-right:45px;">
+        			<p class="form-title" style="margin-bottom: 15px;">Sale Order</p>
+        			<p><b>Sale Order Date :</b></p>
+        			<p><b>Sale Order Date :</b></p>
+        			<div class="span12 main-color order-price"><p>TOTAL ORDER <span>$500,000.00</span></p></div>
+        		</div>
+        		<div class="span3" style="margin-right: 26px;">
+        			<b>Customer Information</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        		<div class="span3">
+        			<b>Delivered to</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title">
+        		<div class="span3">TERM OF PAYMENT</div>
+        		<div class="span3">MODE OF PAYMENT</div>
+        		<div class="span3">DELIVERY DATE</div>
+        		<div class="span3">SALE REP</div>
+        	</div>
+        	<table class="span12" style="border-left: none;border-bottom: none;">
+        		<thead>
+        			<tr>
+        				<th width="200">ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th width="80">QTY</th>
+        				<th width="80">UNIT PRICE</th>
+        				<th width="100">Total</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        		</tbody>
+        		<tfoot>
+        			<tr style="border-left:none">
+        				<td style="border:none;" colspan="2"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="2"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="2"></td>
+        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="120">PREPARED BY</td><td width="100"></td>
+        			<td>POSITION</td><td width="100"></td>
+        			<td>DATE</td><td width="80"></td>
+        		</tr>
+        		<tr>
+        			<td>REVIEWED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>APPROVED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>ACCEPTED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm10" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b> +855 23 6666 979</p>
+        			<p><b>Email: </b> info@pro-cg.com</p>
+        			<p><b>Website: </b> www.pro-cg.com</p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span3" style="margin-right: 15px;">
+        			<b>Customer Information</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        		<div class="span3">
+        			<br>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title">Quotation</p>
+        			<p><b>Sale Order Date :</b></p>
+        			<p><b>Sale Order Date :</b></p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title">
+        		<div class="span4">TERM OF PAYMENT</div>
+        		<div class="span4">MODE OF PAYMENT</div>
+        		<div class="span4">VALIDITY PERIOD</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr>
+        				<th width="90">CODE</th>
+        				<th>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>QTY</th>
+        				<th>UNIT PRICE</th>
+        				<th width="80">Total</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        		</tbody>
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="120">PREPARED BY</td><td width="100"></td>
+        			<td>POSITION</td><td width="100"></td>
+        			<td>DATE</td><td width="80"></td>
+        		</tr>
+        		<tr>
+        			<td>REVIEWED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>APPROVED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm11" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b> +855 23 6666 979</p>
+        			<p><b>Email: </b> info@pro-cg.com</p>
+        			<p><b>Website: </b> www.pro-cg.com</p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span3" style="margin-right: 15px;">
+        			<b>Customer Information</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        		<div class="span3">
+        			<br>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title">Quotation</p>
+        			<p><b>Sale Order Date :</b></p>
+        			<p><b>Sale Order Date :</b></p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title">
+        		<div class="span4">TERM OF PAYMENT</div>
+        		<div class="span4">MODE OF PAYMENT</div>
+        		<div class="span4">VALIDITY PERIOD</div>
+        	</div>
+        	<table class="span12" style="border-left: 0;border-bottom: 0;">
+        		<thead>
+        			<tr>
+        				<th width="90">CODE</th>
+        				<th>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>QTY</th>
+        				<th>UNIT PRICE</th>
+        				<th width="80">Total</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        		</tbody>
+        		<tfoot>
+        			<tr style="border-left:0">
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="120">PREPARED BY</td><td width="100"></td>
+        			<td>POSITION</td><td width="100"></td>
+        			<td>DATE</td><td width="80"></td>
+        		</tr>
+        		<tr>
+        			<td>REVIEWED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>APPROVED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm12" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5" style="margin-right: 30px;">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" >
+        			<p><b>Tel: </b> +855 23 6666 979</p>
+        			<p><b>Email: </b> info@pro-cg.com</p>
+        			<p><b>Website: </b> www.pro-cg.com</p>
+        		</div>
+        	</div>
+        	<div class="span12 clear" style="margin: 20px 0;">
+        		<div class="span4" style="margin-right:65px;">
+        			<p class="form-title" style="margin-bottom: 15px;">QUOTATION</p>
+        			<p><b>Sale Order Date :</b></p>
+        			<p><b>Sale Order Date :</b></p>
+        			<div class="span12 main-color order-price"><p>TOTAL ORDER <span>$500,000.00</span></p></div>
+        		</div>
+        		<div class="span3">
+        			<b>Customer Information</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title">
+        		<div class="span4">TERM OF PAYMENT</div>
+        		<div class="span4">MODE OF PAYMENT</div>
+        		<div class="span4">VALIDITY PERIOD</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr>
+        				<th width="200">ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th width="80">QTY</th>
+        				<th width="80">UNIT PRICE</th>
+        				<th width="100">Total</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        		</tbody>
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;" colspan="2"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="2"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="2"></td>
+        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="120">PREPARED BY</td><td width="100"></td>
+        			<td>POSITION</td><td width="100"></td>
+        			<td>DATE</td><td width="80"></td>
+        		</tr>
+        		<tr>
+        			<td>REVIEWED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>APROVED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm13" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5" style="margin-right: 30px;">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" >
+        			<p><b>Tel: </b> +855 23 6666 979</p>
+        			<p><b>Email: </b> info@pro-cg.com</p>
+        			<p><b>Website: </b> www.pro-cg.com</p>
+        		</div>
+        	</div>
+        	<div class="span12 clear" style="margin: 20px 0;">
+        		<div class="span4" style="margin-right:65px;">
+        			<p class="form-title" style="margin-bottom: 15px;">QUOTATION</p>
+        			<p><b>Sale Order Date :</b></p>
+        			<p><b>Sale Order Date :</b></p>
+        			<div class="span12 main-color order-price"><p>TOTAL ORDER <span>$500,000.00</span></p></div>
+        		</div>
+        		<div class="span3">
+        			<b>Customer Information</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title">
+        		<div class="span4">TERM OF PAYMENT</div>
+        		<div class="span4">MODE OF PAYMENT</div>
+        		<div class="span4">VALIDITY PERIOD</div>
+        	</div>
+        	<table class="span12" style="border-left:none;border-bottom: none;">
+        		<thead>
+        			<tr>
+        				<th width="200">ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th width="80">QTY</th>
+        				<th width="80">UNIT PRICE</th>
+        				<th width="100">Total</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        		</tbody>
+        		<tfoot style="border-left:none;">
+        			<tr>
+        				<td style="border:none;" colspan="2"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="2"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				<td style="background-color: #eee;"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="2"></td>
+        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="120">PREPARED BY</td><td width="100"></td>
+        			<td>POSITION</td><td width="100"></td>
+        			<td>DATE</td><td width="80"></td>
+        		</tr>
+        		<tr>
+        			<td>REVIEWED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>APROVED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm14" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b> +855 23 6666 979</p>
+        			<p><b>Email: </b> info@pro-cg.com</p>
+        			<p><b>Website: </b> www.pro-cg.com</p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header" style="background:none;">
+        		<div class="span3" style="margin-right: 15px;">
+        			<b>Customer Information</b><br><br>
+        			<p>Reachs Co., Ltd<br>
+        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			</p>
+        		</div>
+        		<div class="span6" style="float:right;">
+        			<p class="form-title">DELIVERY NOTE</p>
+        			<p><b>Sale Order Date :</b></p>
+        			<p><b>Sale Order Date :</b></p>
+        		</div>
+        	</div>
+        	<table class="span12">
+        		<tr>
+        			<td style="background: #c6d9f1" width="150"><b>SALE ORDER #</b></td>
+        			<td width="100"><b></b></td>
+        			<td width="150" style="background: #c6d9f1"><b>INVOICE #</b></td>
+        			<td><b></b></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1"><b>JOB/ CONTRACT #</b></td>
+        			<td><b></b></td>
+        			<td style="background: #c6d9f1"><b></b></td>
+        			<td><b></b></td>
+        		</tr>
+        	</table>
+        	<table class="span12" style="margin: 5px 0;">
+        		<thead>
+        			<tr>
+        				<th width="50">NO</th>
+        				<th>ITEM CODE</th>
+        				<th>DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>QTY</th>
+        				<th>REMARK</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        			<tr>
+        				<td>&nbsp;</td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        				<td></td>
+        			</tr>
+        		</tbody>
+        	</table>
+        	<table class="span12">
+        		<tr>
+        			<td style="background: #c6d9f1" width="150">ISSUED BY</td>
+        			<td width="100"></td>
+        			<td width="150" style="background: #c6d9f1">DATE</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1">DELIVERED BY</td>
+        			<td></td>
+        			<td style="background: #c6d9f1">DATE</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1">RECEIVED BY</td>
+        			<td></td>
+        			<td style="background: #c6d9f1">DATE/TIME</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1">ACKNOWLEDGED BY</td>
+        			<td></td>
+        			<td style="background: #c6d9f1">DATE/TIME</td>
+        			<td></td>
+        		</tr>
+        	</table>
         </div>
     </div>
 </script>
@@ -46795,7 +48428,8 @@
 					this.addEmpty();
 				}else if(this.dataSource.total()==0){
 					this.addEmpty();					
-				}								
+				}
+				this.obj.set("type", "Quote");				
 			}
 		},
 		addRowLineDS			: function(e){
@@ -46828,6 +48462,16 @@
 				case 1: Active = banhji.view.invoiceForm2; break;
 				case 2: Active = banhji.view.invoiceForm3; break;
 				case 3: Active = banhji.view.invoiceForm4; break;
+				case 4: Active = banhji.view.invoiceForm5; break;
+				case 5: Active = banhji.view.invoiceForm6; break;
+				case 6: Active = banhji.view.invoiceForm7; break;
+				case 7: Active = banhji.view.invoiceForm8; break;
+				case 8: Active = banhji.view.invoiceForm9; break;
+				case 9: Active = banhji.view.invoiceForm10; break;
+				case 10: Active = banhji.view.invoiceForm11; break;
+				case 11: Active = banhji.view.invoiceForm12; break;
+				case 12: Active = banhji.view.invoiceForm13; break;
+				case 13: Active = banhji.view.invoiceForm14; break;
 			}
 
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);	
@@ -46837,7 +48481,8 @@
 			obj.set("transaction_form_id", data.id);
 		},	    			
 		loadObj 			: function(id){
-			var self = this;			
+			var self = this;	
+			var Active;		
 			this.dataSource.query({    			
 				filter: { field:"id", value: id },
 				page: 1,
@@ -46847,8 +48492,23 @@
 				self.set("obj", view[0]);
 				banhji.invoiceForm.set("obj", view[0]);	
 				var Index = view[0].transaction_form_id;
-				if(Index == 1) Active = banhji.view.invoiceForm1;	
-				else if(Index == 2) Active = banhji.view.invoiceForm2;
+				switch(Index) {
+					case 1: Active = banhji.view.invoiceForm1; break;
+					case 2: Active = banhji.view.invoiceForm2; break;
+					case 3: Active = banhji.view.invoiceForm3; break;
+					case 4: Active = banhji.view.invoiceForm4; break;
+					case 5: Active = banhji.view.invoiceForm5; break;
+					case 6: Active = banhji.view.invoiceForm6; break;
+					case 7: Active = banhji.view.invoiceForm7; break;
+					case 8: Active = banhji.view.invoiceForm8; break;
+					case 9: Active = banhji.view.invoiceForm9; break;
+					case 10: Active = banhji.view.invoiceForm10; break;
+					case 11: Active = banhji.view.invoiceForm11; break;
+					case 12: Active = banhji.view.invoiceForm12; break;
+					case 13: Active = banhji.view.invoiceForm13; break;
+					case 14: Active = banhji.view.invoiceForm14; break;
+				}
+				console.log(Active);
 				banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 				var Color = view[0].color, tS = '';
 				if(Color == '#000000' || Color =='#1f497d') tS = '#fff'; 
@@ -46856,6 +48516,7 @@
 				$('.inv1 thead tr th').css({'color': tS});
 				self.addRowLineDS();
 			});	
+
 		},		
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);			
@@ -46906,7 +48567,7 @@
 	banhji.invoiceForm =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
-		obj 				: null,
+		obj 				: {issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote" },
 		company 			: banhji.institute,		
 		lineDS 				: dataStore(apiUrl + "transactions/line"),
 		user_id				: banhji.source.user_id,
@@ -46953,8 +48614,6 @@
 		    
 		},	    
 		savePDF				: function(e){
-
-			
 	        
 			var draw = kendo.drawing;
 
@@ -47005,11 +48664,11 @@
 			}).then(function(e){
 				var view = self.dataSource.view();				
 				self.set("obj", view[0]);
-				self.loadObjTemplate(view[0].transaction_template_id);				
+				self.loadObjTemplate(view[0].transaction_template_id, id);				
 			});
 				
 		},
-		loadObjTemplate 			: function(id){
+		loadObjTemplate 			: function(id, transaction_id){
 			var self = this, obj = this.get('obj');					
 
 			this.txnTemplateDS.query({    			
@@ -47027,7 +48686,7 @@
 				} else if(txNID == 2){
 					banhji.view.invoiceForm.showIn("#invFormContent", banhji.view.invoiceForm2);
 				}
-				self.lineDS.filter({ field:"transaction_id", value: id });	
+				self.lineDS.filter({ field:"transaction_id", value: transaction_id });	
 			});
 		},
 		cancel 				: function(){
@@ -52971,12 +54630,21 @@
 		customerSetting: new kendo.Layout("#customerSetting", {model: banhji.customerSetting}),
 		job: new kendo.Layout("#job", {model: banhji.job}),
 		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
+		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),
 		invoiceForm1: new kendo.Layout("#invoiceForm1", {model: banhji.invoiceForm}),
 		invoiceForm2: new kendo.Layout("#invoiceForm2", {model: banhji.invoiceForm}),
 		invoiceForm3: new kendo.Layout("#invoiceForm3", {model: banhji.invoiceForm}),
 		invoiceForm4: new kendo.Layout("#invoiceForm4", {model: banhji.invoiceForm}),
-		invoiceForm5: new kendo.Layout("#invoiceForm4", {model: banhji.invoiceForm}),
-		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),
+		invoiceForm5: new kendo.Layout("#invoiceForm5", {model: banhji.invoiceForm}),
+		invoiceForm6: new kendo.Layout("#invoiceForm6", {model: banhji.invoiceForm}),
+		invoiceForm7: new kendo.Layout("#invoiceForm7", {model: banhji.invoiceForm}),
+		invoiceForm8: new kendo.Layout("#invoiceForm8", {model: banhji.invoiceForm}),
+		invoiceForm9: new kendo.Layout("#invoiceForm9", {model: banhji.invoiceForm}),
+		invoiceForm10: new kendo.Layout("#invoiceForm10", {model: banhji.invoiceForm}),
+		invoiceForm11: new kendo.Layout("#invoiceForm11", {model: banhji.invoiceForm}),
+		invoiceForm12: new kendo.Layout("#invoiceForm12", {model: banhji.invoiceForm}),
+		invoiceForm13: new kendo.Layout("#invoiceForm13", {model: banhji.invoiceForm}),
+		invoiceForm14: new kendo.Layout("#invoiceForm14", {model: banhji.invoiceForm}),
 		
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.saleSummaryCustomer}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.saleDetailCustomer}),
