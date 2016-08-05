@@ -110,6 +110,7 @@ class Sales extends REST_Controller {
 					} else {
 						$customers[$fullname]['amount']= floatval($value->amount);
 					}
+					$total += floatval($value->amount)/ floatval($value->rate);
 				}
 			}
 
@@ -193,6 +194,7 @@ class Sales extends REST_Controller {
 		// 	}
 		// }
 
+
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 		$type->where('parent_id', 1)->get();
 
@@ -240,8 +242,23 @@ class Sales extends REST_Controller {
 						'amount' 	=> floatval($value->amount)/floatval($value->rate),
 						'lines' 	=> $lines
 					);
+			//Results
+			$obj->get_paged_iterated($page, $limit);
+
+			$customers = array();
+			if($obj->result_count()>0){
+
+				foreach ($obj as $value) {
+					$customer = $value->contact->get();
+					$fullname = $customer->surname.' '.$customer->name;
+
+					if(isset($customers[$fullname])){
+						$customers[$fullname][]= $value;
+					}else{
+						$customers[$fullname][]= $value;
+					}
+					$total += floatval($value->amount)/ floatval($value->rate);
 				}
-				$total += floatval($value->amount)/floatval($value->rate);
 			}
 		}
 
