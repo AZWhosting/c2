@@ -1677,51 +1677,6 @@
               });
             });
           },
-          showConfirm: function(e){
-            this.setCurrent(e.data);
-            var win = $('#userFormConfirm').kendoWindow({
-              width: "600px",
-              title: e.data,
-              visible: false,
-              modal: true,
-              actions: [
-                  "Close"
-              ]
-            }).data('kendoWindow');
-            win.center().open();
-            $('#userConfirm').click(function() {
-              var userData = {
-                  Username : banhji.users.get('current').username,
-                  Pool : userPool
-              };
-              var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-              cognitoUser.confirmRegistration(banhji.users.get('code'), true, function(err, result) {
-                  if (err) {
-                      alert(err);
-                      return;
-                  }
-                  banhji.users.set('code', '');
-                  banhji.users.get('current').set('is_confirmed', true);
-                  banhji.users.save();
-                  win.close();
-              });
-            });
-          },
-          addUser: function() {
-           this.users.insert(0, {
-              username: '',
-              first_name: '',
-              last_name: '',
-              email: '',
-              mobile: '',
-              profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
-              company: {id: banhji.companyDS.data()[0].id, name:''},
-              role: 2,
-              usertype: 2
-            });
-            this.setCurrent(this.users.at(0));
-            banhji.router.navigate('userlist/new');
-          },
           editProfile: function(e) {
             e.preventDefault();
             banhji.router.navigate('userlist/' + this.get('current').id);
@@ -1795,7 +1750,11 @@
                     var file = fileChooser.files[0];
                     if (file) {
                       // results.innerHTML = '';
-                      var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
+                      var params = {
+                        Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name ,
+                        ContentType: file.type,
+                        Body: file
+                      };
                       bucket.upload(params, function (err, data) {
                         results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
                         var loc = data.Location;
