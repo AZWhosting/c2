@@ -29,7 +29,7 @@
 			  			style="background-color: #555555; color: #ffffff; border-color: #333333; height: 22px;">
 			  	<button type="submit" class="btn btn-inverse" data-bind="click: search"><i class="icon-search"></i></button>
 			</form>
-			<ul class="topnav" id="secondary-menu">
+			<ul class="topnav" id="secondary-menu"> 
 			</ul> 
 			<ul class="topnav pull-right">
 				<li role="presentation" class="dropdown">
@@ -17540,7 +17540,7 @@
                             <span>​​Date</span>
                         </div>
                         <div class="left dotted-ruler" style="width: 57%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.issu"></p>
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
                         </div>
                     </div>
                 </div>
@@ -18311,9 +18311,9 @@
         			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b> +855 23 6666 979</p>
-        			<p><b>Email: </b> info@pro-cg.com</p>
-        			<p><b>Website: </b> www.pro-cg.com</p>
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span> +855 23 6666 979</p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
         	</div>
         	<div class="span12 clear mid-header">
@@ -18331,8 +18331,8 @@
         		</div>
         		<div class="span4" style="float:right;">
         			<p class="form-title">Sale Order</p>
-        			<p><b>Sale Order Date :</b></p>
-        			<p><b>Sale Order Date :</b></p>
+        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
         	<div class="span12 mid-title">
@@ -18446,17 +18446,17 @@
         			<tr>
         				<td style="border:none;" colspan="3"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
-        				<td style="background-color: #eee;"></td>
+        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				<td style="border:none;" colspan="3"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
-        				<td style="background-color: #eee;"></td>
+        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
         			</tr>
         			<tr>
         				<td style="border:none;" colspan="3"></td>
         				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
-        				<td style="background-color: #dce6f2;"></td>
+        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
         	</table>
@@ -18499,9 +18499,9 @@
         			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
-        			<p><b>Tel: </b> +855 23 6666 979</p>
-        			<p><b>Email: </b> info@pro-cg.com</p>
-        			<p><b>Website: </b> www.pro-cg.com</p>
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span> +855 23 6666 979</p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
         		</div>
         	</div>
         	<div class="span12 clear mid-header">
@@ -18519,8 +18519,8 @@
         		</div>
         		<div class="span4" style="float:right;">
         			<p class="form-title">Sale Order</p>
-        			<p><b>Sale Order Date :</b></p>
-        			<p><b>Sale Order Date :</b></p>
+        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
         	<div class="span12 mid-title">
@@ -18634,17 +18634,17 @@
         			<tr style="border-left:none">
         				<td style="border:none;" colspan="3"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
-        				<td style="background-color: #eee;"></td>
+        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				<td style="border:none;" colspan="3"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
-        				<td style="background-color: #eee;"></td>
+        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
         			</tr>
         			<tr>
         				<td style="border:none;" colspan="3"></td>
         				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
-        				<td style="background-color: #dce6f2;"></td>
+        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
         	</table>

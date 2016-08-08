@@ -11133,10 +11133,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td>
-								<h3><a href="#/">Expenses/ Purchase Summary by Supplier</a></h3>
+								<h3><a href="#/expenses_purchase_summary_supplier">Expenses/ Purchase Summary by Supplier</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Suppliers Transaction List</a></h3>								
+								<h3><a href="#/suppliers_transaction_list">Suppliers Transaction List</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -11155,10 +11155,10 @@
 						</tr>
 						<tr>
 							<td >
-								<h3><a href="#/">Expenses/Purchase Detail by Supplier</a></h3>
+								<h3><a href="#/expenses_purchase_detail_supplier">Expenses/Purchase Detail by Supplier</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Deposit Detail by Supplier</a></h3>
+								<h3><a href="#/deposit_detail_supplier">Deposit Detail by Supplier</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -11176,10 +11176,10 @@
 
 						<tr>
 							<td >
-								<h3><a href="#/">Purchase Summary by Product/ Services</a></h3>
+								<h3><a href="#/purchase_summary_product_services">Purchase Summary by Product/ Services</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Open Purchase Order</a></h3>
+								<h3><a href="#/open_purchase_order">Open Purchase Order</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -11196,7 +11196,7 @@
 						</tr>
 						<tr>
 							<td >
-								<h3><a href="#/">Purchase Detail by Product/ Services</a></h3>
+								<h3><a href="#/purchase_detail_product_services">Purchase Detail by Product/ Services</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -11220,10 +11220,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td>
-								<h3><a href="#/">Suppliers Balance Summary</a></h3>
+								<h3><a href="#/suppliers_balance_summary">Suppliers Balance Summary</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Suppliers Balance Detail</a></h3>								
+								<h3><a href="#/suppliers_balance_detail">Suppliers Balance Detail</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -11242,10 +11242,10 @@
 						</tr>
 						<tr>
 							<td >
-								<h3><a href="#/">Payables Aging Summary</a></h3>
+								<h3><a href="#/payables_aging_summary">Payables Aging Summary</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Payable Aging Detail</a></h3>
+								<h3><a href="#/payable_aging_detail">Payable Aging Detail</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -11263,10 +11263,10 @@
 
 						<tr>
 							<td >
-								<h3><a href="#/">List of bills to be paid</a></h3>
+								<h3><a href="#/list_bills_paid">List of bills to be paid</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Bill Payment List</a></h3>
+								<h3><a href="#/bill_payment_list">Bill Payment List</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -11291,10 +11291,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td>
-								<h3><a href="#/">Product/ Service List</a></h3>
+								<h3><a href="#/product_service_list">Product/ Service List</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Supplier List</a></h3>								
+								<h3><a href="#/supplier_list">Supplier List</a></h3>								
 							</td>						
 						</tr>
 						<tr>
