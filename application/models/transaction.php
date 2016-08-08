@@ -42,6 +42,10 @@ class Transaction extends DataMapper {
         'transaction' => array(
             'class' => 'transaction',
             'other_field' => 'reference'
+        ),
+        'attachment' => array(
+            'class' => 'attachment',
+            'other_field' => 'transaction'
         ),		
 		'item_line' => array(
             'class' => 'item_line',

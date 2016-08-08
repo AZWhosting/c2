@@ -28,6 +28,41 @@ body{
     display: none !important;
   }
 }
+.divider {
+    border-top: solid 1px #d8e2e7;
+    margin: 9px 0 11px;
+    padding: 0;
+    height: 0;
+}
+.glyphicon-size{
+    font-size: 25px;
+    cursor: pointer;    
+}
+
+.box-generic {
+    background: #0B0B3B;
+    clear: both;
+    display: inline-block;
+    height: auto !important;
+    padding: 15px;
+    position: relative;
+    width: 100%;
+    text-align: right;
+}
+.box-generic .k-button{
+    box-shadow: none;     
+    border: none;
+    border-radius: 0;
+}
+.box-generic .btn-save{
+    background: #609450;
+    color: #fff;   
+}
+.box-generic .btn-cancel{
+    background: #e7e7e7;
+    color: #333;
+}
+
 
 
 /* Menu */
@@ -101,8 +136,9 @@ body{
 .alert{
     border: none;
 }
-
-
+.box-typical{
+    padding: 15px;
+}
 /* User*/
 .box-typical,
 .profile-card .profile-card-photo img{
@@ -193,6 +229,9 @@ body{
 .profile-info-item table tr:nth-child(2n+1) td {
     background: #F2F2F2;
 }
+.profile-info-item table tr td input{
+    border-radius: 0;
+}
 .profile-info-item{
     padding-left: 0;
 }
@@ -215,7 +254,10 @@ body{
     font-size: 13px;
     padding: 4px 4px 2px 9px;
 }
-
+.profile-info-item.user .dropdown-menu{
+    right: 0;
+    left: -122% !important;
+}
 .user table tr td .btn-group.open .btn.btn-grey, 
 .btn-group.open .btn.dropdown-toggle, 
 .btn-group.open .btn.dropdown-toggle:focus, 
@@ -224,4 +266,38 @@ body{
 .dropdown.open .btn.dropdown-toggle:focus{
     background: #41619b;
     border-color: #41619b;
+}
+.user table tr td .btn.dropdown-toggle,
+.user table tr td .dropdown-menu{
+    border-radius: 0;
+}
+
+
+/*Edit Company*/
+/*.box-typical.edit-company{
+    padding: 15px;
+    display: inline-block;
+    width: 100%;
+}*/
+.edit-company h2{
+    text-align: left;
+}
+.edit-company .edit-table{
+    margin-left: 0;
+    margin-right: 0;
+}
+.edit-company .edit-table table{
+    margin-top: 0;
+}
+.edit-company .edit-table table tr td{
+    background: none;
+}
+.edit-company .edit-table table tr td:first-child {
+    padding-left: 15px;
+    width: 12%;
+}
+.edit-company .edit-table table tr td #exampleSelect,
+.edit-company #user-image,
+.edit-company .edit-table table tr td input{
+    border-radius: 0;
 }
