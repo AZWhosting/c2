@@ -26,800 +26,804 @@
 
     <body class="nav-md">
         <div id="main" class="body">
-            <div class="main_container">
-                <header class="site-header">
-                    <div class="container-fluid">
-                        <a href="<?php echo base_url(); ?>rrd" class="site-logo">
-                            <div class="hidden-xs">
-                                <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">
-                            </div>                        
-                            <img class="hidden-sm hidden-md hidden-lg" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="">
-                        </a>
-
-                        <div class="site-header-content">
-                            <div class="site-header-content-in">
-                                <div class="site-header-shown">
-                
-                                    <div class="dropdown user-menu">
-                                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span style="color:#fff;">somsreypoch@gmail.com</span>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-                                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
-                                        </div>
-                                    </div>
-                                </div><!--.site-header-shown-->
-                            </div><!--site-header-content-in-->
-                        </div><!--.site-header-content-->
-                    </div><!--.container-fluid-->
-                </header><!--.site-header-->
-
-                <!--Dashbaord Admin-->
-                <div class="page-content">
-                    <div class="container" >
-                        <div class="row">
-                            <div class="col-xs-12 col-md-4 col-lg-3">
-                                <section class="box-typical">
-                                    <div class="profile-card">
-                                        <div class="profile-card-photo">
-                                            <img src="<?php echo base_url()?>assets/img/photo-220-1.jpg">
-                                        </div>
-                                        <div class="profile-card-name">
-                                            <span>Sreypoch</span>&nbsp;<span>Som</span>
-                                        </div>
-                                        <div class="profile-card-status">
-                                            Registered Email: <span><a href="mailto:somsreypoch@gmail.com">somsreypoch@gmail.com</a></span>
-                                        </div>
-                                        <div class="profile-card-location">
-                                            Confirm: <span>True</span>
-                                        </div>
-                                        <button type="button" class="btn goto-banhji">BanhJi App</button>                                    
-                                    </div>
-
-                                    <div class="profile-statistic tbl">
-                                        <div class="tbl-row">
-                                            <div class="tbl-cell">
-                                                <b>200</b>
-                                                Assign Module
-                                            </div>
-                                            <div class="tbl-cell">
-                                                <b>1.9M</b>
-                                                Followers
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <ul class="profile-links-list">
-                                        <li class="nowrap">
-                                            <i class="font-icon font-icon-fb-fill"></i>
-                                            <a href="#">facebook.com/example</a>
-                                        </li>
-                                        <li class="nowrap">
-                                            <i class="font-icon font-icon-in-fill"></i>
-                                            <a href="#">linked.in/example</a>
-                                        </li>
-                                        <li class="nowrap">
-                                            <i class="font-icon font-icon-tw-fill"></i>
-                                            <a href="#">twitter.com/example</a>
-                                        </li>                                       
-                                    </ul>
-                                </section>                  
-                            </div>
-
-                            <div class="col-xs-12 col-md-8 col-lg-9">
-
-                                <section class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                        <div class="widget widget-3">
-                                            <div class="widget-head">
-                                                <h4 class="heading">
-                                                    <span class="glyphicon glyphicon-user"><i></i></span>
-                                                    User</h4>
-                                            </div>                                           
-                                            <div class="widget-body alert alert-primary" style="background: #496cad;">                                                
-                                                <div align="center" class="text-large strong" data-bind="text: sale">10</div>
-                                                <a  style="color: #fff;" href="#userlist/new">Add User</a>                                               
-                                            </div>                                           
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                       <div class="widget widget-3">
-                                            <div class="widget-head">
-                                                <h4 class="heading">
-                                                    <span class="glyphicon glyphicon-user"><i></i></span>
-                                                    Module
-                                                </h4>
-                                            </div>                                           
-                                            <div class="widget-body alert" style="color: #333; background: #d9edf7;">                                                
-                                                <div align="center"  class="text-large strong" data-bind="text: sale">10</div>
-                                                <a  href="#" data-bind="click: getModule">Modules/Apps</a>
-                                            </div>                                          
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                        <div class="widget widget-3">
-                                            <div class="widget-head">
-                                                <h4 class="heading">
-                                                    <span class="glyphicon glyphicon-user"><i></i></span>
-                                                    User Join in
-                                                </h4>
-                                            </div>                                          
-                                            <div class="widget-body alert"style="color: #333; background: LightGray">                                                
-                                                <div align="center" class="text-large strong" data-bind="text: sale">10</div>
-                                                <a style="color: #fff;" href="#" data-bind="click: getModule">the last 30 days</a>
-                                            </div>                                           
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <section class="box-typical user-module">
-                                    <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/customers">
-                                                <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
-                                            </a>
-                                            <span><span>Customer</span></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/employees">
-                                                <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
-                                            </a>
-                                            <span><span>Employee</span></span>
-                                        </div>
-                                    </div>
-                                     <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/vendors">
-                                                <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
-                                            </a>
-                                             <span><span>Supplier</span></span>
-                                        </div>
-                                    </div>
-                                     <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/inventories">
-                                                <img title="Inventories" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
-                                            </a>
-                                             <span><span>Inventory</span></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/customers">
-                                                <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Customer">
-                                            </a>
-                                            <span><span>Cash MGT.</span></span>
-                                        </div>
-                                    </div>
-                                     <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/employees">
-                                                <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Employee">
-                                            </a>
-                                            <span><span>Accounting</span></span>
-                                        </div>
-                                    </div>
-                                     <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/vendors">
-                                                <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Vendor">
-                                            </a>
-                                             <span><span>Report</span></span>
-                                        </div>
-                                    </div>
-                                </section> 
-
-                                <section class="tabs-section">
-                                    <div class="tabs-section-nav tabs-section-nav-inline">
-                                        <ul class="nav" role="tablist">
-                                            <li class="nav-item">
-                                                <a class="nav-link active" href="#tabs-4-tab-1" role="tab" data-toggle="tab">
-                                                    Company Info
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#tabs-4-tab-2" role="tab" data-toggle="tab">                                                    
-                                                    Users
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1">
-                                            <header class="box-typical-header-sm">
-                                                General Info                                               
-                                            </header>
-                                            <article class="profile-info-item">
-                                                <table >
-                                                    <tr>
-                                                        <td>Company Name</td>
-                                                        <td>:</td>
-                                                        <td>PCG & Partners</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Email</td>
-                                                        <td>:</td>
-                                                        <td>info@banhji.com</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Address</td>
-                                                        <td>:</td>
-                                                        <td>Parkway Square 1st Floor Room 1.1</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>ZIP Code</td>
-                                                        <td>:</td>
-                                                        <td>54879</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Year Founded</td>
-                                                        <td>:</td>
-                                                        <td>2015</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Country</td>
-                                                        <td>:</td>
-                                                        <td>Cambodia</td>
-                                                    </tr>
-                                                     <tr>
-                                                        <td>Industry</td>
-                                                        <td>:</td>
-                                                        <td>Manufacture of textiles</td>
-                                                    </tr>
-                                                </table>
-                                            </article>
-                                            <header class="box-typical-header-sm">Financial Info</header>
-                                            <article class="profile-info-item">
-                                                <table >
-                                                    <tr>
-                                                        <td>Fiscal Date</td>
-                                                        <td>:</td>
-                                                        <td>12-31</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Base Currency</td>
-                                                        <td>:</td>
-                                                        <td>KHR</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Reporting Currency</td>
-                                                        <td>:</td>
-                                                        <td>USD</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Fiscal Report Date</td>
-                                                        <td>:</td>
-                                                        <td>01-01</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Tax Regime</td>
-                                                        <td>:</td>
-                                                        <td>Small</td>
-                                                    </tr>
-                                                </table>
-                                            </article>
-                                            <button data-bind="click: addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
-                                                Edit
-                                            </button>
-                                        </div>
-
-                                        <div style="overflow-y: hidden;" role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2">
-                                            <article class="profile-info-item user">
-                                                <div class="" style="margin-bottom: 10px;">
-                                                    <button data-bind="click: addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
-                                                        Create user
-                                                    </button>
-                                                    &nbsp;&nbsp;
-                                                    <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: refresh"></i>
-                                                </div>
-                                                <table class="clo-xs-12">
-                                                    <tr>
-                                                        <th>Photo</th>
-                                                        <th>Full Name</th>
-                                                        <th>Email</th>
-                                                        <th>Role</th>
-                                                        <th>Last Login</th>
-                                                        <th></th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="#">
-                                                                <img src="<?php echo base_url()?>assets/img/photo-64-2.jpg" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>Sokdararith Prak</td>
-                                                        <td>rith@banhji.com</td>
-                                                        <td>Admin</td>
-                                                        <td>-</td>
-                                                        <td>
-                                                            <div class="btn-group">
-                                                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    Action
-                                                                </button>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-edit"></span>Edit</a>
-                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Password</a>
-                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>View More</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="#">
-                                                                <img src="<?php echo base_url()?>assets/img/photo-64-2.jpg" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>Sokdararith Prak</td>
-                                                        <td>rith@banhji.com</td>
-                                                        <td>Admin</td>
-                                                        <td>-</td>
-                                                        <td>
-                                                            <div class="btn-group">
-                                                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    Action
-                                                                </button>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-edit"></span>Edit</a>
-                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Password</a>
-                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>View More</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="#">
-                                                                <img src="<?php echo base_url()?>assets/img/photo-64-2.jpg" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>Sokdararith Prak</td>
-                                                        <td>rith@banhji.com</td>
-                                                        <td>Admin</td>
-                                                        <td>-</td>
-                                                        <td>
-                                                           <div class="btn-group">
-                                                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    Action
-                                                                </button>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-edit"></span>Edit</a>
-                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Password</a>
-                                                                    <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>View More</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>                                                                                                    
-                                                </table>
-                                            </article>
-                                        </div>
-                                    </div>
-                                </section>
-                               
-                            </div>
-
-                        </div>                  
-                    </div>
-                </div>
-
-                <!--Dashbaord User-->
-                <div class="page-content">
-                    <div class="container" >
-                        <div class="row">
-                            <div class="col-xs-12 col-md-4 col-lg-3">
-                                <section class="box-typical">
-                                    <div class="profile-card">
-                                        <div class="profile-card-photo">
-                                            <img src="<?php echo base_url()?>assets/img/photo-220-1.jpg">
-                                        </div>
-                                        <div class="profile-card-name">
-                                            <span>Sreypoch</span>&nbsp;<span>Som</span>
-                                        </div>
-                                        <div class="profile-card-status">
-                                            Registered Email: <span><a href="mailto:somsreypoch@gmail.com">somsreypoch@gmail.com</a></span>
-                                        </div>
-                                        <div class="profile-card-location">
-                                            Confirm: <span>True</span>
-                                        </div>                                   
-                                    </div>
-
-                                    <ul class="profile-links-list">
-                                        <li class="nowrap">
-                                            <i class="font-icon font-icon-fb-fill"></i>
-                                            <a href="#">facebook.com/example</a>
-                                        </li>
-                                        <li class="nowrap">
-                                            <i class="font-icon font-icon-in-fill"></i>
-                                            <a href="#">linked.in/example</a>
-                                        </li>
-                                        <li class="nowrap">
-                                            <i class="font-icon font-icon-tw-fill"></i>
-                                            <a href="#">twitter.com/example</a>
-                                        </li>                                       
-                                    </ul>
-                                </section>                  
-                            </div>
-
-                            <div class="col-xs-12 col-md-8 col-lg-9">
-
-                                <section class="box-typical user-module">
-                                    <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/customers">
-                                                <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
-                                            </a>
-                                            <span><span>Customer</span></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/employees">
-                                                <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
-                                            </a>
-                                            <span><span>Employee</span></span>
-                                        </div>
-                                    </div>
-                                     <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/vendors">
-                                                <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
-                                            </a>
-                                             <span><span>Supplier</span></span>
-                                        </div>
-                                    </div>
-                                     <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/inventories">
-                                                <img title="Inventories" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
-                                            </a>
-                                             <span><span>Inventory</span></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/customers">
-                                                <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Customer">
-                                            </a>
-                                            <span><span>Cash MGT.</span></span>
-                                        </div>
-                                    </div>
-                                     <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/employees">
-                                                <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Employee">
-                                            </a>
-                                            <span><span>Accounting</span></span>
-                                        </div>
-                                    </div>
-                                     <div class="col-xs-3 col-md-2 col-lg-2">
-                                        <div>
-                                            <a href="#/vendors">
-                                                <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Vendor">
-                                            </a>
-                                             <span><span>Report</span></span>
-                                        </div>
-                                    </div>
-                                </section> 
-                               
-                            </div>
-
-                        </div>                  
-                    </div>
-                </div>
-
-                <!--Edit Company-->
-                <div class="page-content">
-                    <div class="container" >
-                        <div class="row">
-                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                <section class="box-typical edit-company">
-                                    <div class="hidden-print pull-right">
-                                        <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>                        
-                                    </div>
-                                    <h2>Edit Company Info</h2>
-                                    <div class="divider"></div>
-                                    <header class="box-typical-header-sm">
-                                        General Info                                               
-                                    </header>
-                                    <article class="profile-info-item edit-table">
-                                        <table >
-                                            <tr>
-                                                <td>Company Name</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="email" class="form-control" id="" value="" >
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Address</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>ZIP Code</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Year Founded</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Country</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                             <tr>
-                                                <td>Industry</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </article>
-                                    <header class="box-typical-header-sm">Financial Info</header>
-                                    <article class="profile-info-item edit-table">
-                                        <table >
-                                            <tr>
-                                                <td>Fiscal Date</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Base Currency</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Reporting Currency</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Fiscal Report Date</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tax Regime</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </article>
-                                    <div class="box-generic">
-                                        <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
-                                            <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
-                                            &nbsp; Save
-                                        </button>
-                                        &nbsp;
-                                        <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
-                                            <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
-                                            &nbsp; Cancel
-                                        </button>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Edit User-->
-                <div class="page-content">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                <section class="box-typical edit-company">
-                                    <div class="hidden-print pull-right">
-                                        <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>                        
-                                    </div>
-                                    <h2>Edit User</h2>
-                                    <div class="divider"></div>
-                                    <div class="col-md-3 col-lg-3">
-                                        <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png" />
-                                        <h3>Profile Picture</h3>
-                                        <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
-                                    </div>
-                                    <article class="col-md-9 col-lg-9 profile-info-item edit-table">
-                                        <table >
-                                            <tr>
-                                                <td>Username *</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>First Name *</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Last Name *</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Password *</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="password" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Phone</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="Email" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Type</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <select id="exampleSelect" class="form-control">
-                                                        <option>Normal</option>
-                                                        <option>Developer</option>
-                                                    </select>                                                  
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </article>                                                                                                         
-                                    <div class="box-generic">
-                                        <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
-                                            <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
-                                            &nbsp; Save
-                                        </button>
-                                        &nbsp;
-                                        <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
-                                            <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
-                                            &nbsp; Cancel
-                                        </button>
-                                    </div>
-                                </section>
-                            </div> 
-                        </div>                      
-                    </div>
-                </div>
-
-                <!--Add User-->
-                <div class="page-content">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                <section class="box-typical edit-company">
-                                    <div class="hidden-print pull-right">
-                                        <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>                        
-                                    </div>
-                                    <h2>Add User</h2>
-                                    <div class="divider"></div>
-                                    <div class="col-md-3 col-lg-3">
-                                        <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png" />
-                                        <h3>Profile Picture</h3>
-                                        <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
-                                    </div>
-                                    <article class="col-md-9 col-lg-9 profile-info-item edit-table">
-                                        <table >
-                                            <tr>
-                                                <td>Username *</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>First Name *</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Last Name *</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Password *</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="password" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Phone</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="Email" class="form-control" id="" placeholder="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Type</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <select id="exampleSelect" class="form-control">
-                                                        <option>Normal</option>
-                                                        <option>Developer</option>
-                                                    </select>                                                  
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </article>                                                                                                         
-                                    <div class="box-generic">
-                                        <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
-                                            <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
-                                            &nbsp; Save
-                                        </button>
-                                        &nbsp;
-                                        <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
-                                            <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
-                                            &nbsp; Cancel
-                                        </button>
-                                    </div>
-                                </section>
-                            </div> 
-                        </div>                      
-                    </div>
-                </div>
-
+            <div class="main_container" id="placeholder">
+              <div id="menu"></div>
+              <div id="container"></div>
             </div>
-        </div>        
+        </div>
+        <script type="text/x-kendo-template" id="header-menu">
+          <header class="site-header">
+              <div class="container-fluid">
+                  <a href="<?php echo base_url(); ?>rrd" class="site-logo">
+                      <div class="hidden-xs">
+                          <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">
+                      </div>
+                      <img class="hidden-sm hidden-md hidden-lg" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="">
+                  </a>
 
+                  <div class="site-header-content">
+                      <div class="site-header-content-in">
+                          <div class="site-header-shown">
+
+                              <div class="dropdown user-menu">
+                                  <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <span style="color:#fff;">somsreypoch@gmail.com</span>
+                                  </button>
+                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
+                                      <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
+                                      <div class="dropdown-divider"></div>
+                                      <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+                                  </div>
+                              </div>
+                          </div><!--.site-header-shown-->
+                      </div><!--site-header-content-in-->
+                  </div><!--.site-header-content-->
+              </div><!--.container-fluid-->
+          </header>
+        </script>
+        <script type="text/x-kendo-template" id="companyDash">
+          <!--Dashbaord Admin-->
+          <div class="page-content">
+              <div class="container" >
+                  <div class="row">
+                      <div class="col-xs-12 col-md-4 col-lg-3">
+                          <section class="box-typical">
+                              <div class="profile-card">
+                                  <div class="profile-card-photo">
+                                      <img src="<?php echo base_url()?>assets/img/photo-220-1.jpg">
+                                  </div>
+                                  <div class="profile-card-name">
+                                      <span>Sreypoch</span>&nbsp;<span>Som</span>
+                                  </div>
+                                  <div class="profile-card-status">
+                                      Registered Email: <span><a href="mailto:somsreypoch@gmail.com">somsreypoch@gmail.com</a></span>
+                                  </div>
+                                  <div class="profile-card-location">
+                                      Confirm: <span>True</span>
+                                  </div>
+                                  <button type="button" class="btn goto-banhji">BanhJi App</button>
+                              </div>
+
+                              <div class="profile-statistic tbl">
+                                  <div class="tbl-row">
+                                      <div class="tbl-cell">
+                                          <b>200</b>
+                                          Assign Module
+                                      </div>
+                                      <div class="tbl-cell">
+                                          <b>1.9M</b>
+                                          Followers
+                                      </div>
+                                  </div>
+                              </div>
+                              <ul class="profile-links-list">
+                                  <li class="nowrap">
+                                      <i class="font-icon font-icon-fb-fill"></i>
+                                      <a href="#">facebook.com/example</a>
+                                  </li>
+                                  <li class="nowrap">
+                                      <i class="font-icon font-icon-in-fill"></i>
+                                      <a href="#">linked.in/example</a>
+                                  </li>
+                                  <li class="nowrap">
+                                      <i class="font-icon font-icon-tw-fill"></i>
+                                      <a href="#">twitter.com/example</a>
+                                  </li>
+                              </ul>
+                          </section>
+                      </div>
+
+                      <div class="col-xs-12 col-md-8 col-lg-9">
+
+                          <section class="row">
+                              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                  <div class="widget widget-3">
+                                      <div class="widget-head">
+                                          <h4 class="heading">
+                                              <span class="glyphicon glyphicon-user"><i></i></span>
+                                              User</h4>
+                                      </div>
+                                      <div class="widget-body alert alert-primary" style="background: #496cad;">
+                                          <div align="center" class="text-large strong" data-bind="text: sale">10</div>
+                                          <a  style="color: #fff;" href="#userlist/new">Add User</a>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                 <div class="widget widget-3">
+                                      <div class="widget-head">
+                                          <h4 class="heading">
+                                              <span class="glyphicon glyphicon-user"><i></i></span>
+                                              Module
+                                          </h4>
+                                      </div>
+                                      <div class="widget-body alert" style="color: #333; background: #d9edf7;">
+                                          <div align="center"  class="text-large strong" data-bind="text: sale">10</div>
+                                          <a  href="#" data-bind="click: getModule">Modules/Apps</a>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                  <div class="widget widget-3">
+                                      <div class="widget-head">
+                                          <h4 class="heading">
+                                              <span class="glyphicon glyphicon-user"><i></i></span>
+                                              User Join in
+                                          </h4>
+                                      </div>
+                                      <div class="widget-body alert"style="color: #333; background: LightGray">
+                                          <div align="center" class="text-large strong" data-bind="text: sale">10</div>
+                                          <a style="color: #fff;" href="#" data-bind="click: getModule">the last 30 days</a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </section>
+
+                          <section class="box-typical user-module">
+                              <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/customers">
+                                          <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+                                      </a>
+                                      <span><span>Customer</span></span>
+                                  </div>
+                              </div>
+                              <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/employees">
+                                          <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
+                                      </a>
+                                      <span><span>Employee</span></span>
+                                  </div>
+                              </div>
+                               <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/vendors">
+                                          <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+                                      </a>
+                                       <span><span>Supplier</span></span>
+                                  </div>
+                              </div>
+                               <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/inventories">
+                                          <img title="Inventories" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+                                      </a>
+                                       <span><span>Inventory</span></span>
+                                  </div>
+                              </div>
+
+                              <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/customers">
+                                          <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Customer">
+                                      </a>
+                                      <span><span>Cash MGT.</span></span>
+                                  </div>
+                              </div>
+                               <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/employees">
+                                          <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Employee">
+                                      </a>
+                                      <span><span>Accounting</span></span>
+                                  </div>
+                              </div>
+                               <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/vendors">
+                                          <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Vendor">
+                                      </a>
+                                       <span><span>Report</span></span>
+                                  </div>
+                              </div>
+                          </section>
+
+                          <section class="tabs-section">
+                              <div class="tabs-section-nav tabs-section-nav-inline">
+                                  <ul class="nav" role="tablist">
+                                      <li class="nav-item">
+                                          <a class="nav-link active" href="#tabs-4-tab-1" role="tab" data-toggle="tab">
+                                              Company Info
+                                          </a>
+                                      </li>
+                                      <li class="nav-item">
+                                          <a class="nav-link" href="#tabs-4-tab-2" role="tab" data-toggle="tab">
+                                              Users
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+
+                              <div class="tab-content">
+                                  <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1">
+                                      <header class="box-typical-header-sm">
+                                          General Info
+                                      </header>
+                                      <article class="profile-info-item">
+                                          <table >
+                                              <tr>
+                                                  <td>Company Name</td>
+                                                  <td>:</td>
+                                                  <td>PCG & Partners</td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Email</td>
+                                                  <td>:</td>
+                                                  <td>info@banhji.com</td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Address</td>
+                                                  <td>:</td>
+                                                  <td>Parkway Square 1st Floor Room 1.1</td>
+                                              </tr>
+                                              <tr>
+                                                  <td>ZIP Code</td>
+                                                  <td>:</td>
+                                                  <td>54879</td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Year Founded</td>
+                                                  <td>:</td>
+                                                  <td>2015</td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Country</td>
+                                                  <td>:</td>
+                                                  <td>Cambodia</td>
+                                              </tr>
+                                               <tr>
+                                                  <td>Industry</td>
+                                                  <td>:</td>
+                                                  <td>Manufacture of textiles</td>
+                                              </tr>
+                                          </table>
+                                      </article>
+                                      <header class="box-typical-header-sm">Financial Info</header>
+                                      <article class="profile-info-item">
+                                          <table >
+                                              <tr>
+                                                  <td>Fiscal Date</td>
+                                                  <td>:</td>
+                                                  <td>12-31</td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Base Currency</td>
+                                                  <td>:</td>
+                                                  <td>KHR</td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Reporting Currency</td>
+                                                  <td>:</td>
+                                                  <td>USD</td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Fiscal Report Date</td>
+                                                  <td>:</td>
+                                                  <td>01-01</td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Tax Regime</td>
+                                                  <td>:</td>
+                                                  <td>Small</td>
+                                              </tr>
+                                          </table>
+                                      </article>
+                                      <button data-bind="click: addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
+                                          Edit
+                                      </button>
+                                  </div>
+
+                                  <div style="overflow-y: hidden;" role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2">
+                                      <article class="profile-info-item user">
+                                          <div class="" style="margin-bottom: 10px;">
+                                              <button data-bind="click: addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
+                                                  Create user
+                                              </button>
+                                              &nbsp;&nbsp;
+                                              <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: refresh"></i>
+                                          </div>
+                                          <table class="clo-xs-12">
+                                              <tr>
+                                                  <th>Photo</th>
+                                                  <th>Full Name</th>
+                                                  <th>Email</th>
+                                                  <th>Role</th>
+                                                  <th>Last Login</th>
+                                                  <th></th>
+                                              </tr>
+                                              <tr>
+                                                  <td>
+                                                      <a href="#">
+                                                          <img src="<?php echo base_url()?>assets/img/photo-64-2.jpg" alt="">
+                                                      </a>
+                                                  </td>
+                                                  <td>Sokdararith Prak</td>
+                                                  <td>rith@banhji.com</td>
+                                                  <td>Admin</td>
+                                                  <td>-</td>
+                                                  <td>
+                                                      <div class="btn-group">
+                                                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                              Action
+                                                          </button>
+                                                          <div class="dropdown-menu">
+                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-edit"></span>Edit</a>
+                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Password</a>
+                                                              <a class="dropdown-item" href="#profile/12"><span class="font-icon font-icon-speed"></span>View More</a>
+                                                          </div>
+                                                      </div>
+                                                  </td>
+                                              </tr>
+                                              <tr>
+                                                  <td>
+                                                      <a href="#">
+                                                          <img src="<?php echo base_url()?>assets/img/photo-64-2.jpg" alt="">
+                                                      </a>
+                                                  </td>
+                                                  <td>Sokdararith Prak</td>
+                                                  <td>rith@banhji.com</td>
+                                                  <td>Admin</td>
+                                                  <td>-</td>
+                                                  <td>
+                                                      <div class="btn-group">
+                                                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                              Action
+                                                          </button>
+                                                          <div class="dropdown-menu">
+                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-edit"></span>Edit</a>
+                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Password</a>
+                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>View More</a>
+                                                          </div>
+                                                      </div>
+                                                  </td>
+                                              </tr>
+                                              <tr>
+                                                  <td>
+                                                      <a href="#">
+                                                          <img src="<?php echo base_url()?>assets/img/photo-64-2.jpg" alt="">
+                                                      </a>
+                                                  </td>
+                                                  <td>Sokdararith Prak</td>
+                                                  <td>rith@banhji.com</td>
+                                                  <td>Admin</td>
+                                                  <td>-</td>
+                                                  <td>
+                                                     <div class="btn-group">
+                                                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                              Action
+                                                          </button>
+                                                          <div class="dropdown-menu">
+                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-edit"></span>Edit</a>
+                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Password</a>
+                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>View More</a>
+                                                          </div>
+                                                      </div>
+                                                  </td>
+                                              </tr>
+                                          </table>
+                                      </article>
+                                  </div>
+                              </div>
+                          </section>
+
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+
+          <!--Edit Company-->
+          <div class="page-content">
+              <div class="container" >
+                  <div class="row">
+                      <div class="col-xs-12 col-md-12 col-lg-12">
+                          <section class="box-typical edit-company">
+                              <div class="hidden-print pull-right">
+                                  <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
+                              </div>
+                              <h2>Edit Company Info</h2>
+                              <div class="divider"></div>
+                              <header class="box-typical-header-sm">
+                                  General Info
+                              </header>
+                              <article class="profile-info-item edit-table">
+                                  <table >
+                                      <tr>
+                                          <td>Company Name</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Email</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="email" class="form-control" id="" value="" >
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Address</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>ZIP Code</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Year Founded</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Country</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                       <tr>
+                                          <td>Industry</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </article>
+                              <header class="box-typical-header-sm">Financial Info</header>
+                              <article class="profile-info-item edit-table">
+                                  <table >
+                                      <tr>
+                                          <td>Fiscal Date</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Base Currency</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Reporting Currency</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Fiscal Report Date</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Tax Regime</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </article>
+                              <div class="box-generic">
+                                  <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
+                                      <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
+                                      &nbsp; Save
+                                  </button>
+                                  &nbsp;
+                                  <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
+                                      <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
+                                      &nbsp; Cancel
+                                  </button>
+                              </div>
+                          </section>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!--Edit User-->
+          <div class="page-content">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-xs-12 col-md-12 col-lg-12">
+                          <section class="box-typical edit-company">
+                              <div class="hidden-print pull-right">
+                                  <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
+                              </div>
+                              <h2>Edit User</h2>
+                              <div class="divider"></div>
+                              <div class="col-md-3 col-lg-3">
+                                  <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png" />
+                                  <h3>Profile Picture</h3>
+                                  <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                              </div>
+                              <article class="col-md-9 col-lg-9 profile-info-item edit-table">
+                                  <table >
+                                      <tr>
+                                          <td>Username *</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>First Name *</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Last Name *</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Password *</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="password" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Phone</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Email</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="Email" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Type</td>
+                                          <td>:</td>
+                                          <td>
+                                              <select id="exampleSelect" class="form-control">
+                                                  <option>Normal</option>
+                                                  <option>Developer</option>
+                                              </select>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </article>
+                              <div class="box-generic">
+                                  <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
+                                      <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
+                                      &nbsp; Save
+                                  </button>
+                                  &nbsp;
+                                  <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
+                                      <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
+                                      &nbsp; Cancel
+                                  </button>
+                              </div>
+                          </section>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!--Add User-->
+          <div class="page-content">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-xs-12 col-md-12 col-lg-12">
+                          <section class="box-typical edit-company">
+                              <div class="hidden-print pull-right">
+                                  <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
+                              </div>
+                              <h2>Add User</h2>
+                              <div class="divider"></div>
+                              <div class="col-md-3 col-lg-3">
+                                  <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png" />
+                                  <h3>Profile Picture</h3>
+                                  <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                              </div>
+                              <article class="col-md-9 col-lg-9 profile-info-item edit-table">
+                                  <table >
+                                      <tr>
+                                          <td>Username *</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>First Name *</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Last Name *</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Password *</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="password" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Phone</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="text" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Email</td>
+                                          <td>:</td>
+                                          <td>
+                                              <input type="Email" class="form-control" id="" placeholder="">
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>Type</td>
+                                          <td>:</td>
+                                          <td>
+                                              <select id="exampleSelect" class="form-control">
+                                                  <option>Normal</option>
+                                                  <option>Developer</option>
+                                              </select>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </article>
+                              <div class="box-generic">
+                                  <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
+                                      <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
+                                      &nbsp; Save
+                                  </button>
+                                  &nbsp;
+                                  <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
+                                      <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
+                                      &nbsp; Cancel
+                                  </button>
+                              </div>
+                          </section>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </script>
+        <script type="text/x-kendo-template" id="user-profile">
+          <!--Dashbaord User-->
+          <div class="page-content">
+              <div class="container" >
+                  <div class="row">
+                      <div class="col-xs-12 col-md-4 col-lg-3">
+                          <section class="box-typical">
+                              <div class="profile-card">
+                                  <div class="profile-card-photo">
+                                      <img src="<?php echo base_url()?>assets/img/photo-220-1.jpg">
+                                  </div>
+                                  <div class="profile-card-name">
+                                      <span>Sreypoch</span>&nbsp;<span>Som</span>
+                                  </div>
+                                  <div class="profile-card-status">
+                                      Registered Email: <span><a href="mailto:somsreypoch@gmail.com">somsreypoch@gmail.com</a></span>
+                                  </div>
+                                  <div class="profile-card-location">
+                                      Confirm: <span>True</span>
+                                  </div>
+                              </div>
+
+                              <ul class="profile-links-list">
+                                  <li class="nowrap">
+                                      <i class="font-icon font-icon-fb-fill"></i>
+                                      <a href="#">facebook.com/example</a>
+                                  </li>
+                                  <li class="nowrap">
+                                      <i class="font-icon font-icon-in-fill"></i>
+                                      <a href="#">linked.in/example</a>
+                                  </li>
+                                  <li class="nowrap">
+                                      <i class="font-icon font-icon-tw-fill"></i>
+                                      <a href="#">twitter.com/example</a>
+                                  </li>
+                              </ul>
+                          </section>
+                      </div>
+
+                      <div class="col-xs-12 col-md-8 col-lg-9">
+
+                          <section class="box-typical user-module">
+                              <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/customers">
+                                          <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+                                      </a>
+                                      <span><span>Customer</span></span>
+                                  </div>
+                              </div>
+                              <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/employees">
+                                          <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
+                                      </a>
+                                      <span><span>Employee</span></span>
+                                  </div>
+                              </div>
+                               <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/vendors">
+                                          <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+                                      </a>
+                                       <span><span>Supplier</span></span>
+                                  </div>
+                              </div>
+                               <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/inventories">
+                                          <img title="Inventories" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+                                      </a>
+                                       <span><span>Inventory</span></span>
+                                  </div>
+                              </div>
+
+                              <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/customers">
+                                          <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Customer">
+                                      </a>
+                                      <span><span>Cash MGT.</span></span>
+                                  </div>
+                              </div>
+                               <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/employees">
+                                          <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Employee">
+                                      </a>
+                                      <span><span>Accounting</span></span>
+                                  </div>
+                              </div>
+                               <div class="col-xs-3 col-md-2 col-lg-2">
+                                  <div>
+                                      <a href="#/vendors">
+                                          <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Vendor">
+                                      </a>
+                                       <span><span>Report</span></span>
+                                  </div>
+                              </div>
+                          </section>
+
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+        </script>
         <!-- cognito -->
         <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
         <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
@@ -1703,8 +1707,9 @@
             });
 
             // index view
-            var layout = new kendo.Layout('#template-layout-page');
-            var index = new kendo.Layout('#template-admin-page', {model: banhji.company});
+            var layout = new kendo.Layout('#placeholder');
+            var menu = new kendo.View('#header-menu');
+            var mainDash = new kendo.Layout('#companyDash');
             var dash = new kendo.View('#template-dashboard', {model: banhji.company});
             var userlist= new kendo.View('#template-userlist-page', {model: banhji.users});
             var userForm= new kendo.View('#template-userlist-form-page', {model: banhji.users});
@@ -1716,7 +1721,7 @@
             var loading = new kendo.View('#template-waiting-page');
             var unthau = new kendo.View('#template-unauth-page');
             var modeleView = new kendo.View('#template-modules-page', { model: banhji.company});
-            var profile = new kendo.View('#template-profile-page', {model: banhji.users});
+            var profile = new kendo.View('#user-profile', {model: banhji.users});
             var assign = new kendo.View('#template-assign-module-to-page', {model: banhji.users});
             // router initization
             banhji.router = new kendo.Router({
@@ -1728,7 +1733,8 @@
                           banhji.company.set('data', banhji.companyDS.data()[0]);
                           banhji.moduleDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
                           banhji.moduleDS.bind('requestEnd', function(e){
-                            layout.render("#main-display");
+                            layout.render("#main");
+                            layout.showIn('#menu', menu);
                            });
                         });
                       }
@@ -1775,110 +1781,8 @@
 
             // start here
             banhji.router.route('/', function() {
-              layout.showIn("#main-display-container", index);
-              index.showIn('#app-placeholder', dash);
-              $("#userChart").kendoChart({
-                title: {
-                    text: "Gross domestic product growth \n /GDP annual %/"
-                },
-                legend: {
-                    position: "bottom"
-                },
-                chartArea: {
-                    background: ""
-                },
-                seriesDefaults: {
-                    type: "line",
-                    style: "smooth"
-                },
-                series: [{
-                    name: "India",
-                    data: [3.907, 7.943, 7.848, 9.284, 9.263, 9.801, 3.890, 8.238, 9.552, 6.855]
-                },{
-                    name: "World",
-                    data: [1.988, 2.733, 3.994, 3.464, 4.001, 3.939, 1.333, -2.245, 4.339, 2.727]
-                },{
-                    name: "Russian Federation",
-                    data: [4.743, 7.295, 7.175, 6.376, 8.153, 8.535, 5.247, -7.832, 4.3, 4.3]
-                },{
-                    name: "Haiti",
-                    data: [-0.253, 0.362, -3.519, 1.799, 2.252, 3.343, 0.843, 2.877, -5.416, 5.590]
-                }],
-                valueAxis: {
-                    labels: {
-                        format: "{0}%"
-                    },
-                    line: {
-                        visible: false
-                    },
-                    axisCrossingValue: -10
-                },
-                categoryAxis: {
-                    categories: [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011],
-                    majorGridLines: {
-                        visible: false
-                    },
-                    labels: {
-                        rotation: "auto"
-                    }
-                },
-                tooltip: {
-                    visible: true,
-                    format: "{0}%",
-                    template: "#= series.name #: #= value #"
-                }
-              });
-              $("#empChart").kendoChart({
-                title: {
-                    text: "Gross domestic product growth \n /GDP annual %/"
-                },
-                legend: {
-                    position: "bottom"
-                },
-                chartArea: {
-                    background: ""
-                },
-                seriesDefaults: {
-                    type: "line",
-                    style: "smooth"
-                },
-                series: [{
-                    name: "India",
-                    data: [3.907, 7.943, 7.848, 9.284, 9.263, 9.801, 3.890, 8.238, 9.552, 6.855]
-                },{
-                    name: "World",
-                    data: [1.988, 2.733, 3.994, 3.464, 4.001, 3.939, 1.333, -2.245, 4.339, 2.727]
-                },{
-                    name: "Russian Federation",
-                    data: [4.743, 7.295, 7.175, 6.376, 8.153, 8.535, 5.247, -7.832, 4.3, 4.3]
-                },{
-                    name: "Haiti",
-                    data: [-0.253, 0.362, -3.519, 1.799, 2.252, 3.343, 0.843, 2.877, -5.416, 5.590]
-                }],
-                valueAxis: {
-                    labels: {
-                        format: "{0}%"
-                    },
-                    line: {
-                        visible: false
-                    },
-                    axisCrossingValue: -10
-                },
-                categoryAxis: {
-                    categories: [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011],
-                    majorGridLines: {
-                        visible: false
-                    },
-                    labels: {
-                        rotation: "auto"
-                    }
-                },
-                tooltip: {
-                    visible: true,
-                    format: "{0}%",
-                    template: "#= series.name #: #= value #"
-                }
-              });
+              layout.showIn("#container", mainDash);
+
             });
 
             banhji.router.route('userlist', function() {
@@ -1922,9 +1826,9 @@
             });
 
             banhji.router.route('profile/:id', function(id) {
-              layout.showIn("#main-display-container", index);
-              layout.showIn("#main-display-container", profile);
-              banhji.users.setCurrent(banhji.users.users.get(id));
+              layout.showIn("#container", profile);
+              // layout.showIn("#main-display-container", profile);
+              // banhji.users.setCurrent(banhji.users.users.get(id));
             });
 
 
@@ -1949,6 +1853,6 @@
                 //   }
                 // });
             });
-        </script>        
+        </script>
     </body>
 </html>
