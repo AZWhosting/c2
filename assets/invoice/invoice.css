@@ -355,3 +355,6 @@ pre {
 	padding-left: 10px;
 	color: #fff;
 }
+.formstyle div a {
+	display: none;
+}

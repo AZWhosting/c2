@@ -90,9 +90,12 @@ class Attachments extends REST_Controller {
 					"item_id" 			=> $value->item_id,
 					"type" 				=> $value->type,
 					"name" 				=> $value->name,
+					"key" 				=> $value->key,
 					"memo" 				=> $value->memo,
 					"url" 				=> $value->url,
-					"deleted"			=> $value->deleted
+					"deleted"			=> $value->deleted,
+					"created_at" 		=> $value->created_at,
+					"updated_at" 		=> $value->updated_at
 				);
 			}
 		}
@@ -113,9 +116,11 @@ class Attachments extends REST_Controller {
 			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
 			isset($value->type) 			? $obj->type 			= $value->type : "";
 			isset($value->name) 			? $obj->name 			= $value->name : "";
+			isset($value->key) 				? $obj->key 			= $value->key : "";
 			isset($value->memo) 			? $obj->memo 			= $value->memo : "";
 			isset($value->url) 				? $obj->url 			= $value->url : "";
 			isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
+			isset($value->created_at) 		? $obj->created_at 		= $value->created_at : "";
 						
 			if($obj->save()){
 				$data["results"][] = array(
@@ -125,9 +130,12 @@ class Attachments extends REST_Controller {
 					"item_id" 			=> $obj->item_id,
 					"type" 				=> $obj->type,
 					"name" 				=> $obj->name,
+					"key" 				=> $obj->key,
 					"memo" 				=> $obj->memo,
 					"url" 				=> $obj->url,
-					"deleted"			=> $obj->deleted
+					"deleted"			=> $obj->deleted,
+					"created_at" 		=> $obj->created_at,
+					"updated_at" 		=> $obj->updated_at
 				);
 			}
 		}
@@ -151,6 +159,7 @@ class Attachments extends REST_Controller {
 			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
 			isset($value->type) 			? $obj->type 			= $value->type : "";
 			isset($value->name) 			? $obj->name 			= $value->name : "";
+			isset($value->key) 				? $obj->key 			= $value->key : "";
 			isset($value->memo) 			? $obj->memo 			= $value->memo : "";
 			isset($value->url) 				? $obj->url 			= $value->url : "";
 			isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
@@ -163,9 +172,12 @@ class Attachments extends REST_Controller {
 					"item_id" 			=> $obj->item_id,
 					"type" 				=> $obj->type,
 					"name" 				=> $obj->name,
+					"key" 				=> $obj->key,
 					"memo" 				=> $obj->memo,
 					"url" 				=> $obj->url,
-					"deleted"			=> $obj->deleted
+					"deleted"			=> $obj->deleted,
+					"created_at" 		=> $obj->created_at,
+					"updated_at" 		=> $obj->updated_at
 				);		
 			}
 		}
