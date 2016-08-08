@@ -12583,7 +12583,7 @@
 
 		        <h2>QUOTE</h2>			    		   
 
-			    <br>				   				
+			    <br>
 					
 				<!-- Upper Part -->
 				<div class="row-fluid">
@@ -27485,10 +27485,11 @@
 	localforage.config({
 		driver: localforage.LOCALSTORAGE,
 		name: 'userData'
-	});
+	});	
 	var banhji = banhji || {};
 	var baseUrl = "<?php echo base_url(); ?>";
-	var apiUrl = baseUrl + 'api/';	
+	var apiUrl = baseUrl + 'api/';
+	banhji.s3 = "https://banhji.s3.amazonaws.com/";	
 	banhji.token = null;
 	banhji.pageLoaded = {};	
 	// Initializing AWS Cognito service
@@ -41108,6 +41109,10 @@
 	        		return false;
 	        	}
 	        });
+
+	        bucket.deleteObject({		      	
+		      	Key: 'ATTACH_19109225155673304_sony-projector.jpg'
+		    });
 	    },
 	    upload 				: function(id){
 	    	var self = this, params = [];
@@ -41128,7 +41133,7 @@
             });
 
             // this.attachmentDS.sync();
-	    },
+	    },	   
 		//Contact
 		loadContact 		: function(id){
 			var self = this;			
@@ -61473,8 +61478,13 @@
 		}
 	});
 
+
 	$(function() {	
 		banhji.router.start();
+
+		
+
+
 		// signout when browser closed
   //       window.addEventListener("beforeunload", function (e) {
   //         // var confirmationMessage = "\o/";

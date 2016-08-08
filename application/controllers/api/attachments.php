@@ -89,6 +89,8 @@ class Attachments extends REST_Controller {
 					"contact_id" 		=> $value->contact_id,
 					"item_id" 			=> $value->item_id,
 					"type" 				=> $value->type,
+					"name" 				=> $value->name,
+					"memo" 				=> $value->memo,
 					"url" 				=> $value->url,
 					"deleted"			=> $value->deleted
 				);
@@ -110,6 +112,8 @@ class Attachments extends REST_Controller {
 			isset($value->contact_id) 		? $obj->contact_id 		= $value->contact_id : "";
 			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
 			isset($value->type) 			? $obj->type 			= $value->type : "";
+			isset($value->name) 			? $obj->name 			= $value->name : "";
+			isset($value->memo) 			? $obj->memo 			= $value->memo : "";
 			isset($value->url) 				? $obj->url 			= $value->url : "";
 			isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
 						
@@ -120,6 +124,8 @@ class Attachments extends REST_Controller {
 					"contact_id" 		=> $obj->contact_id,
 					"item_id" 			=> $obj->item_id,
 					"type" 				=> $obj->type,
+					"name" 				=> $obj->name,
+					"memo" 				=> $obj->memo,
 					"url" 				=> $obj->url,
 					"deleted"			=> $obj->deleted
 				);
@@ -144,6 +150,8 @@ class Attachments extends REST_Controller {
 			isset($value->contact_id) 		? $obj->contact_id 		= $value->contact_id : "";
 			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
 			isset($value->type) 			? $obj->type 			= $value->type : "";
+			isset($value->name) 			? $obj->name 			= $value->name : "";
+			isset($value->memo) 			? $obj->memo 			= $value->memo : "";
 			isset($value->url) 				? $obj->url 			= $value->url : "";
 			isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
 
@@ -154,6 +162,8 @@ class Attachments extends REST_Controller {
 					"contact_id" 		=> $obj->contact_id,
 					"item_id" 			=> $obj->item_id,
 					"type" 				=> $obj->type,
+					"name" 				=> $obj->name,
+					"memo" 				=> $obj->memo,
 					"url" 				=> $obj->url,
 					"deleted"			=> $obj->deleted
 				);		
