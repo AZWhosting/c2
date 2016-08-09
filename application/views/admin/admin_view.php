@@ -47,12 +47,12 @@
 
                               <div class="dropdown user-menu">
                                   <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <span style="color:#fff;">somsreypoch@gmail.com</span>
+                                      <span style="color:#fff;" data-bind="text: currentID.username"></span>
                                   </button>
                                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
                                       <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
                                       <div class="dropdown-divider"></div>
-                                      <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+                                      <a class="dropdown-item" href="#" data-bind="click: logOut"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
                                   </div>
                               </div>
                           </div><!--.site-header-shown-->
@@ -87,7 +87,7 @@
                               <div class="profile-statistic tbl">
                                   <div class="tbl-row">
                                       <div class="tbl-cell">
-                                          <b>200</b>
+                                          <b><span data-bind="text: modules.total"></span></b>
                                           Assign Module
                                       </div>
                                       <div class="tbl-cell">
@@ -124,7 +124,7 @@
                                               User</h4>
                                       </div>
                                       <div class="widget-body alert alert-primary" style="background: #496cad;">
-                                          <div align="center" class="text-large strong" data-bind="text: sale">10</div>
+                                          <div align="center" class="text-large strong"><span data-bind="text: data"></span></div>
                                           <a  style="color: #fff;" href="#userlist/new">Add User</a>
                                       </div>
                                   </div>
@@ -139,7 +139,7 @@
                                           </h4>
                                       </div>
                                       <div class="widget-body alert" style="color: #333; background: #d9edf7;">
-                                          <div align="center"  class="text-large strong" data-bind="text: sale">10</div>
+                                          <div align="center"  class="text-large strong"><span data-bind="text: appSub"></span></div>
                                           <a  href="#" data-bind="click: getModule">Modules/Apps</a>
                                       </div>
                                   </div>
@@ -1114,6 +1114,7 @@
               pageSize: 50
             });
 
+            /* view model*/
             banhji.aws = kendo.observable({
                 password: null,
                 confirm: null,
@@ -1256,6 +1257,23 @@
                     }
                     return cognitoUser;
                 }
+            });
+
+            banhji.profile = kendo.observable({
+              dataSource: banhji.profileDS,
+              logOut    : function() {
+                var userData = {
+                    Username : userPool.getCurrentUser().username,
+                    Pool : userPool
+                };
+                var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+                if(cognitoUser != null) {
+                    cognitoUser.signOut();
+                    window.location.replace("<?php echo base_url(); ?>login");
+                }
+              },
+              currentID : banhji.profileDS.data()[0] || [],
+
             });
 
             banhji.users = kendo.observable({
@@ -1708,8 +1726,8 @@
 
             // index view
             var layout = new kendo.Layout('#placeholder');
-            var menu = new kendo.View('#header-menu');
-            var mainDash = new kendo.Layout('#companyDash');
+            var menu = new kendo.View('#header-menu', {model: banhji.profile});
+            var mainDash = new kendo.Layout('#companyDash', {model: banhji.company});
             var dash = new kendo.View('#template-dashboard', {model: banhji.company});
             var userlist= new kendo.View('#template-userlist-page', {model: banhji.users});
             var userForm= new kendo.View('#template-userlist-form-page', {model: banhji.users});
@@ -1727,20 +1745,16 @@
             banhji.router = new kendo.Router({
                 init: function() {
                     if(userPool.getCurrentUser()) {
+                      layout.render("#main");
                       institute = JSON.parse(localStorage.getItem('userData/user')).institute;
-                      if(!banhji.companyDS.data()[0]) {
-                        banhji.companyDS.fetch(function() {
-                          banhji.company.set('data', banhji.companyDS.data()[0]);
-                          banhji.moduleDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
-                          banhji.moduleDS.bind('requestEnd', function(e){
-                            layout.render("#main");
-                            layout.showIn('#menu', menu);
-                           });
-                        });
-                      }
+                      banhji.profileDS.fetch(function(e){
+                        banhji.profile.set('currentID', banhji.profileDS.data()[0]);
+                        layout.showIn('#menu', menu);
+                      });
+
                       banhji.profileDS.fetch(function(e){
                         // if(banhji.profileDS.data()[0].role == 1) {
-                          kendo.bind('#main', banhji.aws);
+                          // kendo.bind('#main', banhji.aws);
                           if(userPool.getCurrentUser() == null) {
                             window.location.replace(baseUrl + "login");
                           } else {
@@ -1759,15 +1773,10 @@
                               });
                             }
                           }
-                          banhji.users.modules.filter({
-                              field: 'username',
-                              value: userPool.getCurrentUser().username
-                          });
-                        // } else {
-                          // redirect
-                        //   layout.showIn("#main-display-container", unthau);
-                        //   window.location.replace(baseUrl + "demo/");
-                        // }
+                          // banhji.users.modules.filter({
+                          //     field: 'username',
+                          //     value: userPool.getCurrentUser().username
+                          // });
                       });
                     } else {
                       window.location.replace("<?php echo base_url(); ?>login");
@@ -1781,7 +1790,20 @@
 
             // start here
             banhji.router.route('/', function() {
-              layout.showIn("#container", mainDash);
+              if(!banhji.companyDS.data()[0]) {
+                banhji.companyDS.fetch(function() {
+                  banhji.company.set('data', banhji.companyDS.data()[0]);
+                  banhji.moduleDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
+                  banhji.moduleDS.bind('requestEnd', function(e){
+                    if(e.response) {
+                      banhji.company.set('appSub', e.response.results.length || 0);
+                      banhji.company.set('data', banhji.companyDS.data()[0].users);
+                      console.log(banhji.companyDS.data()[0]);
+                    }
+                    layout.showIn("#container", mainDash);
+                   });
+                });
+              }
 
             });
 
