@@ -53,6 +53,9 @@ pre {
 	height: 141px;
 	background: url(img/logo.png) no-repeat left top;	
 }
+.inv1 .logo img {
+	width: 100%;
+}
 .inv1 .cover-name-company {
 	width: 75%;
 	height: 100%;
@@ -81,7 +84,7 @@ pre {
 	text-align: center;
 	color: #000;
 	font-family: 'Moul', cursive;
-	font-size: 14px;
+	font-size: 16px;
 }
 .inv1 .content h2 {
 	font-family: 'Moul', Arial;
@@ -129,6 +132,10 @@ pre {
 	font-size: 10px;
 	font-weight: bold;
 	border: 1px solid #000;
+	text-align: center;
+	color:#000;
+}
+.inv1 thead tr {
 	background-color: rgb(242, 242, 242);
 }
 .inv1 td {
@@ -182,7 +189,7 @@ pre {
 	padding: 1px 2px;
 	font-size: 10px;
 	line-height: 10px;
-	border: 1px solid #000;
+	font-weight: bold;
 	float: left;
 	margin-left: 0.8%;
 }
@@ -203,8 +210,8 @@ pre {
 }
 .formstyle a.form-thumb-active {
 	-webkit-box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
--moz-box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
-box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
+    -moz-box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
+    box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
 	border: none;
 }
 .invhidden {
@@ -217,6 +224,7 @@ box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
 	overflow: hidden;
 	width: 100%;
 	position: relative;
+	padding: 0;
 }
 .colorPalatte .tableRow {
 	margin-top: 5px;
@@ -238,3 +246,112 @@ box-shadow: 1px 1px 3px 0px rgba(133,133,133,1);
 	padding: 10px 20px;
 	background: #eee;
 	font-size: 18px;}
+.tableRow div {
+	height: 30px;
+}
+.formstyle {
+	margin-right: 0;
+}
+.formstyle a {
+	margin-bottom: 10px;
+}
+.formstyle a+a+a+a+a, .formstyle a+a+a+a+a+a+a+a, .formstyle a+a+a+a+a+a+a+a+a+a+a, .formstyle a+a+a+a+a+a+a+a+a+a+a+a+a+a  {
+	clear: none;
+}
+.formstyle a+a+a+a, .formstyle a+a+a+a+a+a+a, .formstyle a+a+a+a+a+a+a+a+a+a, .formstyle a+a+a+a+a+a+a+a+a+a+a+a+a  {
+	clear: both;
+}
+
+.selectType {
+	margin-bottom: 10px;
+	padding-left:0;
+	padding-right: 0;
+}
+.selectType, .selectType .k-dropdown-wrap {
+	border-radius: 0!important;
+}
+.formVisible {
+	display: block;
+}
+.formHidden {
+	display: none;
+}
+.sale-order {
+	padding-bottom: 20px;
+}
+.sale-order h1 {
+	width: 100%;
+	padding: 20px 0;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.sale-order table tbody tr td.span3 {
+	float: none;
+}
+.sale-order .head {
+	border-bottom: 0;
+}
+.sale-order .span6 td, .sale-order .span6 th {
+	text-align: left;
+	padding-left: 15px;
+}
+.quotation {
+	padding: 40px 0;
+}
+.quotation td {
+	text-align: left;
+	padding-left: 10px;
+}
+.pcg {
+	padding: 20px 0;
+}
+.pcg * {
+	font-size: 10px;
+	color: #355176;
+}
+.pcg .mid-header {
+	margin-top: 15px;
+	padding: 20px;
+	background-color: #dce6f2;
+}
+.pcg p.form-title {
+    color: #000;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    margin-top: 16px;
+}
+.pcg .mid-title {
+	background: #10253f;
+	text-align: center;
+	padding: 8px 0;
+}
+.pcg .mid-title div {
+	color: #fff;
+	font-weight: bold;
+}
+.pcg table th {
+	padding: 8px 0;
+}
+.pcg table, .pcg table th, .pcg table td {
+	border-left: none;
+	border-right: none;
+}
+.pcg-border table, .pcg-border table th, .pcg-border table td {
+	border: 1px solid #000;
+}
+.pcg .order-price {
+	background: #10253f;
+	text-align: center;
+	padding: 8px 0;
+}
+.pcg .order-price p {
+	color: #fff;
+	font-size: 8px;
+}
+.pcg .order-price p span {
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 10px;
+	color: #fff;
+}
