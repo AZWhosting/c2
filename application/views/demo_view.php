@@ -6690,7 +6690,7 @@
 						        <!-- // Info Tab content END -->
 
 						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab2-3">							            	
+						        <div class="tab-pane" id="tab3-4">							            	
 						            
 						            <input id="files" name="files"
 						                   type="file"
@@ -14842,7 +14842,7 @@
 							        <!-- // Info Tab content END -->
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab3-5">							            	
+							        <div class="tab-pane" id="tab4-5">							            	
 							            
 							            <input id="files" name="files"
 							                   type="file"
@@ -15413,7 +15413,7 @@
 						        <!-- // Info Tab content END -->
 
 						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab3-5">							            	
+						        <div class="tab-pane" id="tab4-5">							            	
 						            
 						            <input id="files" name="files"
 						                   type="file"
@@ -16001,7 +16001,7 @@
 						        <!-- // Info Tab content END -->
 
 						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab3-5">							            	
+						        <div class="tab-pane" id="tab4-5">							            	
 						            
 						            <input id="files" name="files"
 						                   type="file"
@@ -16947,11 +16947,29 @@
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab4-5">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
 						        <!-- // Attach Tab content END -->						        
 
@@ -17593,11 +17611,29 @@
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab3-4">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
 						        <!-- // Attach Tab content END -->
 
@@ -44561,43 +44597,108 @@
 					this.addEmpty();					
 				}								
 			}
-		},	    			
-		loadObj 			: function(id, is_recurring){
-			var self = this, para = [];
-
-			para.push({ field:"id", value: id });
-
-			if(is_recurring){
-				para.push({ field:"is_recurring", value: 1 });
-			}			
-
-			this.dataSource.query({    			
-				filter: para,
-				page: 1,
-				take: 100
-			}).then(function(e){
-				var view = self.dataSource.view();				
-
-				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
-				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
-		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
-		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));	  			
-								
-				//self.contactDS.filter({ field: "id", value: view[0].contact_id });				
-				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
-				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });				
-				self.depositDS.filter([
-					{ field: "reference_id", value: view[0].id },
-					{ field: "type", value: "Credit" }
-				]);
-
-				self.set("obj", view[0]);
-				self.set("original_total", view[0].amount);
-				self.set("original_credit", view[0].credit);
-
-				self.loadDeposit();				
-			});				
 		},
+		//Upload
+		onSelect 			: function(e){			
+	        // Array with information about the uploaded files
+	        var self = this, 
+	        files = e.files,
+	        transaction_id = 0, 
+	        obj = this.get("obj");
+			
+			if(this.get("isEdit")){
+				transaction_id = obj.id;
+			}
+
+	        // Check the extension of each file and abort the upload if it is not .jpg
+	        $.each(files, function(index, value){	        	
+	            if (value.extension.toLowerCase() || ".jpg"
+	            	|| value.extension.toLowerCase() || ".jpeg"
+	            	|| value.extension.toLowerCase() || ".tiff"
+	            	|| value.extension.toLowerCase() || ".png" 
+	            	|| value.extension.toLowerCase() || ".gif"
+	            	|| value.extension.toLowerCase() || ".pdf"){
+
+	            	var key = 'ATTACH_' + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+
+	            	self.attachmentDS.add({
+	            		transaction_id 	: transaction_id,
+	            		type 			: "Transaction",
+	            		name 			: value.name,
+	            		key 			: key,
+	            		url 			: banhji.s3 + key,
+	            		memo 			: "",
+	            		file 			: value.rawFile,
+	            		created_at 		: new Date()
+	            	});	            			            		            
+	            }
+	        });
+	    },	    
+	    onRemove 			: function(e){
+	        // Array with information about the uploaded files
+	        var self = this, files = e.files;
+	        $.each(this.attachmentDS.data(), function(index, value){
+	        	if(value.name==files[0].name){
+	        		self.attachmentDS.remove(value);
+
+	        		return false;
+	        	}
+	        });
+	    },
+	    removeFile 			: function(e){
+	    	var data = e.data;
+
+	    	if (confirm("Are you sure, you want to delete it?")) {
+	    		this.attachmentDS.remove(data);
+	    	}	    	
+	    },
+	    uploadFile 			: function(){
+	    	var self = this;
+
+	    	$.each(this.attachmentDS.data(), function(index, value){	    		
+		    	if(!value.id){
+			    	var params = { 
+		            	Body: value.file, 
+		            	Key: value.key 
+		            };
+		            bucket.upload(params, function (err, data) {		                
+	                	// console.log(err, data);
+	                	// var url = data.Location;                
+	            	});
+            	}	            
+            });            
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+            	if(e.type=="destroy"){
+	            	if(saved==false){
+	            		saved = true;
+	            	
+	            		var response = e.response.results;
+	            		$.each(response, function(index, value){            			
+		            		var paramz = {
+							  	//Bucket: 'STRING_VALUE', /* required */
+							 	Delete: { /* required */
+								    Objects: [ /* required */
+								      	{
+									        Key: value.data.key /* required */
+								      	}
+								      /* more items */
+								    ]
+							  	}
+							};
+							bucket.deleteObjects(paramz, function(err, data) {
+							  	//console.log(err, data);
+							});
+						});
+	            	}
+            	}
+            });
+
+            //Clear upload files
+            $(".k-upload-files").remove();
+	    },		
 		//Deposit
 		loadDeposit 		: function(){
 			var self = this, obj = this.get("obj");
@@ -44622,8 +44723,9 @@
 				self.set("total_credit", amount);
 			});
 		},		
-		saveDeposit 		: function(transaction_id){
-			var obj = this.get("obj");		
+		saveDeposit 		: function(){			
+			var obj = this.get("obj"),
+			transaction_id = obj.id;				
 
 			this.depositDS.data([]);
 
@@ -45010,6 +45112,43 @@
 		        	        
 		        this.changes();
 	        }	                	        	
+		},
+		//Obj
+		loadObj 			: function(id, is_recurring){
+			var self = this, para = [];
+
+			para.push({ field:"id", value: id });
+
+			if(is_recurring){
+				para.push({ field:"is_recurring", value: 1 });
+			}			
+
+			this.dataSource.query({    			
+				filter: para,
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.dataSource.view();				
+
+				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
+				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
+		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
+		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));	  			
+								
+				//self.contactDS.filter({ field: "id", value: view[0].contact_id });				
+				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
+				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });				
+				self.depositDS.filter([
+					{ field: "reference_id", value: view[0].id },
+					{ field: "type", value: "Credit" }
+				]);
+
+				self.set("obj", view[0]);
+				self.set("original_total", view[0].amount);
+				self.set("original_credit", view[0].credit);
+
+				self.loadDeposit();				
+			});				
 		},					
 		addEmpty 		 	: function(){
 			this.dataSource.data([]);
@@ -45101,12 +45240,17 @@
 		        this.changes();
 	        }		        
 		},							    
-	    transactionSync 	: function(){
+	    objSync 			: function(){
 	    	var dfd = $.Deferred();	        
 
 	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
 		    });
 
 		    return dfd;	    		    	
@@ -45124,12 +45268,45 @@
 				var ref = this.referenceDS.get(obj.reference_id);
 				ref.set("status", 1);
 				this.referenceDS.sync();
-			} 			
-	    	
-	    	if(this.get("isEdit")){
-	    		this.dataSource.sync();
+			}		
 
-	    		//Update credit changes
+	    	//Recurring
+	    	if(this.get("saveRecurring")){
+	    		this.set("saveRecurring", false);
+
+	    		if(this.get("isEdit")){
+		    		if(obj.is_recurring=="0"){ //Add brand new recurring from existing transaction	    			
+		    			this.addNewRecurring();
+
+		    			this.recurringSync()
+						.then(function(data){ //Success
+							$.each(self.recurringLineDS.data(), function(index, value){										
+								value.set("transaction_id", data[0].id);						
+							});
+							self.recurringLineDS.sync();
+
+							return data;			
+						}, function(reason) { //Error
+							$("#ntf1").data("kendoNotification").error(reason);
+						}).then(function(result){
+							$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+							self.addEmpty();
+						});
+		    		}
+		    	}else{
+	    			obj.set("is_recurring", 1);
+		    	}
+	    	}	    	
+
+	    	//Edit Mode
+	    	if(this.get("isEdit")){
+	    		//Upload has changes
+	    		if(this.attachmentDS.hasChanges()){
+		    		obj.set("dirty", true);
+		    	}
+
+	            //Update credit changes
 	    		if(this.get("original_credit") !== obj.credit){	    			
 	    			this.set("original_credit", obj.credit);    			
 
@@ -45137,12 +45314,10 @@
 					deposit.set("amount", obj.credit*-1);
 
 					this.depositDS.sync();
-	    		}	    		
+	    		}
 
 	    		//Update total changes
-	    		if(this.get("original_total") == obj.amount){
-	    			this.lineDS.sync();	    			
-	    		}else{
+	    		if(this.get("original_total") !== obj.amount){		    			
 	    			this.set("original_total", obj.amount);
 
 	    			$.each(this.journalLineDS.data(), function(index, value){										
@@ -45150,30 +45325,54 @@
 					});
 
 					this.addJournal(obj.id);
-	    		}	    		
-	    	}else{
-	    		
-
-	    		//Add brand new transaction
-				this.transactionSync()
-				.then(function(data){
-					//Deposit
-					if(obj.deposit > 0 || obj.credit > 0){
-						self.saveDeposit(data[0].id);
-					}
-
-					//Journal
-					self.addJournal(data[0].id);
-
+	    		}
+			}	    	
+	    	
+    		//Save Obj
+			this.objSync()
+			.then(function(data){ //Success												
+				if(self.get("isEdit")==false){
 					//Item line
 					$.each(self.lineDS.data(), function(index, value){										
 						value.set("transaction_id", data[0].id);										
 					});
-					self.lineDS.sync();																	
-				}).then(function(){					
+
+					//Attachment
+					$.each(self.attachmentDS.data(), function(index, value){
+			    		value.set("transaction_id", data[0].id);
+		            });
+
+		            //Deposit
+					if(obj.deposit > 0 || obj.credit > 0){
+						self.saveDeposit(data[0].id);
+					}
+		        }
+
+		        self.addJournal(data[0].id);				
+		        self.uploadFile();
+				self.lineDS.sync();				
+				
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+
+					window.history.back();
+				}else if(self.get("savePrint")){
+					//Save Print					
+					self.set("savePrint", false);
+
+					banhji.router.navigate("/invoice_form/"+result[0].id);
+				}else{
+					//Save New
 					self.addEmpty();
-				});
-			}
+				}
+			});
 		},
 		delete 					: function(){
 			var self = this, obj = this.get("obj");
@@ -64552,4 +64751,4 @@
 		// 	var cognitoUser = userPool.getCurrentUser();
 	 //        if(cognitoUser !== null)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 	});
-	</script>
+</script>
