@@ -1,3 +1,20 @@
+/*.k-animation-container .k-popup.k-list-container{
+  width: 250px !important;
+}
+.k-animation-container+.k-animation-container .k-popup.k-list-container{
+  width: auto;
+}
+.k-list-scroller,
+.k-list-container.k-popup.k-group.k-reset{
+  overflow: visible;
+}
+*/
+
+.testCombo1 .k-animation-container{
+  background: red !important;
+}
+
+
 .k-block, 
 .k-button, 
 .k-textbox, 
