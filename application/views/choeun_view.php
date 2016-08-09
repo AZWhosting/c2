@@ -17409,7 +17409,14 @@
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span4">	
 							<div class="span12">
-								<select class="span12 selectType" id="dropdown" data-role="dropdownlist" data-auto-bind="false" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.type, source: selectType, events:{change: onChange}" ></select>
+								<select class="span12 selectType" 
+									data-role="dropdownlist" 
+									data-value-primitive="true" 
+									data-text-field="name" 
+									data-value-field="id" 
+									data-bind="value: obj.type, 
+												source: selectTypeList, 
+												events:{change: onChange}" ></select>
 							</div>
 							<div class="span12" style="margin-bottom: 10px;">
 								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
@@ -17417,7 +17424,8 @@
 							<div class="span12">
 								<h2 class="btn btn-block btn-primary">Form Style</h2>
 								<div class="row formstyle">
-									<div data-role="listview"
+									<div id="formStyle"
+										 data-role="listview"
 										 data-selectable="true"
 						                 data-template="invoiceCustom-txn-form-template"
 						                 data-bind="source: txnFormDS"
@@ -48393,14 +48401,10 @@
     banhji.invoiceCustom =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
 		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
-		obj 				: null,
+		obj 				: {type: "Quote"},
 		company 			: banhji.institute,
 		isEdit 				: false,
-		onChange			: function(e) {
-								var Index = e.data("kendoDropDownList").value();
-								console.log(Index);
-					        },
-		selectType			: [
+		selectTypeList			: [
 							    { id: "Quote", name: "Quotation" },
 							    { id: "Sale_Order", name: "Sale Order" },
 							    { id: "Deposit", name: "Deposit" },
@@ -48410,13 +48414,17 @@
 							    { id: "GDN", name: "Delivery Note" },
 							    { id: "Sale_Return", name: "Sale Return" }
 							  ]	,
+		onChange			: function(e) {
+								var obj = this.get("obj");
+								this.txnFormDS.filter({ field:"type", value: obj.type });	
+					        },
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
-				
 			}else{	
+				var obj = this.get("obj");
 				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm1);		
 				this.addRowLineDS();
 				if(this.get("isEdit")){
@@ -48427,10 +48435,7 @@
 				}else if(this.dataSource.total()==0){
 					this.addEmpty();					
 				}
-				this.obj.set("type", "Quote");	
-				setTimeout(function(){
-					$('.formstyle a.Quote').css("display","block");
-				},3000);
+				this.txnFormDS.filter({ field:"type", value: obj.type });
 			}
 		},
 		addRowLineDS			: function(e){
@@ -48515,6 +48520,7 @@
 				else tS = '#333';
 				$('.inv1 thead tr th').css({'color': tS});
 				self.addRowLineDS();
+				self.txnFormDS.filter({ field:"type", value: view[0].type });	
 			});	
 
 		},		
@@ -48526,7 +48532,7 @@
 			this.dataSource.insert(0,{				
 				user_id			: banhji.source.user_id,
 				transaction_form_id : 0,
-				type 			: null,
+				type 			: "Quote",
 				name 			: "",
 				color  			: null
 	    	});		

@@ -1400,11 +1400,29 @@
 							        <!-- Attach Tab content -->
 							        <div class="tab-pane" id="tab2-3">							            	
 							            
-							            <input name="files"
+							            <input id="files" name="files"
 							                   type="file"
 							                   data-role="upload"
-							                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-							            
+							                   data-bind="events: { 
+					                   				select: onSelect,
+					                   				remove: onRemove
+							                   }">
+
+							            <table class="table table-bordered">
+									        <thead>
+									            <tr>			                
+									                <th>Name</th>
+									                <th>Memo</th>
+									                <th>Date</th>
+									                <th style="width: 13%;"></th>                			                
+									            </tr> 
+									        </thead>
+									        <tbody data-role="listview" 
+									        		data-template="attachment-list-tmpl" 
+									        		data-auto-bind="false"
+									        		data-bind="source: attachmentDS"></tbody>			        
+									    </table>
+
 							        </div>
 							        <!-- // Attach Tab content END -->
 
@@ -6114,11 +6132,29 @@
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab2-3">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
 						        <!-- // Attach Tab content END -->
 
@@ -6654,13 +6690,31 @@
 						        <!-- // Info Tab content END -->
 
 						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab3-4">							            	
+						        <div class="tab-pane" id="tab2-3">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
 						        <!-- // Attach Tab content END -->
 
@@ -8334,13 +8388,31 @@
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab4-5">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
-						        <!-- // Attach Tab content END -->						        
+						        <!-- // Attach Tab content END -->	        
 
 						        <!-- Recuring Tab content -->
 						        <div class="tab-pane" id="tab5-5">							            	
@@ -8818,11 +8890,29 @@
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab3-4">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
 						        <!-- // Attach Tab content END -->						        
 
@@ -9217,11 +9307,29 @@
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab3-4">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
 						        <!-- // Attach Tab content END -->
 
@@ -9734,11 +9842,29 @@
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab4-5">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
 						        <!-- // Attach Tab content END -->						        
 
@@ -10533,13 +10659,31 @@
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab4-5">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
-						        <!-- // Attach Tab content END -->						        
+						        <!-- // Attach Tab content END -->					        
 
 						        <!-- Recuring Tab content -->
 						        <div class="tab-pane" id="tab5-5">							            	
@@ -13361,11 +13505,29 @@
 							            <!-- Attach Tab content -->
 								        <div class="tab-pane" id="tab4-4">							            	
 								            
-								            <input name="files"
+								            <input id="files" name="files"
 								                   type="file"
 								                   data-role="upload"
-								                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-								            
+								                   data-bind="events: { 
+						                   				select: onSelect,
+						                   				remove: onRemove
+								                   }">
+
+								            <table class="table table-bordered">
+										        <thead>
+										            <tr>			                
+										                <th>Name</th>
+										                <th>Memo</th>
+										                <th>Date</th>
+										                <th style="width: 13%;"></th>                			                
+										            </tr> 
+										        </thead>
+										        <tbody data-role="listview" 
+										        		data-template="attachment-list-tmpl" 
+										        		data-auto-bind="false"
+										        		data-bind="source: attachmentDS"></tbody>			        
+										    </table>
+
 								        </div>
 								        <!-- // Attach Tab content END -->							            								            
 
@@ -14680,13 +14842,31 @@
 							        <!-- // Info Tab content END -->
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab4-5">							            	
+							        <div class="tab-pane" id="tab3-5">							            	
 							            
-							            <input name="files"
+							            <input id="files" name="files"
 							                   type="file"
 							                   data-role="upload"
-							                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-							            
+							                   data-bind="events: { 
+					                   				select: onSelect,
+					                   				remove: onRemove
+							                   }">
+
+							            <table class="table table-bordered">
+									        <thead>
+									            <tr>			                
+									                <th>Name</th>
+									                <th>Memo</th>
+									                <th>Date</th>
+									                <th style="width: 13%;"></th>                			                
+									            </tr> 
+									        </thead>
+									        <tbody data-role="listview" 
+									        		data-template="attachment-list-tmpl" 
+									        		data-auto-bind="false"
+									        		data-bind="source: attachmentDS"></tbody>			        
+									    </table>
+
 							        </div>
 							        <!-- // Attach Tab content END -->						        
 
@@ -15233,13 +15413,31 @@
 						        <!-- // Info Tab content END -->
 
 						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab4-5">							            	
+						        <div class="tab-pane" id="tab3-5">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
 						        <!-- // Attach Tab content END -->						        
 
@@ -15803,13 +16001,31 @@
 						        <!-- // Info Tab content END -->
 
 						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab4-5">							            	
+						        <div class="tab-pane" id="tab3-5">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
 						        <!-- // Attach Tab content END -->						        
 
@@ -16284,11 +16500,29 @@
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab3-4">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
 						        <!-- // Attach Tab content END -->						        
 
@@ -21692,15 +21926,33 @@
 						        <!-- // Memo Tab content END -->
 
 						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab2-3">							            	
-						            
-						            <input name="files"
-						                   type="file"
-						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
-						        </div>
-						        <!-- // Attach Tab content END -->
+							        <div class="tab-pane" id="tab2-3">							            	
+							            
+							            <input id="files" name="files"
+							                   type="file"
+							                   data-role="upload"
+							                   data-bind="events: { 
+					                   				select: onSelect,
+					                   				remove: onRemove
+							                   }">
+
+							            <table class="table table-bordered">
+									        <thead>
+									            <tr>			                
+									                <th>Name</th>
+									                <th>Memo</th>
+									                <th>Date</th>
+									                <th style="width: 13%;"></th>                			                
+									            </tr> 
+									        </thead>
+									        <tbody data-role="listview" 
+									        		data-template="attachment-list-tmpl" 
+									        		data-auto-bind="false"
+									        		data-bind="source: attachmentDS"></tbody>			        
+									    </table>
+
+							        </div>
+							        <!-- // Attach Tab content END -->
 
 						        <!-- Recuring Tab content -->
 						        <div class="tab-pane" id="tab3-3">							            	
@@ -22179,11 +22431,29 @@
 							        <!-- Attach Tab content -->
 							        <div class="tab-pane" id="tab2-3">							            	
 							            
-							            <input name="files"
+							            <input id="files" name="files"
 							                   type="file"
 							                   data-role="upload"
-							                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-							            
+							                   data-bind="events: { 
+					                   				select: onSelect,
+					                   				remove: onRemove
+							                   }">
+
+							            <table class="table table-bordered">
+									        <thead>
+									            <tr>			                
+									                <th>Name</th>
+									                <th>Memo</th>
+									                <th>Date</th>
+									                <th style="width: 13%;"></th>                			                
+									            </tr> 
+									        </thead>
+									        <tbody data-role="listview" 
+									        		data-template="attachment-list-tmpl" 
+									        		data-auto-bind="false"
+									        		data-bind="source: attachmentDS"></tbody>			        
+									    </table>
+
 							        </div>
 							        <!-- // Attach Tab content END -->						        
 
@@ -22597,11 +22867,29 @@
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab2-3">							            	
 						            
-						            <input name="files"
+						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
-						                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-						            
+						                   data-bind="events: { 
+				                   				select: onSelect,
+				                   				remove: onRemove
+						                   }">
+
+						            <table class="table table-bordered">
+								        <thead>
+								            <tr>			                
+								                <th>Name</th>
+								                <th>Memo</th>
+								                <th>Date</th>
+								                <th style="width: 13%;"></th>                			                
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+								        		data-template="attachment-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>			        
+								    </table>
+
 						        </div>
 						        <!-- // Attach Tab content END -->						        
 
@@ -28677,7 +28965,11 @@
 	</span>
 </script>
 <script id="item-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=sku# #=name#</span> <span class="pull-right">#=on_hand#</span>	
+	<ul class="comboItem">
+		<li>
+			<span>#=sku# #=name#</span> <span class="pull-right">#=on_hand#</span>
+		</li>
+	</ul>	
 </script>
 <script id="account-list-tmpl" type="text/x-kendo-tmpl">	
 	<span>
@@ -31630,7 +31922,7 @@
 			page:1,
 			pageSize: 100
 		}),		
-		cogsAccountDS		: new kendo.data.DataSource({
+		cogsAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -43256,6 +43548,7 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -43366,6 +43659,107 @@
 		    	obj.set("credit_allowed", creditAllowed, "c");		
 			});				
 		},
+		//Upload
+		onSelect 			: function(e){			
+	        // Array with information about the uploaded files
+	        var self = this, 
+	        files = e.files,
+	        transaction_id = 0, 
+	        obj = this.get("obj");
+			
+			if(this.get("isEdit")){
+				transaction_id = obj.id;
+			}
+
+	        // Check the extension of each file and abort the upload if it is not .jpg
+	        $.each(files, function(index, value){	        	
+	            if (value.extension.toLowerCase() || ".jpg"
+	            	|| value.extension.toLowerCase() || ".jpeg"
+	            	|| value.extension.toLowerCase() || ".tiff"
+	            	|| value.extension.toLowerCase() || ".png" 
+	            	|| value.extension.toLowerCase() || ".gif"
+	            	|| value.extension.toLowerCase() || ".pdf"){
+
+	            	var key = 'ATTACH_' + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+
+	            	self.attachmentDS.add({
+	            		transaction_id 	: transaction_id,
+	            		type 			: "Transaction",
+	            		name 			: value.name,
+	            		key 			: key,
+	            		url 			: banhji.s3 + key,
+	            		memo 			: "",
+	            		file 			: value.rawFile,
+	            		created_at 		: new Date()
+	            	});	            			            		            
+	            }
+	        });
+	    },	    
+	    onRemove 			: function(e){
+	        // Array with information about the uploaded files
+	        var self = this, files = e.files;
+	        $.each(this.attachmentDS.data(), function(index, value){
+	        	if(value.name==files[0].name){
+	        		self.attachmentDS.remove(value);
+
+	        		return false;
+	        	}
+	        });
+	    },
+	    removeFile 			: function(e){
+	    	var data = e.data;
+
+	    	if (confirm("Are you sure, you want to delete it?")) {
+	    		this.attachmentDS.remove(data);
+	    	}	    	
+	    },
+	    uploadFile 			: function(){
+	    	var self = this;
+
+	    	$.each(this.attachmentDS.data(), function(index, value){	    		
+		    	if(!value.id){
+			    	var params = { 
+		            	Body: value.file, 
+		            	Key: value.key 
+		            };
+		            bucket.upload(params, function (err, data) {		                
+	                	// console.log(err, data);
+	                	// var url = data.Location;                
+	            	});
+            	}	            
+            });            
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+            	if(e.type=="destroy"){
+	            	if(saved==false){
+	            		saved = true;
+	            	
+	            		var response = e.response.results;
+	            		$.each(response, function(index, value){            			
+		            		var paramz = {
+							  	//Bucket: 'STRING_VALUE', /* required */
+							 	Delete: { /* required */
+								    Objects: [ /* required */
+								      	{
+									        Key: value.data.key /* required */
+								      	}
+								      /* more items */
+								    ]
+							  	}
+							};
+							bucket.deleteObjects(paramz, function(err, data) {
+							  	//console.log(err, data);
+							});
+						});
+	            	}
+            	}
+            });
+
+            //Clear upload files
+            $(".k-upload-files").remove();
+	    },
 		//Contact
 		loadContact 		: function(id){
 			var self = this;
@@ -43786,19 +44180,61 @@
 		    return dfd;	    		    	
 	    },	    	    
 		save 				: function(){				
-	    	var self = this;    	
+	    	var self = this, obj = this.get("obj");
+
+	    	//Recurring
+	    	if(this.get("saveRecurring")){
+	    		this.set("saveRecurring", false);
+
+	    		if(this.get("isEdit")){
+		    		if(obj.is_recurring=="0"){ //Add brand new recurring from existing transaction	    			
+		    			this.addNewRecurring();
+
+		    			this.recurringSync()
+						.then(function(data){ //Success
+							$.each(self.recurringLineDS.data(), function(index, value){										
+								value.set("transaction_id", data[0].id);						
+							});
+							self.recurringLineDS.sync();
+
+							return data;			
+						}, function(reason) { //Error
+							$("#ntf1").data("kendoNotification").error(reason);
+						}).then(function(result){
+							$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+							self.addEmpty();
+						});
+		    		}
+		    	}else{
+	    			obj.set("is_recurring", 1);
+		    	}
+	    	}
+
+	    	//Upload has changes
+	    	if(this.get("isEdit")){
+		    	if(this.attachmentDS.hasChanges()){
+		    		obj.set("dirty", true);
+		    	}
+	    	}	    	
 	    	
     		//Save Obj
 			this.objSync()
-			.then(function(data){ //Success								
+			.then(function(data){ //Success												
 				if(self.get("isEdit")==false){
 					//Item line
 					$.each(self.lineDS.data(), function(index, value){										
 						value.set("transaction_id", data[0].id);										
 					});
+
+					//Attachment
+					$.each(self.attachmentDS.data(), function(index, value){
+			    		value.set("transaction_id", data[0].id);
+		            });
 				}
 				self.lineDS.sync();
-
+				self.uploadFile();
+				
 				return data;
 			}, function(reason) { //Error
 				$("#ntf1").data("kendoNotification").error(reason);
@@ -43819,7 +44255,7 @@
 					//Save New
 					self.addEmpty();
 				}
-			});
+			});			
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();

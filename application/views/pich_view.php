@@ -14011,7 +14011,7 @@
 								<tr>
 									<td>Customer</td>
 									<td>
-										<input id="cbbContact" name="cbbContact"
+										<input class="testCombo1" id="cbbContact" name="cbbContact"
 											   data-role="combobox"											                    
 							                   data-value-primitive="true"
 							                   data-template="contact-list-tmpl"
@@ -14393,7 +14393,7 @@
 			#:banhji.quote.lineDS.indexOf(data)+1#			
 		</td>		
 		<td>
-			<input id="ccbItem-#:uid#" name="ccbItem-#:uid#"
+			<input class="testCombo" id="test ccbItem-#:uid#" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
@@ -28662,7 +28662,7 @@
 	</span>
 </script>
 <script id="item-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=sku# #=name#</span> <span class="pull-right">#=on_hand#</span>	
+	<span>#=sku# #=name#</span> <span class="pull-right">#=on_hand#</span>
 </script>
 <script id="account-list-tmpl" type="text/x-kendo-tmpl">	
 	<span>
