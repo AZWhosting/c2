@@ -32,12 +32,9 @@ class Sales extends REST_Controller {
 			$data["count"] = 0;
 			$is_pattern = 0;
 			$deleted = 0;
-			$total =0;
+			
 
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
-
-
-
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 			$type->where('parent_id', 1)->get();
@@ -51,6 +48,7 @@ class Sales extends REST_Controller {
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;
 			$customers = array();
+			$total =0;
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
 					$customer = $value->contact->get();
@@ -73,6 +71,8 @@ class Sales extends REST_Controller {
 			}
 
 			//Response Data
+			$data['total'] = $total;
+			$data['count'] = count($customers);
 			$this->response($data, 200);
 	}
 
@@ -139,12 +139,21 @@ class Sales extends REST_Controller {
 					);
 			//Results
 				}
-				}
+			$total += floatval($value->amount)/ floatval($value->rate);
+			}		
+		}
+		foreach ($customers as $key => $value) {
+			$data["results"][] = array(
+				'group' 	=> $key,
+				'amount'	=> $value['amount'],
+				'items' 	=> $value['transactions']
+
+			);
+		}
 		$data['total'] = $total;
 		$data['count'] = count($customers);
 		//Response Data
 		$this->response($data, 200);
-		}
 	}
 
 	function transaction_customer_get() {
