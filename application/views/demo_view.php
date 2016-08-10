@@ -48168,10 +48168,10 @@
 		}
 	});
 	banhji.customerSale = kendo.observable({
-		lang 					: langVM,
+		lang 				: langVM,
 		locale 				: banhji.locale,
 		summarySale 		: dataStore(apiUrl + "sales/summary_customer"),
-		detailSale 		: dataStore(apiUrl + "sales/detail_customer"),
+		detailSale 			: dataStore(apiUrl + "sales/detail_customer"),
 		total 				: 0,
 		count 				: 0,
 		startDate 			: new Date(),
