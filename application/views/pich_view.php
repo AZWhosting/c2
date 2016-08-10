@@ -14011,7 +14011,7 @@
 								<tr>
 									<td>Customer</td>
 									<td>
-										<input class="testCombo1" id="cbbContact" name="cbbContact"
+										<input  id="cbbContact" name="cbbContact"
 											   data-role="combobox"											                    
 							                   data-value-primitive="true"
 							                   data-template="contact-list-tmpl"
@@ -14393,7 +14393,7 @@
 			#:banhji.quote.lineDS.indexOf(data)+1#			
 		</td>		
 		<td>
-			<input class="testCombo" id="test ccbItem-#:uid#" name="ccbItem-#:uid#"
+			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
@@ -14456,7 +14456,10 @@
                    			  events:{ change: changes }"
                    style="width: 100%" />			
 		</td>						
-    </tr>   
+    </tr>
+
+
+
 </script>
 <script id="saleOrder" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -60004,6 +60007,7 @@
 			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }
 				});
+
 			}
 
 			vm.pageLoad(id, is_recurring);			

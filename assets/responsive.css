@@ -1,19 +1,9 @@
-/*.k-animation-container .k-popup.k-list-container{
+#cbbContact-list{
   width: 250px !important;
 }
-.k-animation-container+.k-animation-container .k-popup.k-list-container{
-  width: auto;
+#ccbItem-list{
+  width: 300px !important;
 }
-.k-list-scroller,
-.k-list-container.k-popup.k-group.k-reset{
-  overflow: visible;
-}
-*/
-
-.testCombo1 .k-animation-container{
-  background: red !important;
-}
-
 
 .k-block, 
 .k-button, 

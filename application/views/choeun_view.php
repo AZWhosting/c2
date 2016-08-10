@@ -17782,89 +17782,11 @@
 	        			</th>
 	        		</tr>
         		</thead>
-        		<tbody>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        		</tbody>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template3"
+						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
         				<td colspan="4" rowspan="4" style="text-align:left;padding-left:20px;">
@@ -17988,100 +17910,12 @@
 	        			</th>
 	        		</tr>
         		</thead>
-        		<tbody>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        		</tbody>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template4"
+						data-bind="source: lineDS">
         		<tfoot>
-        			
         			<tr>
         				<td style="text-align:right;padding-right:10px;" colspan="7"><b>Total</b></td>
         				<td></td>
@@ -18360,96 +18194,11 @@
         				<th width="80">Total</th>
         			</tr>
         		</thead>
-        		<tbody>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        		</tbody>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template6"
+						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
         				<td style="border:none;" colspan="3"></td>
@@ -18548,96 +18297,11 @@
         				<th width="80">Total</th>
         			</tr>
         		</thead>
-        		<tbody>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        		</tbody>
+        		<tbody id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template6"
+						data-bind="source: lineDS">
         		<tfoot>
         			<tr style="border-left:none">
         				<td style="border:none;" colspan="3"></td>
@@ -18736,85 +18400,11 @@
         				<th width="100">Total</th>
         			</tr>
         		</thead>
-        		<tbody>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        		</tbody>
+        		<tbody id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template8"
+						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
         				<td style="border:none;" colspan="2"></td>
@@ -18880,8 +18470,8 @@
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
         			<p class="form-title" style="margin-bottom: 15px;">Sale Order</p>
-        			<p><b>Sale Order Date :</b></p>
-        			<p><b>Sale Order Date :</b></p>
+        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         			<div class="span12 main-color order-price"><p>TOTAL ORDER <span>$500,000.00</span></p></div>
         		</div>
         		<div class="span3" style="margin-right: 26px;">
@@ -18913,85 +18503,11 @@
         				<th width="100">Total</th>
         			</tr>
         		</thead>
-        		<tbody>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        		</tbody>
+        		<tbody id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template8"
+						data-bind="source: lineDS">
         		<tfoot>
         			<tr style="border-left:none">
         				<td style="border:none;" colspan="2"></td>
@@ -19086,96 +18602,11 @@
         				<th width="80">Total</th>
         			</tr>
         		</thead>
-        		<tbody>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        		</tbody>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template10"
+						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
         				<td style="border:none;" colspan="3"></td>
@@ -19265,96 +18696,11 @@
         				<th width="80">Total</th>
         			</tr>
         		</thead>
-        		<tbody>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        		</tbody>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template10"
+						data-bind="source: lineDS">
         		<tfoot>
         			<tr style="border-left:0">
         				<td style="border:none;" colspan="3"></td>
@@ -19441,85 +18787,11 @@
         				<th width="100">Total</th>
         			</tr>
         		</thead>
-        		<tbody>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        		</tbody>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template12"
+						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
         				<td style="border:none;" colspan="2"></td>
@@ -19606,85 +18878,11 @@
         				<th width="100">Total</th>
         			</tr>
         		</thead>
-        		<tbody>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td style="background-color: #eee;"></td>
-        			</tr>
-        		</tbody>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template12"
+						data-bind="source: lineDS">
         		<tfoot style="border-left:none;">
         			<tr>
         				<td style="border:none;" colspan="2"></td>
@@ -19941,7 +19139,7 @@
     </div>
 </script>
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
-	<a class="span4 #= type #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
+	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
     	<img src="<?php echo base_url(); ?>assets/invoice/img/#= image_url #.jpg" alt="#: name # image" />
     </a>
 </script>
@@ -19949,6 +19147,67 @@
 	<tr>
 		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
 		<td>#= description#</td>
+		<td>#= quantity#</td>
+		<td>#= price#</td>
+		<td>#= amount#</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template3" type="text/x-kendo-template">
+	<tr>
+		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
+		<td>#= description#</td>
+		<td></td>
+		<td></td>
+		<td>#= quantity#</td>
+		<td>#= price#</td>
+		<td>#= amount#</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template4" type="text/x-kendo-template">
+	<tr>
+		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
+		<td></td>
+		<td>#= description#</td>
+		<td></td>
+		<td></td>
+		<td>#= quantity#</td>
+		<td>#= price#</td>
+		<td>#= amount#</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template6" type="text/x-kendo-template">
+	<tr>
+		<td>&nbsp;</td>
+		<td>#= description#</td>
+		<td></td>
+		<td>#= quantity#</td>
+		<td>#= price#</td>
+		<td>#= amount#</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template8" type="text/x-kendo-template">
+	<tr>
+		<td>#= description#</td>
+		<td></td>
+		<td>#= quantity#</td>
+		<td>#= price#</td>
+		<td>#= amount#</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template10" type="text/x-kendo-template">
+	<tr>
+		<td>&nbsp;</td>
+		<td>#= description#</td>
+		<td></td>
+		<td>#= quantity#</td>
+		<td>#= price#</td>
+		<td>#= amount#</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template12" type="text/x-kendo-template">
+	<tr>
+		<td>#= description#</td>
+		<td>&nbsp;</td>
 		<td>#= quantity#</td>
 		<td>#= price#</td>
 		<td>#= amount#</td>
@@ -48459,25 +47718,23 @@
 			$('.inv1 thead tr th').css({'background-color': e.value, 'color': tS});
 		},
 		selectedForm 		: function(e){
-			var Index = $(e.currentTarget).index();
-			$('.form-thumb-active').removeClass('form-thumb-active');
-			$('.formstyle .span4').eq(Index).addClass('form-thumb-active');
+			var Index = e.data.id;
 			var Active;
 			switch(Index) {
-				case 0: Active = banhji.view.invoiceForm1; break;
-				case 1: Active = banhji.view.invoiceForm2; break;
-				case 2: Active = banhji.view.invoiceForm3; break;
-				case 3: Active = banhji.view.invoiceForm4; break;
-				case 4: Active = banhji.view.invoiceForm5; break;
-				case 5: Active = banhji.view.invoiceForm6; break;
-				case 6: Active = banhji.view.invoiceForm7; break;
-				case 7: Active = banhji.view.invoiceForm8; break;
-				case 8: Active = banhji.view.invoiceForm9; break;
-				case 9: Active = banhji.view.invoiceForm10; break;
-				case 10: Active = banhji.view.invoiceForm11; break;
-				case 11: Active = banhji.view.invoiceForm12; break;
-				case 12: Active = banhji.view.invoiceForm13; break;
-				case 13: Active = banhji.view.invoiceForm14; break;
+				case 1: Active = banhji.view.invoiceForm1; break;
+				case 2: Active = banhji.view.invoiceForm2; break;
+				case 3: Active = banhji.view.invoiceForm3; break;
+				case 4: Active = banhji.view.invoiceForm4; break;
+				case 5: Active = banhji.view.invoiceForm5; break;
+				case 6: Active = banhji.view.invoiceForm6; break;
+				case 7: Active = banhji.view.invoiceForm7; break;
+				case 8: Active = banhji.view.invoiceForm8; break;
+				case 9: Active = banhji.view.invoiceForm9; break;
+				case 10: Active = banhji.view.invoiceForm10; break;
+				case 11: Active = banhji.view.invoiceForm11; break;
+				case 12: Active = banhji.view.invoiceForm12; break;
+				case 13: Active = banhji.view.invoiceForm13; break;
+				case 14: Active = banhji.view.invoiceForm14; break;
 			}
 
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);	
@@ -48514,6 +47771,7 @@
 					case 13: Active = banhji.view.invoiceForm13; break;
 					case 14: Active = banhji.view.invoiceForm14; break;
 				}
+				console.log(Active);
 				banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 				var Color = view[0].color, tS = '';
 				if(Color == '#000000' || Color =='#1f497d') tS = '#fff'; 
