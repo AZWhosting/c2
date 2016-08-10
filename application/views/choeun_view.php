@@ -17502,7 +17502,7 @@
                 <div class="clear">
                 	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
                     <pre>Address      </pre>
-                    <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: obj.contact[0].phone"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: company.phone"></span></pre>
                     <pre>Telephone N<sup>o</sup></pre>
                 </div>
             </div>
@@ -17519,7 +17519,7 @@
                             <span>Company name / Customer</span>
                         </div>
                         <div class="left dotted-ruler" style="width: 62%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].company"></p>
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].name"></p>
                         </div>
                     </div>
                     <div class="clear">
@@ -17606,7 +17606,7 @@
                 <div class="clear">
                 	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
                     <pre>Address      </pre>
-                    <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: obj.contact[0].phone"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: company.phone"></span></pre>
                     <pre>Telephone N<sup>o</sup></pre>
                 </div>
             </div>
@@ -17623,7 +17623,7 @@
                             <span>Company name / Customer</span>
                         </div>
                         <div class="left dotted-ruler" style="width: 42%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].company"></p>
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].name"></p>
                         </div>
                     </div>
                     <div class="clear">
@@ -17738,15 +17738,19 @@
         		<tbody>
         			<tr style="height: 100px">
         				<td colspan="2">
+        					<p><span data-bind="text: obj.contact[0].name"></span><br>
+        					<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
 	        			</td>
 	        			<td colspan="2">
+	        				<p><span data-bind="text: obj.contact[0].name"></span><br>
+        					<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
 	        			</td>
         			</tr>
         			<tr>
 	        			<td class="span3">TERM OF PAYMENT</td>
 	        			<td class="span3"></td>
 	        			<td class="span3">DELIVERY DATE</td>
-	        			<td class="span3"></td>
+	        			<td class="span3" data-bind="text: obj.issued_date"></td>
 	        		</tr>
 	        		<tr>
 	        			<td class="span3">MODE OF PAYMENT</td>
@@ -17759,25 +17763,25 @@
         	<table class="span12" style="margin-top: 5px;">
         		<thead>
         			<tr>
-	        			<th>
+	        			<th data-bind="style: {backgroundColor: obj.color}">
 	        				Item <br>Code
 	        			</th>
-	        			<th>
+	        			<th data-bind="style: {backgroundColor: obj.color}">
 	        				Description
 	        			</th>
-	        			<th width="70">
+	        			<th width="70" data-bind="style: {backgroundColor: obj.color}">
 	        				Required<br>Date
 	        			</th>
-	        			<th width="40">
+	        			<th width="40" data-bind="style: {backgroundColor: obj.color}">
 	        				UM
 	        			</th>
-	        			<th width="40">
+	        			<th width="40" data-bind="style: {backgroundColor: obj.color}">
 	        				QTY
 	        			</th>
-	        			<th width="100">
+	        			<th width="100" data-bind="style: {backgroundColor: obj.color}">
 	        				Unit Price
 	        			</th>
-	        			<th width="70">
+	        			<th width="70" data-bind="style: {backgroundColor: obj.color}">
 	        				Total
 	        			</th>
 	        		</tr>
@@ -17798,11 +17802,11 @@
 							</ol>
         				</td>
         				<td style="text-align:left;padding-left:20px;" colspan="2"><b>SUB TOTAL</b></td>
-        				<td></td>
+        				<td data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				<td style="text-align:left;padding-left:20px;" colspan="2"><b>VAT​(10%) if applicable</b></td>
-        				<td></td>
+        				<td data-bind="text: obj.tax"></td>
         			</tr>
         			<tr>
         				<td style="text-align:left;padding-left:20px;" colspan="2"><b>Other charges</b></td>
@@ -17810,7 +17814,7 @@
         			</tr>
         			<tr>
         				<td style="text-align:left;padding-left:20px;" colspan="2"><b>Total</b></td>
-        				<td></td>
+        				<td data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
         	</table>
@@ -17851,11 +17855,11 @@
 	        			<td width="120">
 	        				<b>Date</b>
 	        			</td>
-	        			<td>&nbsp;</td>
+	        			<td data-bind="text: obj.issued_date"></td>
         			</tr>
         			<tr>
 	        			<td ><b>Quotation Form #</b></td>
-	        			<td></td>
+	        			<td data-bind="text: obj.number"></td>
 	        		</tr>
 	        		<tr>
 	        			<td><b>Requisition #</b></td>
@@ -17863,13 +17867,13 @@
 	        		</tr>
 	        		<tr>
 	        			<td width="150"><b>Customer Name:</b></td>
-	        			<td ></td>
+	        			<td data-bind="text: obj.contact[0].name"></td>
 	        			<td ><b>Date of contact:</b></td>
 	        			<td ></td>
 	        		</tr>
 	        		<tr>
 	        			<td width="150"><b>Contact Information:</b></td>
-	        			<td ></td>
+	        			<td data-bind="text: obj.contact[0].address"></td>
 	        			<td ><b>Time of contact:</b></td>
 	        			<td ></td>
 	        		</tr>
@@ -17884,28 +17888,28 @@
         	<table class="span12" style="margin-top: 5px;">
         		<thead>
         			<tr>
-	        			<th>
+	        			<th data-bind="style: {backgroundColor: obj.color}">
 	        				No
 	        			</th>
-	        			<th width="70">
+	        			<th width="70" data-bind="style: {backgroundColor: obj.color}">
 	        				Item<br>Code
 	        			</th>
-	        			<th width="">
+	        			<th width="" data-bind="style: {backgroundColor: obj.color}">
 	        				Description
 	        			</th>
-	        			<th width="30">
+	        			<th width="30" data-bind="style: {backgroundColor: obj.color}">
 
 	        			</th>
-	        			<th width="40">
+	        			<th width="40" data-bind="style: {backgroundColor: obj.color}">
 	        				UM
 	        			</th>
-	        			<th width="40">
+	        			<th width="40" data-bind="style: {backgroundColor: obj.color}">
 	        				QTY
 	        			</th>
-	        			<th width="80">
+	        			<th width="80" data-bind="style: {backgroundColor: obj.color}">
 	        				Unit Price
 	        			</th>
-	        			<th width="70">
+	        			<th width="70" data-bind="style: {backgroundColor: obj.color}">
 	        				Extended<br>Price
 	        			</th>
 	        		</tr>
@@ -17918,7 +17922,7 @@
         		<tfoot>
         			<tr>
         				<td style="text-align:right;padding-right:10px;" colspan="7"><b>Total</b></td>
-        				<td></td>
+        				<td data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
         	</table>
@@ -17962,7 +17966,7 @@
         			</tr>
         			<tr>
 	        			<td ><b>Date</b></td>
-	        			<td></td>
+	        			<td data-bind="text: obj.issued_date"></td>
 	        		</tr>
 	        		<tr>
 	        			<td><b>SO/ CONTRACT #</b></td>
@@ -17970,15 +17974,15 @@
 	        		</tr>
 	        		<tr>
 	        			<td width="90"><b>Name</b></td>
-	        			<td width="80"></td>
+	        			<td width="80" data-bind="text: obj.contact[0].name"></td>
 	        			<td width="90"><b>CODE</b></td>
 	        			<td width="80"></td>
 	        			<td ><b>CUSTOMER<br>INVOICE #</b></td>
-	        			<td ></td>
+	        			<td data-bind="text: obj.number"></td>
 	        		</tr>
 	        		<tr>
 	        			<td ><b>ADDRESS</b></td>
-	        			<td colspan="3"></td>
+	        			<td colspan="3" data-bind="text: obj.contact[0].address"></td>
 	        			<td><b>DELIVERY NOTE #</b></td>
 	        			<td ></td>
 	        		</tr>
@@ -17987,119 +17991,32 @@
         	<table class="span12" style="margin-top: 5px;">
         		<thead>
         			<tr>
-	        			<th rowspan="2" width="70">
+	        			<th rowspan="2" width="70" data-bind="style: {backgroundColor: obj.color}">
 	        				Item<br>Code
 	        			</th>
-	        			<th rowspan="2">
+	        			<th rowspan="2" data-bind="style: {backgroundColor: obj.color}">
 	        				DESCRIPTION
 	        			</th>
-	        			<th rowspan="2">
+	        			<th rowspan="2" data-bind="style: {backgroundColor: obj.color}">
 	        				INSPECTION<br>CRITERIA
 	        			</th>
-	        			<th colspan="5">
+	        			<th colspan="5" data-bind="style: {backgroundColor: obj.color}">
 	        				QUANTITY
 	        			</th>
 	        		</tr>
 	        		<tr>
-	        			<th><b style="font-size:10px">ORDERED</b></th>
-	        			<th><b style="font-size:10px">RECEIVED</b></th>
-	        			<th><b style="font-size:10px">INSPECTED</b></th>
-	        			<th><b style="font-size:10px">ACCEPTED</b></th>
-	        			<th><b style="font-size:10px">REJECTED</b></th>
+	        			<th data-bind="style: {backgroundColor: obj.color}"><b style="font-size:10px">ORDERED</b></th>
+	        			<th data-bind="style: {backgroundColor: obj.color}"><b style="font-size:10px">RECEIVED</b></th>
+	        			<th data-bind="style: {backgroundColor: obj.color}"><b style="font-size:10px">INSPECTED</b></th>
+	        			<th data-bind="style: {backgroundColor: obj.color}"><b style="font-size:10px">ACCEPTED</b></th>
+	        			<th data-bind="style: {backgroundColor: obj.color}"><b style="font-size:10px">REJECTED</b></th>
 	        		</tr>
         		</thead>
-        		<tbody>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        		</tbody>
+        		<tbody id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template5"
+						data-bind="source: lineDS">
         		<tfoot>
         			
         			<tr>
@@ -18161,14 +18078,14 @@
         	<div class="span12 clear mid-header">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<p><span data-bind="text: obj.contact[0].company"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span3">
-        		<b>Delivered to</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<b>Delivered to</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].company"><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -18264,14 +18181,14 @@
         	<div class="span12 clear mid-header">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<p><span data-bind="text: obj.contact[0].company"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span3">
-        		<b>Delivered to</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<b>Delivered to</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].company"><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -18373,14 +18290,14 @@
         		</div>
         		<div class="span3" style="margin-right: 26px;">
         			<b>Customer Information</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<p><span data-bind="text: obj.contact[0].company"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span3">
         			<b>Delivered to</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<p><span data-bind="text: obj.contact[0].company"><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
         			</p>
         		</div>
         	</div>
@@ -18476,14 +18393,14 @@
         		</div>
         		<div class="span3" style="margin-right: 26px;">
         			<b>Customer Information</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<p><span data-bind="text: obj.contact[0].company"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span3">
         			<b>Delivered to</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<p><span data-bind="text: obj.contact[0].company"><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
         			</p>
         		</div>
         	</div>
@@ -18573,8 +18490,8 @@
         	<div class="span12 clear mid-header">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<p><span data-bind="text: obj.contact[0].company"><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
         			</p>
         		</div>
         		<div class="span3">
@@ -18627,9 +18544,9 @@
         	</table>
         	<table class="span12" rules="rows" style="margin-top: 20px;">
         		<tr>
-        			<td width="120">PREPARED BY</td><td width="100"></td>
-        			<td>POSITION</td><td width="100"></td>
-        			<td>DATE</td><td width="80"></td>
+        			<td width="90">PREPARED BY</td><td width="120"></td>
+        			<td width="80">POSITION</td><td width="80"></td>
+        			<td>DATE</td><td width="120"></td>
         		</tr>
         		<tr>
         			<td>REVIEWED BY</td><td></td>
@@ -18667,8 +18584,8 @@
         	<div class="span12 clear mid-header">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<p><span data-bind="text: obj.contact[0].company"><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
         			</p>
         		</div>
         		<div class="span3">
@@ -18767,8 +18684,8 @@
         		</div>
         		<div class="span3">
         			<b>Customer Information</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<p><span data-bind="text: obj.contact[0].company"><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
         			</p>
         		</div>
         	</div>
@@ -18858,8 +18775,8 @@
         		</div>
         		<div class="span3">
         			<b>Customer Information</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<p><span data-bind="text: obj.contact[0].company"><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
         			</p>
         		</div>
         	</div>
@@ -18943,8 +18860,8 @@
         	<div class="span12 clear mid-header" style="background:none;">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p>Reachs Co., Ltd<br>
-        			<b>Address: </b> no. 113, Mao Tse Toung Blvd (245), Parkway Square, 1st Floor, 1230B, Phnom Penh, Cambodia.
+        			<p><span data-bind="text: obj.contact[0].company"><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
         			</p>
         		</div>
         		<div class="span6" style="float:right;">
@@ -18978,136 +18895,11 @@
         				<th>REMARK</th>
         			</tr>
         		</thead>
-        		<tbody>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        			<tr>
-        				<td>&nbsp;</td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        				<td></td>
-        			</tr>
-        		</tbody>
+        		<tbody id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template14"
+						data-bind="source: lineDS">
         	</table>
         	<table class="span12">
         		<tr>
@@ -19157,7 +18949,7 @@
 		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
 		<td>#= description#</td>
 		<td></td>
-		<td></td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
 		<td>#= price#</td>
 		<td>#= amount#</td>
@@ -19175,11 +18967,23 @@
 		<td>#= amount#</td>
 	</tr>
 </script>
-<script id="invoiceForm-lineDS-template6" type="text/x-kendo-template">
+<script id="invoiceForm-lineDS-template5" type="text/x-kendo-template">
 	<tr>
 		<td>&nbsp;</td>
 		<td>#= description#</td>
 		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template6" type="text/x-kendo-template">
+	<tr>
+		<td>&nbsp;</td>
+		<td>#= description#</td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
 		<td>#= price#</td>
 		<td>#= amount#</td>
@@ -19187,8 +18991,8 @@
 </script>
 <script id="invoiceForm-lineDS-template8" type="text/x-kendo-template">
 	<tr>
-		<td>#= description#</td>
-		<td></td>
+		<td>&nbsp;#= description#</td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
 		<td>#= price#</td>
 		<td>#= amount#</td>
@@ -19198,7 +19002,7 @@
 	<tr>
 		<td>&nbsp;</td>
 		<td>#= description#</td>
-		<td></td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
 		<td>#= price#</td>
 		<td>#= amount#</td>
@@ -19206,8 +19010,19 @@
 </script>
 <script id="invoiceForm-lineDS-template12" type="text/x-kendo-template">
 	<tr>
-		<td>#= description#</td>
+		<td>#= description.length>0 ? description: "&nbsp;"#</td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td>#= quantity#</td>
+		<td>#= price#</td>
+		<td>#= amount#</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template14" type="text/x-kendo-template">
+	<tr>
 		<td>&nbsp;</td>
+		<td></td>
+		<td>#= description#</td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
 		<td>#= price#</td>
 		<td>#= amount#</td>
@@ -47660,7 +47475,7 @@
     banhji.invoiceCustom =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
 		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
-		obj 				: {type: "Quote"},
+		obj 				: {type: "Quote", contact: []},
 		company 			: banhji.institute,
 		isEdit 				: false,
 		selectTypeList			: [
@@ -47705,8 +47520,9 @@
 					description : '',
 					quantity 	: '',
 					price 		: '',
-					amount 		: ''
-
+					amount 		: '',
+					description : '',
+					item_prices : []
 		    	});	
 		    }
 		},
@@ -47852,7 +47668,7 @@
 		            '<head>' +
 		            '<meta charset="utf-8" />' +
 		            '<title></title>' +
-		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" /> <link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" /> ' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" /> <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css"> <link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" /> ' +
 		            '<style>' +
 		            'html { font: 11pt sans-serif; }' +
 		            '.k-grid { border-top-width: 0; }' +
@@ -47928,11 +47744,11 @@
 			}).then(function(e){
 				var view = self.dataSource.view();				
 				self.set("obj", view[0]);
-				self.loadObjTemplate(view[0].transaction_template_id, id);				
-			});
-				
+				self.loadObjTemplate(view[0].transaction_template_id, id);		
+				console.log(self.lineDS.data().length);		
+			});	
 		},
-		loadObjTemplate 			: function(id, transaction_id){
+		loadObjTemplate 		: function(id, transaction_id){
 			var self = this, obj = this.get('obj');					
 
 			this.txnTemplateDS.query({    			
@@ -47941,9 +47757,7 @@
 				take: 100
 			}).then(function(e){
 				var view = self.txnTemplateDS.view(), Index = parseInt(view[0].transaction_form_id), Active;
-				
 				obj.set("color", view[0].color);
-				console.log(Index);
 				switch(Index) {
 					case 1: Active = banhji.view.invoiceForm1; break;
 					case 2: Active = banhji.view.invoiceForm2; break;
@@ -47961,7 +47775,7 @@
 					case 14: Active = banhji.view.invoiceForm14; break;
 				}
 				banhji.view.invoiceForm.showIn('#invFormContent', Active);
-				self.lineDS.filter({ field:"transaction_id", value: transaction_id });	
+				self.lineDS.filter({ field:"transaction_id", value: transaction_id });
 			});
 		},
 		cancel 				: function(){

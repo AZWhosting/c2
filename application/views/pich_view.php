@@ -14026,7 +14026,7 @@
 								</tr>																															
 							</table>
 
-							<div class="strong" style="width: 100%; padding: 10px;" align="center"
+							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 								data-bind="style: { backgroundColor: amtDueColor}">
 								<div align="left">AMOUNT QUOTED</div>
 								<h2 data-bind="text: total" align="right"></h2>
@@ -14447,7 +14447,7 @@
 			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
-			<input id="ccbTaxItem-#:uid#" name="ccbTaxItem-#:uid#"
+			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 				   data-role="combobox"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -14457,10 +14457,8 @@
                    style="width: 100%" />			
 		</td>						
     </tr>
-
-
-
 </script>
+
 <script id="saleOrder" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -14515,7 +14513,7 @@
 									</tr>																															
 								</table>
 
-								<div class="strong" style="width: 100%; padding: 10px;" align="center"
+								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: {backgroundColor: amtDueColor}">
 									<div align="left">AMOUNT ORDERED</div>
 									<h2 data-bind="text: total" align="right"></h2>
@@ -14927,7 +14925,7 @@
 			#:banhji.saleOrder.lineDS.indexOf(data)+1#			
 		</td>		
 		<td>
-			<input id="ccbItem-#:uid#" name="ccbItem-#:uid#"
+			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
@@ -14981,7 +14979,7 @@
 			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
-			<input id="ccbTaxItem-#:uid#" name="ccbTaxItem-#:uid#"
+			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 				   data-role="combobox"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -14992,6 +14990,7 @@
 		</td>						
     </tr>   
 </script>
+
 <script id="invoice" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -15047,7 +15046,7 @@
 								</tr>																															
 							</table>
 
-							<div class="strong" style="width: 90%; padding: 10px;" align="center"
+							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 								data-bind="style: {
 								        backgroundColor: bgColor}">
 								<div align="left">AMOUNT DUE</div>
@@ -15487,7 +15486,7 @@
 			#:banhji.invoice.lineDS.indexOf(data)+1#			
 		</td>		
 		<td>
-			<input id="ccbItem-#:uid#" name="ccbItem-#:uid#"
+			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
@@ -15541,7 +15540,7 @@
 			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
-			<input id="ccbTaxItem-#:uid#" name="ccbTaxItem-#:uid#"
+			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 				   data-role="combobox"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -15607,7 +15606,7 @@
 								</tr>																															
 							</table>
 
-							<div class="strong" style="width: 90%; padding: 10px;" align="center"
+							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 								data-bind="style: {
 								        backgroundColor: bgColor}">
 								<div align="left">AMOUNT DUE</div>
@@ -16057,7 +16056,7 @@
 			#:banhji.cashSale.lineDS.indexOf(data)+1#			
 		</td>		
 		<td>
-			<input id="ccbItem-#:uid#" name="ccbItem-#:uid#"
+			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
@@ -16111,7 +16110,7 @@
 			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
-			<input id="ccbTaxItem-#:uid#" name="ccbTaxItem-#:uid#"
+			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 				   data-role="combobox"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -16177,7 +16176,7 @@
 								</tr>																															
 							</table>
 
-							<div class="strong" style="width: 90%; padding: 10px;" align="center"
+							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 								data-bind="style: {
 								        backgroundColor: bgColor}">
 								<div align="left">AMOUNT DUE</div>
@@ -22069,7 +22068,7 @@
 								</div>
 							</div>
 							
-							<div class="strong" style="width: 90%; padding: 10px;" align="center"
+							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 								data-bind="style: {
 								        backgroundColor: bgColor}">
 								<div align="left">AMOUNT RECEIVED</div>

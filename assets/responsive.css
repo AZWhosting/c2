@@ -1,8 +1,28 @@
-#cbbContact-list{
-  width: 250px !important;
+#cbbContact-list,
+#ccbItem-list,
+#cbbCurrency-list,
+#ddlRA-list,
+#ddlDepositAccount-list,
+#ddlTradeDiscount-list,
+#ddlSettlementDiscount-list,
+#currency-list,
+#ddlCurrency-list,
+#ddlAP-list,
+#ddlTradeDiscountAccount-list,
+#ddlPrePaymentAccount-list{
+  width: 350px !important;
 }
-#ccbItem-list{
-  width: 300px !important;
+#ddlMesurement-list{
+  width: 150px !important;
+}
+#ccbTaxItem-list{
+  width: 150px !important;
+  right: 75px;
+}
+
+.topnav .dropdown-menu{
+  width: 250px !important;
+  margin-top: 0;
 }
 
 .k-block, 
@@ -493,7 +513,7 @@ width: 90px !important;
   padding: 5px !important;
 }
 .box-generic .btn.btn-icon.btn-default.glyphicons.remove_2{
-   width: 90px !important;
+   width: 94px !important;
   text-align: right;
   line-height: 15px;
   color: #333;
@@ -504,9 +524,9 @@ width: 90px !important;
 }
 
 
-.btn-group, .btn-group-vertical {
+/*.btn-group, .btn-group-vertical {
   float: left;
-}
+}*/
 .btn-group .dropdown-menu{
   left: 0 !important;
   top: 123% !important;
@@ -525,10 +545,10 @@ width: 90px !important;
   background: #283444 !important;
   border: none !important;
 }
-.btn{
+/*.btn{
   padding: 6px 12px !important;
   border-left: none !important;
-}
+}*/
 
 
 /*----Customer-----*/
@@ -558,10 +578,9 @@ width: 90px !important;
 }
 
 #saveNew{
-  width: 111px !important;
-  text-align: right;
-  line-height: 15px;
+  width: 120px !important;
   color: #fff;
+  padding: 5px 35px;
 }
 .btn.btn-danger{
   width: 90px !important;
@@ -570,22 +589,27 @@ width: 90px !important;
   color: #fff;
 }
 #saveClose{
-  width: 111px !important;
-  text-align: right;
-  line-height: 15px;
+  width: 120px !important;
   color: #fff;
+  padding: 5px 35px;
 }
 #savePrint{
-  width: 111px !important;
-  text-align: right;
-  line-height: 15px;
+  width: 115px !important;
+  padding: 5px 35px;
 }
-
 .btn.btn-icon.btn-warning.glyphicons.remove_2{
-  width: 90px !important;
-  text-align: right;
-  line-height: 15px;
+  width: 94px !important;
+  padding: 5px 35px;
   color: #fff;
+}
+.btn-group .btn.btn-default.dropdown-toggle{
+  padding: 6px 10px !important;
+}
+.span4 .btn.btn-default{
+  padding: 6px 10px !important;
+}
+.k-widget.k-dropdown.k-header > .k-dropdown-wrap.k-state-default{
+  height: 26px;
 }
 .well textarea, .tab-pane textarea, .row-fluid .span5 textarea {
     resize: none;
