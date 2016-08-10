@@ -16724,7 +16724,7 @@
 	</div>
 </script>
 <script id="sale-summary-tmpl" type="text/x-kendo-template">
-	 <tr>
+	<tr>
 		<td>#=customer#</td>
 		<td>#:kendo.toString(amount, "n")#</td>
 	</tr>
@@ -16907,7 +16907,7 @@
 					           data-value-field="value"
 					           data-bind="value: sorter,
 					                      source: sortList,
-																events: {change: dateChange}" />
+										  events: {change: dateChange}" />
 
 					        <input id="sdate" name="sdate"
 										 data-role="datepicker"
@@ -48168,10 +48168,10 @@
 		}
 	});
 	banhji.customerSale = kendo.observable({
-		lang 					: langVM,
+		lang 				: langVM,
 		locale 				: banhji.locale,
 		summarySale 		: dataStore(apiUrl + "sales/summary_customer"),
-		detailSale 		: dataStore(apiUrl + "sales/detail_customer"),
+		detailSale 			: dataStore(apiUrl + "sales/detail_customer"),
 		total 				: 0,
 		count 				: 0,
 		startDate 			: new Date(),
