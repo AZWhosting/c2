@@ -32,7 +32,7 @@ class Sales extends REST_Controller {
 			$data["count"] = 0;
 			$is_pattern = 0;
 			$deleted = 0;
-			
+
 
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 
@@ -140,7 +140,7 @@ class Sales extends REST_Controller {
 			//Results
 				}
 			$total += floatval($value->amount)/ floatval($value->rate);
-			}		
+			}
 		}
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
@@ -170,7 +170,7 @@ class Sales extends REST_Controller {
 
 
 
-	
+
 
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 		$type->where('parent_id', 1)->get();
@@ -189,25 +189,22 @@ class Sales extends REST_Controller {
 			foreach ($obj as $value) {
 				$customer = $value->contact->get();
 				$fullname = $customer->surname.' '.$customer->name;
-				$account  = $value->account->get();
 				$lines = array();
 
 				if(isset($customers["$fullname"])) {
-					$customers["$fullname"]['amount'] += floatval($value->amount);
+					$customers["$fullname"]['amount'] += floatval($value->amount)/floatval($value->rate);
 					$customers["$fullname"]['transactions'][] = array(
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
-						'account' => array('number' => $account->number, 'name' => $account->name),
 						'number' 	=> $value->number,
 						'memo' 		=> $value->memo2,
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
 					);
 				} else {
-					$customers["$fullname"]['amount'] = floatval($value->amount);
+					$customers["$fullname"]['amount'] = floatval($value->amount)/floatval($value->rate);
 					$customers["$fullname"]['transactions'][] = array(
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
-						'account' => array('number' => $account->number, 'name' => $account->name),
 						'number' 	=> $value->number,
 						'memo' 		=> $value->memo2,
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
