@@ -688,7 +688,8 @@ class Transactions extends REST_Controller {
 				   	"additional_applied"=> $value->additional_applied,
 				   	"rate"				=> floatval($value->rate),
 				   	"locale" 			=> $value->locale,				   					   			   	
-				   	"movement" 			=> $value->movement,				   	
+				   	"movement" 			=> $value->movement,
+				   	"required_date"		=> $value->required_date,		   	
 
 				   	"item_prices" 		=> $itemPrice
 				);
@@ -774,6 +775,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->additional_cost)	? $obj->additional_cost  	= $value->additional_cost : "";		   	   	
 		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
+		   	isset($value->required_date)	? $obj->required_date 		= $value->required_date : "";
 
 		   	if($obj->save()){
 			   	$data["results"][] = array(
@@ -798,7 +800,8 @@ class Transactions extends REST_Controller {
 				   	"additional_applied"=> $obj->additional_applied,
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,				   				   	
-				   	"movement" 			=> $obj->movement   	
+				   	"movement" 			=> $obj->movement,
+				   	"required_date"		=> $obj->required_date   	
 			   	);
 		    }
 		}		
@@ -858,6 +861,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->additional_cost)	? $obj->additional_cost  	= $value->additional_cost : "";		   	
 		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
+		   	isset($value->required_date)	? $obj->required_date 		= $value->required_date : "";
 		   
 			if($obj->save()){				
 				//Results
@@ -883,7 +887,8 @@ class Transactions extends REST_Controller {
 				   	"additional_applied"=> $obj->additional_applied,
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,				   				   	
-				   	"movement" 			=> $obj->movement 
+				   	"movement" 			=> $obj->movement,
+				   	"required_date"		=> $obj->required_date 
 				);						
 			}
 		}

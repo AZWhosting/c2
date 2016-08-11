@@ -17471,15 +17471,15 @@
 			        <h2>PREVIEW FORM</h2>
 				    <br>	
 				    <div class="row" style="margin-left:0;">			   				
-						<div class="span10" id="invFormContent" style="border:1px solid #ccc; margin: 0 auto;">	
+						<div class="span10" id="invFormContent" style="border:1px solid #ccc; margin: 0 auto;float:none;padding-bottom:20px;margin-bottom: 30px;">	
 						</div>
 					</div>
 					<!-- Form actions -->
 					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
 						<span id="notification"></span>
 
-						<span id="savePrint" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-						<span id="savePDF" class="btn btn-icon btn-success glyphicons power" data-bind="click: savePDF" style="width: 80px;"><i></i> Save PDF</span>									
+						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 60px;"><i></i> Print</span>
+						<span id="savePDF" class="btn btn-icon btn-success glyphicons edit" data-bind="click: savePDF" style="width: 120px;"><i></i> Save PDF</span>									
 					</div>
 					<!-- // Form actions END -->
 				</div>							
@@ -17556,12 +17556,12 @@
         	<div class="clear">
             	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
                 	<thead>
-                        <tr>
-                            <th data-bind="style: {backgroundColor: obj.color}">ល.រ<br />N<sup>0</sup></th>
-                            <th data-bind="style: {backgroundColor: obj.color}">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-                            <th data-bind="style: {backgroundColor: obj.color}">បរិមាណ<br />Quantity</th>
-                            <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃឯកតា​<br />Unit Price</th>
-                            <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        <tr class="main-color" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
                         </tr>
                     </thead>
                     <tbody style="margin-top: 2px" id="formListView" data-role="listview"
@@ -17665,12 +17665,12 @@
         	<div class="clear inv2">
             	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
                 	<thead>
-                        <tr>
-                            <th data-bind="style: {backgroundColor: obj.color}">ល.រ<br />N<sup>0</sup></th>
-                            <th data-bind="style: {backgroundColor: obj.color}">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-                            <th data-bind="style: {backgroundColor: obj.color}">បរិមាណ<br />Quantity</th>
-                            <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃឯកតា​<br />Unit Price</th>
-                            <th data-bind="style: {backgroundColor: obj.color}">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        <tr class="main-color" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
                         </tr>
                     </thead>
                     <tbody style="margin-top: 2px" id="formListView" data-role="listview"
@@ -17708,7 +17708,7 @@
         </div>
     </div>
 </script>
-<script id="invoiceForm3" type="text/x-kendo-template">
+<!--script id="invoiceForm3" type="text/x-kendo-template">
 	<div class="inv1 sale-order">
     	<div class="head">
         	<h1>Sale Order</h1>
@@ -18055,7 +18055,7 @@
 	        </div>
         </div>
     </div>
-</script>
+</script-->
 <script id="invoiceForm6" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
@@ -18078,14 +18078,14 @@
         	<div class="span12 clear mid-header">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"></span><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
         			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span3">
         			<b>Delivered to</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -18094,7 +18094,7 @@
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
-        	<div class="span12 mid-title">
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span3">TERM OF PAYMENT</div>
         		<div class="span3">MODE OF PAYMENT</div>
         		<div class="span3">DELIVERY DATE</div>
@@ -18129,7 +18129,7 @@
         			</tr>
         			<tr>
         				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
         				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
@@ -18181,14 +18181,14 @@
         	<div class="span12 clear mid-header">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"></span><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
         			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span3">
         			<b>Delivered to</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -18197,7 +18197,7 @@
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
-        	<div class="span12 mid-title">
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span3">TERM OF PAYMENT</div>
         		<div class="span3">MODE OF PAYMENT</div>
         		<div class="span3">DELIVERY DATE</div>
@@ -18232,7 +18232,7 @@
         			</tr>
         			<tr>
         				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
         				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
@@ -18286,22 +18286,22 @@
         			<p class="form-title" style="margin-bottom: 15px;">Sale Order</p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
-        			<div class="span12 main-color order-price"><p>TOTAL ORDER <span>$500,000.00</span></p></div>
+        			<div class="span12 main-color order-price"><p>TOTAL ORDER <span data-bind="text: obj.amount"></span></p></div>
         		</div>
         		<div class="span3" style="margin-right: 26px;">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"></span><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
         			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span3">
         			<b>Delivered to</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         	</div>
-        	<div class="span12 mid-title">
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span3">TERM OF PAYMENT</div>
         		<div class="span3">MODE OF PAYMENT</div>
         		<div class="span3">DELIVERY DATE</div>
@@ -18335,7 +18335,7 @@
         			</tr>
         			<tr>
         				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
         				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
@@ -18389,22 +18389,22 @@
         			<p class="form-title" style="margin-bottom: 15px;">Sale Order</p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
-        			<div class="span12 main-color order-price"><p>TOTAL ORDER <span>$500,000.00</span></p></div>
+        			<div class="span12 main-color order-price"><p>TOTAL ORDER <span data-bind="text: obj.amount"></span></p></div>
         		</div>
         		<div class="span3" style="margin-right: 26px;">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"></span><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
         			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span3">
         			<b>Delivered to</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         	</div>
-        	<div class="span12 mid-title">
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span3">TERM OF PAYMENT</div>
         		<div class="span3">MODE OF PAYMENT</div>
         		<div class="span3">DELIVERY DATE</div>
@@ -18438,7 +18438,7 @@
         			</tr>
         			<tr>
         				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
         				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
@@ -18490,8 +18490,8 @@
         	<div class="span12 clear mid-header">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span3">
@@ -18503,7 +18503,7 @@
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
-        	<div class="span12 mid-title">
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span4">TERM OF PAYMENT</div>
         		<div class="span4">MODE OF PAYMENT</div>
         		<div class="span4">VALIDITY PERIOD</div>
@@ -18537,7 +18537,7 @@
         			</tr>
         			<tr>
         				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
         				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
@@ -18584,8 +18584,8 @@
         	<div class="span12 clear mid-header">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span3">
@@ -18597,7 +18597,7 @@
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
-        	<div class="span12 mid-title">
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span4">TERM OF PAYMENT</div>
         		<div class="span4">MODE OF PAYMENT</div>
         		<div class="span4">VALIDITY PERIOD</div>
@@ -18631,7 +18631,7 @@
         			</tr>
         			<tr>
         				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
         				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
@@ -18680,16 +18680,16 @@
         			<p class="form-title" style="margin-bottom: 15px;">QUOTATION</p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
-        			<div class="span12 main-color order-price"><p>TOTAL ORDER <span>$500,000.00</span></p></div>
+        			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>TOTAL ORDER <span data-bind="text: obj.amount"></span></p></div>
         		</div>
         		<div class="span3">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         	</div>
-        	<div class="span12 mid-title">
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span4">TERM OF PAYMENT</div>
         		<div class="span4">MODE OF PAYMENT</div>
         		<div class="span4">VALIDITY PERIOD</div>
@@ -18722,7 +18722,7 @@
         			</tr>
         			<tr>
         				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
         				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
@@ -18771,16 +18771,16 @@
         			<p class="form-title" style="margin-bottom: 15px;">QUOTATION</p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
-        			<div class="span12 main-color order-price"><p>TOTAL ORDER <span>$500,000.00</span></p></div>
+        			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>TOTAL ORDER <span data-bind="text: obj.amount"></span></p></div>
         		</div>
         		<div class="span3">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         	</div>
-        	<div class="span12 mid-title">
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span4">TERM OF PAYMENT</div>
         		<div class="span4">MODE OF PAYMENT</div>
         		<div class="span4">VALIDITY PERIOD</div>
@@ -18813,7 +18813,7 @@
         			</tr>
         			<tr>
         				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
         				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
@@ -18860,8 +18860,8 @@
         	<div class="span12 clear mid-header" style="background:none;">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].company"><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address">
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         		<div class="span6" style="float:right;">
@@ -18938,94 +18938,93 @@
 <script id="invoiceForm-lineDS-template" type="text/x-kendo-template">
 	<tr>
 		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
-		<td>#= description#</td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td>#= quantity#</td>
-		<td>#= price#</td>
-		<td>#= amount#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template3" type="text/x-kendo-template">
 	<tr>
 		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
-		<td>#= description#</td>
-		<td></td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td style="text-align: left; padding-left: 5px;"></td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td>#= price#</td>
-		<td>#= amount#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template4" type="text/x-kendo-template">
 	<tr>
 		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
-		<td></td>
-		<td>#= description#</td>
+		<td style="text-align: left; padding-left: 5px;"></td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td></td>
 		<td></td>
 		<td>#= quantity#</td>
-		<td>#= price#</td>
-		<td>#= amount#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template5" type="text/x-kendo-template">
 	<tr>
-		<td>&nbsp;</td>
-		<td>#= description#</td>
+		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
-		<td></td>
+		<td style="text-align: right; padding-right: 5px;"></td>
+		<td style="text-align: right; padding-right: 5px;"></td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template6" type="text/x-kendo-template">
 	<tr>
-		<td>&nbsp;</td>
-		<td>#= description#</td>
+		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td>#= price#</td>
-		<td>#= amount#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template8" type="text/x-kendo-template">
 	<tr>
-		<td>&nbsp;#= description#</td>
+		<td style="text-align: left; padding-left: 5px;">&nbsp;#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td>#= price#</td>
-		<td>#= amount#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template10" type="text/x-kendo-template">
 	<tr>
-		<td>&nbsp;</td>
-		<td>#= description#</td>
+		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td>#= price#</td>
-		<td>#= amount#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template12" type="text/x-kendo-template">
 	<tr>
-		<td>#= description.length>0 ? description: "&nbsp;"#</td>
-		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td style="text-align: left; padding-left: 5px;">#= description.length>0 ? description: "&nbsp;"#</td>
+		<td style="text-align: left; padding-left: 5px;">#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td>#= price#</td>
-		<td>#= amount#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td style="background-color: \\#eee;text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template14" type="text/x-kendo-template">
 	<tr>
-		<td>&nbsp;</td>
-		<td></td>
-		<td>#= description#</td>
+		<td>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</td>
+		<td style="text-align: left; padding-left: 5px;"></td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td>#= price#</td>
-		<td>#= amount#</td>
+		<td style="text-align: right; padding-right: 5px;"></td>
 	</tr>
 </script>
 
@@ -47475,7 +47474,7 @@
     banhji.invoiceCustom =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
 		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
-		obj 				: {type: "Quote", contact: []},
+		obj 				: {type: "Quote", amount: "$500,000.00"},
 		company 			: banhji.institute,
 		isEdit 				: false,
 		selectTypeList			: [
@@ -47490,7 +47489,8 @@
 							  ]	,
 		onChange			: function(e) {
 								var obj = this.get("obj");
-								this.txnFormDS.filter({ field:"type", value: obj.type });	
+								this.txnFormDS.filter({ field:"type", value: obj.type });
+								setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
 					        },
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
@@ -47499,7 +47499,7 @@
 				this.loadObj(id);
 			}else{	
 				var obj = this.get("obj");
-				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm1);		
+				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm10);		
 				this.addRowLineDS();
 				if(this.get("isEdit")){
 					this.set("isEdit", false);								
@@ -47522,6 +47522,7 @@
 					price 		: '',
 					amount 		: '',
 					description : '',
+					locale : '',
 					item_prices : []
 		    	});	
 		    }
@@ -47531,17 +47532,20 @@
 			var tS = '';
 			if(Color == '#000000' || Color =='#1f497d') tS = '#fff'; 
 			else tS = '#333';
-			$('.inv1 thead tr th').css({'background-color': e.value, 'color': tS});
+			$('.main-color').css({'background-color': e.value, 'color': tS});
+			$('.main-color div').css({'color': tS});
+			$('.main-color p').css({'color': tS});
+			$('.main-color span').css({'color': tS});
+			$('.main-color th').css({'color': tS});
 		},
-		selectedForm 		: function(e){
-			var Index = e.data.id;
+		activeInvoiceTmp	: function(e){
 			var Active;
-			switch(Index) {
+			switch(e) {
 				case 1: Active = banhji.view.invoiceForm1; break;
 				case 2: Active = banhji.view.invoiceForm2; break;
-				case 3: Active = banhji.view.invoiceForm3; break;
-				case 4: Active = banhji.view.invoiceForm4; break;
-				case 5: Active = banhji.view.invoiceForm5; break;
+				//case 3: Active = banhji.view.invoiceForm3; break;
+				//case 4: Active = banhji.view.invoiceForm4; break;
+				//case 5: Active = banhji.view.invoiceForm5; break;
 				case 6: Active = banhji.view.invoiceForm6; break;
 				case 7: Active = banhji.view.invoiceForm7; break;
 				case 8: Active = banhji.view.invoiceForm8; break;
@@ -47552,8 +47556,11 @@
 				case 13: Active = banhji.view.invoiceForm13; break;
 				case 14: Active = banhji.view.invoiceForm14; break;
 			}
-
-			banhji.view.invoiceCustom.showIn('#invFormContent', Active);	
+			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
+		},
+		selectedForm 		: function(e){
+			var Index = e.data.id;
+			this.activeInvoiceTmp(Index);
 			this.addRowLineDS();
 
 			var data = e.data, obj = this.get("obj");
@@ -47571,28 +47578,7 @@
 				self.set("obj", view[0]);
 				banhji.invoiceForm.set("obj", view[0]);	
 				var Index = parseInt(view[0].transaction_form_id);
-				switch(Index) {
-					case 1: Active = banhji.view.invoiceForm1; break;
-					case 2: Active = banhji.view.invoiceForm2; break;
-					case 3: Active = banhji.view.invoiceForm3; break;
-					case 4: Active = banhji.view.invoiceForm4; break;
-					case 5: Active = banhji.view.invoiceForm5; break;
-					case 6: Active = banhji.view.invoiceForm6; break;
-					case 7: Active = banhji.view.invoiceForm7; break;
-					case 8: Active = banhji.view.invoiceForm8; break;
-					case 9: Active = banhji.view.invoiceForm9; break;
-					case 10: Active = banhji.view.invoiceForm10; break;
-					case 11: Active = banhji.view.invoiceForm11; break;
-					case 12: Active = banhji.view.invoiceForm12; break;
-					case 13: Active = banhji.view.invoiceForm13; break;
-					case 14: Active = banhji.view.invoiceForm14; break;
-				}
-				console.log(Active);
-				banhji.view.invoiceCustom.showIn('#invFormContent', Active);
-				var Color = view[0].color, tS = '';
-				if(Color == '#000000' || Color =='#1f497d') tS = '#fff'; 
-				else tS = '#333';
-				$('.inv1 thead tr th').css({'color': tS});
+				self.activeInvoiceTmp(Index);
 				self.addRowLineDS();
 				self.txnFormDS.filter({ field:"type", value: view[0].type });	
 			});	
@@ -47647,7 +47633,7 @@
 	banhji.invoiceForm =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
-		obj 				: {issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote" },
+		obj 				: {issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
 		company 			: banhji.institute,		
 		lineDS 				: dataStore(apiUrl + "transactions/line"),
 		user_id				: banhji.source.user_id,
@@ -47659,9 +47645,8 @@
 		printGrid			: function() {
 			var gridElement = $('#grid'),
 		        printableContent = '',
-		        win = window.open('', '', 'width=800, height=500'),
+		        win = window.open('', '', 'width=800, height=900'),
 		        doc = win.document.open();
-
 		    var htmlStart =
 		            '<!DOCTYPE html>' +
 		            '<html>' +
@@ -47679,13 +47664,13 @@
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
 		            '</style>' +
 		            '</head>' +
-		            '<body><div class="inv1">';
+		            '<body>';
 
 		    var htmlEnd =
-		            '</div></body>' +
+		            '</body>' +
 		            '</html>';
 		    
-		    printableContent = $('.inv1').html();
+		    printableContent = $('#invFormContent').html();
 		    doc.write(htmlStart + printableContent + htmlEnd);
 		    doc.close();
 		    setTimeout(function(){
@@ -47720,7 +47705,6 @@
 		            '</style>' +
 		            '</head>' +
 		            '<body><div class="inv1">';
-
 			    var htmlEnd =
 			            '</div></body>' +
 			            '</html>';
@@ -47742,15 +47726,16 @@
 				page: 1,
 				take: 100
 			}).then(function(e){
-				var view = self.dataSource.view();				
+				var view = self.dataSource.view();	
+				view[0].set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));	
+				view[0].set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
+				view[0].set("amount", kendo.toString(view[0].amount, "c", view[0].locale));			
 				self.set("obj", view[0]);
 				self.loadObjTemplate(view[0].transaction_template_id, id);		
-				console.log(self.lineDS.data().length);		
 			});	
 		},
 		loadObjTemplate 		: function(id, transaction_id){
-			var self = this, obj = this.get('obj');					
-
+			var self = this, obj = this.get('obj');			
 			this.txnTemplateDS.query({    			
 				filter: { field:"id", value: id },
 				page: 1,
@@ -47761,9 +47746,9 @@
 				switch(Index) {
 					case 1: Active = banhji.view.invoiceForm1; break;
 					case 2: Active = banhji.view.invoiceForm2; break;
-					case 3: Active = banhji.view.invoiceForm3; break;
-					case 4: Active = banhji.view.invoiceForm4; break;
-					case 5: Active = banhji.view.invoiceForm5; break;
+					//case 3: Active = banhji.view.invoiceForm3; break;
+					//case 4: Active = banhji.view.invoiceForm4; break;
+					//case 5: Active = banhji.view.invoiceForm5; break;
 					case 6: Active = banhji.view.invoiceForm6; break;
 					case 7: Active = banhji.view.invoiceForm7; break;
 					case 8: Active = banhji.view.invoiceForm8; break;
@@ -47776,11 +47761,28 @@
 				}
 				banhji.view.invoiceForm.showIn('#invFormContent', Active);
 				self.lineDS.filter({ field:"transaction_id", value: transaction_id });
+				setTimeout(function(){ 	
+					var CountItemsRow = parseInt(self.lineDS.data().length); 
+					var TotalRow = 15 - CountItemsRow;
+					if(TotalRow > 0){
+						for (var i = 1; i < TotalRow; i++) { 
+							self.lineDS.add({				
+								id			: '',
+								description : '',
+								quantity 	: '',
+								price 		: '',
+								amount 		: '',
+								description : '',
+								locale 		: '',
+								item_prices : []
+					    	});	
+					    }
+					}
+				},7000);
 			});
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();		
-
 			window.history.back();
 		}    
 	});
@@ -53722,9 +53724,9 @@
 		invoiceForm: new kendo.Layout("#invoiceForm", {model: banhji.invoiceForm}),
 		invoiceForm1: new kendo.Layout("#invoiceForm1", {model: banhji.invoiceForm}),
 		invoiceForm2: new kendo.Layout("#invoiceForm2", {model: banhji.invoiceForm}),
-		invoiceForm3: new kendo.Layout("#invoiceForm3", {model: banhji.invoiceForm}),
-		invoiceForm4: new kendo.Layout("#invoiceForm4", {model: banhji.invoiceForm}),
-		invoiceForm5: new kendo.Layout("#invoiceForm5", {model: banhji.invoiceForm}),
+		//invoiceForm3: new kendo.Layout("#invoiceForm3", {model: banhji.invoiceForm}),
+		//invoiceForm4: new kendo.Layout("#invoiceForm4", {model: banhji.invoiceForm}),
+		//invoiceForm5: new kendo.Layout("#invoiceForm5", {model: banhji.invoiceForm}),
 		invoiceForm6: new kendo.Layout("#invoiceForm6", {model: banhji.invoiceForm}),
 		invoiceForm7: new kendo.Layout("#invoiceForm7", {model: banhji.invoiceForm}),
 		invoiceForm8: new kendo.Layout("#invoiceForm8", {model: banhji.invoiceForm}),
