@@ -979,7 +979,7 @@
 </script>
 <script id="sale-summary-tmpl" type="text/x-kendo-template">
 	<tr>
-		<td>#=customer#</td>		
+		<td>#=customer#</td>
 		<td>#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
@@ -6521,7 +6521,7 @@
 	/*********************
 	*  Accounting Section  *
 	**********************/
-	
+
 	banhji.customerSale = kendo.observable({
 		lang 				: langVM,
 		locale 				: banhji.locale,
@@ -6605,7 +6605,7 @@
    //          end.min(start.value());
 		}
 
-	});	
+	});
 
 
     /*************************
@@ -6625,8 +6625,8 @@
 		blank		: new kendo.View('<div></div>'),
 		index  		: new kendo.Layout("#index", {model: banhji.index}),
 		menu 		: new kendo.Layout('#menu-tmpl', {model: banhji.userManagement}),
-		searchAdvanced: new kendo.Layout("#searchAdvanced", {model: banhji.searchAdvanced}),		
-		
+		searchAdvanced: new kendo.Layout("#searchAdvanced", {model: banhji.searchAdvanced}),
+
 
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.customerSale}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.customerSale}),
@@ -6642,7 +6642,7 @@
 		collectReport : new kendo.Layout("#collectReport", {model: banhji.collectReport}),
 		invoiceList : new kendo.Layout("#invoiceList", {model: banhji.invoiceList}),
 
-		
+
 		//Report
 		reportDashboard: new kendo.Layout("#reportDashboard", {model: banhji.reportDashboard}),
 
@@ -8072,7 +8072,7 @@
 			vm.pageLoad();
 		}
 	});
-	
+
 	/*************************
 	*   Reports Section   *
 	**************************/
@@ -8095,6 +8095,7 @@
 
 	$(function() {
 		banhji.router.start();
+	});
 		// signout when browser closed
   //       window.addEventListener("beforeunload", function (e) {
   //         // var confirmationMessage = "\o/";
@@ -8130,3 +8131,4 @@
 	 //              }
 	 //            });
 	 //
+	 </script>
