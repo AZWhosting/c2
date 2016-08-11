@@ -16725,8 +16725,8 @@
 </script>
 <script id="sale-summary-tmpl" type="text/x-kendo-template">
 	<tr>
-		<td>#=customer#</td>
-		<td>#:kendo.toString(amount, "n")#</td>
+		<td>#=customer#</td>		
+		<td>#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="customerTransactionList" type="text/x-kendo-template">
@@ -16737,25 +16737,27 @@
 			    	<span class="pull-right glyphicons no-js remove_2"
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
-					<div class="box-search">
-						<div class="hidden-print">
-					    	<input id="sorter" name="sorter"
-					    	   data-role="dropdownlist"
-					           data-value-primitive="true"
-					           data-text-field="text"
-					           data-value-field="value"
-					           data-bind="value: sorter,
-					                      source: sortList" />
+					<div>
+						<input id="sorter" name="sorter"
+				    	   data-role="dropdownlist"
+				           data-value-primitive="true"
+				           data-text-field="text"
+				           data-value-field="value"
+				           data-bind="value: sorter,
+				                      source: sortList,
+				                      events: {change: dateChange}" />
 
-					        <input id="sdate" name="sdate"
-					           data-bind="value: sdate"
+				        <input id="sdate" name="sdate"
+				        	   data-role="datepicker"
+					           data-bind="value: startDate, events: {change: dateMax}"
 					           placeholder="From ..." />
 
-					       	<input id="edate" name="edate"
-					           data-bind="value: edate"
+				       	<input id="edate" name="edate"
+				       		   data-role="datepicker"
+					           data-bind="value: endDate, events: {change: dateMin}"
 					           placeholder="To ..." />
-					  		<button id="search" type="button" data-role="button">Segment</button>
-					    </div>
+
+			            <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
 
 					<div class="block-title">
@@ -16769,7 +16771,7 @@
 							<div class="total-customer">
 								<div class="span4">
 									<p>Total Customer</p>
-									<span>2</span>
+									<span data-bind="text: count"></span>
 								</div>
 								<div class="span4">
 									<p>Cash Sale</p>
@@ -16782,10 +16784,10 @@
 							</div>
 						</div>
 						<div class="span7">
-							<div class="total-customer">
+							<div class="total-sale">
 								<div class="span6">
 									<p>Total Sale</p>
-									<span>2,700.00</span>
+									<span data-bind="text: total"></span>
 								</div>
 								<div class="span6">
 									<p>Customer Balance</p>
@@ -16821,7 +16823,7 @@
 		</div>
 	</div>
 </script>
-<script type="text/x-kendo-template" id="customertransactionlist-temp">
+<script id="customertransactionlist-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
@@ -16926,7 +16928,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="4">Total</th>
-								<th colspan="4"><span data-bind="value: total"></span></th>
+								<th colspan="4"><span data-bind="text: total"></span></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -58323,19 +58325,19 @@
 		};
 	});
 	banhji.router.route("/sale_summary_customer", function(){
-		banhji.view.layout.showIn("#content", banhji.view.saleSummaryCustomer);
-		banhji.customerSale.summarySale.read()
-		.then(function() {
-			banhji.customerSale.set("count", banhji.customerSale.summarySale.total());
-			var total = 0;
-			for(var i =0; i < banhji.customerSale.summarySale.view().length; i++){
-				total += banhji.customerSale.summarySale.view()[i].amount;
-
-			}
-			banhji.customerSale.set("total", total);
-
-
-        });
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleSummaryCustomer);
+			banhji.customerSale.summarySale.read();
+			banhji.customerSale.summarySale.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.customerSale.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
+				}
+			});
+		}
 
 	});
 	banhji.router.route("/sale_detail_customer", function(){
@@ -58487,7 +58489,16 @@
 			banhji.router.navigate('/manage');
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.customerTransactionList);
+			banhji.customerSale.transactions.read();
+			banhji.customerSale.transactions.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.customerSale.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
+				}
+			});
 		}
+
 	});
 	banhji.router.route("/deposit_detail_customer", function(){
 		if(!banhji.userManagement.getLogin()){

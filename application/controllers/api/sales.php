@@ -54,9 +54,9 @@ class Sales extends REST_Controller {
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
 					if(isset($customers["$fullname"])) {
-						$customers["$fullname"]['amount']+= floatval($value->amount);
+						$customers["$fullname"]['amount']+= floatval($value->amount)/ floatval($value->rate);
 					} else {
-						$customers[$fullname]['amount']= floatval($value->amount);
+						$customers[$fullname]['amount']= floatval($value->amount)/ floatval($value->rate);
 					}
 					$total += floatval($value->amount)/ floatval($value->rate);
 				}
@@ -216,9 +216,9 @@ class Sales extends REST_Controller {
 
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
-				'group' => $key,
-				'amount'	 => $value['amount'],
-				'items'	=> $value['transactions']
+				'group' 	=> $key,
+				'amount'	=> $value['amount'],
+				'items'		=> $value['transactions']
 			);
 		}
 		$data['total'] = $total;
