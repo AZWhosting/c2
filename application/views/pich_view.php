@@ -13739,7 +13739,7 @@
 									<div class="control-group">										
 										<label for="ddlContactType"><span data-bind="text: lang.lang.customer_type"></span> <span style="color:red">*</span></label>
 										<input id="ddlContactType" name="ddlContactType"
-												   data-role="dropdownlist"														   										                   
+												   data-role="dropdownlist"			                   
 								                   data-value-primitive="true"
 								                   data-text-field="name"
 								                   data-value-field="id"
@@ -13748,7 +13748,7 @@
 								                              source: contactTypeDS,
 								                              events:{change: contactTypeChanges}"
 								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" style="width: 100%;" />																				            
+								                   required data-required-msg="required" style="width: 100%;" />
 									</div>
 									<!-- // Group END -->
 								</div>
@@ -14119,8 +14119,10 @@
 <script id="contact-person-row-tmpl" type="text/x-kendo-tmpl">
 	<tr>		
 		<td>
-			<input id="name" name="name" 
-					type="text" class="k-textbox" 
+			<input id="name" 
+					name="name" 
+					type="text" 
+					class="k-textbox" 
 					data-bind="value: name"
 					placeholder="eg: Mr. John" 
 					required="required" validationMessage="required" style="width: 190px;" />
@@ -14185,6 +14187,7 @@
 								                   data-value-primitive="true"
 								                   data-auto-bind="false"
 								                   data-template="contact-list-tmpl"
+								                   data-header-template="contact-header-tmpl"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_id,
@@ -14247,6 +14250,7 @@
 														   data-role="combobox"											                    
 										                   data-value-primitive="true"
 										                   data-template="contact-list-tmpl"
+										                   data-template="employee-header-tmpl"
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.employee_id,
@@ -14489,8 +14493,8 @@
 								</ul>
 							</div>
 
-							<a href="#/item" class="btn btn-default">Add Item</a>
-							<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+							<!-- <a href="#/item" class="btn btn-default">Add Item</a>
+							<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a> -->
 							
 							<br><br>
 							<div class="well">
@@ -14595,7 +14599,7 @@
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
 				   data-template="item-list-tmpl"				   
-                   data-headerTemplate= "headerTemplate"              			   
+                   data-header-template="item-header-tmpl"          			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -14662,10 +14666,6 @@
 		</td>						
     </tr>   
 </script>
-<script id="headerTemplate" type="text/x-kendo-template">
-    <strong>Header</strong>
-</script>
-
 
 <script id="saleOrder" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -15147,7 +15147,8 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
+				   data-header-template="item-header-tmpl"                  			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -15596,6 +15597,7 @@
 				   data-role="combobox"                   
                    data-value-primitive="true"                   
                    data-template="account-list-tmpl"
+                   data-header-template="account-header-tmpl"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -16136,7 +16138,8 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
+				   data-header-template="item-header-tmpl"                  			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -16723,7 +16726,8 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
+				   data-header-template="item-header-tmpl"                  			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -17168,7 +17172,8 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
+				   data-header-template="item-header-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -17670,7 +17675,8 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-template="item-list-tmpl"                   			   
+				   data-template="item-list-tmpl"
+				   data-header-template="item-header-tmpl"                 			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: item_id, 
@@ -30495,6 +30501,11 @@
 	<span>#=abbr##=number#</span>	
 	<span>#=name#</span>	
 </script>
+<script id="contact-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/customer">+ Add New Customer</a>
+    </strong>
+</script>
 <script id="currency-list-tmpl" type="text/x-kendo-tmpl">
 	<span>
 		#=code# - #=country#
@@ -30512,6 +30523,12 @@
 	<span>#=sku# #=name#</span>
 	<span class="pull-right">#=on_hand#</span>	
 </script>
+<script id="item-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/item">+ Add New Item</a> &nbsp;&nbsp;
+    	<a href="\#/item_service">+ Add New Service</a>
+    </strong>
+</script>
 <script id="account-list-tmpl" type="text/x-kendo-tmpl">	
 	<span>
 		#=number#				
@@ -30524,6 +30541,9 @@
 			#=name#
 		#}#
 	</span>
+</script>
+<script id="account-header-tmpl" type="text/x-kendo-tmpl">
+    <strong><a href="\#/account">+ Add New</a></strong>
 </script>
 <script id="account-type-list-tmpl" type="text/x-kendo-tmpl">	
 	<span>

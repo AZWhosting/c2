@@ -47783,16 +47783,16 @@
 		    
 		},	    
 		savePDF				: function(e){
-	        
-			var draw = kendo.drawing;
+			kendo.drawing.drawDOM($('#invFormContent')).then(function(group){
+	          kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
+	        });
+			/*var draw = kendo.drawing;
 
 	        draw.drawDOM($("#khPDF"), {
 	            avoidLinks: true,
 	            paperSize: "A4"
 	        })
 	        .then(function(root) {
-	        	
-
 	            return draw.exportPDF(root);
 	        })
 	        .done(function(data) {
@@ -47800,7 +47800,7 @@
 	                dataURI: data,
 	                fileName: "1.pdf"
 	            });
-	        });
+	        });*/
 		},		
 		loadObj 			: function(id){
 			var self = this;				
