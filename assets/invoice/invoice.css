@@ -355,3 +355,10 @@ pre {
 	padding-left: 10px;
 	color: #fff;
 }
+.inv1 .main-color {
+	background: #10253f;
+	color: #fff;
+}
+.inv1 .main-color th {
+	color: #fff;
+}
