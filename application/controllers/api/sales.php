@@ -168,13 +168,6 @@ class Sales extends REST_Controller {
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 
-<<<<<<< HEAD
-=======
-
-
-
-
->>>>>>> aead4cbe38ffa5ac14604616f4507a18984273a6
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 		$type->where('parent_id', 1)->get();
 
@@ -327,57 +320,149 @@ class Sales extends REST_Controller {
 
 	function summary_balance_get() {
 		$filters 	= $this->get("filter")["filters"];
-			$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-			$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-			$sort 	 	= $this->get("sort");
-			$data["results"] = array();
-			$data["count"] = 0;
-			$is_pattern = 0;
-			$deleted = 0;
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$deleted = 0;
 
 
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 
-			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
-			$type->where('parent_id', 1)->get();
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type->where('parent_id', 1)->get();
 
-			$obj->where_related("contact", 'contact_type_id', $type);
-			$obj->where("status <>", 1);
-			$obj->where_in("type", "Invoice");
+		$obj->where_related("contact", 'contact_type_id', $type);
+		$obj->where("status <>", 1);
+		$obj->where_in("type", array("Invoice", "Cash_Receipt"));
 
-			// $obj->include_related("contact_type", "name");
+		// $obj->include_related("contact_type", "name");
 
-			//Results
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-			$customers = array();
-			$total =0;
-			if($obj->result_count()>0){
-				foreach ($obj as $value) {
-					$customer = $value->contact->get();
-					$fullname = $customer->surname.' '.$customer->name;
-					if(isset($customers["$fullname"])) {
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+		$customers = array();
+		$total = 0;
+		$paid  = 0;
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {
+				$customer = $value->contact->get();
+				$fullname = $customer->surname.' '.$customer->name;
+				if(isset($customers["$fullname"])) {
+					if($value->type == 'Invoice') {
 						$customers["$fullname"]['amount']+= floatval($value->amount);
 					} else {
+						$customers["$fullname"]['amount']-= floatval($value->amount);
+					}
+				} else {
+					if($value->type == 'Invoice') {
 						$customers[$fullname]['amount']= floatval($value->amount)/ floatval($value->rate);
+					} else {
+						$customers[$fullname]['amount']= (floatval($value->amount)/ floatval($value->rate)) * -1;
+					}
+				}
+				if($value->type == "Invoice") {
+					$total += floatval($value->amount)/ floatval($value->rate);
+				} else {
+					$paid += floatval($value->amount)/ floatval($value->rate);
+				}
+
+			}
+		}
+
+		foreach ($customers as $key => $value) {
+			$data["results"][] = array(
+				'customer' => $key,
+				'amount'	=> $value['amount']
+
+			);
+		}
+
+		//Response Data
+		$data['total'] = $total - $paid;
+		$data['count'] = count($customers);
+		$this->response($data, 200);
+	}
+
+	function detail_balance_get() {
+		$filters 	= $this->get("filter")["filters"];
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$deleted = 0;
+
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type->where('parent_id', 1)->get();
+
+		$obj->where_related("contact", 'contact_type_id', $type);
+		$obj->where("status <>", 1);
+		$obj->where_in("type", array("Invoice", "Cash_Receipt"));
+
+		// $obj->include_related("contact_type", "name");
+
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+		$customers = array();
+		$total = 0;
+		$paid  = 0;
+		$invoiceOpen = 0;
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {
+				$customer = $value->contact->get();
+				$fullname = $customer->surname.' '.$customer->name;
+				if(isset($customers["$fullname"])) {
+					$customers["$fullname"]['transactions'][] = array(
+						'type'  	=> $value->type,
+						'date' 		=> $value->issued_date,
+						'number' 	=> $value->number,
+						'memo' 		=> $value->memo2,
+						'amount' 	=> floatval($value->amount)/floatval($value->rate)
+					);
+				} else {
+					$customers["$fullname"]['transactions'][] = array(
+						'type'  	=> $value->type,
+						'date' 		=> $value->issued_date,
+						'number' 	=> $value->number,
+						'memo' 		=> $value->memo2,
+						'amount' 	=> floatval($value->amount)/floatval($value->rate)
+					);
+				}
+				if($value->type == "Invoice") {
+					if($value->status != 1) {
+						$invoiceOpen += 1;
 					}
 					$total += floatval($value->amount)/ floatval($value->rate);
+				} else {
+					$paid += floatval($value->amount)/ floatval($value->rate);
 				}
+
 			}
+		}
 
-			foreach ($customers as $key => $value) {
-				$data["results"][] = array(
-					'customer' => $key,
-					'amount'	=> $value['amount']
+		foreach ($customers as $key => $value) {
+			$data["results"][] = array(
+				'customer' => $key,
+				'transactions' => $value['transactions']
+			);
+		}
 
-				);
-			}
-
-			//Response Data
-			$data['total'] = $total;
-			$data['count'] = count($customers);
-			$this->response($data, 200);
+		//Response Data
+		$data['total'] = $total - $paid;
+		$data['openInvoice'] = $invoiceOpen;
+		$data['count'] = count($customers);
+		$this->response($data, 200);
 	}
+
+
 
 	// item or service classified as list
 	function summary_list_get() {
@@ -391,43 +476,137 @@ class Sales extends REST_Controller {
 		$deleted = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		// $type->where('parent_id', 1)->get();
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
-		$type->where('parent_id', 1)->get();
-
-		$obj->where_related("contact", 'contact_type_id', $type);
-		$obj->where_in("type", array("Invoice"));
+		// $obj->where_related("contact", 'contact_type_id', $type);
+		$obj->where("type", "Invoice");
+		$obj->where('is_recurring', 0);
 
 		// $obj->include_related("contact_type", "name");
 
 		//Results
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;
-		$customers = array();
+		$items = array();
 		$total = 0;
+		$totalAvg = 0;
+		$totalQty = 0;
+		$totalCost= 0;
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
-				$items = $value->item_line->include_related('item', array('name'))->get();
-				$lines = array();
-				foreach($items as $item) {
-					$data['results'][] = array(
-						'name' 			=> $item->item_name,
-						'quantity' 	=> $item->quantity,
-						'price' 		=> floatval($item->price)/floatval($value->rate),
-						'amount'		=> floatval($item->amount)/floatval($value->rate)
-					);
+				$itemLine = $value->item_line->get();
+				foreach($itemLine as $line) {
+					$item = $line->item->get();
+					if(isset($items["$item->name"])) {
+						$items["$item->name"]['qty'] += intval($line->quantity);
+						$items["$item->name"]['amount'] += floatval($line->amount);
+						$items["$item->name"]['price'] += floatval($line->price);
+						$items["$item->name"]['cost'] += floatval($line->cost);
+						$items["$item->name"]['gross_profit'] += (floatval($line->price)-floatval($line->cost)) * floatval($line->quantity);
+					} else {
+						$items["$item->name"]['qty'] = intval($line->quantity);
+						$items["$item->name"]['amount'] = floatval($line->amount);
+						$items["$item->name"]['price'] = floatval($line->price);
+						$items["$item->name"]['cost'] = floatval($line->cost);
+						$items["$item->name"]['rate'] = floatval($value->rate);
+						$items["$item->name"]['gross_profit'] = (floatval($line->price)-floatval($line->cost)) * floatval($line->quantity);
+					}
+					$total += floatval($line->amount)/floatval($value->rate);
 				}
-				$total += floatval($value->amount)/floatval($value->rate);
 			}
 		}
-		$data['total'] = $total;
-		$data['count'] = count($customers);
+		foreach($items as $key => $value) {
+			$avg = ($value['amount']/$value['rate']) / $value['qty'];
+			$data['results'][] = array(
+				'group' => $key,
+				'qty' => $value['qty'],
+				'avg_price' => round($avg, 2),
+				'cost' => ($value['cost']/$value['rate']) / $value['qty'],
+				'gross_profit_margin' => (($value['amount'] - $value['cost']) / $value['amount'])
+			);
+			$totalAvg += $value['amount']/$value['rate'];
+			$totalCost+= $value['cost']/$value['rate'];
+			$totalQty += $value['qty'];
+		}
+		$data['total_sale'] = $total;
+		$data['total_avg'] = round(($totalAvg/$totalQty), 2);
+		$data['gpm'] = ($totalAvg - $totalCost) / $totalAvg;
+		$data['count'] = count($items);
 		//Response Data
 		$this->response($data, 200);
 	}
 
 	function detail_list_get() {
-		$this->response(array('results' => "sales by item or service--detail"), 200);
+		$filters 	= $this->get("filter")["filters"];
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$deleted = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		// $type->where('parent_id', 1)->get();
+
+		// $obj->where_related("contact", 'contact_type_id', $type);
+		$obj->where("type", "Invoice");
+		$obj->where('is_recurring', 0);
+
+		// $obj->include_related("contact_type", "name");
+
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+		$items = array();
+		$total = 0;
+		$totalAvg = 0;
+		$totalQty = 0;
+		$totalCost= 0;
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {
+				$itemLine = $value->item_line->get();
+				foreach($itemLine as $line) {
+					$item = $line->item->get();
+					if(isset($items["$item->name"])) {
+						$items["$item->name"]['qty'] += intval($line->quantity);
+						$items["$item->name"]['amount'] += floatval($line->amount);
+						$items["$item->name"]['price'] += floatval($line->price);
+						$items["$item->name"]['cost'] += floatval($line->cost);
+						$items["$item->name"]['gross_profit'] += (floatval($line->price)-floatval($line->cost)) * floatval($line->quantity);
+					} else {
+						$items["$item->name"]['qty'] = intval($line->quantity);
+						$items["$item->name"]['amount'] = floatval($line->amount);
+						$items["$item->name"]['price'] = floatval($line->price);
+						$items["$item->name"]['cost'] = floatval($line->cost);
+						$items["$item->name"]['rate'] = floatval($value->rate);
+						$items["$item->name"]['gross_profit'] = (floatval($line->price)-floatval($line->cost)) * floatval($line->quantity);
+					}
+					$total += floatval($line->amount)/floatval($value->rate);
+				}
+			}
+		}
+		foreach($items as $key => $value) {
+			$avg = ($value['amount']/$value['rate']) / $value['qty'];
+			$data['results'][] = array(
+				'group' => $key,
+				'qty' => $value['qty'],
+				'avg_price' => round($avg, 2),
+				'cost' => ($value['cost']/$value['rate']) / $value['qty'],
+				'gross_profit_margin' => (($value['amount'] - $value['cost']) / $value['amount'])
+			);
+			$totalAvg += $value['amount']/$value['rate'];
+			$totalCost+= $value['cost']/$value['rate'];
+			$totalQty += $value['qty'];
+		}
+		$data['total_sale'] = $total;
+		$data['total_avg'] = round(($totalAvg/$totalQty), 2);
+		$data['gpm'] = ($totalAvg - $totalCost) / $totalAvg;
+		$data['count'] = count($items);
+		//Response Data
+		$this->response($data, 200);
 	}
 
 }//End Of Class
