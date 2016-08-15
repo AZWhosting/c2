@@ -9,7 +9,9 @@
 #ddlCurrency-list,
 #ddlAP-list,
 #ddlTradeDiscountAccount-list,
-#ddlPrePaymentAccount-list{
+#ddlPrePaymentAccount-list,
+#cbbAccounts-list,
+#ddlVendor-list{
   width: 350px !important;
 }
 #ddlMeasurement-list,

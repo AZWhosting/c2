@@ -7725,6 +7725,7 @@
 										<label for="ddlContactType">Supplier Type <span style="color:red">*</span></label>
 										<input id="ddlContactType" name="ddlContactType"
 											   data-role="dropdownlist"
+											   data-header-template="vendor-type-header-tmpl"
 											   data-option-label="(--- Select ---)"									                   
 							                   data-value-primitive="true"
 							                   data-text-field="name"
@@ -7958,6 +7959,7 @@
 												<label for="ddlAP">Account Payable <span style="color:red">*</span></label>
 												<input id="ddlAP" name="ddlAP"
 													   data-role="dropdownlist"
+													   data-header-template="account-header-tmpl"
 													   data-template="account-list-tmpl"
 													   data-option-label="(--- Select ---)"											                   
 									                   data-value-primitive="true"
@@ -7976,6 +7978,7 @@
 												<label for="ddlTradeDiscountAccount">Trade Discount <span style="color:red">*</span></label>
 												<input id="ddlTradeDiscountAccount" name="ddlTradeDiscountAccount"
 														   data-role="dropdownlist"
+														   data-header-template="account-header-tmpl"
 														   data-template="account-list-tmpl"
 														   data-option-label="(--- Select ---)"												                   
 										                   data-value-primitive="true"
@@ -7994,6 +7997,7 @@
 												<label for="ddlSettlementDiscountAccount">Settlement Discount <span style="color:red">*</span></label>
 												<input id="ddlSettlementDiscountAccount" name="ddlSettlementDiscountAccount"
 														   data-role="dropdownlist"
+														   data-header-template="account-header-tmpl"
 														   data-template="account-list-tmpl"
 														   data-option-label="(--- Select ---)"												                   
 										                   data-value-primitive="true"
@@ -8013,6 +8017,7 @@
 												<input id="ddlPrePaymentAccount" name="ddlPrePaymentAccount"
 														   data-role="dropdownlist"
 														   data-option-label="(--- Select ---)"
+														   data-header-template="account-header-tmpl"
 														   data-template="account-list-tmpl"												                   
 										                   data-value-primitive="true"
 										                   data-text-field="name"
@@ -8050,6 +8055,7 @@
 												<label for="ddlTax">Tax</label>
 												<input id="ddlTax" name="ddlTax"
 														   data-role="dropdownlist"
+														   data-header-template="tax-header-tmpl"
 														   data-option-label="(--- Select ---)"																   												                   
 										                   data-value-primitive="true"
 										                   data-text-field="name"
@@ -8086,6 +8092,7 @@
 							              	<td>
 							              		<input id="ddlPaymentMethod" name="ddlPaymentMethod"
 													data-role="dropdownlist"
+													data-header-template="vendor-payment-method-header-tmpl"
 									            	data-value-primitive="true"
 									                data-text-field="name"
 									                data-value-field="id"
@@ -8097,6 +8104,7 @@
 							              	<td>
 							              		<input id="ddlPaymentTerm" name="ddlPaymentTerm"
 													data-role="dropdownlist"
+													data-header-template="vendor-payment-term-header-tmpl"
 									            	data-value-primitive="true"
 									                data-text-field="name"
 									                data-value-field="id"
@@ -8241,6 +8249,7 @@
 											   data-role="combobox"											                    
 							                   data-value-primitive="true"
 							                   data-auto-bind="false"
+							                   data-header-template="vendor-header-tmpl"
 							                   data-template="contact-list-tmpl"
 							                   data-text-field="name"
 							                   data-value-field="id"
@@ -8253,7 +8262,7 @@
 								</tr>																															
 							</table>
 
-							<div class="strong" style="width: 90%; padding: 10px;" align="center"
+							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 								data-bind="style: {
 								        backgroundColor: bgColor}">
 								<div align="left">AMOUNT DUE</div>
@@ -8354,7 +8363,8 @@
 											<td>Segments</td>
 											<td>
 												<select data-role="multiselect"
-													   data-value-primitive="true"								   
+													   data-value-primitive="true"
+													   data-header-template="segment-header-tmpl"							   
 													   data-item-template="segment-list-tmpl"				    
 													   data-value-field="id" 
 													   data-text-field="code"
@@ -8370,6 +8380,7 @@
 											<td>
 												<input id="ddlJob" name="ddlJob"
 													   data-role="dropdownlist"
+													   data-header-template="job-header-tmpl"
 													   data-template="job-list-tmpl"
 													   data-auto-bind="false"				                
 									                   data-value-primitive="true"									                   				   
@@ -8576,9 +8587,6 @@
 								</li>															
 							</ul>
 						</div>
-
-						<a href="#/item" class="btn btn-default">Add Item</a>
-						<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
 						
 						<br><br>
 						<div class="well">
@@ -8668,8 +8676,9 @@
 			#:banhji.purchaseOrder.lineDS.indexOf(data)+1#			
 		</td>		
 		<td>
-			<input id="ccbItem-#:uid#" name="ccbItem-#:uid#"
+			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
+				   data-header-template="item-header-tmpl"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -8689,16 +8698,19 @@
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
 					data-format="n0" data-min="0"
+					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
 
-			<input data-role="dropdownlist"                  
+			<input id="ddlMesurement"
+					data-role="dropdownlist"                  
                    data-text-field="measurement"
                    data-value-field="measurement_id"
+                   data-header-template="item-measurement-header-tmpl"
                    data-bind="value: measurement_id,
                    			  source: item_prices,
                    			  events:{ change: measurementChanges }"
-                   data-option-label="Measure"
+                   data-option-label="UM"
                    style="width: 57%;" />
 		</td>					
 		<td>
@@ -8722,8 +8734,9 @@
 			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
-			<input id="ccbTaxItem-#:uid#" name="ccbTaxItem-#:uid#"
-				   data-role="combobox"                   			   
+			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
+				   data-role="combobox"
+				   data-header-template="tax-header-tmpl"			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -8778,6 +8791,7 @@
 											   data-role="combobox"											                    
 							                   data-value-primitive="true"
 							                   data-auto-bind="false"
+							                   data-header-template="vendor-header-tmpl"
 							                   data-template="contact-list-tmpl"
 							                   data-text-field="name"
 							                   data-value-field="id"
@@ -8790,7 +8804,7 @@
 								</tr>																															
 							</table>
 
-							<div class="strong" style="width: 90%; padding: 10px;" align="center"
+							<div class="strong" style="margin-bottom:0;width: 100%; padding: 10px;" align="center"
 								data-bind="style: {
 								        backgroundColor: bgColor}">
 								<div align="left">AMOUNT DUE</div>
@@ -8830,6 +8844,7 @@
 											<td>
 												<input id="ddlJob" name="ddlJob"
 													   data-role="dropdownlist"
+													   data-header-template="job-header-tmpl"
 													   data-template="job-list-tmpl"
 													   data-auto-bind="false"				                
 									                   data-value-primitive="true"									                   				   
@@ -9057,11 +9072,10 @@
 	            <div class="row-fluid">
 		
 					<!-- Column -->
-					<div class="span8">	
+					<div class="span4">	
 						<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>									
 						
-						<a href="#/item" class="btn btn-default">Add Item</a>
-						<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+					
 
 						<br><br>
 						<div class="well">
@@ -9117,8 +9131,9 @@
 			#:banhji.grn.lineDS.indexOf(data)+1#			
 		</td>		
 		<td>
-			<input id="ccbItem-#:uid#" name="ccbItem-#:uid#"
+			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
+				   data-header-template="item-header-tmpl"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -9138,16 +9153,19 @@
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
 					data-format="n0" data-min="0"
+					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
 
-			<input data-role="dropdownlist"                  
+			<input id="ddlMesurement"
+					data-role="dropdownlist"
+					data-header-template="item-measurement-header-tmpl"            
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
                    			  source: item_prices,
                    			  events:{ change: measurementChanges }"
-                   data-option-label="Measure"
+                   data-option-label="UM"
                    style="width: 57%;" />
 		</td>						
     </tr>   
@@ -9196,6 +9214,7 @@
 										<input id="cbbContact" name="cbbContact"
 											   data-role="combobox"											                    
 							                   data-value-primitive="true"
+							                   data-header-template="contact-header-tmpl"
 							                   data-template="contact-list-tmpl"
 							                   data-text-field="name"
 							                   data-value-field="id"
@@ -9254,7 +9273,8 @@
 										<td style="width: 40%">
 											<input id="cbbAccount" name="cbbAccount"
 												   data-role="combobox"                   
-								                   data-value-primitive="true"                   
+								                   data-value-primitive="true" 
+								                   data-header-template="account-header-tmpl"                  
 								                   data-template="account-list-tmpl"
 								                   data-text-field="name"								                  
 								                   data-value-field="id"
@@ -9280,7 +9300,8 @@
 										<td style="width: 10%">Segment</td>
 										<td style="width: 40%">
 											<select data-role="multiselect"
-										   data-value-primitive="true"								   
+										   data-value-primitive="true"	
+										   data-header-template="segment-header-tmpl"							   
 										   data-item-template="segment-list-tmpl"				    
 										   data-value-field="id" 
 										   data-text-field="code"
@@ -9474,11 +9495,7 @@
 					<!-- Column -->
 					<div class="span6 hidden-print">
 						
-						<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
-
-						
-
-						<a href="#/account" class="btn btn-default">Add New Account</a>						
+						<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>																
 						
 					</div>
 					<!-- Column END -->
@@ -9525,7 +9542,8 @@
 		<td>
 			<input id="cbbAccounts" name="cbbAccounts"
 				   data-role="combobox"                   
-                   data-value-primitive="true"                   
+                   data-value-primitive="true"
+                   data-header-template="account-header-tmpl"                  
                    data-template="account-list-tmpl"
                    data-text-field="name"
                    data-value-field="id"
@@ -9600,6 +9618,7 @@
 											   data-role="combobox"											                    
 							                   data-value-primitive="true"
 							                   data-auto-bind="false"
+							                   data-header-template="vendor-header-tmpl"
 							                   data-template="contact-list-tmpl"
 							                   data-text-field="name"
 							                   data-value-field="id"
@@ -9612,7 +9631,7 @@
 								</tr>																															
 							</table>
 
-							<div class="strong" style="width: 90%; padding: 10px;" align="center"
+							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 								data-bind="style: {
 								        backgroundColor: bgColor}">
 								<div align="left">AMOUNT DUE</div>
@@ -9698,6 +9717,7 @@
 														data-role="dropdownlist"
 														data-auto-bind="false"														
 							              				data-value-primitive="true"
+							              				data-header-template="account-header-tmpl"
 							              				data-template="account-list-tmpl"
 														data-text-field="name" 
 							              				data-value-field="id"						              				 
@@ -9762,7 +9782,8 @@
 											<td>Segments</td>
 											<td>
 												<select data-role="multiselect"
-													   data-value-primitive="true"								   
+													   data-value-primitive="true"
+													   data-header-template="segment-header-tmpl"							   
 													   data-item-template="segment-list-tmpl"				    
 													   data-value-field="id" 
 													   data-text-field="code"
@@ -9778,6 +9799,7 @@
 											<td>
 												<input id="ddlJob" name="ddlJob"
 													   data-role="dropdownlist"
+													   data-header-template="job-header-tmpl"
 													   data-template="job-list-tmpl"
 													   data-auto-bind="false"				                
 									                   data-value-primitive="true"									                   				   
@@ -9795,7 +9817,8 @@
 												<input data-role="dropdownlist"														
 							              				data-value-primitive="true"
 														data-text-field="name" 
-							              				data-value-field="id"						              				 
+							              				data-value-field="id"
+							              				data-header-template="vendor-payment-term-header-tmpl"					              				 
 							              				data-bind="value: obj.payment_term_id,
 							              							source: paymentTermDS"
 							              				data-option-label="Select Term..." 
@@ -9808,7 +9831,8 @@
 												<input data-role="dropdownlist"														
 							              				data-value-primitive="true"
 														data-text-field="name" 
-							              				data-value-field="id"						              				 
+							              				data-value-field="id"
+							              				data-header-template="vendor-payment-method-header-tmpl"						              				 
 							              				data-bind="value: obj.payment_method_id,
 							              							source: paymentMethodDS"
 							              				data-option-label="Select Method..." 
@@ -10028,7 +10052,7 @@
 						    </table>
 
 						    <!-- Item Add Row part -->
-				            <div class="row-fluid">		
+				            <div class="row">		
 														
 								<div class="span12">
 									<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
@@ -10050,8 +10074,7 @@
 										</ul>
 									</div>
 
-									<a href="#/item" class="btn btn-default">Add Item</a>
-									<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+									
 
 								</div>										
 								
@@ -10098,7 +10121,7 @@
 									</ul>
 								</div>
 
-								<a href="#/account" class="btn btn-default">Add New Account</a>								
+															
 							</div>
 
 				        </div>
@@ -10276,8 +10299,9 @@
 			#:banhji.purchase.lineDS.indexOf(data)+1#			
 		</td>		
 		<td>
-			<input id="ccbItem-#:uid#" name="ccbItem-#:uid#"
+			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
+				   data-header-template="item-header-tmpl"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -10297,16 +10321,20 @@
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
 					data-format="n0" data-min="0"
+					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
 
-			<input data-role="dropdownlist"                  
+			<input
+					id="ddlMesurement"
+					data-role="dropdownlist"                  
                    data-text-field="measurement"
+                   data-header-template="item-measurement-header-tmpl"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
                    			  source: item_prices,
                    			  events:{ change: measurementChanges }"
-                   data-option-label="Measure"
+                   data-option-label="UM"
                    style="width: 57%;" />
 		</td>					
 		<td>
@@ -10330,10 +10358,11 @@
 			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
-			<input id="ccbTaxItem-#:uid#" name="ccbTaxItem-#:uid#"
+			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 				   data-role="combobox"                   			   
                    data-text-field="name"
                    data-value-field="id"
+                   data-header-template="tax-header-tmpl"
                    data-bind="value: tax_item_id, 
                    			  source: taxItemDS,
                    			  events:{ change: changes }"
@@ -10355,9 +10384,10 @@
 			#:banhji.purchase.accountLineDS.indexOf(data)+1#			
 		</td>			
 		<td>
-			<input id="cbbAccounts-#:uid#" name="cbbAccounts-#:uid#"
+			<input id="cbbAccounts" name="cbbAccounts-#:uid#"
 				   data-role="combobox"                   
-                   data-value-primitive="true"                   
+                   data-value-primitive="true"
+                   data-header-template="account-header-tmpl"                  
                    data-template="account-list-tmpl"                                     
                    data-text-field="name"
                    data-value-field="id"
@@ -10398,9 +10428,10 @@
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>
 		<td>
-			<input id="ccbTaxItemAccount-#:uid#" name="ccbTaxItemAccount-#:uid#"
+			<input id="ccbTaxItem" name="ccbTaxItemAccount-#:uid#"
 				   data-role="combobox"                   			   
                    data-text-field="name"
+                    data-header-template="tax-header-tmpl"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
                    			  source: taxItemDS,
@@ -10427,8 +10458,10 @@
                    required data-required-msg="required" style="width: 100%" />	
 		</td>
 		<td>
-			<input data-role="combobox"                   
+			<input id="ddlVendor"
+					data-role="combobox"                   
                    data-value-primitive="true"
+                   data-header-template="vendor-header-tmpl"
                    data-template="contact-list-tmpl"
                    data-text-field="name"
                    data-value-field="id"
@@ -10470,10 +10503,11 @@
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>		
 		<td>
-			<input id="ccbTaxItem-#:uid#" name="ccbTaxItem-#:uid#"
+			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
 				   data-role="combobox"                   			   
                    data-text-field="name"
                    data-value-field="id"
+                   data-header-template="tax-header-tmpl"
                    data-bind="value: tax_item_id, 
                    			  source: taxItemDS,
                    			  events:{ change: changes }"
@@ -10526,6 +10560,7 @@
 											   data-role="combobox"											                    
 							                   data-value-primitive="true"
 							                   data-auto-bind="false"
+							                   data-header-template="vendor-header-tmpl"
 							                   data-template="contact-list-tmpl"
 							                   data-text-field="name"
 							                   data-value-field="id"
@@ -10538,7 +10573,7 @@
 								</tr>																															
 							</table>
 
-							<div class="strong" style="width: 90%; padding: 10px;" align="center"
+							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 								data-bind="style: {
 								        backgroundColor: bgColor}">
 								<div align="left">AMOUNT PAID</div>
@@ -10611,7 +10646,8 @@
 											<td>Segments</td>
 											<td>
 												<select data-role="multiselect"
-													   data-value-primitive="true"								   
+													   data-value-primitive="true"	
+													   data-header-template="segment-header-tmpl"							   
 													   data-item-template="segment-list-tmpl"				    
 													   data-value-field="id" 
 													   data-text-field="code"
@@ -10627,6 +10663,7 @@
 											<td>
 												<input id="ddlJob" name="ddlJob"
 													   data-role="dropdownlist"
+													   data-header-template="job-header-tmpl"
 													   data-template="job-list-tmpl"
 													   data-auto-bind="false"				                
 									                   data-value-primitive="true"									                   				   
@@ -10855,8 +10892,7 @@
 										</ul>
 									</div>
 								
-									<a href="#/item" class="btn btn-default">Add Item</a>
-									<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+									
 
 
 								</td>						
@@ -10944,8 +10980,9 @@
 			#:banhji.saleReturn.lineDS.indexOf(data)+1#			
 		</td>		
 		<td>
-			<input id="ccbItem-#:uid#" name="ccbItem-#:uid#"
+			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
+				   data-header-template="item-header-tmpl"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -10965,16 +11002,19 @@
 			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
 					data-role="numerictextbox" 
 					data-format="n0" data-min="0"
+					data-spinners="false"
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
 
-			<input data-role="dropdownlist"                  
+			<input id="ddlMesurement"
+					data-role="dropdownlist"                  
                    data-text-field="measurement"
+                   data-header-template="item-measurement-header-tmpl"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
                    			  source: item_prices,
                    			  events:{ change: measurementChanges }"
-                   data-option-label="Measure"
+                   data-option-label="UM"
                    style="width: 57%;" />
 		</td>					
 		<td>
@@ -10998,8 +11038,9 @@
 			<span data-format="n" data-bind="text: amount"></span> 						
 		</td>
 		<td>
-			<input id="ccbTaxItem-#:uid#" name="ccbTaxItem-#:uid#"
-				   data-role="combobox"                   			   
+			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
+				   data-role="combobox" 
+				   data-header-template="tax-header-tmpl"                  			   
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
@@ -14016,7 +14057,7 @@
 						            	<div class="span3">
 											<label for="ddlPaymentTerm"><span data-bind="text: lang.lang.payment_term"></span></label>
 											<input id="ddlPaymentTerm" name="ddlPaymentTerm"
-												data-header-template="term-header-tmpl"
+												data-header-template="customer-term-header-tmpl"
 												data-role="dropdownlist"
 								            	data-value-primitive="true"
 								                data-text-field="name"
@@ -14028,7 +14069,7 @@
 										<div class="span3">
 											<label for="ddlPaymentMethod"><span data-bind="text: lang.lang.payment_method"></span></label>
 											<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-												data-header-template="payment-method-header-tmpl"
+												data-header-template="customer-payment-method-header-tmpl"
 												data-role="dropdownlist"
 								            	data-value-primitive="true"
 								                data-text-field="name"
@@ -14632,7 +14673,7 @@
 
 			<input 	id="ddlMesurement"
 					data-role="dropdownlist"					
-					data-header-template="measurement-header-tmpl"                 
+					data-header-template="item-measurement-header-tmpl"                 
                 	data-text-field="measurement"
                    	data-value-field="measurement_id"
                    	data-bind="value: measurement_id,
@@ -15182,7 +15223,7 @@
 					required data-required-msg="required" style="width: 40%;" />
 
 			<input id="ddlMesurement"  data-role="dropdownlist"
-					data-header-template="measurement-header-tmpl"                
+					data-header-template="item-measurement-header-tmpl"                
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -16185,7 +16226,7 @@
 					required data-required-msg="required" style="width: 40%;" />
 
 			<input id="ddlMesurement" data-role="dropdownlist"
-					data-header-template="measurement-header-tmpl"                  
+					data-header-template="item-measurement-header-tmpl"                  
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -16328,7 +16369,7 @@
 											<td>
 												<input data-role="dropdownlist"
 							              				data-value-primitive="true"
-							              				data-header-template="payment-method-header-tmpl"
+							              				data-header-template="customer-payment-method-header-tmpl"
 														data-text-field="name" 
 							              				data-value-field="id"
 							              				data-bind="value: obj.payment_method_id,
@@ -16777,7 +16818,7 @@
 					required data-required-msg="required" style="width: 40%;" />
 
 			<input id="ddlMesurement" data-role="dropdownlist"
-					data-header-template="measurement-header-tmpl"                  
+					data-header-template="item-measurement-header-tmpl"                  
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -17224,7 +17265,7 @@
 					required data-required-msg="required" style="width: 40%;" />
 
 			<input id="ddlMesurement" data-role="dropdownlist"
-					data-header-template="measurement-header-tmpl"                  
+					data-header-template="item-measurement-header-tmpl"                  
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -17729,7 +17770,7 @@
 					required data-required-msg="required" style="width: 40%;" />
 
 			<input id="ddlMesurement" data-role="dropdownlist"
-					data-header-template="measurement-header-tmpl"                  
+					data-header-template="item-measurement-header-tmpl"                  
                    data-text-field="measurement"
                    data-value-field="measurement_id"
                    data-bind="value: measurement_id,
@@ -23958,7 +23999,7 @@
 												<td>
 													<input id="ddlPaymentMethod" name="ddlPaymentMethod"
 															data-role="dropdownlist"								
-															data-header-template="payment-method-header-tmpl"
+															data-header-template="customer-payment-method-header-tmpl"
 								              				data-value-primitive="true"
 															data-text-field="name" 
 								              				data-value-field="id"
@@ -24329,7 +24370,8 @@
 												</div>
 												<div class="select2-container" style="width: 100%;">								
 													<input id="cbbContact" name="cbbContact"
-														   data-role="combobox"											                    
+														   data-role="combobox"
+														   data-header-template="vendor-header-tmpl"										                    
 										                   data-value-primitive="true"
 										                   data-template="contact-list-tmpl"
 										                   data-text-field="name"
@@ -24347,7 +24389,7 @@
 							</div>
 						</div>
 						
-						<div class="strong" style="width: 90%; padding: 10px;" align="center"
+						<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 							data-bind="style: {
 							        backgroundColor: bgColor}">
 							<div align="left">AMOUNT PAID</div>
@@ -24396,7 +24438,8 @@
 							            	</td>				
 											<td>
 												<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-														data-role="dropdownlist"														
+														data-role="dropdownlist"
+														data-header-template="vendor-payment-method-header-tmpl"														
 							              				data-value-primitive="true"
 														data-text-field="name" 
 							              				data-value-field="id"						              				 
@@ -24412,6 +24455,7 @@
 						            		<td>
 												<input id="ddlCashAccount" name="ddlCashAccount" 
 													data-role="dropdownlist"
+													data-header-template="account-header-tmpl"
 													data-template="account-list-tmpl"														
 						              				data-value-primitive="true"
 													data-text-field="name" 
@@ -24427,7 +24471,8 @@
 											<td>Segments</td>
 											<td>
 												<select data-role="multiselect"
-													   data-value-primitive="true"								   
+													   data-value-primitive="true"	
+													   data-header-template="segment-header-tmpl"							   
 													   data-item-template="segment-list-tmpl"				    
 													   data-value-field="id" 
 													   data-text-field="code"
@@ -26123,8 +26168,9 @@
 										<label for="ddlCategory"><span data-bind="text: lang.lang.category"></span> <span style="color:red">*</span></label>										
 										<input id="ddlCategory" id="ddlCategory"
 											   data-option-label="Select Category..."
-											   data-role="dropdownlist"							                   
-							                   data-value-primitive="true"
+											   data-role="dropdownlist"
+											   data-header-template="item-category-header-tmpl"
+											   data-value-primitive="true"
 							                   data-text-field="name"
 							                   data-value-field="id"
 							                   data-bind="value: obj.category_id,
@@ -26142,6 +26188,7 @@
 										<label for="ddlItemGroup"><span data-bind="text: lang.lang.group"></span> </label>										
 										<input id="ddlItemGroup" id="ddlItemGroup"											   
 											   data-role="dropdownlist"
+											   data-header-template="item-group-header-tmpl"
 											   data-option-label="Select Group..."
 											   data-cascade-from="ddlCategory"
 											   data-cascade-from-field="category_id"							                   
@@ -26235,7 +26282,8 @@
 										<label for="ddlMeasurement"><span data-bind="text: lang.lang.unit_measure"></span> <span style="color:red">*</span></label>
 										<input id="ddlMeasurement" name="ddlMeasurement"
 										   data-option-label="(--- Select ---)" 
-										   data-role="dropdownlist"						                   
+										   data-role="dropdownlist"
+										   data-header-template="item-measurement-header-tmpl"					                   
 						                   data-value-primitive="true"
 						                   data-text-field="name"
 						                   data-value-field="id"
@@ -26288,6 +26336,7 @@
 											<label for="ddlIncome"><span data-bind="text: lang.lang.income_account"></span><span style="color:red">*</span></label>											
 											<input id="ddlIncome" name="ddlIncome"
 												   data-role="dropdownlist"
+												   data-header-template="account-header-tmpl"
 												   data-template="account-list-tmpl"								                   
 								                   data-value-primitive="true"
 								                   data-text-field="name"
@@ -26301,6 +26350,7 @@
 											<label for="ddlCogs"><span data-bind="text: lang.lang.cost_of_good_sold_account"></span><span style="color:red">*</span></label>
 											<input id="ddlCogs" name="ddlCogs"
 												   data-role="dropdownlist"
+												   data-header-template="account-header-tmpl"
 												   data-template="account-list-tmpl"								                   
 								                   data-value-primitive="true"
 								                   data-text-field="name"
@@ -26387,12 +26437,14 @@
 		<td>
 			<input id="cbbVendor" name="cbbVendor" 
 			   data-role="combobox"
+			   data-header-template="vendor-header-tmpl"
+			   data-template="contact-list-tmpl"
                data-placeholder="vendor ..."
                data-auto-bind="false"
                data-value-primitive="true"
                data-filter="startswith"							                   
                data-min-length="3"							                   
-               data-text-field="company"
+               data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
                           source: vendorList"
@@ -26410,13 +26462,15 @@
 	<tr>		
 		<td>
 			<input id="cbbCustomer" name="cbbCustomer" 
-			   data-role="combobox"
+			  data-role="combobox"
+			   data-header-template="contact-header-tmpl"
+			   data-template="contact-list-tmpl"
                data-placeholder="customer ..."
                data-auto-bind="false"
                data-value-primitive="true"
                data-filter="startswith"							                   
                data-min-length="3"							                   
-               data-text-field="fullname"
+               data-text-field="name"
                data-value-field="id"										                   
                data-bind="value: contact_id,
                           source: customerList"
@@ -30543,11 +30597,7 @@
 <!-- ***************************
 *	Template List Section     *
 **************************** -->
-<script id="contact-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/customer">+ Add New Customer</a>
-    </strong>
-</script>
+
 <script id="contact-list-tmpl" type="text/x-kendo-tmpl">
 	<span>#=abbr##=number#</span>	
 	<span>#=name#</span>	
@@ -30556,11 +30606,6 @@
 	<span>
 		#=code# - #=country#
 	</span>
-</script>
-<script id="employee-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/employee">+ Add New Employee</a>
-    </strong>
 </script>
 <script id="segment-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
@@ -30580,6 +30625,33 @@
 		#=number# #=name#
 	</span>
 </script>
+
+<!--- Costomer -->
+<script id="contact-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/customer">+ Add New Customer</a>
+    </strong>
+</script>
+<script id="customer-payment-method-header-tmpl" type="text/x-kendo-tmpl">
+	<strong>
+    	<a href="\#/customer_setting">+ Add New Payment Method</a>
+    </strong>	
+</script>
+<script id="customer-term-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/customer_setting">+ Add New Term</a>
+    </strong>
+</script>
+
+
+<!--- Eemployee -->
+<script id="employee-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/employee">+ Add New Employee</a>
+    </strong>
+</script>
+
+<!--- Item - Inventory -->
 <script id="item-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
     	<a href="\#/item">+ Add New Item</a> &nbsp;&nbsp;
@@ -30607,19 +30679,33 @@
 </script>
 <script id="item-measurement-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
-    	<a href="\#/item_setting">+ Add New Item Measurement</a>
+    	<a href="\#/item_setting">+ Add New Measurement</a>
     </strong>
 </script>
-<script id="measurement-header-tmpl" type="text/x-kendo-tmpl">
-	<strong>
-    	<a href="\#/item_setting">+ Add New Measurement</a>
-    </strong>	
+
+<!--- Vendor - Supplier -->
+<script id="vendor-type-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/vendor_setting">+ Add New Supplier Type</a>
+    </strong>
 </script>
-<script id="tax-header-tmpl" type="text/x-kendo-tmpl">
-	<strong>
-    	<a href="\#/sale_tax">+ Add New Tax</a>
-    </strong>	
+<script id="vendor-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/vendor">+ Add New Supplier</a>
+    </strong>
 </script>
+<script id="vendor-payment-method-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/vendor_setting">+ Add New Payment Method</a>
+    </strong>
+</script>
+<script id="vendor-payment-term-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/vendor_setting">+ Add New Payment Term</a>
+    </strong>
+</script>
+
+<!--- Account -->
 <script id="account-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
     	<a href="\#/account">+ Add New Account</a>
@@ -30650,21 +30736,13 @@
 	-
 	<span>#=name#</span>
 </script>
-<script id="term-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/customer_setting">+ Add New Term</a>
-    </strong>
-</script>
-<script id="payment-method-header-tmpl" type="text/x-kendo-tmpl">
+
+<script id="tax-header-tmpl" type="text/x-kendo-tmpl">
 	<strong>
-    	<a href="\#/customer_setting">+ Add New Payment Method</a>
+    	<a href="\#/sale_tax">+ Add New Tax</a>
     </strong>	
 </script>
-<script id="vendor-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/vendor">+ Add New Supplier</a>
-    </strong>
-</script>
+
 <script id="reference-list-tmpl" type="text/x-kendo-tmpl">
 	<span>#=number# : #=kendo.toString(amount, "c", locale)#</span>
 	<span class="pull-right">
