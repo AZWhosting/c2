@@ -9157,361 +9157,361 @@
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">					
-			<div id="example" class="k-content">					
-			    
-		    	<div class="hidden-print pull-right">
-		    		<span class="glyphicons no-js remove_2" 
-						data-bind="click: cancel"><i></i></span>						
-				</div>
+				<div id="example" class="k-content">					
+				    
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
 
-		        <h2>Vendor Deposit</h2>			    		   
+			        <h2>Vendor Deposit</h2>			    		   
 
-			    <br>				   				
-					
-				<!-- Upper Part -->
-				<div class="row-fluid">
-					<div class="span4">
-						<div class="box-generic well" style="height: 150px;">				
-							<table class="table table-borderless table-condensed cart_total">									
-								<tr data-bind="visible: isEdit">				
-									<td>No.</td>
-									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
-								</tr>
-								<tr>
-									<td>Date</td>
-									<td class="right">
-										<input id="issuedDate" name="issuedDate" 
-												data-role="datepicker"
-												data-format="dd-MM-yyyy"
-												data-parse-formats="yyyy-MM-dd" 
-												data-bind="value: obj.issued_date, 
-															events:{ change : setRate }" 
-												required data-required-msg="required"
-												style="width:100%;" />
-									</td>
-								</tr>
-								<tr>
-									<td>Suppliers</td>
-									<td>
-										<input id="cbbContact" name="cbbContact"
-											   data-role="combobox"											                    
-							                   data-value-primitive="true"
-							                   data-template="contact-list-tmpl"
-							                   data-text-field="name"
-							                   data-value-field="id"
-							                   data-bind="value: obj.contact_id,
-							                              source: contactDS,
-							                              events:{ change: contactChanges }"
-							                   data-placeholder="Type Name.."                    
-							                   required data-required-msg="required" style="width: 100%" />
-									</td>
-								</tr>							
-								<tr>
-									<td>Currency</td>
-									<td>
-										<input id="cbbCurrency" name="cbbCurrency"
-											   data-role="combobox"				                
-							                   data-value-primitive="true"
-							                   data-auto-bind="false"
-							                   data-template="currency-list-tmpl"				   
-							                   data-text-field="code"
-							                   data-value-field="locale"
-							                   data-bind="value: obj.locale, 
-							                   			source: currencyDS, 
-							                   			events: {change : setRate}"
-							                   placeholder="Add currency..." 
-							                   required data-required-msg="required" style="width: 100%" />	
-									</td>
-								</tr>															
-							</table>
-						</div>
-					</div>					   
-
-					<div class="span8">
-
-						<div class="box-generic" style="height: 150px;">
-
-						    <!-- Tabs Heading -->
-						    <div class="tabsbar tabsbar-2">
-						        <ul class="row-fluid row-merge">
-						        	<li class="span1 glyphicons cogwheels active" ><a href="#tab1-4" data-toggle="tab" ><i></i></a>
-						            </li>
-						            <li class="span1 glyphicons pencil"><a href="#tab2-4" data-toggle="tab"><i></i></a>
-						            </li>
-						            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
-						            </li>
-						            <li class="span2 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i>Recuring</a>
-						            </li>								            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
-
-						    <div class="tab-content">
-						    	<div class="tab-pane active" id="tab1-4">
-							       <table class="table table-borderless table-condensed cart_total">						
-									<tr>
-										<td style="width: 15%">Deposit To</td>
-										<td style="width: 40%">
-											<input id="cbbAccount" name="cbbAccount"
-												   data-role="combobox"                   
-								                   data-value-primitive="true"                   
-								                   data-template="account-list-tmpl"
-								                   data-text-field="name"								                  
-								                   data-value-field="id"
-								                   data-bind="value: obj.account_id,
-								                   			  source: depositAccountDS"
-								                   data-placeholder="Add Account.."					                                      
-								                   required data-required-msg="required" style="width: 100%" />
-										</td>
-										<td style="width: 20%">Reference Type</td>
-											<td><input data-role="dropdownlist"
-								                   data-option-label="Reference Type..."								                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.reference_type,
-								                              source: referenceTypes"								                              
-								                   style="width: 100%" />						            						            		
-							            	</td>
-
-							            	
+				    <br>				   				
+						
+					<!-- Upper Part -->
+					<div class="row-fluid">
+						<div class="span4">
+							<div class="box-generic well" style="height: 150px;">				
+								<table class="table table-borderless table-condensed cart_total">									
+									<tr data-bind="visible: isEdit">				
+										<td>No.</td>
+										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
-										<td style="width: 10%">Segment</td>
-										<td style="width: 40%">
-											<select data-role="multiselect"
-										   data-value-primitive="true"								   
-										   data-item-template="segment-list-tmpl"				    
-										   data-value-field="id" 
-										   data-text-field="code"
-										   data-bind="value: obj.segments, 
-										   			source: segmentItemDS,
-										   			events:{ change: segmentChanges }"
-										   data-placeholder="Add Segment.."				   
-										   style="width: 100%" /></select>
-										</td>														
-									</tr>									
-									</table>
-						   		</div>
-						        <!-- Memo Tab content -->
-						        <div class="tab-pane" id="tab2-4">
-						        	<textarea id="memo2" cols="0" rows="4" class="k-textbox" 
-						        		data-bind="value: obj.memo2" style="width:100%;" 
-						        		placeholder="Please enter transaction purpose here ..."></textarea>
-						        </div>
-						        <!-- // Memo Tab content END -->
+										<td>Date</td>
+										<td class="right">
+											<input id="issuedDate" name="issuedDate" 
+													data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd" 
+													data-bind="value: obj.issued_date, 
+																events:{ change : setRate }" 
+													required data-required-msg="required"
+													style="width:100%;" />
+										</td>
+									</tr>
+									<tr>
+										<td>Suppliers</td>
+										<td>
+											<input id="cbbContact" name="cbbContact"
+												   data-role="combobox"											                    
+								                   data-value-primitive="true"
+								                   data-template="contact-list-tmpl"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.contact_id,
+								                              source: contactDS,
+								                              events:{ change: contactChanges }"
+								                   data-placeholder="Type Name.."                    
+								                   required data-required-msg="required" style="width: 100%" />
+										</td>
+									</tr>							
+									<tr>
+										<td>Currency</td>
+										<td>
+											<input id="cbbCurrency" name="cbbCurrency"
+												   data-role="combobox"				                
+								                   data-value-primitive="true"
+								                   data-auto-bind="false"
+								                   data-template="currency-list-tmpl"				   
+								                   data-text-field="code"
+								                   data-value-field="locale"
+								                   data-bind="value: obj.locale, 
+								                   			source: currencyDS, 
+								                   			events: {change : setRate}"
+								                   placeholder="Add currency..." 
+								                   required data-required-msg="required" style="width: 100%" />	
+										</td>
+									</tr>															
+								</table>
+							</div>
+						</div>					   
 
-						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab3-4">							            	
-						            
-						            <input id="files" name="files"
-						                   type="file"
-						                   data-role="upload"
-						                   data-show-file-list="false"
-						                   data-bind="events: { 
-				                   				select: onSelect
-						                   }">
+						<div class="span8">
 
-						            <table class="table table-bordered">
-								        <thead>
-								            <tr>			                
-								                <th>File Name</th>
-								                <th>Description</th>
-								                <th>Date</th>
-								                <th style="width: 13%;"></th>                			                
-								            </tr> 
-								        </thead>
-								        <tbody data-role="listview" 
-								        		data-template="attachment-list-tmpl" 
-								        		data-auto-bind="false"
-								        		data-bind="source: attachmentDS"></tbody>			        
-								    </table>
+							<div class="box-generic" style="height: 150px;">
 
-						        </div>
-						        <!-- // Attach Tab content END -->
+							    <!-- Tabs Heading -->
+							    <div class="tabsbar tabsbar-2">
+							        <ul class="row-fluid row-merge">
+							        	<li class="span1 glyphicons cogwheels active" ><a href="#tab1-4" data-toggle="tab" ><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons pencil"><a href="#tab2-4" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span2 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i>Recuring</a>
+							            </li>								            
+							        </ul>
+							    </div>
+							    <!-- // Tabs Heading END -->
 
-						        <!-- Recuring Tab content -->
-						        <div class="tab-pane" id="tab4-4">							            	
-						            
-						            <div class="span5">
+							    <div class="tab-content">
+							    	<div class="tab-pane active" id="tab1-4">
+								       <table class="table table-borderless table-condensed cart_total">						
+										<tr>
+											<td style="width: 15%">Deposit To</td>
+											<td style="width: 40%">
+												<input id="cbbAccount" name="cbbAccount"
+													   data-role="combobox"                   
+									                   data-value-primitive="true"                   
+									                   data-template="account-list-tmpl"
+									                   data-text-field="name"								                  
+									                   data-value-field="id"
+									                   data-bind="value: obj.account_id,
+									                   			  source: depositAccountDS"
+									                   data-placeholder="Add Account.."					                                      
+									                   required data-required-msg="required" style="width: 100%" />
+											</td>
+											<td style="width: 20%">Reference Type</td>
+												<td><input data-role="dropdownlist"
+									                   data-option-label="Reference Type..."								                   
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.reference_type,
+									                              source: referenceTypes"								                              
+									                   style="width: 100%" />						            						            		
+								            	</td>
 
-							        	<input data-role="combobox"
-						                   data-placeholder="Select existing recuring ..."
-						                   data-value-primitive="true"
-						                   data-auto-bind="false"
-						                   data-text-field="recurring_name"
-						                   data-value-field="id"
-						                   data-bind="value: obj.recurring_id,
-						                              source: recurringDS,
-						                              events:{ change:applyRecurring }"
-						                   style="width: 100%" />
+								            	
+										</tr>
+										<tr>
+											<td style="width: 10%">Segment</td>
+											<td style="width: 40%">
+												<select data-role="multiselect"
+											   data-value-primitive="true"								   
+											   data-item-template="segment-list-tmpl"				    
+											   data-value-field="id" 
+											   data-text-field="code"
+											   data-bind="value: obj.segments, 
+											   			source: segmentItemDS,
+											   			events:{ change: segmentChanges }"
+											   data-placeholder="Add Segment.."				   
+											   style="width: 100%" /></select>
+											</td>														
+										</tr>									
+										</table>
+							   		</div>
+							        <!-- Memo Tab content -->
+							        <div class="tab-pane" id="tab2-4">
+							        	<textarea id="memo2" cols="0" rows="4" class="k-textbox" 
+							        		data-bind="value: obj.memo2" style="width:100%;" 
+							        		placeholder="Please enter transaction purpose here ..."></textarea>
+							        </div>
+							        <!-- // Memo Tab content END -->
 
-						                <br><br>
+							        <!-- Attach Tab content -->
+							        <div class="tab-pane" id="tab3-4">							            	
+							            
+							            <input id="files" name="files"
+							                   type="file"
+							                   data-role="upload"
+							                   data-show-file-list="false"
+							                   data-bind="events: { 
+					                   				select: onSelect
+							                   }">
 
-						                <div align="right">
-							                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
+							            <table class="table table-bordered">
+									        <thead>
+									            <tr>			                
+									                <th>File Name</th>
+									                <th>Description</th>
+									                <th>Date</th>
+									                <th style="width: 13%;"></th>                			                
+									            </tr> 
+									        </thead>
+									        <tbody data-role="listview" 
+									        		data-template="attachment-list-tmpl" 
+									        		data-auto-bind="false"
+									        		data-bind="source: attachmentDS"></tbody>			        
+									    </table>
+
+							        </div>
+							        <!-- // Attach Tab content END -->
+
+							        <!-- Recuring Tab content -->
+							        <div class="tab-pane" id="tab4-4">							            	
+							            
+							            <div class="span5">
+
+								        	<input data-role="combobox"
+							                   data-placeholder="Select existing recuring ..."
+							                   data-value-primitive="true"
+							                   data-auto-bind="false"
+							                   data-text-field="recurring_name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.recurring_id,
+							                              source: recurringDS,
+							                              events:{ change:applyRecurring }"
+							                   style="width: 100%" />
+
+							                <br><br>
+
+							                <div align="right">
+								                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
+								            </div>
+
 							            </div>
 
-						            </div>
+							            <div class="span7">
 
-						            <div class="span7">
-
-							            <table style="width: 100%">
-							            	<tr align="right">
-							            		<td>
-							            			Name
-							            		</td>
-							            		<td>
-							            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
-							            					placeholder="Recurring name.." 
-							            					style="width: 40%;" />
-							            			Start
-									                <input data-role="datepicker"
-															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd"
-															data-bind="value: obj.start_date"
-															style="width: 40%;" />
-							            		</td>
-							            	</tr>
-							            	<tr align="right">
-							            		<td>
-								            		Every
-								            	</td>
-							            		<td>
-								            		<input data-role="numerictextbox"
-									                   data-format="n0"
-									                   data-min="0"								                   
-									                   data-bind="value: obj.interval"
-									                   style="width: 45%;" />
-
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
-										                              events: { change: frequencyChanges }"
-										                   style="width: 45%;" />
-								            	</td>
-							            	</tr>
-								            <tr align="right">
-								            	<td>
-								            		On
-								            	</td>							            	
-								            	<td>
-
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.month,
-										                   			  visible: showMonth,
-										                              source: monthList"										                   
+								            <table style="width: 100%">
+								            	<tr align="right">
+								            		<td>
+								            			Name
+								            		</td>
+								            		<td>
+								            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
+								            					placeholder="Recurring name.." 
+								            					style="width: 40%;" />
+								            			Start
+										                <input data-role="datepicker"
+																data-format="dd-MM-yyyy"
+																data-parse-formats="yyyy-MM-dd"
+																data-bind="value: obj.start_date"
+																style="width: 40%;" />
+								            		</td>
+								            	</tr>
+								            	<tr align="right">
+								            		<td>
+									            		Every
+									            	</td>
+								            		<td>
+									            		<input data-role="numerictextbox"
+										                   data-format="n0"
+										                   data-min="0"								                   
+										                   data-bind="value: obj.interval"
 										                   style="width: 45%;" />
 
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.month_option,
-										                   			  visible: showMonthOption,
-										                              source: monthOptionList,
-										                              events: { change: monthOptionChanges }"										                   
-										                   style="width: 45%;" />
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.frequency,
+											                              source: frequencyList,
+											                              events: { change: frequencyChanges }"
+											                   style="width: 45%;" />
+									            	</td>
+								            	</tr>
+									            <tr align="right">
+									            	<td>
+									            		On
+									            	</td>							            	
+									            	<td>
 
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.week,
-										                   			  visible: showWeek,
-										                              source: weekDayList"										                  
-										                   style="width: 45%;" />										            
-										        
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.day,
-										                   			  visible: showDay,
-										                              source: dayList"										                   
-										                   style="width: 45%;" />
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.month,
+											                   			  visible: showMonth,
+											                              source: monthList"										                   
+											                   style="width: 45%;" />
 
-								            	</td>
-								            </tr>
-							            </table>
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.month_option,
+											                   			  visible: showMonthOption,
+											                              source: monthOptionList,
+											                              events: { change: monthOptionChanges }"										                   
+											                   style="width: 45%;" />
 
-							        </div>									     
-						            
-						        </div>
-						        <!-- // Recuring Tab content END -->								        
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.week,
+											                   			  visible: showWeek,
+											                              source: weekDayList"										                  
+											                   style="width: 45%;" />										            
+											        
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.day,
+											                   			  visible: showDay,
+											                              source: dayList"										                   
+											                   style="width: 45%;" />
 
-						    </div>
+									            	</td>
+									            </tr>
+								            </table>
+
+								        </div>									     
+							            
+							        </div>
+							        <!-- // Recuring Tab content END -->								        
+
+							    </div>
+							</div>
+
+					    </div>
+					</div>								
+					<!-- Item List -->
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				                <th style="width: 1%;">No.</th>			               
+				                <th style="width: 30%;">ACCOUNT</th>
+				                <th>DESCRIPTION</th>
+				                <th style="width: 10%;">REF</th>			                
+				                <th style="width: 15%;">AMOUNT</th>			                			                
+				            </tr> 
+				        </thead>
+				        <tbody data-role="listview" 
+				        		data-template="vendorDeposit-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: lineDS"></tbody>			        
+				    </table>			    
+									
+		            <!-- Bottom part -->
+		            <div class="row-fluid">
+			
+						<!-- Column -->
+						<div class="span6 hidden-print">
+							
+							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
+
+							
+
+							<a href="#/account" class="btn btn-default">Add New Account</a>						
+							
 						</div>
-
-				    </div>
-				</div>								
-				<!-- Item List -->
-				<table class="table table-bordered table-primary table-striped table-vertical-center">
-			        <thead>
-			            <tr>
-			                <th style="width: 1%;">No.</th>			               
-			                <th style="width: 30%;">ACCOUNT</th>
-			                <th>DESCRIPTION</th>
-			                <th style="width: 10%;">REF</th>			                
-			                <th style="width: 15%;">AMOUNT</th>			                			                
-			            </tr> 
-			        </thead>
-			        <tbody data-role="listview" 
-			        		data-template="vendorDeposit-template" 
-			        		data-auto-bind="false"
-			        		data-bind="source: lineDS"></tbody>			        
-			    </table>			    
-								
-	            <!-- Bottom part -->
-	            <div class="row-fluid">
-		
-					<!-- Column -->
-					<div class="span6 hidden-print">
+						<!-- Column END -->
 						
-						<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
-
-						
-
-						<a href="#/account" class="btn btn-default">Add New Account</a>						
+						<!-- Column -->
+						<div class="span6">
+							<table class="table table-borderless table-condensed cart_total">
+								<tbody>								
+									<tr>
+										<td class="right">Total:</td>
+										<td class="right strong"><span data-bind="text: total"></span></td>
+									</tr>								
+								</tbody>
+							</table>
+						</div>
+						<!-- // Column END -->
 						
 					</div>
-					<!-- Column END -->
+		           
+		            <br>
 					
-					<!-- Column -->
-					<div class="span6">
-						<table class="table table-borderless table-condensed cart_total">
-							<tbody>								
-								<tr>
-									<td class="right">Total:</td>
-									<td class="right strong"><span data-bind="text: total"></span></td>
-								</tr>								
-							</tbody>
-						</table>
+					<!-- Form actions -->
+					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
+						<span id="notification"></span>
+
+						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
+						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>										
+						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
+						<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
 					</div>
-					<!-- // Column END -->
-					
-				</div>
-	           
-	            <br>
-				
-				<!-- Form actions -->
-				<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-					<span id="notification"></span>
+					<!-- // Form actions END -->								
 
-					<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-					<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>										
-					<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
-					<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-				</div>
-				<!-- // Form actions END -->								
-
-			</div>							
+				</div>							
 			</div>
 		</div>
 	</div>
@@ -14792,7 +14792,7 @@
 								            		Reference	            						            		
 								            	</td>
 								            	<td>
-													<select data-role="combobox"
+													<input data-role="combobox"
 															data-template="reference-list-tmpl"
 															data-auto-bind="false"
 								              				data-value-primitive="true"
@@ -14801,7 +14801,7 @@
 								              				data-bind="value: obj.reference_id,
 								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}" 
-								              				style="width: 100%" ></select>
+								              				style="width: 100%" />
 												</td>
 											</tr>	
 							            </table>						            
@@ -15359,7 +15359,7 @@
 								            		Reference	            						            		
 								            	</td>
 								            	<td>
-													<select data-role="combobox"
+													<input data-role="combobox"
 															data-template="reference-list-tmpl"
 															data-auto-bind="false"
 								              				data-value-primitive="true"
@@ -15368,7 +15368,7 @@
 								              				data-bind="value: obj.reference_id,
 								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}" 
-								              				style="width: 100%"></select>
+								              				style="width: 100%" />
 												</td>
 											</tr>
 										</table>
@@ -15589,7 +15589,7 @@
 					                   data-value-field="id"
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
-					                   data-option-label="Select template..." />
+					                   data-option-label="Select Template..." />
 							</div>
 							<div class="span9" align="right">
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
@@ -44397,25 +44397,25 @@
 		taxItemDS 			: banhji.source.customerTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),		
-		segmentItemDS		: banhji.source.segmentItemDS,		
+		segmentItemDS		: banhji.source.segmentItemDS,
+		amtDueColor 		: banhji.source.amtDueColor,
+	    confirmMessage 		: banhji.source.confirmMessage,		
 		frequencyList 		: banhji.source.frequencyList,
 		monthOptionList 	: banhji.source.monthOptionList,
 		monthList 			: banhji.source.monthList,
 		weekDayList 		: banhji.source.weekDayList,
-		dayList 			: banhji.source.dayList,			    
-	    amtDueColor 		: banhji.source.amtDueColor,
-	    confirmMessage 		: banhji.source.confirmMessage,
-	    statusSrc 			: "",
+		dayList 			: banhji.source.dayList,
 		showMonthOption 	: false,
 		showMonth 			: false,
 		showWeek 			: false,
 		showDay 			: false,
 		obj 				: null,
 		isEdit 				: false,
+		showDiscount 		: false,
 		saveClose 			: false,
 		savePrint 			: false,
-		saveRecurring 		: false,		
-		showDiscount 		: false,
+		saveRecurring 		: false,
+		statusSrc 			: "",
 		sub_total 			: 0,		
 		discount 			: 0,
 		balance 			: 0,		
@@ -44455,24 +44455,6 @@
 		    	obj.set("credit_allowed", creditAllowed, "c");		
 			});				
 		},
-		//Template
-		loadDefaultTemplate	: function(){
-			var obj = this.get("obj");
-
-			if(this.txnTemplateDS.total()>0){
-				var txnTmpl = this.txnTemplateDS.at(0);
-				obj.set("transaction_template_id", txnTmpl.id);				
-			}else{
-				this.txnTemplateDS.bind("requestEnd", function(e){
-					if(e.type=="read"){
-						var response = e.response.results;
-						if(response.length>0){
-							obj.set("transaction_template_id", response[0].id);
-						}
-					}
-				});
-			}
-		},	
 		//Upload
 		onSelect 			: function(e){			
 	        // Array with information about the uploaded files
@@ -44851,7 +44833,6 @@
 
 			this.addRow();
 			this.setRate();
-			this.loadDefaultTemplate();						
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -45309,24 +45290,6 @@
 		    	obj.set("credit_allowed", creditAllowed, "c");		
 			});				
 		},
-		//Template
-		loadDefaultTemplate	: function(){
-			var obj = this.get("obj");
-
-			if(this.txnTemplateDS.total()>0){
-				var txnTmpl = this.txnTemplateDS.at(0);
-				obj.set("transaction_template_id", txnTmpl.id);				
-			}else{
-				this.txnTemplateDS.bind("requestEnd", function(e){
-					if(e.type=="read"){
-						var response = e.response.results;
-						if(response.length>0){
-							obj.set("transaction_template_id", response[0].id);
-						}
-					}
-				});
-			}
-		},
 		//Upload
 		onSelect 			: function(e){			
 	        // Array with information about the uploaded files
@@ -45673,7 +45636,7 @@
 
 			this.dataSource.insert(0, {				
 				contact_id 			: "",				
-				reference_id 		: 0,
+				reference_id 		: "",
 				recurring_id 		: "",
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
@@ -45711,7 +45674,6 @@
 
 			this.addRow();
 			this.setRate();
-			this.loadDefaultTemplate();			
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -46149,7 +46111,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter: { field: "type", value:"Sale_Order" },
+			filter: { field: "type", value:"Deposit" },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -46161,6 +46123,8 @@
 		depositAccountDS 	: banhji.source.depositAccountDS,
 		segmentItemDS 		: banhji.source.segmentItemDS,
 		accountDS 			: banhji.source.cashAccountDS,
+		amtDueColor 		: banhji.source.amtDueColor,
+	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
 		monthList 			: banhji.source.monthList,	
 		monthOptionList 	: banhji.source.monthOptionList,
@@ -46187,24 +46151,6 @@
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
 				}								
-			}
-		},
-		//Template
-		loadDefaultTemplate	: function(){
-			var obj = this.get("obj");
-
-			if(this.txnTemplateDS.total()>0){
-				var txnTmpl = this.txnTemplateDS.at(0);
-				obj.set("transaction_template_id", txnTmpl.id);				
-			}else{
-				this.txnTemplateDS.bind("requestEnd", function(e){
-					if(e.type=="read"){
-						var response = e.response.results;
-						if(response.length>0){
-							obj.set("transaction_template_id", response[0].id);
-						}
-					}
-				});
 			}
 		},
 		//Upload
@@ -46317,6 +46263,7 @@
 		    	obj.set("account_id", contact.deposit_account_id);
 		    	obj.set("locale", contact.locale);
 		    	this.setRate();
+		    	this.loadReference();
 	    	}
 	    },
 		//Currency Rate
@@ -46338,20 +46285,10 @@
 
 				if(view.length>0){
 					obj.set("rate", kendo.parseFloat(view[0].rate));
-
-					$.each(self.lineDS.data(), function(index, value){
-						value.set("rate", kendo.parseFloat(view[0].rate));
-						value.set("locale", view[0].locale);
-					});
 				}else{
 					obj.set("rate", 1);
-
-					$.each(self.lineDS.data(), function(index, value){
-						value.set("rate", 1);
-						value.set("locale", banhji.institute.locale);
-					});
 				}
-			});
+			});				
 		},
 		//Segment
 		segmentChanges 		: function(e) {
@@ -46388,16 +46325,10 @@
 			}).then(function(e){
 				var view = self.dataSource.view();
 
-				if(view.length>0){
-					self.set("obj", view[0]);
-					self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
-		        }
-
-				self.lineDS.query({
-					filter: { field: "transaction_id", value: id },
-					page: 1,
-					pageSize: 100
-				});
+				self.set("obj", view[0]);
+				self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
+				self.lineDS.filter({ field: "transaction_id", value: id });
+				self.journalLineDS.filter({ field: "transaction_id", value: id });
 			});
 		},
 		changes				: function(){
@@ -46427,29 +46358,31 @@
 			this.set("total", 0);
 
 			this.dataSource.insert(0, {
-				recurring_id 		: "",
-				account_id 			: "",
-				user_id 			: this.get("uer_id"),
-				reference_id	 	: 0,
-			   	type				: "Deposit", //required
-			   	amount				: 0,
-			   	rate				: 1,
-			   	locale 				: banhji.institute.locale,
-			   	issued_date 		: new Date(),
-			   	memo 				: "",
-			   	memo2 				: "",
-			   	segments 			: [],
-			   	is_journal 			: 1,
+				contact_id 				: "",
+				transaction_template_id : 0,
+				recurring_id 			: "",
+				account_id 				: "",
+				user_id 				: this.get("uer_id"),
+				reference_id	 		: "",
+			   	type					: "Deposit", //required
+			   	amount					: 0,
+			   	rate					: 1,
+			   	locale 					: banhji.institute.locale,
+			   	issued_date 			: new Date(),
+			   	memo 					: "",
+			   	memo2 					: "",
+			   	segments 				: [],
+			   	is_journal 				: 1,
 			   	//Recurring
-			   	recurring_name 		: "",
-			   	start_date 			: new Date(),
-			   	frequency 			: "Daily",
-			   	month_option 		: "Day",
-			   	interval 			: 1,
-			   	day 				: 1,
-			   	week 				: 0,
-			   	month 				: 0,
-			   	is_recurring 		: 0
+			   	recurring_name 			: "",
+			   	start_date 				: new Date(),
+			   	frequency 				: "Daily",
+			   	month_option 			: "Day",
+			   	interval 				: 1,
+			   	day 					: 1,
+			   	week 					: 0,
+			   	month 					: 0,
+			   	is_recurring 			: 0
 	    	});
 
 			var obj = this.dataSource.at(0);
@@ -46530,6 +46463,12 @@
 		    	if(this.attachmentDS.hasChanges()){
 		    		obj.set("dirty", true);
 		    	}
+
+		    	$.each(this.journalLineDS.data(), function(index, value){										
+					value.set("deleted", 1);										
+				});
+
+				this.addJournal(obj.id);
 	    	}	    	
 	    	
 			//Save Obj
@@ -46613,12 +46552,11 @@
 		},
 		addJournal 			: function(transaction_id){
 	    	var self = this,
-	    	sum =0 ,
+	    	sum = 0,
 	    	obj = this.get("obj"),
 	    	contact = this.contactDS.get(obj.contact_id);
 
 			//Cash account on DR
-					
 			$.each(this.lineDS.data(), function(index, value){
 				sum += value.amount;
 				self.journalLineDS.add({
@@ -46635,6 +46573,7 @@
 				});
 			});
 
+			//Deposit on CR
 			this.journalLineDS.add({
 				transaction_id 		: transaction_id,
 				account_id 			: obj.account_id,
@@ -62520,6 +62459,7 @@
 
 			var vm = banhji.quote;
 			banhji.userManagement.addMultiTask("Quote","quote",vm);
+
 			if(banhji.pageLoaded["quote"]==undefined){
 				banhji.pageLoaded["quote"] = true;				        
 
@@ -62628,6 +62568,68 @@
 			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }
 				});
+			}
+
+			vm.pageLoad(id, is_recurring);			
+		}		
+	});
+	banhji.router.route("/customer_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{						
+			banhji.view.layout.showIn("#content", banhji.view.customerDeposit);			
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.customerDeposit;
+			banhji.userManagement.addMultiTask("Customer Deposit","customer_deposit",vm);
+
+			if(banhji.pageLoaded["customer_deposit"]==undefined){
+				banhji.pageLoaded["customer_deposit"] = true;
+
+		        var validator = $("#example").kendoValidator().data("kendoValidator");
+												
+		        $("#saveNew").click(function(e){				
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();		            				  
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }		            
+				});
+
+				$("#saveClose").click(function(e){				
+					e.preventDefault();
+
+					if(validator.validate()){
+						vm.set("saveClose", true);
+		            	vm.save();		            	
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#savePrint").click(function(e){				
+					e.preventDefault();
+					
+					if(validator.validate()){
+						vm.set("savePrint", true);
+		            	vm.save();       				  
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }		            
+				});
+
+				$("#saveRecurring").click(function(e){				
+					e.preventDefault();
+
+					if(validator.validate() && vm.validateRecurring()){
+		            	vm.set("saveRecurring", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});				
 			}
 
 			vm.pageLoad(id, is_recurring);			
@@ -63111,79 +63113,6 @@
 			}
 
 			vm.pageLoad(id);
-		}		
-	});
-	banhji.router.route("/customer_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.customerDeposit);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.customerDeposit;
-			banhji.userManagement.addMultiTask("Customer Deposit","customer_deposit",vm);
-			if(banhji.pageLoaded["customer_deposit"]==undefined){
-				banhji.pageLoaded["customer_deposit"] = true;				        
-
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-				
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-		            	window.print();
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});
-
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.saveRecurring();
-		            	
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});				
-			}
-
-			vm.pageLoad(id, is_recurring);			
 		}		
 	});
 	banhji.router.route("/customer_report_center", function(){
