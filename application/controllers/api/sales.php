@@ -209,18 +209,18 @@ class Sales extends REST_Controller {
 				$total += floatval($value->amount)/floatval($value->rate);
 			}
 		}
-
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
 				'group' 	=> $key,
 				'amount'	=> $value['amount'],
-				'items'		=> $value['transactions']
+				'items'		=> $value['transactions'],
 			);
 		}
+
 		$data['total'] = $total;
 		$data['count'] = count($customers);
 		//Response Data
-		$this->response($data, 200);
+		$this->response($data, 200);	
 	}
 
 	function invoice_list_get() {
