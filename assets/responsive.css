@@ -9,11 +9,14 @@
 #ddlCurrency-list,
 #ddlAP-list,
 #ddlTradeDiscountAccount-list,
-#ddlPrePaymentAccount-list{
+#ddlPrePaymentAccount-list,
+#cbbAccounts-list,
+#ddlVendor-list{
   width: 350px !important;
 }
+#ddlMeasurement-list,
 #ddlMesurement-list{
-  width: 150px !important;
+  width: 250px !important;
 }
 #ccbTaxItem-list{
   width: 150px !important;

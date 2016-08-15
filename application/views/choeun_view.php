@@ -17473,7 +17473,7 @@
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span10" id="invFormContent" style="border:1px solid #ccc; margin: 0 auto;float:none;padding-bottom:20px;margin-bottom: 30px;">	
 						</div>
-						<div style="display:none" id="khPDF">
+						<div id="khPDF">
 							<div class="inv1">
 						    	<div class="head">
 						        	<div class="logo">
@@ -47783,16 +47783,16 @@
 		    
 		},	    
 		savePDF				: function(e){
-	        
-			var draw = kendo.drawing;
+			kendo.drawing.drawDOM($('#invFormContent')).then(function(group){
+	          kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
+	        });
+			/*var draw = kendo.drawing;
 
 	        draw.drawDOM($("#khPDF"), {
 	            avoidLinks: true,
 	            paperSize: "A4"
 	        })
 	        .then(function(root) {
-	        	
-
 	            return draw.exportPDF(root);
 	        })
 	        .done(function(data) {
@@ -47800,7 +47800,7 @@
 	                dataURI: data,
 	                fileName: "1.pdf"
 	            });
-	        });
+	        });*/
 		},		
 		loadObj 			: function(id){
 			var self = this;				
