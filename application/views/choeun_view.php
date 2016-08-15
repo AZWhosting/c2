@@ -15547,8 +15547,8 @@
 </script>
 <script id="customerSetting-form-template" type="text/x-kendo-template">
 	<tr>
-		<td class="center"><a href="\\#/invoice_custom/#= id # "> #=name#  </a></td>
-		<td class="center"> 
+		<td ><a style="text-align: left; padding-left: 10px;" href="\\#/invoice_custom/#= id # "> #=name#  </a></td>
+		<td style="text-align: left; padding-left: 10px!important;"> 
 			#= type.replace("_"," ")# 
 		</td>
 		<td class="center"> #if( updated_at ){ # 
@@ -17473,7 +17473,7 @@
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span10" id="invFormContent" style="border:1px solid #ccc; margin: 0 auto;float:none;padding-bottom:20px;margin-bottom: 30px;">	
 						</div>
-						<div id="khPDF">
+						<div style="display: none;" id="khPDF">
 							<div class="inv1">
 						    	<div class="head">
 						        	<div class="logo">
@@ -47724,7 +47724,7 @@
 				this.transactionSync()
 				.then(function(data){
 					self.addEmpty();
-					banhji.customerSetting.txnTemplateDS.fetch();												
+					banhji.customerSetting.txnTemplateDS.fetch();											
 				});
 			}
 		},
@@ -47861,7 +47861,7 @@
 					    	});	
 					    }
 					}
-				},7000);
+				},6000);
 			});
 		},
 		cancel 				: function(){
