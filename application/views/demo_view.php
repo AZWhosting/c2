@@ -9175,7 +9175,7 @@
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">					
-<<<<<<< HEAD
+
 			<div id="example" class="k-content">					
 			    
 		    	<div class="hidden-print pull-right">
@@ -9248,124 +9248,6 @@
 					</div>					   
 
 					<div class="span8">
-
-						<div class="box-generic" style="height: 150px;">
-=======
-				<div id="example" class="k-content">					
-				    
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
-					</div>
->>>>>>> origin/master
-
-			        <h2>Vendor Deposit</h2>			    		   
-
-				    <br>				   				
-						
-					<!-- Upper Part -->
-					<div class="row-fluid">
-						<div class="span4">
-							<div class="box-generic well" style="height: 150px;">				
-								<table class="table table-borderless table-condensed cart_total">									
-									<tr data-bind="visible: isEdit">				
-										<td>No.</td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
-									</tr>
-									<tr>
-<<<<<<< HEAD
-										<td style="width: 15%">Deposit To</td>
-										<td style="width: 40%">
-											<input id="cbbAccount" name="cbbAccount"
-												   data-role="combobox"                   
-								                   data-value-primitive="true" 
-								                   data-header-template="account-header-tmpl"                  
-								                   data-template="account-list-tmpl"
-								                   data-text-field="name"								                  
-								                   data-value-field="id"
-								                   data-bind="value: obj.account_id,
-								                   			  source: depositAccountDS"
-								                   data-placeholder="Add Account.."					                                      
-								                   required data-required-msg="required" style="width: 100%" />
-=======
-										<td>Date</td>
-										<td class="right">
-											<input id="issuedDate" name="issuedDate" 
-													data-role="datepicker"
-													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
-													data-bind="value: obj.issued_date, 
-																events:{ change : setRate }" 
-													required data-required-msg="required"
-													style="width:100%;" />
->>>>>>> origin/master
-										</td>
-									</tr>
-									<tr>
-										<td>Suppliers</td>
-										<td>
-											<input id="cbbContact" name="cbbContact"
-												   data-role="combobox"											                    
-								                   data-value-primitive="true"
-								                   data-template="contact-list-tmpl"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.contact_id,
-								                              source: contactDS,
-								                              events:{ change: contactChanges }"
-								                   data-placeholder="Type Name.."                    
-								                   required data-required-msg="required" style="width: 100%" />
-										</td>
-									</tr>							
-									<tr>
-<<<<<<< HEAD
-										<td style="width: 10%">Segment</td>
-										<td style="width: 40%">
-											<select data-role="multiselect"
-										   data-value-primitive="true"	
-										   data-header-template="segment-header-tmpl"							   
-										   data-item-template="segment-list-tmpl"				    
-										   data-value-field="id" 
-										   data-text-field="code"
-										   data-bind="value: obj.segments, 
-										   			source: segmentItemDS,
-										   			events:{ change: segmentChanges }"
-										   data-placeholder="Add Segment.."				   
-										   style="width: 100%" /></select>
-										</td>														
-									</tr>									
-									</table>
-						   		</div>
-						        <!-- Memo Tab content -->
-						        <div class="tab-pane" id="tab2-4">
-						        	<textarea id="memo2" cols="0" rows="4" class="k-textbox" 
-						        		data-bind="value: obj.memo2" style="width:100%;" 
-						        		placeholder="Please enter transaction purpose here ..."></textarea>
-						        </div>
-						        <!-- // Memo Tab content END -->
-=======
-										<td>Currency</td>
-										<td>
-											<input id="cbbCurrency" name="cbbCurrency"
-												   data-role="combobox"				                
-								                   data-value-primitive="true"
-								                   data-auto-bind="false"
-								                   data-template="currency-list-tmpl"				   
-								                   data-text-field="code"
-								                   data-value-field="locale"
-								                   data-bind="value: obj.locale, 
-								                   			source: currencyDS, 
-								                   			events: {change : setRate}"
-								                   placeholder="Add currency..." 
-								                   required data-required-msg="required" style="width: 100%" />	
-										</td>
-									</tr>															
-								</table>
-							</div>
-						</div>					   
->>>>>>> origin/master
-
-						<div class="span8">
 
 							<div class="box-generic" style="height: 150px;">
 
@@ -9557,34 +9439,7 @@
 											                              events: { change: monthOptionChanges }"										                   
 											                   style="width: 45%;" />
 
-<<<<<<< HEAD
-				    </div>
-				</div>								
-				<!-- Item List -->
-				<table class="table table-bordered table-primary table-striped table-vertical-center">
-			        <thead>
-			            <tr>
-			                <th style="width: 1%;">No.</th>			               
-			                <th style="width: 30%;">ACCOUNT</th>
-			                <th>DESCRIPTION</th>
-			                <th style="width: 10%;">REF</th>			                
-			                <th style="width: 15%;">AMOUNT</th>			                			                
-			            </tr> 
-			        </thead>
-			        <tbody data-role="listview" 
-			        		data-template="vendorDeposit-template" 
-			        		data-auto-bind="false"
-			        		data-bind="source: lineDS"></tbody>			        
-			    </table>			    
-								
-	            <!-- Bottom part -->
-	            <div class="row-fluid">
-		
-					<!-- Column -->
-					<div class="span6 hidden-print">
-						
-						<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>																
-=======
+
 									            		<input data-role="dropdownlist"									                   
 											                   data-value-primitive="true"
 											                   data-text-field="name"
@@ -9642,10 +9497,6 @@
 							
 							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
 
-							
-
-							<a href="#/account" class="btn btn-default">Add New Account</a>						
-							
 						</div>
 						<!-- Column END -->
 						
@@ -9661,7 +9512,6 @@
 							</table>
 						</div>
 						<!-- // Column END -->
->>>>>>> origin/master
 						
 					</div>
 		           
