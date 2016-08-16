@@ -53,7 +53,7 @@
 				<div class="span12" style="padding-left: 0; margin-left: 0; margin-top: 0;">
 					<ul id="module-image">
 						<li style="text-align:center;">
-							<a href="#/customers">
+							<a href="#/customer_report_center">
 								<img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.customer"></span></span>
@@ -831,11 +831,11 @@
 					           data-bind="value: endDate, events: {change: dateMin}"
 					           placeholder="To ..." />
 
-			            <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+					  	 <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h4 data-bind="text: companyName"></h4>
 						<h2>Sale Summary by Customer</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -872,110 +872,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<br>
-	<hr>
-	<br>
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
-						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<div class="box-search">
-						<div class="hidden-print">
-					    	<input id="sorter" name="sorter"
-					    	   data-role="dropdownlist"
-					           data-value-primitive="true"
-					           data-text-field="text"
-					           data-value-field="value"
-					           data-bind="value: sorter,
-					                      source: sortList" />
-
-					        <input id="sdate" name="sdate"
-					           data-bind="value: sdate"
-					           placeholder="From ..." />
-
-					       	<input id="edate" name="edate"
-					           data-bind="value: edate"
-					           placeholder="To ..." />
-
-					  		<button id="search" type="button" data-role="button">Segment</button>
-					    </div>
-					</div>
-
-					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
-						<h2>Sale Summary by Customer is Segment</h2>
-						<p>From</p><span id="today-date" data-bind="text: sdate"><p>to</p><span id="today-date" data-bind="text: edate">
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Segment</p>
-									<span>2</span>
-								</div>
-								<div class="span6">
-									<p>Total Customer</p>
-									<span>7</span>
-								</div>
-
-							</div>
-						</div>
-						<div class="span7">
-							<div class="total-sale">
-								<p>Total Sale</p>
-								<span>121,500.00</sapn>
-							</div>
-						</div>
-					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<tr>
-							<th>CUSTOMER</th>
-							<th>TOTAL SALE</th>
-						</tr>
-						<tr>
-							<td>Phonm Penh Branch</td>
-							<td>13,000.00</td>
-						</tr>
-						<tr>
-							<td style="padding-left:30px !important;">A S Co.,Ltd</td>
-							<td style="padding-left:30px !important;">8,500.00</td>
-						</tr>
-						<tr>
-							<td style="padding-left:30px !important;">Bon Bon</td>
-							<td style="padding-left:30px !important;">10,000.00</td>
-						</tr>
-						<tr>
-							<td>Battambang Branch</td>
-							<td>13,000.00</td>
-						</tr>
-						<tr>
-							<td style="padding-left:30px !important;">Bon Bon</td>
-							<td style="padding-left:30px !important;">20,000.00</td>
-						</tr>
-						<tr>
-							<td style="padding-left:30px !important;">Sok Chan</td>
-							<td style="padding-left:30px !important;">25,000.00</td>
-						</tr>
-						<tr>
-							<td style="padding-left:30px !important;">Yellow Trading</td>
-							<td style="padding-left:30px !important;">30,000.00</td>
-						</tr>
-						<tr>
-							<th>Total</th>
-							<th>121,500.00</th>
-						</tr>
-					</table>
-
-				</div>
-			</div>
-		</div>
-	</div>
+	</div>	
 </script>
 <script id="sale-summary-tmpl" type="text/x-kendo-template">
 	<tr>
@@ -3132,25 +3029,38 @@
 					<h3 align="center" data-bind="text: lang.lang.customer_list"></h3>
 
 					<br>
-
-					<div data-role="grid"
-						 data-groupable="true"
-						 data-sortable="true"
-						 data-pageable="true"
-		                 data-columns="[
-                             { field: 'number', title:'Number' },
-                             { field: 'surname', title:'Surname' },
-                             { field: 'name', title:'Name' },
-                             { field: 'contact_type_id', title:'Type', template:'#=contact_type#' },
-                             { field: 'phone', title:'Phone' },
-                             { field: 'status', title:'Status', template:'#=status==1?&quot;Active&quot;:&quot;Inactive&quot;#' }
-                                                       ]"
-		                 data-bind="source: dataSource"></div>
+					<table class="table table-borderless table-condensed ">
+						<thead>
+							<tr>
+								<th><span>Number</span></th>
+								<th><span>Surname</span></th>
+								<th><span>name</span></th>
+								<th><span>Type</span></th>
+								<th><span>Phone</span></th>
+								<th><span>Status</span></th>
+							</tr>
+						</thead>
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"
+				                data-template="customer-list-tmpl"
+				                data-bind="source: dataSource" >
+				        </tbody>
+	            	</table>
 
 				</div> <!-- //End div example-->
 			</div><!-- //End div row-fluid-->
 		</div>
 	</div>
+</script>
+<script id="customer-list-tmpl" type="text/x-kendo-template">
+	<tr>
+		<td>#=number#</td>
+		<td>#=surname#</td>
+		<td>#=name#</td>
+		<td>#=Type#</td>
+		<td>#=Phone#</td>
+		<td>#=Status#</td>
+	</tr>
 </script>
 <script id="customerBalance" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -3248,7 +3158,7 @@
 </script>
 
 
-
+ 
 <!-- ***************************
 *	Report Section       *
 **************************** -->
@@ -6521,7 +6431,34 @@
 	/*********************
 	*  Accounting Section  *
 	**********************/
+	banhji.customerList = kendo.observable({
+		lang 					: langVM,
+		dataSource 				: dataStore(apiUrl + "contacts/customer"),
+		contactTypeDS			: banhji.source.customerTypeDS,
+		statusList 				: banhji.source.statusList,
+		contact_type_id 		: null,
+		status 					: null,		
+		pageLoad 				: function(){
 
+		},
+		search 					: function(){
+			var para = [],
+			status = this.get("status"),
+			contact_type_id = this.get("contact_type_id");
+
+			if(status!==null){
+				para.push({ field:"status", value: status });
+			}
+
+			if(contact_type_id){
+				para.push({ field:"contact_type_id", value: contact_type_id });
+			}
+
+			this.dataSource.filter(para);
+			this.set("status", null);
+			this.set("contact_type_id", null);
+		}
+	});
 	banhji.customerSale = kendo.observable({
 		lang 				: langVM,
 		locale 				: banhji.locale,
@@ -6530,6 +6467,7 @@
 		transactions 		: dataStore(apiUrl + "sales/transaction_customer"),
 		total 				: 0,
 		count 				: 0,
+		companyName 		: null,
 		startDate 			: new Date(),
 		endDate				: new Date(),
 		sorter				: '',
@@ -6629,6 +6567,7 @@
 
 
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.customerSale}),
+		saleSummaryCustomerBySegment: new kendo.Layout("#saleSummaryCustomerBySegment", {model: banhji.customerSale}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.customerSale}),
 		saleSummaryProduct: new kendo.Layout("#saleSummaryProduct", {model: banhji.saleSummaryProduct}),
 		customerTransactionList: new kendo.Layout("#customerTransactionList", {model: banhji.customerSale}),
@@ -6641,10 +6580,12 @@
 		listInvoicesCollect : new kendo.Layout("#listInvoicesCollect", {model: banhji.listInvoicesCollect}),
 		collectReport : new kendo.Layout("#collectReport", {model: banhji.collectReport}),
 		invoiceList : new kendo.Layout("#invoiceList", {model: banhji.invoiceList}),
+		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
 
 
 		//Report
 		reportDashboard: new kendo.Layout("#reportDashboard", {model: banhji.reportDashboard}),
+		customerReportCenter: new kendo.Layout("#customerReportCenter", {model: banhji.customerReportCenter}),
 
 		//Menu
 		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
@@ -6736,20 +6677,21 @@
 
 	banhji.router.route("/sale_summary_customer", function(){
 		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
+			banhji.router.navigate('/manage');			
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.saleSummaryCustomer);
-			banhji.customerSale.summarySale.read();
+			banhji.customerSale.summarySale.read();			
 			banhji.customerSale.summarySale.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
-					kendo.culture(banhji.locale);
+					kendo.culture(banhji.locale);					
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
 				}
 			});
 		}
 
 	});
+
 	banhji.router.route("/sale_detail_customer", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -8072,10 +8014,44 @@
 			vm.pageLoad();
 		}
 	});
+	banhji.router.route("/customer_list", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerList);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+
+			var vm = banhji.customerList;			
+			
+			if(banhji.pageLoaded["customer_list"]==undefined){
+				banhji.pageLoaded["customer_list"] = true;				
+				
+			}			
+		}		
+	});
 
 	/*************************
 	*   Reports Section   *
 	**************************/
+	banhji.router.route("/customer_report_center", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerReportCenter);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+
+			var vm = banhji.customerReportCenter;			
+			banhji.userManagement.addMultiTask("Customer Report Center","customer_report_center",null);
+			if(banhji.pageLoaded["customer_report_center"]==undefined){
+				banhji.pageLoaded["customer_report_center"] = true;				
+								
+			}
+
+			vm.pageLoad();			
+		}		
+	});
 	banhji.router.route("/reports", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
