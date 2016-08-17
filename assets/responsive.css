@@ -36,6 +36,10 @@
   width: 90% !important;
 }
 
+#txtAmount{
+  width: 97% !important;
+}
+
 .k-block, 
 .k-button, 
 .k-textbox, 
@@ -219,8 +223,8 @@
     font-size: 20px;
   }
   .dropdown-menu.ul-multiTaskList{
-    left: -192px !important;
-    width: 250px !important;
+    left: -254px !important;
+    width: 313px !important;
   }
 
 
@@ -421,7 +425,7 @@ width: 50% !important;
 }
 .saleSummaryCustomer  .total-customer span,
 .saleSummaryCustomer  .total-sale span{
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 800;
 }
 #edate,
@@ -577,6 +581,9 @@ width: 50% !important;
   width: 120px !important;
   color: #fff;
   padding: 5px 35px;
+}
+.span9 > .btn.btn-danger{
+  padding: 5px 56px 5px 35px;
 }
 .btn.btn-danger{
   width: 25px !important;
