@@ -23669,8 +23669,8 @@
 			        <thead>
 			            <tr>
 			                <th style="width: 1%;">No.</th>
-			                <th style="width: 20%;">METHOD</th>
 			                <th style="width: 20%;">ACCOUNT</th>
+			                <th style="width: 20%;">METHOD</th>
 			                <th>DESCRIPTION</th>
 			                <th data-bind="visible: showRef" style="width: 7%;">REF</th>
 			                <th data-bind="visible: showName" style="width: 15%;">NAME</th>
@@ -23755,18 +23755,6 @@
 			#:banhji.cashTransaction.lineDS.indexOf(data)+1#			
 		</td>
 		<td>
-			<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-				   data-role="dropdownlist"                   
-                   data-value-primitive="true"                   
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: payment_method_id,
-                              source: paymentMethodDS"
-                   data-option-label="Select method.."
-                   data-list-width="400"                    
-                   required data-required-msg="required" style="width: 100%" />	
-		</td>		
-		<td>
 			<input id="cbbAccounts" name="cbbAccounts"
 				   data-role="combobox"                   
                    data-value-primitive="true"                   
@@ -23776,6 +23764,18 @@
                    data-bind="value: account_id,
                               source: accountDS"
                    data-placeholder="Add Account.."
+                   data-list-width="400"                    
+                   required data-required-msg="required" style="width: 100%" />	
+		</td>
+		<td>
+			<input id="ddlPaymentMethod" name="ddlPaymentMethod"
+				   data-role="dropdownlist"                   
+                   data-value-primitive="true"                   
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: payment_method_id,
+                              source: paymentMethodDS"
+                   data-option-label="Select method.."
                    data-list-width="400"                    
                    required data-required-msg="required" style="width: 100%" />	
 		</td>		
@@ -29193,7 +29193,7 @@
 							<div class="widget-search separator bottom">
 								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
-									<input type="search" placeholder="Customer ..." data-bind="value: searchText, events:{change: enterSearch}">
+									<input type="search" placeholder="account ..." data-bind="value: searchText, events:{change: enterSearch}">
 								</div>
 							</div>
 							<div class="select2-container" style="width: 100%;">								
@@ -29206,8 +29206,8 @@
 
 					<div class="table table-condensed" style="height: 580px;"						 
 						 data-role="grid" 
-						 data-bind="source: contactDS"
-						 data-auto-bind="false" 
+						 data-bind="source: dataStore"
+						 data-auto-bind="true" 
 						 data-row-template="cashCenter-customer-list-tmpl"
 						 data-columns="[{title: ''}]"
 						 data-selectable=true
@@ -29227,19 +29227,9 @@
 							        	<li style="font-size: large; color: black; font-weight: bold;">
 							            	<span data-bind="text: obj.number"></span>
 							            	-
-							            	<span data-bind="text: obj.fullname"></span>
+							            	<span data-bind="text: obj.name"></span>
 							            </li>
 							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-7"><i></i></span>
-							            </li>							           
-							            <li class="glyphicons riflescope"><span data-toggle="tab" data-target="#tab2-7"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab3-7"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab4-7"><i></i></span>
-							            </li>
-							            <li class="glyphicons edit"><span data-bind="click: goEditContact"><i></i></span>
-							            </li>
-							            <li class="glyphicons user_add"><a href="#/customer"><i></i></a>
 							            </li>							            							            
 							        </ul>
 							        <div class="clearfix"></div>
@@ -29256,127 +29246,32 @@
 							            	<table class="table table-borderless table-condensed cart_total cash-table">
 								            	<tr>
 								            		<td width="50%">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goQuote">Cash Transaction</span>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashTransaction">Cash Transaction</span>
 								            		</td>
 								            		<td width="50%">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit">Cash Receipt</span>								            			
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt">Cash Receipt</span>								            			
 								            		</td>
 								            	</tr>
 								            	<tr>
 								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleOrder">Cash Payment</span>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashPayment">Cash Payment</span>
 								            		</td>
 								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goCashSale">Cash Advance</span>								            											            			
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashAdvance">Cash Advance</span>								            											            			
 								            		</td>
 								            	</tr>
 								            	<tr>
 								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn">Expense</span>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goExpense">Expense</span>
 								            		</td>
 								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice">Exchange Rate Record</span>								            											            			
+								            			<span class="btn btn-block btn-primary" data-bind="click: goExchange">Exchange Rate Record</span>								            											            			
 								            		</td>
 								            	</tr>
 								            	
 							            	</table>
 							            </div>
 							            <!-- // Transactions Tab content END -->
-
-							            <!-- SEARCH Tab content -->
-							            <div id="tab2-7" class="tab-pane box-generic">
-							                <input data-role="dropdownlist"
-							                	   data-auto-bind="false"
-						            			   data-option-label="Select Customer Type..."					            			   		                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: contact_type_id,
-								                              source: contactTypeDS"
-								                   style="width: 100%"/>
-
-							                <input data-role="dropdownlist"
-						            			   data-option-label="Select Currency..."
-						            			   data-template="currency-list-tmpl"					            			   		                   
-								                   data-value-primitive="true"
-								                   data-text-field="code"
-								                   data-value-field="id"
-								                   data-bind="value: currency_id,
-								                              source: currencyDS"
-								                   style="width: 100%"/>
-
-								            <br><br>
-								            <span class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search"></span></span>
-								            <br>
-							            </div>
-							            <!-- // SEARCH Tab content END -->							            
-
-							            <!-- INFO Tab content -->
-							            <div id="tab3-7" class="tab-pane box-generic">
-							            	<div class="row-fluid">
-								            	<div class="span6">
-										
-													<!-- Bio -->
-													<div class="widget widget-heading-simple widget-body-gray margin-none">
-														<div class="widget-head">
-															<h4 class="heading glyphicons user"><i></i> <span data-bind="text: obj.wnumber"></span> <span data-bind="text: obj.fullname"></span></h4>
-														</div>
-														<div class="widget-body">
-															<ul class="unstyled icons margin-none">
-																<li class="glyphicons group"><i></i> <span data-bind="text: obj.contact_type"></span></li>
-																<li class="glyphicons phone"><i></i> <span data-bind="text: obj.phone"></span></li>
-																<li class="glyphicons envelope"><i></i> <span data-bind="text: obj.email"></li>
-																<li class="glyphicons calendar"><i></i> <span data-bind="text: obj.registered_date"></li>
-															</ul>
-														</div>
-													</div>
-													<!-- // Bio END -->
-													
-												</div>
-												<div class="span6">
-													<!-- Bio -->
-													<div class="widget widget-heading-simple widget-body-gray margin-none">
-														<div class="widget-head">
-															<h4 class="heading glyphicons edit" data-bind="click: goEditContact"><i></i> <span data-bind="text: lang.lang.edit"></span></h4>
-														</div>
-														<div class="widget-body">
-															<p><i class="icon-home"></i> <span data-bind="text: obj.address"></span></p>
-														</div>
-													</div>
-													<!-- // Bio END -->
-												</div>
-											</div>
-							            </div>
-							            <!-- // INFO Tab content END -->
-
-							            <!-- NOTE Tab content -->
-							            <div id="tab4-7" class="tab-pane box-generic">
-
-										    <div class="chat-controls">															
-												<form class="margin-none">
-													<div class="row-fluid">
-														<div class="span10">
-															<input type="text" name="message" class="input-block-level margin-none" data-bind="value: note" placeholder="កំណត់Memo ...">
-														</div>
-														<div class="span2">
-															<span class="btn btn-block btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.save"></span></span>
-														</div>
-													</div>
-												</form>															
-											</div>
-
-											<br>
-
-									    	<div data-role="grid"
-									    	 	 data-height="100"
-					 							 data-scrollable="{virtual: true}"									                 
-								                 data-row-template="cashCenter-note-tmpl"
-								                 data-bind="source: noteDS"
-								                 data-columns="[{title: ''}]"></div>
-											
-							            </div>
-							            <!-- // NOTE Tab content END -->							            								            
-
 							        </div>
 							    </div>
 							</div>
@@ -29384,43 +29279,21 @@
 
 						<div class="span6">
 							<div class="row-fluid">
-								<div class="span6">
+								<div class="span12">
 									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
 										<span class="glyphicons coins"><i></i></span>
 										<span class="txt">Balance<span data-bind="text: balance" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
-								<div class="span6">
-									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit">
-										<span class="glyphicons briefcase"><i></i></span>
-										<span class="txt">Deposit<span data-bind="text: deposit" style="font-size:medium;"></span></span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>							
-							
-							<div class="row-fluid">
-								<div class="span6">
-									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
-										<span class="glyphicons circle_exclamation_mark"><i></i></span>
-										<span class="txt"><span data-bind="text: outInvoice"></span> Open</span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-								<div class="span6">
-									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice">
-										<span class="glyphicons turtle"><i></i></span>
-										<span class="txt"><span data-bind="text: overInvoice"></span> Over Due</span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>														
+								
+							</div>																					
 						</div>											          	
 		          	</div>
 					
 					<div>
-						<input data-role="dropdownlist"                   
+						<input data-role="dropdownlist"
+							   class="sorter"                  
 					           data-value-primitive="true"
 					           data-text-field="text"
 					           data-value-field="value"
@@ -29428,13 +29301,12 @@
 					                      source: sortList,                              
 					                      events: { change: sorterChanges }" />
 
-						<input data-role="datepicker"
-							   data-format="dd-MM-yyyy"
-					           data-bind="value: sdate,
-					                      events: { change: dateChanges }"
+						<input
+							   class="sdate"
 					           placeholder="From ..." >
 
 					    <input data-role="datepicker"
+					    	   class="edate"
 					    	   data-format="dd-MM-yyyy"
 					           data-bind="value: edate,
 					                      events: { change: dateChanges }"
@@ -29449,9 +29321,8 @@
 								<th>Date</th>
 								<th>Type</th>								
 								<th>Reference No</th>
-								<th>Amount</th>
-								<th>Status</th>
-								<th>Action</th>
+								<th>Dr.</th>
+								<th>Cr.</th>
 							</tr>
 						</thead>	            		
 	            		<tbody data-role="listview"
@@ -29481,60 +29352,11 @@
 			#}#        	
         </td>
     	<td class="right">
-    		#if(type=="GDN"){#
-    			#=kendo.toString(amount, "n0")#
-    		#}else{#
-    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
-    		#}#
+    		#=dr/rate#
     	</td>
     	<td>        	
-        	#if(type==="Invoice"){#
-        		#if(status==="0" || status==="2") {#
-        			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
-					#if(dueDate < toDay) {#
-						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
-					#} else {#
-						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
-					#}#
-				#} else {#
-					Paid
-				#}#
-        	#}else if(type==="Sale_Order" || type==="GDN"){#
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Done        			
-        		#}#
-        	#}else if(type==="Quote"){#        		
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Approved        			
-        		#}#
-        	#}#			
-		</td>    	
-    	<td align="center">
-			#if(type==="Invoice"){#
-				<a href="\#/invoice/#=id#"><i></i> Send</a>
-
-				#if(status==="0" || status==="2"){#					
-					| <a href="\#/cashier/#=id#"><i></i> Pay</a>
-				#}#        	
-			#}else if(type==="Sale_Order"){#
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}else if(type==="Quote"){#
-        		<a href="\#/quote/#=id#"><i></i> Send</a>        		
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}else if(type==="GDN"){#        		
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}#
-		</td>     	
+        	#=cr/rate#		
+		</td>   	
     </tr>
 </script>
 <script id="cashCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
@@ -29542,7 +29364,7 @@
 		<td>
 			<div class="media-body">
 				<span class="strong">
-					#=number# #=fullname#				
+					#=number# #=name#				
 				</span>
 			</div>
 		</td>
@@ -54801,6 +54623,99 @@
 	    }	 		
 	});
 
+	banhji.cashCenter = kendo.observable({
+		dataStore 	: banhji.source.cashAccountDS,
+		summaryDS  	: dataStore(apiUrl + 'centers/accounting_summary'),
+		transactionDS  		: dataStore(apiUrl + 'centers/accounting_txn'),
+		balance 	: 0,
+		obj 		: null,
+		searchText 	: null,
+		goCashTransaction: function() {
+			banhji.router.navigate('/cash_transaction');
+		},
+		goCashReceipt: function() {
+			banhji.router.navigate('/cash_receipt');
+		},
+		goCashPayment: function() {
+			banhji.router.navigate('/cash_payment');
+		},
+		goCashAdvance: function() {
+			banhji.router.navigate('/cash_advance');
+		},
+		goExpense: function() {
+			banhji.router.navigate('/expense');
+		},
+		goExchange: function() {
+			banhji.router.navigate('/currency_rate');
+		},
+		selectedRow	: function(e) {
+			this.set('obj', e.data);
+			var self = this, obj = this.get("obj");
+			var para = [],
+				obj = this.get("obj"),
+				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+			this.set('balance', 'Loading');
+			this.summaryDS.query({
+			  	filter: [
+			  		{ field:"account_id", value: obj.id }
+			  	],
+			  	page: 1,
+			  	pageSize: 100
+			}).then(function(){
+				var view = self.summaryDS.view();				
+				
+				if(view.length>0){
+					self.set("balance", kendo.toString(view[0].balance, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
+				}else{
+					self.set("balance", 0);
+				}
+			});
+
+        	if(obj.id){
+        		para.push({ field:"account_id", value: obj.id });
+        	}
+
+        	//Dates
+        	if(start && end){
+            	para.push({ field:"issued_date >=", operator:"where_related", model:"transaction", value: start });
+            	para.push({ field:"issued_date <=", operator:"where_related", model:"transaction", value: end });            	            	
+            }else if(start){
+            	para.push({ field:"issued_date", operator:"where_related", model:"transaction", value: start });
+            }else if(end){
+            	para.push({ field:"issued_date <=", operator:"where_related", model:"transaction", value: end });
+            }else{
+            	
+            }                        
+
+            this.transactionDS.query({
+            	filter: para,            	
+            	page: 1,
+            	pageSize: 100
+            });
+		},
+		search 		: function() {
+			var isNumber =  /^\d+$/.test(this.get('searchText'));
+
+			if(isNumber) {
+				this.dataStore.filter([
+					{field: "number", value: this.get('searchText')},
+					{field: "account_type_id", value: 10}
+				]);
+			} else {
+				this.dataStore.filter([
+					{field: "name", operator: "like", value: this.get('searchText')},
+					{field: "account_type_id", value: 10}
+				]);
+			}
+		}
+	});
+
+	banhji.cashDashboard = kendo.observable({
+		topCashDS 	: dataStore(apiUrl + 'dashboards/top_cash'),
+		topAdvaDS 	: dataStore(apiUrl + 'dashboards/top_advance'),
+		topExpsDS 	: dataStore(apiUrl + 'dashboards/top_expense')
+	});
 
 	/*************************
 	*	Inventory Section   *
@@ -64944,10 +64859,7 @@
 							read 	: {
 								url: apiUrl+"currencies",
 								type: "GET",
-								headers: {
-									"Entity": getDB(),
-									"User": banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id
-								},
+								headers: banhji.header,
 								dataType: 'json'
 							}							
 						},
@@ -65015,7 +64927,7 @@
 	banhji.router.route("/cash_receipt(/:id)(/:is_recurring)", function(id,is_recurring){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
-		}else{						
+		} else {						
 			banhji.view.layout.showIn("#content", banhji.view.cashReceipt);			
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -65926,103 +65838,92 @@
 		}
 	});
 	banhji.router.route("/cash_center", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
+		// if(!banhji.userManagement.getLogin()){
+		// 	banhji.router.navigate('/manage');
+		// }else{
 			banhji.view.layout.showIn("#content", banhji.view.cashCenter);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.cashMenu);
-			
+			var blank = new kendo.View('#blank-tmpl');
 			var vm = banhji.cashCenter;
 
 			if(banhji.pageLoaded["cash_center"]==undefined){
 				banhji.pageLoaded["cash_center"] = true;
-							
-				
-				vm.contactDS.query({
-				  	filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
-				  	page: 1,
-				  	pageSize: 50
-				}).then(function(e) {
-				    var view = vm.contactDS.data();
-				    
-				    if(view.length>0){
-				    	vm.set("obj", view[0]);				    	
-				    	vm.loadOutStandingInvoice(view[0].id);
-				    	vm.loadTransaction(view[0].id);				    	
-				    	vm.loadNote(view[0].id);
-				    }
-				});	
+				var start = $(".sdate"),
+					end = $(".edate");
 
-				function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
+                if(start) {
+					start = $(".sdate").kendoDatePicker({
+	                	format: "dd-MM-yyyy",
+	                    change: startChange
+	                }).data("kendoDatePicker");
+	                console.log(start);
+				} 
+				if(end) {
+					$(".edate").kendoDatePicker({
+	                	format: "dd-MM-yyyy",
+	                    change: endChange
+	                }).data("kendoDatePicker");
+				}
+				if( start && end) {
+					function startChange() {
+	                    var startDate = start.value(),
+	                    endDate = end.value();
 
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
+	                    if (startDate) {
+	                        startDate = new Date(startDate);
+	                        startDate.setDate(startDate.getDate());
+	                        end.min(startDate);
+	                    } else if (endDate) {
+	                        start.max(new Date(endDate));
+	                    } else {
+	                        endDate = new Date();
+	                        start.max(endDate);
+	                        end.min(endDate);
+	                    }
 
-                    dateChanges();
-                }
+	                    dateChanges();
+	                }
 
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
+	                function endChange() {
+	                    var endDate = end.value(),
+	                    startDate = start.value();
 
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
+	                    if (endDate) {
+	                        endDate = new Date(endDate);
+	                        endDate.setDate(endDate.getDate());
+	                        start.max(endDate);
+	                    } else if (startDate) {
+	                        end.min(new Date(startDate));
+	                    } else {
+	                        endDate = new Date();
+	                        start.max(endDate);
+	                        end.min(endDate);
+	                    }
 
-                    dateChanges();
-                }
+	                    dateChanges();
+	                }
 
-                function dateChanges(){
-                	var strDate = "";
+	                function dateChanges(){
+	                	var strDate = "";
 
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}
+						if(start.value() && end.value()){
+							strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+						}else if(start.value()){
+							strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+						}else if(end.value()){
+							strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+						}else{
+							strDate = "";
+						}
 
-					$("#strDate").text(strDate);
-                }
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");               
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
+						$(".strDate").text(strDate);
+	                }
+	                var sorter = $(".sorter").change(function(){
                 	var today = new Date(),
                 	sdate = "",
                 	edate = "",
-                	value = $("#sorter").val();
+                	value = $(".sorter").val();
 
 					switch(value){
 					case "today":								
@@ -66059,11 +65960,16 @@
 
                 	dateChanges();                	
                 });
-                
-                start.max(end.value());
-                end.min(start.value());			               
+
+	                var test = $(".start");
+	                console.log(test);
+	                
+	                start.max(end.value());
+	                end.min(start.value());	
+				}
+                		               
 			}				
-		}
+		// }
 	});
 	banhji.router.route("/cash(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
