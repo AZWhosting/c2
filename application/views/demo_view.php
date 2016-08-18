@@ -6967,7 +6967,7 @@
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
-                              source: accountDS"
+                              source: expenseAccountDS"
                    data-placeholder="Add Account.."                                     
                    required data-required-msg="required" style="width: 100%" />	
 		</td>
@@ -31513,10 +31513,27 @@
 			</div>
 
 			<!-- Graph -->
-			<div> 
-			    <div id="cash-chart" style="height: 250px; "></div>
+		    <div class="span12">
+				<div class="home-chart">
+					<!-- Graph -->
+					<div data-role="chart"
+						 data-auto-bind="false"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+		            <!-- End Graph -->      
+				</div>
 			</div>
-
 		</div>
 	</div>
 </script>
@@ -33013,7 +33030,7 @@
   				<li><a href='#/customer_recurring'>Customer Recurring List</a></li>  				 				  				 				
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/customer_report_center'>REPORTS</a></li>	  	
+	  	<li><a href="<?php echo base_url(); ?>welcome/report#/customer_report_center">REPORTS</a></li>	  	
 	  	<li><a href='#/customer_setting' class='glyphicons settings'><i></i></a></li>	  		  	
 	</ul>
 </script>
@@ -38949,7 +38966,8 @@
 		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),		
 		accountDS  			: banhji.source.accountDS,
-		cashAccountDS  		: banhji.source.accountDS,
+		cashAccountDS  		: banhji.source.cashAccountDS,
+		expenseAccountDS    : banhji.source.expenseAccountDS,
 		taxItemDS  			: dataStore(apiUrl + "tax_items"),
 		segmentItemDS 		: banhji.source.segmentItemDS,		
 		frequencyList 		: banhji.source.frequencyList,
@@ -57343,6 +57361,7 @@
 		topCashDS 	: dataStore(apiUrl + 'dashboards/top_cash'),
 		topAdvaDS 	: dataStore(apiUrl + 'dashboards/top_advance'),
 		topExpsDS 	: dataStore(apiUrl + 'dashboards/top_expense'),
+		graphDS 	: banhji.index.graphDS,
 		balance 	: 0,
 		open 		: 0,
 		overDue 	: 0,
@@ -69413,6 +69432,7 @@
 
 			if(banhji.pageLoaded["cashs"]==undefined){
 				banhji.pageLoaded["cashs"] = true;
+				banhji.cashDashboard.graphDS.fetch();
 				banhji.cashDashboard.topCashDS.read();
 				banhji.cashDashboard.topCashDS.bind('requestEnd', function(e) {
 					if(e.response) {
