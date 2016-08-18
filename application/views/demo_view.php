@@ -49363,6 +49363,7 @@
 
 				obj.set("employee_id", data.employee_id);
 				obj.set("segments", data.segments);
+				obj.set("deposit", data.deposit);
 												
 			 	this.referenceLineDS.query({
 			 		filter: { field:"transaction_id", value: obj.reference_id },
@@ -50704,6 +50705,7 @@
 				
 				obj.set("employee_id", data.employee_id);
 				obj.set("segments", data.segments);
+				obj.set("deposit", data.deposit);
 												
 			 	this.referenceLineDS.query({
 			 		filter: { field:"transaction_id", value: obj.reference_id },
