@@ -130,8 +130,8 @@
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.web_store"></span></span>
 						</li>
 						<li style="text-align:center;">
-							<a href="#">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.png" alt="Inventory">
+							<a href="#/sale_tax">
+								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.png" alt="Tax">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax"></span></span>
 						</li>
@@ -515,13 +515,7 @@
 			 	</tr>
 			</table>
 			<table class="table table-borderless table-condensed table-vertical-center ">
-				<tr>
-					<td class="center">
-						<a href="#/sale_tax">
-							<img title="Add Tax Setting" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/tax_setting.png" width="110" height="200" />
-							T.Setting
-						</a>						
-					</td>	
+				<tr>	
 					<td class="center">
 						<a href="#/journal">
 							<img title="Add Account" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/journal.png" width="110" height="200" />
@@ -534,16 +528,13 @@
 							Segment
 						</a>
 					</td>
-									
-				</tr>
-				<tr>
 					<td class="center">
 						<a href="#/">
 							<img title="Add Importing Batch" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/importing_batch.png" width="110" height="200" />
 							Import Batch
 						</a>
-					</td>													
-				</tr>							
+					</td>				
+				</tr>						
 			</table>
 
 		</div>
@@ -562,11 +553,11 @@
 					</div>
 					<div class="account-stement">
 						<h2>Statement of Financial Position</h2>
-						<p>As of xx/xx/xxxx</p>
+						<p>As of <?php echo date('d-M-Y') ?></p>
 						<table width="100%">
 							<tr>
 								<td>
-									<span>Current Asset</span>
+									<span>Current Assets</span>
 								</td>
 								<td>
 									<span> 1,000</span>
@@ -574,42 +565,19 @@
 							</tr>
 							<tr>
 								<td>
-									<span>Properties, Plants & Equipment</span>
+									<span>Non-Current Assets</span>
 								</td>
 								<td>
-									<span> 1,000</span>
+									<span> 4,000</span>
 								</td>
 							</tr>
-							<tr>
-								<td>
-									<span>Investment Property</span>
-								</td>
-								<td>
-									<span> 1,000</span>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span>Investment</span>
-								</td>
-								<td>
-									<span> 1,000</span>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span>Other Asset</span>
-								</td>
-								<td>
-									<span> 5,000</span>
-								</td>
-							</tr>
+							
 							<tr>
 								<td>
 									<span>Total Asset</span>
 								</td>
 								<td>
-									<span> 1,000</span>
+									<span> 5,000</span>
 								</td>
 							</tr>
 							<tr>
@@ -628,7 +596,7 @@
 									<span> 2,000</span>
 								</td>
 							</tr>
-							<tr >
+							<tr>
 								<td>
 									<span>Total Liabilities</span>
 								</td>
