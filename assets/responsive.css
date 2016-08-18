@@ -11,7 +11,9 @@
 #ddlTradeDiscountAccount-list,
 #ddlPrePaymentAccount-list,
 #cbbAccounts-list,
-#ddlVendor-list{
+#ddlVendor-list,
+#ddlPaymentMethod-list,
+#ddlAccount-list{
   width: 350px !important;
 }
 #ddlMeasurement-list,
@@ -22,7 +24,9 @@
   width: 150px !important;
   right: 75px;
 }
-
+.table-segment span{
+  cursor: pointer;
+}
 .topnav .dropdown-menu{
   width: 250px !important;
   margin-top: 0;
@@ -30,6 +34,10 @@
 .k-numeric-wrap.k-state-default.k-expand-padding >input:nth-child(1),
 .k-numeric-wrap.k-state-default.k-expand-padding >input:nth-child(2){
   width: 90% !important;
+}
+
+#txtAmount{
+  width: 97% !important;
 }
 
 .k-block, 
@@ -215,8 +223,8 @@
     font-size: 20px;
   }
   .dropdown-menu.ul-multiTaskList{
-    left: -192px !important;
-    width: 250px !important;
+    left: -254px !important;
+    width: 313px !important;
   }
 
 
@@ -417,7 +425,7 @@ width: 50% !important;
 }
 .saleSummaryCustomer  .total-customer span,
 .saleSummaryCustomer  .total-sale span{
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 800;
 }
 #edate,
@@ -481,31 +489,22 @@ width: 50% !important;
 }
 .btn.btn-success.btn-icon.glyphicons.ok_2,
 .btn.btn-icon.btn-primary.glyphicons.circle_ok{
-   width: 80px !important;
-  text-align: right;
-  line-height: 15px;
+  width: 90px !important;
   color: #fff;
+  padding: 5px 35px;
 }
 .btn.btn-icon.btn-default.glyphicons.ban{
-width: 90px !important;
-  text-align: right;
-  line-height: 15px;
+  width: 90px !important;
   color: #333;
+  padding: 5px 35px;
 }
 .span6.hidden-print{
   padding-left: 0;
 }
-/*#example.k-content .span6{
-  padding-right: 0;
-}*/
-/*#example.k-content .span12{
-  padding: 0;
-}*/
 .btn.btn-success.btn-icon.glyphicons.ok_2{
-   width: 50px !important;
-  text-align: right;
-  line-height: 15px;
+   width: 25px !important;
   color: #fff;
+  padding: 5px 35px;
 }
 #item-window .btn.btn-danger.btn-icon.glyphicons.remove_2,
 #saleTax-window .btn.btn-danger.btn-icon.glyphicons.remove_2{
@@ -531,9 +530,7 @@ width: 90px !important;
 }
 
 
-/*.btn-group, .btn-group-vertical {
-  float: left;
-}*/
+
 .btn-group .dropdown-menu{
   left: 0 !important;
   top: 123% !important;
@@ -552,10 +549,6 @@ width: 90px !important;
   background: #283444 !important;
   border: none !important;
 }
-/*.btn{
-  padding: 6px 12px !important;
-  border-left: none !important;
-}*/
 
 
 /*----Customer-----*/
@@ -589,8 +582,11 @@ width: 90px !important;
   color: #fff;
   padding: 5px 35px;
 }
+.span9 > .btn.btn-danger{
+  padding: 5px 56px 5px 35px;
+}
 .btn.btn-danger{
-  width: 95px !important;
+  width: 25px !important;
   color: #fff;
   padding: 5px 35px;
 

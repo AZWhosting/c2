@@ -762,7 +762,7 @@ class Dashboards extends REST_Controller {
 		//Group by contact_id
 		foreach($obj as $value) {
 			$account = $value->account->get();
-			$temp = (floatval($value->dr) - floatval($value->cr));			
+			$temp = ((floatval($value->dr) - floatval($value->cr)) / $value->rate);			
 			if(isset($customer[$value->account_id])){
 				$customer[$value->account_id]['amount'] += $temp;
 			} else {
@@ -791,6 +791,7 @@ class Dashboards extends REST_Controller {
 		}
 
 		$data['balance'] = $balance;
+		$data['cashACNumber'] = count($ids);
 		//Response Data		
 		$this->response($data, 200);
 	}
@@ -977,17 +978,29 @@ class Dashboards extends REST_Controller {
 		$top = [];		
 		$customer = [];
 		$open = 0;
+		$over_due = 0;
+		$total_advance = 0;
 
 		//Group by contact_id
 		foreach($obj as $value) {
-			$employee = $value->contact->get();			
+			$employee = $value->contact->get();
+
+			$today = date("Y-m-d");
+			$expire = $value->due_date; //from db
+
+			$today_time = new DateTime($today);
+			$expire_time = new DateTime($expire);			
 			if(isset($customer[$value->contact_id])){
 				$customer[$value->contact_id]['amount'] += floatval($value->amount) / floatval($value->rate);
 			} else {
 				$customer[$value->contact_id]['amount'] = floatval($value->amount) / floatval($value->rate);
 				$customer[$value->contact_id]['name']   = $employee->name;
 			}
-			$open++;					
+			if($today_time > $expire_time) {
+				$over_due++;
+			}
+			$open++;
+			$total_advance += floatval($value->amount) / floatval($value->rate);			
 		}		
 
 		//Sort amount
@@ -1007,6 +1020,8 @@ class Dashboards extends REST_Controller {
 			$data['results'][] = $customer[$i];
 		}
 		$data['open'] = $open;
+		$data['overDue'] = $over_due;
+		$data['total_advance'] = $total_advance;
 		//Response Data		
 		$this->response($data, 200);
 	}
