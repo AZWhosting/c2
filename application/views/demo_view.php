@@ -15660,7 +15660,6 @@
 									data-bind="style: { backgroundColor: amtDueColor}">
 									<div align="left">AMOUNT QUOTED</div>
 									<h2 data-bind="text: total" align="right"></h2>
-
 								</div>
 
 							</div>						
@@ -17063,7 +17062,7 @@
 <script id="customerDeposit-template" type="text/x-kendo-tmpl">		
 	<tr data-uid="#: uid #">		
 		<td class="center">
-			<i class="icon-trash" data-bind="events: { click: remove }"></i>
+			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
 			#:banhji.customerDeposit.lineDS.indexOf(data)+1#			
 		</td>				
 		<td>
@@ -17159,11 +17158,9 @@
 								</table>
 
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
-									data-bind="style: {
-									        backgroundColor: bgColor}">
-									<div align="left">AMOUNT DUE</div>
+									data-bind="style: { backgroundColor: amtDueColor}">
+									<div align="left">AMOUNT QUOTED</div>
 									<h2 data-bind="text: total" align="right"></h2>
-
 								</div>
 
 							</div>						
@@ -17763,9 +17760,8 @@
 								</table>
 
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
-									data-bind="style: {
-									        backgroundColor: bgColor}">
-									<div align="left">AMOUNT DUE</div>
+									data-bind="style: { backgroundColor: amtDueColor}">
+									<div align="left">AMOUNT QUOTED</div>
 									<h2 data-bind="text: total" align="right"></h2>
 								</div>
 
@@ -18344,11 +18340,9 @@
 							</table>
 
 							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
-								data-bind="style: {
-								        backgroundColor: bgColor}">
-								<div align="left">AMOUNT DUE</div>
+								data-bind="style: { backgroundColor: amtDueColor}">
+								<div align="left">AMOUNT QUOTED</div>
 								<h2 data-bind="text: total" align="right"></h2>
-
 							</div>
 
 						</div>						
@@ -18761,9 +18755,8 @@
 							</table>
 
 							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
-								data-bind="style: {
-								        backgroundColor: bgColor}">
-								<div align="left">AMOUNT PAID</div>
+								data-bind="style: { backgroundColor: amtDueColor}">
+								<div align="left">AMOUNT QUOTED</div>
 								<h2 data-bind="text: total" align="right"></h2>
 							</div>
 
@@ -23917,7 +23910,7 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
-			        <h2>CUSTOM FORMS</h2>
+			        <h2 style="padding:0 15px;"">CUSTOM FORMS</h2>
 				    <br>	
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span4">	
@@ -23955,7 +23948,7 @@
                                 </div>
 							</div>
 						</div>
-						<div class="span8" id="invFormContent" style="border:1px solid #eee;margin-bottom:20px;">
+						<div class="span8" id="invFormContent" style="padding-left:0;padding-right: 0;width: 63%;border:1px solid #eee;margin-bottom:20px;">
 
 						</div>
 					</div>
@@ -23983,120 +23976,18 @@
 					</div>
 			        <h2>PREVIEW FORM</h2>
 				    <br>	
-				    <div class="row" style="margin-left:0;">			   				
-						<div class="span10" id="invFormContent" style="border:1px solid #ccc; margin: 0 auto;float:none;padding-bottom:20px;margin-bottom: 30px;">	
-						</div>
-						<div style="display: none;" id="khPDF">
-							<div class="inv1">
-						    	<div class="head">
-						        	<div class="logo">
-						            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
-						            </div>
-						            <div class="cover-name-company">
-						            	<h2 ></h2>
-						                <h3 data-bind="text: company.name"></h3>
-						                <div class="vattin">
-						                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
-						                </div>
-						                <div class="clear">
-						                	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
-						                    <pre>Address      </pre>
-						                    <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: company.phone"></span></pre>
-						                    <pre>Telephone N<sup>o</sup></pre>
-						                </div>
-						            </div>
-						        </div>
-						        <div class="content">
-						        	<h1>វិក្កយបត្រ</h1>
-						            <h2>invoice</h2>
-						            <div class="clear">
-						            	<div class="cover-customer">
-						                	<h5>អតិថិជន​ / Customer :</h5>
-						                    <div class="clear">
-						                    	<div class="left">
-						                    		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
-						                            <span>Company name / Customer</span>
-						                        </div>
-						                        <div class="left dotted-ruler" style="width: 62%;">
-						                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].name"></p>
-						                        </div>
-						                    </div>
-						                    <div class="clear">
-						                    	<div class="left">
-						                    		<p>ទូរស័ព្ទ​លេខ</p>
-						                            <span>Telephone N<sup>o</sup></span>
-						                        </div>
-						                        <div class="left dotted-ruler" style="width: 78%;">
-						                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
-						                        </div>
-						                    </div>
-						                </div>
-						                <div class="cover-inv-number">
-						                	<div class="clear">
-						                    	<div class="left">
-						                    		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
-						                            <span>​​Invoice N<sup>o</sup></span>
-						                        </div>
-						                        <div class="left dotted-ruler" style="width: 42%;">
-						                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
-						                        </div>
-						                    </div>
-						                    <div class="clear">
-						                    	<div class="left">
-						                    		<p>កាល​បរិច្ឆេទ៖</p>
-						                            <span>​​Date</span>
-						                        </div>
-						                        <div class="left dotted-ruler" style="width: 57%;">
-						                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
-						                        </div>
-						                    </div>
-						                </div>
-						            </div>
-						        	<div class="clear">
-						            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
-						                	<thead>
-						                        <tr class="main-color" data-bind="style: {backgroundColor: obj.color}">
-						                            <th>ល.រ<br />N<sup>0</sup></th>
-						                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-						                            <th>បរិមាណ<br />Quantity</th>
-						                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
-						                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
-						                        </tr>
-						                    </thead>
-						                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
-																 data-auto-bind="false"
-												                 data-template="invoiceForm-lineDS-template"
-												                 data-bind="source: lineDS">
-						                    </tbody>
-						                    <tfoot>
-						                        <tr>
-						                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
-						                            <td data-bind="text: obj.amount"></td>
-						                        </tr>
-						                    </tfoot>
-						                </table>
-						            </div>
-						        </div>
-						        <div class="foot">
-						        	<div class="cover-signature">
-						            	<div class="singature" style="float:left">
-						                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
-						                </div>
-						                <div class="singature" style="float:right">
-						                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
-						                </div>
-						            </div>
-						            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-						        </div>
-						    </div>
+				    <div class="row" style="margin-left:0;">	 				
+						<div class="span10" id="invFormContent" style="min-height: 300px;border:1px solid #ccc; margin: 0 auto;float:none;padding-bottom:20px;margin-bottom: 30px;">	
+							<div id="loading-inv" style="margin-left: -15px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
+							</div>
 						</div>
 					</div>
 					<!-- Form actions -->
 					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
 						<span id="notification"></span>
 
-						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 60px;"><i></i> Print</span>
-						<span id="savePDF" class="btn btn-icon btn-success glyphicons edit" data-bind="click: savePDF" style="width: 120px;"><i></i> Save PDF</span>									
+						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 60px;"><i></i> Print</span>								
 					</div>
 					<!-- // Form actions END -->
 				</div>							
@@ -25134,7 +25025,7 @@
         			</p>
         		</div>
         		<div class="span6" style="float:right;">
-        			<p class="form-title">DELIVERY NOTE</p>
+        			<p class="form-title" style="font-size: 30px;">DELIVERY NOTE</p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
@@ -26260,10 +26151,9 @@
 							</div>
 							
 							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
-								data-bind="style: {
-								        backgroundColor: bgColor}">
-								<div align="left">AMOUNT RECEIVED</div>
-								<h2 data-bind="text: pay" align="right"></h2>
+								data-bind="style: { backgroundColor: amtDueColor}">
+								<div align="left">AMOUNT QUOTED</div>
+								<h2 data-bind="text: total" align="right"></h2>
 							</div>												
 						</div>					   
 
@@ -26586,14 +26476,46 @@
 					</div>	           
 					
 					<!-- Form actions -->
-					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-						<span id="notification"></span>
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
 
-						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
-						<!-- <span id="saveSend" class="btn btn-icon btn-warning glyphicons envelope" style="width: 80px;"><i></i> Save Send</span>										 -->
-						<span id="savePrint" class="btn btn-icon btn-default glyphicons print" data-bind="click: cancel" style="width: 80px;"><i></i> Save Print</span>
-						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+						<!-- Delete Confirmation -->
+						<div data-role="window"
+			                 data-title="Delete Confirmation"
+			                 data-width="350"
+			                 data-height="200"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'40%',left:'35%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: showConfirm"
+			                 style="text-align:center;">
+			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+			            </div>
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span3">
+								<input data-role="dropdownlist"
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: obj.transaction_template_id,
+					                              source: txnTemplateDS"
+					                   data-option-label="Select Template..." />
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>																	
+								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> Save Print</span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+							</div>
+						</div>
 					</div>
 					<!-- // Form actions END -->								
 
@@ -26609,15 +26531,7 @@
 			#:banhji.cashReceipt.dataSource.indexOf(data)+1#			
 		</td>		
 		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-		<td>
-			#if(contact.length>0){#
-				#if(contact[0].company==""){#
-					#=contact[0].surname# #=contact[0].name#
-				#}else{#
-					#=contact[0].company#
-				#}#
-			#}#
-		</td>		
+		<td>#=contact[0].name#</td>		
 		<td>#=reference.length>0?reference[0].number:""#</td>
 		<td data-bind="visible: showCheckNo">
 			<input type="text" class="k-textbox" 
@@ -48679,7 +48593,7 @@
 				locale				: obj.locale
 			});
 		},
-		removeRow 			: function(e){						
+		removeRow  			: function(e){						
 			var data = e.data;
 			if(this.lineDS.total()>1){				
 				this.lineDS.remove(data);
@@ -54498,21 +54412,6 @@
 			kendo.drawing.drawDOM($('#invFormContent')).then(function(group){
 	          kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
 	        });
-			/*var draw = kendo.drawing;
-
-	        draw.drawDOM($("#khPDF"), {
-	            avoidLinks: true,
-	            paperSize: "A4"
-	        })
-	        .then(function(root) {
-	            return draw.exportPDF(root);
-	        })
-	        .done(function(data) {
-	            kendo.saveAs({
-	                dataURI: data,
-	                fileName: "1.pdf"
-	            });
-	        });*/
 		},		
 		loadObj 			: function(id){
 			var self = this;				
@@ -54541,9 +54440,6 @@
 				switch(Index) {
 					case 1: Active = banhji.view.invoiceForm1; break;
 					case 2: Active = banhji.view.invoiceForm2; break;
-					//case 3: Active = banhji.view.invoiceForm3; break;
-					//case 4: Active = banhji.view.invoiceForm4; break;
-					//case 5: Active = banhji.view.invoiceForm5; break;
 					case 6: Active = banhji.view.invoiceForm6; break;
 					case 7: Active = banhji.view.invoiceForm7; break;
 					case 8: Active = banhji.view.invoiceForm8; break;
@@ -54573,6 +54469,7 @@
 					    	});	
 					    }
 					}
+					$("#loading-inv").remove();
 				},6000);
 			});
 		},
@@ -68473,24 +68370,15 @@
 			if(banhji.pageLoaded["cash_receipt"]==undefined){
 				banhji.pageLoaded["cash_receipt"] = true;
 
-				vm.paymentTermDS.read();				        
-
 				var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-				
+												
 		        $("#saveNew").click(function(e){				
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
+		            	vm.save();		            				  
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
@@ -68572,25 +68460,21 @@
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
+						vm.set("saveClose", true);
+		            	vm.save();		            	
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
 				});
 
 				$("#savePrint").click(function(e){				
 					e.preventDefault();
-
+					
 					if(validator.validate()){
-		            	vm.save();
-		            	window.print();
-
-		            	notification.success("Save Successful");			  
+						vm.set("savePrint", true);
+		            	vm.save();       				  
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
@@ -68598,12 +68482,11 @@
 					e.preventDefault();
 
 					if(validator.validate() && vm.validateRecurring()){
-		            	vm.saveRecurring();
-		            	
-		            	notification.success("Save Successful");			  
+		            	vm.set("saveRecurring", true);
+		            	vm.save();
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
 				});
 			}
 

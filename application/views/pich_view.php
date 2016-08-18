@@ -11592,7 +11592,7 @@
 							<td>
 							</td>
 							<td >
-								<h3><a href="#">Recurring Supplier Template List</a></h3>								
+								<h3><a href="#/customer_recurring">Recurring Supplier Template List</a></h3>								
 							</td>
 						</tr>
 					</table>

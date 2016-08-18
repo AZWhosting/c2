@@ -590,7 +590,9 @@ width: 50% !important;
   color: #fff;
   padding: 5px 35px;
 }
-
+.btn.btn-success.edit{
+  color: #fff !important;
+}
 .btn.btn-danger.delete {
     width: 12px !important;
     color: #fff;
