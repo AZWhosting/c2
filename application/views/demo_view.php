@@ -49022,8 +49022,13 @@
 		    	}
 
 		    	//Update credit changes
-	    		if(this.get("original_credit") !== obj.credit){	    			
-	    			this.set("original_credit", 0);    			
+	    		if(this.get("original_credit")==0){	    			
+	    			//Add New Credit 
+					if(obj.deposit > 0 || obj.credit > 0){
+						self.saveDeposit(obj.id);
+					}
+	    		}else{
+	    			this.set("original_credit", obj.credit);    			
 
 					var deposit = this.depositDS.at(0);
 					deposit.set("amount", obj.credit*-1);
@@ -50360,8 +50365,13 @@
 		    	}
 
 		    	//Update credit changes
-	    		if(this.get("original_credit") !== obj.credit){	    			
-	    			this.set("original_credit", 0);    			
+	    		if(this.get("original_credit")==0){	    			
+	    			//Add New Credit 
+					if(obj.deposit > 0 || obj.credit > 0){
+						self.saveDeposit(obj.id);
+					}
+	    		}else{
+	    			this.set("original_credit", obj.credit);    			
 
 					var deposit = this.depositDS.at(0);
 					deposit.set("amount", obj.credit*-1);
