@@ -421,7 +421,7 @@ width: 50% !important;
 }
 .saleSummaryCustomer  .total-customer p,
 .saleSummaryCustomer  .total-sale p{
-  font-size: 15px;
+  font-size: 14px;
 }
 .saleSummaryCustomer  .total-customer span,
 .saleSummaryCustomer  .total-sale span{
@@ -589,7 +589,12 @@ width: 50% !important;
   width: 25px !important;
   color: #fff;
   padding: 5px 35px;
+}
 
+.btn.btn-danger.delete {
+    width: 12px !important;
+    color: #fff;
+    padding: 5px 55px 5px 37px !important;
 }
 #saveClose{
   width: 120px !important;

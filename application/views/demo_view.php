@@ -71,25 +71,25 @@
 							<a href="#/customers">
 								<img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.customer"></span></span>
-						</li>
-						<li style="text-align:center;">
-							<a><!-- <a href="#/employees"> -->
-								<img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.employee"></span></span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Customers</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/vendors">
 								<img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.vendor"></span></span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Suppliers</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/inventories">
 								<img title="Inventories" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.inventory"></span></span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Products/Services</span>
+						</li>
+						<li style="text-align:center;">
+							<a href="#">
+								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.png" alt="Attachment">
+							</a>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Documents</span>
 						</li>
 					</ul>
 					<ul id="module-image">
@@ -109,7 +109,7 @@
 							<a href="#/reports">
 								<img title="Reports" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Reports">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.report"></span></span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Reports</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
@@ -128,18 +128,6 @@
 								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/web_store.png" alt="Customer">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.web_store"></span></span>
-						</li>
-						<li style="text-align:center;">
-							<a href="#">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/services.png" alt="Service">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.service"></span></span>
-						</li>
-						<li style="text-align:center;">
-							<a href="#">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.png" alt="Attachment">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.attachment"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#">
@@ -49903,7 +49891,7 @@
 				recurring_id 		: "",
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
-				employee_id			: this.get("user_id"), 	    		
+				employee_id			: "", 	    		
 			   	type				: "Cash_Sale",
 			   	sub_total 			: 0,
 			   	account_id 			: 0,				   		   					   				   	
@@ -49998,7 +49986,7 @@
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
-
+	    		
 	    		if(this.get("isEdit")){
 		    		if(obj.is_recurring=="0"){ //Add brand new recurring from existing transaction	    			
 		    			this.addNewRecurring();
@@ -51243,7 +51231,7 @@
 				recurring_id 		: "",
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
-				employee_id 		: this.get("user_id"), 	    		
+				employee_id 		: "", 	    		
 			   	type				: "Invoice",
 			   	sub_total 			: 0,				   		   					   				   	
 			   	amount				: 0,
@@ -51327,7 +51315,7 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
-
+	    	
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
 	        	alert("Over credit allowed!");		        	
@@ -51336,7 +51324,7 @@
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
-
+	    		
 	    		if(this.get("isEdit")){
 		    		if(obj.is_recurring=="0"){ //Add brand new recurring from existing transaction	    			
 		    			this.addNewRecurring();
@@ -51751,60 +51739,55 @@
 		loadRecurring 		: function(){
 			var obj = this.get("obj");
 
-			if(obj.contact_id){
-				this.recurringDS.filter([
-					{ field:"type", value:obj.type },
-					{ field:"contact_id", value:obj.contact_id },
-					{ field:"is_recurring", value:1 }
-				]);
-			}
+			this.recurringDS.filter([
+				{ field:"type", value:obj.type },
+				{ field:"contact_id", value:obj.contact_id },
+				{ field:"is_recurring", value:1 }
+			]);
 		},		
-		applyRecurring 		: function(){
-			var self = this, obj = this.get("obj");
+		applyRecurring 		: function(e){
+			var self = this, data = e.data, obj = this.get("obj");
 			
 			if(obj.recurring_id){
-				var recur = this.recurringDS.get(obj.recurring_id);				
-				
-				obj.set("segments", recur.segments);
-				obj.set("amount", recur.amount);
-				obj.set("discount", recur.discount);
-				obj.set("fine", recur.fine);
-				obj.set("rate", recur.rate);
-				obj.set("locale", recur.locale);					
-				obj.set("memo", recur.memo);
-				obj.set("memo2", recur.memo2);
-
-				var locale = recur.locale;
-				this.set("total", kendo.toString(recur.amount, locale=="km-KH"?"c0":"c", locale));
+				obj.set("employee_id", data.employee_id);//Sale Rep
+				obj.set("segments", data.segments);
+				obj.set("rate", data.rate);
+				obj.set("locale", data.locale);
+				obj.set("memo", data.memo);
+				obj.set("memo2", data.memo2);
+				obj.set("bill_to", data.bill_to);
+				obj.set("ship_to", data.ship_to);
 
 				this.recurringLineDS.query({
-					filter: { field:"transaction_id", value:recur.id },
+					filter: { field:"transaction_id", value:data.id },
 					page: 1,
 					pageSize: 100
 				}).then(function(){
-					var line = self.recurringLineDS.view();
+					var view = self.recurringLineDS.view();
 					self.lineDS.data([]);
 
-					$.each(line, function(index, value){
-						self.lineDS.add({					
-							transaction_id 		: 0,							
+					$.each(view, function(index, value){
+						self.lineDS.add({
+							transaction_id 		: obj.id,
+							tax_item_id 		: value.tax_item_id,
 							item_id 			: value.item_id,
-							tax_item_id 		: value.tax_item_id,									
-							description 		: value.description,							
+							description 		: value.description,
 							quantity 			: value.quantity,
-							price 				: value.price,								
-							amount 	 			: value.amount,									
+							price 				: value.price,
+							amount 	 			: value.amount,
 							rate				: value.rate,
 							locale				: value.locale,
-
+							
 							item_prices 		: value.item_prices
 						});
 					});
-				});				
+
+					self.changes();
+				});
 			}else{
 				this.addEmpty();
-			} 
-		},		
+			}
+		},
 		frequencyChanges 	: function(){
 			var obj = this.get("obj");
 
@@ -51845,16 +51828,16 @@
 			var obj = this.get("obj");
 
 			switch(obj.month_option) {
-			    case "Day":			       
+			    case "Day":
 			        this.set("showWeek", false);
 			        this.set("showDay", true);
 			       
-			        break;			    
-			    default:			        
+			        break;
+			    default:
 			        this.set("showWeek", true);
 			        this.set("showDay", false);
 			}
-		},		
+		},
 		validateRecurring  	: function(){
 			var result = true, obj = this.get("obj");
 			
@@ -51871,47 +51854,54 @@
 			}
 			else{
 				result = false;
-				alert("Recurring name is required.");				
-			}			
+				alert("Recurring name is required.");
+			}
 
 			return result;
 		},
 		addNewRecurring 	: function(){
 			var self = this, obj = this.get("obj");
 
-			this.recurringDS.add({				
-				user_id 			: obj.user_id, 	    			    		
-			   	type				: obj.type,			   				   				   		   					   				   	
-			   	amount				: obj.amount,
-			   	discount 			: obj.discount,
-			   	fine 				: obj.fine,
-			   	rate				: obj.rate,			   	
-			   	locale 				: obj.locale,					   		   	   	
-			   	memo 				: obj.memo,
-			   	memo2 				: obj.memo2,
-			   	segments 			: obj.segments,
-			   	recurring_name 		: obj.recurring_name,
-			   	start_date 			: obj.start_date,
-			   	frequency 			: obj.frequency,
-			   	month_option 		: obj.month_option,
-			   	interval 			: obj.interval,
-			   	day 				: obj.day,
-			   	week 				: obj.week,
-			   	month 				: obj.month,
-			   	is_recurring 		: 1			
+			this.recurringDS.add({
+				contact_id 				: obj.contact_id,
+				transaction_template_id : obj.transaction_template_id,
+				user_id 				: this.get("user_id"),
+				employee_id 			: obj.employee_id,
+			   	type					: obj.type,
+			   	amount					: obj.amount,
+			   	discount 				: obj.discount,
+			   	tax 					: obj.tax,
+			   	rate					: obj.rate,
+			   	locale 					: obj.locale,
+			   	bill_to 				: obj.bill_to,
+			   	ship_to 				: obj.ship_to,
+			   	memo 					: obj.memo,
+			   	memo2 					: obj.memo2,
+			   	segments 				: obj.segments,
+			   	recurring_name 			: obj.recurring_name,
+			   	start_date 				: obj.start_date,
+			   	frequency 				: obj.frequency,
+			   	month_option 			: obj.month_option,
+			   	interval 				: obj.interval,
+			   	day 					: obj.day,
+			   	week 					: obj.week,
+			   	month 					: obj.month,
+			   	is_recurring 			: 1
 	    	});
 
 	    	$.each(this.lineDS.data(), function(index, value){
-	    		self.recurringLineDS.add({					
-					transaction_id 		: 0,					
-					item_id 			: value.item_id,								
-					description 		: value.description,													
+	    		self.recurringLineDS.add({
+					transaction_id 		: 0,
+					measurement_id 		: value.measurement_id,
+					tax_item_id 		: value.tax_item_id,
+					item_id 			: value.item_id,
+					description 		: value.description,
+					quantity 			: value.quantity,
+					price 				: value.price,
 					amount 	 			: value.amount,
 					discount 			: value.discount,
-					fine 				: value.fine,						
 					rate				: value.rate,
-					locale				: value.locale,
-					has_vat 			: value.has_vat
+					locale				: value.locale
 				});
 	    	});
 		},
@@ -51919,46 +51909,16 @@
 	    	var dfd = $.Deferred();	        
 
 	    	this.recurringDS.sync();
-		    this.recurringDS.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.recurringDS.bind("requestEnd", function(e){
+		    	if(e.response){
+					dfd.resolve(e.response.results);
+				}
+		    });
+		    this.recurringDS.bind("error", function(e){
+				dfd.reject(e.errorThrown);
 		    });
 
-		    return dfd;	    		    	
-	    },
-		saveRecurring 		: function(){
-	    	var self = this, obj = this.get("obj");
-
-	    	if(this.get("isEdit")){
-	    		if(obj.is_recurring=="0"){ //Add brand new recurring from existing transaction	    			
-	    			this.addNewRecurring();
-
-	    			this.recurringSync()
-					.then(function(data){
-						$.each(self.recurringLineDS.data(), function(index, value){										
-							value.set("transaction_id", data[0].id);						
-						});
-
-						self.recurringLineDS.sync();			
-					}).then(function(){					
-						self.addEmpty();
-					});
-	    		}else{
-	    			this.save();
-	    		}
-	    	}else{ //Add brand new recurring
-	    		obj.set("is_recurring", 1);
-	    		
-	    		this.transactionSync()
-				.then(function(data){
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("transaction_id", data[0].id);								
-					});
-
-					self.lineDS.sync();							
-				}).then(function(){					
-					self.addEmpty();
-				});
-	    	}	    	
+		    return dfd;
 	    }	 		
 	});
 	banhji.gdn =  kendo.observable({
@@ -56062,13 +56022,14 @@
 		accountDS  			: banhji.source.cashAccountDS,		
 		paymentTermDS 		: dataStore(apiUrl + "payment_terms"),
 		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),
-		segmentItemDS		: banhji.source.segmentItemDS,		
+		segmentItemDS		: banhji.source.segmentItemDS,
+		amtDueColor 		: banhji.source.amtDueColor,
+	    confirmMessage 		: banhji.source.confirmMessage,		
 		frequencyList 		: banhji.source.frequencyList,
 		monthOptionList 	: banhji.source.monthOptionList,
 		monthList 			: banhji.source.monthList,
 		weekDayList 		: banhji.source.weekDayList,
 		dayList 			: banhji.source.dayList,
-	    bgColor 			: "#D5DBDB",
 	    showDeposit 		: false,	    
 		showMonthOption 	: false,
 		showMonth 			: false,

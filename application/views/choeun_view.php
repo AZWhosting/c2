@@ -17470,112 +17470,11 @@
 					</div>
 			        <h2>PREVIEW FORM</h2>
 				    <br>	
-				    <div class="row" style="margin-left:0;">			   				
-						<div class="span10" id="invFormContent" style="border:1px solid #ccc; margin: 0 auto;float:none;padding-bottom:20px;margin-bottom: 30px;">	
-						</div>
-						<div style="display: none;" id="khPDF">
-							<div class="inv1">
-						    	<div class="head">
-						        	<div class="logo">
-						            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
-						            </div>
-						            <div class="cover-name-company">
-						            	<h2 ></h2>
-						                <h3 data-bind="text: company.name"></h3>
-						                <div class="vattin">
-						                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
-						                </div>
-						                <div class="clear">
-						                	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
-						                    <pre>Address      </pre>
-						                    <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: company.phone"></span></pre>
-						                    <pre>Telephone N<sup>o</sup></pre>
-						                </div>
-						            </div>
-						        </div>
-						        <div class="content">
-						        	<h1>វិក្កយបត្រ</h1>
-						            <h2>invoice</h2>
-						            <div class="clear">
-						            	<div class="cover-customer">
-						                	<h5>អតិថិជន​ / Customer :</h5>
-						                    <div class="clear">
-						                    	<div class="left">
-						                    		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
-						                            <span>Company name / Customer</span>
-						                        </div>
-						                        <div class="left dotted-ruler" style="width: 62%;">
-						                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].name"></p>
-						                        </div>
-						                    </div>
-						                    <div class="clear">
-						                    	<div class="left">
-						                    		<p>ទូរស័ព្ទ​លេខ</p>
-						                            <span>Telephone N<sup>o</sup></span>
-						                        </div>
-						                        <div class="left dotted-ruler" style="width: 78%;">
-						                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
-						                        </div>
-						                    </div>
-						                </div>
-						                <div class="cover-inv-number">
-						                	<div class="clear">
-						                    	<div class="left">
-						                    		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
-						                            <span>​​Invoice N<sup>o</sup></span>
-						                        </div>
-						                        <div class="left dotted-ruler" style="width: 42%;">
-						                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
-						                        </div>
-						                    </div>
-						                    <div class="clear">
-						                    	<div class="left">
-						                    		<p>កាល​បរិច្ឆេទ៖</p>
-						                            <span>​​Date</span>
-						                        </div>
-						                        <div class="left dotted-ruler" style="width: 57%;">
-						                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
-						                        </div>
-						                    </div>
-						                </div>
-						            </div>
-						        	<div class="clear">
-						            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
-						                	<thead>
-						                        <tr class="main-color" data-bind="style: {backgroundColor: obj.color}">
-						                            <th>ល.រ<br />N<sup>0</sup></th>
-						                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-						                            <th>បរិមាណ<br />Quantity</th>
-						                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
-						                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
-						                        </tr>
-						                    </thead>
-						                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
-																 data-auto-bind="false"
-												                 data-template="invoiceForm-lineDS-template"
-												                 data-bind="source: lineDS">
-						                    </tbody>
-						                    <tfoot>
-						                        <tr>
-						                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
-						                            <td data-bind="text: obj.amount"></td>
-						                        </tr>
-						                    </tfoot>
-						                </table>
-						            </div>
-						        </div>
-						        <div class="foot">
-						        	<div class="cover-signature">
-						            	<div class="singature" style="float:left">
-						                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
-						                </div>
-						                <div class="singature" style="float:right">
-						                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
-						                </div>
-						            </div>
-						            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-						        </div>
-						    </div>
+				    <div class="row" style="margin-left:0;">	 				
+						<div class="span10" id="invFormContent" style="min-height: 300px;border:1px solid #ccc; margin: 0 auto;float:none;padding-bottom:20px;margin-bottom: 30px;">	
+							<div id="loading-inv" style="margin-left: -15px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(0,0,0,.1);z-index: 9999;">
+								<img src="<?php echo base_url(); ?>assets/invoice/loading.gif" style="position: absolute; top: 45%;left: 45%" />
+							</div>
 						</div>
 					</div>
 					<!-- Form actions -->
@@ -17583,7 +17482,7 @@
 						<span id="notification"></span>
 
 						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 60px;"><i></i> Print</span>
-						<span id="savePDF" class="btn btn-icon btn-success glyphicons edit" data-bind="click: savePDF" style="width: 120px;"><i></i> Save PDF</span>									
+						<!--span id="savePDF" class="btn btn-icon btn-success glyphicons edit" data-bind="click: savePDF" style="width: 120px;"><i></i> Save PDF</span-->									
 					</div>
 					<!-- // Form actions END -->
 				</div>							
@@ -47774,7 +47673,7 @@
 		            '</body>' +
 		            '</html>';
 		    
-		    printableContent = $('#invFormContent').html();
+		    printableContent = $('#khPDF').html();
 		    doc.write(htmlStart + printableContent + htmlEnd);
 		    doc.close();
 		    setTimeout(function(){
@@ -47783,9 +47682,17 @@
 		    
 		},	    
 		savePDF				: function(e){
-			kendo.drawing.drawDOM($('#invFormContent')).then(function(group){
-	          kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
-	        });
+			// var spreadsheet = $("#invFormContent").data("kendoSpreadsheet");
+   //          $("#data").val(JSON.stringify(spreadsheet.toJSON()));
+   //          $("#active-sheet").val(spreadsheet.activeSheet().name());
+			// $("#khPDF").kendoSpreadsheet({
+			// 	pdf: {                
+   //             		proxyURL: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/service/export"
+   //          	}
+			// });
+			//kendo.drawing.drawDOM($('#invFormContent')).then(function(group){
+	          //kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
+	        //});
 			/*var draw = kendo.drawing;
 
 	        draw.drawDOM($("#khPDF"), {
@@ -47860,6 +47767,7 @@
 								item_prices : []
 					    	});	
 					    }
+					    $("#loading-inv").remove();
 					}
 				},6000);
 			});
