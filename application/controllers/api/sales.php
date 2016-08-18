@@ -588,7 +588,7 @@ class Sales extends REST_Controller {
 		foreach ($products as $key => $value) {
 			$data["results"][] = array(
 				'group' 	=> $key,
-				'amount'	=> $value['amount'],
+				// 'amount'	=> $value['amount'],
 				'items' 	=> $value
 
 			);
@@ -836,9 +836,9 @@ class Sales extends REST_Controller {
 				'group' 	=> $key,
 				'amount'	=> $value['amount'],
 				'<30' 		=> isset($value['<30']) ? $value['<30'] : 0,
-				'30'			=> isset($value['30']) ? $value['30'] : 0,
-				'60' 			=> isset($value['60']) ? $value['60'] : 0,
-				'90' 			=> isset($value['90']) ? $value['90'] : 0,
+				'30'		=> isset($value['30']) ? $value['30'] : 0,
+				'60' 		=> isset($value['60']) ? $value['60'] : 0,
+				'90' 		=> isset($value['90']) ? $value['90'] : 0,
 				'>90' 		=> isset($value['<90']) ? $value['<30'] : 0,
 			);
 		}
