@@ -17782,7 +17782,7 @@
 
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
-									<div align="left">AMOUNT QUOTED</div>
+									<div align="left">AMOUNT RECEIVED</div>
 									<h2 data-bind="text: total" align="right"></h2>
 								</div>
 
@@ -18384,7 +18384,7 @@
 
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
-									<div align="left">AMOUNT QUOTED</div>
+									<div align="left">AMOUNT DUE</div>
 									<h2 data-bind="text: total" align="right"></h2>
 								</div>
 
@@ -25791,7 +25791,7 @@
 							
 							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 								data-bind="style: { backgroundColor: amtDueColor}">
-								<div align="left">AMOUNT QUOTED</div>
+								<div align="left">AMOUNT RECEIVED</div>
 								<h2 data-bind="text: total" align="right"></h2>
 							</div>												
 						</div>					   
@@ -25803,7 +25803,9 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-1" data-toggle="tab"><i></i> </a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-2" data-toggle="tab"><i></i> </a>
+							            </li>
+							            <li class="span1 glyphicons info"><a href="#tab2-2" data-toggle="tab"><i></i> </a>
 							            </li>
 							        </ul>
 							    </div>
@@ -25812,7 +25814,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-1">						            
+							        <div class="tab-pane active" id="tab1-2">						            
 							            <table class="table table-borderless table-condensed cart_total">
 							            	<tr>
 												<td>Date</td>
@@ -25881,6 +25883,45 @@
 							            </table>						            
 							        </div>
 							        <!-- // Options Tab content END -->
+
+							        <!-- INFO Tab content -->
+							        <div class="tab-pane" id="tab2-2">						            
+							            <table class="table table-borderless table-condensed cart_total">
+											<tr>
+								            	<td>Collector</td>							            	
+							            		<td>
+													<input id="cbbEmployee" name="cbbEmployee"
+														   data-role="combobox"
+										                   data-value-primitive="true"
+										                   data-header-template="employee-header-tmpl"
+										                   data-template="contact-list-tmpl"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.employee_id,
+										                              source: employeeDS"
+										                   data-placeholder="Type Name..." 
+										                   style="width: 100%" />
+												</td>							            	
+								            </tr>				            
+								            <tr>
+												<td>Segments</td>
+												<td>
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-header-template="segment-header-tmpl"
+														   data-item-template="segment-list-tmpl"				    
+														   data-value-field="id" 
+														   data-text-field="code"
+														   data-bind="value: obj.segments, 
+														   			source: segmentItemDS,
+														   			events:{ change: segmentChanges }"
+														   data-placeholder="Add Segment.."				   
+														   style="width: 100%" /></select>
+												</td>
+											</tr>											
+							            </table>						            
+							        </div>
+							        <!-- // INFO Tab content END -->
 
 							    </div>
 							</div>
@@ -26103,8 +26144,7 @@
 						</div>
 						
 						<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
-							data-bind="style: {
-							        backgroundColor: bgColor}">
+							data-bind="style: { backgroundColor: amtDueColor}">
 							<div align="left">AMOUNT PAID</div>
 							<h2 data-bind="text: total" align="right"></h2>
 						</div>												
@@ -41509,202 +41549,6 @@
 
 			window.history.back();
 		},
-	    //Journal	        
-	    addJournal 			: function(transaction_id){
-	    	var self = this,
-	    	obj = this.get("obj"),
-	    	contact = this.contactDS.get(obj.contact_id),	    				    	
-	    	saleList = {},
-	    	taxList = {},
-	    	inventoryList = {},
-			cogsList = {};			
-			
-			//Arrange sale, cogs, inventory
-			$.each(this.lineDS.data(), function(index, value){										
-				var item = self.itemDS.get(value.item_id),
-				amount = value.quantity * value.price;				
-				
-				//Add sale list
-				var incomeID = item.income_account_id;																				
-				if(incomeID>0){
-					if(saleList[incomeID]===undefined){
-						saleList[incomeID]={"id": incomeID, "amount": amount};						
-					}else{											
-						if(saleList[incomeID].id===incomeID){
-							saleList[incomeID].amount += amount;
-						}else{
-							saleList[incomeID]={"id": incomeID, "amount": amount};
-						}
-					}
-				}
-
-				//Add tax list																							
-				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id),
-					taxID = taxItem.account_id,
-					taxAmt = value.amount*taxItem.rate;
-
-					if(taxList[taxID]===undefined){
-						taxList[taxID]={"id": taxID, "amount": taxAmt};						
-					}else{											
-						if(taxList[taxID].id===taxID){
-							taxList[taxID].amount += taxAmt;
-						}else{
-							taxList[taxID]={"id": taxID, "amount": taxAmt};
-						}
-					}
-				}				
-				
-				//Inventory
-				if(item.item_type_id==1){
-					//Add cogs list
-					var itemCost = value.quantity*item.cost,
-					cogsID = item.cogs_account_id;				
-					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": itemCost};						
-					}else{											
-						if(cogsList[cogsID].id===cogsID){
-							cogsList[cogsID].amount += itemCost;
-						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": itemCost};
-						}
-					}						
-
-					//Add inventory list
-					var inventoryID = item.inventory_account_id;
-					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost};						
-					}else{											
-						if(inventoryList[inventoryID].id===inventoryID){
-							inventoryList[inventoryID].amount += itemCost;
-						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost};
-						}
-					}
-				}					  	
-			});//End Foreach Loop			
-
-			//Start journal
-			//A/R on Dr
-			this.journalLineDS.add({					
-				transaction_id 		: transaction_id,
-				account_id 			: contact.account_id,				
-				contact_id 			: obj.contact_id,				
-				description 		: "",
-				reference_no 		: "",
-				segments 	 		: [],								
-				dr 	 				: obj.amount,
-				cr 					: 0,				
-				rate				: obj.rate,
-				locale				: obj.locale
-			});
-
-			//Discount on Dr			
-			if(obj.discount > 0){				
-				this.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: contact.discount_account_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: obj.discount,
-					cr 					: 0,				
-					rate				: obj.rate,
-					locale				: obj.locale
-				});
-			}
-
-			//Deposit and Credit on Dr
-			if(obj.deposit > 0 || obj.credit > 0){				
-				this.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: contact.deposit_account_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: obj.deposit + obj.credit,
-					cr 					: 0,				
-					rate				: obj.rate,
-					locale				: obj.locale
-				});
-			}
-
-			//Sale accounts on Cr		
-			if(!jQuery.isEmptyObject(saleList)){				
-				$.each(saleList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});										
-				});
-			}
-
-			//Tax on Cr					
-			if(!jQuery.isEmptyObject(taxList)){				
-				$.each(taxList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});										
-				});
-			}	
-
-			//Inventory to journal
-			//COGS on Dr 			
-			if(!jQuery.isEmptyObject(cogsList)){							
-				$.each(cogsList, function(index, value){				
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: value.amount,
-						cr 					: 0,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});								
-				});							
-			}
-			//Inventory on Cr
-			if(!jQuery.isEmptyObject(inventoryList)){
-				$.each(inventoryList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});						
-				});
-			}
-
-			this.journalLineDS.sync();
-		},
 		//Recurring		
 		applyRecurring 		: function(){
 			var self = this, obj = this.get("obj");
@@ -43558,7 +43402,7 @@
 			if(obj.discount > 0){				
 				this.journalLineDS.add({					
 					transaction_id 		: transaction_id,
-					account_id 			: contact.discount_account_id,				
+					account_id 			: contact.trade_discount_id,				
 					contact_id 			: obj.contact_id,				
 					description 		: "",
 					reference_no 		: "",
@@ -44618,7 +44462,7 @@
 			if(obj.discount>0){			
 				this.journalLineDS.add({					
 					transaction_id 		: transaction_id,
-					account_id 			: contact.discount_account_id,				
+					account_id 			: contact.trade_discount_id,				
 					contact_id 			: obj.contact_id,				
 					description 		: "",
 					reference_no 		: "",
@@ -49380,7 +49224,7 @@
 			if(obj.discount > 0){				
 				this.journalLineDS.add({					
 					transaction_id 		: transaction_id,
-					account_id 			: contact.discount_account_id,				
+					account_id 			: contact.trade_discount_id,				
 					contact_id 			: obj.contact_id,				
 					description 		: "",
 					reference_no 		: "",
@@ -50716,7 +50560,7 @@
 			if(obj.discount > 0){				
 				this.journalLineDS.add({					
 					transaction_id 		: transaction_id,
-					account_id 			: contact.discount_account_id,				
+					account_id 			: contact.trade_discount_id,				
 					contact_id 			: obj.contact_id,				
 					description 		: "",
 					reference_no 		: "",
@@ -51720,202 +51564,6 @@
 
 			banhji.userManagement.removeMultiTask("gdn");
 		},
-	    //Journal	        
-	    addJournal 			: function(transaction_id){
-	    	var self = this,
-	    	obj = this.get("obj"),
-	    	contact = this.contactDS.get(obj.contact_id),	    				    	
-	    	saleList = {},
-	    	taxList = {},
-	    	inventoryList = {},
-			cogsList = {};			
-			
-			//Arrange sale, cogs, inventory
-			$.each(this.lineDS.data(), function(index, value){										
-				var item = self.itemDS.get(value.item_id),
-				amount = value.quantity * value.price;				
-				
-				//Add sale list
-				var incomeID = item.income_account_id;																				
-				if(incomeID>0){
-					if(saleList[incomeID]===undefined){
-						saleList[incomeID]={"id": incomeID, "amount": amount};						
-					}else{											
-						if(saleList[incomeID].id===incomeID){
-							saleList[incomeID].amount += amount;
-						}else{
-							saleList[incomeID]={"id": incomeID, "amount": amount};
-						}
-					}
-				}
-
-				//Add tax list																							
-				if(value.tax_item_id>0){
-					var taxItem = self.taxItemDS.get(value.tax_item_id),
-					taxID = taxItem.account_id,
-					taxAmt = value.amount*taxItem.rate;
-
-					if(taxList[taxID]===undefined){
-						taxList[taxID]={"id": taxID, "amount": taxAmt};						
-					}else{											
-						if(taxList[taxID].id===taxID){
-							taxList[taxID].amount += taxAmt;
-						}else{
-							taxList[taxID]={"id": taxID, "amount": taxAmt};
-						}
-					}
-				}				
-				
-				//Inventory
-				if(item.item_type_id==1){
-					//Add cogs list
-					var itemCost = value.quantity*item.cost,
-					cogsID = item.cogs_account_id;				
-					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": itemCost};						
-					}else{											
-						if(cogsList[cogsID].id===cogsID){
-							cogsList[cogsID].amount += itemCost;
-						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": itemCost};
-						}
-					}						
-
-					//Add inventory list
-					var inventoryID = item.inventory_account_id;
-					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost};						
-					}else{											
-						if(inventoryList[inventoryID].id===inventoryID){
-							inventoryList[inventoryID].amount += itemCost;
-						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost};
-						}
-					}
-				}					  	
-			});//End Foreach Loop			
-
-			//Start journal
-			//A/R on Dr
-			this.journalLineDS.add({					
-				transaction_id 		: transaction_id,
-				account_id 			: contact.account_id,				
-				contact_id 			: obj.contact_id,				
-				description 		: "",
-				reference_no 		: "",
-				segments 	 		: [],								
-				dr 	 				: obj.amount,
-				cr 					: 0,				
-				rate				: obj.rate,
-				locale				: obj.locale
-			});
-
-			//Discount on Dr			
-			if(obj.discount > 0){				
-				this.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: contact.discount_account_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: obj.discount,
-					cr 					: 0,				
-					rate				: obj.rate,
-					locale				: obj.locale
-				});
-			}
-
-			//Deposit and Credit on Dr
-			if(obj.deposit > 0 || obj.credit > 0){				
-				this.journalLineDS.add({					
-					transaction_id 		: transaction_id,
-					account_id 			: contact.deposit_account_id,				
-					contact_id 			: obj.contact_id,				
-					description 		: "",
-					reference_no 		: "",
-					segments 	 		: [],								
-					dr 	 				: obj.deposit + obj.credit,
-					cr 					: 0,				
-					rate				: obj.rate,
-					locale				: obj.locale
-				});
-			}
-
-			//Sale accounts on Cr		
-			if(!jQuery.isEmptyObject(saleList)){				
-				$.each(saleList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});										
-				});
-			}
-
-			//Tax on Cr					
-			if(!jQuery.isEmptyObject(taxList)){				
-				$.each(taxList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});										
-				});
-			}	
-
-			//Inventory to journal
-			//COGS on Dr 			
-			if(!jQuery.isEmptyObject(cogsList)){							
-				$.each(cogsList, function(index, value){				
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: value.amount,
-						cr 					: 0,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});								
-				});							
-			}
-			//Inventory on Cr
-			if(!jQuery.isEmptyObject(inventoryList)){
-				$.each(inventoryList, function(index, value){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: value.id,				
-						contact_id 			: obj.contact_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});						
-				});
-			}
-
-			this.journalLineDS.sync();
-		},
 		//Recurring		
 		applyRecurring 		: function(){
 			var self = this, obj = this.get("obj");
@@ -52917,7 +52565,7 @@
 			if(obj.discount>0){			
 				this.journalLineDS.add({					
 					transaction_id 		: transaction_id,
-					account_id 			: contact.discount_account_id,				
+					account_id 			: contact.trade_discount_id,				
 					contact_id 			: obj.contact_id,				
 					description 		: "",
 					reference_no 		: "",
@@ -55154,6 +54802,7 @@
 		jobDS				: dataStore(apiUrl + "jobs"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
+		employeeDS  		: banhji.source.saleRepDS,
 		accountDS  			: banhji.source.cashAccountDS,		
 		paymentTermDS 		: dataStore(apiUrl + "payment_terms"),
 		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),	
@@ -55730,6 +55379,7 @@
 		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.supplierDS,
+		employeeDS  		: banhji.source.saleRepDS,
 		accountDS  			: banhji.source.cashAccountDS,		
 		paymentTermDS 		: dataStore(apiUrl + "payment_terms"),
 		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),	
