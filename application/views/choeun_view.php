@@ -17404,7 +17404,7 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
-			        <h2>CUSTOM FORMS</h2>
+			        <h2 style="padding:0 15px;"">CUSTOM FORMS</h2>
 				    <br>	
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span4">	
@@ -17442,7 +17442,7 @@
                                 </div>
 							</div>
 						</div>
-						<div class="span8" id="invFormContent" style="border:1px solid #eee;margin-bottom:20px;">
+						<div class="span8" id="invFormContent" style="padding-left:0;padding-right: 0;width: 63%;border:1px solid #eee;margin-bottom:20px;">
 
 						</div>
 					</div>
@@ -17472,8 +17472,8 @@
 				    <br>	
 				    <div class="row" style="margin-left:0;">	 				
 						<div class="span10" id="invFormContent" style="min-height: 300px;border:1px solid #ccc; margin: 0 auto;float:none;padding-bottom:20px;margin-bottom: 30px;">	
-							<div id="loading-inv" style="margin-left: -15px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(0,0,0,.1);z-index: 9999;">
-								<img src="<?php echo base_url(); ?>assets/invoice/loading.gif" style="position: absolute; top: 45%;left: 45%" />
+							<div id="loading-inv" style="margin-left: -15px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
 							</div>
 						</div>
 					</div>
@@ -17481,7 +17481,7 @@
 					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
 						<span id="notification"></span>
 
-						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 60px;"><i></i> Print</span>
+						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;"><i></i>Print / PDF</span>
 						<!--span id="savePDF" class="btn btn-icon btn-success glyphicons edit" data-bind="click: savePDF" style="width: 120px;"><i></i> Save PDF</span-->									
 					</div>
 					<!-- // Form actions END -->
