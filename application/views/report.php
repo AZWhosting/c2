@@ -476,10 +476,10 @@
 	<div class="row-fluid customer-report-center">
 
 		<div class="span7">
-			<div class="row-fluid sale-report">
+			<div class="row-fluid sale-report">				
 				<h2>SALE MANAGEMENT REPORTS</h2>
 				<p>
-					The following reports provide summary and detailed reports in
+					The following reports provide summary and detailed reports in 
 					different ways to help analyze your revenue performance.
 				</p>
 				<div class="row-fluid">
@@ -489,23 +489,23 @@
 								<h3><a href="#/sale_summary_customer">Sale Summary by Customer</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a href="#/customer_transaction_list">Customer Transaction List</a></h3>
-							</td>
+								<h3><a href="#/customer_transaction_list">Customer Transaction List</a></h3>								
+							</td>						
 						</tr>
 						<tr>
 							<td width="50%">
 								<p>
-									Summarizes total sales for each customer within a period
+									Summarizes total sales for each customer within a period 
 									of time so you can see which ones generate the most revenue for you.
 								</p>
-
+								
 							</td>
 							<td width="50%">
 								<p>
 									List of all transactions related to and grouped by each customer, including invoice, cash sale
 								</p>
 							</td>
-
+							
 						</tr>
 						<tr>
 							<td width="50%">
@@ -539,7 +539,7 @@
 						<tr>
 							<td width="50%">
 								<p>
-									Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices.
+									Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices. 
 								</p>
 							</td>
 							<td width="50%">
@@ -550,15 +550,13 @@
 						</tr>
 						<tr>
 							<td width="50%">
-								<h3><a href="#/">Sale by Job/Engagement</a></h3>
+								<h3><a href="#/sale_job_engagement">Sale by Job/Engagement</a></h3>
 							</td>
 							<td width="50%">
+								<h3><a href="#/sale_order_list">Sale Order List</a></h3>
 							</td>
 						</tr>
-
-
 					</table>
-
 				</div>
 			</div>
 
@@ -574,22 +572,22 @@
 								<h3><a href="#/customer_balance_summary">Customer Balance Summary</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/customer_balance_detail">Customer Balance Detail</a></h3>
-							</td>
+								<h3><a href="#/customer_balance_detail">Customer Balance Detail</a></h3>								
+							</td>						
 						</tr>
 						<tr>
 							<td>
 								<p>
 									Show each customer’s total outstanding balances.
 								</p>
-
+								
 							</td>
 							<td >
 								<p>
 									Lists individual unpaid invoices for each customer
 								</p>
 							</td>
-
+							
 						</tr>
 						<tr>
 							<td >
@@ -602,13 +600,13 @@
 						<tr>
 							<td >
 								<p>
-									Lists all unpaid invoices for the current period, 30, 60, 90,
+									Lists all unpaid invoices for the current period, 30, 60, 90, 
 									and more than 90 days, grouped by individual customers.
 								</p>
 							</td>
 							<td >
 								<p>
-									Lists individual unpaid invoices, grouped by customer. This includes due date,
+									Lists individual unpaid invoices, grouped by customer. This includes due date, 
 									outstanding days (aging days), and amount.
 								</p>
 							</td>
@@ -659,39 +657,32 @@
 					</table>
 				</div>
 			</div>
-
+			
 			<div class="row-fluid recevable-report">
 				<h2>OTHER REPORTS/ LISTS</h2>
 				<div class="row-fluid">
 					<table class="table table-borderless table-condensed">
 						<tr>
-							<td>
-								<h3><a href="#/">Product/ Service List</a></h3>
+							<td style="width: 48%; padding-right: 8px !important;">
+								<h3><a href="#/customer_recurring">Recurring Customer Template List</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/">Payment Method & Term List</a></h3>
-							</td>
+								<h3><a href="#/customer_setting">Payment Method & Term List</a></h3>								
+							</td>						
 						</tr>
 						<tr>
-							<td >
-								<p>
-									Lists the products and services you sell. The following information is
-									included: name, description, cost, sales price, and quantity on hand.
-								</p>
-
+							<td style="width: 48%; padding-right: 8px !important;">
+								<p></p>								
 							</td>
 							<td>
 								<p>
 									List the types of payments and the term that determine due date for payment from customers.
 								</p>
 							</td>
-
+							
 						</tr>
 						<tr >
-							<td></td>
-							<td>
-								<h3><a href="#/">Recurring Customer Template List</a></h3>
-							</td>
+							<td></td>														
 						</tr>
 
 					</table>
@@ -699,7 +690,7 @@
 			</div>
 		</div>
 		<div class="span5">
-			<span class="pull-right glyphicons no-js remove_2"
+			<span class="pull-right glyphicons no-js remove_2" 
 						onclick="javascript:window.history.back()"><i></i></span>
 			<br>
 			<br>
@@ -709,7 +700,7 @@
 					<div align="center" class="text-large strong" data-bind="text: sale"></div>
 					<table width="100%">
 						<tr align="center">
-							<td>
+							<td>										
 								<span data-bind="text: sale_customer"></span>
 								<br>
 								<span>Customer</span>
@@ -742,11 +733,11 @@
 		                    visible: true,
 		                    format: "{0}%",
 		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-		                 }'
+		                 }'                 
 		                 data-series="[
 		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
 		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
-		                             ]"
+		                             ]"	                             
 		                 data-bind="source: graphDS"
 		                 style="height: 250px;" ></div>
 	            <!-- End Graph -->
@@ -758,12 +749,12 @@
 					<div align="center" class="text-large strong" data-bind="text: ar"></div>
 					<table width="100%">
 						<tr align="center">
-							<td>
+							<td>										
 								<span data-bind="text: ar_open"></span>
 								<br>
 								<span>Open</span>
 							</td>
-							<td>
+							<td>										
 								<span data-bind="text: ar_customer"></span>
 								<br>
 								<span>Customer</span>
@@ -790,11 +781,11 @@
 		                    visible: true,
 		                    format: "{0}%",
 		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-		                 }'
+		                 }'                 
 		                 data-series="[
 		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
 		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
-		                             ]"
+		                             ]"	                             
 		                 data-bind="source: graphDS"
 		                 style="height: 250px;" ></div>
 	            <!-- End Graph -->
@@ -3053,7 +3044,253 @@
 		</div>
 	</div>
 </script>
+<script id="saleOrderList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
 
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								
+								<div class="widget-body">
+									<div class="tab-content">
+								    	<!-- //GENERAL INFO -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"                   
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
+										           placeholder="From ..." />
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
+										           placeholder="To ..." />
+
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+								        
+										<!-- //ACCOUNTING -->
+								        <div class="tab-pane" id="tab-2">
+								        	
+								        	<div class="row-fluid">								        		
+								            	<div class="span3">
+													<label for="ddlAR"><span ></span>Filtered by</label>
+													<input id="ddlAR" name="ddlAR"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.account_id,
+										                              source: arDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />													
+												</div>
+												<div class="span3">
+													<label for="ddlRA"><span ></span>Sorted By</label>
+													<input id="ddlRA" name="ddlRA"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.ra_id,
+										                              source: raDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />
+										         										
+												</div>
+																																		
+											</div>
+							        	</div>
+
+								        <div class="tab-pane" id="tab-3">
+								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								        <!-- //ACCOUNTING END -->								       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Sale Order List</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Product Items</p>
+									<span>#</span>
+								</div>
+								<div class="span6">
+									<p>Product Items on Hand</p>
+									<span>-</span>
+								</div>	
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Customer Order</p>
+									<span>#</span>
+								</div>
+								<div class="span6">
+									<p>Order</p>
+									<span>-</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>Item Name</th>
+							<th>Description</th>
+							<th>Type</th>
+							<th>Sale Tax</th>							
+							<th>Record P</th>
+							<th>Cost</th>
+							<th>Sale Price</th>
+							<th>QOH</th>
+							<th>Suppliers</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>						
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>					
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>						
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>				
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>				
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>						
+						</tr>
+						<tr>
+							<th colspan="9" style="text-align: left; padding-left: 8px !important;">Total</th>
+						</tr>
+					</table>
+
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
 
  
 <!-- ***************************
@@ -6480,7 +6717,7 @@
 		collectReport : new kendo.Layout("#collectReport", {model: banhji.collectReport}),
 		invoiceList : new kendo.Layout("#invoiceList", {model: banhji.invoiceList}),
 		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
-
+		saleOrderList: new kendo.Layout("#saleOrderList", {model: banhji.saleOrderList}),
 
 		//Report
 		reportDashboard: new kendo.Layout("#reportDashboard", {model: banhji.reportDashboard}),
@@ -7591,6 +7828,136 @@
 			}			
 		}		
 	});
+	banhji.router.route("/sale_order_list", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{						
+			banhji.view.layout.showIn("#content", banhji.view.saleOrderList);			
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.recurring;
+			banhji.userManagement.addMultiTask("Sale Order List","sale_order_list",null);
+			
+			if(banhji.pageLoaded["sale_order_list"]==undefined){
+				banhji.pageLoaded["sale_order_list"] = true; 
+				
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());
+
+
+			}
+
+			vm.pageLoad();					
+		}		
+	});
+
+	
 
 	/*************************
 	*   Reports Section   *
