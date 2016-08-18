@@ -519,6 +519,7 @@ class Sales extends REST_Controller {
 			$avg = ($value['amount']/$value['rate']) / $value['qty'];
 			$data['results'][] = array(
 				'group' => $key,
+				'amount' => $value['amount'],
 				'qty' => $value['qty'],
 				'avg_price' => round($avg, 2),
 				'cost' => ($value['cost']/$value['rate']) / $value['qty'],
@@ -570,6 +571,7 @@ class Sales extends REST_Controller {
 						'type' => $value->type,
 						'date' => $value->issued_date,
 						'memo' => $value->memo2,
+						'number' 	=> $value->number,
 						'qty'  => $item->quantity,
 						'price'=> $item->price,
 						'amount'=> floatval($item->amount)/floatval($value->rate)
@@ -586,7 +588,7 @@ class Sales extends REST_Controller {
 		foreach ($products as $key => $value) {
 			$data["results"][] = array(
 				'group' 	=> $key,
-				// 'amount'	=> $value['amount'],
+				'amount'	=> $value['amount'],
 				'items' 	=> $value
 
 			);
