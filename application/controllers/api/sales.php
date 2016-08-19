@@ -1247,6 +1247,8 @@ class Sales extends REST_Controller {
 		$data["count"] = $obj->paged->total_rows;
 		$products = array();
 		$total = 0;
+		$order = 0;
+		$customers = array();
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
 				$items = $value->item_line->include_related('item', array('name'))->get();
@@ -1262,12 +1264,25 @@ class Sales extends REST_Controller {
 						'price'=> $item->price,
 						'amount'=> floatval($item->amount)/floatval($value->rate)
 					);
+					if(isset($products["$item->item_name"])) {
+						
+					} else {
+						$products["$item->item_name"] = array();
+					}
 				}
-			$total += floatval($value->amount)/ floatval($value->rate);
+				if(isset($customers["$customer->id"])) {
+					
+				} else {
+					$customers["$customer->id"] = array();
+				}
+				$order++;
+				$total += floatval($value->amount)/ floatval($value->rate);
 			}
 		}
 
 		$data['total'] = $total;
+		$data['customer'] = count($customers);
+		$data['order'] = $order;
 		$data['count'] = count($products);
 		//Response Data
 		$this->response($data, 200);
