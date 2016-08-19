@@ -17856,26 +17856,17 @@
 								            </tr>
 											<tr>							            				
 												<td>
-								            		<input data-role="dropdownlist"
-										                   data-option-label="Reference Type..."								                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.reference_type,
-										                              source: referenceTypes,
-										                              events:{change: loadReference}"
-										                   style="width: 100%" />						            						            		
+								            		Reference	            						            		
 								            	</td>
 								            	<td>
-													<input data-role="dropdownlist"
-															data-option-label="Select Reference..."
+													<input data-role="combobox"
+															data-template="reference-list-tmpl"
 															data-auto-bind="false"
 								              				data-value-primitive="true"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
-								              							source: referenceDS,
-								              							enabled: bolReference,						              							
+								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}" 
 								              				style="width: 100%" />
 												</td>
@@ -18443,28 +18434,19 @@
 								            </tr>
 											<tr>							            				
 												<td>
-								            		<input data-role="dropdownlist"
-										                   data-option-label="Reference Type..."								                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.reference_type,
-										                              source: referenceTypes,
-										                              events:{change: loadReference}"
-										                   style="width: 100%" />						            						            		
+								            		Reference	            						            		
 								            	</td>
 								            	<td>
-													<select data-role="dropdownlist"
-															data-option-label="Select Reference..."
+													<input data-role="combobox"
+															data-template="reference-list-tmpl"
 															data-auto-bind="false"
 								              				data-value-primitive="true"
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
-								              							source: referenceDS,
-								              							enabled: bolReference,						              							
+								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}" 
-								              				style="width: 100%" ></select>
+								              				style="width: 100%" />
 												</td>
 											</tr>	
 							            </table>						            
@@ -48472,6 +48454,7 @@
 			this.attachmentDS.data([]);
 			this.journalLineDS.data([]);
 
+			this.set("isEdit", false);
 			this.set("obj", null);
 			this.set("total", 0);
 
@@ -48950,8 +48933,6 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		depositDS			: dataStore(apiUrl + "transactions"),
-		creditDS 			: dataStore(apiUrl + "transactions"),
 		jobDS				: dataStore(apiUrl + "jobs"),		
 		balanceDS  			: new kendo.data.DataSource({
 			transport: {
@@ -48975,13 +48956,43 @@
 			serverPaging: true,
 			pageSize: 100
 		}),
-		totalDepositDS  	: new kendo.data.DataSource({
+		depositDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "transactions/amount_sum",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
+				},
+				create 	: {
+					url: apiUrl + "transactions",
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: apiUrl + "transactions",
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: apiUrl + "transactions",
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,								
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
 				}
 			},
 			schema 	: {
@@ -49043,12 +49054,7 @@
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
 		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),
-		segmentItemDS		: banhji.source.segmentItemDS,		
-		referenceTypes 		: [
-			{ id:"Sale_Order", name:"Sale Order" },
-			{ id:"Quote", name:"Quote" },
-			{ id:"GDN", name:"Goods Delivery Note" }
-		],
+		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -49056,8 +49062,6 @@
 		monthList 			: banhji.source.monthList,
 		weekDayList 		: banhji.source.weekDayList,
 		dayList 			: banhji.source.dayList,
-	    item 				: null,
-	    showDeposit 		: false,	    
 		showMonthOption 	: false,
 		showMonth 			: false,
 		showWeek 			: false,
@@ -49069,16 +49073,14 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
-		bolReference 		: false,
 		showDiscount 		: false,
 		sub_total 			: 0,
 		tax 				: 0,
 		discount 			: 0,
 		balance 			: 0,
-		total_credit		: 0,
+		total_deposit		: 0,
 		total 				: 0,
 		original_total 		: 0,
-		original_credit 	: 0,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
 			if(id){
@@ -49200,36 +49202,29 @@
 		loadDeposit 		: function(){
 			var self = this, obj = this.get("obj");
 
-			this.totalDepositDS.query({
+			this.depositDS.query({
 				filter:[
-					{ field:"contact_id", value:obj.contact_id },
-					{ field:"type", value:"Credit" }
+					{ field:"type", value:"Deposit" },
+					{ field:"contact_id", value:obj.contact_id }
 				],
 				page: 1,
 				pageSize: 100
 			}).then(function(){
-				var view = self.totalDepositDS.view(),
-				amount = 0;
+				var view = self.depositDS.view(),
+				total_deposit = view[0].amount + obj.deposit;
 
-				if(self.get("isEdit")){
-					amount = view[0].amount + obj.credit;
-				}else{
-					amount = view[0].amount;
-				}
-
-				self.set("total_credit", amount);
+				self.set("total_deposit", total_deposit);
 			});
-		},		
-		saveDeposit 		: function(transaction_id){			
-			var obj = this.get("obj");				
+		},
+		addDeposit 			: function(){
+			var obj = this.get("obj");
 
 			this.depositDS.data([]);
-
-			//Deposit apply
-			if(obj.deposit > 0){				
+			
+			if(obj.deposit>0){				
 				this.depositDS.add({				
 					contact_id 			: obj.contact_id,								
-					reference_id 		: transaction_id,				
+					reference_id 		: obj.id,				
 					user_id 			: this.get("user_id"),				    		
 				   	type				: "Deposit",
 				   	amount				: obj.deposit*-1,			   	
@@ -49238,62 +49233,22 @@
 				   	issued_date 		: obj.issued_date			   	
 		    	});
 			}
-
-			//Credit apply
-			if(obj.credit > 0){				
-				this.depositDS.add({				
-					contact_id 			: obj.contact_id,								
-					reference_id 		: transaction_id,				
-					user_id 			: this.get("user_id"),				    		
-				   	type				: "Credit",
-				   	amount				: obj.credit*-1,			   	
-				   	rate				: obj.rate,			   	
-				   	locale 				: obj.locale,			   	
-				   	issued_date 		: obj.issued_date			   	
-		    	});
-			}
-
-	    	this.depositDS.sync();
-		},
-		addCredit 			: function(cash_sale_id){
-			var self = this, obj = this.get("obj");
+		},		
+		saveDeposit 		: function(){			
+			var obj = this.get("obj");
 			
-			//Add over amount to customer credit
-			var overAmount = ((value.reference[0].amount - value.amount_paid) - value.amount) - value.discount;
-			
-			if(overAmount<0){
-				self.creditDS.add({
-    				contact_id 			: value.contact_id,				
-					account_id 			: value.contact[0].deposit_account_id,						
-					payment_method_id	: obj.payment_method_id,				
-					reference_id 		: cash_sale_id,								
-					user_id 			: self.get("user_id"),
-					check_no 			: value.check_no,
-				   	type				: "Credit",
-				   	amount 				: overAmount*-1,				   	
-				   	discount 			: 0,
-				   	rate				: value.rate,			   	
-				   	locale 				: value.locale,			   	
-				   	issued_date 		: obj.issued_date,					   	
-				   	memo 				: obj.memo,
-				   	memo2 				: obj.memo2,
-				   	status 				: 0,
-				   	segments 			: obj.segments,
-				   	is_journal 			: 0,
-				   	//Recurring
-				   	recurring_name 		: "",
-				   	start_date 			: new Date(),
-				   	frequency 			: "Daily",
-				   	month_option 		: "Day",
-				   	interval 			: 1,
-				   	day 				: 1,
-				   	week 				: 0,
-				   	month 				: 0,
-				   	is_recurring 		: 0
-		    	});	    			
-			}
+    		if(this.get("isEdit")){
+    			if(this.depositDS.total()>0){
+					var deposit = this.depositDS.at(0);
+					deposit.set("amount", obj.deposit*-1);
+				}else{
+					this.addDeposit();
+				}
+    		}else{
+				this.addDeposit();
+    		}
 
-			this.creditDS.sync();
+			this.depositDS.sync();
 		},
 		//Contact
 		loadContact 		: function(id){
@@ -49335,7 +49290,7 @@
 		    	this.loadBalance();
 		    	this.loadRecurring();	    	
 	    	}else{
-	    		this.set("total_credit", 0);
+	    		this.set("total_deposit", 0);
 	    	}
 
 	    	this.lineDS.data([]);
@@ -49490,12 +49445,8 @@
 				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
 		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
 		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
-
-		        if(view[0].status=="1"){
-					self.set("statusSrc", banhji.source.paidSrc);
-				}else{
-					self.set("statusSrc", banhji.source.openSrc);
-				}	  			
+		        
+				self.set("statusSrc", banhji.source.paidSrc);
 								
 				//self.contactDS.filter({ field: "id", value: view[0].contact_id });				
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
@@ -49546,27 +49497,17 @@
 		        total = subTotal + tax;
 
 		        //Apply Deposit
-		        if(obj.deposit > 0){
-		        	if(obj.deposit <= total){
-		        		total -= obj.deposit;
-		        	}else{
-		        		obj.set("deposit", total);
-		        		total = 0;
-		        	}
-		        }
-
-		        //Apply Credit
-		        if(obj.credit > 0){
-		        	if(obj.credit <= this.get("total_credit")){
-			        	if(obj.credit <= total){
-			        		total -= obj.credit;
+		        if(obj.deposit>0){
+		        	if(obj.deposit <= this.get("total_deposit")){
+			        	if(obj.deposit <= total){
+			        		total -= obj.deposit;
 			        	}else{
-			        		obj.set("credit", total);
+			        		obj.set("deposit", total);
 			        		total = 0;
 			        	}
-		        	}else{
-		        		alert("Over Credit To Apply!");
-		        		obj.set("credit", 0);
+			        }else{
+		        		alert("Over deposit to apply!");
+		        		obj.set("deposit", 0);
 		        	}
 		        }
 
@@ -49601,24 +49542,27 @@
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.depositDS.data([]);
 			this.journalLineDS.data([]);
 			this.attachmentDS.data([]);
 
+			this.set("isEdit", false);
 			this.set("obj", null);
 			this.set("sub_total", 0);
 			this.set("tax", 0);
 			this.set("discount", 0);
+			this.set("total_deposit", 0);
 			this.set("total", 0);				
 
 			this.dataSource.insert(0, {				
-				contact_id 			: "",
+				contact_id 			: "",//Customer
 				payment_method_id	: 0,				
-				reference_id 		: 0,
+				reference_id 		: "",
 				recurring_id 		: "",
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
-				employee_id			: "", 	    		
-			   	type				: "Cash_Sale",
+				employee_id			: "",//Sale Rep 	    		
+			   	type				: "Cash_Sale",//Required
 			   	sub_total 			: 0,
 			   	account_id 			: 0,				   		   					   				   	
 			   	amount				: 0,
@@ -49630,9 +49574,8 @@
 			   	tax 				: 0,
 			   	check_no 			: "",
 			   	rate				: 1,			   	
-			   	locale 				: "km-KH",			   	
-			   	issued_date 		: new Date(),
-			   	due_date 			: new Date(),			   	
+			   	locale 				: banhji.locale,			   	
+			   	issued_date 		: new Date(),			   	
 			   	bill_to 			: "",
 			   	ship_to 			: "",
 			   	memo 				: "",
@@ -49754,21 +49697,6 @@
 		    		obj.set("dirty", true);
 		    	}
 
-		    	//Update credit changes
-	    		if(this.get("original_credit")==0){	    			
-	    			//Add New Credit 
-					if(obj.deposit > 0 || obj.credit > 0){
-						self.saveDeposit(obj.id);
-					}
-	    		}else{
-	    			this.set("original_credit", obj.credit);    			
-
-					var deposit = this.depositDS.at(0);
-					deposit.set("amount", obj.credit*-1);
-
-					this.depositDS.sync();
-	    		}
-
 		    	//Line has changed
 		    	if(obj.amount!==this.get("original_total")){
 		    		this.set("original_total",0);
@@ -49795,16 +49723,12 @@
 			    		value.set("transaction_id", data[0].id);
 		            });
 
-		            //Deposit
-					if(obj.deposit > 0 || obj.credit > 0){
-						self.saveDeposit(data[0].id);
-					}
-
 		            //Journal
 		            self.addJournal(data[0].id);
 				}
 
 				self.lineDS.sync();
+				self.saveDeposit();
 				self.uploadFile();
 				
 				return data;
@@ -50068,31 +49992,18 @@
 		loadReference 		: function(){			
 			var obj = this.get("obj");
 
-			if(obj.reference_type){
-				this.set("bolReference", true);
-
-				this.referenceDS.filter([
-					{ field: "contact_id", value: obj.contact_id },
-					{ field: "status", value: 0 },
-					{ field: "type", value: obj.reference_type },
-					{ field: "due_date <=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-				]);				
-			}else{
-				this.set("bolReference", false);
-			}							
+			this.referenceDS.filter([
+				{ field: "contact_id", value: obj.contact_id },
+				{ field: "status", value: 0 },
+				{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
+				{ field: "due_date <=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+			]);					
 		},
 		referenceChanges 	: function(){
 			var self = this, obj = this.get("obj");
 			
 			if(obj.reference_id>0){
 				var data = this.referenceDS.get(obj.reference_id);
-
-				//Deposit
-				if(data.deposit>0){
-					this.set("showDeposit", true);
-				}else{
-					this.set("showDeposit", false);
-				}
 
 				obj.set("employee_id", data.employee_id);
 				obj.set("segments", data.segments);
@@ -50129,7 +50040,6 @@
 			 	});			 				 				 				 				
 			}else{
 				obj.set("deposit", 0);
-				this.set("showDeposit", false);
 			}								
 		},
 		//Recurring
@@ -50447,12 +50357,7 @@
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
 		paymentTermDS 		: dataStore(apiUrl + "payment_terms"),
-		segmentItemDS		: banhji.source.segmentItemDS,		
-		referenceTypes 		: [
-			{ id:"Sale_Order", name:"Sale Order" },
-			{ id:"Quote", name:"Quote" },
-			{ id:"GDN", name:"Goods Delivery Note" }
-		],
+		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -50460,7 +50365,6 @@
 		monthList 			: banhji.source.monthList,
 		weekDayList 		: banhji.source.weekDayList,
 		dayList 			: banhji.source.dayList,
-	    showDeposit 		: false,	    
 		showMonthOption 	: false,
 		showMonth 			: false,
 		showWeek 			: false,
@@ -50624,15 +50528,15 @@
 			this.depositDS.query({
 				filter:[
 					{ field:"type", value:"Deposit" },
-					{ field:"reference_id", value:0 },
 					{ field:"contact_id", value:obj.contact_id }
 				],
 				page: 1,
 				pageSize: 100
 			}).then(function(){
-				var view = self.depositDS.view();
+				var view = self.depositDS.view(),
+				total_deposit = view[0].amount + obj.deposit;
 
-				self.set("total_deposit", view[0].amount);
+				self.set("total_deposit", total_deposit);
 			});
 		},
 		addDeposit 			: function(){
@@ -50701,7 +50605,6 @@
 		    	var contact = this.contactDS.get(obj.contact_id);		    	 	
 		    	
 		    	obj.set("payment_term_id", contact.payment_term_id);
-		    	obj.set("vat_id", contact.tax_item_id);
 		    	obj.set("locale", contact.locale);
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
@@ -50712,7 +50615,7 @@
 		    	this.loadBalance();
 		    	this.loadRecurring();		    			    	
 	    	}else{
-	    		this.set("total_credit", 0);
+	    		this.set("total_deposit", 0);
 	    	}
 	    },
 	    //Currency Rate
@@ -50873,6 +50776,15 @@
 			}).then(function(e){
 				var view = self.dataSource.view();				
 
+				self.set("obj", view[0]);
+				self.set("original_total", view[0].amount);
+
+				if(view[0].status=="1"){
+					self.set("statusSrc", banhji.source.paidSrc);
+				}else{
+					self.set("statusSrc", banhji.source.openSrc);
+				}
+
 				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
 				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
 		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
@@ -50883,12 +50795,8 @@
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });				
 				self.depositDS.filter([
 					{ field: "reference_id", value: view[0].id },
-					{ field: "type", value: "Credit" }
+					{ field: "type", value: "Deposit" }
 				]);
-
-				self.set("obj", view[0]);
-				self.set("original_total", view[0].amount);
-				self.set("original_credit", view[0].credit);
 
 				self.loadDeposit();				
 			});				
@@ -50923,27 +50831,17 @@
 		        total = subTotal + tax;
 
 		        //Apply Deposit
-		        if(obj.deposit > 0){
-		        	if(obj.deposit <= total){
-		        		total -= obj.deposit;
-		        	}else{
-		        		obj.set("deposit", total);
-		        		total = 0;
-		        	}
-		        }
-
-		        //Apply Credit
-		        if(obj.credit > 0){
-		        	if(obj.credit <= this.get("total_credit")){
-			        	if(obj.credit <= total){
-			        		total -= obj.credit;
+		        if(obj.deposit>0){
+		        	if(obj.deposit <= this.get("total_deposit")){
+			        	if(obj.deposit <= total){
+			        		total -= obj.deposit;
 			        	}else{
-			        		obj.set("credit", total);
+			        		obj.set("deposit", total);
 			        		total = 0;
 			        	}
-		        	}else{
-		        		alert("Over Credit To Apply!");
-		        		obj.set("credit", 0);
+			        }else{
+		        		alert("Over deposit to apply!");
+		        		obj.set("deposit", 0);
 		        	}
 		        }
 
@@ -50972,16 +50870,18 @@
 			this.journalLineDS.data([]);
 			this.attachmentDS.data([]);
 
+			this.set("isEdit", false);
 			this.set("obj", null);
 			this.set("sub_total", 0);
 			this.set("tax", 0);
 			this.set("discount", 0);
+			this.set("total_deposit", 0);
 			this.set("total", 0);				
 
 			this.dataSource.insert(0, {				
 				contact_id 			: "",//Customer
 				payment_term_id		: 0,				
-				reference_id 		: 0,
+				reference_id 		: "",
 				recurring_id 		: "",
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
@@ -51067,6 +50967,13 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
+
+	    	//Status
+	    	if(obj.amount==0){
+	    		obj.set("status", 1);
+	    	}else{
+	    		obj.set("status", 0);
+	    	}
 	    	
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
@@ -51411,31 +51318,18 @@
 		loadReference 		: function(){			
 			var obj = this.get("obj");
 
-			if(obj.reference_type){
-				this.set("bolReference", true);
-
-				this.referenceDS.filter([
-					{ field: "contact_id", value: obj.contact_id },
-					{ field: "status", value: 0 },
-					{ field: "type", value: obj.reference_type },
-					{ field: "due_date <=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-				]);				
-			}else{
-				this.set("bolReference", false);
-			}							
+			this.referenceDS.filter([
+				{ field: "contact_id", value: obj.contact_id },
+				{ field: "status", value: 0 },
+				{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
+				{ field: "due_date <=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+			]);					
 		},
 		referenceChanges 	: function(){
 			var self = this, obj = this.get("obj");
 			
 			if(obj.reference_id>0){
 				var data = this.referenceDS.get(obj.reference_id);
-
-				//Deposit
-				if(data.deposit>0){
-					this.set("showDeposit", true);
-				}else{
-					this.set("showDeposit", false);
-				}
 				
 				obj.set("employee_id", data.employee_id);
 				obj.set("segments", data.segments);
@@ -51471,7 +51365,6 @@
 			 	});			 				 				 				 				
 			}else{
 				obj.set("deposit", 0);
-				this.set("showDeposit", false);
 			}								
 		},
 		//Recurring
