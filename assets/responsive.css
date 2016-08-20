@@ -519,10 +519,8 @@ width: 50% !important;
   padding: 5px !important;
 }
 .box-generic .btn.btn-icon.btn-default.glyphicons.remove_2{
-   width: 94px !important;
-  text-align: right;
-  line-height: 15px;
-  color: #333;
+  width: 25px !important;
+  padding: 5px 55px 5px 35px;
 }
 .box-generic .row-fluid.row-merge .span6{
   overflow: hidden;
@@ -588,7 +586,12 @@ width: 50% !important;
 .btn.btn-danger{
   width: 25px !important;
   color: #fff;
-  padding: 5px 35px;
+  padding: 5px 55px 5px 35px;
+}
+.btn.btn-danger.bin{
+  width: 25px !important;
+  color: #fff;
+  padding: 5px 55px 5px 35px;
 }
 .btn.btn-success.edit{
   color: #fff !important;

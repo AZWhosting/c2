@@ -70,13 +70,16 @@
                           <section class="box-typical">
                               <div class="profile-card">
                                   <div class="profile-card-photo">
-                                      <img src="<?php echo base_url()?>assets/img/photo-220-1.jpg">
+                                      <img data-bind="attr: {src: userProfile.currentID.profile_photo}">
                                   </div>
                                   <div class="profile-card-name">
-                                      <span>Sreypoch</span>&nbsp;<span>Som</span>
+                                      <span data-bind="text: userProfile.currentID.last_name"></span>&nbsp;
+                                      <span data-bind="text: userProfile.currentID.first_name"></span>
                                   </div>
                                   <div class="profile-card-status">
-                                      Registered Email: <span><a href="mailto:somsreypoch@gmail.com">somsreypoch@gmail.com</a></span>
+                                      Registered Email: <span><a href="mailto:somsreypoch@gmail.com">
+                                        <span data-bind="text: userProfile.currentID.username"></span>
+                                      </a></span>
                                   </div>
                                   <div class="profile-card-location">
                                       Confirm: <span>True</span>
@@ -323,86 +326,21 @@
                                                   Create user
                                               </button>
                                               &nbsp;&nbsp;
-                                              <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: refresh"></i>
+                                              <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: users.refresh"></i>
                                           </div>
                                           <table class="clo-xs-12">
-                                              <tr>
-                                                  <th>Photo</th>
-                                                  <th>Full Name</th>
-                                                  <th>Email</th>
-                                                  <th>Role</th>
-                                                  <th>Last Login</th>
-                                                  <th></th>
-                                              </tr>
-                                              <tr>
-                                                  <td>
-                                                      <a href="#">
-                                                          <img src="<?php echo base_url()?>assets/img/photo-64-2.jpg" alt="">
-                                                      </a>
-                                                  </td>
-                                                  <td>Sokdararith Prak</td>
-                                                  <td>rith@banhji.com</td>
-                                                  <td>Admin</td>
-                                                  <td>-</td>
-                                                  <td>
-                                                      <div class="btn-group">
-                                                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              Action
-                                                          </button>
-                                                          <div class="dropdown-menu">
-                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-edit"></span>Edit</a>
-                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Password</a>
-                                                              <a class="dropdown-item" href="#profile/12"><span class="font-icon font-icon-speed"></span>View More</a>
-                                                          </div>
-                                                      </div>
-                                                  </td>
-                                              </tr>
-                                              <tr>
-                                                  <td>
-                                                      <a href="#">
-                                                          <img src="<?php echo base_url()?>assets/img/photo-64-2.jpg" alt="">
-                                                      </a>
-                                                  </td>
-                                                  <td>Sokdararith Prak</td>
-                                                  <td>rith@banhji.com</td>
-                                                  <td>Admin</td>
-                                                  <td>-</td>
-                                                  <td>
-                                                      <div class="btn-group">
-                                                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              Action
-                                                          </button>
-                                                          <div class="dropdown-menu">
-                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-edit"></span>Edit</a>
-                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Password</a>
-                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>View More</a>
-                                                          </div>
-                                                      </div>
-                                                  </td>
-                                              </tr>
-                                              <tr>
-                                                  <td>
-                                                      <a href="#">
-                                                          <img src="<?php echo base_url()?>assets/img/photo-64-2.jpg" alt="">
-                                                      </a>
-                                                  </td>
-                                                  <td>Sokdararith Prak</td>
-                                                  <td>rith@banhji.com</td>
-                                                  <td>Admin</td>
-                                                  <td>-</td>
-                                                  <td>
-                                                     <div class="btn-group">
-                                                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              Action
-                                                          </button>
-                                                          <div class="dropdown-menu">
-                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-edit"></span>Edit</a>
-                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Password</a>
-                                                              <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>View More</a>
-                                                          </div>
-                                                      </div>
-                                                  </td>
-                                              </tr>
+                                              <thead>
+                                                <tr>
+                                                    <th>Photo</th>
+                                                    <th>Full Name</th>
+                                                    <th>Email</th>
+                                                    <th>Role</th>
+                                                    <th>Last Login</th>
+                                                    <th></th>
+                                                </tr>
+                                              </thead>
+                                              <tbody data-row="listview" data-template="user-profile-list" data-bind="source:users.users" data-bind="false">
+                                              </tbody>
                                           </table>
                                       </article>
                                   </div>
@@ -414,307 +352,130 @@
                   </div>
               </div>
           </div>
-
+        </script>
+        <script type="text/x-kendo-template" id="company-edit">
           <!--Edit Company-->
           <div class="page-content">
               <div class="container" >
-                  <div class="row">
-                      <div class="col-xs-12 col-md-12 col-lg-12">
-                          <section class="box-typical edit-company">
-                              <div class="hidden-print pull-right">
-                                  <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
-                              </div>
-                              <h2>Edit Company Info</h2>
-                              <div class="divider"></div>
-                              <header class="box-typical-header-sm">
-                                  General Info
-                              </header>
-                              <article class="profile-info-item edit-table">
-                                  <table >
-                                      <tr>
-                                          <td>Company Name</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Email</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="email" class="form-control" id="" value="" >
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Address</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>ZIP Code</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Year Founded</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Country</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                       <tr>
-                                          <td>Industry</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                  </table>
-                              </article>
-                              <header class="box-typical-header-sm">Financial Info</header>
-                              <article class="profile-info-item edit-table">
-                                  <table >
-                                      <tr>
-                                          <td>Fiscal Date</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Base Currency</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Reporting Currency</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Fiscal Report Date</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Tax Regime</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                  </table>
-                              </article>
-                              <div class="box-generic">
-                                  <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
-                                      <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
-                                      &nbsp; Save
-                                  </button>
-                                  &nbsp;
-                                  <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
-                                      <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
-                                      &nbsp; Cancel
-                                  </button>
-                              </div>
-                          </section>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-          <!--Edit User-->
-          <div class="page-content">
-              <div class="container">
-                  <div class="row">
-                      <div class="col-xs-12 col-md-12 col-lg-12">
-                          <section class="box-typical edit-company">
-                              <div class="hidden-print pull-right">
-                                  <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
-                              </div>
-                              <h2>Edit User</h2>
-                              <div class="divider"></div>
-                              <div class="col-md-3 col-lg-3">
-                                  <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png" />
-                                  <h3>Profile Picture</h3>
-                                  <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
-                              </div>
-                              <article class="col-md-9 col-lg-9 profile-info-item edit-table">
-                                  <table >
-                                      <tr>
-                                          <td>Username *</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>First Name *</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Last Name *</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Password *</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="password" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Phone</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Email</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="Email" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Type</td>
-                                          <td>:</td>
-                                          <td>
-                                              <select id="exampleSelect" class="form-control">
-                                                  <option>Normal</option>
-                                                  <option>Developer</option>
-                                              </select>
-                                          </td>
-                                      </tr>
-                                  </table>
-                              </article>
-                              <div class="box-generic">
-                                  <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
-                                      <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
-                                      &nbsp; Save
-                                  </button>
-                                  &nbsp;
-                                  <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
-                                      <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
-                                      &nbsp; Cancel
-                                  </button>
-                              </div>
-                          </section>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-          <!--Add User-->
-          <div class="page-content">
-              <div class="container">
-                  <div class="row">
-                      <div class="col-xs-12 col-md-12 col-lg-12">
-                          <section class="box-typical edit-company">
-                              <div class="hidden-print pull-right">
-                                  <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
-                              </div>
-                              <h2>Add User</h2>
-                              <div class="divider"></div>
-                              <div class="col-md-3 col-lg-3">
-                                  <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png" />
-                                  <h3>Profile Picture</h3>
-                                  <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
-                              </div>
-                              <article class="col-md-9 col-lg-9 profile-info-item edit-table">
-                                  <table >
-                                      <tr>
-                                          <td>Username *</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>First Name *</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Last Name *</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Password *</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="password" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Phone</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="text" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Email</td>
-                                          <td>:</td>
-                                          <td>
-                                              <input type="Email" class="form-control" id="" placeholder="">
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>Type</td>
-                                          <td>:</td>
-                                          <td>
-                                              <select id="exampleSelect" class="form-control">
-                                                  <option>Normal</option>
-                                                  <option>Developer</option>
-                                              </select>
-                                          </td>
-                                      </tr>
-                                  </table>
-                              </article>
-                              <div class="box-generic">
-                                  <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
-                                      <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
-                                      &nbsp; Save
-                                  </button>
-                                  &nbsp;
-                                  <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
-                                      <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
-                                      &nbsp; Cancel
-                                  </button>
-                              </div>
-                          </section>
-                      </div>
-                  </div>
-              </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <section class="box-typical edit-company">
+                            <div class="hidden-print pull-right">
+                                <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
+                            </div>
+                            <h2>Edit Company Info</h2>
+                            <div class="divider"></div>
+                            <header class="box-typical-header-sm">
+                                General Info
+                            </header>
+                            <article class="profile-info-item edit-table">
+                                <table >
+                                    <tr>
+                                        <td>Company Name</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="email" class="form-control" id="" value="" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>ZIP Code</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Year Founded</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Country</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td>Industry</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </article>
+                            <header class="box-typical-header-sm">Financial Info</header>
+                            <article class="profile-info-item edit-table">
+                                <table >
+                                    <tr>
+                                        <td>Fiscal Date</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Base Currency</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Reporting Currency</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fiscal Report Date</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax Regime</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </article>
+                            <div class="box-generic">
+                                <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
+                                    <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
+                                    &nbsp; Save
+                                </button>
+                                &nbsp;
+                                <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
+                                    <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
+                                    &nbsp; Cancel
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
           </div>
         </script>
         <script type="text/x-kendo-template" id="user-profile">
@@ -726,16 +487,19 @@
                           <section class="box-typical">
                               <div class="profile-card">
                                   <div class="profile-card-photo">
-                                      <img src="<?php echo base_url()?>assets/img/photo-220-1.jpg">
+                                      <img data-bind="attr: {src: current.profile_photo}">
                                   </div>
                                   <div class="profile-card-name">
-                                      <span>Sreypoch</span>&nbsp;<span>Som</span>
+                                      <span data-bind="text: current.last_name"></span>&nbsp;
+                                      <span data-bind="text: current.first_name"></span>
                                   </div>
                                   <div class="profile-card-status">
-                                      Registered Email: <span><a href="mailto:somsreypoch@gmail.com">somsreypoch@gmail.com</a></span>
+                                      Registered Email: <span><a href="mailto:somsreypoch@gmail.com">
+                                        <span data-bind="text: current.username"></span>
+                                      </a></span>
                                   </div>
                                   <div class="profile-card-location">
-                                      Confirm: <span>True</span>
+                                      Confirm: <span data-bind="text: is_confirmed"></span>
                                   </div>
                               </div>
 
@@ -822,6 +586,128 @@
 
                   </div>
               </div>
+          </div>
+        </script>
+        <script type="text/x-kendo-template" id="user-profile-list">
+          <tr>
+            <td>
+                <a href="\#">
+                    <img width="120px"  src="#=profile_photo#" alt="">
+                </a>
+            </td>
+            <td>#=first_name# #=last_name#</td>
+            <td>#=username#</td>
+            <td>
+              # if(role == "1") {#
+                Admin
+              #} else {#
+                User
+              #}#
+            </td>
+            <td>-</td>
+            <td>
+                <div class="btn-group">
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Action
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="\#" style="display: none">Test</a>
+                        <a class="dropdown-item" href="\#userlist/#=id#"><span class="font-icon font-icon-edit"></span>Edit</a>
+                        <a class="dropdown-item" href="\#"><span class="font-icon font-icon-cart"></span>Password</a>
+                        <a class="dropdown-item" href="\#profile/#=id#"><span class="font-icon font-icon-speed"></span>View More</a>
+                    </div>
+                </div>
+            </td>
+          </tr>
+        </script>
+        <script type="text/x-kendo-template" id="user-profile-action">
+          <!--Add User-->
+          <div class="page-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <section class="box-typical edit-company">
+                            <div class="hidden-print pull-right">
+                                <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
+                            </div>
+                            <h2>User Detail</h2>
+                            <div class="divider"></div>
+                            <div class="col-md-3 col-lg-3">
+                                <img width="240px" data-bind="attr: {src: current.profile_photo}" />
+                                <h3>Profile Picture</h3>
+                                <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                            </div>
+                            <article class="col-md-9 col-lg-9 profile-info-item edit-table">
+                                <table >
+                                    <tr>
+                                        <td>Username *</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" data-bind="value: current.username" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>First Name *</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" data-bind="value: current.first_name" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Last Name *</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" data-bind="value: current.last_name" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Password *</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="password" data-bind="value: current.password" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" data-bind="value: current.mobile" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Type</td>
+                                        <td>:</td>
+                                        <td>
+                                            <select id="exampleSelect" class="form-control">
+                                                <option>Normal</option>
+                                                <option>Developer</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </article>
+                            <div class="box-generic">
+                                <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
+                                    <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
+                                    &nbsp; Save
+                                </button>
+                                &nbsp;
+                                <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
+                                    <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
+                                    &nbsp; Cancel
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
           </div>
         </script>
         <!-- cognito -->
@@ -1377,7 +1263,7 @@
               },
               refresh: function() {
                 $('#user-spinwhile').addClass('fa-spin');
-                this.users.read().then(function() {
+                banhji.users.users.read().then(function() {
                   $('#user-spinwhile').removeClass('fa-spin');
                 });
               },
@@ -1411,7 +1297,7 @@
                   actions: [
                       "Close"
                   ],
-                  close: function(e) {
+                    close: function(e) {
                     if(banhji.userDS.hasChanges()) {
                       banhji.userDS.cancelChanges();
                     }
@@ -1676,6 +1562,8 @@
               industries: banhji.industry,
               currencies: banhji.currencies,
               appSub: 0,
+              users   : banhji.users,
+              userProfile: banhji.profile,
               getModule: function() {
                 index.showIn('#app-placeholder', modeleView);
               },
@@ -1730,7 +1618,7 @@
             var mainDash = new kendo.Layout('#companyDash', {model: banhji.company});
             var dash = new kendo.View('#template-dashboard', {model: banhji.company});
             var userlist= new kendo.View('#template-userlist-page', {model: banhji.users});
-            var userForm= new kendo.View('#template-userlist-form-page', {model: banhji.users});
+            var userForm= new kendo.View('#user-profile-action', {model: banhji.users});
             var userNew= new kendo.View('#template-userlist-form-new-page', {model: banhji.users});
             var userlMod= new kendo.View('#template-modules-users-page', {model: banhji.users});
             var institute = new kendo.Layout('#template-createcompany-page', {model: banhji.company});
@@ -1798,7 +1686,8 @@
                     if(e.response) {
                       banhji.company.set('appSub', e.response.results.length || 0);
                       banhji.company.set('data', banhji.companyDS.data()[0].users);
-                      console.log(banhji.companyDS.data()[0]);
+                      // console.log(banhji.companyDS.data()[0]);
+                      banhji.userDS.filter({field: 'id', value: institute.id});
                     }
                     layout.showIn("#container", mainDash);
                    });
@@ -1819,18 +1708,29 @@
             });
 
             banhji.router.route('userlist/new', function() {
-              layout.showIn("#main-display-container", index);
-              index.showIn('#app-placeholder', userNew);
+              layout.showIn("#container", profile);
               console.log('new');
             });
 
-            banhji.router.route('userlist/:id', function(id) {
-              layout.showIn("#main-display-container", index);
-              banhji.users.setCurrent(banhji.users.users.get(id));
-              if(banhji.users.get('current')) {
-                 index.showIn('#app-placeholder', userForm);
+            banhji.router.route('userlist(/:id)', function(id) {
+              if(id) {
+                banhji.users.setCurrent(banhji.users.users.get(id));
+              } else {
+                banhji.users.users.insert(0, {
+                  username: null,
+                  first_name: null,
+                  last_name: null,
+                  email: null,
+                  mobile: null,
+                  password: null,
+                  profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+                  company: {id: banhji.companyDS.data()[0].id, name:''},
+                  usertype: null
+                });
+
+                banhji.users.setCurrent(banhji.users.users.at(0));
               }
-              console.log(id);
+              layout.showIn("#container", userForm);
             });
 
             banhji.router.route('apps', function() {
@@ -1850,7 +1750,7 @@
             banhji.router.route('profile/:id', function(id) {
               layout.showIn("#container", profile);
               // layout.showIn("#main-display-container", profile);
-              // banhji.users.setCurrent(banhji.users.users.get(id));
+              banhji.users.setCurrent(banhji.users.users.get(id));
             });
 
 
