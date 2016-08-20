@@ -18,8 +18,8 @@ class Sales extends REST_Controller {
 			$this->server_host = $conn->server_name;
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;
-			// $this->_database = $conn->inst_database;
-			$this->_database = 'db_banhji';
+			$this->_database = $conn->inst_database;
+			
 		}
 	}
 
@@ -34,9 +34,9 @@ class Sales extends REST_Controller {
 			$deleted = 0;
 
 
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 1)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
@@ -86,11 +86,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -166,9 +166,9 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -233,11 +233,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -257,7 +257,7 @@ class Sales extends REST_Controller {
 				$customer = $value->contact->get();
 				$fullname = $customer->surname.' '.$customer->name;
 
-				$segment = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+				$segment = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$segment->where_in('id', explode(',',$value->segments))->get();
 				$lines = array();
 				$segments = array();
@@ -328,9 +328,9 @@ class Sales extends REST_Controller {
 		$deleted = 0;
 
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -396,9 +396,9 @@ class Sales extends REST_Controller {
 		$deleted = 0;
 
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -423,7 +423,7 @@ class Sales extends REST_Controller {
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
 						'number' 	=> $value->number,
-						'memo' 		=> $value->memo2,
+						'memo' 		=> $value->memo2,						
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
 					);
 				} else {
@@ -431,7 +431,7 @@ class Sales extends REST_Controller {
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
 						'number' 	=> $value->number,
-						'memo' 		=> $value->memo2,
+						'memo' 		=> $value->memo2,					
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
 					);
 				}
@@ -449,8 +449,8 @@ class Sales extends REST_Controller {
 
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
-				'customer' => $key,
-				'transactions' => $value['transactions']
+				'group' => $key,
+				'items' => $value['transactions']
 			);
 		}
 
@@ -474,7 +474,7 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 		// $type->where('parent_id', 1)->get();
 
@@ -547,11 +547,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, `);
 		// $type->where('parent_id', 1)->get();
 
 		// $obj->where_related("contact", 'contact_type_id', $type);
@@ -610,11 +610,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -681,11 +681,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -706,7 +706,7 @@ class Sales extends REST_Controller {
 				$customer = $value->contact->get();
 				$fullname = $customer->surname.' '.$customer->name;
 				$job = $value->job->get();
-				$segment = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+				$segment = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$segment->where_in('id', explode(',',$value->segments))->get();
 				$segments = array();
 				if($segment->exists()) {
@@ -768,11 +768,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -809,7 +809,7 @@ class Sales extends REST_Controller {
 							$customers["$fullname"]['30'] += floatval($value->amount) / floatval($value->rate);
 						}
 					}else{
-						$customers["$fullname"]['<30'] += floatval($value->amount) / floatval($value->rate);
+						// $customers["$fullname"]['<30'] += floatval($value->amount) / floatval($value->rate);
 					}
 				} else {
 					$customers["$fullname"]['amount']	= floatval($value->amount) / floatval($value->rate);
@@ -833,13 +833,13 @@ class Sales extends REST_Controller {
 		}
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
-				'group' 	=> $key,
-				'amount'	=> $value['amount'],
-				'<30' 		=> isset($value['<30']) ? $value['<30'] : 0,
-				'30'		=> isset($value['30']) ? $value['30'] : 0,
-				'60' 		=> isset($value['60']) ? $value['60'] : 0,
-				'90' 		=> isset($value['90']) ? $value['90'] : 0,
-				'>90' 		=> isset($value['<90']) ? $value['<30'] : 0,
+				'group' 		=> $key,
+				'amount'		=> $value['amount'],
+				'underThirty' 	=> isset($value['<30']) ? $value['<30'] : 0,
+				'thirty'		=> isset($value['30']) ? $value['30'] : 0,
+				'sixty' 		=> isset($value['60']) ? $value['60'] : 0,
+				'ninety' 		=> isset($value['90']) ? $value['90'] : 0,
+				'overNinety' 	=> isset($value['<90']) ? $value['<30'] : 0,
 			);
 		}
 		$data['total'] = $total;
@@ -858,11 +858,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -943,7 +943,7 @@ class Sales extends REST_Controller {
 			$data["results"][] = array(
 				'group' 	=> $key,
 				'amount'	=> $value['amount'],
-				'transactions' => $value['transactions']
+				'items' 	=> $value['transactions']
 			);
 		}
 		$data['total'] = $total;
@@ -962,11 +962,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -1033,7 +1033,7 @@ class Sales extends REST_Controller {
 			$data["results"][] = array(
 				'group' 	=> $key,
 				'amount'	=> $value['amount'],
-				'transactions' => $value['transactions']
+				'items' => $value['transactions']
 			);
 		}
 		$data['total'] = $total;
@@ -1052,11 +1052,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -1104,7 +1104,7 @@ class Sales extends REST_Controller {
 			$data["results"][] = array(
 				'group' 	=> $key,
 				'amount'	=> $value['amount'],
-				'transactions' => $value['transactions']
+				'items' => $value['transactions']
 			);
 		}
 		$data['total'] = $total;
