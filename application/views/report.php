@@ -873,7 +873,7 @@
 <script id="sale-summary-tmpl" type="text/x-kendo-template">
 	<tr>
 		<td>#=customer#</td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="customerTransactionList" type="text/x-kendo-template">
@@ -994,13 +994,6 @@
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
-	</tr>
 </script>
 <script id="saleDetailCustomer" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -1257,7 +1250,7 @@
 				<td></td>
 				<td></td>
 				<td></td>
-				<td>#=kendo.toString(items[i].amount, 'c2')#</td>
+				<td style="text-align: right">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 				#if(items[i].lines.length >0) {#
 					#for(var x = 0; x < items[i].lines.length; x++) {#
@@ -1268,8 +1261,8 @@
 							<td></td>
 							<td>#=items[i].lines[x].name#</td>
 							<td>#=items[i].lines[x].quantity#</td>
-							<td>#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
-							<td stye="text-align: left;">#=kendo.toString(items[i].lines[x].amount, 'c2')#</td>
+							<td style="text-align: right">#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
+							<td stye="text-align: right;">#=kendo.toString(items[i].lines[x].amount, 'c2')#</td>
 						</tr>
 					#}#
 				#}#
@@ -1283,7 +1276,7 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="saleSummaryProduct" type="text/x-kendo-template">
@@ -6600,6 +6593,22 @@
 		sorter				: '',
 		openInvoice 		: 0,
 		sortList			: banhji.source.sortList,
+		saleSummarySearch 	: function() {}, // search button
+		saleDetailSearch 	: function() {},
+		trnxSearch 			: function() {},
+		depositDetailSearch : function() {},
+		summaryProductSearch: function() {},
+		detailProductSearch : function() {},
+		saleJobSearch 		: function() {},
+		saleOrderSearch 	: function() {},
+		balanaceSearch 		: function() {},
+		balanceDetailSearch : function() {},
+		agingSummarySearch  : function() {},
+		agingDetailSearch   : function() {},
+		collectingInvSearch : function() {},
+		collectedInvSearch  : function() {},
+		invoiceListSearch 	: function() {},
+		customerListSearch 	: function() {},
 		dateMax 			: function(e) {
 			$('#edate').css('width', '160px');
 			var edate = $('#edate').kendoDatePicker().data("kendoDatePicker");

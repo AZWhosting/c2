@@ -40,6 +40,7 @@ class Sales extends REST_Controller {
 			$type->where('parent_id', 1)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where('is_recurring', 0);
 			$obj->where_in("type", array("Invoice", "Cash_Sale"));
 
 			// $obj->include_related("contact_type", "name");
@@ -95,6 +96,7 @@ class Sales extends REST_Controller {
 
 		$obj->where_related("contact", 'contact_type_id', $type);
 		$obj->where_in("type", array("Invoice", "Cash_Sale"));
+		$obj->where('is_recurring', 0);
 
 		// $obj->include_related("contact_type", "name");
 
@@ -172,7 +174,8 @@ class Sales extends REST_Controller {
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
-		$obj->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt"));
+		$obj->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Quote", "Sale_Return", "GDN"));
+		$obj->where('is_recurring', 0);
 
 		// $obj->include_related("contact_type", "name");
 
@@ -188,7 +191,6 @@ class Sales extends REST_Controller {
 				$lines = array();
 
 				if(isset($customers["$fullname"])) {
-					$customers["$fullname"]['amount'] += floatval($value->amount)/floatval($value->rate);
 					$customers["$fullname"]['transactions'][] = array(
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
@@ -197,7 +199,6 @@ class Sales extends REST_Controller {
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
 					);
 				} else {
-					$customers["$fullname"]['amount'] = floatval($value->amount)/floatval($value->rate);
 					$customers["$fullname"]['transactions'][] = array(
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
@@ -212,7 +213,6 @@ class Sales extends REST_Controller {
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
 				'group' 	=> $key,
-				'amount'	=> $value['amount'],
 				'items'		=> $value['transactions'],
 			);
 		}
@@ -336,6 +336,7 @@ class Sales extends REST_Controller {
 		$obj->where_related("contact", 'contact_type_id', $type);
 		$obj->where("status <>", 1);
 		$obj->where_in("type", array("Invoice", "Cash_Receipt"));
+		$obj->where('is_recurring', 0);
 
 		// $obj->include_related("contact_type", "name");
 
@@ -404,6 +405,7 @@ class Sales extends REST_Controller {
 		$obj->where_related("contact", 'contact_type_id', $type);
 		$obj->where("status <>", 1);
 		$obj->where_in("type", array("Invoice", "Cash_Receipt"));
+		$obj->where('is_recurring', 0);
 
 		// $obj->include_related("contact_type", "name");
 
