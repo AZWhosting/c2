@@ -16572,8 +16572,7 @@
 									</li>															
 								</ul>
 							</div>
-							<a href="#/item" class="btn btn-default">Add Item</a>
-							<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+							
 							<br><br>
 							<div class="well">
 								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -17145,8 +17144,7 @@
 									</li>															
 								</ul>
 							</div>
-							<a href="#/item" class="btn btn-default">Add Item</a>
-							<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+							
 							<br><br>
 							<div class="well">
 								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -17306,8 +17304,7 @@
 			<input data-role="datepicker"
 					data-format="dd-MM-yyyy"
 					data-parse-formats="yyyy-MM-dd" 
-					data-bind="value: required_date" 
-					required data-required-msg="required"
+					data-bind="value: required_date"
 					style="width:100%;" />
 		</td>				
 		<td class="right">
@@ -19630,8 +19627,7 @@
 							                   style="width: 100%" />
 
 							                <br><br>
-							                <a href="#/item" class="btn btn-default">Add Item</a>
-											<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+							                
 							                <div align="right">
 								                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
 								            </div>
@@ -47233,10 +47229,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -48104,7 +48102,7 @@
 			 		self.lineDS.data([]);
 			 		$.each(view, function(index, value){
 			 			self.lineDS.add({					
-							transaction_id 		: obj.id,
+							transaction_id 		: 0,
 							item_id 			: value.item_id,
 							tax_item_id 		: value.tax_item_id,
 							measurement_id 		: value.measurement_id,							
@@ -48134,10 +48132,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -48895,10 +48895,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -50199,10 +50201,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -51523,10 +51527,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -52354,10 +52360,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -53669,10 +53677,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+				
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -53846,47 +53856,11 @@
 	    }	 		
 	});	
 	banhji.statement = kendo.observable({
-		lang 				: langVM,		
-		dataSource 			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "invoices/statement",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							limit: options.pageSize,
-							page: options.page,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			sort: { field: "issued_date", dir: "asc" },
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			aggregate: [
-			    { field: "amount", aggregate: "sum" }
-			],			
-			batch: true,
-			serverFiltering: true,			
-			pageSize: 100
-		}),
-		agingDS  			: dataStore(apiUrl + "invoices/statement_aging"),
+		lang 				: langVM,
+		dataSource  		: dataStore(apiUrl + "transactions/statement"),
+		agingDS  			: dataStore(apiUrl + "transactions/statement_aging"),
 		contactDS  			: dataStore(apiUrl + "contacts"),
 		companyDS  			: dataStore(apiUrl + "contacts/branch"),
-
 		sortList			: [ 
 	 		{ text:"All", 	value: "all" }, 
 	 		{ text:"Today", 	value: "today" }, 
@@ -53897,11 +53871,9 @@
 		sorter 				: "all",		
 		sdate 				: "",
 		edate 				: "",
-
 		obj 				: null,
 		company 			: null,
 		total 				: 0,
-
 		pageLoad 			: function(id){
 			this.loadContact(1);
 			this.loadCompany(1);
