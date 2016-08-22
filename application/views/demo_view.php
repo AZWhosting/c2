@@ -17304,8 +17304,7 @@
 			<input data-role="datepicker"
 					data-format="dd-MM-yyyy"
 					data-parse-formats="yyyy-MM-dd" 
-					data-bind="value: required_date" 
-					required data-required-msg="required"
+					data-bind="value: required_date"
 					style="width:100%;" />
 		</td>				
 		<td class="right">
@@ -47230,10 +47229,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -48101,7 +48102,7 @@
 			 		self.lineDS.data([]);
 			 		$.each(view, function(index, value){
 			 			self.lineDS.add({					
-							transaction_id 		: obj.id,
+							transaction_id 		: 0,
 							item_id 			: value.item_id,
 							tax_item_id 		: value.tax_item_id,
 							measurement_id 		: value.measurement_id,							
@@ -48131,10 +48132,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -48892,10 +48895,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -50196,10 +50201,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -51520,10 +51527,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -52351,10 +52360,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -53666,10 +53677,12 @@
 				{ field:"is_recurring", value:1 }
 			]);
 		},		
-		applyRecurring 		: function(e){
-			var self = this, data = e.data, obj = this.get("obj");
+		applyRecurring 		: function(){
+			var self = this, obj = this.get("obj");
 			
 			if(obj.recurring_id){
+				var data = this.recurringDS.get(obj.recurring_id);
+				
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
