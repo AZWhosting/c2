@@ -1133,9 +1133,9 @@ class Transactions extends REST_Controller {
 		$data["count"] = 0;
 		$balance_forward_date = "";
 
-		$obj = new Invoice(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$pay = new Payment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$bf = new Invoice(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$pay = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -1169,7 +1169,7 @@ class Transactions extends REST_Controller {
 			}									 			
 		}
 
-		$obj->where_in("type", array("Invoice", "Receipt", "wInvoice"));
+		$obj->where_in("type", array("Invoice", "Cash_Sale"));
 		$pay->where("type", "invoice");		
 		
 		//Results
@@ -1182,7 +1182,7 @@ class Transactions extends REST_Controller {
 			$newdate = date ( 'Y-m-d' , $newdate );
 
 			$bf->select_sum("amount");
-			$bf->where_in("type", ["Invoice", "Receipt", "wInvoice"]);
+			$bf->where_in("type", ["Invoice", "Cash_Sale"]);
 			$bf->where_in("status", [0,2]);
 			$bf->get();
 
@@ -1255,7 +1255,7 @@ class Transactions extends REST_Controller {
 			}									 			
 		}
 
-		$obj->where_in("type", array("Invoice", "wInvoice"));		
+		$obj->where("type", "Invoice");		
 		$obj->where_in("status", array(0,2));		
 		$obj->get();				
 

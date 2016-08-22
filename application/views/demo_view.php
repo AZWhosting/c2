@@ -53843,47 +53843,11 @@
 	    }	 		
 	});	
 	banhji.statement = kendo.observable({
-		lang 				: langVM,		
-		dataSource 			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "invoices/statement",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							limit: options.pageSize,
-							page: options.page,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			sort: { field: "issued_date", dir: "asc" },
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			aggregate: [
-			    { field: "amount", aggregate: "sum" }
-			],			
-			batch: true,
-			serverFiltering: true,			
-			pageSize: 100
-		}),
-		agingDS  			: dataStore(apiUrl + "invoices/statement_aging"),
+		lang 				: langVM,
+		dataSource  		: dataStore(apiUrl + "transactions/statement"),
+		agingDS  			: dataStore(apiUrl + "transactions/statement_aging"),
 		contactDS  			: dataStore(apiUrl + "contacts"),
 		companyDS  			: dataStore(apiUrl + "contacts/branch"),
-
 		sortList			: [ 
 	 		{ text:"All", 	value: "all" }, 
 	 		{ text:"Today", 	value: "today" }, 
@@ -53894,11 +53858,9 @@
 		sorter 				: "all",		
 		sdate 				: "",
 		edate 				: "",
-
 		obj 				: null,
 		company 			: null,
 		total 				: 0,
-
 		pageLoad 			: function(id){
 			this.loadContact(1);
 			this.loadCompany(1);
