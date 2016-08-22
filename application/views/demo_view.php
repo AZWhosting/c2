@@ -734,7 +734,7 @@
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" style="height: 700px;">
+				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							<div class="widget-search separator bottom">
@@ -1688,15 +1688,16 @@
 		<div class="customer-background">
 			<div class="container-960">					
 				<div id="example" class="k-content">
+					<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+					<h2 >Exchange Rate</h2>			    		   
+
+				    <br>
 
 					<!-- Collapsible Widget -->			
 					<div class="widget">
-					    <div class="widget-head">
-					    	<span class="btn btn-primary pull-right" 
-									onclick="javascript:window.history.back()">X</span>
-					        
-					        <h4 class="heading glyphicons notes"><i></i>Exchange Rate</h4>							        	
-					    </div>
 					    <div class="widget-body">
 
 					    	<div class="row-fluid">
@@ -5239,7 +5240,7 @@
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" style="height: 700px;">
+				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							<div class="widget-search separator bottom">
@@ -6360,7 +6361,7 @@
 							</ul>
 						</div>
 
-						<span class="btn btn-default">Add New Account</span>						
+												
 						
 					</div>
 					<!-- Column END -->
@@ -6852,9 +6853,6 @@
 							</ul>
 						</div>
 
-						<a href="#/account" class="btn btn-default">Add New Account</a>
-						<a style="margin-left:0; margin-top: 5px;" href="#/vendor" class="btn btn-default">Add New Supplier</a>
-
 						<br><br>
 						<div class="well">
 							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -7335,7 +7333,7 @@
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" style="height: 700px;">
+				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							<div class="widget-search separator bottom">
@@ -8295,7 +8293,7 @@
 						        	Billing Address
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 									
-									Shipping Address
+									Delivery
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 											
 						        </div>
@@ -8527,7 +8525,7 @@
 			        <thead>
 			            <tr>
 			                <th class="center" style="width: 1%;">No.</th>			                
-			                <th>ITEM</th>
+			                <th>PRODUCTS/SERVICES/ITEMS</th>
 			                <th>DESCRIPTION</th>
 			                <th style="width: 20%;">QUANTITY</th>
 			                <th style="width: 13%;">COST</th>
@@ -8561,8 +8559,7 @@
 								</li>															
 							</ul>
 						</div>
-						<a href="#/item" class="btn btn-default">Add Item</a>
-						<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+						
 						<br><br>
 						<div class="well">
 							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -8866,7 +8863,7 @@
 						        	Billing Address
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 									
-									Shipping Address
+									Delivery
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 											
 						        </div>
@@ -9032,7 +9029,7 @@
 			        <thead>
 			            <tr>
 			                <th class="center" style="width: 1%;">No.</th>			                
-			                <th>ITEM</th>
+			                <th>PRODUCTS/SERVICES/ITEMS</th>
 			                <th>DESCRIPTION</th>
 			                <th style="width: 20%;">QUANTITY</th>			                			                			                			                
 			            </tr> 
@@ -9050,8 +9047,7 @@
 					<div class="span4">	
 						<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>									
 						
-						<a href="#/item" class="btn btn-default">Add Item</a>
-						<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+						
 
 						<br><br>
 						<div class="well">
@@ -9812,7 +9808,7 @@
 						        	Billing Address
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 									
-									Shipping Address
+									Delivery
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 											
 						        </div>
@@ -9992,7 +9988,7 @@
 						        <thead>
 						            <tr>
 						                <th class="center" style="width: 1%;">No.</th>			                
-						                <th>ITEM</th>
+						                <th>PRODUCTS/SERVICES/ITEMS</th>
 						                <th>DESCRIPTION</th>
 						                <th style="width: 20%;">QUANTITY</th>
 						                <th style="width: 10%;">COST</th>
@@ -10649,7 +10645,7 @@
 						        	Billing Address
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 									
-									Shipping Address
+									Delivery
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 											
 						        </div>
@@ -10811,7 +10807,7 @@
 			        <thead>
 			            <tr>
 			                <th class="center" style="width: 1%;">No.</th>			                
-			                <th>ITEM</th>
+			                <th>PRODUCTS/SERVICES/ITEMS</th>
 			                <th>DESCRIPTION</th>
 			                <th style="width: 20%;">QUANTITY</th>
 			                <th style="width: 13%;">PRICE</th>		                
@@ -15400,7 +15396,7 @@
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" style="height: 700px;">
+				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							<div class="widget-search separator bottom">
@@ -16375,7 +16371,7 @@
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
-										Shipping Address
+										Delivery
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
@@ -16537,7 +16533,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>ITEM</th>
+				                <th>PRODUCTS/SERVICES/ITEMS</th>
 				                <th>DESCRIPTION</th>
 				                <th style="width: 15%;">QUANTITY</th>
 				                <th style="width: 10%;">PRICE</th>
@@ -16572,7 +16568,24 @@
 									</li>															
 								</ul>
 							</div>
-							
+
+							<ul class="topnav addNew">
+								<li role="presentation" class="dropdown ">
+							  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							  			Add New Item
+				    					<span class="caret"></span>
+							  		</a>
+						  			<ul class="dropdown-menu addNewItem">  				  				
+						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>  				 				  				
+						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>  				
+						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li> 
+						  				<li><a href='#/item_service'>Add New Services</a></li>  				 				  				
+						  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  			</ul>
+							  	</li>				
+							</ul>
+
 							<br><br>
 							<div class="well">
 								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -16885,7 +16898,7 @@
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
-										Shipping Address
+										Delivery
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
@@ -17105,7 +17118,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>ITEM</th>
+				                <th>PRODUCTS/SERVICES/ITEMS</th>
 				                <th>DESCRIPTION</th>
 				                <th style="width: 15%;">QUANTITY</th>
 				                <th style="width: 10%;">PRICE</th>
@@ -17914,7 +17927,7 @@
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
-										Shipping Address
+										Delivery
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
@@ -18144,7 +18157,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>ITEM</th>
+				                <th>PRODUCTS/SERVICES/ITEMS</th>
 				                <th>DESCRIPTION</th>
 				                <th style="width: 15%;">QUANTITY</th>
 				                <th style="width: 10%;">PRICE</th>
@@ -18178,8 +18191,7 @@
 									</li>															
 								</ul>
 							</div>
-							<a href="#/item" class="btn btn-default">Add Item</a>
-							<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+							
 							<br><br>
 							<div class="well">
 								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -18510,7 +18522,7 @@
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
-										Shipping Address
+										Delivery
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
@@ -18740,7 +18752,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>ITEM</th>
+				                <th>PRODUCTS/SERVICES/ITEMS</th>
 				                <th>DESCRIPTION</th>
 				                <th style="width: 20%;">QUANTITY</th>
 				                <th style="width: 13%;">PRICE</th>
@@ -18775,8 +18787,7 @@
 								</ul>
 							</div>
 
-							<a href="#/item" class="btn btn-default">Add Item</a>
-							<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+							
 							
 							<br><br>
 							<div class="well">
@@ -19111,7 +19122,7 @@
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
-										Shipping Address
+										Delivery
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
@@ -19273,7 +19284,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>ITEM</th>
+				                <th>PRODUCTS/SERVICES/ITEMS</th>
 				                <th>DESCRIPTION</th>
 				                <th style="width: 20%;">QUANTITY</th>			                			                			                			                
 				            </tr> 
@@ -19290,8 +19301,7 @@
 						<!-- Column -->
 						<div class="span4">	
 							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
-							<a href="#/item" class="btn btn-default">Add Item</a>
-							<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+						
 							<br><br>
 							<div class="well">
 								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -19475,7 +19485,7 @@
 
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
-									<div align="left">AMOUNT DUE</div>
+									<div align="left">AMOUNT RETURN</div>
 									<h2 data-bind="text: total" align="right"></h2>
 								</div>
 
@@ -19575,7 +19585,7 @@
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
-										Shipping Address
+										Delivery
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
@@ -19737,7 +19747,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>ITEM</th>
+				                <th>PRODUCTS/SERVICES/ITEMS</th>
 				                <th>DESCRIPTION</th>
 				                <th style="width: 15%;">QUANTITY</th>
 				                <th style="width: 10%;">PRICE</th>
@@ -20008,7 +20018,8 @@
 		<td>
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n" 
+					data-format="n"
+					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
 		</td>								
@@ -21674,7 +21685,7 @@
 					<table class="table table-borderless table-condensed ">
 						<thead>
 							<tr>
-								<th>ITEM</th>
+								<th>PRODUCTS/SERVICES/ITEMS</th>
 								<th>QTY</th>
 								<th>AMOUNT</th>
 								<th>AVG PRICE</th>
@@ -25647,7 +25658,10 @@
 </script>
 
 
+<!--Customer Report-->
 
+
+<!--End-Customer Report-->
 
 
 <!-- ***************************
@@ -27572,7 +27586,7 @@
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" style="height: 700px;">
+				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							<div class="widget-search separator bottom">
@@ -31713,7 +31727,7 @@
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" style="height: 700px;">
+				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							<div class="widget-search separator bottom">
@@ -33180,7 +33194,7 @@
 </script>
 <script id="cashMenu" type="text/x-kendo-template">
 	<ul class="topnav">
-	  	<li><a href='#/cash' class='glyphicons show_big_thumbnails'><i></i></a></li>
+	  	<li><a href='#/cashs' class='glyphicons show_big_thumbnails'><i></i></a></li>
 	  	<li><a href='#/cash_center'>CENTER</a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
@@ -36204,6 +36218,15 @@
 			serverPaging: true,
 			pageSize: 100
 		}),
+		//Add New Item
+		addNewItem				: [
+	 		{ name:"Add New Inventory for Sale", value: "1" },
+	 		{ name:"Add New Other Inventory", value: "2" },
+	 		{ name:"Add New Fixed Assets", value: "3" },
+	 		{ name:"Add New Services", value: "4" },
+	 		{ name:"Add New Transaction", value: "5" },
+	 		{ name:"Add New Other Charge", value: "6" }
+		],
 		//Recurring
 		frequencyList 			: [
 			{ id: 'Daily', name: 'Day' },
@@ -46581,7 +46604,7 @@
 		deleteDS 			: dataStore(apiUrl + "transactions"),		
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
-		attachmentDS	 	: dataStore(apiUrl + "attachments"),		
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),			
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -46634,6 +46657,7 @@
 		monthList 			: banhji.source.monthList,
 		weekDayList 		: banhji.source.weekDayList,
 		dayList 			: banhji.source.dayList,
+		addNewItem			: banhji.source.addNewItem,
 		showMonthOption 	: false,
 		showMonth 			: false,
 		showWeek 			: false,
@@ -47623,7 +47647,8 @@
 				
 				self.setRate();
 				self.loadBalance();
-				self.loadReference();						
+				self.loadReference();
+				self.loadRecurring();						
 			});
 		},		
 		contactChanges 		: function(){
@@ -48492,6 +48517,8 @@
 		    	obj.set("locale", view[0].locale);
 				
 				self.setRate();
+				self.loadReference();
+				self.loadRecurring();
 			});
 		},
 		contactChanges 		: function(){
@@ -49419,7 +49446,9 @@
 				obj.set("ship_to", view[0].ship_to);
 				
 				self.setRate();				
-				self.loadDeposit();							
+				self.loadDeposit();
+				self.loadReference();
+				self.loadRecurring();							
 			});
 		},
 		contactChanges 		: function(){
@@ -50744,7 +50773,9 @@
 				
 				self.setRate();
 				self.setTerm();
-				self.loadDeposit();							
+				self.loadDeposit();
+				self.loadReference();
+				self.loadRecurring();							
 			});
 		},
 		contactChanges 		: function(){
@@ -50763,7 +50794,8 @@
 		    	this.setTerm();
 		    	this.loadDeposit();
 		    	this.loadBalance();
-		    	this.loadRecurring();		    			    	
+		    	this.loadReference();
+		    	self.loadRecurring();		    			    	
 	    	}else{
 	    		this.set("total_deposit", 0);
 	    	}
@@ -53682,7 +53714,7 @@
 			
 			if(obj.recurring_id){
 				var data = this.recurringDS.get(obj.recurring_id);
-				
+
 				obj.set("employee_id", data.employee_id);//Sale Rep
 				obj.set("segments", data.segments);
 				obj.set("rate", data.rate);
@@ -54205,9 +54237,9 @@
 							    { id: "Sale_Return", name: "Sale Return" }
 							  ]	,
 		onChange			: function(e) {
-								var obj = this.get("obj");
-								this.txnFormDS.filter({ field:"type", value: obj.type });
-								setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
+			var obj = this.get("obj");
+			this.txnFormDS.filter({ field:"type", value: obj.type });
+			setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
 					        },
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){

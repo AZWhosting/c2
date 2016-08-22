@@ -7335,7 +7335,7 @@
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" style="height: 700px;">
+				<div class="span3 listWrapper">
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							<div class="widget-search separator bottom">
@@ -15400,7 +15400,7 @@
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" style="height: 700px;">
+				<div class="span3 listWrapper">
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							<div class="widget-search separator bottom">
