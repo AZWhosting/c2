@@ -18,8 +18,8 @@ class Sales extends REST_Controller {
 			$this->server_host = $conn->server_name;
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;
-			// $this->_database = $conn->inst_database;
-			$this->_database = 'db_banhji';
+			$this->_database = $conn->inst_database;
+			
 		}
 	}
 
@@ -34,9 +34,9 @@ class Sales extends REST_Controller {
 			$deleted = 0;
 
 
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 1)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
@@ -86,11 +86,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -166,9 +166,9 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -233,11 +233,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -257,7 +257,7 @@ class Sales extends REST_Controller {
 				$customer = $value->contact->get();
 				$fullname = $customer->surname.' '.$customer->name;
 
-				$segment = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+				$segment = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$segment->where_in('id', explode(',',$value->segments))->get();
 				$lines = array();
 				$segments = array();
@@ -328,9 +328,9 @@ class Sales extends REST_Controller {
 		$deleted = 0;
 
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -396,9 +396,9 @@ class Sales extends REST_Controller {
 		$deleted = 0;
 
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -423,7 +423,7 @@ class Sales extends REST_Controller {
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
 						'number' 	=> $value->number,
-						'memo' 		=> $value->memo2,
+						'memo' 		=> $value->memo2,						
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
 					);
 				} else {
@@ -431,7 +431,7 @@ class Sales extends REST_Controller {
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
 						'number' 	=> $value->number,
-						'memo' 		=> $value->memo2,
+						'memo' 		=> $value->memo2,					
 						'amount' 	=> floatval($value->amount)/floatval($value->rate)
 					);
 				}
@@ -449,8 +449,8 @@ class Sales extends REST_Controller {
 
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
-				'customer' => $key,
-				'transactions' => $value['transactions']
+				'group' => $key,
+				'items' => $value['transactions']
 			);
 		}
 
@@ -474,7 +474,7 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 		// $type->where('parent_id', 1)->get();
 
@@ -519,6 +519,7 @@ class Sales extends REST_Controller {
 			$avg = ($value['amount']/$value['rate']) / $value['qty'];
 			$data['results'][] = array(
 				'group' => $key,
+				'amount' => $value['amount'],
 				'qty' => $value['qty'],
 				'avg_price' => round($avg, 2),
 				'cost' => ($value['cost']/$value['rate']) / $value['qty'],
@@ -546,11 +547,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, `);
 		// $type->where('parent_id', 1)->get();
 
 		// $obj->where_related("contact", 'contact_type_id', $type);
@@ -570,6 +571,7 @@ class Sales extends REST_Controller {
 						'type' => $value->type,
 						'date' => $value->issued_date,
 						'memo' => $value->memo2,
+						'number' 	=> $value->number,
 						'qty'  => $item->quantity,
 						'price'=> $item->price,
 						'amount'=> floatval($item->amount)/floatval($value->rate)
@@ -595,7 +597,6 @@ class Sales extends REST_Controller {
 		$data['count'] = count($products);
 		//Response Data
 		$this->response($data, 200);
-
 	}
 
 	function deposit_detail_get() {
@@ -608,11 +609,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -679,11 +680,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -704,7 +705,7 @@ class Sales extends REST_Controller {
 				$customer = $value->contact->get();
 				$fullname = $customer->surname.' '.$customer->name;
 				$job = $value->job->get();
-				$segment = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+				$segment = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$segment->where_in('id', explode(',',$value->segments))->get();
 				$segments = array();
 				if($segment->exists()) {
@@ -766,11 +767,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -807,7 +808,7 @@ class Sales extends REST_Controller {
 							$customers["$fullname"]['30'] += floatval($value->amount) / floatval($value->rate);
 						}
 					}else{
-						$customers["$fullname"]['<30'] += floatval($value->amount) / floatval($value->rate);
+						// $customers["$fullname"]['<30'] += floatval($value->amount) / floatval($value->rate);
 					}
 				} else {
 					$customers["$fullname"]['amount']	= floatval($value->amount) / floatval($value->rate);
@@ -831,13 +832,13 @@ class Sales extends REST_Controller {
 		}
 		foreach ($customers as $key => $value) {
 			$data["results"][] = array(
-				'group' 	=> $key,
-				'amount'	=> $value['amount'],
-				'<30' 		=> isset($value['<30']) ? $value['<30'] : 0,
-				'30'			=> isset($value['30']) ? $value['30'] : 0,
-				'60' 			=> isset($value['60']) ? $value['60'] : 0,
-				'90' 			=> isset($value['90']) ? $value['90'] : 0,
-				'>90' 		=> isset($value['<90']) ? $value['<30'] : 0,
+				'group' 		=> $key,
+				'amount'		=> $value['amount'],
+				'underThirty' 	=> isset($value['<30']) ? $value['<30'] : 0,
+				'thirty'		=> isset($value['30']) ? $value['30'] : 0,
+				'sixty' 		=> isset($value['60']) ? $value['60'] : 0,
+				'ninety' 		=> isset($value['90']) ? $value['90'] : 0,
+				'overNinety' 	=> isset($value['<90']) ? $value['<30'] : 0,
 			);
 		}
 		$data['total'] = $total;
@@ -856,11 +857,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -941,7 +942,7 @@ class Sales extends REST_Controller {
 			$data["results"][] = array(
 				'group' 	=> $key,
 				'amount'	=> $value['amount'],
-				'transactions' => $value['transactions']
+				'items' 	=> $value['transactions']
 			);
 		}
 		$data['total'] = $total;
@@ -960,11 +961,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -1031,7 +1032,7 @@ class Sales extends REST_Controller {
 			$data["results"][] = array(
 				'group' 	=> $key,
 				'amount'	=> $value['amount'],
-				'transactions' => $value['transactions']
+				'items' => $value['transactions']
 			);
 		}
 		$data['total'] = $total;
@@ -1050,11 +1051,11 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$obj->where_related("contact", 'contact_type_id', $type);
@@ -1102,11 +1103,187 @@ class Sales extends REST_Controller {
 			$data["results"][] = array(
 				'group' 	=> $key,
 				'amount'	=> $value['amount'],
+				'items' => $value['transactions']
+			);
+		}
+		$data['total'] = $total;
+		$data['count'] = count($customers);
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	function statement_get() {
+		$filters 	= $this->get("filter")["filters"];
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$deleted = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+
+
+
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		$type->where('parent_id', 1)->get();
+
+		$obj->where_related("contact", 'contact_type_id', $type);
+		$obj->where_in("type", array("Invoice", "Cash_Sale", "Sale_Return", "Cash_Receipt"));
+		$obj->where('is_recurring', 0);
+
+		// $obj->include_related("contact_type", "name");
+
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+		$customers = array();
+		$total = 0;
+		$underThirty = 0;
+		$thirty = 0;
+		$sixty = 0;
+		$ninety = 0;
+		$overNinety = 0;
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {
+				$customer = $value->contact->get();
+				$fullname = $customer->surname.' '.$customer->name;
+				$items = $value->item_line->include_related('item', array('name'))->get();
+
+				$today = new DateTime();
+				$dueDate = new DateTime($value->due_date);
+				$diff = $today->diff($dueDate)->format("%a");
+				$dr = 0;
+				$cr = 0;
+				if($value->type == "Invoice" || $value->type == "Cash_Sale") {
+					$dr = floatval($value->amount) / floatval($value->rate);
+				} else {
+					$cr = floatval($value->amount) / floatval($value->rate);
+				}
+				if(isset($customers["$fullname"])) {
+					$customers["$fullname"]['amount']	+= floatval($value->amount) / floatval($value->rate);
+					
+					$customers["$fullname"]['transactions'][] = array(
+						'type' => $value->type,
+						'date' => $value->issued_date,
+						'number' => $value->number,
+						'due_date' => $value->due_date,
+						'dr' => $dr,
+						'cr' => $cr,
+						'memo' => $value->memo2
+					);
+				} else {
+					$customers["$fullname"]['amount']	= floatval($value->amount) / floatval($value->rate);
+			
+					$customers["$fullname"]['transactions'][] = array(
+						'type' => $value->type,
+						'date' => $value->issued_date,
+						'number' => $value->number,
+						'due_date' => $value->due_date,
+						'dr' => $dr,
+						'cr' => $cr,
+						'memo' => $value->memo2
+					);
+			//Results
+				}
+				if($dueDate<$today){
+					if(intval($diff)>90){
+						$overNinety+= floatval($value->amount) / floatval($value->rate);
+					}else if(intval($diff)>60){
+						$ninety += floatval($value->amount) / floatval($value->rate);
+					}else if(intval($diff)>30){
+						$sixty += floatval($value->amount) / floatval($value->rate);
+					}else{
+						$thirty += floatval($value->amount) / floatval($value->rate);
+					}
+				}else{
+					$underThirty += floatval($value->amount) / floatval($value->rate);
+				}
+				$total += floatval($value->amount)/ floatval($value->rate);
+			}
+		}
+		foreach ($customers as $key => $value) {
+			$data["results"][] = array(
+				'group' 	=> $key,
+				'amount'	=> $value['amount'],
 				'transactions' => $value['transactions']
 			);
 		}
 		$data['total'] = $total;
 		$data['count'] = count($customers);
+		$data['underThirty'] = $underThirty;
+		$data['thirty'] = $thirty;
+		$data['sixty'] = $sixty;
+		$data['ninety'] = $ninety;
+		$data['overNinety'] = $overNinety;
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	function sale_order_get() {
+		$filters 	= $this->get("filter")["filters"];
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$deleted = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+
+
+
+		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+		// $type->where('parent_id', 1)->get();
+
+		// $obj->where_related("contact", 'contact_type_id', $type);
+		$obj->where('is_recurring', 0);
+		$obj->where("type", "Cash_Sale");
+
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+		$products = array();
+		$total = 0;
+		$order = 0;
+		$customers = array();
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {
+				$items = $value->item_line->include_related('item', array('name'))->get();
+				$customer=$value->contact->get();
+				foreach($items as $item) {
+					$data['results'][] = array(
+						'customer' => $customer->name,
+						'SO'	   => $value->number,
+						'item' => $item->item_name,
+						'memo' => $value->memo,
+						'cost' => $item->item_cost,
+						'qty'  => $item->quantity,
+						'price'=> $item->price,
+						'amount'=> floatval($item->amount)/floatval($value->rate)
+					);
+					if(isset($products["$item->item_name"])) {
+						
+					} else {
+						$products["$item->item_name"] = array();
+					}
+				}
+				if(isset($customers["$customer->id"])) {
+					
+				} else {
+					$customers["$customer->id"] = array();
+				}
+				$order++;
+				$total += floatval($value->amount)/ floatval($value->rate);
+			}
+		}
+
+		$data['total'] = $total;
+		$data['customer'] = count($customers);
+		$data['order'] = $order;
+		$data['count'] = count($products);
 		//Response Data
 		$this->response($data, 200);
 	}
