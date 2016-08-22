@@ -16572,8 +16572,7 @@
 									</li>															
 								</ul>
 							</div>
-							<a href="#/item" class="btn btn-default">Add Item</a>
-							<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+							
 							<br><br>
 							<div class="well">
 								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -17145,8 +17144,7 @@
 									</li>															
 								</ul>
 							</div>
-							<a href="#/item" class="btn btn-default">Add Item</a>
-							<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+							
 							<br><br>
 							<div class="well">
 								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -19630,8 +19628,7 @@
 							                   style="width: 100%" />
 
 							                <br><br>
-							                <a href="#/item" class="btn btn-default">Add Item</a>
-											<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+							                
 							                <div align="right">
 								                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
 								            </div>

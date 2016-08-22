@@ -580,10 +580,10 @@ width: 50% !important;
   overflow: hidden;
 }
 #saveRecurring{
-  width: 144px;
-  text-align: right;
-  line-height: 15px;
+  width: 150px;
   color: #333;
+  text-align: left !important;
+  padding: 5px 35px;
 }
 
 #saveNew{
@@ -1217,16 +1217,16 @@ width: 50% !important;
 }
 
 .accounCetner-textedit{
-  margin-top: 15px;
-  margin-left: 15px;
-  border: 1px solid #ddd;
-  margin-right: 15px;
   padding: 10px;
-  width: 97%;
+  width: 100%;
   min-height: 240px;
-  margin-bottom: 15px;
 }
-
+.span9.detailsWrapper > .row-fluid > .span6:nth-child(1){
+  border: 1px solid #ddd;
+  margin-left: 10px;
+  width: 48%;
+  margin-bottom: 10px;
+}
 /*.detailsWrapper>.count{
   font-size: 30px !important;
   color: #fff;
@@ -1489,7 +1489,7 @@ width: 50% !important;
 }
 .accounCetner-textedit .btn.btn-primary.btn-icon.glyphicons.edit.pull-right{
   margin-top: 10px;
-  margin-bottom: 0;
+  margin-bottom: 10px;
   width: 80px;
   text-align: right;
   color: #fff;
