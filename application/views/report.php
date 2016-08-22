@@ -1262,13 +1262,13 @@
 							<td>#=items[i].lines[x].name#</td>
 							<td>#=items[i].lines[x].quantity#</td>
 							<td style="text-align: right">#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
-							<td stye="text-align: right;">#=kendo.toString(items[i].lines[x].amount, 'c2')#</td>
+							<td style="text-align: right;">#=kendo.toString(items[i].lines[x].amount, 'c2')#</td>
 						</tr>
 					#}#
 				#}#
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
+	<tr style="font-weight: bold;">
 		<td></td>
 		<td></td>
 		<td></td>
@@ -1767,19 +1767,12 @@
 				<td>#=items[i].number#</td>
 				<td>#=items[i].memo#</td>
 				<td>#=items[i].qty#</td>
-				<td>#=items[i].price#</td>
-				<td>#=items[i].amount#</td>
+				<td style="text-align: right;">#=items[i].price#</td>
+				<td style="text-align: right;">#=items[i].amount#</td>
 			</tr>
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		
-	</tr>
 </script>
 <script id="saleJobEngagement" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -1923,7 +1916,7 @@
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
+	<tr style="font-weight: bold;>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -3013,7 +3006,7 @@
 						></tbody>
 						<tfoot>
 							<tr>
-								<th colspan="4">Total</th>
+								<th colspan="5">Total</th>
 								<th colspan="3">(600.00)</th>
 							</tr>
 						</tfoot>
@@ -3031,10 +3024,10 @@
 		<td>#=SO#</td>
 		<td>#=item#</td>
 		<td>#=memo#</td>
-		<td>#=kendo.toString(cost, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(cost, 'c2')#</td>
 		<td>#=kendo.toString(qty, 'n')#</td>
-		<td>#=kendo.toString(price, 'c2')#</td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(price, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
  
