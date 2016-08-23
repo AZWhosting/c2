@@ -49,7 +49,25 @@
   border: 1px solid #333 !important;
   padding: 5px;
 }
-
+.topnav.addNew{
+  display: inline-block;
+  background: #f4f4f4;
+  padding: 3px 15px 6px 15px;
+  margin: 0;
+  line-height: 23px;
+}
+.topnav.addNew li{
+  list-style: none;
+}
+.topnav.addNew li a{
+  color: #333;
+}
+.addNew .addNewItem{
+  left: -15px !important;
+  border-radius: 0;
+  top: 29px !important;
+  z-index: 24;
+}
 
 .k-block, 
 .k-button, 
@@ -580,10 +598,10 @@ width: 50% !important;
   overflow: hidden;
 }
 #saveRecurring{
-  width: 144px;
-  text-align: right;
-  line-height: 15px;
+  width: 150px;
   color: #333;
+  text-align: left !important;
+  padding: 5px 35px;
 }
 
 #saveNew{
@@ -681,16 +699,33 @@ width: 50% !important;
 }
 .tabsbar-2 ul li{
   width: 10%;
-}
+}   
 .row-merge .detailsWrapper,
 .row-merge .detailsWrapper .span6{
   padding: 0;
 }
+.row-merge .detailsWrapper{
+  margin-left: 10px !important;
+  width: 74%;
+  margin-top: 0;
+  background: #fff;
+  padding: 10px;
+}
+.row-merge .detailsWrapper .span6 {
+    padding: 0;
+}
+
 .listWrapper{
   padding: 0;
 }
 .cart_total tr td {
     padding: 5px !important;
+}
+.margin-bottom-none .widget-body .tab-content > .box-generic{
+  padding: 7px !important;
+}
+.margin-bottom-none .widget-body .tab-content #tab3-4 .k-grid{
+  border-radius: 0;
 }
 #edate,
 #sdate {
@@ -700,6 +735,19 @@ width: 50% !important;
 }
 .widget-stats-5{
   margin-left: 15px;
+}
+.span3.listWrapper > .table.table-condensed.k-grid.k-widget{
+  width: 99.1%;
+  margin-bottom: 0;
+}
+.k-grid-content .k-virtual-scrollable-wrap table tr td .media-body span:last-child{
+  font-size: 12.5px;
+}
+.k-grid-content .k-virtual-scrollable-wrap table tr:last-child td .media-body{
+  border-bottom: 0;
+}
+.accounCetner-textedit table tr td .k-checkbox-label{
+  margin-top: -11px;
 }
 .media, .media-body{
     border-bottom: 1px solid #ccc;
@@ -751,15 +799,13 @@ width: 50% !important;
   padding: 5px;
   margin-right: 5px
 }
-/*.tab-pane.active .k-widget.k-dropdown.k-header{
-  margin-bottom: 10px;
-}*/
 
 .row-fluid>.control-group{
   padding: 0 15px;
 }
 .widget-employees [class*="span"].listWrapper{
-  background: none !important; 
+  background: #fff !important;
+  padding: 10px;
 }
 .widget-search.separator.bottom .overflow-hidden>input{
   border: none;
@@ -1217,16 +1263,12 @@ width: 50% !important;
 }
 
 .accounCetner-textedit{
-  margin-top: 15px;
-  margin-left: 15px;
-  border: 1px solid #ddd;
-  margin-right: 15px;
-  padding: 10px;
-  width: 97%;
+  width: 100%;
   min-height: 240px;
-  margin-bottom: 15px;
 }
-
+.span9.detailsWrapper > .row-fluid > .span6:nth-child(1){
+  width: 50%;
+}
 /*.detailsWrapper>.count{
   font-size: 30px !important;
   color: #fff;
@@ -1328,10 +1370,8 @@ width: 50% !important;
     padding: 20px 15px;
 }
 .account-center .widget-stats.widget-stats-5 .txt{
-  font-size: 15px;
-
+  font-size: 13.5px;
 }
-
 .journal_report_tab_title ul li:first-child{
   width: 12%;
 }
@@ -1348,6 +1388,9 @@ width: 50% !important;
 }
 .k-picker-wrap.k-state-default #sdate,
 .k-picker-wrap.k-state-default #edate{
+  border: none !important;
+}
+.widget-employees .padding-none{
   border: none !important;
 }
 .tab-pane .span3{
@@ -1426,11 +1469,9 @@ width: 50% !important;
 .margin-bottom-none .table{
   margin-bottom: 0;
 }
-.span9.detailsWrapper div>span,
-.span9.detailsWrapper div>button{
-  margin-bottom: 15px;
+.span9.detailsWrapper .table.table-bordered.table-striped.table-white{
+  margin-top: 15px;
 }
-
 .saleSummaryStatement .block-title {
     text-align: center;
     margin-bottom: 20px;
@@ -1489,7 +1530,7 @@ width: 50% !important;
 }
 .accounCetner-textedit .btn.btn-primary.btn-icon.glyphicons.edit.pull-right{
   margin-top: 10px;
-  margin-bottom: 0;
+  margin-bottom: 10px;
   width: 80px;
   text-align: right;
   color: #fff;

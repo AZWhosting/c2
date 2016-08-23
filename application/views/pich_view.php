@@ -734,7 +734,7 @@
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" style="height: 700px;">
+				<div class="span3 listWrapper" style="">
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							<div class="widget-search separator bottom">
@@ -7335,7 +7335,7 @@
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" style="height: 700px;">
+				<div class="span3 listWrapper">
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							<div class="widget-search separator bottom">
@@ -15400,7 +15400,7 @@
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" style="height: 700px;">
+				<div class="span3 listWrapper">
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							<div class="widget-search separator bottom">
@@ -16572,8 +16572,7 @@
 									</li>															
 								</ul>
 							</div>
-							<a href="#/item" class="btn btn-default">Add Item</a>
-							<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+
 							<br><br>
 							<div class="well">
 								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -17145,8 +17144,7 @@
 									</li>															
 								</ul>
 							</div>
-							<a href="#/item" class="btn btn-default">Add Item</a>
-							<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+							
 							<br><br>
 							<div class="well">
 								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -18153,8 +18151,7 @@
 									</li>															
 								</ul>
 							</div>
-							<a href="#/item" class="btn btn-default">Add Item</a>
-							<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+							
 							<br><br>
 							<div class="well">
 								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -18730,9 +18727,6 @@
 											</li>															
 										</ul>
 									</div>
-
-									<a href="#/item" class="btn btn-default">Add Item</a>
-									<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
 									
 									<br><br>
 									<div class="well">
@@ -19226,8 +19220,8 @@
 					<!-- Column -->
 					<div class="span4">	
 						<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
-						<a href="#/item" class="btn btn-default">Add Item</a>
-						<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+						
+
 						<br><br>
 						<div class="well">
 							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -19547,8 +19541,7 @@
 						                   style="width: 100%" />
 
 						                <br><br>
-						                <a href="#/item" class="btn btn-default">Add Item</a>
-										<a href="#/item_service" class="btn btn-default btn-nomargin">Add Service</a>
+						                
 						                <div align="right">
 							                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
 							            </div>
