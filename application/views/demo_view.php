@@ -20031,8 +20031,10 @@
 		<div class="customer-background">
 			<div class="container-960">					
 				<div id="example" class="k-content saleSummaryCustomer">
+					
 					<span class="pull-right glyphicons no-js remove_2" 
 						onclick="javascript:window.history.back()"><i></i></span>
+					
 					<br>
 					<br>
 					
@@ -20075,28 +20077,27 @@
 							
 							        	</div>
 								        
-										<!-- //ACCOUNTING -->
+										<!-- //FILTERS -->
 								        <div class="tab-pane" id="tab-2">
 								        	
 								        	<div class="row-fluid">								        		
 								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
+													<label for="ddlContact"><span ></span>Filtered by</label>
+													<input id="ddlContact" name="ddlContact"
+														   data-role="combobox"
+														   data-template="contact-list-tmpl"										                   
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
+										                   data-bind="value: contact_id,
+										                              source: contactDS"
 										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
+										                   style="width: 100%;" />													
 												</div>
 												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
+													<label for="ddlSortBy"><span ></span>Sorted By</label>
+													<input id="ddlSortBy" name="ddlSortBy"
+														   data-role="dropdownlist"										                   
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
@@ -20109,7 +20110,9 @@
 																																		
 											</div>
 							        	</div>
+							        	<!-- //FILTERS END -->
 
+							        	<!-- PRINT -->
 								        <div class="tab-pane" id="tab-3">
 								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
@@ -20122,7 +20125,7 @@
 								        		Export to Excel
 								        	</span>
 							        	</div>
-								        <!-- //ACCOUNTING END -->								       
+								        <!-- //PRINT END -->								       
 								    </div>
 								</div>
 							</div>
@@ -20131,7 +20134,7 @@
 					</div>
 					
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Statement</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -37470,7 +37473,7 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "accounting_reports/journal"),		
 		sortList			: banhji.source.sortList,
-		sorter 				: "all",		
+		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",
 		showDescription 	: false,
@@ -47205,11 +47208,14 @@
 					//Save New
 					self.addEmpty();
 				}
+
+				this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
 			});			
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
-			this.lineDS.cancelChanges();			
+			this.lineDS.cancelChanges();
+			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("quote");
 		},
@@ -53891,20 +53897,13 @@
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "transactions/statement"),
 		agingDS  			: dataStore(apiUrl + "transactions/statement_aging"),
-		contactDS  			: dataStore(apiUrl + "contacts"),
-		companyDS  			: dataStore(apiUrl + "contacts/branch"),
-		sortList			: [ 
-	 		{ text:"All", 	value: "all" }, 
-	 		{ text:"Today", 	value: "today" }, 
-	 		{ text:"This Week",value: "week" }, 
-	 		{ text:"This Month", 		value: "month" }, 
-	 		{ text:"This Year", 	value: "year" } 
-		],
+		contactDS  			: banhji.source.customerDS,
+		sortList			: banhji.source.sortList,
 		sorter 				: "all",		
 		sdate 				: "",
 		edate 				: "",
 		obj 				: null,
-		company 			: null,
+		company 			: banhji.institute,
 		total 				: 0,
 		pageLoad 			: function(id){
 			this.loadContact(1);
