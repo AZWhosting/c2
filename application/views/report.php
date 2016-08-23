@@ -3400,79 +3400,27 @@
 								</div>
 								<!-- // Tabs Heading END -->
 								
-								<div class="widget-body">
-									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
-								        <div class="tab-pane active" id="tab-1">									        	
-											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
-									           data-value-primitive="true"
-									           data-text-field="text"
-									           data-value-field="value"
-									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
-										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
-										           placeholder="To ..." />
+								<div>
+									<input id="sorter" name="sorter"
+							    	   data-role="dropdownlist"
+							           data-value-primitive="true"
+							           data-text-field="text"
+							           data-value-field="value"
+							           data-bind="value: sorter,
+							                      source: sortList,
+							                      events: {change: dateChange}" />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>
-								        
-										<!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							        	</div>
+							        <input id="sdate" name="sdate"
+							        	   data-role="datepicker"
+								           data-bind="value: startDate, events: {change: dateMax}"
+								           placeholder="From ..." />
 
-								        <div class="tab-pane" id="tab-3">
-								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->								       
-								    </div>
+							       	<input id="edate" name="edate"
+							       		   data-role="datepicker"
+								           data-bind="value: endDate, events: {change: dateMin}"
+								           placeholder="To ..." />
+
+								  	 <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 								</div>
 							</div>
 						</div>
@@ -3489,90 +3437,28 @@
 					</div>
 
 					<table class="table table-borderless table-condensed ">
-						<tr>
-							<th>Date</th>
-							<th>Ref</th>
-							<th>Description</th>
-							<th>Due Date</th>
-							<th>Charge</th>							
-							<th>Credit</th>
-							<th>Total</th>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>						
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>					
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>					
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>				
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>				
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>						
-						</tr>
-						<tr>
-							<th colspan="7" style="text-align:right; color: #fff; padding-right: 8px !important;">Account Current Balance</th>
-						</tr>						
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Description</th>
+								<th>No</th>
+								<th>Due Date</th>
+								<th>Memo</th>
+								<th>Charge</th>
+								<th>Credit</th>
+								<th>AMOUNT</th>
+							</tr>
+						</thead>
+						<tbody data-role="listview"
+									 data-bind="source: statementDB"
+									 data-template="statement-row-template"
+						></tbody>
+						<tfoot>
+							<tr>
+								<th colspan="4">Total</th>
+								<th colspan="3">(600.00)</th>
+							</tr>
+						</tfoot>
 					</table>
 					<table class="table-statement">
 						<tr>
@@ -3594,14 +3480,29 @@
 		</div>
 	</div>
 </script>
-<script id="statement-row-template" type="text/x-kendo-template">	
-	<tr data-uid="#: uid #">
-		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-		<td>#=description#</td>
-		<td align="right">#=kendo.toString(amount, "c", locale)#</td>		
+<script id="statement-row-template" type="text/x-kendo-template" >
+	# kendo.culture(banhji.customerSale.locale); #
+	<tr style="font-weight: bold">
+		<td>#=group#</td>
+		<td></td>
+		<td></td>
+		<td></td>		
+		<td></td>
+		<td></td>
 	</tr>
-</script>
+	# if (items.length) {#
+		#for(var i= 0; i <items.length; i++) {#
+			<tr>
+				<td>&nbsp;&nbsp;#=items[i].type#</td>
+				<td>#=items[i].date#</td>
+				<td>#=items[i].number#</td>
+				<td>#=items[i].memo#</td>				
+				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
+			</tr>
 
+		#}#
+	#}#
+</script>
 
 
 
@@ -6713,6 +6614,7 @@
 		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
 		segment: new kendo.Layout("#segment", {model: banhji.segment}),
 		saleJobEngagement: new kendo.Layout("#saleJobEngagement", {model: banhji.customerSale}),
+		statement: new kendo.Layout("#statement", {model: banhji.customerSale}),
 
 
 		saleOrderList: new kendo.Layout("#saleOrderList", {model: banhji.customerSale}),
