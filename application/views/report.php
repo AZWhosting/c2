@@ -6557,6 +6557,7 @@
 			this.set("contact_type_id", null);
 		}
 	});
+
 	banhji.customerSale = kendo.observable({
 		lang 				: langVM,
 		locale 				: banhji.locale,
@@ -6595,7 +6596,11 @@
 		saleDetailSearch 	: function() {
 			this.detailSale.filter({
 				logic: 'segment',
-				filters: [{field: "id", value: 9}]
+				filters: [
+					{field: "id", value: 9},
+					{field: "issued_date >=", value: this.startDate},
+					{field: "issued_date <=", value: this.endDate}
+				]
 			});
 		},
 		trnxSearch 			: function() {},
