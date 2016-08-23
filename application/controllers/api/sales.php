@@ -24,21 +24,50 @@ class Sales extends REST_Controller {
 	}
 
 	function summary_customer_get() {
-		$filters 	= $this->get("filter")["filters"];
-			$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-			$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
-			$sort 	 	= $this->get("sort");
-			$data["results"] = array();
-			$data["count"] = 0;
-			$is_pattern = 0;
-			$deleted = 0;
+		$filters 	= $this->get("filter");
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$deleted = 0;			
+		$customers = array();
+		$total =0;
+		// checked if the logic is customer or segment
 
 
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		// Segment
+		if($filters['logic'] == "segment") {
+			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$segmentItem->get();
 
+			foreach ($segmentItem as $seg) {
+				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+				$txn->where("type", "Invoice");
+				$txn->where_in("status", array(0,2));
+				$txn->like("segments", $seg->id, "both");
+				$txn->where("deleted",0);
+				$txn->where("is_recurring",0);
+				$txn->get_iterated();
+
+				foreach ($txn as $t) {
+					$amt = floatval($t->amount)/ floatval($t->rate);
+
+					if(isset($customers["$seg->name"])) {
+						$customers["$seg->name"]['amount']+= $amt;
+					} else {
+						$customers["$seg->name"]['amount']= $amt;
+					}
+					$total += $amt;
+				}
+			}
+		} else {
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 1)->get();
 
+			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where('is_recurring', 0);
 			$obj->where_in("type", array("Invoice", "Cash_Sale"));
@@ -48,8 +77,7 @@ class Sales extends REST_Controller {
 			//Results
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;
-			$customers = array();
-			$total =0;
+			
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
 					$customer = $value->contact->get();
@@ -62,23 +90,24 @@ class Sales extends REST_Controller {
 					$total += floatval($value->amount)/ floatval($value->rate);
 				}
 			}
+		}				
 
-			foreach ($customers as $key => $value) {
-				$data["results"][] = array(
-					'customer' => $key,
-					'amount'	=> $value['amount']
+		foreach ($customers as $key => $value) {
+			$data["results"][] = array(
+				'customer' => $key,
+				'amount'	=> $value['amount']
 
-				);
-			}
+			);
+		}
 
-			//Response Data
-			$data['total'] = $total;
-			$data['count'] = count($customers);
-			$this->response($data, 200);
+		// Response Data
+		$data['total'] = $total;
+		$data['count'] = count($customers);
+		$this->response($data, 200);
 	}
 
 	function detail_customer_get() {
-		$filters 	= $this->get("filter")["filters"];
+		$filters 	= $this->get("filter");
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");
@@ -86,62 +115,119 @@ class Sales extends REST_Controller {
 		$data["count"] = 0;
 		$is_pattern = 0;
 		$deleted = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-
-
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$type->where('parent_id', 1)->get();
-
-		$obj->where_related("contact", 'contact_type_id', $type);
-		$obj->where_in("type", array("Invoice", "Cash_Sale"));
-		$obj->where('is_recurring', 0);
-
-		// $obj->include_related("contact_type", "name");
-
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
 		$customers = array();
 		$total = 0;
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				$customer = $value->contact->get();
-				$fullname = $customer->surname.' '.$customer->name;
-				$items = $value->item_line->include_related('item', array('name'))->get();
-				$lines = array();
-				foreach($items as $item) {
-					$lines[] = array(
-						'name' 			=> $item->item_name,
-						'quantity' 	=> $item->quantity,
-						'price' 		=> floatval($item->price)/floatval($value->rate),
-						'amount'		=> floatval($item->amount)/floatval($value->rate)
-					);
+
+		// Segment
+		if($filters['logic'] == "segment") {
+			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			if(isset($filters['filters'])) {
+				foreach($filters['filters'] as $f) {
+					$segmentItem->where($f['field'], $f['value']);
 				}
-				if(isset($customers["$fullname"])) {
-					$customers["$fullname"]['amount'] += floatval($value->amount);
-					$customers["$fullname"]['transactions'][] = array(
-						'type'  	=> $value->type,
-						'date' 		=> $value->issued_date,
-						'number' 	=> $value->number,
-						'memo' 		=> $value->memo2,
-						'amount' 	=> floatval($value->amount)/floatval($value->rate),
-						'lines' 	=> $lines
-					);
-				} else {
-					$customers["$fullname"]['amount'] = floatval($value->amount);
-					$customers["$fullname"]['transactions'][] = array(
-						'type'  	=> $value->type,
-						'date' 		=> $value->issued_date,
-						'number' 	=> $value->number,
-						'memo' 		=> $value->memo2,
-						'amount' 	=> floatval($value->amount)/floatval($value->rate),
-						'lines' 	=> $lines
-					);
+			}
+			$segmentItem->get();
+
+			foreach ($segmentItem as $seg) {
+				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+				$txn->where("type", "Invoice");
+				$txn->where_in("status", array(0,2));
+				$txn->like("segments", $seg->id, "both");
+				$txn->where("deleted",0);
+				$txn->where("is_recurring",0);
+				$txn->get_iterated();
+
+				foreach ($txn as $t) {
+					$amt = floatval($t->amount)/ floatval($t->rate);
+					$items = $t->item_line->include_related('item', array('name'))->get();
+					$lines = array();
+					foreach($items as $item) {
+						$lines[] = array(
+							'name' 			=> $item->item_name,
+							'quantity' 	=> $item->quantity,
+							'price' 		=> floatval($item->price)/floatval($t->rate),
+							'amount'		=> floatval($item->amount)/floatval($t->rate)
+						);
+					}
+					if(isset($customers["$seg->name"])) {
+						$customers["$seg->name"]['amount']+= $amt;
+						$customers["$seg->name"]['transactions'][] = array(
+							'type'  	=> $t->type,
+							'date' 		=> $t->issued_date,
+							'number' 	=> $t->number,
+							'memo' 		=> $t->memo2,
+							'amount' 	=> $amt,
+							'lines' 	=> $lines
+						);
+					} else {
+						$customers["$seg->name"]['amount']= $amt;
+						$customers["$seg->name"]['transactions'][] = array(
+							'type'  	=> $t->type,
+							'date' 		=> $t->issued_date,
+							'number' 	=> $t->number,
+							'memo' 		=> $t->memo2,
+							'amount' 	=> $amt,
+							'lines' 	=> $lines
+						);
+					}
+					$total += $amt;
+				}
+			}
+		} else {
+			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$type->where('parent_id', 1)->get();
+
+			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where_in("type", array("Invoice", "Cash_Sale"));
+			$obj->where('is_recurring', 0);
+
+			// $obj->include_related("contact_type", "name");
+
 			//Results
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+			
+			if($obj->result_count()>0){
+				foreach ($obj as $value) {
+					$customer = $value->contact->get();
+					$fullname = $customer->surname.' '.$customer->name;
+					$items = $value->item_line->include_related('item', array('name'))->get();
+					$lines = array();
+					foreach($items as $item) {
+						$lines[] = array(
+							'name' 			=> $item->item_name,
+							'quantity' 	=> $item->quantity,
+							'price' 		=> floatval($item->price)/floatval($value->rate),
+							'amount'		=> floatval($item->amount)/floatval($value->rate)
+						);
+					}
+					if(isset($customers["$fullname"])) {
+						$customers["$fullname"]['amount'] += floatval($value->amount);
+						$customers["$fullname"]['transactions'][] = array(
+							'type'  	=> $value->type,
+							'date' 		=> $value->issued_date,
+							'number' 	=> $value->number,
+							'memo' 		=> $value->memo2,
+							'amount' 	=> floatval($value->amount)/floatval($value->rate),
+							'lines' 	=> $lines
+						);
+					} else {
+						$customers["$fullname"]['amount'] = floatval($value->amount);
+						$customers["$fullname"]['transactions'][] = array(
+							'type'  	=> $value->type,
+							'date' 		=> $value->issued_date,
+							'number' 	=> $value->number,
+							'memo' 		=> $value->memo2,
+							'amount' 	=> floatval($value->amount)/floatval($value->rate),
+							'lines' 	=> $lines
+						);
+				//Results
+					}
+				$total += floatval($value->amount)/ floatval($value->rate);
 				}
-			$total += floatval($value->amount)/ floatval($value->rate);
 			}
 		}
 		foreach ($customers as $key => $value) {

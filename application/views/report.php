@@ -6586,8 +6586,18 @@
 		sorter				: '',
 		openInvoice 		: 0,
 		sortList			: banhji.source.sortList,
-		saleSummarySearch 	: function() {}, // search button
-		saleDetailSearch 	: function() {},
+		saleSummarySearch 	: function() {
+			this.summarySale.filter({
+				logic: 'segment',
+				filters: [{field: "id", value: 9}]
+			});
+		}, // search button
+		saleDetailSearch 	: function() {
+			this.detailSale.filter({
+				logic: 'segment',
+				filters: [{field: "id", value: 9}]
+			});
+		},
 		trnxSearch 			: function() {},
 		depositDetailSearch : function() {},
 		summaryProductSearch: function() {},
