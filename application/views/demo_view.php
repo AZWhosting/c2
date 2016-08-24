@@ -6445,7 +6445,8 @@
 		<td class="right">
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
-					data-format="n0" 
+					data-format="n0"
+					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>			
@@ -6982,7 +6983,8 @@
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0" 
+					data-format="n0"
+					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>
@@ -8293,7 +8295,7 @@
 						        	Billing Address
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 									
-									Delivery
+									Delivery Address
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 											
 						        </div>
@@ -8525,7 +8527,7 @@
 			        <thead>
 			            <tr>
 			                <th class="center" style="width: 1%;">No.</th>			                
-			                <th>PRODUCTS/SERVICES/ITEMS</th>
+			                <th>ITEMS</th>
 			                <th>DESCRIPTION</th>
 			                <th style="width: 20%;">QUANTITY</th>
 			                <th style="width: 13%;">COST</th>
@@ -8560,6 +8562,25 @@
 							</ul>
 						</div>
 						
+						<!-- Add New Item -->
+						<ul class="topnav addNew">
+							<li role="presentation" class="dropdown ">
+						  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						  			Add New Item
+			    					<span class="caret"></span>
+						  		</a>
+					  			<ul class="dropdown-menu addNewItem">  				  				
+					  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+					  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+					  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+					  				<li><a href='#/item_service'>Add New Services</a></li>
+					  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+					  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+					  			</ul>
+						  	</li>				
+						</ul>
+						<!--End Add New Item -->
+
 						<br><br>
 						<div class="well">
 							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -8688,7 +8709,8 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n" 
+					data-format="n"
+					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
 		</td>
@@ -8863,7 +8885,7 @@
 						        	Billing Address
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 									
-									Delivery
+									Delivery Address
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 											
 						        </div>
@@ -9029,7 +9051,7 @@
 			        <thead>
 			            <tr>
 			                <th class="center" style="width: 1%;">No.</th>			                
-			                <th>PRODUCTS/SERVICES/ITEMS</th>
+			                <th>ITEMS</th>
 			                <th>DESCRIPTION</th>
 			                <th style="width: 20%;">QUANTITY</th>			                			                			                			                
 			            </tr> 
@@ -9047,7 +9069,24 @@
 					<div class="span4">	
 						<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>									
 						
-						
+						<!-- Add New Item -->
+						<ul class="topnav addNew">
+							<li role="presentation" class="dropdown ">
+						  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						  			Add New Item
+			    					<span class="caret"></span>
+						  		</a>
+					  			<ul class="dropdown-menu addNewItem">  				  				
+					  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+					  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+					  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+					  				<li><a href='#/item_service'>Add New Services</a></li>
+					  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+					  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+					  			</ul>
+						  	</li>				
+						</ul>
+						<!--End Add New Item -->
 
 						<br><br>
 						<div class="well">
@@ -9450,6 +9489,26 @@
 						
 						<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>	
 						
+						<!-- Add New Item -->
+						<ul class="topnav addNew">
+							<li role="presentation" class="dropdown ">
+						  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						  			Add New Item
+			    					<span class="caret"></span>
+						  		</a>
+					  			<ul class="dropdown-menu addNewItem">  				  				
+					  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+					  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+					  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+					  				<li><a href='#/item_service'>Add New Services</a></li>
+					  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+					  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+					  			</ul>
+						  	</li>				
+						</ul>
+						<!--End Add New Item -->
+						 
+
 					</div>
 					<!-- Column END -->
 					
@@ -9520,7 +9579,8 @@
 		<td class="right">
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
-					data-format="c" 
+					data-format="c"
+					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>			
@@ -9808,7 +9868,7 @@
 						        	Billing Address
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 									
-									Delivery
+									Delivery Address
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 											
 						        </div>
@@ -9988,7 +10048,7 @@
 						        <thead>
 						            <tr>
 						                <th class="center" style="width: 1%;">No.</th>			                
-						                <th>PRODUCTS/SERVICES/ITEMS</th>
+						                <th>ITEMS</th>
 						                <th>DESCRIPTION</th>
 						                <th style="width: 20%;">QUANTITY</th>
 						                <th style="width: 10%;">COST</th>
@@ -10027,7 +10087,24 @@
 										</ul>
 									</div>
 
-									
+									<!-- Add New Item -->
+									<ul class="topnav addNew">
+										<li role="presentation" class="dropdown ">
+									  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+									  			Add New Item
+						    					<span class="caret"></span>
+									  		</a>
+								  			<ul class="dropdown-menu addNewItem">  				  				
+								  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+								  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+								  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+								  				<li><a href='#/item_service'>Add New Services</a></li>
+								  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+								  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+								  			</ul>
+									  	</li>				
+									</ul>
+									<!--End Add New Item -->
 
 								</div>										
 								
@@ -10074,6 +10151,24 @@
 									</ul>
 								</div>
 
+								<!-- Add New Item -->
+								<ul class="topnav addNew">
+									<li role="presentation" class="dropdown ">
+								  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								  			Add New Item
+					    					<span class="caret"></span>
+								  		</a>
+							  			<ul class="dropdown-menu addNewItem">  				  				
+							  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+							  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+							  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+							  				<li><a href='#/item_service'>Add New Services</a></li>
+							  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+							  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+							  			</ul>
+								  	</li>				
+								</ul>
+								<!--End Add New Item -->
 															
 							</div>
 
@@ -10293,7 +10388,8 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n" 
+					data-format="n"
+					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
 		</td>
@@ -10645,7 +10741,7 @@
 						        	Billing Address
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 									
-									Delivery
+									Delivery Address
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 											
 						        </div>
@@ -10807,7 +10903,7 @@
 			        <thead>
 			            <tr>
 			                <th class="center" style="width: 1%;">No.</th>			                
-			                <th>PRODUCTS/SERVICES/ITEMS</th>
+			                <th>ITEMS</th>
 			                <th>DESCRIPTION</th>
 			                <th style="width: 20%;">QUANTITY</th>
 			                <th style="width: 13%;">PRICE</th>		                
@@ -10844,7 +10940,25 @@
 											</li>																
 										</ul>
 									</div>
-								
+									
+									<!-- Add New Item -->
+									<ul class="topnav addNew">
+										<li role="presentation" class="dropdown ">
+									  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+									  			Add New Item
+						    					<span class="caret"></span>
+									  		</a>
+								  			<ul class="dropdown-menu addNewItem">  				  				
+								  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+								  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+								  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+								  				<li><a href='#/item_service'>Add New Services</a></li>
+								  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+								  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+								  			</ul>
+									  	</li>				
+									</ul>
+									<!--End Add New Item -->
 									
 
 
@@ -16371,7 +16485,7 @@
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
-										Delivery
+										Delivery Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
@@ -16533,7 +16647,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>PRODUCTS/SERVICES/ITEMS</th>
+				                <th>ITEMS</th>
 				                <th>DESCRIPTION</th>
 				                <th style="width: 15%;">QUANTITY</th>
 				                <th style="width: 10%;">PRICE</th>
@@ -16569,6 +16683,7 @@
 								</ul>
 							</div>
 
+							<!-- Add New Item -->
 							<ul class="topnav addNew">
 								<li role="presentation" class="dropdown ">
 							  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -16576,15 +16691,16 @@
 				    					<span class="caret"></span>
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
-						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>  				 				  				
-						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>  				
-						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li> 
-						  				<li><a href='#/item_service'>Add New Services</a></li>  				 				  				
+						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add New Services</a></li>
 						  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
 						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
 						  			</ul>
 							  	</li>				
 							</ul>
+							<!--End Add New Item -->
 
 							<br><br>
 							<div class="well">
@@ -16731,6 +16847,7 @@
 					name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
 					data-format="n"
+					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
 		</td>
@@ -16898,7 +17015,7 @@
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
-										Delivery
+										Delivery Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
@@ -17118,7 +17235,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>PRODUCTS/SERVICES/ITEMS</th>
+				                <th>ITEMS</th>
 				                <th>DESCRIPTION</th>
 				                <th style="width: 15%;">QUANTITY</th>
 				                <th style="width: 10%;">PRICE</th>
@@ -17153,10 +17270,29 @@
 									</li>
 									<li>
 										<input type="checkbox" id="chbRequiredDate" class="k-checkbox" data-bind="checked: showRequiredDate">
-      									<label class="k-checkbox-label" for="chbRequiredDate">DELIVERY DATE</label>
+      									<label class="k-checkbox-label" for="chbRequiredDate">Delivery Address DATE</label>
 									</li>															
 								</ul>
 							</div>
+
+							<!-- Add New Item -->
+							<ul class="topnav addNew">
+								<li role="presentation" class="dropdown ">
+							  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							  			Add New Item
+				    					<span class="caret"></span>
+							  		</a>
+						  			<ul class="dropdown-menu addNewItem">  				  				
+						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add New Services</a></li>
+						  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  			</ul>
+							  	</li>				
+							</ul>
+							<!--End Add New Item -->
 							
 							<br><br>
 							<div class="well">
@@ -17660,8 +17796,30 @@
 						<!-- Column -->
 						<div class="span6">
 							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
+							
+							<!-- Add New Item -->
+							<ul class="topnav addNew">
+								<li role="presentation" class="dropdown ">
+							  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							  			Add New Item
+				    					<span class="caret"></span>
+							  		</a>
+						  			<ul class="dropdown-menu addNewItem">  				  				
+						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add New Services</a></li>
+						  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  			</ul>
+							  	</li>				
+							</ul>
+							<!--End Add New Item -->
+
 						</div>
 						<!-- Column END -->
+
+
 						
 						<!-- Column -->
 						<div class="span6">
@@ -17679,7 +17837,7 @@
 					</div>
 		           
 		            <br>
-					
+
 					<!-- Form actions -->
 					<div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>
@@ -17927,7 +18085,7 @@
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
-										Delivery
+										Delivery Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
@@ -18157,7 +18315,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>PRODUCTS/SERVICES/ITEMS</th>
+				                <th>ITEMS</th>
 				                <th>DESCRIPTION</th>
 				                <th style="width: 15%;">QUANTITY</th>
 				                <th style="width: 10%;">PRICE</th>
@@ -18191,6 +18349,25 @@
 									</li>															
 								</ul>
 							</div>
+
+							<!-- Add New Item -->
+							<ul class="topnav addNew">
+								<li role="presentation" class="dropdown ">
+							  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							  			Add New Item
+				    					<span class="caret"></span>
+							  		</a>
+						  			<ul class="dropdown-menu addNewItem">  				  				
+						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add New Services</a></li>
+						  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  			</ul>
+							  	</li>				
+							</ul>
+							<!--End Add New Item -->
 							
 							<br><br>
 							<div class="well">
@@ -18522,7 +18699,7 @@
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
-										Delivery
+										Delivery Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
@@ -18752,7 +18929,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>PRODUCTS/SERVICES/ITEMS</th>
+				                <th>ITEMS</th>
 				                <th>DESCRIPTION</th>
 				                <th style="width: 20%;">QUANTITY</th>
 				                <th style="width: 13%;">PRICE</th>
@@ -18787,7 +18964,24 @@
 								</ul>
 							</div>
 
-							
+							<!-- Add New Item -->
+							<ul class="topnav addNew">
+								<li role="presentation" class="dropdown ">
+							  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							  			Add New Item
+				    					<span class="caret"></span>
+							  		</a>
+						  			<ul class="dropdown-menu addNewItem">  				  				
+						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add New Services</a></li>
+						  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  			</ul>
+							  	</li>				
+							</ul>
+							<!--End Add New Item -->
 							
 							<br><br>
 							<div class="well">
@@ -18984,7 +19178,7 @@
 							data-bind="click: cancel"><i></i></span>						
 					</div>
 
-			        <h2>GOODS DELIVERY NOTE</h2>			    		   
+			        <h2>GOODS Delivery Address NOTE</h2>			    		   
 
 				    <br>				   				
 						
@@ -19122,7 +19316,7 @@
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
-										Delivery
+										Delivery Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
@@ -19284,7 +19478,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>PRODUCTS/SERVICES/ITEMS</th>
+				                <th>ITEMS</th>
 				                <th>DESCRIPTION</th>
 				                <th style="width: 20%;">QUANTITY</th>			                			                			                			                
 				            </tr> 
@@ -19301,7 +19495,26 @@
 						<!-- Column -->
 						<div class="span4">	
 							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
-						
+							
+							<!-- Add New Item -->
+							<ul class="topnav addNew">
+								<li role="presentation" class="dropdown ">
+							  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							  			Add New Item
+				    					<span class="caret"></span>
+							  		</a>
+						  			<ul class="dropdown-menu addNewItem">  				  				
+						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add New Services</a></li>
+						  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  			</ul>
+							  	</li>				
+							</ul>
+							<!--End Add New Item -->
+
 							<br><br>
 							<div class="well">
 								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
@@ -19585,7 +19798,7 @@
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
-										Delivery
+										Delivery Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
@@ -19747,7 +19960,7 @@
 				        <thead>
 				            <tr>
 				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>PRODUCTS/SERVICES/ITEMS</th>
+				                <th>ITEMS</th>
 				                <th>DESCRIPTION</th>
 				                <th style="width: 15%;">QUANTITY</th>
 				                <th style="width: 10%;">PRICE</th>
@@ -19771,7 +19984,7 @@
 								<tr>
 									<td>						
 										<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
-									
+
 										<div class="btn-group">
 											<div class="leadcontainer">
 												
@@ -19784,6 +19997,26 @@
 												</li>																
 											</ul>
 										</div>
+
+										<!-- Add New Item -->
+										<ul class="topnav addNew">
+											<li role="presentation" class="dropdown ">
+										  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+										  			Add New Item
+							    					<span class="caret"></span>
+										  		</a>
+									  			<ul class="dropdown-menu addNewItem">  				  				
+									  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+									  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+									  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+									  				<li><a href='#/item_service'>Add New Services</a></li>
+									  				<li><a href='#/txn_item'>Add New Transaction</a></li>  				
+									  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+									  			</ul>
+										  	</li>				
+										</ul>
+										<!--End Add New Item -->
+
 									</td>			
 									<td class="right">
 										Amount Paid:
@@ -19946,7 +20179,8 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n" 
+					data-format="n"
+					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
 		</td>					
@@ -20031,8 +20265,10 @@
 		<div class="customer-background">
 			<div class="container-960">					
 				<div id="example" class="k-content saleSummaryCustomer">
+					
 					<span class="pull-right glyphicons no-js remove_2" 
 						onclick="javascript:window.history.back()"><i></i></span>
+					
 					<br>
 					<br>
 					
@@ -20075,28 +20311,27 @@
 							
 							        	</div>
 								        
-										<!-- //ACCOUNTING -->
+										<!-- //FILTERS -->
 								        <div class="tab-pane" id="tab-2">
 								        	
 								        	<div class="row-fluid">								        		
 								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
+													<label for="ddlContact"><span ></span>Filtered by</label>
+													<input id="ddlContact" name="ddlContact"
+														   data-role="combobox"
+														   data-template="contact-list-tmpl"										                   
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
+										                   data-bind="value: contact_id,
+										                              source: contactDS"
 										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
+										                   style="width: 100%;" />													
 												</div>
 												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
+													<label for="ddlSortBy"><span ></span>Sorted By</label>
+													<input id="ddlSortBy" name="ddlSortBy"
+														   data-role="dropdownlist"										                   
 										                   data-value-primitive="true"
 										                   data-text-field="name"
 										                   data-value-field="id"
@@ -20109,7 +20344,9 @@
 																																		
 											</div>
 							        	</div>
+							        	<!-- //FILTERS END -->
 
+							        	<!-- PRINT -->
 								        <div class="tab-pane" id="tab-3">
 								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
@@ -20122,7 +20359,7 @@
 								        		Export to Excel
 								        	</span>
 							        	</div>
-								        <!-- //ACCOUNTING END -->								       
+								        <!-- //PRINT END -->								       
 								    </div>
 								</div>
 							</div>
@@ -20131,7 +20368,7 @@
 					</div>
 					
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Statement</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -21685,7 +21922,7 @@
 					<table class="table table-borderless table-condensed ">
 						<thead>
 							<tr>
-								<th>PRODUCTS/SERVICES/ITEMS</th>
+								<th>ITEMS</th>
 								<th>QTY</th>
 								<th>AMOUNT</th>
 								<th>AVG PRICE</th>
@@ -24726,7 +24963,7 @@
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span3">TERM OF PAYMENT</div>
         		<div class="span3">MODE OF PAYMENT</div>
-        		<div class="span3">DELIVERY DATE</div>
+        		<div class="span3">Delivery Address DATE</div>
         		<div class="span3">SALE REP</div>
         	</div>
         	<table class="span12" rules="rows">
@@ -24829,7 +25066,7 @@
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span3">TERM OF PAYMENT</div>
         		<div class="span3">MODE OF PAYMENT</div>
-        		<div class="span3">DELIVERY DATE</div>
+        		<div class="span3">Delivery Address DATE</div>
         		<div class="span3">SALE REP</div>
         	</div>
         	<table class="span12" style="border-left: none;border-bottom: none;">
@@ -24933,7 +25170,7 @@
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span3">TERM OF PAYMENT</div>
         		<div class="span3">MODE OF PAYMENT</div>
-        		<div class="span3">DELIVERY DATE</div>
+        		<div class="span3">Delivery Address DATE</div>
         		<div class="span3">SALE REP</div>
         	</div>
         	<table class="span12" rules="rows">
@@ -25036,7 +25273,7 @@
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
         		<div class="span3">TERM OF PAYMENT</div>
         		<div class="span3">MODE OF PAYMENT</div>
-        		<div class="span3">DELIVERY DATE</div>
+        		<div class="span3">Delivery Address DATE</div>
         		<div class="span3">SALE REP</div>
         	</div>
         	<table class="span12" style="border-left: none;border-bottom: none;">
@@ -25494,7 +25731,7 @@
         			</p>
         		</div>
         		<div class="span6" style="float:right;">
-        			<p class="form-title" style="font-size: 30px;">DELIVERY NOTE</p>
+        			<p class="form-title" style="font-size: 30px;">Delivery Address NOTE</p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
@@ -26549,7 +26786,8 @@
 		<td class="right">
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
-					data-format="n0" 
+					data-format="n0"
+					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>			
@@ -27304,7 +27542,7 @@
 					</td>
 					<td class="center">
 						<a href="#/gdn">
-							<img title="Add Delivery Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png" width="110" height="200" />
+							<img title="Add Delivery Address Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png" width="110" height="200" />
 							Delivery Note
 						</a>
 					</td>
@@ -30450,7 +30688,7 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td>
-								<h3><a href="#/">Inventory Position Summary</a></h3>
+								<h3><a href="#/inventory_position_summary">Inventory Position Summary</a></h3>
 							</td>
 							<td >
 								<h3><a href="#/">Inventory Sale by Item Analysis</a></h3>								
@@ -30474,7 +30712,7 @@
 						</tr>
 						<tr>
 							<td >
-								<h3><a href="#/">Inventory Position Detail</a></h3>
+								<h3><a href="#/inventory_position_detail">Inventory Position Detail</a></h3>
 							</td>
 							<td >
 								<h3><a href="#/">Inventory Turnover List</a></h3>
@@ -30642,62 +30880,476 @@
 	</div>
 </script>
 <script id="inventoryPositionSummary" type="text/x-kendo-template">
-	<div class="container-fluid">
-		<div class="row-fluid">    
-			<div class="span12">
-				<div id="example" class="k-content">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
 
-				<div class="box-generic hidden-print">
-	            	<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>	            	
-	                
-	               	<input data-role="datepicker"
-	                   data-format="dd-MM-yyyy"
-	                   data-parse-formats="yyyy-MM-dd"
-	                   data-bind="value: as_of"
-	                   placeholder="As of ..." />	                    	            	
-	          		
-	          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-	          		|
-					<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>						          		
-	            </div>
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								
+								<div class="widget-body">
+									<div class="tab-content">
+								    	<!-- //GENERAL INFO -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"                   
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
+										           placeholder="From ..." />
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
+										           placeholder="To ..." />
 
-	            <br>
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+								        
+										<!-- //ACCOUNTING -->
+								        <div class="tab-pane" id="tab-2">
+								        	
+								        	<div class="row-fluid">								        		
+								            	<div class="span3">
+													<label for="ddlAR"><span ></span>Filtered by</label>
+													<input id="ddlAR" name="ddlAR"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.account_id,
+										                              source: arDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />													
+												</div>
+												<div class="span3">
+													<label for="ddlRA"><span ></span>Sorted By</label>
+													<input id="ddlRA" name="ddlRA"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.ra_id,
+										                              source: raDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />
+										         										
+												</div>
+																																		
+											</div>
+							        	</div>
 
-	            <div align="center">
-					<h3>Inventory Position Summary</h3>
+								        <div class="tab-pane" id="tab-3">
+								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								        <!-- //ACCOUNTING END -->								       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Inventory Position Summary</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Product Items</p>
+									<span>-</span>
+								</div>
+								<div class="span6">
+									<p>Service Items</p>
+									<span>-</span>
+								</div>	
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Product Items on hand</p>
+									<span>-</span>
+								</div>
+								<div class="span6">
+									<p>Total </p>
+									<span>-</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>Item Name</th>
+							<th>On Hand</th>
+							<th>Purchase order</th>
+							<th>Sale Order</th>
+							<th>Avg Cost</th>							
+							<th>Sale Price</th>
+							<th>Total</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
 					
-					<span data-bind="text: strDate"></span>														
-				</div>
 
-				<br>			
-
-				<div data-role="grid"
-					 data-column-menu="true"
-					 data-groupable="true"
-					 data-row-template="inventory-position-summary-row-template"
-		             data-bind="source: dataSource"
-					 data-toolbar="['excel']"
-					 data-excel="{
-		                fileName: 'inventory_position_summary.xlsx'
-		             }"		             		             	                 	                 
-	                 data-columns="[
-	                    { 'title': 'SKU' },
-	                    { 'title': 'Item' },
-	                    { 'field': 'item_group_id', 'title': 'Group' },
-	                    { 'field': 'category_id', 'title': 'Category' },
-	                    { 'title': 'On Hand' },
-	                    { 'title': 'On PO' },
-	                    { 'title': 'On SO' },
-	                    { 'title': 'Avg Cost' },
-	                    { 'title': 'Cost' },
-	                    { 'title': 'Avg Price' }
-	                 ]"></div>
-
+				</div>		
 			</div>
 		</div>
 	</div>
 </script>
+<script id="inventoryPositionDetail" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								
+								<div class="widget-body">
+									<div class="tab-content">
+								    	<!-- //GENERAL INFO -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"                   
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
+										           placeholder="From ..." />
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
+										           placeholder="To ..." />
+
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+								        
+										<!-- //ACCOUNTING -->
+								        <div class="tab-pane" id="tab-2">
+								        	
+								        	<div class="row-fluid">								        		
+								            	<div class="span3">
+													<label for="ddlAR"><span ></span>Filtered by</label>
+													<input id="ddlAR" name="ddlAR"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.account_id,
+										                              source: arDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />													
+												</div>
+												<div class="span3">
+													<label for="ddlRA"><span ></span>Sorted By</label>
+													<input id="ddlRA" name="ddlRA"
+														   data-role="dropdownlist"
+														   data-template="account-list-tmpl"										                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.ra_id,
+										                              source: raDS"
+										                   data-option-label="(--- Select ---)"
+										                   required data-required-msg="required" style="width: 100%;" />
+										         										
+												</div>
+																																		
+											</div>
+							        	</div>
+
+								        <div class="tab-pane" id="tab-3">
+								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								        <!-- //ACCOUNTING END -->								       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+
+					<div class="block-title">
+						<h3>ABC Co., Ltd</h3>
+						<h2>Inventory Position Detail</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Product Items</p>
+									<span>-</span>
+								</div>
+								<div class="span6">
+									<p>Service Items</p>
+									<span>-</span>
+								</div>	
+							</div>
+						</div>
+						<div class="span7">
+							<div class="total-customer">
+								<div class="span6">
+									<p>Product Items on hand</p>
+									<span>-</span>
+								</div>
+								<div class="span6">
+									<p>Total </p>
+									<span>-</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<tr>
+							<th>Type</th>
+							<th>Date</th>
+							<th>Item Name</th>
+							<th>Ref</th>
+							<th>Qty</th>							
+							<th>Cost</th>
+							<th>On Hand</th>
+							<th>Avg Cost</th>
+							<th>Total</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+
 <script id="inventory-position-summary-row-template" type="text/x-kendo-tmpl">
     <tr data-uid="#: uid #">
         <td>#=sku#</td>
@@ -30711,72 +31363,6 @@
         <td align="right">#=kendo.toString(on_hand*cost, "c", banhji.institute.locale)#</td>
         <td align="right">#=kendo.toString(price_avg, "c", banhji.institute.locale)#</td>
    </tr>
-</script>
-<script id="inventoryPositionDetail" type="text/x-kendo-template">
-	<div class="container-fluid">
-		<div class="row-fluid">    
-			<div class="span12">
-				<div id="example" class="k-content">
-
-				<div class="box-generic hidden-print">
-	            	<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-
-	            	<input data-role="dropdownlist"                   
-	                   data-value-primitive="true"
-	                   data-text-field="text"
-	                   data-value-field="value"
-	                   data-bind="value: sorter,
-	                              source: sortList,                              
-	                              events: { change: sorterChanges }" />
-	                                           
-	                <input data-role="datepicker"	                       
-	                   data-format="dd-MM-yyyy"
-	                   data-parse-formats="yyyy-MM-dd"
-	                   data-bind="value: sdate"
-	                   placeholder="from ..." />
-	                
-	               	<input data-role="datepicker"
-	                   data-format="dd-MM-yyyy"
-	                   data-parse-formats="yyyy-MM-dd"
-	                   data-bind="value: edate"
-	                   placeholder="to ..." />	                    	            	
-	          		
-	          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-	          		|
-					<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>						          		
-	            </div>
-
-	            <br><br>
-
-	            <div align="center">
-					<h3>Inventory Position Detail</h3>
-					
-					<span data-bind="text: strDate"></span>														
-				</div>				
-
-				<div data-role="grid"
-					 data-column-menu="true"					 
-					 data-row-template="inventory-position-detail-row-template"
-		             data-bind="source: dataSource"
-					 data-toolbar="['excel']"
-					 data-excel="{
-		                fileName: 'inventory_position_detail.xlsx'
-		             }"		             		             	                 	                 
-	                 data-columns="[
-	                    { 'field': 'issued_date', 'title': 'Date' },
-	                    { 'title': 'Reference' },	                    
-	                    { 'field': 'item_id','title': 'Item' },
-	                    { 'title': 'Qty' },
-	                    { 'title': 'Price' },	                    
-	                    { 'title': 'On Hand' },	                    
-	                    { 'title': 'Weighted Avg Cost' },
-	                    { 'title': 'Cost' }	                    
-	                 ]"></div>
-
-			</div>
-		</div>
-	</div>
 </script>
 <script id="inventory-position-detail-row-template" type="text/x-kendo-tmpl">
     <tr data-uid="#: uid #">
@@ -32899,7 +33485,6 @@
 <!-- ***************************
 *	Template List Section     *
 **************************** -->
-
 <script id="contact-list-tmpl" type="text/x-kendo-tmpl">
 	<span>#=abbr##=number#</span>	
 	<span>#=name#</span>	
@@ -33177,7 +33762,7 @@
   				<li><a href='#/customer'>Add New Customer</a></li>  				  				
   				<li><a href='#/quote'>Add Quote</a></li>  				
   				<li><a href='#/sale_order'>Add Sale Order</a></li>
-  				<li><a href='#/gdn'>Add Goods Delivery Note</a></li>
+  				<li><a href='#/gdn'>Add Goods Delivery Address Note</a></li>
   				<li><a href='#/customer_deposit'>Receive Customer Deposit</a></li>
   				<li><a href='#/cash_sale'>Make Cash Sale</a></li>  				
   				<li><a href='#/invoice'>Create Invoice</span></a></li>
@@ -33201,7 +33786,7 @@
   			<ul class='dropdown-menu'>  				  				
   				<li><a href='#/quote'>Quote</a></li>  				
   				<li><a href='#/sale_order'>Sale Order</a></li>
-  				<li><a href='#/gdn'>Goods Delivery Note</a></li>
+  				<li><a href='#/gdn'>Goods Delivery Address Note</a></li>
   				<li><a href='#/customer_deposit'>Deposit</a></li>
   				<li><a href='#/cash_sale'>Cash Sale</a></li>  				
   				<li><a href='#/invoice'><span data-bind="text: lang.invoice"></span></a></li>
@@ -37470,7 +38055,7 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "accounting_reports/journal"),		
 		sortList			: banhji.source.sortList,
-		sorter 				: "all",		
+		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",
 		showDescription 	: false,
@@ -40850,7 +41435,7 @@
 		referenceTypes 		: [
 			{ id:"Sale_Order", name:"Sale Order" },
 			{ id:"Quote", name:"Quote" },
-			{ id:"GDN", name:"Goods Delivery Note" }
+			{ id:"GDN", name:"Goods Delivery Address Note" }
 		],
 		frequencyList 		: banhji.source.frequencyList,
 		monthOptionList 	: banhji.source.monthOptionList,
@@ -47205,11 +47790,14 @@
 					//Save New
 					self.addEmpty();
 				}
+
+				this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
 			});			
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
-			this.lineDS.cancelChanges();			
+			this.lineDS.cancelChanges();
+			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("quote");
 		},
@@ -53891,20 +54479,13 @@
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "transactions/statement"),
 		agingDS  			: dataStore(apiUrl + "transactions/statement_aging"),
-		contactDS  			: dataStore(apiUrl + "contacts"),
-		companyDS  			: dataStore(apiUrl + "contacts/branch"),
-		sortList			: [ 
-	 		{ text:"All", 	value: "all" }, 
-	 		{ text:"Today", 	value: "today" }, 
-	 		{ text:"This Week",value: "week" }, 
-	 		{ text:"This Month", 		value: "month" }, 
-	 		{ text:"This Year", 	value: "year" } 
-		],
+		contactDS  			: banhji.source.customerDS,
+		sortList			: banhji.source.sortList,
 		sorter 				: "all",		
 		sdate 				: "",
 		edate 				: "",
 		obj 				: null,
-		company 			: null,
+		company 			: banhji.institute,
 		total 				: 0,
 		pageLoad 			: function(id){
 			this.loadContact(1);
@@ -54233,7 +54814,7 @@
 							    { id: "Cash_Sale", name: "Cash Sale" },
 							    { id: "Invoice", name: "Invoice" },
 							    { id: "Cash_Receipt", name: "Cash Receipt" },
-							    { id: "GDN", name: "Delivery Note" },
+							    { id: "GDN", name: "Delivery Address Note" },
 							    { id: "Sale_Return", name: "Sale Return" }
 							  ]	,
 		onChange			: function(e) {
@@ -68999,7 +69580,117 @@
 			banhji.userManagement.addMultiTask("Inventory Position Summary","inventory_position_summary",null);		
 			
 			if(banhji.pageLoaded["inventory_position_summary"]==undefined){
-				banhji.pageLoaded["inventory_position_summary"] = true;				
+				banhji.pageLoaded["inventory_position_summary"] = true;
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());
+
 				
 			}			
 		}		
@@ -69017,11 +69708,123 @@
 			banhji.userManagement.addMultiTask("Inventory Position Detail","inventory_position_detail",null);		
 			
 			if(banhji.pageLoaded["inventory_position_detail"]==undefined){
-				banhji.pageLoaded["inventory_position_detail"] = true;				
+				banhji.pageLoaded["inventory_position_detail"] = true;
+
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());			
 								
 			}			
 		}		
 	});
+
+
 	banhji.router.route("/inventory_sale_by_item", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
