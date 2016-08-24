@@ -7111,17 +7111,17 @@
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: sale_customer"></span>
+										<span data-bind="text: purchase_supplier"></span>
 										<br>
 										<span>Supplier</span>
 									</td>
 									<td>
-										<span data-bind="text: sale_product"></span>
+										<span data-bind="text: purchase_product"></span>
 										<br>
 										<span>Product</span>
 									</td>
 									<td>
-										<span data-bind="text: sale_order"></span>
+										<span data-bind="text: purchase_order"></span>
 										<br>
 										<span>Order</span>
 									</td>
@@ -7188,21 +7188,21 @@
 						
 						<div class="widget-body alert-info3" style="background-color: LightGray">
 							
-							<div align="center" class="text-large strong" data-bind="text: ar"></div>
+							<div align="center" class="text-large strong" data-bind="text: ap"></div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: ar_open"></span>
+										<span data-bind="text: ap_open"></span>
 										<br>
 										<span>Open</span>
 									</td>
 									<td>
-										<span data-bind="text: ar_customer"></span>
+										<span data-bind="text: ap_customer"></span>
 										<br>
 										<span>Supplier</span>
 									</td>
 									<td>
-										<span data-bind="text: ar_overdue"></span>
+										<span data-bind="text: ap_overdue"></span>
 										<br>
 										<span>Overdue</span>
 									</td>
@@ -40504,10 +40504,10 @@
 	**********************/
 	banhji.vendorDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "contact_reports/summary"),
-		topContactDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
-		topAPDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),		
+		summaryDS 			: dataStore(apiUrl + "contact_reports/supplier_summary"),
+		topContactDS 		: dataStore(apiUrl + "contact_reports/top_supplier"),
+		topAPDS 			: dataStore(apiUrl + "contact_reports/top_ap"),
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_sproduct"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -40534,17 +40534,17 @@
 			serverPaging: true,
 			pageSize: 100
 		}),
-		sale 				: 0,
-		sale_customer 		: 0,
-		sale_product 		: 0,
-		sale_order 			: 0,
+		purchase 			: 0,
+		purchase_supplier 	: 0,
+		purchase_product 	: 0,
+		purchase_order 		: 0,
 		order 				: 0,
 		order_avg 			: 0,
 		order_open 			: 0,
-		ar 					: 0,
-		ar_open 			: 0,
-		ar_customer 		: 0,
-		ar_overdue 			: 0,						
+		ap 					: 0,
+		ap_open 			: 0,
+		ap_customer 		: 0,
+		ap_overdue 			: 0,						
 		pageLoad 			: function(){
 			var self = this, today = new Date(),
 			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
@@ -40560,18 +40560,18 @@
 				var view = self.summaryDS.view();
 				
 				self.set("purchase", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
-				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
-				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
+				self.set("purchase_supplier", kendo.toString(view[0].sale_customer, "n0"));
+				self.set("purchase_product", kendo.toString(view[0].sale_product, "n0"));
+				self.set("purchase_order", kendo.toString(view[0].sale_order, "n0"));
 
 				self.set("order", kendo.toString(view[0].order, "n0"));
 				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.locale=="km-KH"?"c0":"c", banhji.locale));				
 				self.set("order_open", kendo.toString(view[0].order_open, "n0"));
 
-				self.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
-				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
-				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
+				self.set("ap", kendo.toString(view[0].ap, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
+				self.set("ap_customer", kendo.toString(view[0].ap_customer, "n0"));
+				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
 			});
 
 			this.topContactDS.query({
