@@ -140,16 +140,7 @@ class Vendorreports extends REST_Controller {
 
 				foreach ($txn as $t) {
 					$amt = floatval($t->amount)/ floatval($t->rate);
-					$items = $t->item_line->include_related('item', array('name'))->get();
-					$lines = array();
-					foreach($items as $item) {
-						$lines[] = array(
-							'name' 			=> $item->item_name,
-							'quantity' 	=> $item->quantity,
-							'price' 		=> floatval($item->price)/floatval($t->rate),
-							'amount'		=> floatval($item->amount)/floatval($t->rate)
-						);
-					}
+				
 					if(isset($customers["$seg->name"])) {
 						$customers["$seg->name"]['amount']+= $amt;
 						$customers["$seg->name"]['transactions'][] = array(
@@ -157,8 +148,7 @@ class Vendorreports extends REST_Controller {
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
 							'memo' 		=> $t->memo2,
-							'amount' 	=> $amt,
-							'lines' 	=> $lines
+							'amount' 	=> $amt
 						);
 					} else {
 						$customers["$seg->name"]['amount']= $amt;
@@ -167,8 +157,7 @@ class Vendorreports extends REST_Controller {
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
 							'memo' 		=> $t->memo2,
-							'amount' 	=> $amt,
-							'lines' 	=> $lines
+							'amount' 	=> $amt
 						);
 					}
 					$total += $amt;
@@ -194,16 +183,7 @@ class Vendorreports extends REST_Controller {
 				foreach ($obj as $value) {
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
-					$items = $value->item_line->include_related('item', array('name'))->get();
-					$lines = array();
-					foreach($items as $item) {
-						$lines[] = array(
-							'name' 			=> $item->item_name,
-							'quantity' 	=> $item->quantity,
-							'price' 		=> floatval($item->price)/floatval($value->rate),
-							'amount'		=> floatval($item->amount)/floatval($value->rate)
-						);
-					}
+					
 					if(isset($customers["$fullname"])) {
 						$customers["$fullname"]['amount'] += floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
@@ -211,8 +191,7 @@ class Vendorreports extends REST_Controller {
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
 							'memo' 		=> $value->memo2,
-							'amount' 	=> floatval($value->amount)/floatval($value->rate),
-							'lines' 	=> $lines
+							'amount' 	=> floatval($value->amount)/floatval($value->rate)
 						);
 					} else {
 						$customers["$fullname"]['amount'] = floatval($value->amount);
@@ -222,7 +201,6 @@ class Vendorreports extends REST_Controller {
 							'number' 	=> $value->number,
 							'memo' 		=> $value->memo2,
 							'amount' 	=> floatval($value->amount)/floatval($value->rate),
-							'lines' 	=> $lines
 						);
 				//Results
 					}
@@ -277,16 +255,7 @@ class Vendorreports extends REST_Controller {
 
 				foreach ($txn as $t) {
 					$amt = floatval($t->amount)/ floatval($t->rate);
-					$items = $t->item_line->include_related('item', array('name'))->get();
-					$lines = array();
-					foreach($items as $item) {
-						$lines[] = array(
-							'name' 			=> $item->item_name,
-							'quantity' 	=> $item->quantity,
-							'price' 		=> floatval($item->price)/floatval($t->rate),
-							'amount'		=> floatval($item->amount)/floatval($t->rate)
-						);
-					}
+
 					if(isset($customers["$seg->name"])) {
 						$customers["$seg->name"]['amount']+= $amt;
 						$customers["$seg->name"]['transactions'][] = array(
@@ -294,8 +263,7 @@ class Vendorreports extends REST_Controller {
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
 							'memo' 		=> $t->memo2,
-							'amount' 	=> $amt,
-							'lines' 	=> $lines
+							'amount' 	=> $amt
 						);
 					} else {
 						$customers["$seg->name"]['amount']= $amt;
@@ -304,8 +272,7 @@ class Vendorreports extends REST_Controller {
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
 							'memo' 		=> $t->memo2,
-							'amount' 	=> $amt,
-							'lines' 	=> $lines
+							'amount' 	=> $amt
 						);
 					}
 					$total += $amt;
@@ -319,9 +286,14 @@ class Vendorreports extends REST_Controller {
 			$type->where('parent_id', 1)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
-			$obj->where_in("type", array("Purchase", "Expense", "Deposit", "Cash_Receipt", "Quote", "Sale_Return", "GDN"));
+			$obj->where_in("type", array("Purchase", "Expense"));
 			$obj->where('is_recurring', 0);
-			$obj->whee('deleted', 0);
+			$obj->where('deleted', 0);
+			if(isset($filters['filters'])) {
+				foreach($filters['filters'] as $f) {
+					$obj->where($f['field'], $f['value']);
+				}
+			}
 
 			// $obj->include_related("contact_type", "name");
 
@@ -333,7 +305,6 @@ class Vendorreports extends REST_Controller {
 				foreach ($obj as $value) {
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
-					$lines = array();
 
 					if(isset($customers["$fullname"])) {
 						$customers["$fullname"]['transactions'][] = array(
@@ -745,8 +716,6 @@ class Vendorreports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-
-
 	// item or service classified as list
 	function summary_list_get() {
 		$filters 	= $this->get("filter")["filters"];
@@ -775,7 +744,7 @@ class Vendorreports extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Expense", "Purchase"));
+				$txn->where("type", "Purchase");
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -825,7 +794,7 @@ class Vendorreports extends REST_Controller {
 			// $type->where('parent_id', 1)->get();
 
 			// $obj->where_related("contact", 'contact_type_id', $type);
-			$obj->where("type", "Invoice");
+			$obj->where("type", "Purchase");
 			$obj->where('is_recurring', 0);
 
 			// $obj->include_related("contact_type", "name");
@@ -904,7 +873,7 @@ class Vendorreports extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Expense", "Purchase"));
+				$txn->where("type", "Purchase");
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -945,8 +914,12 @@ class Vendorreports extends REST_Controller {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$obj->where('is_recurring', 0);
-			$obj->where_in("type", array("Expense", "Purchase"));
-
+			$obj->where("type", "Purchase");
+			if(isset($filters['filters'])) {
+				foreach($filters['filters'] as $f) {
+					$obj->where($f['field'], $f['value']);
+				}
+			}
 			//Results
 			$obj->get_paged_iterated($page, $limit);
 			if($obj->result_count()>0){
@@ -1010,7 +983,7 @@ class Vendorreports extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Expense", "Purchase"));
+				$txn->where("type", "Deposit");
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -1048,10 +1021,14 @@ class Vendorreports extends REST_Controller {
 			$type->where('parent_id', 1)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
-			$obj->where_in("type", array("Deposit", "Credit"));
+			$obj->where("type", "Deposit");
 			$obj->where('is_recurring', 0);
 
-			// $obj->include_related("contact_type", "name");
+			if(isset($filters['filters'])) {
+				foreach($filters['filters'] as $f) {
+					$obj->where($f['field'], $f['value']);
+				}
+			}
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);
@@ -1172,7 +1149,11 @@ class Vendorreports extends REST_Controller {
 			$obj->where('job_id <>', 0);
 			$obj->where('is_recurring', 0);
 
-			// $obj->include_related("contact_type", "name");
+			if(isset($filters['filters'])) {
+				foreach($filters['filters'] as $f) {
+					$obj->where($f['field'], $f['value']);
+				}
+			}
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);
@@ -1323,7 +1304,11 @@ class Vendorreports extends REST_Controller {
 			$obj->where_in("type", array("Expense", "Purchase"));
 			$obj->where('is_recurring', 0);
 
-			// $obj->include_related("contact_type", "name");
+			if(isset($filters['filters'])) {
+				foreach($filters['filters'] as $f) {
+					$obj->where($f['field'], $f['value']);
+				}
+			}
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);
@@ -1492,7 +1477,11 @@ class Vendorreports extends REST_Controller {
 			$obj->where("type", "Invoice");
 			$obj->where('is_recurring', 0);
 
-			// $obj->include_related("contact_type", "name");
+			if(isset($filters['filters'])) {
+				foreach($filters['filters'] as $f) {
+					$obj->where($f['field'], $f['value']);
+				}
+			}
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);
@@ -1662,7 +1651,11 @@ class Vendorreports extends REST_Controller {
 			$obj->where("type", "Purchase");
 			$obj->where('is_recurring', 0);
 
-			// $obj->include_related("contact_type", "name");
+			if(isset($filters['filters'])) {
+				foreach($filters['filters'] as $f) {
+					$obj->where($f['field'], $f['value']);
+				}
+			}
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);
@@ -1796,14 +1789,18 @@ class Vendorreports extends REST_Controller {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->where('parent_id', 2)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
-			$obj->where("type", "Purchase");
+			$obj->where_in("type", array("Purchase", "Expense"));
 			$obj->where_in('status', array(1, 2));
 			$obj->where('is_recurring', 0);
 
-			// $obj->include_related("contact_type", "name");
+			if(isset($filters['filters'])) {
+				foreach($filters['filters'] as $f) {
+					$obj->where($f['field'], $f['value']);
+				}
+			}
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);
@@ -1878,9 +1875,8 @@ class Vendorreports extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Expense", "Purchase"));
+				$txn->where("type", "Purchase_Order");
 				$txn->where_in("status", array(0,2));
-				$txn->where('job_id <> ' 0);
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted", 0);
 				$txn->where("is_recurring",0);
@@ -1920,9 +1916,15 @@ class Vendorreports extends REST_Controller {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 
 			$obj->where('is_recurring', 0);
+			$obj->where('status <>', 1);
 			$obj->where("type", "Purchase_Order");
 
-			//Results
+			if(isset($filters['filters'])) {
+				foreach($filters['filters'] as $f) {
+					$obj->where($f['field'], $f['value']);
+				}
+			}
+
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;
 			
