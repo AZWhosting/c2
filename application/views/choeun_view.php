@@ -15403,7 +15403,7 @@
 				                 data-bind="source: txnTemplateDS">				            
 	            		</tbody>
 	            	</table>
-	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" href="#/invoice_custom" style="width: 110px;"><i></i>Add New</a>
+	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
 	            </div>
 	            <!-- // Tab Invoice Custom content END -->
 
@@ -18886,6 +18886,114 @@
         			<td style="background: #c6d9f1"><b></b></td>
         			<td><b></b></td>
         		</tr>
+        	</table>
+        	<table class="span12" style="margin: 5px 0;">
+        		<thead>
+        			<tr>
+        				<th width="50">NO</th>
+        				<th>ITEM CODE</th>
+        				<th>DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>QTY</th>
+        				<th>REMARK</th>
+        			</tr>
+        		</thead>
+        		<tbody id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template14"
+						data-bind="source: lineDS">
+        	</table>
+        	<table class="span12">
+        		<tr>
+        			<td style="background: #c6d9f1" width="150">ISSUED BY</td>
+        			<td width="100"></td>
+        			<td width="150" style="background: #c6d9f1">DATE</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1">DELIVERED BY</td>
+        			<td></td>
+        			<td style="background: #c6d9f1">DATE</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1">RECEIVED BY</td>
+        			<td></td>
+        			<td style="background: #c6d9f1">DATE/TIME</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1">ACKNOWLEDGED BY</td>
+        			<td></td>
+        			<td style="background: #c6d9f1">DATE/TIME</td>
+        			<td></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm15" type="text/x-kendo-template">
+	<div class="inv1 pcg-cash">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<h2>សក្ខីប័ត្រផ្ទេរសាច់ប្រាក់ Transfer</h2>
+        	</div>
+        	<div class="span12" style="background:none;margin-top: 15px;">
+        		<table class="span12" border="1">
+        			<tr>
+        				<td width="200">លេខសក្ខីប័ត្រ TV No.</td>
+        				<td width="200"></td>
+        				<td width="200">កាលបរិច្ឆេទ Date</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td>Rational for transfer</td>
+        				<td colspan="3"></td>
+        			</tr>
+        		</table>
+        	</div>
+        	<table class="span12" style="border-top: none;">
+        		<tr>
+        			<td colspan="4" style="background: #10253f; color: #fff;">
+        				ផ្ទេរប្រាក់​ពី Transfer from
+        			</td>
+        			<td colspan="2" style="background: #eee;">
+        				ផ្ទេរប្រាក់ទៅ Transfer to
+        			</td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1;">
+        				No.
+        			</td>
+        			<td style="background: #c6d9f1;">
+        				Nature
+        			</td>
+        			<td style="background: #c6d9f1;">
+        				Amount
+        			</td>
+        			<td style="background: #c6d9f1;">
+        				Cheque No./<br>Account No.
+        			</td>
+        			<td>
+        				Nature
+        			</td>
+        			<td>
+        				Bank Account No./ Cash<br>Account Code
+        			</td>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
         	</table>
         	<table class="span12" style="margin: 5px 0;">
         		<thead>
@@ -26016,7 +26124,9 @@
 	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Payment Method</span></a>
 	            </li>
 	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Payment Term</span></a>
-	            </li>	                        
+	            </li>	 
+	            <li><a href="#tab4-1" class="glyphicons list" data-toggle="tab"><i></i><span class="strong">Custom Forms</span></a>
+	            </li>                       
 	        </ul>
 	    </div>
 	    <!-- // Tabs Heading END -->
@@ -26091,6 +26201,28 @@
 	            	</table>
 	            </div>
 	            <!-- // Tab Block content END -->
+
+	            <!-- Tab Invocice Custom content -->
+	            <div class="tab-pane" id="tab4-1">
+            		
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center">Name</th>
+	            				<th class="center">Form Type</th>
+	            				<th class="center">Last Edited</th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<!--tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="customerSetting-form-template"
+				                 data-bind="source: txnTemplateDS">				            
+	            		</tbody-->
+	            	</table>
+	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
+	            </div>
+	            <!-- // Tab Invoice Custom content END -->
 
 	        </div>
 	    </div>
@@ -47414,7 +47546,22 @@
         		this.txnTemplateDS.remove(data);
         		this.txnTemplateDS.sync();
         	}
-        }      
+        },
+        goInvoiceCustom : function(){
+        	var typeList = [
+			    { id: "Quote", name: "Quotation" },
+			    { id: "Sale_Order", name: "Sale Order" },
+			    { id: "Deposit", name: "Deposit" },
+			    { id: "Cash_Sale", name: "Cash Sale" },
+			    { id: "Invoice", name: "Invoice" },
+			    { id: "Cash_Receipt", name: "Cash Receipt" },
+			    { id: "GDN", name: "Delivery Note" },
+			    { id: "Transfer", name: "Transfer" },
+			    { id: "Sale_Return", name: "Sale Return" }
+		    ];
+		    banhji.invoiceCustom.set("selectTypeList", typeList);
+		    banhji.router.navigate('/invoice_custom');
+        }     
     });
     banhji.job = kendo.observable({
 		lang 				: langVM,		
@@ -47480,16 +47627,6 @@
 		obj 				: {type: "Quote", amount: "$500,000.00"},
 		company 			: banhji.institute,
 		isEdit 				: false,
-		selectTypeList			: [
-							    { id: "Quote", name: "Quotation" },
-							    { id: "Sale_Order", name: "Sale Order" },
-							    { id: "Deposit", name: "Deposit" },
-							    { id: "Cash_Sale", name: "Cash Sale" },
-							    { id: "Invoice", name: "Invoice" },
-							    { id: "Cash_Receipt", name: "Cash Receipt" },
-							    { id: "GDN", name: "Delivery Note" },
-							    { id: "Sale_Return", name: "Sale Return" }
-							  ]	,
 		onChange			: function(e) {
 								var obj = this.get("obj");
 								this.txnFormDS.filter({ field:"type", value: obj.type });
@@ -47558,6 +47695,7 @@
 				case 12: Active = banhji.view.invoiceForm12; break;
 				case 13: Active = banhji.view.invoiceForm13; break;
 				case 14: Active = banhji.view.invoiceForm14; break;
+				case 15: Active = banhji.view.invoiceForm15; break;
 			}
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 		},
@@ -47682,32 +47820,6 @@
 		    
 		},	    
 		savePDF				: function(e){
-			// var spreadsheet = $("#invFormContent").data("kendoSpreadsheet");
-   //          $("#data").val(JSON.stringify(spreadsheet.toJSON()));
-   //          $("#active-sheet").val(spreadsheet.activeSheet().name());
-			// $("#khPDF").kendoSpreadsheet({
-			// 	pdf: {                
-   //             		proxyURL: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/service/export"
-   //          	}
-			// });
-			//kendo.drawing.drawDOM($('#invFormContent')).then(function(group){
-	          //kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
-	        //});
-			/*var draw = kendo.drawing;
-
-	        draw.drawDOM($("#khPDF"), {
-	            avoidLinks: true,
-	            paperSize: "A4"
-	        })
-	        .then(function(root) {
-	            return draw.exportPDF(root);
-	        })
-	        .done(function(data) {
-	            kendo.saveAs({
-	                dataURI: data,
-	                fileName: "1.pdf"
-	            });
-	        });*/
 		},		
 		loadObj 			: function(id){
 			var self = this;				
@@ -50384,6 +50496,107 @@
 	    	}	    	
 	    }	 		
 	});
+	banhji.cashSetting =  kendo.observable({
+		lang 				: langVM,		
+        contactTypeDS 		: banhji.source.customerTypeDS,
+        paymentMethodDS		: dataStore(apiUrl+"payment_methods"),
+        paymentTermDS		: dataStore(apiUrl+"payment_terms"),
+        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
+        contactTypeName 	: "",
+        contactTypeAbbr 	: "",
+        contactTypeCompany 	: 0,
+        paymentMethodName 	: "",
+        paymentTermName 	: "",
+        paymentTermNetDue	: "",
+        paymentTermPeriod 	: "",
+        paymentTermPercentage 	: "",
+        pageLoad 			: function() {
+        	
+        },	    
+        addContactType 		: function(){
+        	var name = this.get("contactTypeName");
+
+        	if(name!==""){
+	        	this.contactTypeDS.add({
+	        		parent_id 	: 1,
+	        		name 		: name,
+	        		abbr 		: this.get("contactTypeAbbr"),
+	        		description : "",
+	        		is_company 	: this.get("contactTypeCompany"),
+	        		is_system 	: 0
+	        	});
+
+	        	this.contactTypeDS.sync();
+
+	        	this.set("contactTypeName", "");
+	        	this.set("contactTypeAbbr", "");
+	        	this.set("contactTypeCompany", 0);
+        	}
+        },
+        addPaymentMethod 		: function(){
+        	var name = this.get("paymentMethodName");
+
+        	if(name!==""){
+	        	this.paymentMethodDS.add({	        		
+	        		name 		: name,
+	        		description : "",
+	        		is_system 	: 0
+	        	});
+
+	        	this.paymentMethodDS.sync();
+
+	        	this.set("paymentMethodName", "");
+        	}
+        },
+        addPaymentTerm 		: function(){
+        	var name = this.get("paymentTermName");
+
+        	if(name!==""){
+	        	this.paymentTermDS.add({	        		
+	        		name 				: name,
+	        		net_due 			: this.get("paymentTermNetDue"),
+	        		discount_period 	: this.get("paymentTermPeriod"),
+	        		discount_percentage : this.get("paymentTermPercentage"),
+	        		is_system 			: 0
+	        	});
+
+	        	this.paymentTermDS.sync();
+
+	        	this.set("paymentTermName", "");
+	        	this.set("paymentTermNetDue", "");
+	        	this.set("paymentTermPeriod", "");
+	        	this.set("paymentTermPercentage", "");
+        	}
+        },
+        goPattern 	: function(e){
+        	var data = e.data;        	        	
+
+        	if(kendo.parseInt(data.contact_id)>0){        		        	
+	        	banhji.router.navigate('/customer/'+data.contact_id+'/1');   	
+        	}else{
+        		banhji.router.navigate('/customer');
+        		banhji.customer.set("contact_type_id",data.id);
+        	}
+        },
+        deleteForm 		: function(e){
+        	var data = e.data;
+        	if(confirm("Do you want to delete it?") == true) {
+        		this.txnTemplateDS.remove(data);
+        		this.txnTemplateDS.sync();
+        	}
+        },
+        goInvoiceCustom : function(){
+        	var typeList = [
+		    	{ id: "Transfer", name: "Transfer" },
+		    	{ id: "Deposit", name: "Deposit" },
+				{ id: "Withdrawal", name: "Withdrawal" }
+		    ];
+
+		    banhji.invoiceCustom.set("selectTypeList", typeList);
+
+		    banhji.router.navigate('/invoice_custom');
+        }  
+    });
 
 
 	/*************************
@@ -53727,6 +53940,7 @@
 		invoiceForm12: new kendo.Layout("#invoiceForm12", {model: banhji.invoiceForm}),
 		invoiceForm13: new kendo.Layout("#invoiceForm13", {model: banhji.invoiceForm}),
 		invoiceForm14: new kendo.Layout("#invoiceForm14", {model: banhji.invoiceForm}),
+		invoiceForm15: new kendo.Layout("#invoiceForm15", {model: banhji.invoiceForm}),
 		
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.saleSummaryCustomer}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.saleDetailCustomer}),
