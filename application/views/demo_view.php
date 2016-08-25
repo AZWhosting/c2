@@ -41054,7 +41054,7 @@
 				}
 						    	
 		    	self.set("balance", kendo.toString(balance, "c", obj.locale));
-		    	obj.set("credit_allowed", creditAllowed, "c");		
+		    	obj.set("credit_allowed", creditAllowed);		
 			});				
 		},
 		//Currency Rate
@@ -43309,7 +43309,7 @@
 				}
 						    	
 		    	self.set("balance", kendo.toString(balance, "c", obj.locale));
-		    	obj.set("credit_allowed", creditAllowed, "c");		
+		    	obj.set("credit_allowed", creditAllowed);		
 			});				
 		},
 		contactChanges 		: function(){
@@ -44547,7 +44547,7 @@
 				}
 						    	
 		    	self.set("balance", kendo.toString(balance, "c", obj.locale));
-		    	obj.set("credit_allowed", creditAllowed, "c");		
+		    	obj.set("credit_allowed", creditAllowed);		
 			});				
 		},
 		contactChanges 		: function(){
@@ -46712,6 +46712,7 @@
 
 	    	this.lineDS.data([]);
 		    this.addRow();
+		    this.changes();
 	    },
 	    loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
@@ -46743,7 +46744,7 @@
 				}
 						    	
 		    	self.set("balance", kendo.toString(balance, "c", obj.locale));
-		    	obj.set("credit_allowed", creditAllowed, "c");		
+		    	obj.set("credit_allowed", creditAllowed);		
 			});				
 		},
 	    //Currency Rate	
@@ -47134,6 +47135,9 @@
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
+			this.attachmentDS.cancelChanges();
+			this.dataSource.data([]);
+			this.lineDS.data([]);
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("quote");
@@ -47604,7 +47608,7 @@
 				}
 						    	
 		    	self.set("balance", kendo.toString(balance, "c", obj.locale));
-		    	obj.set("credit_allowed", creditAllowed, "c");		
+		    	obj.set("credit_allowed", creditAllowed);		
 			});				
 		},
 		//Currency Rate
@@ -48008,6 +48012,8 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			this.dataSource.data([]);
+			this.lineDS.data([]);
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("sale_order");
@@ -48756,6 +48762,8 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			this.dataSource.data([]);
+			this.lineDS.data([]);
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
 			
 			banhji.userManagement.removeMultiTask("customer_deposit");
@@ -49413,7 +49421,7 @@
 				}
 						    	
 		    	self.set("balance", kendo.toString(balance, "c", obj.locale));
-		    	obj.set("credit_allowed", creditAllowed, "c");		
+		    	obj.set("credit_allowed", creditAllowed);		
 			});				
 		},
 	    //Currency Rate
@@ -49880,6 +49888,8 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			this.dataSource.data([]);
+			this.lineDS.data([]);
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
 
 			banhji.userManagement.removeMultiTask("cash_sale");
@@ -50729,7 +50739,7 @@
 				}
 						    	
 		    	self.set("balance", kendo.toString(balance, "c", obj.locale));
-		    	obj.set("credit_allowed", creditAllowed, "c");		
+		    	obj.set("credit_allowed", creditAllowed);		
 			});				
 		},
 	    //Currency Rate
@@ -51202,6 +51212,8 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			this.dataSource.data([]);
+			this.lineDS.data([]);
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("invoice");
@@ -52235,6 +52247,8 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			this.dataSource.data([]);
+			this.lineDS.data([]);
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("gdn");
@@ -53286,6 +53300,8 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			this.dataSource.data([]);
+			this.lineDS.data([]);
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("sale_return");
