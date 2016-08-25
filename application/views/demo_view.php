@@ -41861,6 +41861,7 @@
 				obj.set("ship_to", view[0].ship_to);
 				
 				self.setRate();
+				self.loadReference();
 				self.loadRecurring();						
 			});
 		},
@@ -42035,7 +42036,6 @@
 				}
 
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
-				self.jobDS.filter({ field: "contact_id", value: view[0].contact_id });
 				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
 				self.loadRecurring();				
 			});				
@@ -49374,6 +49374,7 @@
 		    	this.setRate();		    	
 		    	this.loadDeposit();
 		    	this.loadBalance();
+		    	this.loadReference();
 		    	this.loadRecurring();	    	
 	    	}else{
 	    		this.set("total_deposit", 0);
