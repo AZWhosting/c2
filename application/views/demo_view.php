@@ -42519,22 +42519,15 @@
 		monthList 			: banhji.source.monthList,	
 		monthOptionList 	: banhji.source.monthOptionList,
 		weekDayList 		: banhji.source.weekDayList,
-		dayList 			: banhji.source.dayList,						
-		referenceTypes 		: [
-			{ id:"Purchase_Order", name:"Purchase Order" }
-		],						
-		showRef 			: true,
-		showName 			: false,
-		showSegment 		: false,
+		dayList 			: banhji.source.dayList,
 		showMonthOption 	: false,
 		showMonth 			: false,
-		bolReference 		: false,
 		showWeek 			: false,
 		showDay 			: false,		
 		obj 				: null,		
-		isEdit 				: false,			
-		uer_id				: banhji.userManagement.getLogin() === null ? 0 : banhji.userManagement.getLogin().id,
-		total				: 0,													
+		isEdit 				: false,
+		total				: 0,			
+		uer_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
 			if(id){
 				this.set("isEdit", true);							
@@ -46507,7 +46500,6 @@
 	banhji.quote =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),		
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),			
@@ -47144,27 +47136,16 @@
 		},
 		delete 				: function(){
 			var self = this, obj = this.get("obj");
-			this.set("showConfirm",false);			
-			
-	        this.deleteDS.query({
-	        	filter:[
-	        		{ field:"type", operator:"where_in", value:["Sale_Order","Invoice","Cash_Sale"] },
-	        		{ field:"reference_id", value:obj.id },
-	        	],
-	        	page:1,
-	        	pageSize:1
-	        }).then(function(){
-	        	var view = self.deleteDS.view();
+			this.set("showConfirm",false);
 
-	        	if(view.length>0){
-	        		alert("Sorry, you can not delete it.");
-	        	}else{
-	        		obj.set("deleted", 1);
-			        self.dataSource.sync();
+			if(obj.status==0){
+				obj.set("deleted", 1);
+		        self.dataSource.sync();
 
-			        window.history.back();
-	        	}
-	        });		    	    	
+		        window.history.back();
+			}else{
+				alert("Sorry, you can not delete it.");
+			}	    	
 		},
 		openConfirm 		: function(){
 			this.set("showConfirm", true);
@@ -47362,7 +47343,6 @@
 	});
 	banhji.saleOrder =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),		
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
@@ -47577,6 +47557,7 @@
 
 	    	this.lineDS.data([]);
 		    this.addRow();
+		    this.changes();
 	    },
 	    loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
@@ -48022,25 +48003,14 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
-	        	filter:[
-	        		{ field:"type", operator:"where_in", value:["Invoice","Cash_Sale"] },
-	        		{ field:"reference_id", value:obj.id },
-	        	],
-	        	page:1,
-	        	pageSize:1
-	        }).then(function(){
-	        	var view = self.deleteDS.view();
+	        if(obj.status==0){
+				obj.set("deleted", 1);
+		        self.dataSource.sync();
 
-	        	if(view.length>0){
-	        		alert("Sorry, you can not delete it.");
-	        	}else{
-	        		obj.set("deleted", 1);
-			        self.dataSource.sync();
-
-			        window.history.back();
-	        	}
-	        });		    	    	
+		        window.history.back();
+			}else{
+				alert("Sorry, you can not delete it.");
+			}		    	    	
 		},
 		openConfirm 		: function(){
 			this.set("showConfirm", true);
@@ -48489,6 +48459,7 @@
 
 	    	this.lineDS.data([]);
 		    this.addRow();
+		    this.changes();
 	    },
 		//Currency Rate
 		setRate 			: function(){
@@ -49390,6 +49361,7 @@
 
 	    	this.lineDS.data([]);
 		    this.addRow();
+		    this.changes();
 	    },
 	    loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
@@ -50367,7 +50339,6 @@
 	banhji.invoice =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
-		deleteDS 			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
@@ -50704,10 +50675,14 @@
 		    	this.loadDeposit();
 		    	this.loadBalance();
 		    	this.loadReference();
-		    	self.loadRecurring();		    			    	
+		    	this.loadRecurring();  			    	
 	    	}else{
 	    		this.set("total_deposit", 0);
 	    	}
+
+	    	this.lineDS.data([]);
+		    this.addRow();
+		    this.changes();
 	    },
 	    loadBalance 		: function(){
 			var self = this, obj = this.get("obj");			
@@ -51222,25 +51197,14 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        this.deleteDS.query({
-	        	filter:[
-	        		{ field:"type", value:"Cash_Receipt" },
-	        		{ field:"reference_id", value:obj.id },
-	        	],
-	        	page:1,
-	        	pageSize:1
-	        }).then(function(){
-	        	var view = self.deleteDS.view();
+	        if(obj.status==0){
+				obj.set("deleted", 1);
+		        self.dataSource.sync();
 
-	        	if(view.length>0){
-	        		alert("Sorry, you can not delete it.");
-	        	}else{
-	        		obj.set("deleted", 1);
-			        self.dataSource.sync();
-
-			        window.history.back();
-	        	}
-	        });		    	    	
+		        window.history.back();
+			}else{
+				alert("Sorry, you can not delete it.");
+			}		    	    	
 		},
 		openConfirm 		: function(){
 			this.set("showConfirm", true);
@@ -51900,6 +51864,10 @@
 
 		    	this.setRate();   			    	
 	    	}
+
+	    	this.lineDS.data([]);
+		    this.addRow();
+		    this.changes();
 	    },
 	    //Currency Rate
 		setRate 			: function(){
@@ -52760,6 +52728,10 @@
 		    	this.loadReference();
 		    	this.loadRecurring();		    		    			    	
 	    	}
+
+	    	this.lineDS.data([]);
+		    this.addRow();
+		    this.changes();
 	    },
 		//Currency Rate		
 		setRate 			: function(){
