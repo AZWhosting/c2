@@ -18960,10 +18960,10 @@
         	</div>
         	<table class="span12" style="border-top: none;">
         		<tr>
-        			<td colspan="4" style="background: #10253f; color: #fff;">
+        			<td colspan="4" style="background: #10253f; color: #fff;border-top: 0;">
         				ផ្ទេរប្រាក់​ពី Transfer from
         			</td>
-        			<td colspan="2" style="background: #eee;">
+        			<td colspan="2" style="background: #eee;border-top: 0;">
         				ផ្ទេរប្រាក់ទៅ Transfer to
         			</td>
         		</tr>
@@ -18994,48 +18994,67 @@
         		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
         		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
         		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr>
+        			<td style="background: #c6d9f1;text-align: right;padding-right: 5px;" colspan="2">ចំនួនសរុប<br>Total</td>
+        			<td></td>
+        			<td style="background: #c6d9f1;text-align: right;padding-right: 5px;" colspan="2">ចំនួនជាអក្សរ<br>Amount in Words</td>
+        			<td></td>
+        		</tr>
         	</table>
-        	<table class="span12" style="margin: 5px 0;">
-        		<thead>
-        			<tr>
-        				<th width="50">NO</th>
-        				<th>ITEM CODE</th>
-        				<th>DESCRIPTION</th>
-        				<th>UM</th>
-        				<th>QTY</th>
-        				<th>REMARK</th>
-        			</tr>
-        		</thead>
-        		<tbody id="formListView" 
-        				data-role="listview"
-						data-auto-bind="false"
-						data-template="invoiceForm-lineDS-template14"
-						data-bind="source: lineDS">
+        	<div class="span12" style="background: #eee;padding: 5px;">
+        		<div class="span9" style="background: #fff;border:1px solid #ccc;padding: 8px;">
+        			<div class="span4">
+        				<p style="margin-bottom:30px;font-size:10px;">រៀបចំដោយ<br>Prepared by:</p>
+        				_______________
+        				<p style="font-size:10px;">Name: <br>Date:</p>
+        			</div>
+        			<div class="span4">
+        				<p style="margin-bottom:30px;font-size:10px;">រៀបចំដោយ<br>Prepared by:</p>
+        				_______________
+        				<p style="font-size:10px;">Name: <br>Date:</p>
+        			</div>
+        			<div class="span4">
+        				<p style="margin-bottom:30px;font-size:10px;">រៀបចំដោយ<br>Prepared by:</p>
+        				_______________
+        				<p style="font-size:10px;">Name: <br>Date:</p>
+        			</div>
+        		</div>
+        		<div class="span3" style="padding: 10px;">
+        			<p style="margin-bottom:45px;font-size:10px;">Transerred by:</p>
+    				_______________
+    				<p style="font-size:10px;">Name: <br>Date:</p>
+        		</div>
+        	</div>
+        	<table class="span12" border="1">
+        		<tr>
+        			<td colspan="3" style="background: #10253f; color: #fff;padding-left: 5px;text-align:left;">
+        				សម្រាប់ការិយាល័យហិរញ្ញវត្ថុ For Accounting Department
+        			</td>
+        		</tr>
+        		<tr>
+        			<td style="text-align: center;">លេខគណនី<br>Account code</td>
+        			<td>ឥណពន្ធ<br>Debit</td>
+        			<td>ឥណទាន<br>Credit</td>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td></tr>
+        		<tr>
+        			<td colspan="3" style="text-align: left;padding-left: 5px;">
+        				<span style="font-size: 10px; margin-right: 100px;">Posted By:</span> Date:
+        			</td>
+        		</tr>
         	</table>
-        	<table class="span12">
+        	<table class="span12" border="1">
         		<tr>
-        			<td style="background: #c6d9f1" width="150">ISSUED BY</td>
-        			<td width="100"></td>
-        			<td width="150" style="background: #c6d9f1">DATE</td>
-        			<td></td>
+        			<td rowspan="2" style="border-top:0;text-align: left;padding-left: 5px;">Used for internal deposit, withdraw, transfer amoung the company's Bank account to<br> bank account and to on hand and deposit back to the bank accounts.</td>
+        			<td style="border-top:0;text-align: left;padding-left: 5px;">Version</td>
+        			<td style="border-top:0;text-align: left;padding-left: 5px;"><b>V.01</b></td>
         		</tr>
         		<tr>
-        			<td style="background: #c6d9f1">DELIVERED BY</td>
-        			<td></td>
-        			<td style="background: #c6d9f1">DATE</td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td style="background: #c6d9f1">RECEIVED BY</td>
-        			<td></td>
-        			<td style="background: #c6d9f1">DATE/TIME</td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td style="background: #c6d9f1">ACKNOWLEDGED BY</td>
-        			<td></td>
-        			<td style="background: #c6d9f1">DATE/TIME</td>
-        			<td></td>
+        			<td style="text-align: left;padding-left: 5px;">Doc. Control</td>
+        			<td style="text-align: left;padding-left: 5px;"><b>TRM02-07</b></td>
         		</tr>
         	</table>
         </div>
