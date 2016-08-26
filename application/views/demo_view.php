@@ -23240,9 +23240,9 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: institute.name"></h3>
 						<h2>Collect Report</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
+						<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 					</div>
 
 					<div class="row-fluid">
@@ -54836,7 +54836,7 @@
 		}
 	});
 	banhji.collectReport = kendo.observable({
-
+		institute 		: banhji.institute,
 		dataSource 		: dataStore(apiUrl + "sales/invoicecollected"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -54846,6 +54846,8 @@
 		sortDB 				: [
 			{id: 'date', name: 'Date'}
 		],
+		startDate 		: kendo.toString(new Date(), 'yyyy-MM-dd'),
+		endDate 		: kendo.toString(new Date(), 'yyyy-MM-dd'),
 		search 	: function() {
 
 			banhji.collectReport.dataSource.filter({
