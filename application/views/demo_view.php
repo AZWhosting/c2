@@ -31180,13 +31180,10 @@
 					</div>
 
 					<div class="block-title">
-<<<<<<< HEAD
-						<h3>ABC Co., Ltd</h3>
-						<h2>Inventory Movement Summary</h2>
-=======
+
 						<h3 data-bind="text: institute.name"></h3>
 						<h2>Inventory Position Detail</h2>
->>>>>>> origin/master
+
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
 
