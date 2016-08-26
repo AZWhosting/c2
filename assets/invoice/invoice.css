@@ -362,3 +362,14 @@ pre {
 .inv1 .main-color th {
 	color: #fff;
 }
+.pcg-cash {
+	padding: 40px 0;
+}
+.pcg-cash h2 {
+	font-family: 'Content', Arial;
+    font-size: 20px;
+    padding-top: 15px;
+}
+.pcg-cash td {
+	min-height: 30px;
+}
