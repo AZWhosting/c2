@@ -90,6 +90,8 @@ class Transaction_templates extends REST_Controller {
 					"type" 					=> $value->type,
 					"name" 	 				=> $value->name,
 					"color" 				=> $value->color,
+					"title" 				=> $value->title,
+					"note" 					=> $value->note,
 					"created_at" 			=> $value->created_at,
 					"updated_at" 			=> $value->updated_at	
 				);
@@ -110,6 +112,8 @@ class Transaction_templates extends REST_Controller {
 			$obj->user_id 					= $value->user_id;
 			$obj->type 						= $value->type;
 			$obj->name 						= $value->name;
+			$obj->title 					= $value->title;
+			$obj->note 						= $value->note;
 			$obj->color 					= $value->color;	
 						
 			if($obj->save()){
@@ -120,6 +124,8 @@ class Transaction_templates extends REST_Controller {
 					"type" 					=> $obj->type,
 					"name" 	 				=> $obj->name,
 					"color" 				=> $obj->color,
+					"title" 				=> $obj->title,
+					"note" 					=> $obj->note,
 					"created_at" 			=> $obj->created_at,
 					"updated_at" 			=> $obj->updated_at
 				);
@@ -144,6 +150,8 @@ class Transaction_templates extends REST_Controller {
 			$obj->user_id 					= $value->user_id;
 			$obj->type 						= $value->type;
 			$obj->name 						= $value->name;
+			$obj->title 					= $value->title;
+			$obj->note 						= $value->note;
 			$obj->color 					= $value->color;			
 
 			if($obj->save()){				
@@ -154,6 +162,8 @@ class Transaction_templates extends REST_Controller {
 					"type" 					=> $obj->type,
 					"name" 	 				=> $obj->name,
 					"color" 				=> $obj->color,
+					"title" 				=> $obj->title,
+					"note" 					=> $obj->note,
 					"created_at" 			=> $obj->created_at,
 					"updated_at" 			=> $obj->updated_at
 				);		

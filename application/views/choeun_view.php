@@ -17441,6 +17441,15 @@
                                 	</div>
                                 </div>
 							</div>
+							<div class="span12" style="margin-left:0; margin-top: 10px;">
+								<h2 class="btn btn-block btn-primary">Form Appearance</h2>
+								<div class="colorPalatte span12">
+									<div class="" style="margin-top: 15px;">
+										<input type="text" id="formtitle" name="Form Title" class="k-textbox" placeholder="Form Title" required validationMessage="" data-bind="value: obj.title" style="width: 100%;" />
+										<textarea data-bind="text: obj.note" class="span12" style="min-height: 100px;margin-top: 15px;"></textarea>
+                                	</div>
+                                </div>
+							</div>
 						</div>
 						<div class="span8" id="invFormContent" style="padding-left:0;padding-right: 0;width: 63%;border:1px solid #eee;margin-bottom:20px;">
 
@@ -47643,7 +47652,7 @@
     banhji.invoiceCustom =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
 		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
-		obj 				: {type: "Quote", amount: "$500,000.00"},
+		obj 				: {type: "Quote", amount: "$500,000.00",title: "Quotation"},
 		company 			: banhji.institute,
 		isEdit 				: false,
 		onChange			: function(e) {
@@ -47669,6 +47678,7 @@
 					this.addEmpty();					
 				}
 				this.txnFormDS.filter({ field:"type", value: obj.type });
+
 			}
 		},
 		addRowLineDS			: function(e){
@@ -47736,11 +47746,17 @@
 			}).then(function(e){
 				var view = self.dataSource.view();
 				self.set("obj", view[0]);
+				var typeList = [
+				    { id: view[0].type, name: "Quotation" }
+			    ];
+				self.set("selectTypeList", typeList);
 				banhji.invoiceForm.set("obj", view[0]);	
 				var Index = parseInt(view[0].transaction_form_id);
 				self.activeInvoiceTmp(Index);
 				self.addRowLineDS();
+
 				self.txnFormDS.filter({ field:"type", value: view[0].type });	
+				console.log(view[0].type);
 			});	
 
 		},		
