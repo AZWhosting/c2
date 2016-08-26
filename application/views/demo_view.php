@@ -2533,7 +2533,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: banhji.institute.name"></h3>
 						<h2>JOURNAL ENTRY REPORTS</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -31211,7 +31211,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: institute.name"></h3>
 						<h2>Inventory Position Detail</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -40559,10 +40559,10 @@
 			}).then(function(){
 				var view = self.summaryDS.view();
 				
-				self.set("purchase", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("purchase_supplier", kendo.toString(view[0].sale_customer, "n0"));
-				self.set("purchase_product", kendo.toString(view[0].sale_product, "n0"));
-				self.set("purchase_order", kendo.toString(view[0].sale_order, "n0"));
+				self.set("purchase", kendo.toString(view[0].purchase, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("purchase_supplier", kendo.toString(view[0].purchase_supplier, "n0"));
+				self.set("purchase_product", kendo.toString(view[0].purchase_product, "n0"));
+				self.set("purchase_order", kendo.toString(view[0].purchase_order, "n0"));
 
 				self.set("order", kendo.toString(view[0].order, "n0"));
 				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.locale=="km-KH"?"c0":"c", banhji.locale));				
@@ -55079,6 +55079,7 @@
 		}    
 	});
 	banhji.customerSale = kendo.observable({
+		institute 			: banhji.institute,
 		lang 				: langVM,
 		locale 				: banhji.locale,
 		summarySale 		: dataStore(apiUrl + "sales/summary_customer"),

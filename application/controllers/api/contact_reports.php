@@ -1110,6 +1110,7 @@ class Contact_reports extends REST_Controller {
 		$data["count"] = 0;
 		$is_recurring = 0;
 		$deleted = 0;
+		$productCount = 0;
 		
 		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$order = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1153,6 +1154,7 @@ class Contact_reports extends REST_Controller {
 		$saleCustomerCount = 0;
 		foreach($sale as $value) {
 			//Total sale
+			$item = $value->item_line->count();
 			$saleAmount += floatval($value->amount) / floatval($value->rate);
 
 			//Group customer
@@ -1162,6 +1164,10 @@ class Contact_reports extends REST_Controller {
 				$saleCustomer[$value->contact_id] = 0;
 
 				$saleCustomerCount++;
+			}
+
+			if($item > 0) {
+				$productCount += $item;
 			}							
 		}
 
@@ -1188,10 +1194,12 @@ class Contact_reports extends REST_Controller {
 		$orderAvg = 0;
 		foreach($order as $value) {
 			$orderCount++;
+			
 
 			if($value->status==0){
 				$orderOpen++;
 			}
+
 
 			$orderAmount += floatval($value->amount) / floatval($value->rate);
 		}
@@ -1272,7 +1280,7 @@ class Contact_reports extends REST_Controller {
 			'id' 				=> 0,
 			'purchase' 			=> $saleAmount,						
 			'purchase_supplier' => $saleCustomerCount,
-			'purchase_product' 	=> $saleProduct->count(),
+			'purchase_product' 	=> $productCount,
 			'purchase_order' 	=> $saleOrder->count(),
 			'order' 			=> $order->result_count(),
 			'order_avg' 		=> $orderAvg,
