@@ -1053,7 +1053,7 @@ class Transactions extends REST_Controller {
 		return $number;				
 	}
 	
-
+	
 	//GET AMOUNT SUM
 	function amount_sum_get() {		
 		$filters 	= $this->get("filter")["filters"];		
