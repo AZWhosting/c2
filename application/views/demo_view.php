@@ -10531,7 +10531,8 @@
 		</td>
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
-					data-role="numerictextbox" 
+					data-role="numerictextbox"
+					data-spinners="false" 
 					data-format="n0" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -10540,7 +10541,7 @@
 			<input id="ccbTaxItem" name="ccbTaxItemAccount-#:uid#"
 				   data-role="combobox"                   			   
                    data-text-field="name"
-                    data-header-template="tax-header-tmpl"
+                   data-header-template="tax-header-tmpl"
                    data-value-field="id"
                    data-bind="value: tax_item_id, 
                    			  source: taxItemDS,
@@ -10606,7 +10607,8 @@
 		</td>				
 		<td class="right">
 			<input id="txtSubTotal-#:uid#" name="txtSubTotal-#:uid#" 
-					data-role="numerictextbox" 
+					data-role="numerictextbox"
+					data-spinners="false" 
 					data-format="n0" 
 					data-bind="value: sub_total, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -44439,7 +44441,7 @@
 			this.jobDS.filter({ field:"contact_id", value:obj.contact_id });
 
 	    	if(obj.contact_id>0){		    			    	
-		    	contact = this.contactDS.get(obj.contact_id);		    	
+		    	var contact = this.contactDS.get(obj.contact_id);		    	
 		    	
 		    	obj.set("account_id", contact.account_id);
 		    	obj.set("payment_term_id", contact.payment_term_id);
@@ -44453,11 +44455,12 @@
 		    	this.loadBalance();
 		    	this.loadReference();
 		    	this.loadRecurring();		    			    	
-	    	}else{
-	    		this.set("total_credit", 0);
 	    	}
 
 	    	this.lineDS.data([]);
+	    	this.accountLineDS.data([]);
+	    	this.additionalCostDS.data([]);
+
 		    this.addRow();
 		    this.changes();
 	    },
@@ -44610,14 +44613,9 @@
 			   	type				: "Cash_Purchase",//Required
 			   	sub_total 			: 0,				   		   					   				   	
 			   	amount				: 0,
-			   	credit_allowed 		: 0,
-			   	credit 				: 0,
-			   	deposit 			: 0,
-			   	discount 			: 0,		   	
-			   	fine 				: 0,
 			   	tax 				: 0,
 			   	rate				: 1,			   	
-			   	locale 				: "km-KH",			   	
+			   	locale 				: banhji.locale,			   	
 			   	issued_date 		: new Date(),
 			   	due_date 			: new Date(),			   	
 			   	bill_to 			: "",
@@ -45024,6 +45022,10 @@
 		    		}
 		    	}else{
 	    			obj.set("is_recurring", 1);
+
+	    			$.each(this.additionalCostDS.data(), function(index, value){
+	    				value.set("is_recurring", 1);
+	    			});
 		    	}
 	    	}
 
@@ -45110,19 +45112,9 @@
 					self.addEmpty();
 				}
 
-				//Refresh Customer
+				//Refresh Supplier
 				self.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });
 			});
-		},
-		delete 				: function(){
-			var obj = this.get("obj");
-			
-			if (confirm("Are you sure, you want to delete it?")) {				
-		        obj.set("deleted", 1);
-		        this.save();
-
-		        window.history.back();												
-	    	}	    	
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
@@ -45185,7 +45177,7 @@
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
 					taxID = taxItem.account_id,
 					taxAmt = value.amount*taxItem.rate;
-					console.log("item: "+taxAmt);
+					
 					if(taxList[taxID]===undefined){
 						taxList[taxID]={"id": taxID, "amount": taxAmt};						
 					}else{											
@@ -45220,7 +45212,7 @@
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
 					taxID = taxItem.account_id,
 					taxAmt = value.amount*taxItem.rate;
-					console.log("account: "+taxAmt);
+					
 					if(taxList[taxID]===undefined){
 						taxList[taxID]={"id": taxID, "amount": taxAmt};						
 					}else{											
@@ -45240,7 +45232,7 @@
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
 					taxID = taxItem.account_id,
 					taxAmt = value.sub_total*taxItem.rate;
-					console.log("additional cost: "+taxAmt);
+					
 					if(taxList[taxID]===undefined){
 						taxList[taxID]={"id": taxID, "amount": taxAmt};						
 					}else{											
@@ -45423,6 +45415,7 @@
 			if(obj.recurring_id>0){
 				var recur = this.recurringDS.get(obj.recurring_id);				
 				
+				obj.set("account_id", recur.account_id);
 				obj.set("segments", recur.segments);
 				obj.set("sub_total", recur.sub_total);
 				obj.set("discount", recur.discount);
@@ -45490,7 +45483,10 @@
 
 				//Additional Cost Line
 				this.recurringAdditionalCostDS.query({
-					filter: { field:"reference_id", value:recur.id },
+					filter: [
+						{ field:"reference_id", value:recur.id },
+						{ field:"is_recurring", value:1 },
+					],
 					page: 1,
 					pageSize: 100
 				}).then(function(){
@@ -45503,12 +45499,13 @@
 							tax_item_id 		: value.tax_item_id,				
 							user_id 			: value.user_id,
 							reference_no 		: value.reference_no,	    		
-						   	type				: value.type,				   		   					   				   	
+						   	type				: value.type,
+						   	sub_total 			: value.sub_total,				   		   					   				   	
 						   	amount				: value.amount,
 						   	rate				: value.rate,			   	
 						   	locale 				: value.locale,			   	
-						   	issued_date 		: value.issued_date,
-						   	due_date 			: value.due_date,
+						   	issued_date 		: new Date(),
+						   	due_date 			: new Date(),
 						   	//Recurring
 						   	recurring_name 		: "",
 						   	start_date 			: new Date(),
