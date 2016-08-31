@@ -718,6 +718,7 @@ class Transactions extends REST_Controller {
 						$item->price = ($lastPrice + $currentPrice) / (floatval($item->on_hand) + floatval($value->quantity));
 
 						$item->on_hand -= floatval($value->quantity);
+						$obj->cost = $item->cost;
 					}else if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase"){
 						//Avg Cost
 						$lastCost = floatval($item->on_hand) * floatval($item->cost);

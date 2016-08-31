@@ -48447,6 +48447,12 @@
 			this.set("contact_type_id", null);
 		}
 	});
+	var typeList = [
+		    	{ id: "Quote", name: "Quotation" },
+				{ id: "Sale_Order", name: "Sale Order" },
+				{ id: "Invoice", name: "Invoice" },
+				{ id: "GDN", name: "Delivered Note" }
+		    ];
 	banhji.customerSetting =  kendo.observable({
 		lang 				: langVM,		
         contactTypeDS 		: banhji.source.customerTypeDS,
@@ -48537,8 +48543,10 @@
         	}
         },
         goInvoiceCustom : function(){
-        	var typeList = "customer_mg";
-		    banhji.invoiceCustom.set("selectCustom", typeList);
+        	var selectCustom = "customer_mg";
+		    banhji.invoiceCustom.set("selectCustom", selectCustom);
+		    
+		    banhji.invoiceCustom.set("selectTypeList", typeList);
 		    banhji.router.navigate('/invoice_custom');
         }     
     });
@@ -48696,7 +48704,6 @@
 		},	    			
 		loadObj 			: function(id){
 			var self = this;	
-			var Active;		
 			this.dataSource.query({    			
 				filter: { field:"id", value: id },
 				page: 1,
@@ -48704,24 +48711,23 @@
 			}).then(function(e){
 				var view = self.dataSource.view();
 				self.set("obj", view[0]);
-				var typeList = [
-				    { id: view[0].type, name: "Quotation" }
-			    ];
-				self.set("selectTypeList", typeList);
+				
+				
 				banhji.invoiceForm.set("obj", view[0]);	
 				var Index = parseInt(view[0].transaction_form_id);
 				self.activeInvoiceTmp(Index);
 				self.addRowLineDS();
 
 				self.txnFormDS.filter({ field:"type", value: view[0].type });	
+				var other = self.txnFormDS.view();
+				if(other[0].other == "customer_mg"){
+					self.set("selectTypeList", typeList);
+				}
 			});	
-
 		},		
 		addEmpty 		 	: function(){			
-			this.dataSource.data([]);			
-
+			this.dataSource.data([]);		
 			this.set("obj", null);				
-
 			this.dataSource.insert(0,{				
 				user_id			: banhji.source.user_id,
 				transaction_form_id : 0,

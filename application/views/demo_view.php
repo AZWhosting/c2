@@ -2178,7 +2178,6 @@
 								<h3><a href="#/recent_transactions_list">Recent Transactions List</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a href="#/reconciliation_report">Reconciliation Report</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -2188,9 +2187,7 @@
 								</p>
 							</td>
 							<td width="50%">
-								<p>
-									Lists of all reconciliation reports 
-								</p>
+								
 							</td>
 						</tr>
 
@@ -3276,104 +3273,6 @@
 							<th colspan="4">(600.00)</th>
 						</tr>
 					</table>					  
-
-				</div>
-			</div>						
-		</div>
-	</div>
-</script>
-<script id="reconciliationReport" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">					
-				<div id="example" class="k-content saleSummaryCustomer">			
-		    		<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
-					<br>
-					<br>
-					
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-							
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons filter" href="#tab-1" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->
-								
-								<div class="widget-body">
-									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
-								        <div class="tab-pane active" id="tab-1">									        	
-											<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Grouped By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							
-							        	</div>
-								        <!-- //GENERAL INFO END -->
-
-								        <!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->
-								       
-								    </div>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->
-						
-					</div>
-			    	
-					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
-						<h2>Reconciliation Report</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-										  
 
 				</div>
 			</div>						
@@ -9398,7 +9297,8 @@
 				                <th>DESCRIPTION</th>
 				                <th style="width: 20%;">QUANTITY</th>
 				                <th style="width: 13%;">COST</th>
-				                <th style="width: 1%;" data-bind="visible: showDiscount">DISCOUNT</th>			                
+				                <th style="width: 1%;" data-bind="visible: showDiscount">DISCOUNT</th>
+				                <th style="width: 10%;" data-bind="visible: showRequiredDate">DELIV.DATE</th>			                
 				                <th style="width: 10%;">AMOUNT</th>
 				                <th style="width: 11%;">TAX</th>			                			                			                
 				            </tr> 
@@ -9425,6 +9325,10 @@
 									<li>
 										<input type="checkbox" id="chbDiscount" class="k-checkbox" data-bind="checked: showDiscount">
 	  									<label class="k-checkbox-label" for="chbDiscount">DISCOUNT</label>
+									</li>
+									<li>
+										<input type="checkbox" id="chbRequiredDate" class="k-checkbox" data-bind="checked: showRequiredDate">
+      									<label class="k-checkbox-label" for="chbRequiredDate">DELIVERY DATE</label>
 									</li>															
 								</ul>
 							</div>
@@ -9602,6 +9506,13 @@
                    data-bind="value: discount,
                               events: { change: changes }"
                    style="width: 65px;">			
+		</td>
+		<td class="center" data-bind="visible: showRequiredDate">
+			<input data-role="datepicker"
+					data-format="dd-MM-yyyy"
+					data-parse-formats="yyyy-MM-dd" 
+					data-bind="value: required_date"
+					style="width:100%;" />
 		</td>				
 		<td class="right">
 			<span data-format="n" data-bind="text: amount"></span> 						
@@ -10596,7 +10507,7 @@
 
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
-									<div align="left">AMOUNT RECEIVED</div>
+									<div align="left">AMOUNT PURCHASED</div>
 									<h2 data-bind="text: total" align="right"></h2>
 								</div>
 							</div>						
@@ -11189,7 +11100,7 @@
 							<div class="span12 well">
 								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
 								<br>						
-								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for internal ..."></textarea>
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
 							</div>
 						</div>
 						<!-- Column END -->
@@ -11291,6 +11202,92 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="purchase-item-line-template" type="text/x-kendo-tmpl">		
+	<tr data-uid="#: uid #">		
+		<td>
+			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
+			#:banhji.purchase.lineDS.indexOf(data)+1#			
+		</td>		
+		<td>
+			<input id="ccbItem" name="ccbItem-#:uid#"
+				   data-role="combobox"
+				   data-header-template="item-header-tmpl"
+				   data-template="item-list-tmpl"                   			   
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: item_id, 
+                   			  source: itemDS,
+                   			  events:{ change: itemChanges }"
+                   placeholder="Add Item..." 
+                   required data-required-msg="required" style="width: 100%" />			
+		</td>		
+		<td>
+			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
+					type="text" class="k-textbox" 
+					data-bind="value: description"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td>
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
+					data-role="numerictextbox" 
+					data-format="n0" data-min="0"
+					data-spinners="false"
+					data-bind="value: quantity, events: {change : changes}"
+					required data-required-msg="required" style="width: 40%;" />
+
+			<input
+					id="ddlMesurement"
+					data-role="dropdownlist"                  
+                   data-text-field="measurement"
+                   data-header-template="item-measurement-header-tmpl"
+                   data-value-field="measurement_id"
+                   data-bind="value: measurement_id,
+                   			  source: item_prices,
+                   			  events:{ change: measurementChanges }"
+                   data-option-label="UM"
+                   style="width: 57%;" />
+		</td>					
+		<td>
+			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
+					data-role="numerictextbox" 
+					data-format="n"
+					data-spinners="false"
+					data-bind="value: cost, events: {change : changes}" 
+					required data-required-msg="required" style="width: 100%;" />
+		</td>
+		<td class="center" data-bind="visible: showDiscount">
+			<input data-role="numerictextbox"
+                   data-format="p0"
+                   data-min="0"
+                   data-max="0.99"
+                   data-step="0.1"                   
+                   data-bind="value: discount,
+                              events: { change: changes }"
+                   style="width: 65px;">			
+		</td>				
+		<td class="right">
+			<span data-format="n" data-bind="text: amount"></span> 						
+		</td>
+		<td>
+			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
+				   data-role="combobox"                   			   
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-header-template="tax-header-tmpl"
+                   data-bind="value: tax_item_id, 
+                   			  source: taxItemDS,
+                   			  events:{ change: changes }"
+                   style="width: 100%" />			
+		</td>
+		<td class="center" data-bind="visible: showAdditionalCost">
+			<span data-format="n" data-bind="text: additional_cost"></span>
+						
+			<input type="checkbox" data-bind="checked: additional_applied,
+										events:{ change: changes }" />
+							
+		</td>				
+    </tr>   
 </script>
 <script id="purchase-account-line-template" type="text/x-kendo-tmpl">		
 	<tr data-uid="#: uid #">		
@@ -16915,6 +16912,7 @@
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
+								              							enabled: enableRef,
 								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}" 
 								              				style="width: 100%" />
@@ -17185,7 +17183,7 @@
 									</li>
 									<li>
 										<input type="checkbox" id="chbRequiredDate" class="k-checkbox" data-bind="checked: showRequiredDate">
-      									<label class="k-checkbox-label" for="chbRequiredDate">Delivery Address DATE</label>
+      									<label class="k-checkbox-label" for="chbRequiredDate">DELIVERY DATE</label>
 									</li>															
 								</ul>
 							</div>
@@ -17520,6 +17518,7 @@
 															data-text-field="number" 
 								              				data-value-field="id"	 
 								              				data-bind="value: obj.reference_id,
+								              							enabled: enableRef,
 								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}" 
 								              				placeholder="Select Reference" style="width: 100%" />
@@ -17984,6 +17983,7 @@
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
+								              							enabled: enableRef,
 								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}" 
 								              				style="width: 100%" />
@@ -18600,6 +18600,7 @@
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
+								              							enabled: enableRef,
 								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}" 
 								              				style="width: 100%" />
@@ -19095,7 +19096,7 @@
 							data-bind="click: cancel"><i></i></span>						
 					</div>
 
-			        <h2>GOODS Delivery Address NOTE</h2>			    		   
+			        <h2>GOODS DELIVERY NOTE</h2>			    		   
 
 				    <br>				   				
 						
@@ -19219,6 +19220,7 @@
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
+								              							enabled: enableRef,
 								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}" 
 								              				style="width: 100%" />
@@ -19660,7 +19662,7 @@
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
 								              							source: referenceDS,
-								              							enabled: bolReference,						              							
+								              							enabled: enableRef,						              							
 								              							events:{change: referenceChanges}"
 								              				placeholder="Select Invoice..." 
 								              				style="width: 100%" />
@@ -19724,7 +19726,7 @@
 
 							        <!-- Attach Tab content -->
 							        <div class="tab-pane" id="tab4-5">
-							        	 <p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
+							        	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
 							            
 							            <input id="files" name="files"
 							                   type="file"
@@ -21529,13 +21531,6 @@
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
-	</tr>
 </script>
 <script id="saleDetailCustomer" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -21679,7 +21674,7 @@
 	<hr>
 	<br>
 </script>
-`<script id="saleDetailCustomerReportItem" type="text/x-kendo-template">
+<script id="saleDetailCustomerReportItem" type="text/x-kendo-template">
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
@@ -30573,11 +30568,7 @@
 					<div class="row-fluid">
 						<div class="span5">
 							<div class="total-customer">
-								<div class="span6">
-									<p>Purcahse In</p>
-									<span>-</span>
-								</div>
-								<div class="span6">
+								<div class="span12">
 									<p>Sale</p>
 									<span>-</span>
 								</div>	
@@ -30599,13 +30590,12 @@
 
 					<table class="table table-borderless table-condensed ">
 						<tr>
-							<th>Date</th>							
-							<th>Opening</th>
-							<th>Purchase</th>
-							<th>Sale</th>							
-							<th>Adjustment</th>							
-							<th>Balance</th>
-							<th>Avg Cost</th>							
+							<th>Type</th>							
+							<th>Item</th>
+							<th>Qty</th>
+							<th>Priice</th>							
+							<th>Amount</th>							
+							<th>Cost</th>							
 							<th>Gross Profit Margin</th>
 						</tr>
 						<tr>
@@ -30616,6 +30606,41 @@
 							<td></td>
 							<td></td>
 							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 							<td></td>
 						</tr>
 						<tr>
@@ -30636,50 +30661,8 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td></td>
 						</tr>
 						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -37907,18 +37890,8 @@
 
 				if(view.length>0){
 					obj.set("rate", kendo.parseFloat(view[0].rate));
-
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("rate", kendo.parseFloat(view[0].rate));
-						value.set("locale", view[0].locale);												
-					});					
 				}else{
 					obj.set("rate", 1);
-
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("rate", 1);
-						value.set("locale", banhji.institute.locale);												
-					});
 				}
 			});				
 		},															
@@ -39661,18 +39634,8 @@
 
 				if(view.length>0){
 					obj.set("rate", kendo.parseFloat(view[0].rate));
-
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("rate", kendo.parseFloat(view[0].rate));
-						value.set("locale", view[0].locale);												
-					});					
 				}else{
 					obj.set("rate", 1);
-
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("rate", 1);
-						value.set("locale", banhji.institute.locale);												
-					});
 				}
 			});				
 		},															
@@ -40142,18 +40105,8 @@
 
 				if(view.length>0){
 					obj.set("rate", kendo.parseFloat(view[0].rate));
-
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("rate", kendo.parseFloat(view[0].rate));
-						value.set("locale", view[0].locale);												
-					});					
 				}else{
 					obj.set("rate", 1);
-
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("rate", 1);
-						value.set("locale", banhji.institute.locale);												
-					});
 				}
 			});				
 		},
@@ -41766,6 +41719,7 @@
 		showConfirm   		: false,
 		statusSrc 			: "",
 		showDiscount 		: false,
+		showRequiredDate 	: false,
 		sub_total 			: 0,
 		tax 				: 0,
 		discount 			: 0,
@@ -41963,8 +41917,6 @@
 				}else{
 					obj.set("rate", 1);
 				}
-
-				self.changes();
 			});				
 		},	
 	    segmentChanges 		: function(e) {
@@ -42224,6 +42176,7 @@
 				discount 			: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,
+				required_date 		: new Date(),
 
 				item_prices 		: []
 			});																	
@@ -42787,8 +42740,6 @@
 				}else{
 					obj.set("rate", 1);
 				}
-
-				self.changes();
 			});				
 		},
 		//Segment	
@@ -43153,7 +43104,7 @@
 				{ field: "contact_id", value: obj.contact_id },
 				{ field: "status", value: 0 },
 				{ field: "type", value: "Purchase_Order" },
-				{ field: "due_date <=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
 			]);				
 		},
 		referenceChanges 	: function(){
@@ -43948,7 +43899,7 @@
 				{ field: "contact_id", value: obj.contact_id },
 				{ field: "status", value: 0 },
 				{ field: "type", value: "Purchase_Order" },
-				{ field: "due_date <=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
 			]);
 		},
 		referenceChanges 	: function(){
@@ -44577,8 +44528,6 @@
 				}else{
 					obj.set("rate", 1);
 				}
-
-				self.changes();
 			});				
 		},	    
 		//Item		
@@ -44589,12 +44538,11 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var rate = 1, measurement_id = 0;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
 						rate = obj.rate / item.item_prices[0].rate;
-						price = item.item_prices[0].price*rate;						
 						measurement_id = item.item_prices[0].measurement_id;
 					}					
 				}
@@ -44608,20 +44556,20 @@
 		        		$.each(self.catalogDS.view(), function(index, value){										
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
+								tax_item_id 		: value.tax_item_id,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.name,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								cost 				: 0,												
+								amount 				: 0,
 								discount 			: 0,
 								fine 				: 0,
 								rate				: obj.rate,
 								locale				: obj.locale,
-								has_vat 			: false,
 								movement 			: -1,								
 
-								item_prices 		: value.item_prices
+								item_prices 		: []
 							});								
 		        		});
 
@@ -44629,9 +44577,9 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		    		data.set("description", item.name);	    		
-			        data.set("price", item.price*rate);
+			        data.set("cost", 0);
 			        data.set("measurement_id", 0);
-			        data.set("rate", obj.rate);		        	        
+			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
@@ -44639,7 +44587,7 @@
 		        	data.set("measurement_id", measurement_id);		        	
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
+			        data.set("cost", 0);			        		        
 			        data.set("rate", rate);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -44655,7 +44603,7 @@
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
 						var rate = obj.rate / value.rate;						
-				        data.set("price", value.price*rate);				       			       
+				        data.set("cost", value.cost*rate);				       			       
 				        
 						return false;
 					}
@@ -44768,7 +44716,7 @@
 			}			
 		},
 		//Segment
-		segmentChanges 		: function(e) {
+		segmentChanges 		: function() {
 			var dataArr = this.get("obj").segments,
 			lastIndex = dataArr.length - 1,
 			last = this.segmentItemDS.get(dataArr[lastIndex]);
@@ -44843,7 +44791,7 @@
 				
 				//Item
 				$.each(this.lineDS.data(), function(index, value) {				
-					var amt = value.quantity * value.price;					
+					var amt = value.quantity * value.cost;					
 
 					//Discount by line
 					if(value.discount>0){										
@@ -45030,19 +44978,16 @@
 			this.typeChanges();			
 		},		
 		addRow 				: function(){				
-			var transaction_id = 0, obj = this.get("obj");
-			if(this.get("isEdit")){
-				transaction_id = obj.id;
-			}
-						
+			var obj = this.get("obj");
+									
 			this.lineDS.add({					
-				transaction_id 		: transaction_id,
+				transaction_id 		: obj.id,
 				tax_item_id 		: "",
 				item_id 			: "",				
 				measurement_id 		: 0,				
 				description 		: "",				
 				quantity 	 		: 1,
-				price 				: 0,												
+				cost 				: 0,												
 				amount 				: 0,
 				discount 			: 0,
 				fine 				: 0,
@@ -45772,16 +45717,7 @@
 			{ id:"Credit_Note", name:"Cash Refund" }
 		],
 		amtDueColor 		: banhji.source.amtDueColor,
-	    confirmMessage 		: banhji.source.confirmMessage,		
-		frequencyList 		: banhji.source.frequencyList,
-		monthOptionList 	: banhji.source.monthOptionList,
-		monthList 			: banhji.source.monthList,
-		weekDayList 		: banhji.source.weekDayList,
-		dayList 			: banhji.source.dayList,
-		showMonthOption 	: false,
-		showMonth 			: false,
-		showWeek 			: false,
-		showDay 			: false,
+	    confirmMessage 		: banhji.source.confirmMessage,
 		obj 				: null,
 		isEdit 				: false,
 		saveClose 			: false,
@@ -45964,21 +45900,9 @@
 
 				if(view.length>0){
 					obj.set("rate", kendo.parseFloat(view[0].rate));
-
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("rate", kendo.parseFloat(view[0].rate));
-						value.set("locale", obj.locale);												
-					});					
 				}else{
 					obj.set("rate", 1);
-
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("rate", 1);
-						value.set("locale", obj.locale);												
-					});
 				}
-
-				self.changes();
 			});				
 		},		
 		changes				: function(){
@@ -46945,7 +46869,7 @@
 			banhji.summaryProductSuppplier.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
 		}
 	});
-	banhji.purchaseOrder = kendo.observable({
+	banhji.purchaseOrderReport = kendo.observable({
 
 		dataSource 		: dataStore(apiUrl + "vendorReports/purchase_order"),
 		filterDB	 		: [
@@ -47326,7 +47250,7 @@
 
 	});
 
-	
+
 
 	/*************************
 	*   SME Section   *
@@ -48671,7 +48595,7 @@
 
 			this.dataSource.insert(0,{				
 				contact_id 				: "",				
-				transaction_template_id : 0,				
+				transaction_template_id : 1,				
 				recurring_id 			: "",				
 				user_id 				: this.get("user_id"),
 				employee_id 			: "", 	    		
@@ -49120,6 +49044,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		enableRef 	 		: false,
 		showDiscount 		: false,
 		showRequiredDate 	: false,
 		sub_total 			: 0,		
@@ -49523,7 +49448,8 @@
 			duedate.setDate(duedate.getDate() + 30);				
 
 			this.dataSource.insert(0, {				
-				contact_id 			: "",				
+				contact_id 			: "",
+				transaction_template_id : 2,				
 				reference_id 		: "",
 				recurring_id 		: "",
 				job_id 				: 0,				
@@ -49729,12 +49655,19 @@
 		loadReference 		: function(){			
 			var obj = this.get("obj");
 
-			this.referenceDS.filter([
-				{ field: "contact_id", value: obj.contact_id },
-				{ field: "status", value: 0 },
-				{ field: "type", value: "Quote" },
-				{ field: "due_date <=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-			]);				
+			if(obj.contact_id>0){
+				this.set("enableRef", true);
+
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status", value: 0 },
+					{ field: "type", value: "Quote" },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);
+			}else{
+				this.set("enableRef", false);
+				obj.set("reference_id", "");
+			}				
 		},
 		referenceChanges 	: function(){
 			var self = this, obj = this.get("obj");
@@ -50033,6 +49966,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		enableRef 	 		: false,
 		total				: 0,
 		original_total 		: 0,
 		user_id				: banhji.source.user_id,
@@ -50519,12 +50453,19 @@
 		loadReference 		: function(){
 			var obj = this.get("obj");
 
-			this.referenceDS.filter([
-				{ field: "contact_id", value: obj.contact_id },
-				{ field: "status", value: 0 },
-				{ field: "type", value: "Sale_Order" },
-				{ field: "due_date <=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-			]);
+			if(obj.contact_id>0){
+				this.set("enableRef", true);
+
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status", value: 0 },
+					{ field: "type", value: "Sale_Order" },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);
+			}else{
+				this.set("enableRef", false);
+				obj.set("reference_id", "");
+			}
 		},
 		referenceChanges 	: function(){
 			var obj = this.get("obj");
@@ -50864,6 +50805,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		enableRef 	 		: false,
 		showDiscount 		: false,
 		sub_total 			: 0,
 		tax 				: 0,
@@ -51124,8 +51066,6 @@
 				}else{
 					obj.set("rate", 1);
 				}
-
-				self.changes();
 			});				
 		},
 		//Segment	
@@ -51804,12 +51744,19 @@
 		loadReference 		: function(){			
 			var obj = this.get("obj");
 
-			this.referenceDS.filter([
-				{ field: "contact_id", value: obj.contact_id },
-				{ field: "status", value: 0 },
-				{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
-				{ field: "due_date <=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-			]);					
+			if(obj.contact_id>0){
+				this.set("enableRef", true);
+
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status", value: 0 },
+					{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);
+			}else{
+				this.set("enableRef", false);
+				obj.set("reference_id", "");
+			}					
 		},
 		referenceChanges 	: function(){
 			var self = this, obj = this.get("obj");
@@ -52168,6 +52115,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		enableRef 	 		: false,
 		showDiscount 		: false,
 		sub_total 			: 0,
 		tax 				: 0,
@@ -52445,8 +52393,6 @@
 				}else{
 					obj.set("rate", 1);
 				}
-
-				self.changes();
 			});				
 		},
 		//Payment Term
@@ -52685,6 +52631,7 @@
 
 			this.dataSource.insert(0, {				
 				contact_id 			: "",//Customer
+				transaction_template_id : 3,
 				payment_term_id		: 0,				
 				reference_id 		: "",
 				recurring_id 		: "",
@@ -53118,12 +53065,19 @@
 		loadReference 		: function(){			
 			var obj = this.get("obj");
 
-			this.referenceDS.filter([
-				{ field: "contact_id", value: obj.contact_id },
-				{ field: "status", value: 0 },
-				{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
-				{ field: "due_date <=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-			]);					
+			if(obj.contact_id>0){
+				this.set("enableRef", true);
+
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status", value: 0 },
+					{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);
+			}else{
+				this.set("enableRef", false);
+				obj.set("reference_id", "");
+			}					
 		},
 		referenceChanges 	: function(){
 			var self = this, obj = this.get("obj");
@@ -53425,6 +53379,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		enableRef 	 		: false,
 		total 				: 0,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
@@ -53597,8 +53552,6 @@
 				}else{
 					obj.set("rate", 1);
 				}
-
-				self.changes();
 			});				
 		},
 		//Segment	
@@ -53751,6 +53704,7 @@
 
 			this.dataSource.insert(0, {				
 				contact_id 			: "",
+				transaction_template_id : 4,
 				reference_id 		: "",
 				recurring_id 		: "",
 				job_id 				: 0,				
@@ -53960,12 +53914,19 @@
 		loadReference 		: function(){			
 			var obj = this.get("obj");
 
-			this.referenceDS.filter([
-				{ field: "contact_id", value: obj.contact_id },
-				{ field: "status", value: 0 },
-				{ field: "type", operator:"where_in", value:["Quote", "Sale_Order", "Invoice"] },
-				{ field: "due_date <=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-			]);					
+			if(obj.contact_id>0){
+				this.set("enableRef", true);
+
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status", value: 0 },
+					{ field: "type", operator:"where_in", value:["Quote", "Sale_Order", "Invoice"] },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);
+			}else{
+				this.set("enableRef", false);
+				obj.set("reference_id", "");
+			}					
 		},
 		referenceChanges 	: function(){
 			var self = this, obj = this.get("obj");
@@ -54260,16 +54221,7 @@
 			{ id:"Credit_Note", name:"Cash Refund" }
 		],
 		amtDueColor 		: banhji.source.amtDueColor,
-		confirmMessage 		: banhji.source.confirmMessage,		
-		frequencyList 		: banhji.source.frequencyList,
-		monthOptionList 	: banhji.source.monthOptionList,
-		monthList 			: banhji.source.monthList,
-		weekDayList 		: banhji.source.weekDayList,
-		dayList 			: banhji.source.dayList,
-		showMonthOption 	: false,
-		showMonth 			: false,
-		showWeek 			: false,
-		showDay 			: false,
+		confirmMessage 		: banhji.source.confirmMessage,
 		obj 				: null,
 		isEdit 				: false,
 		saveClose 			: false,
@@ -54459,8 +54411,6 @@
 				}else{
 					obj.set("rate", 1);
 				}
-
-				self.changes();
 			});				
 		},
 		//Segment	
@@ -57323,18 +57273,8 @@
 
 				if(view.length>0){
 					obj.set("rate", kendo.parseFloat(view[0].rate));
-
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("rate", kendo.parseFloat(view[0].rate));
-						value.set("locale", view[0].locale);												
-					});					
 				}else{
 					obj.set("rate", 1);
-
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("rate", 1);
-						value.set("locale", banhji.institute.locale);												
-					});
 				}
 			});				
 		},															
@@ -62292,7 +62232,6 @@
 		generalLedger: new kendo.Layout("#generalLedger", {model: banhji.generalLedger}),
 		transactionListDate: new kendo.Layout("#transactionListDate", {model: banhji.transactionListDate}),
 		recentTransactionsList: new kendo.Layout("#recentTransactionsList", {model: banhji.recentTransactionsList}),
-		reconciliationReport: new kendo.Layout("#reconciliationReport", {model: banhji.reconciliationReport}),
 		recurringJournalList: new kendo.Layout("#recurringJournalList", {model: banhji.recurringJournalList}),
 		statementProfitLoss: new kendo.Layout("#statementProfitLoss", {model: banhji.statementProfitLoss}),
 		statementFinancialPosition: new kendo.Layout("#statementFinancialPosition", {model: banhji.statementFinancialPosition}),
@@ -63854,154 +63793,6 @@
 			}
 		}		
 	});	
-	banhji.router.route("/reconciliation_report", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.reconciliationReport);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
-			var vm = banhji.journalReport;
-			banhji.userManagement.addMultiTask("Reconciliation Report","reconciliation_report",null);
-
-			if(banhji.pageLoaded["reconciliation_report"]==undefined){
-				banhji.pageLoaded["reconciliation_report"] = true;
-
-				function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
-
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
-
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function dateChanges(){
-                	var strDate = "";
-
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}
-
-					$("#strDate").text(strDate);
-                }
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");               
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $("#sorter").val();
-
-					switch(value){
-					case "today":								
-						sdate = today;
-															  					
-					  	break;
-					case "week":			  	
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
-					  	break;
-					case "month":							  	
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":				
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-											  
-					}
-
-					start.value(sdate);
-					end.value(edate);
-					
-					start.max(end.value());
-                	end.min(start.value());
-
-                	dateChanges();                	
-                });
-                
-                start.max(end.value());
-                end.min(start.value());				
-
-				$("#search").click(function(e){
-		        	e.preventDefault();
-
-		        	var para = [],		        	
-					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
-					edate = kendo.toString(end.value(), "yyyy-MM-dd");
-					
-		        	//Dates
-		        	if(start.value() && end.value()){        		
-		            	para.push({ field:"issued_date >=", value: sdate });
-		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
-		            }else if(start.value()){
-		            	para.push({ field:"issued_date", value: sdate });
-		            }else if(end.value()){
-		            	para.push({ field:"issued_date <=", value: edate });
-		            }else{
-		            	
-		            }
-
-		            vm.dataSource.filter(para);		            
-		        });								
-						
-			}
-		}		
-	});
 	banhji.router.route("/recurring_journal_list", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');

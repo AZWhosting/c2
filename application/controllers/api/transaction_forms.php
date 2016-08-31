@@ -87,6 +87,7 @@ class Transaction_forms extends REST_Controller {
 					"id" 			=> $value->id,					
 					"type" 			=> $value->type,
 					"name" 	 		=> $value->name,
+					"other" 	 	=> $value->other,
 					"image_url" 	=> $value->image_url	
 				);
 			}
@@ -104,6 +105,7 @@ class Transaction_forms extends REST_Controller {
 			$obj = new Transaction_form(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 			$obj->type 			= $value->type;
 			$obj->name 			= $value->name;
+			$obj->other 		= $value->other;
 			$obj->image_url 	= $value->image_url;
 						
 			if($obj->save()){
@@ -111,6 +113,7 @@ class Transaction_forms extends REST_Controller {
 					"id" 			=> $obj->id,					
 					"type" 			=> $obj->type,
 					"name" 	 		=> $obj->name,
+					"other" 	 	=> $obj->other,
 					"image_url" 	=> $obj->image_url
 				);
 			}
@@ -132,6 +135,7 @@ class Transaction_forms extends REST_Controller {
 			
 			$obj->type 			= $value->type;
 			$obj->name 			= $value->name;
+			$obj->other 		= $value->other;
 			$obj->image_url 	= $value->image_url;			
 
 			if($obj->save()){				
@@ -139,6 +143,7 @@ class Transaction_forms extends REST_Controller {
 					"id" 			=> $obj->id,					
 					"type" 			=> $obj->type,
 					"name" 	 		=> $obj->name,
+					"other" 	 	=> $obj->other,
 					"image_url" 	=> $obj->image_url
 				);		
 			}
