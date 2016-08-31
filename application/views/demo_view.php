@@ -42044,7 +42044,7 @@
 				self.set("obj", view[0]);
 
 				if(view[0].status=="1"){
-					self.set("statusSrc", banhji.source.usedSrc);
+					self.set("statusSrc", banhji.source.approvedSrc);
 				}else{
 					self.set("statusSrc", banhji.source.openSrc);
 				}
@@ -42863,12 +42863,8 @@
 		        self.set("total", kendo.toString(view[0].amount, "n0"));				
 				
 				self.set("obj", view[0]);
-
-				if(view[0].status=="1"){
-					self.set("statusSrc", banhji.source.usedSrc);
-				}else{
-					self.set("statusSrc", banhji.source.openSrc);
-				}
+				
+				self.set("statusSrc", banhji.source.acceptedSrc);
 
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
@@ -44764,8 +44760,10 @@
 				self.set("obj", view[0]);
 				self.set("original_total", view[0].amount);
 
-				if(view[0].status=="1"){
+				if(view[0].status=="1" || view[0].type=="Cash_Sale"){
 					self.set("statusSrc", banhji.source.paidSrc);
+				}else if(view[0].status=="2"){
+					self.set("statusSrc", banhji.source.partialyPaidSrc);
 				}else{
 					self.set("statusSrc", banhji.source.openSrc);
 				}
@@ -44925,7 +44923,8 @@
 			this.set("discount", 0);
 			this.set("tax", 0);						
 			this.set("total", 0);
-			this.set("additional_cost", 0);				
+			this.set("additional_cost", 0);
+			this.set("amtDueColor", banhji.source.amtDueColor);				
 
 			this.dataSource.insert(0, {				
 				contact_id 			: "",
@@ -49442,6 +49441,7 @@
 			this.set("discount", 0);
 			this.set("tax", 0);			
 			this.set("total", 0);
+			this.set("amtDueColor", banhji.source.amtDueColor);
 
 			//Set Date
 			var duedate = new Date();
@@ -51298,7 +51298,8 @@
 			this.set("tax", 0);
 			this.set("discount", 0);
 			this.set("total_deposit", 0);
-			this.set("total", 0);				
+			this.set("total", 0);
+			this.set("amtDueColor", banhji.source.amtDueColor);				
 
 			this.dataSource.insert(0, {				
 				contact_id 			: "",//Customer
@@ -52532,6 +52533,8 @@
 
 				if(view[0].status=="1"){
 					self.set("statusSrc", banhji.source.paidSrc);
+				}else if(view[0].status=="2"){
+					self.set("statusSrc", banhji.source.partialyPaidSrc);
 				}else{
 					self.set("statusSrc", banhji.source.openSrc);
 				}
@@ -52627,7 +52630,8 @@
 			this.set("tax", 0);
 			this.set("discount", 0);
 			this.set("total_deposit", 0);
-			this.set("total", 0);				
+			this.set("total", 0);
+			this.set("amtDueColor", banhji.source.amtDueColor);				
 
 			this.dataSource.insert(0, {				
 				contact_id 			: "",//Customer
@@ -53673,12 +53677,8 @@
 				var view = self.dataSource.view();
 
 				self.set("obj", view[0]);
-
-				if(view[0].status=="1"){
-					self.set("statusSrc", banhji.source.usedSrc);
-				}else{
-					self.set("statusSrc", banhji.source.openSrc);
-				}
+				
+				self.set("statusSrc", banhji.source.acceptedSrc);
 				
 				//self.contactDS.filter({ field: "id", value: view[0].contact_id });				
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
@@ -54608,12 +54608,8 @@
 				var view = self.dataSource.view();				
 				
 				self.set("obj", view[0]);
-
-				if(view[0].status=="1"){
-					self.set("statusSrc", banhji.source.paidSrc);
-				}else{
-					self.set("statusSrc", banhji.source.openSrc);
-				}	
+				
+				self.set("statusSrc", banhji.source.acceptedSrc);
 
 				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));				
 		        self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
@@ -60998,7 +60994,7 @@
 			   	amount				: 0,
 			   	vat 				: 0,
 			   	rate				: 1,			   	
-			   	locale 				: "km-KH",			   	
+			   	locale 				: banhji.locale,			   	
 			   	issued_date 		: new Date(),
 			   	due_date 			: "",
 			   	check_no 			: "",
