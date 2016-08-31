@@ -3420,16 +3420,16 @@
 
 					<p style="margin-left: 18%; margin-top: 10px;">Exchange rate on the day of:</p>
 										  
-					<table class="table2">
+					<!-- <table class="table2">
 						<tr>
 							<td>Counted By:</td>
-							<td style="padding-bottom: 5px; border-bottom: 1px solid #000;"></td>
+							<td ></td>
 							<td>Position:</td>
 							<td></td>
 							<td>Date:</td>
 							<td></td>
 						</tr>
-					</table>
+					</table> -->
 
 				</div>
 			</div>						
