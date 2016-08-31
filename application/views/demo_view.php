@@ -48185,7 +48185,6 @@
 		monthList 			: banhji.source.monthList,
 		weekDayList 		: banhji.source.weekDayList,
 		dayList 			: banhji.source.dayList,
-		addNewItem			: banhji.source.addNewItem,
 		showMonthOption 	: false,
 		showMonth 			: false,
 		showWeek 			: false,
@@ -48195,6 +48194,7 @@
 		saveClose 			: false,
 		savePrint 			: false,
 		saveRecurring 		: false,
+		showConfirm 		: false,
 		statusSrc 			: "",
 		showDiscount 		: false,
 		sub_total 			: 0,		
@@ -48973,6 +48973,7 @@
 	});
 	banhji.saleOrder =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),		
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
@@ -49027,6 +49028,7 @@
 		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
+		confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
 		monthOptionList 	: banhji.source.monthOptionList,
 		monthList 			: banhji.source.monthList,
@@ -49636,14 +49638,24 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        if(obj.status==0){
-				obj.set("deleted", 1);
-		        self.dataSource.sync();
+	        this.deleteDS.query({
+	        	filter:[
+	        		{ field:"reference_id", value:obj.id },
+	        	],
+	        	page:1,
+	        	pageSize:1
+	        }).then(function(){
+	        	var view = self.deleteDS.view();
 
-		        window.history.back();
-			}else{
-				alert("Sorry, you can not delete it.");
-			}		    	    	
+	        	if(view.length>0){
+	        		alert("Sorry, you can not delete it.");
+	        	}else{
+	        		obj.set("deleted", 1);
+			        self.dataSource.sync();
+
+			        window.history.back();
+	        	}
+	        });		    	    	
 		},
 		openConfirm 		: function(){
 			this.set("showConfirm", true);
