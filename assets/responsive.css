@@ -417,7 +417,34 @@ width: 50% !important;
 .saleSummaryCustomer .block-title{
   text-align: center;
   margin-bottom: 20px;
+  clear: both;
+  overflow: hidden;
 }
+.reconciliation_report{
+  width:100%;
+  font-weight: 700;
+}
+.reconciliation_report tr td,
+.reconciliation_report tr th{
+  border: 1px solid black;
+}
+.reconciliation_report tr th{
+  background: #000;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+}
+.reconciliation_report tr td{
+  padding: 5px;
+}
+.table2{
+  width: 100%;
+  border: 1px solid black;
+}
+.table2 tr td{
+  padding: 5px;
+}
+
 .saleSummaryCustomer .block-title h3{
   font-size: 15px;
 }

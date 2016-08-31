@@ -18951,7 +18951,7 @@
 	            </div>
         	</div>
         	<div class="span7">
-        		<h2>សក្ខីប័ត្រផ្ទេរសាច់ប្រាក់ Transfer</h2>
+        		<h2>សក្ខីប័ត្រផ្ទេរសាច់ប្រាក់ Transfer Voucher</h2>
         	</div>
         	<div class="span12" style="background:none;margin-top: 15px;">
         		<table class="span12" border="1">
@@ -19018,12 +19018,12 @@
         				<p style="font-size:10px;">Name: <br>Date:</p>
         			</div>
         			<div class="span4">
-        				<p style="margin-bottom:30px;font-size:10px;">រៀបចំដោយ<br>Prepared by:</p>
+        				<p style="margin-bottom:30px;font-size:10px;">ត្រួតពិនិត្យដោយ<br>Reviewed by:</p>
         				_______________
         				<p style="font-size:10px;">Name: <br>Date:</p>
         			</div>
         			<div class="span4">
-        				<p style="margin-bottom:30px;font-size:10px;">រៀបចំដោយ<br>Prepared by:</p>
+        				<p style="margin-bottom:30px;font-size:10px;font-weight:bold;">ពិនិត្យ និងសំរេចដោយ<br>Approved by:</p>
         				_______________
         				<p style="font-size:10px;">Name: <br>Date:</p>
         			</div>
@@ -19069,6 +19069,967 @@
         </div>
     </div>
 </script>
+<script id="invoiceForm16" type="text/x-kendo-template">
+	<div class="inv1 pcg-cash">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<h2>សក្ខីប័ត្រដាក់សាច់ប្រាក់ Deposit Voucher</h2>
+        	</div>
+        	<div class="span12" style="background:none;margin-top: 15px;">
+        		<table class="span12" border="1">
+        			<tr>
+        				<td width="200">លេខសក្ខីប័ត្រ TV No.</td>
+        				<td width="200"></td>
+        				<td width="200">កាលបរិច្ឆេទ Date</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td>Rational for Deposit</td>
+        				<td colspan="3"></td>
+        			</tr>
+        		</table>
+        	</div>
+        	<table class="span12" style="border-top: none;">
+        		<tr>
+        			<td colspan="4" style="background: #10253f; color: #fff;border-top: 0;">
+        				ដាក់ប្រាក់​ពី Deposit from
+        			</td>
+        			<td colspan="2" style="background: #eee;border-top: 0;">
+        				ដាក់ប្រាក់ទៅ Deposit to
+        			</td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1;">
+        				No.
+        			</td>
+        			<td style="background: #c6d9f1;">
+        				Nature
+        			</td>
+        			<td style="background: #c6d9f1;">
+        				Amount
+        			</td>
+        			<td style="background: #c6d9f1;">
+        				Cheque No./<br>Account No.
+        			</td>
+        			<td>
+        				Nature
+        			</td>
+        			<td>
+        				Bank Account No./ Cash<br>Account Code
+        			</td>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr>
+        			<td style="background: #c6d9f1;text-align: right;padding-right: 5px;" colspan="2">ចំនួនសរុប<br>Total</td>
+        			<td></td>
+        			<td style="background: #c6d9f1;text-align: right;padding-right: 5px;" colspan="2">ចំនួនជាអក្សរ<br>Amount in Words</td>
+        			<td></td>
+        		</tr>
+        	</table>
+        	<div class="span12" style="background: #eee;padding: 5px;">
+        		<div class="span9" style="background: #fff;border:1px solid #ccc;padding: 8px;">
+        			<div class="span4">
+        				<p style="margin-bottom:30px;font-size:10px;">រៀបចំដោយ<br>Prepared by:</p>
+        				_______________
+        				<p style="font-size:10px;">Name: <br>Date:</p>
+        			</div>
+        			<div class="span4">
+        				<p style="margin-bottom:30px;font-size:10px;">ត្រួតពិនិត្យដោយ<br>Reviewed by:</p>
+        				_______________
+        				<p style="font-size:10px;">Name: <br>Date:</p>
+        			</div>
+        			<div class="span4">
+        				<p style="margin-bottom:30px;font-size:10px;font-weight:bold;">ពិនិត្យ និងសំរេចដោយ<br>Approved by:</p>
+        				_______________
+        				<p style="font-size:10px;">Name: <br>Date:</p>
+        			</div>
+        		</div>
+        		<div class="span3" style="padding: 10px;">
+        			<p style="margin-bottom:45px;font-size:10px;">Deposited by:</p>
+    				_______________
+    				<p style="font-size:10px;">Name: <br>Date:</p>
+        		</div>
+        	</div>
+        	<table class="span12" border="1">
+        		<tr>
+        			<td colspan="3" style="background: #10253f; color: #fff;padding-left: 5px;text-align:left;">
+        				សម្រាប់ការិយាល័យហិរញ្ញវត្ថុ For Accounting Department
+        			</td>
+        		</tr>
+        		<tr>
+        			<td style="text-align: center;">លេខគណនី<br>Account code</td>
+        			<td>ឥណពន្ធ<br>Debit</td>
+        			<td>ឥណទាន<br>Credit</td>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td></tr>
+        		<tr>
+        			<td colspan="3" style="text-align: left;padding-left: 5px;">
+        				<span style="font-size: 10px; margin-right: 100px;">Posted By:</span> Date:
+        			</td>
+        		</tr>
+        	</table>
+        	<table class="span12" border="1">
+        		<tr>
+        			<td rowspan="2" style="border-top:0;text-align: left;padding-left: 5px;">Used for internal deposit, withdraw, transfer amoung the company's Bank account to<br> bank account and to on hand and deposit back to the bank accounts.</td>
+        			<td style="border-top:0;text-align: left;padding-left: 5px;">Version</td>
+        			<td style="border-top:0;text-align: left;padding-left: 5px;"><b>V.01</b></td>
+        		</tr>
+        		<tr>
+        			<td style="text-align: left;padding-left: 5px;">Doc. Control</td>
+        			<td style="text-align: left;padding-left: 5px;"><b>TRM02-07</b></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm17" type="text/x-kendo-template">
+	<div class="inv1 pcg-cash">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<h2>សក្ខីប័ត្រដកប្រាក់ Withdrawal Voucher</h2>
+        	</div>
+        	<div class="span12" style="background:none;margin-top: 15px;">
+        		<table class="span12" border="1">
+        			<tr>
+        				<td width="200">លេខសក្ខីប័ត្រ TV No.</td>
+        				<td width="200"></td>
+        				<td width="200">កាលបរិច្ឆេទ Date</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td>Rational for Withdraw</td>
+        				<td colspan="3"></td>
+        			</tr>
+        		</table>
+        	</div>
+        	<table class="span12" style="border-top: none;">
+        		<tr>
+        			<td colspan="4" style="background: #10253f; color: #fff;border-top: 0;">
+        				ដកប្រាក់​ពី Withdraw from
+        			</td>
+        			<td colspan="2" style="background: #eee;border-top: 0;">
+        				ដកប្រាក់ទៅ Withdraw to
+        			</td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1;">
+        				No.
+        			</td>
+        			<td style="background: #c6d9f1;">
+        				Nature
+        			</td>
+        			<td style="background: #c6d9f1;">
+        				Amount
+        			</td>
+        			<td style="background: #c6d9f1;">
+        				Cheque No./<br>Account No.
+        			</td>
+        			<td>
+        				Nature
+        			</td>
+        			<td>
+        				Bank Account No./ Cash<br>Account Code
+        			</td>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+        		<tr>
+        			<td style="background: #c6d9f1;text-align: right;padding-right: 5px;" colspan="2">ចំនួនសរុប<br>Total</td>
+        			<td></td>
+        			<td style="background: #c6d9f1;text-align: right;padding-right: 5px;" colspan="2">ចំនួនជាអក្សរ<br>Amount in Words</td>
+        			<td></td>
+        		</tr>
+        	</table>
+        	<div class="span12" style="background: #eee;padding: 5px;">
+        		<div class="span9" style="background: #fff;border:1px solid #ccc;padding: 8px;">
+        			<div class="span4">
+        				<p style="margin-bottom:30px;font-size:10px;">រៀបចំដោយ<br>Prepared by:</p>
+        				_______________
+        				<p style="font-size:10px;">Name: <br>Date:</p>
+        			</div>
+        			<div class="span4">
+        				<p style="margin-bottom:30px;font-size:10px;">ត្រួតពិនិត្យដោយ<br>Reviewed by:</p>
+        				_______________
+        				<p style="font-size:10px;">Name: <br>Date:</p>
+        			</div>
+        			<div class="span4">
+        				<p style="margin-bottom:30px;font-size:10px;font-weight:bold;">ពិនិត្យ និងសំរេចដោយ<br>Approved by:</p>
+        				_______________
+        				<p style="font-size:10px;">Name: <br>Date:</p>
+        			</div>
+        		</div>
+        		<div class="span3" style="padding: 10px;">
+        			<p style="margin-bottom:45px;font-size:10px;">Withdrew by:</p>
+    				_______________
+    				<p style="font-size:10px;">Name: <br>Date:</p>
+        		</div>
+        	</div>
+        	<table class="span12" border="1">
+        		<tr>
+        			<td colspan="3" style="background: #10253f; color: #fff;padding-left: 5px;text-align:left;">
+        				សម្រាប់ការិយាល័យហិរញ្ញវត្ថុ For Accounting Department
+        			</td>
+        		</tr>
+        		<tr>
+        			<td style="text-align: center;">លេខគណនី<br>Account code</td>
+        			<td>ឥណពន្ធ<br>Debit</td>
+        			<td>ឥណទាន<br>Credit</td>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td></tr>
+        		<tr>
+        			<td colspan="3" style="text-align: left;padding-left: 5px;">
+        				<span style="font-size: 10px; margin-right: 100px;">Posted By:</span> Date:
+        			</td>
+        		</tr>
+        	</table>
+        	<table class="span12" border="1">
+        		<tr>
+        			<td width="450" style="border-top:0;text-align: left;padding-left: 5px;"></td>
+        			<td style="border-top:0;text-align: left;padding-left: 5px;">Version</td>
+        			<td style="border-top:0;text-align: left;padding-left: 5px;"><b>V.01</b></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm18" type="text/x-kendo-template">
+	<div class="inv1 pcg-cash">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<h2>សក្ខីប័ត្របុរេប្រទាន ADVANCE VOUCHER</h2>
+        	</div>
+        	<div class="span12" style="background:none;margin-top: 15px;">
+        		<table class="span12 left-tbl" border="1">
+        			<tr>
+        				<td width="200">អ្នកស្នើសុំ NAME</td>
+        				<td width="200"></td>
+        				<td width="200">លេខសក្ខីប័ត្រ AV No.</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">តំណែង Position</td>
+        				<td width="200"></td>
+        				<td width="200">កាលបរិច្ឆេទ Date</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">ផ្នែក Department</td>
+        				<td width="200"></td>
+        				<td width="200">លេខប័ណ្ណលទ្ធកម្ម PR No.</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">ទូទាត់ដោយ Mode of<br>Payment</td>
+        				<td colspan="3">ទូទាត់ដោយ mode of payment </td>
+        			</tr>
+        			<tr>
+        				<td width="200">គោលបំណងនៃ​បុរេប្រទាន<br>Purpose of Advance</td>
+        				<td colspan="3">&nbsp;</td>
+        			</tr>
+        		</table>
+        	</div>
+        	<table class="span12" style="border-top: none;">
+        		<tr style="background: #c6d9f1;">
+        			<th style="border-top: 0;">
+        				No.
+        			</th>
+        			<th style="border-top: 0;">
+        				បរិយាយ DESCRIPTION
+        			</th>
+        			<th style="border-top: 0;">
+        				REF.
+        			</th>
+        			<th style="border-top: 0;">
+        				AMOUNT
+        			</th>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr>
+        			<td colspan="3" style="text-align: right;padding-right: 5px;">សរុប Total</td>
+        			<td></td>
+        		</tr>
+        	</table>
+        	<table class="span12 left-tbl" >
+        		<tr>
+        			<td colspan="2" style="border-top: none;text-align:right;padding-right:5px;">
+        				 ចំនួនជាអក្សរ<br>Amount in Words
+        			</td>
+        			<td colspan="3" style="border-top: none;">&nbsp;</td>
+        		</tr>
+        		<tr>
+        			<td colspan="2"></td>
+        			<td style="background: #000; color: #fff;text-align:center;">SIGNATURE</td>
+        			<td style="background: #000; color: #fff;text-align:center;">POSITION</td>
+        			<td style="background: #000; color: #fff;text-align:center;">DATE</td>
+        		</tr>
+        		<tr>
+        			<td style="background: #10253f; color: #fff;text-align:center;" rowspan="2" width="20"><p class="upside">Requestiong<br>Dept</p></td>
+        			<td width="100">រៀបចំដោយ<br>PREPARED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>យល់ស្របដោយ<br>ENDORSED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td rowspan="4" style="text-align:center;" width="20"><p class="upside">Finance Department</p></td>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>សំរេចដោយ<br>APPROVED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>ទួទាត់ដោយ<br>PAID BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>ទទួលដោយ<br>RECEIVED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background:#000;"></td>
+        			<td colspan="4">For Accounting Department Only</td>
+        		</tr>
+        		<tr>
+        			<td></td>
+        			<td style="text-align:center;">Account Code</td>
+        			<td style="text-align:center;">Account Description</td>
+        			<td style="text-align:center;">Debit</td>
+        			<td style="text-align:center;">Credit</td>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr>
+        			<td style="background: #c6d9f1;"></td>
+        			<td style="background: #c6d9f1;">កត់ត្រាដោយ<br>POSTED BY</td>
+        			<td style="text-align:center;"></td>
+        			<td style="text-align:center;"></td>
+        			<td style="text-align:center;"></td>
+        		</tr>
+        	</table>
+        	<table class="span12" border="1" style="margin-top:5px;">
+        		<tr>
+        			<td rowspan="2" width="400" style="text-align: left;padding-left: 5px;">Advance Voucher should be used to account for cash advance request (either for operational or salary advance). No additional voucher is required to disburse cash. This is a pre-printed form and there are two copies, one of which (original) will be given to advance requestor; while another one is for the Finance Department.</td>
+        			<td style="text-align: left;padding-left: 5px;">Version</td>
+        			<td style="text-align: left;padding-left: 5px;"><b>V.01</b></td>
+        		</tr>
+        		<tr>
+        			<td style="text-align: left;padding-left: 5px;">Doc. Control</td>
+        			<td style="text-align: left;padding-left: 5px;"><b>APM02-02</b></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm19" type="text/x-kendo-template">
+	<div class="inv1 pcg-cash">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<h2>សក្ខីប័ត្រចំណាយ PAYMENT VOUCHER</h2>
+        	</div>
+        	<div class="span12" style="background:none;margin-top: 15px;">
+        		<table class="span12 left-tbl" border="1">
+        			<tr>
+        				<td width="200">ឈ្មោះ NAME</td>
+        				<td width="200"></td>
+        				<td width="200">លេខសក្ខីប័ត្រ PV No.</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">អ្នកផ្គត់ផ្គង់ Supplier Code</td>
+        				<td width="200"></td>
+        				<td width="200">កាលបរិច្ឆេទ Date</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">ផ្នែក Department</td>
+        				<td width="200"></td>
+        				<td width="200">លេខសក្ខីប័ត្របំណុល APV No.</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">ទូទាត់ដោយ Mode of<br>Payment</td>
+        				<td colspan="3">ទូទាត់ដោយ mode of payment </td>
+        			</tr>
+        			<tr>
+        				<td width="200">គោលបំណងការចំណាយ<br>Purpose of Advance</td>
+        				<td colspan="2">&nbsp;</td>
+        				<td>Budgeted: </td>
+        			</tr>
+        		</table>
+        	</div>
+        	<table class="span12" style="border-top: none;">
+        		<tr style="background: #c6d9f1;">
+        			<th style="border-top: 0;">
+        				No.
+        			</th>
+        			<th style="border-top: 0;" width="100">
+        				Invoice No.
+        			</th>
+        			<th style="border-top: 0;">
+        				Description
+        			</th>
+        			<th style="border-top: 0;" width="120">
+        				Amount
+        			</th>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr>
+        			<td colspan="3" style="text-align: right;padding-right: 5px;">Total</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td colspan="3" style="text-align: right;padding-right: 5px;">Settlement Discounts</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td colspan="3" style="text-align: right;padding-right: 5px;background: #c6d9f1;">NET AMOUNT PAID</td>
+        			<td></td>
+        		</tr>
+        	</table>
+        	<table class="span12 left-tbl" >
+        		<tr>
+        			<td colspan="2" style="background: #c6d9f1;border-top: none;text-align:right;padding-right:5px;">
+        				Amount in Words
+        			</td>
+        			<td colspan="3" style="border-top: none;">&nbsp;</td>
+        		</tr>
+        		<tr>
+        			<td colspan="2"></td>
+        			<td style="background: #000; color: #fff;text-align:center;">SIGNATURE</td>
+        			<td style="background: #000; color: #fff;text-align:center;">POSITION</td>
+        			<td width="120" style="background: #000; color: #fff;text-align:center;">DATE</td>
+        		</tr>
+        		<tr>
+        			<td style="background: #10253f; color: #fff;text-align:center;" rowspan="5" width="20"><p class="upside">Finance Department</p></td>
+        			<td width="100">រៀបចំដោយ<br>PREPARED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td><b>សំរេចដោយ<br>APPROVED BY</b></td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>ទួទាត់ដោយ<br>PAID BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>ទទួលដោយ<br>RECEIVED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background:#000;"></td>
+        			<td colspan="4">For Accounting Department Only</td>
+        		</tr>
+        		<tr>
+        			<td></td>
+        			<td style="text-align:center;">Account Code</td>
+        			<td style="text-align:center;">Account Description</td>
+        			<td style="text-align:center;">Debit</td>
+        			<td style="text-align:center;">Credit</td>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr>
+        			<td style="background: #c6d9f1;"></td>
+        			<td style="background: #c6d9f1;">កត់ត្រាដោយ<br>POSTED BY</td>
+        			<td style="text-align:center;"></td>
+        			<td style="text-align:center;"></td>
+        			<td style="text-align:center;"></td>
+        		</tr>
+        	</table>
+        	<table class="span12" border="1">
+        		<tr>
+        			<td rowspan="2" width="400" style="border-top:0;text-align: left;padding-left: 5px;">This is an automated voucher generated based on the payment made to outstanding invoice, reimbursements, claims, and other disbursement. The purpose of this voucher is used to approve payment transactions.</td>
+        			<td style="border-top:0;text-align: left;padding-left: 5px;">Version</td>
+        			<td style="border-top:0;text-align: left;padding-left: 5px;"><b>V.01</b></td>
+        		</tr>
+        		<tr>
+        			<td style="text-align: left;padding-left: 5px;">Doc. Control</td>
+        			<td style="text-align: left;padding-left: 5px;"><b>TRM02-03</b></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm20" type="text/x-kendo-template">
+	<div class="inv1 pcg-cash">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<h2>សក្ខីប័ត្រចំណាយ REIMBURSEMENT VOUCHER</h2>
+        	</div>
+        	<div class="span12" style="background:none;margin-top: 15px;">
+        		<table class="span12 left-tbl" border="1">
+        			<tr>
+        				<td width="200">ឈ្មោះ NAME</td>
+        				<td width="200"></td>
+        				<td width="200">លេខសក្ខីប័ត្រ PV No.</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">អ្នកផ្គត់ផ្គង់ Supplier Code</td>
+        				<td width="200"></td>
+        				<td width="200">កាលបរិច្ឆេទ Date</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">ផ្នែក Department</td>
+        				<td width="200"></td>
+        				<td width="200">លេខសក្ខីប័ត្របំណុល APV No.</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">ទូទាត់ដោយ Mode of<br>Payment</td>
+        				<td colspan="3">ទូទាត់ដោយ mode of payment </td>
+        			</tr>
+        			<tr>
+        				<td width="200">គោលបំណងការចំណាយ<br>Purpose of Advance</td>
+        				<td colspan="2">&nbsp;</td>
+        				<td>Budgeted: </td>
+        			</tr>
+        		</table>
+        	</div>
+        	<table class="span12" style="border-top: none;">
+        		<tr style="background: #c6d9f1;">
+        			<th style="border-top: 0;">
+        				No.
+        			</th>
+        			<th style="border-top: 0;" width="100">
+        				Invoice No.
+        			</th>
+        			<th style="border-top: 0;">
+        				Description
+        			</th>
+        			<th style="border-top: 0;" width="120">
+        				Amount
+        			</th>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr>
+        			<td colspan="3" style="text-align: right;padding-right: 5px;">Total</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td colspan="3" style="text-align: right;padding-right: 5px;">Settlement Discounts</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td colspan="3" style="text-align: right;padding-right: 5px;background: #c6d9f1;">NET AMOUNT PAID</td>
+        			<td></td>
+        		</tr>
+        	</table>
+        	<table class="span12 left-tbl" >
+        		<tr>
+        			<td colspan="2" style="background: #c6d9f1;border-top: none;text-align:right;padding-right:5px;">
+        				Amount in Words
+        			</td>
+        			<td colspan="3" style="border-top: none;">&nbsp;</td>
+        		</tr>
+        		<tr>
+        			<td colspan="2"></td>
+        			<td style="background: #000; color: #fff;text-align:center;">SIGNATURE</td>
+        			<td style="background: #000; color: #fff;text-align:center;">POSITION</td>
+        			<td width="120" style="background: #000; color: #fff;text-align:center;">DATE</td>
+        		</tr>
+        		<tr>
+        			<td style="background: #10253f; color: #fff;text-align:center;" rowspan="5" width="20"><p class="upside">Finance Department</p></td>
+        			<td width="100">រៀបចំដោយ<br>PREPARED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td><b>សំរេចដោយ<br>APPROVED BY</b></td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>ទួទាត់ដោយ<br>PAID BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>ទទួលដោយ<br>RECEIVED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background:#000;"></td>
+        			<td colspan="4">For Accounting Department Only</td>
+        		</tr>
+        		<tr>
+        			<td></td>
+        			<td style="text-align:center;">Account Code</td>
+        			<td style="text-align:center;">Account Description</td>
+        			<td style="text-align:center;">Debit</td>
+        			<td style="text-align:center;">Credit</td>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr>
+        			<td style="background: #c6d9f1;"></td>
+        			<td style="background: #c6d9f1;">កត់ត្រាដោយ<br>POSTED BY</td>
+        			<td style="text-align:center;"></td>
+        			<td style="text-align:center;"></td>
+        			<td style="text-align:center;"></td>
+        		</tr>
+        	</table>
+        	<table class="span12" border="1">
+        		<tr>
+        			<td rowspan="2" width="400" style="border-top:0;text-align: left;padding-left: 5px;">This is an automated voucher generated based on the payment made to outstanding invoice, reimbursements, claims, and other disbursement. The purpose of this voucher is used to approve payment transactions.</td>
+        			<td style="border-top:0;text-align: left;padding-left: 5px;">Version</td>
+        			<td style="border-top:0;text-align: left;padding-left: 5px;"><b>V.01</b></td>
+        		</tr>
+        		<tr>
+        			<td style="text-align: left;padding-left: 5px;">Doc. Control</td>
+        			<td style="text-align: left;padding-left: 5px;"><b>TRM02-03</b></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm21" type="text/x-kendo-template">
+	<div class="inv1 pcg-cash">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<h2>សក្ខីប័ត្រជំរះបុរេប្រទាន<br>ADVANCE SETTLEMENT VOUCHER</h2>
+        	</div>
+        	<div class="span12" style="background:none;margin-top: 15px;">
+        		<table class="span12 left-tbl" border="1">
+        			<tr>
+        				<td width="200">អ្នកស្នើសុំ NAME</td>
+        				<td width="200"></td>
+        				<td width="200">លេខសក្ខីប័ត្រ AS No.</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">តំណែង Position</td>
+        				<td width="200"></td>
+        				<td width="200">កាលបរិច្ឆេទ Date</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">ផ្នែក Department</td>
+        				<td width="200"></td>
+        				<td width="200">លេខសំណើរបុរេប្រទាន ADR No.</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">គោលបំណងនៃ​ការទូទាត់បុរេប្រទាន <br>Purpose of Advance</td>
+        				<td colspan="3">&nbsp;</td>
+        			</tr>
+        		</table>
+        	</div>
+        	<table class="span12" style="margin-top: 5px;">
+        		<tr style="background: #c6d9f1;height: 30px;">
+        			<th width="160">
+        				ACCOUNT CODE
+        			</th>
+        			<th >
+        				បរិយាយ DESCRIPTION
+        			</th>
+        			<th >
+        				REF.
+        			</th>
+        			<th width="120">
+        				AMOUNT
+        			</th>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr>
+        			<td colspan="3" style="text-align: right;padding-right: 5px;">សរុបចំណាយជាក់ស្តែង TOTAL EXPENSES</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td colspan="3" style="text-align: right;padding-right: 5px;">ចំនួនបុរេប្រទាន ADVANCED AMOUNT</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td colspan="3" style="text-align: right;padding-right: 5px;">ប្រាក់ត្រូវ NET AMOUNT DUE <input type="checkbox" name="nad"> បង់អោយបុគ្គលិក TO STAFF <input type="checkbox" name="ts"> ទទួលពីបុគ្គលិក FROM STAFF <input type="checkbox" name="fs"></td>
+        			<td></td>
+        		</tr>
+        	</table>
+        	<table class="span12 left-tbl" >
+        		<tr>
+        			<td colspan="2" style="background: #c6d9f1;border-top: none;text-align:right;padding-right:5px;">
+        				 ចំនួនជាអក្សរ<br>Amount in Words
+        			</td>
+        			<td colspan="3" style="border-top: none;">&nbsp;</td>
+        		</tr>
+        		<tr>
+        			<td colspan="2"></td>
+        			<td style="background: #000; color: #fff;text-align:center;">SIGNATURE</td>
+        			<td style="background: #000; color: #fff;text-align:center;">POSITION</td>
+        			<td style="background: #000; color: #fff;text-align:center;">DATE</td>
+        		</tr>
+        		<tr>
+        			<td style="text-align:center;" rowspan="4" width="20"></td>
+        			<td width="100" style="background: #c6d9f1;">រៀបចំដោយ<br>PREPARED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1;">ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		
+        		<tr>
+        			<td style="background: #c6d9f1;"><b>សំរេចដោយ<br>APPROVED BY</b></td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1;">កត់ត្រាដោយ<br>POSTED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        	</table>
+        	
+        </div>
+    </div>
+</script>
+<script id="invoiceForm22" type="text/x-kendo-template">
+	<div class="inv1 pcg-cash">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<h2>សក្ខីប័ត្រទិន្នានុប្បវត្តិ JOURNAL VOUCHER</h2>
+        	</div>
+        	<div class="span12" style="background:none;margin-top: 15px;">
+        		<table class="span12 left-tbl" border="1">
+        			<tr>
+        				<td width="200" style="text-align:center;"><b>លេខសក្ខីប័ត្រ JV No.</b></td>
+        				<td width="200" style="text-align:center;"></td>
+        				<td width="200" style="text-align:center;"><b>កាលបរិច្ឆេត Date<b></td>
+        				<td width="200" style="text-align:center;"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="4">ប្រភេទប្រតិបត្តិការ Type of transaction</td>
+        			</tr>
+        			<tr>
+        				<td colspan="4" style="padding: 5px 0;">
+        					<div class="row">
+        						<div class="span4">
+        							<input type="checkbox" name="">កែតម្រូវ Adjustment<br>
+        							<input type="checkbox" name="">ប្តូរចំណាត់ថ្នាក់ Reclassification<
+        						</div>
+        						<div class="span4">
+        							<input type="checkbox" name="">សមតុល្យដើមគ្រា Opening Balance<br>
+        							<input type="checkbox" name="">ប្រតិបត្តិការបង្ករ Accrual
+        						</div>
+        						<div class="span4">
+        							<input type="checkbox" name="">សមតុស្យចុងគ្រា Closing Entries<br>
+        							<input type="checkbox" name="">កាត់រំលោះ Depreciation/Amortization
+        						</div>
+        					</div>
+        					<div class="row">
+        						<div class="span8"><input type="checkbox" name="">ប្រតិបត្តិការញាតិសម្ព័ន្ធ Parties Transactions</div>
+        						<div class="span4"><input type="checkbox" name="">ប្តូរចំណាត់ថ្នាក់ Reclassification</div>
+        					</div>
+        				</td>
+        			</tr>
+        			<tr>
+        				<td colspan="4">Please specify, if applicable</td>
+        			</tr>
+        			<tr>
+        				<td width="200">វិក្ក័យប័ត្រ Invoice No.</td>
+        				<td width="200"></td>
+        				<td width="200">សក្ខីប័ត្របុរេប្រទាន<br>Advance Voucher No.</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">សក្ខីប័ត្របំណុល<br>AP Voucher No.</td>
+        				<td width="200"></td>
+        				<td width="200">សក្ខីប័ត្រចំណាយ<br>Payment Voucher No</td>
+        				<td width="200"></td>
+        			</tr>
+        			<tr>
+        				<td width="200">សក្ខីប័ត្រទិន្នានុប្បវត្តិ<br>Journal Voucher No.</td>
+        				<td width="200"></td>
+        				<td width="200">Other</td>
+        				<td width="200"></td>
+        			</tr>
+        		</table>
+        	</div>
+        	<table class="span12 left-tbl" style="margin-top: 5px;">
+        		<tr>
+        			<td style="background: #c6d9f1;">
+        				 ពន្យាល់ Description of the transaction
+        			</td>
+        		</tr>
+        		<tr>
+        			<td style="padding: 5px 0;">&nbsp;</td>
+        		</tr>
+        	</table>
+        	<table class="span12" style="margin-top: 5px;">
+        		<tr>
+        			<th><b>លេខកូជគណនី<br>Account Code</b></th>
+        			<th><b>ឈ្មោះគណនី</b>Account Name</th>
+        			<th><b>ពិពណ៌នា Description</b></th>
+        			<th><b>ឥណពន្ធ<br>Debit</b></th>
+        			<th><b>ឥណទាន<br>Credit</b></th>
+        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+        		<tr>
+        			<td colspan="3" style="text-align: right;padding-right: 5px;"><b>សរុប Total</b></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        	</table>
+        	<div class="span12" style="background: #eee;padding: 5px;">
+    			<div class="span3">
+    				<p style="margin-bottom:30px;font-size:10px;">រៀបចំដោយ<br>Prepared by:</p>
+    				_______________
+    				<p style="font-size:10px;">Name: <br>Date:</p>
+    			</div>
+    			<div class="span3">
+    				<p style="margin-bottom:30px;font-size:10px;">ត្រួតពិនិត្យដោយ<br>Reviewed by:</p>
+    				_______________
+    				<p style="font-size:10px;">Name: <br>Date:</p>
+    			</div>
+    			<div class="span3">
+    				<p style="margin-bottom:30px;font-size:10px;font-weight:bold;">អ្នកអនុម័ត<br>Approved by:</p>
+    				_______________
+    				<p style="font-size:10px;">Name: <br>Date:</p>
+    			</div>
+        		<div class="span3">
+        			<p style="margin-bottom:30px;font-size:10px;">អ្នកកត់ត្រា<br>Recorded by:</p>
+    				_______________
+    				<p style="font-size:10px;">Name: <br>Date:</p>
+        		</div>
+        	</div>
+        	<table class="span12" border="1">
+        		<tr>
+        			<td rowspan="2" width="400" style="text-align: left;padding-left: 5px;">Used for mainly non cash transactions and (but not limited to) Adjustment, Reclassification, Opening Balance, Closing Entries, Accrual, and Depreciation or Amortization</td>
+        			<td style="text-align: left;padding-left: 5px;">Version</td>
+        			<td style="text-align: left;padding-left: 5px;"><b>V.01</b></td>
+        		</tr>
+        		<tr>
+        			<td style="text-align: left;padding-left: 5px;">Doc. Ref.</td>
+        			<td style="text-align: left;padding-left: 5px;"><b>AMS02-01</b></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
 	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
     	<img src="<?php echo base_url(); ?>assets/invoice/img/#= image_url #.jpg" alt="#: name # image" />
@@ -47584,7 +48545,13 @@
 			    { id: "Invoice", name: "Invoice" },
 			    { id: "Cash_Receipt", name: "Cash Receipt" },
 			    { id: "GDN", name: "Delivery Note" },
+			    { id: "Journal", name: "Journal" },
 			    { id: "Transfer", name: "Transfer" },
+			    { id: "Withdraw", name: "Withdraw" },
+			    { id: "Advance", name: "Advance" },
+			    { id: "Payment", name: "Payment" },
+			    { id: "Reimbursement", name: "Reimbursement" },
+			    { id: "Advance_Settlement", name: "Advance Settlement" },
 			    { id: "Sale_Return", name: "Sale Return" }
 		    ];
 		    banhji.invoiceCustom.set("selectTypeList", typeList);
@@ -47725,6 +48692,13 @@
 				case 13: Active = banhji.view.invoiceForm13; break;
 				case 14: Active = banhji.view.invoiceForm14; break;
 				case 15: Active = banhji.view.invoiceForm15; break;
+				case 16: Active = banhji.view.invoiceForm16; break;
+				case 17: Active = banhji.view.invoiceForm17; break;
+				case 18: Active = banhji.view.invoiceForm18; break;
+				case 19: Active = banhji.view.invoiceForm19; break;
+				case 20: Active = banhji.view.invoiceForm20; break;
+				case 21: Active = banhji.view.invoiceForm21; break;
+				case 22: Active = banhji.view.invoiceForm22; break;
 			}
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 		},
@@ -53976,6 +54950,13 @@
 		invoiceForm13: new kendo.Layout("#invoiceForm13", {model: banhji.invoiceForm}),
 		invoiceForm14: new kendo.Layout("#invoiceForm14", {model: banhji.invoiceForm}),
 		invoiceForm15: new kendo.Layout("#invoiceForm15", {model: banhji.invoiceForm}),
+		invoiceForm16: new kendo.Layout("#invoiceForm16", {model: banhji.invoiceForm}),
+		invoiceForm17: new kendo.Layout("#invoiceForm17", {model: banhji.invoiceForm}),
+		invoiceForm18: new kendo.Layout("#invoiceForm18", {model: banhji.invoiceForm}),
+		invoiceForm19: new kendo.Layout("#invoiceForm19", {model: banhji.invoiceForm}),
+		invoiceForm20: new kendo.Layout("#invoiceForm20", {model: banhji.invoiceForm}),
+		invoiceForm21: new kendo.Layout("#invoiceForm21", {model: banhji.invoiceForm}),
+		invoiceForm22: new kendo.Layout("#invoiceForm22", {model: banhji.invoiceForm}),
 		
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.saleSummaryCustomer}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.saleDetailCustomer}),

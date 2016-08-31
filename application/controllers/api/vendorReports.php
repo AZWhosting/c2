@@ -1018,7 +1018,7 @@ class Vendorreports extends REST_Controller {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->where('parent_id', 2)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Deposit");
@@ -1103,7 +1103,7 @@ class Vendorreports extends REST_Controller {
 
 				$txn->where_in("type", array("Expense", "Purchase"));
 				$txn->where_in("status", array(0,2));
-				$txn->where('job_id <> ' 0);
+				$txn->where('job_id <> ', 0);
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted", 0);
 				$txn->where("is_recurring",0);
@@ -1247,7 +1247,7 @@ class Vendorreports extends REST_Controller {
 
 				$txn->where_in("type", array("Expense", "Purchase"));
 				$txn->where_in("status", array(0,2));
-				$txn->where('job_id <> ' 0);
+				// $txn->where('job_id <> ' 0);
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted", 0);
 				$txn->where("is_recurring",0);
@@ -1402,7 +1402,7 @@ class Vendorreports extends REST_Controller {
 
 				$txn->where_in("type", array("Expense", "Purchase"));
 				$txn->where_in("status", array(0,2));
-				$txn->where('job_id <> ' 0);
+				// $txn->where('job_id <> ' 0);
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted", 0);
 				$txn->where("is_recurring",0);
@@ -1471,7 +1471,7 @@ class Vendorreports extends REST_Controller {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->where('parent_id', 2)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Invoice");
@@ -1590,7 +1590,7 @@ class Vendorreports extends REST_Controller {
 
 				$txn->where_in("type", array("Expense", "Purchase"));
 				$txn->where_in("status", array(0,2));
-				$txn->where('job_id <> ' 0);
+				// $txn->where('job_id <> ' 0);
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted", 0);
 				$txn->where("is_recurring",0);
@@ -1645,7 +1645,7 @@ class Vendorreports extends REST_Controller {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$type->where('parent_id', 1)->get();
+			$type->where('parent_id', 2)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Purchase");
@@ -1724,7 +1724,7 @@ class Vendorreports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	function billPaid() {
+	function billPaid_get() {
 		$filters 	= $this->get("filter")["filters"];
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
@@ -1750,7 +1750,7 @@ class Vendorreports extends REST_Controller {
 
 				$txn->where_in("type", array("Expense", "Purchase"));
 				$txn->where_in("status", array(0,2));
-				$txn->where('job_id <> ' 0);
+				// $txn->where('job_id <> ' 0);
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted", 0);
 				$txn->where("is_recurring",0);
