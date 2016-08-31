@@ -48537,24 +48537,8 @@
         	}
         },
         goInvoiceCustom : function(){
-        	var typeList = [
-			    { id: "Quote", name: "Quotation" },
-			    { id: "Sale_Order", name: "Sale Order" },
-			    { id: "Deposit", name: "Deposit" },
-			    { id: "Cash_Sale", name: "Cash Sale" },
-			    { id: "Invoice", name: "Invoice" },
-			    { id: "Cash_Receipt", name: "Cash Receipt" },
-			    { id: "GDN", name: "Delivery Note" },
-			    { id: "Journal", name: "Journal" },
-			    { id: "Transfer", name: "Transfer" },
-			    { id: "Withdraw", name: "Withdraw" },
-			    { id: "Advance", name: "Advance" },
-			    { id: "Payment", name: "Payment" },
-			    { id: "Reimbursement", name: "Reimbursement" },
-			    { id: "Advance_Settlement", name: "Advance Settlement" },
-			    { id: "Sale_Return", name: "Sale Return" }
-		    ];
-		    banhji.invoiceCustom.set("selectTypeList", typeList);
+        	var typeList = "customer_mg";
+		    banhji.invoiceCustom.set("selectCustom", typeList);
 		    banhji.router.navigate('/invoice_custom');
         }     
     });
@@ -48621,6 +48605,7 @@
 		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
 		obj 				: {type: "Quote", amount: "$500,000.00",title: "Quotation"},
 		company 			: banhji.institute,
+		selectCustom		: null,
 		isEdit 				: false,
 		onChange			: function(e) {
 								var obj = this.get("obj");
@@ -48644,8 +48629,7 @@
 				}else if(this.dataSource.total()==0){
 					this.addEmpty();					
 				}
-				this.txnFormDS.filter({ field:"type", value: obj.type });
-
+				this.txnFormDS.filter([{ field:"type", value: obj.type }]);
 			}
 		},
 		addRowLineDS			: function(e){
@@ -48730,7 +48714,6 @@
 				self.addRowLineDS();
 
 				self.txnFormDS.filter({ field:"type", value: view[0].type });	
-				console.log(view[0].type);
 			});	
 
 		},		

@@ -1027,6 +1027,7 @@ class Transactions extends REST_Controller {
 
 		$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$inv->where('type', $type);
+		$inv->where('is_recurring', 0);
 		$inv->order_by('id', 'desc');
 		$inv->get();
 

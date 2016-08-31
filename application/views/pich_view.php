@@ -3306,7 +3306,7 @@
 						<input type="checkbox" id="surpriseCheck" class="k-checkbox" data-bind="">
 						<label class="k-checkbox-label" for="surpriseCheck">Surprise Check</label>
 					</div>
-					<table class="reconciliation_report" >
+					<table style="width:100%;" class="helloe">
 						<tr>
 							<th></th>
 							<th colspan="2">KHMER REIL</th>
@@ -3418,7 +3418,7 @@
 						</tr>
 					</table>
 
-					<p style="margin-left: 18%; margin-top: 10px;">Exchange rate on the day of:</p>
+					<!-- <p style="margin-left: 18%; margin-top: 10px;">Exchange rate on the day of:</p> -->
 										  
 					<!-- <table class="table2">
 						<tr>
