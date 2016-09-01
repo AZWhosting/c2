@@ -124,6 +124,26 @@ class Items extends REST_Controller {
 					); 
 				}
 
+				//Sum On Hand
+				$on_hand = 0;
+				if($value->item_type_id=="1"){					
+					$itemIn = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$itemIn->select_sum("quantity");
+					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
+					$itemIn->where("item_id", $value->id);
+					$itemIn->where("movement", 1);
+					$itemIn->get();
+					
+					$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$itemOut->select_sum("quantity");
+					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
+					$itemOut->where("item_id", $value->id);
+					$itemOut->where("movement", -1);
+					$itemOut->get();
+
+					$on_hand = floatval($itemIn->quantity) - floatval($itemOut->quantity);
+				}
+
 				$data["results"][] = array(
 					"id" 					=> $value->id,
 					"company_id" 			=> $value->company_id,
@@ -150,7 +170,7 @@ class Items extends REST_Controller {
 				   	"amount" 				=> floatval($value->amount),
 				   	"rate" 					=> floatval($value->rate),
 				   	"locale" 				=> $value->locale,
-				   	"on_hand" 				=> floatval($value->on_hand),
+				   	"on_hand" 				=> $on_hand,
 				   	"on_po" 				=> floatval($value->on_po),
 				   	"on_so" 				=> floatval($value->on_so),
 				   	"order_point" 			=> intval($value->order_point),
