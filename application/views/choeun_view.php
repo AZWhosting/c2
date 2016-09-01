@@ -18101,7 +18101,7 @@
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
-        			<p class="form-title">Sale Order</p>
+        			<p class="form-title" data-bind="text: obj.title"></p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
@@ -18510,7 +18510,7 @@
         			<br>
         		</div>
         		<div class="span4" style="float:right;">
-        			<p class="form-title">Quotation</p>
+        			<p class="form-title" data-bind="text: obj.title"></p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
@@ -48447,7 +48447,7 @@
 			this.set("contact_type_id", null);
 		}
 	});
-	var typeList = [
+	var customerList = [
 		    	{ id: "Quote", name: "Quotation" },
 				{ id: "Sale_Order", name: "Sale Order" },
 				{ id: "Invoice", name: "Invoice" },
@@ -48545,8 +48545,8 @@
         goInvoiceCustom : function(){
         	var selectCustom = "customer_mg";
 		    banhji.invoiceCustom.set("selectCustom", selectCustom);
-		    
-		    banhji.invoiceCustom.set("selectTypeList", typeList);
+		    banhji.invoiceForm.set("selectForm", selectCustom);
+		    banhji.invoiceCustom.set("selectTypeList", customerList);
 		    banhji.router.navigate('/invoice_custom');
         }     
     });
@@ -48613,12 +48613,22 @@
 		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
 		obj 				: {type: "Quote", amount: "$500,000.00",title: "Quotation"},
 		company 			: banhji.institute,
+		selectTypeList 		: [
+						    	{ id: "Quote", name: "Quotation" },
+								{ id: "Sale_Order", name: "Sale Order" },
+								{ id: "Invoice", name: "Invoice" },
+								{ id: "GDN", name: "Delivered Note" }
+						    ],
 		selectCustom		: null,
 		isEdit 				: false,
 		onChange			: function(e) {
 								var obj = this.get("obj");
 								this.txnFormDS.filter({ field:"type", value: obj.type });
 								setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
+								var title = banhji.invoiceForm.get("obj");
+								var view = this.txnFormDS.view();
+								console.log(view[0].title);
+								title.set("title",view[0].title);
 					        },
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
@@ -48638,6 +48648,8 @@
 					this.addEmpty();					
 				}
 				this.txnFormDS.filter([{ field:"type", value: obj.type }]);
+				var name = banhji.invoiceForm.get("obj");
+				name.set("title", "Quotation");
 			}
 		},
 		addRowLineDS			: function(e){
@@ -48776,6 +48788,7 @@
 		company 			: banhji.institute,		
 		lineDS 				: dataStore(apiUrl + "transactions/line"),
 		user_id				: banhji.source.user_id,
+		selectForm 			: null,
 		pageLoad 			: function(id, is_recurring){
 			if(id){				
 				this.loadObj(id);

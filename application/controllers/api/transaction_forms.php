@@ -86,8 +86,9 @@ class Transaction_forms extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $value->id,					
 					"type" 			=> $value->type,
-					"name" 	 		=> $value->name,
+					"title" 	 	=> $value->title,
 					"other" 	 	=> $value->other,
+					"note" 	 		=> $value->note,
 					"image_url" 	=> $value->image_url	
 				);
 			}
@@ -104,16 +105,18 @@ class Transaction_forms extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Transaction_form(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 			$obj->type 			= $value->type;
-			$obj->name 			= $value->name;
+			$obj->title 		= $value->title;
 			$obj->other 		= $value->other;
+			$obj->note 			= $value->note;
 			$obj->image_url 	= $value->image_url;
 						
 			if($obj->save()){
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
 					"type" 			=> $obj->type,
-					"name" 	 		=> $obj->name,
+					"title" 	 	=> $obj->title,
 					"other" 	 	=> $obj->other,
+					"note" 	 		=> $obj->note,
 					"image_url" 	=> $obj->image_url
 				);
 			}
@@ -134,16 +137,18 @@ class Transaction_forms extends REST_Controller {
 			$obj->get_by_id($value->id);
 			
 			$obj->type 			= $value->type;
-			$obj->name 			= $value->name;
+			$obj->title 			= $value->title;
 			$obj->other 		= $value->other;
+			$obj->note 			= $value->note;
 			$obj->image_url 	= $value->image_url;			
 
 			if($obj->save()){				
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
 					"type" 			=> $obj->type,
-					"name" 	 		=> $obj->name,
+					"title" 	 		=> $obj->title,
 					"other" 	 	=> $obj->other,
+					"note" 	 		=> $obj->note,
 					"image_url" 	=> $obj->image_url
 				);		
 			}

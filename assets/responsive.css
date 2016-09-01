@@ -674,6 +674,10 @@ width: 50% !important;
     resize: none;
     margin-bottom: 6px;
 }
+.well textarea:last-child{
+  margin-bottom: 0;
+}
+
 .customer-background{
   width: 85%;
   background: #fff;
