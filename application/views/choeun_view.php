@@ -48622,13 +48622,20 @@
 		selectCustom		: null,
 		isEdit 				: false,
 		onChange			: function(e) {
-								var obj = this.get("obj");
-								this.txnFormDS.filter({ field:"type", value: obj.type });
+								var obj = this.get("obj"), self = this;
+								obj.set("title", obj.type);
+								//this.txnFormDS.filter({ field:"type", value: obj.type });
+								this.txnFormDS.query({    			
+									filter: { field:"type", value: obj.type },
+									page: 1,
+									take: 100
+								}).then(function(e){
+									var view = self.txnFormDS.view();
+									banhji.invoiceForm.set("obj", view[0]);
+										
+									self.dataSource.fetch();	
+								});	
 								setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
-								var title = banhji.invoiceForm.get("obj");
-								var view = this.txnFormDS.view();
-								console.log(view[0].title);
-								title.set("title",view[0].title);
 					        },
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
@@ -48647,7 +48654,16 @@
 				}else if(this.dataSource.total()==0){
 					this.addEmpty();					
 				}
-				this.txnFormDS.filter([{ field:"type", value: obj.type }]);
+				var obj = this.get("obj"), self = this;
+				//this.txnFormDS.filter({ field:"type", value: obj.type });
+				this.txnFormDS.query({    			
+					filter: { field:"type", value: obj.type },
+					page: 1,
+					take: 100
+				}).then(function(e){
+					var view = self.txnFormDS.view();
+					self.set("obj", view[0]);
+				});	
 				var name = banhji.invoiceForm.get("obj");
 				name.set("title", "Quotation");
 			}

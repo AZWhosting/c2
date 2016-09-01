@@ -146,7 +146,7 @@ class Transaction_forms extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
 					"type" 			=> $obj->type,
-					"title" 	 		=> $obj->title,
+					"title" 	 	=> $obj->title,
 					"other" 	 	=> $obj->other,
 					"note" 	 		=> $obj->note,
 					"image_url" 	=> $obj->image_url
