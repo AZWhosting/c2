@@ -15734,7 +15734,7 @@
         <td>
         	#if(type=="Invoice" || type=="Cash_Sale" || type=="Quote" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return" || type=="Cash_Receipt"){#
 				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>						
-			#}else if(type=="Credit" || type=="Deposit"){#
+			#}else if(type=="Deposit"){#
 				<a href="\#/customer_deposit/#=id#"><i></i> #=number#</a>			
 			#}else{#
 				#=number#
@@ -51670,7 +51670,7 @@
 				description 		: "",
 				reference_no 		: "",
 				segments 	 		: [],								
-				dr 	 				: obj.amount,
+				dr 	 				: obj.amount - obj.deposit,
 				cr 					: 0,				
 				rate				: obj.rate,
 				locale				: obj.locale

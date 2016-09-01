@@ -17446,7 +17446,7 @@
 								<div class="colorPalatte span12">
 									<div class="" style="margin-top: 15px;">
 										<input type="text" id="formtitle" name="Form Title" class="k-textbox" placeholder="Form Title" required validationMessage="" data-bind="value: obj.title" style="width: 100%;" />
-										<textarea data-bind="text: obj.note" class="span12" style="min-height: 100px;margin-top: 15px;"></textarea>
+										<textarea data-bind="value: obj.note, text: obj.note" class="span12" style="min-height: 100px;margin-top: 15px;"></textarea>
                                 	</div>
                                 </div>
 							</div>
@@ -17459,7 +17459,7 @@
 					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
 						<span id="notification"></span>
 
-						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
+						<span onclick="saveNew(this);" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
 						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>									
 					</div>
 					<!-- // Form actions END -->
@@ -18204,7 +18204,7 @@
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
-        			<p class="form-title">Sale Order</p>
+        			<p class="form-title" data-bind="text: obj.title"></p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
@@ -18295,7 +18295,7 @@
         	</div>
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
-        			<p class="form-title" style="margin-bottom: 15px;">Sale Order</p>
+        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         			<div class="span12 main-color order-price"><p>TOTAL ORDER <span data-bind="text: obj.amount"></span></p></div>
@@ -18398,7 +18398,7 @@
         	</div>
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
-        			<p class="form-title" style="margin-bottom: 15px;">Sale Order</p>
+        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         			<div class="span12 main-color order-price"><p>TOTAL ORDER <span data-bind="text: obj.amount"></span></p></div>
@@ -18604,7 +18604,7 @@
         			<br>
         		</div>
         		<div class="span4" style="float:right;">
-        			<p class="form-title">Quotation</p>
+        			<p class="form-title" data-bind="text: obj.title"></p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
@@ -18689,7 +18689,7 @@
         	</div>
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:65px;">
-        			<p class="form-title" style="margin-bottom: 15px;">QUOTATION</p>
+        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>TOTAL ORDER <span data-bind="text: obj.amount"></span></p></div>
@@ -18780,7 +18780,7 @@
         	</div>
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:65px;">
-        			<p class="form-title" style="margin-bottom: 15px;">QUOTATION</p>
+        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>TOTAL ORDER <span data-bind="text: obj.amount"></span></p></div>
@@ -18877,7 +18877,7 @@
         			</p>
         		</div>
         		<div class="span6" style="float:right;">
-        			<p class="form-title">DELIVERY NOTE</p>
+        			<p class="form-title" data-bind="text: obj.title" style="font-size: 26px"></p>
         			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
@@ -18951,7 +18951,7 @@
 	            </div>
         	</div>
         	<div class="span7">
-        		<h2>សក្ខីប័ត្រផ្ទេរសាច់ប្រាក់ Transfer Voucher</h2>
+        		<h2 data-bind="text: obj.title"></h2>
         	</div>
         	<div class="span12" style="background:none;margin-top: 15px;">
         		<table class="span12" border="1">
@@ -48623,7 +48623,6 @@
 		isEdit 				: false,
 		onChange			: function(e) {
 								var obj = this.get("obj"), self = this;
-								obj.set("title", obj.type);
 								//this.txnFormDS.filter({ field:"type", value: obj.type });
 								this.txnFormDS.query({    			
 									filter: { field:"type", value: obj.type },
@@ -48632,8 +48631,7 @@
 								}).then(function(e){
 									var view = self.txnFormDS.view();
 									banhji.invoiceForm.set("obj", view[0]);
-										
-									self.dataSource.fetch();	
+									self.set("obj", view[0]);	
 								});	
 								setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
 					        },
@@ -48749,7 +48747,7 @@
 				self.txnFormDS.filter({ field:"type", value: view[0].type });	
 				var other = self.txnFormDS.view();
 				if(other[0].other == "customer_mg"){
-					self.set("selectTypeList", typeList);
+					self.set("selectTypeList", customerList);
 				}
 			});	
 		},		
@@ -54871,8 +54869,7 @@
 
 
 
-
-
+    
     /*************************
 	*	Reports Module Section   *
 	**************************/
@@ -58477,10 +58474,23 @@
 				    height: 50
 				}).data('kendoNotification');
 				
-
-		        $("#saveNew").click(function(e){				
+				function saveNew(e){	
+					alert("abc");			
 					e.preventDefault();
+					
+					if(validator.validate()){
+				    	vm.save();		            	
 
+				    	notification.success("Save Successful");			  
+				    }else{
+				    	notification.error("Warning, please review it again!");			           
+				    }		 
+				}
+				alert("abc");	
+		        jQuery("#saveNew").click(function(e){	
+		        			
+					e.preventDefault();
+					
 					if(validator.validate()){
 		            	vm.save();		            	
 
