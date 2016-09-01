@@ -715,27 +715,40 @@ class Transactions extends REST_Controller {
 				if($item->item_type_id=="1"){
 					$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$transaction->get_by_id($value->transaction_id);
+					
+					//Sum On Hand
+					$itemIn = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$itemIn->select_sum("quantity");
+					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
+					$itemIn->where("item_id", $value->item_id);
+					$itemIn->where("movement", 1);
+					$itemIn->get();
+
+					$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$itemOut->select_sum("quantity");
+					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
+					$itemOut->where("item_id", $value->item_id);
+					$itemOut->where("movement", -1);
+					$itemOut->get();					
+					
+					$onHand = floatval($itemIn->quantity) - floatval($itemOut->quantity);					
+					$totalQty = $onHand + floatval($value->quantity);
 
 					if($transaction->type=="Invoice" || $transaction->type=="Cash_Sale"){
-						$lastPrice = floatval($item->on_hand) * floatval($item->price);
+						//Avg Price
+						$lastPrice = $onHand * floatval($item->price);
 						$currentPrice = floatval($value->quantity) * floatval($value->price);
 
-						$item->price = ($lastPrice + $currentPrice) / (floatval($item->on_hand) + floatval($value->quantity));
-
-						$item->on_hand -= floatval($value->quantity);
+						$item->price = ($lastPrice + $currentPrice) / $totalQty;
 						$obj->cost = $item->cost;
-					}else if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase"){
+					}
+
+					if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase"){
 						//Avg Cost
-						$lastCost = floatval($item->on_hand) * floatval($item->cost);
+						$lastCost = $onHand * floatval($item->cost);
 						$currentCost = floatval($value->amount) + floatval($value->additional_cost);
 
-						$item->cost = ($lastCost + $currentCost) / (floatval($item->on_hand) + floatval($value->quantity));
-
-						$item->on_hand += floatval($value->quantity);
-					}else if($transaction->type=="Sale_Return"){
-						$item->on_hand += floatval($value->quantity);
-					}else if($transaction->type=="Adjustment"){
-						$item->on_hand += floatval($value->quantity) * floatval($value->movement);
+						$item->cost = ($lastCost + $currentCost) / $totalQty;
 					}
 
 					if($item->save()){

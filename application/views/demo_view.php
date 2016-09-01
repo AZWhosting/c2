@@ -50952,15 +50952,15 @@
 				self.set("total_deposit", total_deposit);
 			});
 		},
-		addDeposit 			: function(){
+		addDeposit 			: function(id){
 			var obj = this.get("obj");
-
+			
 			this.depositDS.data([]);
-			console.log(obj.id);
+
 			if(obj.deposit>0){				
 				this.depositDS.add({				
 					contact_id 			: obj.contact_id,								
-					reference_id 		: obj.id,				
+					reference_id 		: id,				
 					user_id 			: this.get("user_id"),				    		
 				   	type				: "Deposit",
 				   	amount				: obj.deposit*-1,			   	
@@ -50970,7 +50970,7 @@
 		    	});
 			}
 		},		
-		saveDeposit 		: function(){			
+		saveDeposit 		: function(id){			
 			var obj = this.get("obj");
 			
     		if(this.get("isEdit")){
@@ -50978,10 +50978,10 @@
 					var deposit = this.depositDS.at(0);
 					deposit.set("amount", obj.deposit*-1);
 				}else{
-					this.addDeposit();
+					this.addDeposit(id);
 				}
     		}else{
-				this.addDeposit();
+				this.addDeposit(id);
     		}
 
 			this.depositDS.sync();
@@ -51338,7 +51338,7 @@
 				payment_method_id	: 0,				
 				reference_id 		: "",
 				recurring_id 		: "",
-				account_id 			: 0,
+				account_id 			: 1,
 				job_id 				: 0,				
 				user_id 			: this.get("user_id"),
 				employee_id			: "",//Sale Rep 	    		
@@ -51507,7 +51507,7 @@
 				}
 
 				self.lineDS.sync();
-				self.saveDeposit();
+				self.saveDeposit(data[0].id);
 				self.uploadFile();
 				
 				return data;
