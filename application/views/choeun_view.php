@@ -24093,13 +24093,22 @@
 						</div>
 					</div>
 					<!-- Form actions -->
-					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-						<span id="notification"></span>
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
 
-						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>									
+						
+
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>			
+							</div>
+						</div>
 					</div>
-					<!-- // Form actions END -->
+					<!-- // Form actions END -->	
 				</div>							
 			</div>
 		</div>
@@ -54597,7 +54606,7 @@
 			}
 
 			//Deposit and Credit on Dr
-			if(obj.deposit>0){				
+			if(obj.deposit > 0){				
 				this.journalLineDS.add({					
 					transaction_id 		: transaction_id,
 					account_id 			: contact.deposit_account_id,				
@@ -54605,7 +54614,7 @@
 					description 		: "",
 					reference_no 		: "",
 					segments 	 		: [],								
-					dr 	 				: obj.deposit + obj.credit,
+					dr 	 				: obj.deposit,
 					cr 					: 0,				
 					rate				: obj.rate,
 					locale				: obj.locale
@@ -57358,6 +57367,7 @@
 		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
 		obj 				: {type: "Quote", amount: "$500,000.00",title: "Quotation"},
 		company 			: banhji.institute,
+		saveClose 			: false,
 		selectTypeList 		: customerList,
 		selectCustom		: "customer_mg",
 		isEdit 				: false,
@@ -57377,12 +57387,20 @@
 								setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
 					        },
 		user_id				: banhji.source.user_id,
-		pageLoad 			: function(id, is_recurring){
+		pageLoad 			: function(id){
+			if(id){
+				this.set("isEdit", true);
+				this.loadObj(id);
+			}else{				
+				if(this.get("isEdit") || this.dataSource.total()==0){
+					this.addEmpty();
+				}								
+			}
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
 			}else{	
-				var obj = this.get("obj");
+				var obj = this.get("obj"), self = this;
 				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm10);		
 				this.addRowLineDS();
 				if(this.get("isEdit")){
@@ -57393,7 +57411,7 @@
 				}else if(this.dataSource.total()==0){
 					this.addEmpty();					
 				}
-				var obj = this.get("obj"), self = this;
+				
 				this.txnFormDS.query({    			
 					filter: { field:"type", value: obj.type },
 					page: 1,
@@ -57465,39 +57483,59 @@
 		},		
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);		
-			this.set("obj", null);				
+			this.set("obj", null);		
+			this.set("isEdit", false);		
 			this.dataSource.insert(0,{				
 				user_id			: banhji.source.user_id,
 				transaction_form_id : 0,
 				type 			: "Quote",
 				name 			: "",
+				title 			: "",
+				note 			: "",
 				color  			: null
 	    	});		
 			var obj = this.dataSource.at(0);			
-			this.set("obj", obj);					
-		},							    
-	    transactionSync 	: function(){
+			this.set("obj", obj);		
+
+		},		
+		objSync 			: function(){
 	    	var dfd = $.Deferred();	        
 
 	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
 		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
+		    });
+
 		    return dfd;	    		    	
-	    },	    	    
+	    }, 	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
-	    	
-	    	if(this.get("isEdit")){
-	    		this.dataSource.sync();	    		
-	    	}else{
-	    		//Add brand new transaction
-				this.transactionSync()
-				.then(function(data){
+			//Save Obj
+			this.objSync()
+			.then(function(data){ //Success	
+				//banhji.customerSetting.txnTemplateDS.fetch();	
+				
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					window.history.back();
+				}else{
+					//Save New
 					self.addEmpty();
-					banhji.customerSetting.txnTemplateDS.fetch();											
-				});
-			}
+				}
+			});
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();		
@@ -68839,37 +68877,34 @@
 				var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
 				loadStyle(Href1);	
 
-				setTimeout(function(){
+				//setTimeout(function(){
 					var validator = $("#example").kendoValidator().data("kendoValidator");
 					var notification = $("#notification").kendoNotification({				    
 					    autoHideAfter: 5000,
 					    width: 300,				    
 					    height: 50
 					}).data('kendoNotification');
-					$("#saveNew").click(function(e){	
-		        			
+					$("#saveNew").click(function(e){				
 						e.preventDefault();
-						if(validator.validate()){
-			            	vm.save();		            	
 
-			            	notification.success("Save Successful");			  
+						if(validator.validate()){
+			            	vm.save();		            				  
 				        }else{
-				        	notification.error("Warning, please review it again!");			           
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 				        }		            
 					});
+
 					$("#saveClose").click(function(e){				
 						e.preventDefault();
 
 						if(validator.validate()){
-			            	vm.save();
-			            	window.history.back();
-
-			            	notification.success("Save Successful");			  
+							vm.set("saveClose", true);
+			            	vm.save();		            	
 				        }else{
-				        	notification.error("Warning, please review it again!");			           
-				        }	            
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
 					});
-				},2000);
+				//},2000);
 		        
 						
 			};
@@ -71388,30 +71423,5 @@
 
 	$(function() {	
 		banhji.router.start();
-
-		
-
-
-		// signout when browser closed
-  //       window.addEventListener("beforeunload", function (e) {
-  //         // var confirmationMessage = "\o/";
-
-  //         // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-  //         // return confirmationMessage;                            //Webkit, Safari, Chrome
-  //         var userData = {
-  //             Username : userPool.getCurrentUser().username,
-  //             Pool : userPool
-  //         };
-  //         var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-  //         if(cognitoUser != null) {
-  //             cognitoUser.signOut();
-  //             // window.location.replace("<?php echo base_url(); ?>login");
-  //         } else {
-  //             console.log('No user');
-  //         }
-  //       });
-		// if(userPool.getCurrentUser() == null){
-		// 	window.location.replace(baseUrl + "login");
-		// } else {
-		// 	var cognitoUser = userPool.getCurrentUser();
-	 //        if(cognitoUser !== null) 
+	});
+</script>

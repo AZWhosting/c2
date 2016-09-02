@@ -737,10 +737,17 @@
 				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
-							
+
+							<div class="widget-search separator bottom">
+								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<div class="overflow-hidden">
+									<input type="search" placeholder="Account ..." data-bind="value: searchText, events:{change: enterSearch}">
+								</div>
+							</div>
+
 							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
-								<input data-role="combobox"
-					                   data-placeholder="Account Type..."
+								<input data-role="dropdownlist"
+					                   data-option-label="Account Type..."
 					                   data-template="account-type-list-tmpl"
 					                   data-value-primitive="true"
 					                   data-text-field="name"
@@ -748,13 +755,6 @@
 					                   data-bind="value: account_type_id,
 					                              source: accountTypeDS"
 					                   style="width: 100%" />									
-							</div>
-
-							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-								<div class="overflow-hidden">
-									<input type="search" placeholder="Account ..." data-bind="value: searchText, events:{change: enterSearch}">
-								</div>
 							</div>
 
 						</form>					
@@ -820,9 +820,9 @@
 							</div>
 						</div>
 
-						<div class="span6 account-center">
-							<div class="row-fluid">
-								<div class="span12" >
+						<div class="span6 account-center" style="margin-bottom: 10px;">
+							<div class="row-fluid" >
+								<div class="span12" style="margin-bottom: 10px;">
 									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadTransaction" style=" width: 425px; height:114px; background:#424242; margin-left:0;">
 										<span class="glyphicons coins"><i></i></span>										
 										<span class="txt">
@@ -8139,22 +8139,21 @@
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							
+							<div class="widget-search separator bottom">
+								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<div class="overflow-hidden">
+									<input type="search" placeholder="Number or Name ..." data-bind="value: searchText, events:{change: enterSearch}">
+								</div>
+							</div>
 							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
-								<input data-role="combobox"
+								<input data-role="dropdownlist"
 									   data-value-primitive="true"
-					                   data-placeholder="Supplier Type..."					                   
+					                   data-option-lable="Supplier Type..."
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: contact_type_id,
 					                              source: contactTypeDS"
 					                   style="width: 100%" />									
-							</div>
-
-							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-								<div class="overflow-hidden">
-									<input type="search" placeholder="number or name ..." data-bind="value: searchText, events:{change: enterSearch}">
-								</div>
 							</div>
 
 						</form>					
@@ -15473,24 +15472,22 @@
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
 							
+							<div class="widget-search separator bottom">
+								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<div class="overflow-hidden">
+									<input type="search" placeholder="Customer ..." data-bind="value: searchText, events:{change: enterSearch}">
+								</div>
+							</div>						
 							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
-								<input data-role="combobox"
-					                   data-placeholder="Customer Type..."
-					                   data-value-primitive="true"					                   
+								<input data-role="dropdownlist"
+					                   data-option-label="Customer Type..."
+					                   data-value-primitive="true"
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: contact_type_id,
 					                              source: contactTypeDS"
 					                   style="width: 100%;" />							
 							</div>
-
-							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-								<div class="overflow-hidden">
-									<input type="search" placeholder="Customer ..." data-bind="value: searchText, events:{change: enterSearch}">
-								</div>
-							</div>
-
 						</form>					
 					</div>
 					
@@ -15729,8 +15726,8 @@
 									</div>
 								</div>
 							</div>														
-						</div>											          	
-		          	</div>
+						</div>
+					</div>
 					
 					<div>
 						<input id="sorter" name="sorter"
@@ -28700,23 +28697,22 @@
 				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
-							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
-								<input data-role="combobox"
-					                   data-placeholder="sku or name..."
-					                   data-template="account-type-list-tmpl"
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: account_type_id,
-					                              source: accountTypeDS"
-					                   style="width: 100%" />									
-							</div>
-
 							<div class="widget-search separator bottom">
 								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
-									<input type="search" placeholder="sku or name ..." data-bind="value: searchText, events:{change: enterSearch}">
+									<input type="search" placeholder="Number or Name ..." data-bind="value: searchText, events:{change: enterSearch}">
 								</div>
+							</div>
+
+							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
+								<input data-role="dropdownlist"
+					                   data-option-label="Select Type..."
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: item_type_id,
+					                              source: itemTypeDS"
+					                   style="width: 100%; " />									
 							</div>
 						</form>					
 					</div>
@@ -28749,8 +28745,6 @@
 							            	<span data-bind="text: obj.name"></span>
 							            </li>
 							            <li class="glyphicons circle_info active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
-							            </li>
-							            <li class="glyphicons riflescope"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
 							            </li>
 							            <li class="glyphicons coins"><span data-bind="click: pricing"><i></i></span>
 							            </li>
@@ -28811,43 +28805,6 @@
 							            </div>
 							            <!-- // Info Tab content END -->
 
-							            <!-- SEARCH Tab content -->
-							            <div id="tab2-4" class="tab-pane box-generic" style="overflow:hidden;">
-							                <table>
-									    		<tr>
-									    			<td>
-												    	<input data-role="dropdownlist"
-														   data-option-label="(--- Category ---)"
-										                   data-auto-bind="false"
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: category_id,
-										                              source: categoryDS,			                              
-										                              events: {
-										                                change: categoryChanges
-										                              }"/>
-									            	</td>
-									            	<td>
-										            	<select data-role="multiselect"
-												           data-placeholder="item group ..."
-												           data-value-primitive="true"
-												           data-text-field="name"
-												           data-value-field="id"
-												           data-bind="value: selectedItemGroup,
-												                      source: itemGroupDS,
-												                      enabled: isCategorySelected"
-												           style="width: 200px;" 
-												    	></select>
-												    </td>
-												</tr>
-											</table>
-								            <br>
-								            <span style="padding: 5px 7px 5px 36px !important; width: auto;" class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search"></span></span>
-								            <br>
-							            </div>
-							            <!-- // SEARCH Tab content END -->
-
 							             <!-- Attach Tab content -->
 								        <div class="tab-pane" id="tab3-4">							            	
 								            
@@ -28882,10 +28839,10 @@
 							</div>
 						</div>
 
-						<div class="span6 account-center" style="margin-bottom:10px;">
+						<div class="span6 account-center" style="margin-bottom: 10px;">
 							<div class="row-fluid">
 								<div class="span12" style="padding-right:0;">
-									<div class="widget-body alert alert-primary" style="margin-bottom:0;">							
+									<div class="widget-body alert alert-primary" style="margin-bottom: 10px; background:#424242;">							
 										<div align="center" class="text-large strong" >100,000</div>
 										<table width="100%">
 											<tr align="center">
@@ -28913,15 +28870,15 @@
 							<div class="row-fluid">
 								<div class="span6">
 									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadPO">
-										
-										<span class="txt"><span data-bind="text: on_po"></span>On PO</span>
+										<span class="glyphicons adjust_alt"><i></i></span>
+										<span class="txt"><span data-bind="text: on_po"></span>Type</span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="span6">
 									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadSO">
-										
-										<span class="txt"><span data-bind="text: on_so"></span>On SO</span>
+										<span class="glyphicons random"><i></i></span>
+										<span class="txt"><span data-bind="text: on_so"></span>Transaction</span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -53164,29 +53121,28 @@
 				//Inventory
 				if(item.item_type_id==1){
 					//Add cogs list
-					var itemRate = obj.rate / item.item_prices[0].rate,
-					itemCost = value.quantity*item.cost/itemRate,
+					var itemCost = (value.quantity*item.cost)/item.rate,
 					cogsID = item.cogs_account_id;
 
 					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": itemCost};						
+						cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": item.rate, "locale": item.locale};						
 					}else{											
 						if(cogsList[cogsID].id===cogsID){
 							cogsList[cogsID].amount += itemCost;
 						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": itemCost};
+							cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": item.rate, "locale": item.locale};
 						}
 					}						
 
 					//Add inventory list
 					var inventoryID = item.inventory_account_id;
 					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost};						
+						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": item.rate, "locale": item.locale};						
 					}else{											
 						if(inventoryList[inventoryID].id===inventoryID){
 							inventoryList[inventoryID].amount += itemCost;
 						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost};
+							inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": item.rate, "locale": item.locale};
 						}
 					}
 				}					  	
@@ -53224,7 +53180,7 @@
 			}
 
 			//Deposit and Credit on Dr
-			if(obj.deposit > 0 || obj.credit > 0){				
+			if(obj.deposit > 0){				
 				this.journalLineDS.add({					
 					transaction_id 		: transaction_id,
 					account_id 			: contact.deposit_account_id,				
@@ -53232,7 +53188,7 @@
 					description 		: "",
 					reference_no 		: "",
 					segments 	 		: [],								
-					dr 	 				: obj.deposit + obj.credit,
+					dr 	 				: obj.deposit,
 					cr 					: 0,				
 					rate				: obj.rate,
 					locale				: obj.locale
@@ -53288,8 +53244,8 @@
 						segments 	 		: [],								
 						dr 	 				: value.amount,
 						cr 					: 0,				
-						rate				: obj.rate,
-						locale				: obj.locale
+						rate				: value.rate,
+						locale				: value.locale
 					});								
 				});							
 			}
@@ -53305,8 +53261,8 @@
 						segments 	 		: [],								
 						dr 	 				: 0,
 						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
+						rate				: value.rate,
+						locale				: value.locale
 					});						
 				});
 			}
@@ -54539,27 +54495,28 @@
 				//Inventory
 				if(item.item_type_id==1){
 					//Add cogs list
-					var itemCost = value.quantity*item.cost,
-					cogsID = item.cogs_account_id;				
+					var itemCost = (value.quantity*item.cost)/item.rate,
+					cogsID = item.cogs_account_id;
+
 					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": itemCost};						
+						cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": item.rate, "locale": item.locale};						
 					}else{											
 						if(cogsList[cogsID].id===cogsID){
 							cogsList[cogsID].amount += itemCost;
 						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": itemCost};
+							cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": item.rate, "locale": item.locale};
 						}
 					}						
 
 					//Add inventory list
 					var inventoryID = item.inventory_account_id;
 					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost};						
+						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": item.rate, "locale": item.locale};						
 					}else{											
 						if(inventoryList[inventoryID].id===inventoryID){
 							inventoryList[inventoryID].amount += itemCost;
 						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost};
+							inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": item.rate, "locale": item.locale};
 						}
 					}
 				}					  	
@@ -54596,8 +54553,8 @@
 				});
 			}
 
-			//Deposit and Credit on Dr
-			if(obj.deposit>0){				
+			//Deposit on Dr
+			if(obj.deposit > 0){				
 				this.journalLineDS.add({					
 					transaction_id 		: transaction_id,
 					account_id 			: contact.deposit_account_id,				
@@ -54605,7 +54562,7 @@
 					description 		: "",
 					reference_no 		: "",
 					segments 	 		: [],								
-					dr 	 				: obj.deposit + obj.credit,
+					dr 	 				: obj.deposit,
 					cr 					: 0,				
 					rate				: obj.rate,
 					locale				: obj.locale
@@ -54661,8 +54618,8 @@
 						segments 	 		: [],								
 						dr 	 				: value.amount,
 						cr 					: 0,				
-						rate				: obj.rate,
-						locale				: obj.locale
+						rate				: value.rate,
+						locale				: value.locale
 					});								
 				});							
 			}
@@ -54678,8 +54635,8 @@
 						segments 	 		: [],								
 						dr 	 				: 0,
 						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
+						rate				: value.rate,
+						locale				: value.locale
 					});						
 				});
 			}

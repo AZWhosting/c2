@@ -820,9 +820,9 @@
 							</div>
 						</div>
 
-						<div class="span6 account-center">
-							<div class="row-fluid">
-								<div class="span12" >
+						<div class="span6 account-center" style="margin-bottom: 10px;">
+							<div class="row-fluid" >
+								<div class="span12" style="margin-bottom: 10px;">
 									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadTransaction" style=" width: 425px; height:114px; background:#424242; margin-left:0;">
 										<span class="glyphicons coins"><i></i></span>										
 										<span class="txt">
@@ -8138,17 +8138,6 @@
 				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
-							
-							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
-								<input data-role="combobox"
-									   data-value-primitive="true"
-					                   data-placeholder="Supplier Type..."					                   
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: contact_type_id,
-					                              source: contactTypeDS"
-					                   style="width: 100%" />									
-							</div>
 
 							<div class="widget-search separator bottom">
 								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
@@ -8156,7 +8145,16 @@
 									<input type="search" placeholder="number or name ..." data-bind="value: searchText, events:{change: enterSearch}">
 								</div>
 							</div>
-
+							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
+								<input data-role="dropdownlist"
+									   data-value-primitive="true"
+					                   data-option-lable="Supplier Type..."
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: contact_type_id,
+					                              source: contactTypeDS"
+					                   style="width: 100%" />									
+							</div>
 						</form>					
 					</div>
 					
@@ -15472,25 +15470,22 @@
 				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
-							
-							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
-								<input data-role="combobox"
-					                   data-placeholder="Customer Type..."
-					                   data-value-primitive="true"					                   
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: contact_type_id,
-					                              source: contactTypeDS"
-					                   style="width: 100%;" />							
-							</div>
-
 							<div class="widget-search separator bottom">
 								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
 									<input type="search" placeholder="Customer ..." data-bind="value: searchText, events:{change: enterSearch}">
 								</div>
-							</div>
-
+							</div>						
+							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
+								<input data-role="dropdownlist"
+					                   data-option-label="Customer Type..."
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: contact_type_id,
+					                              source: contactTypeDS"
+					                   style="width: 100%;" />							
+							</div>							
 						</form>					
 					</div>
 					
@@ -27254,24 +27249,25 @@
 				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
-							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
-								<input data-role="combobox"
-					                   data-placeholder="sku or name..."
-					                   data-template="account-type-list-tmpl"
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: account_type_id,
-					                              source: accountTypeDS"
-					                   style="width: 100%" />									
-							</div>
 
 							<div class="widget-search separator bottom">
 								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
-									<input type="search" placeholder="sku or name ..." data-bind="value: searchText, events:{change: enterSearch}">
+									<input type="search" placeholder="Number or Name ..." data-bind="value: searchText, events:{change: enterSearch}">
 								</div>
 							</div>
+
+							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
+								<input data-role="dropdownlist"
+					                   data-option-label="Select Type..."
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: item_type_id,
+					                              source: itemTypeDS"
+					                   style="width: 100%; " />									
+							</div>
+							
 						</form>					
 					</div>
 					
@@ -27304,8 +27300,6 @@
 							            </li>
 							            <li class="glyphicons circle_info active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
 							            </li>
-							            <li class="glyphicons riflescope"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
-							            </li>
 							            <li class="glyphicons coins"><span data-bind="click: pricing"><i></i></span>
 							            </li>
 							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
@@ -27333,7 +27327,7 @@
 															</td>
 														</tr>
 														<tr>
-															<td>Weightel Ave:</td>
+															<td>Weighted Avg Cost:</td>
 															<td>
 																<span class="strong" ></span>
 															</td>
@@ -27345,7 +27339,7 @@
 															</td>
 														</tr>
 														<tr>
-															<td>VOM:</td>
+															<td>UOM:</td>
 															<td>
 																<span ></span>
 															</td>
@@ -27364,43 +27358,7 @@
 											
 							            </div>
 							            <!-- // Info Tab content END -->
-
-							            <!-- SEARCH Tab content -->
-							            <div id="tab2-4" class="tab-pane box-generic" style="overflow:hidden;">
-							                <table>
-									    		<tr>
-									    			<td>
-												    	<input data-role="dropdownlist"
-														   data-option-label="(--- Category ---)"
-										                   data-auto-bind="false"
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: category_id,
-										                              source: categoryDS,			                              
-										                              events: {
-										                                change: categoryChanges
-										                              }"/>
-									            	</td>
-									            	<td>
-										            	<select data-role="multiselect"
-												           data-placeholder="item group ..."
-												           data-value-primitive="true"
-												           data-text-field="name"
-												           data-value-field="id"
-												           data-bind="value: selectedItemGroup,
-												                      source: itemGroupDS,
-												                      enabled: isCategorySelected"
-												           style="width: 200px;" 
-												    	></select>
-												    </td>
-												</tr>
-											</table>
-								            <br>
-								            <span style="padding: 5px 7px 5px 36px !important; width: auto;" class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search"></span></span>
-								            <br>
-							            </div>
-							            <!-- // SEARCH Tab content END -->
+							           
 
 							            <!-- Attach Tab content -->
 								        <div class="tab-pane" id="tab3-4">							            	
@@ -27436,10 +27394,10 @@
 							</div>
 						</div>
 
-						<div class="span6 account-center">
+						<div class="span6 account-center" style="margin-bottom: 10px;">
 							<div class="row-fluid">
 								<div class="span12" style="padding-right:0;">
-									<div class="widget-body alert alert-primary" style="margin-bottom:0;">							
+									<div class="widget-body alert alert-primary" style="margin-bottom: 10px; background:#424242;">							
 										<div align="center" class="text-large strong" >100,000</div>
 										<table width="100%">
 											<tr align="center">
@@ -27467,14 +27425,14 @@
 							<div class="row-fluid">
 								<div class="span6">
 									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadPO">
-										<span class="glyphicons cart_in"><i></i></span>
+										<span class="glyphicons adjust_alt"><i></i></span>
 										<span class="txt"><span data-bind="text: on_po"></span>Type</span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="span6">
 									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadSO">
-										<span class="glyphicons cart_out"><i></i></span>
+										<span class="glyphicons random"><i></i></span>
 										<span class="txt"><span data-bind="text: on_so"></span>Transaction</span>
 										<div class="clearfix"></div>
 									</div>
