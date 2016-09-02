@@ -68,20 +68,20 @@
 				<div class="span12" style="padding-left: 0; margin-left: 0; margin-top: 0;">
 					<ul id="module-image">
 						<li style="text-align:center;">
-							<a href="#/customers">
-								<img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+							<a href="#/customers ">
+								<img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Customers</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/vendors">
-								<img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+								<img title="Supplier Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Suppliers</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/inventories">
-								<img title="Inventories" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+								<img title="Inventories Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Products/Services</span>
 						</li>
@@ -95,25 +95,25 @@
 					<ul id="module-image">
 						<li style="text-align:center;">
 							<a href="#/cashs">
-								<img title="Cash" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
+								<img title="Cash Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000">Cash MGT.</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/accounting">
-								<img title="Accounting" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
+								<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.accounting"></span></span>
 							</a>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/reports">
-								<img title="Reports" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Reports">
+								<img title="Reports Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Reports">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Reports</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
-								<img title="Setting" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.png" alt="Admin">
+								<img title="Setting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.png" alt="Admin">
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings"></span></span>
 							</a>
 						</li>
@@ -157,22 +157,22 @@
 							<div class="span12">
 								<div class="span3">
 									<a href="#/customer" class="center">
-										<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+										<img title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
 									</a>
 								</div>
 								<div class="span3">
 									<a href="#/vendor" class="center">
-										<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
+										<img title="Add Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
 									</a>
 								</div>
 								<div class="span3">
 									<a href="#/item" class="center">
-										<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+										<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
 									</a>
 								</div>
 								<div class="span3">
 									<a href="#/item_service" class="center">
-										<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+										<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
 									</a>
 								</div>
 							</div>
@@ -737,13 +737,8 @@
 				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
-							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-								<div class="overflow-hidden">
-									<input type="search" placeholder="Account ..." data-bind="value: searchText, events:{change: enterSearch}">
-								</div>
-							</div>
-							<div class="select2-container" style="width: 100%;">								
+							
+							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
 								<input data-role="combobox"
 					                   data-placeholder="Account Type..."
 					                   data-template="account-type-list-tmpl"
@@ -754,6 +749,14 @@
 					                              source: accountTypeDS"
 					                   style="width: 100%" />									
 							</div>
+
+							<div class="widget-search separator bottom">
+								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<div class="overflow-hidden">
+									<input type="search" placeholder="Account ..." data-bind="value: searchText, events:{change: enterSearch}">
+								</div>
+							</div>
+
 						</form>					
 					</div>
 					
@@ -8135,13 +8138,8 @@
 				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
-							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-								<div class="overflow-hidden">
-									<input type="search" placeholder="number or name ..." data-bind="value: searchText, events:{change: enterSearch}">
-								</div>
-							</div>
-							<div class="select2-container" style="width: 100%;">								
+							
+							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
 								<input data-role="combobox"
 									   data-value-primitive="true"
 					                   data-placeholder="Supplier Type..."					                   
@@ -8151,6 +8149,14 @@
 					                              source: contactTypeDS"
 					                   style="width: 100%" />									
 							</div>
+
+							<div class="widget-search separator bottom">
+								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<div class="overflow-hidden">
+									<input type="search" placeholder="number or name ..." data-bind="value: searchText, events:{change: enterSearch}">
+								</div>
+							</div>
+
 						</form>					
 					</div>
 					
@@ -15424,13 +15430,8 @@
 				<div class="span3 listWrapper" >
 					<div class="innerAll">							
 						<form autocomplete="off" class="form-inline">
-							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-								<div class="overflow-hidden">
-									<input type="search" placeholder="Customer ..." data-bind="value: searchText, events:{change: enterSearch}">
-								</div>
-							</div>
-							<div class="select2-container" style="width: 100%;">								
+							
+							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
 								<input data-role="combobox"
 					                   data-placeholder="Customer Type..."
 					                   data-value-primitive="true"					                   
@@ -15438,8 +15439,16 @@
 					                   data-value-field="id"
 					                   data-bind="value: contact_type_id,
 					                              source: contactTypeDS"
-					                   style="width: 100%" />									
+					                   style="width: 100%;" />							
 							</div>
+
+							<div class="widget-search separator bottom">
+								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<div class="overflow-hidden">
+									<input type="search" placeholder="Customer ..." data-bind="value: searchText, events:{change: enterSearch}">
+								</div>
+							</div>
+
 						</form>					
 					</div>
 					
@@ -15725,7 +15734,7 @@
         <td>
         	#if(type=="Invoice" || type=="Cash_Sale" || type=="Quote" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return" || type=="Cash_Receipt"){#
 				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>						
-			#}else if(type=="Credit" || type=="Deposit"){#
+			#}else if(type=="Deposit"){#
 				<a href="\#/customer_deposit/#=id#"><i></i> #=number#</a>			
 			#}else{#
 				#=number#
@@ -32619,7 +32628,7 @@
 									<input type="search" placeholder="account ..." data-bind="value: searchText, events:{change: enterSearch}">
 								</div>
 							</div>
-							<div class="select2-container" style="width: 100%;">								
+							<div class="select2-container" style="width: 100%; ">								
 																
 							</div>
 						</form>					
@@ -51661,7 +51670,7 @@
 				description 		: "",
 				reference_no 		: "",
 				segments 	 		: [],								
-				dr 	 				: obj.amount,
+				dr 	 				: obj.amount - obj.deposit,
 				cr 					: 0,				
 				rate				: obj.rate,
 				locale				: obj.locale

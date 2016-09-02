@@ -787,6 +787,7 @@ width: 50% !important;
 }
 .margin-none .span2 .btn-primary{
   width: 90px;
+  margin-left: -43px;
 
 }
 .k-textbox>input, .k-autocomplete .k-input, .k-picker-wrap .k-input, .k-numeric-wrap .k-input, .k-dropdown-wrap .k-input, .k-selectbox .k-input{
@@ -1551,9 +1552,9 @@ width: 50% !important;
 }
 .accounCetner-textedit .btn.btn-primary.btn-icon.glyphicons.edit.pull-right{
   margin-top: 10px;
-  margin-bottom: 10px;
-  width: 80px;
+  padding: 5px 10px 5px 35px; 
   text-align: right;
+  width: auto ;
   color: #fff;
 }
 .multiTaskList i:before{
