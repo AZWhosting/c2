@@ -278,7 +278,106 @@ class Itemreports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	function item_turnover_get() {}
+	function item_turnover_get() {
+		$filters 	= $this->get("filter");
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$deleted = 0;
+		$gpm = 0;
+		$turnover = 0;
+		$onHand = 0;
+		$total =0;
+		$temp = array();
+
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->where('item_type_id', 1);
+		$obj->where('deleted', 0);
+
+		$obj->get_iterated();
+		if($obj->exists()) {
+			foreach($obj as $value) {
+				// get journal line with item inventory account
+				$journalLines = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$journalLines->where('account_id', $value->cogs_account_id);
+				$journalLines->where_related('transaction', 'deleted', 0);
+				$journalLines->where_related('transaction', 'is_recurring', 0);
+				$journalLines->where_related('transaction', 'is_pattern', 0);
+				$journalLines->where_in_related('transaction', 'type', array('Invoice', 'Cash_Sale'));
+				$journalLines->include_related('transaction', array('id','issued_date', 'type'));
+				$journalLines->get();
+
+				if($adj->exists()) {
+					foreach($adj as $ad) {
+						$adjustment += floatval($ad->quanity) * $ad->movement;
+					}
+				}
+
+				$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$itemLines->where('item_id', $value->id);
+				$itemLines->where_related('transaction', 'deleted', 0);
+				$itemLines->where_related('transaction', 'is_recurring', 0);
+				$itemLines->where_related('transaction', 'is_pattern', 0);
+				$itemLines->where_in_related('transaction', 'type', array('Invoice', 'Cash_Sale'));
+				$itemLines->get();
+
+				if($itemLines->exists()) {
+					foreach($itemLines as $item) {
+						$gpm += (floatval($item->amount) - (floatval($item->quantity) * $value->cost)) / floatval($item->amount);
+					}
+				}
+
+				if($journalLine->exists()) {
+					foreach($journalLines as $line) {
+						if(isset($temp["$value->id"])) {
+							$temp["$value->id"]['dr'] += $line->dr;
+							$temp["$value->id"]['cr'] += $line->cr;
+						} else {
+							$itemIn = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$itemIn->select_sum("quantity");
+							$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
+							$itemIn->where("item_id", $value->id);
+							$itemIn->where("movement", 1);
+							$itemIn->get();
+							
+							$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$itemOut->select_sum("quantity");
+							$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
+							$itemOut->where("item_id", $value->id);
+							$itemOut->where("movement", -1);
+							$itemOut->get();
+
+							$on_hand = floatval($itemIn->quantity) - floatval($itemOut->quantity);
+							$temp["$value->id"]['name'] = $value->name;
+							$temp["$value->id"]['dr'] = $line->dr;
+							$temp["$value->id"]['cr'] = $line->cr;
+							$temp["$value->id"]['onhand'] = $on_hand;
+						}
+					}
+				}
+				
+					
+			}
+		}
+		foreach ($temp as $key => $value) {
+			$cogs = floatval($value['dr']) - floatval($value['cr']);
+			$turnover += $cogs/floatval($value['onhand']);
+			$onHand += $value['onhand'];
+			$data["results"][] = array(
+				'id' 	=> $key,
+				'cogs' 	=> $cogs,
+				'onHand'=> $value['onhand'],
+				'turnover'=> $cogs/floatval($value['onhand']);
+			);
+		}
+		$data['onhand'] = $onHand;
+		$data['turnover'] = $turnover;
+		$data['count'] = count($temp);
+		$this->response($data, 200);
+	}
 
 	function movement_summary_get() {
 		$filters 	= $this->get("filter");
@@ -345,6 +444,110 @@ class Itemreports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	function movement_detail_get() {}
+	function movement_detail_get() {
+		$filters 	= $this->get("filter");
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$deleted = 0;
+		$gpm = 0;
+		$service = 0;
+		$onHand = 0;
+		$total =0;
+		$temp = array();
+
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->where('item_type_id', 1);
+		$obj->where('deleted', 0);
+
+		$obj->get_iterated();
+		if($obj->exists()) {
+			foreach($obj as $value) {
+				// get journal line with item inventory account
+				$journalLines = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$journalLines->where('account_id', $value->inventory_account_id);
+				$journalLines->where_related('transaction', 'deleted', 0);
+				$journalLines->where_related('transaction', 'is_recurring', 0);
+				$journalLines->where_related('transaction', 'is_pattern', 0);
+				$journalLines->where_in_related('transaction', 'type', array('Cash_Purchase', 'Credit_Purcahse', 'Invoice', 'Cash_Sale'));
+				$journalLines->include_related('transaction', array('id','issued_date', 'type'));
+				$journalLines->get();
+
+				if($adj->exists()) {
+					foreach($adj as $ad) {
+						$adjustment += floatval($ad->quanity) * $ad->movement;
+					}
+				}
+
+				$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$itemLines->where('item_id', $value->id);
+				$itemLines->where_related('transaction', 'deleted', 0);
+				$itemLines->where_related('transaction', 'is_recurring', 0);
+				$itemLines->where_related('transaction', 'is_pattern', 0);
+				$itemLines->where_in_related('transaction', 'type', array('Invoice', 'Cash_Sale'));
+				$itemLines->get();
+
+				if($itemLines->exists()) {
+					foreach($itemLines as $item) {
+						$gpm += (floatval($item->amount) - (floatval($item->quantity) * $value->cost)) / floatval($item->amount);
+					}
+				}
+
+				if($journalLine->exists()) {
+					foreach($journalLines as $line) {
+						$adjustment = 0;
+						$adj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$adj->where_related('transaction_id', $line->transaction_id);
+						$adj->get();
+						if($adj->exists()) {
+							foreach($adj as $ad) {
+								$adjustment += floatval($ad->quanity) * $ad->movement;
+							}
+						}
+						if(isset($temp["$value->id"])) {
+							$temp["$value->id"][] 	= array(
+								"id"   => $line->transaction_id,
+								"date" => $line->transaction_issued_date,
+								"type" => $line->transaction_type,
+								"name" => array(
+									"id" => $value->id,
+									"name" => $value->name
+								),
+								"opening" => 0,
+								"dr" => $line->dr,
+								"cr" => $line->cr,
+								"adjustment"=> $adjustment
+							);
+						} else {
+							$temp["$value->id"][] 	= array(
+								"id"   => $line->transaction_id,
+								"date" => $line->transaction_issued_date,
+								"type" => $line->transaction_type,
+								"name" => array(
+									"id" => $value->id,
+									"name" => $value->name
+								),
+								"opening" => 0,
+								"dr" => $line->dr,
+								"cr" => $line->cr,
+								"adjustment"=> $adjustment
+							);
+						}
+					}
+				}
+				
+					
+			}
+		}
+		foreach ($temp as $key => $value) {
+			$data["results"][] = $value;
+		}
+		$data['gpm'] = $grm;
+		$data['count'] = count($temp);
+		$this->response($data, 200);
+	}
 
 }//End Of Class
