@@ -15483,8 +15483,6 @@
 							            </li>							            
 							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
 							            </li>
-							            <li class="glyphicons edit"><span data-bind="click: goEditContact"><i></i></span>
-							            </li>
 							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
 							            </li>							            							            
 							        </ul>
@@ -15547,36 +15545,47 @@
 							            <!-- INFO Tab content -->
 							            <div id="tab2-4" class="tab-pane box-generic">
 							            	<div class="row-fluid">
-								            	<div class="span6">
-										
-													<!-- Bio -->
-													<div class="widget widget-heading-simple widget-body-gray margin-none">
-														<div class="widget-head">
-															<h4 class="heading glyphicons user"><i></i> <span data-bind="text: obj.wnumber"></span> <span data-bind="text: obj.fullname"></span></h4>
-														</div>
-														<div class="widget-body">
-															<ul class="unstyled icons margin-none">
-																<li class="glyphicons group"><i></i> <span data-bind="text: obj.contact_type"></span></li>
-																<li class="glyphicons phone"><i></i> <span data-bind="text: obj.phone"></span></li>
-																<li class="glyphicons envelope"><i></i> <span data-bind="text: obj.email"></li>
-																<li class="glyphicons calendar"><i></i> <span data-bind="text: obj.registered_date"></li>
-															</ul>
-														</div>
-													</div>
-													<!-- // Bio END -->
-													
-												</div>
-												<div class="span6">
-													<!-- Bio -->
-													<div class="widget widget-heading-simple widget-body-gray margin-none">
-														<div class="widget-head">
-															<h4 class="heading glyphicons edit" data-bind="click: goEditContact"><i></i> <span data-bind="text: lang.lang.edit"></span></h4>
-														</div>
-														<div class="widget-body">
-															<p><i class="icon-home"></i> <span data-bind="text: obj.address"></span></p>
-														</div>
-													</div>
-													<!-- // Bio END -->
+							            		<div class="accounCetner-textedit">
+									            	<table width="100%">
+														<tr>
+															<td width="40%">Customer Type:</td>
+															<td width="60%">
+																<span class="strong"></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Number</td>
+															<td>
+																<span class="strong" ></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Name:</td>
+															<td>
+																<span></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Billed Address:</td>
+															<td>
+																<span ></span>
+															</td>
+														</tr>								
+														<tr>
+															<td>Phone:</td>
+															<td>
+																<span ></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Currency:</td>
+															<td>										
+																<span ></span>
+															</td>
+														</tr>
+													</table>
+
+													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i>View All Info / Edit</span>
 												</div>
 											</div>
 							            </div>
@@ -15585,9 +15594,9 @@
 							            <!-- NOTE Tab content -->
 							            <div id="tab3-4" class="tab-pane box-generic">
 
-										    <div class="chat-controls">															
+										    <div class="chat-controls" style="overflow: hidden; ">															
 												<form class="margin-none">
-													<div class="row-fluid">
+													<div class="row">
 														<div class="span10">
 															<input type="text" name="message" class="input-block-level margin-none" data-bind="value: note" placeholder="កំណត់Memo ...">
 														</div>
@@ -15644,7 +15653,7 @@
 							</div>
 						</div>
 
-						<div class="span6">
+						<div class="span6" style="margin-bottom: 10px;">
 							<div class="row-fluid">
 								<div class="span6">
 									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
@@ -21516,8 +21525,8 @@
 						></tbody>
 						<tfoot>
 							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3">(600.00)</th>
+								<th colspan="3">Total</th>
+								<th colspan="2">(600.00)</th>
 							</tr>
 						</tfoot>
 					</table>
@@ -21530,9 +21539,6 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
-		<td></td>
-		<td></td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -22236,7 +22242,6 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
@@ -22247,18 +22252,20 @@
 				<td>#=items[i].memo#</td>
 				<td>#=items[i].qty#</td>
 				<td>#=items[i].price#</td>
-				<td>#=items[i].amount#</td>
+				<td align="right">#=items[i].amount#</td>
 			</tr>
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
+	<!-- <tr style="font-weight: bold; color: red">
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
-		
-	</tr>
+		<td></td>
+		<td></td>
+		<td></td>		
+	</tr> -->
 </script>
 <script id="customerBalanceSummary" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -23461,7 +23468,7 @@
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
+	<tr style="font-weight: bold; color: black;">
 		<td></td>
 		<td></td>
 		<td></td>
@@ -26876,7 +26883,7 @@
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td valign="top">
-			        	<h2>INVENTORY</h2>
+			        	<h2>PRODUCTS/SERVICES</h2>
 			        	<p>
 			        		In here, you can manage your inventory information, stock, item price, and other related transactions.
 			        	</p>
@@ -27239,8 +27246,6 @@
 							            <li class="glyphicons riflescope"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
 							            </li>
 							            <li class="glyphicons coins"><span data-bind="click: pricing"><i></i></span>
-							            </li>							            							            
-							            <li class="glyphicons edit"><span data-bind="click: edit"><i></i></span>
 							            </li>							            						            
 							        </ul>
 							        <div class="clearfix"></div>
@@ -27255,22 +27260,42 @@
 							            <!-- Info Tab content -->
 							            <div id="tab1-4" class="tab-pane active box-generic">
 							            	
-											<div class="widget widget-heading-simple widget-body-white">
-												<div class="widget-body padding-none">
-													<div class="row-fluid row-merge">
-														<div class="span6">
-															<div class="innerAll center">
-																<h5 class="strong muted text-uppercase"><i class="icon-money text-faded"></i> <span data-bind="text: lang.lang.weighted_avg_cost"></span></h5>
-																<span class="text-large strong text-primary"><span data-format="n" data-bind="text: obj.cost"></span></span>
-															</div>
-														</div>
-														<div class="span6">
-															<div class="innerAll center muted">
-																<h5 class="strong muted text-uppercase"><i class="icon-dollar text-faded"></i> <span data-bind="text: lang.lang.avg_price"></span></h5>
-																<span class="text-large strong"><span data-bind="text: obj.price"></span></span>
-															</div>
-														</div>
-													</div>
+											<div class="row-fluid">
+							            		<div class="accounCetner-textedit">
+									            	<table width="100%">
+														<tr>
+															<td width="40%">Categories:</td>
+															<td width="60%">
+																<span class="strong"></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Weightel Ave:</td>
+															<td>
+																<span class="strong" ></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Average Price:</td>
+															<td>
+																<span></span>
+															</td>
+														</tr>
+														<tr>
+															<td>VOM:</td>
+															<td>
+																<span ></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Currency:</td>
+															<td>										
+																<span ></span>
+															</td>
+														</tr>
+													</table>
+
+													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i>View All Info / Edit</span>
 												</div>
 											</div>
 											
@@ -27278,7 +27303,7 @@
 							            <!-- // Info Tab content END -->
 
 							            <!-- SEARCH Tab content -->
-							            <div id="tab2-4" class="tab-pane box-generic">
+							            <div id="tab2-4" class="tab-pane box-generic" style="overflow:hidden;">
 							                <table>
 									    		<tr>
 									    			<td>
@@ -27308,9 +27333,8 @@
 												    </td>
 												</tr>
 											</table>
-
-								            <br><br>
-								            <span class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search"></span></span>
+								            <br>
+								            <span style="padding: 5px 7px 5px 36px !important; width: auto;" class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search"></span></span>
 								            <br>
 							            </div>
 							            <!-- // SEARCH Tab content END -->							            
