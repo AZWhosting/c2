@@ -58485,8 +58485,7 @@
 				    }else{
 				    	notification.error("Warning, please review it again!");			           
 				    }		 
-				}
-				alert("abc");	
+				}	
 		        jQuery("#saveNew").click(function(e){	
 		        			
 					e.preventDefault();

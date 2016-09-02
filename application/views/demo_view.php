@@ -15483,8 +15483,6 @@
 							            </li>							            
 							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
 							            </li>
-							            <li class="glyphicons edit"><span data-bind="click: goEditContact"><i></i></span>
-							            </li>
 							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
 							            </li>							            							            
 							        </ul>
@@ -15547,36 +15545,47 @@
 							            <!-- INFO Tab content -->
 							            <div id="tab2-4" class="tab-pane box-generic">
 							            	<div class="row-fluid">
-								            	<div class="span6">
-										
-													<!-- Bio -->
-													<div class="widget widget-heading-simple widget-body-gray margin-none">
-														<div class="widget-head">
-															<h4 class="heading glyphicons user"><i></i> <span data-bind="text: obj.wnumber"></span> <span data-bind="text: obj.fullname"></span></h4>
-														</div>
-														<div class="widget-body">
-															<ul class="unstyled icons margin-none">
-																<li class="glyphicons group"><i></i> <span data-bind="text: obj.contact_type"></span></li>
-																<li class="glyphicons phone"><i></i> <span data-bind="text: obj.phone"></span></li>
-																<li class="glyphicons envelope"><i></i> <span data-bind="text: obj.email"></li>
-																<li class="glyphicons calendar"><i></i> <span data-bind="text: obj.registered_date"></li>
-															</ul>
-														</div>
-													</div>
-													<!-- // Bio END -->
-													
-												</div>
-												<div class="span6">
-													<!-- Bio -->
-													<div class="widget widget-heading-simple widget-body-gray margin-none">
-														<div class="widget-head">
-															<h4 class="heading glyphicons edit" data-bind="click: goEditContact"><i></i> <span data-bind="text: lang.lang.edit"></span></h4>
-														</div>
-														<div class="widget-body">
-															<p><i class="icon-home"></i> <span data-bind="text: obj.address"></span></p>
-														</div>
-													</div>
-													<!-- // Bio END -->
+							            		<div class="accounCetner-textedit">
+									            	<table width="100%">
+														<tr>
+															<td width="40%">Customer Type:</td>
+															<td width="60%">
+																<span class="strong"></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Number</td>
+															<td>
+																<span class="strong" ></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Name:</td>
+															<td>
+																<span></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Billed Address:</td>
+															<td>
+																<span ></span>
+															</td>
+														</tr>								
+														<tr>
+															<td>Phone:</td>
+															<td>
+																<span ></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Currency:</td>
+															<td>										
+																<span ></span>
+															</td>
+														</tr>
+													</table>
+
+													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i>View All Info / Edit</span>
 												</div>
 											</div>
 							            </div>
@@ -15585,9 +15594,9 @@
 							            <!-- NOTE Tab content -->
 							            <div id="tab3-4" class="tab-pane box-generic">
 
-										    <div class="chat-controls">															
+										    <div class="chat-controls" style="overflow: hidden; ">															
 												<form class="margin-none">
-													<div class="row-fluid">
+													<div class="row">
 														<div class="span10">
 															<input type="text" name="message" class="input-block-level margin-none" data-bind="value: note" placeholder="កំណត់Memo ...">
 														</div>
@@ -15644,7 +15653,7 @@
 							</div>
 						</div>
 
-						<div class="span6">
+						<div class="span6" style="margin-bottom: 10px;">
 							<div class="row-fluid">
 								<div class="span6">
 									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
@@ -18954,22 +18963,31 @@
 										<td class="right strong"><span data-bind="text: tax"></span></td>
 									</tr>
 									<tr>
+										<td class="right"><h4>Total:</h4></td>
+										<td class="right strong"><h4 data-bind="text: total"></h4></td>
+									</tr>
+									<tr>
 										<td class="right">
 											Deposit:
-											<span class="strong" data-format="n" data-bind="text: total_deposit"></span>										
+											<span data-format="n" data-bind="text: total_deposit"></span>										
 										</td>
-										<td class="right strong">
+										<td class="right">
 											<input data-role="numerictextbox"
 								                   data-format="n"
+								                   data-spinners="false"
 								                   data-min="0"							                                      
 								                   data-bind="value: obj.deposit,
 								                              events: { change: changes }"
-								                   style="width: 90%;">
+								                   style="width: 90%; text-align: right;">
 										</td>
-									</tr>								
+									</tr>
 									<tr>
-										<td class="right"><h4>Total:</h4></td>
-										<td class="right strong"><h4 data-bind="text: total"></h4></td>
+										<td class="right">
+											Remaining:
+										</td>
+										<td class="right">
+											<span data-bind="text: remaining"></span>
+										</td>
 									</tr>								
 								</tbody>
 							</table>
@@ -21516,8 +21534,8 @@
 						></tbody>
 						<tfoot>
 							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3">(600.00)</th>
+								<th colspan="3">Total</th>
+								<th colspan="2">(600.00)</th>
 							</tr>
 						</tfoot>
 					</table>
@@ -21530,9 +21548,6 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
-		<td></td>
-		<td></td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -22236,7 +22251,6 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
@@ -22247,18 +22261,20 @@
 				<td>#=items[i].memo#</td>
 				<td>#=items[i].qty#</td>
 				<td>#=items[i].price#</td>
-				<td>#=items[i].amount#</td>
+				<td align="right">#=items[i].amount#</td>
 			</tr>
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
+	<!-- <tr style="font-weight: bold; color: red">
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
-		
-	</tr>
+		<td></td>
+		<td></td>
+		<td></td>		
+	</tr> -->
 </script>
 <script id="customerBalanceSummary" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -23461,7 +23477,7 @@
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
+	<tr style="font-weight: bold; color: black;">
 		<td></td>
 		<td></td>
 		<td></td>
@@ -26876,7 +26892,7 @@
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td valign="top">
-			        	<h2>INVENTORY</h2>
+			        	<h2>PRODUCTS/SERVICES</h2>
 			        	<p>
 			        		In here, you can manage your inventory information, stock, item price, and other related transactions.
 			        	</p>
@@ -27239,8 +27255,6 @@
 							            <li class="glyphicons riflescope"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
 							            </li>
 							            <li class="glyphicons coins"><span data-bind="click: pricing"><i></i></span>
-							            </li>							            							            
-							            <li class="glyphicons edit"><span data-bind="click: edit"><i></i></span>
 							            </li>							            						            
 							        </ul>
 							        <div class="clearfix"></div>
@@ -27255,22 +27269,42 @@
 							            <!-- Info Tab content -->
 							            <div id="tab1-4" class="tab-pane active box-generic">
 							            	
-											<div class="widget widget-heading-simple widget-body-white">
-												<div class="widget-body padding-none">
-													<div class="row-fluid row-merge">
-														<div class="span6">
-															<div class="innerAll center">
-																<h5 class="strong muted text-uppercase"><i class="icon-money text-faded"></i> <span data-bind="text: lang.lang.weighted_avg_cost"></span></h5>
-																<span class="text-large strong text-primary"><span data-format="n" data-bind="text: obj.cost"></span></span>
-															</div>
-														</div>
-														<div class="span6">
-															<div class="innerAll center muted">
-																<h5 class="strong muted text-uppercase"><i class="icon-dollar text-faded"></i> <span data-bind="text: lang.lang.avg_price"></span></h5>
-																<span class="text-large strong"><span data-bind="text: obj.price"></span></span>
-															</div>
-														</div>
-													</div>
+											<div class="row-fluid">
+							            		<div class="accounCetner-textedit">
+									            	<table width="100%">
+														<tr>
+															<td width="40%">Categories:</td>
+															<td width="60%">
+																<span class="strong"></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Weightel Ave:</td>
+															<td>
+																<span class="strong" ></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Average Price:</td>
+															<td>
+																<span></span>
+															</td>
+														</tr>
+														<tr>
+															<td>VOM:</td>
+															<td>
+																<span ></span>
+															</td>
+														</tr>
+														<tr>
+															<td>Currency:</td>
+															<td>										
+																<span ></span>
+															</td>
+														</tr>
+													</table>
+
+													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i>View All Info / Edit</span>
 												</div>
 											</div>
 											
@@ -27278,7 +27312,7 @@
 							            <!-- // Info Tab content END -->
 
 							            <!-- SEARCH Tab content -->
-							            <div id="tab2-4" class="tab-pane box-generic">
+							            <div id="tab2-4" class="tab-pane box-generic" style="overflow:hidden;">
 							                <table>
 									    		<tr>
 									    			<td>
@@ -27308,9 +27342,8 @@
 												    </td>
 												</tr>
 											</table>
-
-								            <br><br>
-								            <span class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search"></span></span>
+								            <br>
+								            <span style="padding: 5px 7px 5px 36px !important; width: auto;" class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search"></span></span>
 								            <br>
 							            </div>
 							            <!-- // SEARCH Tab content END -->							            
@@ -41961,16 +41994,16 @@
 			data = e.data,
 			obj = this.get("obj"), 
 			item = this.itemDS.get(data.item_id);
-			
+
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var cost = 0, rate = 1, measurement_id = 0;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
-						price = item.item_prices[0].price*rate;						
-						measurement_id = item.item_prices[0].measurement_id;
-					}					
+						rate = obj.rate / item.rate;
+						cost = item.cost*rate;
+						measurement_id = item.measurement_id;
+					}
 				}
 
 		        if(item.is_catalog=="1"){
@@ -41982,44 +42015,39 @@
 		        		$.each(self.catalogDS.view(), function(index, value){										
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
+								tax_item_id 		: 0,
 								item_id 			: value.id,
-								measurement_id 		: value.item_prices[0].measurement_id,								
+								measurement_id 		: value.measurement_id,								
 								description 		: value.name,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
-								discount 			: 0,
-								fine 				: 0,
-								rate				: obj.rate,
-								locale				: obj.locale,
-								has_vat 			: false,
-								movement 			: -1,								
+								cost 				: value.cost*rate,												
+								amount 				: value.cost*rate,
+								rate				: obj.rate / value.rate,
+								locale				: obj.locale,						
 
-								item_prices 		: value.item_prices
+								item_prices 		: []
 							});								
 		        		});
 
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		    		data.set("description", item.name);	    		
-			        data.set("price", item.price*rate);
-			        data.set("measurement_id", 0);
-			        data.set("rate", obj.rate);		        	        
-			       	data.set("item_prices", []);
-
-			        this.changes();		     
-		        }else{
-		        	data.set("measurement_id", measurement_id);		        	
+		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
+			        data.set("cost", cost);
 			        data.set("rate", rate);
-			        data.set("item_prices", item.item_prices);			        
+
+			        this.changes();		     
+		        }else{	        	
+		    		data.set("measurement_id", measurement_id);
+		    		data.set("description", item.name);
+		    		data.set("quantity", 1);	    		
+			        data.set("cost", cost);			        		        
+			        data.set("rate", rate);			        
 
 			        this.changes();
 		    	}
-		    			        
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -42029,7 +42057,7 @@
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
 						var rate = obj.rate / value.rate;						
-				        data.set("price", value.price*rate);				       			       
+				        data.set("cost", value.cost*rate);				       			       
 				        
 						return false;
 					}
@@ -42791,14 +42819,14 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var cost = 0, rate = 1, measurement_id = 0;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
-						price = item.item_prices[0].price*rate;						
-						measurement_id = item.item_prices[0].measurement_id;
-					}					
+						rate = obj.rate / item.rate;
+						cost = item.cost*rate;
+						measurement_id = item.measurement_id;
+					}
 				}
 
 		        if(item.is_catalog=="1"){
@@ -42810,44 +42838,39 @@
 		        		$.each(self.catalogDS.view(), function(index, value){										
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
+								tax_item_id 		: 0,
 								item_id 			: value.id,
-								measurement_id 		: value.item_prices[0].measurement_id,								
+								measurement_id 		: value.measurement_id,								
 								description 		: value.name,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
-								discount 			: 0,
-								fine 				: 0,
-								rate				: obj.rate,
-								locale				: obj.locale,
-								has_vat 			: false,
-								movement 			: -1,								
+								cost 				: value.cost*rate,												
+								amount 				: value.cost*rate,
+								rate				: obj.rate / value.rate,
+								locale				: obj.locale,						
 
-								item_prices 		: value.item_prices
+								item_prices 		: []
 							});								
 		        		});
 
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		    		data.set("description", item.name);	    		
-			        data.set("price", item.price*rate);
-			        data.set("measurement_id", 0);
-			        data.set("rate", obj.rate);		        	        
-			       	data.set("item_prices", []);
-
-			        this.changes();		     
-		        }else{
-		        	data.set("measurement_id", measurement_id);		        	
+		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
+			        data.set("cost", cost);
 			        data.set("rate", rate);
-			        data.set("item_prices", item.item_prices);			        
+
+			        this.changes();		     
+		        }else{	        	
+		    		data.set("measurement_id", measurement_id);
+		    		data.set("description", item.name);
+		    		data.set("quantity", 1);	    		
+			        data.set("cost", cost);			        		        
+			        data.set("rate", rate);			        
 
 			        this.changes();
 		    	}
-		    			        
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -42857,7 +42880,7 @@
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
 						var rate = obj.rate / value.rate;						
-				        data.set("price", value.price*rate);				       			       
+				        data.set("cost", value.cost*rate);				       			       
 				        
 						return false;
 					}
@@ -44557,13 +44580,14 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var rate = 1, measurement_id = 0;
+				var cost = 0, rate = 1, measurement_id = 0;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
-						measurement_id = item.item_prices[0].measurement_id;
-					}					
+						rate = obj.rate / item.rate;
+						cost = item.cost*rate;
+						measurement_id = item.measurement_id;
+					}
 				}
 
 		        if(item.is_catalog=="1"){
@@ -44575,18 +44599,15 @@
 		        		$.each(self.catalogDS.view(), function(index, value){										
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
-								tax_item_id 		: value.tax_item_id,
+								tax_item_id 		: 0,
 								item_id 			: value.id,
-								measurement_id 		: value.item_prices[0].measurement_id,								
+								measurement_id 		: value.measurement_id,								
 								description 		: value.name,				
 								quantity 	 		: 1,
-								cost 				: 0,												
-								amount 				: 0,
-								discount 			: 0,
-								fine 				: 0,
-								rate				: obj.rate,
-								locale				: obj.locale,
-								movement 			: -1,								
+								cost 				: value.cost*rate,												
+								amount 				: value.cost*rate,
+								rate				: obj.rate / value.rate,
+								locale				: obj.locale,						
 
 								item_prices 		: []
 							});								
@@ -44595,24 +44616,22 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		    		data.set("description", item.name);	    		
-			        data.set("cost", 0);
-			        data.set("measurement_id", 0);
-			        data.set("rate", rate);		        	        
-			       	data.set("item_prices", []);
-
-			        this.changes();		     
-		        }else{
-		        	data.set("measurement_id", measurement_id);		        	
+		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", 0);			        		        
+			        data.set("cost", cost);
 			        data.set("rate", rate);
-			        data.set("item_prices", item.item_prices);			        
+
+			        this.changes();		     
+		        }else{	        	
+		    		data.set("measurement_id", measurement_id);
+		    		data.set("description", item.name);
+		    		data.set("quantity", 1);	    		
+			        data.set("cost", cost);			        		        
+			        data.set("rate", rate);			        
 
 			        this.changes();
 		    	}
-		    			        
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -45997,14 +46016,14 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var cost = 0, rate = 1, measurement_id = 0;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
-						price = item.item_prices[0].price*rate;						
-						measurement_id = item.item_prices[0].measurement_id;
-					}					
+						rate = obj.rate / item.rate;
+						cost = item.cost*rate;
+						measurement_id = item.measurement_id;
+					}
 				}
 
 		        if(item.is_catalog=="1"){
@@ -46016,44 +46035,39 @@
 		        		$.each(self.catalogDS.view(), function(index, value){										
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
+								tax_item_id 		: 0,
 								item_id 			: value.id,
-								measurement_id 		: value.item_prices[0].measurement_id,								
+								measurement_id 		: value.measurement_id,								
 								description 		: value.name,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
-								discount 			: 0,
-								fine 				: 0,
-								rate				: obj.rate,
-								locale				: obj.locale,
-								has_vat 			: false,
-								movement 			: -1,								
+								cost 				: value.cost*rate,												
+								amount 				: value.cost*rate,
+								rate				: obj.rate / value.rate,
+								locale				: obj.locale,						
 
-								item_prices 		: value.item_prices
+								item_prices 		: []
 							});								
 		        		});
 
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		    		data.set("description", item.name);	    		
-			        data.set("price", item.price*rate);
-			        data.set("measurement_id", 0);
-			        data.set("rate", obj.rate);		        	        
-			       	data.set("item_prices", []);
-
-			        this.changes();		     
-		        }else{
-		        	data.set("measurement_id", measurement_id);		        	
+		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
+			        data.set("cost", cost);
 			        data.set("rate", rate);
-			        data.set("item_prices", item.item_prices);			        
+
+			        this.changes();		     
+		        }else{	        	
+		    		data.set("measurement_id", measurement_id);
+		    		data.set("description", item.name);
+		    		data.set("quantity", 1);	    		
+			        data.set("cost", cost);			        		        
+			        data.set("rate", rate);			        
 
 			        this.changes();
 		    	}
-		    			        
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -46063,7 +46077,7 @@
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
 						var rate = obj.rate / value.rate;						
-				        data.set("price", value.price*rate);				       			       
+				        data.set("cost", value.cost*rate);				       			       
 				        
 						return false;
 					}
@@ -48440,16 +48454,16 @@
 			data = e.data,
 			obj = this.get("obj"), 
 			item = this.itemDS.get(data.item_id);
-			
+
 			if(data.item_id>0){
 				var price = 0, rate = 1, measurement_id = 0;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
 						rate = obj.rate / item.item_prices[0].rate;
-						price = item.item_prices[0].price*rate;						
+						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
-					}					
+					}
 				}
 
 		        if(item.is_catalog=="1"){
@@ -48461,6 +48475,7 @@
 		        		$.each(self.catalogDS.view(), function(index, value){										
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
+								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.name,				
@@ -48468,10 +48483,8 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								fine 				: 0,
 								rate				: obj.rate,
 								locale				: obj.locale,
-								has_vat 			: false,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -48481,15 +48494,16 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		    		data.set("description", item.name);	    		
-			        data.set("price", item.price*rate);
-			        data.set("measurement_id", 0);
-			        data.set("rate", obj.rate);		        	        
+		        	data.set("measurement_id", measurement_id);
+		    		data.set("description", item.name);
+		    		data.set("quantity", 1);	    		
+			        data.set("price", price);
+			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
-		        }else{
-		        	data.set("measurement_id", measurement_id);		        	
+		        }else{	        	
+		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);			        		        
@@ -48498,7 +48512,6 @@
 
 			        this.changes();
 		    	}
-		    			        
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -49307,9 +49320,9 @@
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
 						rate = obj.rate / item.item_prices[0].rate;
-						price = item.item_prices[0].price*rate;						
+						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
-					}					
+					}
 				}
 
 		        if(item.is_catalog=="1"){
@@ -49321,6 +49334,7 @@
 		        		$.each(self.catalogDS.view(), function(index, value){										
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
+								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.name,				
@@ -49328,10 +49342,8 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								fine 				: 0,
 								rate				: obj.rate,
 								locale				: obj.locale,
-								has_vat 			: false,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -49341,15 +49353,16 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		    		data.set("description", item.name);	    		
-			        data.set("price", item.price*rate);
-			        data.set("measurement_id", 0);
-			        data.set("rate", obj.rate);		        	        
+		        	data.set("measurement_id", measurement_id);
+		    		data.set("description", item.name);
+		    		data.set("quantity", 1);	    		
+			        data.set("price", price);
+			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
-		        }else{
-		        	data.set("measurement_id", measurement_id);		        	
+		        }else{	        	
+		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);			        		        
@@ -49358,7 +49371,6 @@
 
 			        this.changes();
 		    	}
-		    			        
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -51133,9 +51145,9 @@
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
 						rate = obj.rate / item.item_prices[0].rate;
-						price = item.item_prices[0].price*rate;						
+						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
-					}					
+					}
 				}
 
 		        if(item.is_catalog=="1"){
@@ -51147,6 +51159,7 @@
 		        		$.each(self.catalogDS.view(), function(index, value){										
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
+								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.name,				
@@ -51154,10 +51167,8 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								fine 				: 0,
 								rate				: obj.rate,
 								locale				: obj.locale,
-								has_vat 			: false,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -51167,15 +51178,16 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		    		data.set("description", item.name);	    		
-			        data.set("price", item.price*rate);
-			        data.set("measurement_id", 0);
-			        data.set("rate", obj.rate);		        	        
+		        	data.set("measurement_id", measurement_id);
+		    		data.set("description", item.name);
+		    		data.set("quantity", 1);	    		
+			        data.set("price", price);
+			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
-		        }else{
-		        	data.set("measurement_id", measurement_id);		        	
+		        }else{	        	
+		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);			        		        
@@ -51184,7 +51196,6 @@
 
 			        this.changes();
 		    	}
-		    			        
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -52093,6 +52104,40 @@
 			serverPaging: true,
 			pageSize: 100
 		}),
+		depositSumDS  		: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "transactions/amount_sum",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,								
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -52165,6 +52210,7 @@
 		balance 			: 0,
 		total_deposit		: 0,
 		total 				: 0,
+		remaining 			: 0,
 		original_total 		: 0,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
@@ -52275,34 +52321,41 @@
 
             //Clear upload files
             $(".k-upload-files").remove();
-	    },		
+	    },
 		//Deposit
 		loadDeposit 		: function(){
 			var self = this, obj = this.get("obj");
 
-			this.depositDS.query({
+			if(this.get("isEdit")){
+				this.depositDS.filter([
+					{ field:"type", value:"Deposit" },
+					{ field:"reference_id", value:obj.id }
+				]);
+			}
+
+			this.depositSumDS.query({
 				filter:[
 					{ field:"type", value:"Deposit" },
 					{ field:"contact_id", value:obj.contact_id }
 				],
 				page: 1,
-				pageSize: 100
+				pageSize: 1000
 			}).then(function(){
-				var view = self.depositDS.view(),
+				var view = self.depositSumDS.view(),
 				total_deposit = view[0].amount + obj.deposit;
 
 				self.set("total_deposit", total_deposit);
 			});
 		},
-		addDeposit 			: function(){
+		addDeposit 			: function(id){
 			var obj = this.get("obj");
-
-			this.depositDS.data([]);
 			
+			this.depositDS.data([]);
+
 			if(obj.deposit>0){				
 				this.depositDS.add({				
 					contact_id 			: obj.contact_id,								
-					reference_id 		: obj.id,				
+					reference_id 		: id,				
 					user_id 			: this.get("user_id"),				    		
 				   	type				: "Deposit",
 				   	amount				: obj.deposit*-1,			   	
@@ -52312,7 +52365,7 @@
 		    	});
 			}
 		},		
-		saveDeposit 		: function(){			
+		saveDeposit 		: function(id){			
 			var obj = this.get("obj");
 			
     		if(this.get("isEdit")){
@@ -52320,10 +52373,10 @@
 					var deposit = this.depositDS.at(0);
 					deposit.set("amount", obj.deposit*-1);
 				}else{
-					this.addDeposit();
+					this.addDeposit(id);
 				}
     		}else{
-				this.addDeposit();
+				this.addDeposit(id);
     		}
 
 			this.depositDS.sync();
@@ -52482,9 +52535,9 @@
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
 						rate = obj.rate / item.item_prices[0].rate;
-						price = item.item_prices[0].price*rate;						
+						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
-					}					
+					}
 				}
 
 		        if(item.is_catalog=="1"){
@@ -52496,6 +52549,7 @@
 		        		$.each(self.catalogDS.view(), function(index, value){										
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
+								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.name,				
@@ -52503,10 +52557,8 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								fine 				: 0,
 								rate				: obj.rate,
 								locale				: obj.locale,
-								has_vat 			: false,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -52516,15 +52568,16 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		    		data.set("description", item.name);	    		
-			        data.set("price", item.price*rate);
-			        data.set("measurement_id", 0);
-			        data.set("rate", obj.rate);		        	        
+		        	data.set("measurement_id", measurement_id);
+		    		data.set("description", item.name);
+		    		data.set("quantity", 1);	    		
+			        data.set("price", price);
+			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
-		        }else{
-		        	data.set("measurement_id", measurement_id);		        	
+		        }else{	        	
+		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);			        		        
@@ -52533,7 +52586,6 @@
 
 			        this.changes();
 		    	}
-		    			        
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -52587,7 +52639,8 @@
 				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
 				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
 		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
-		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));	  			
+		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
+		        self.set("remaining", kendo.toString(view[0].remaining, "c", view[0].locale));	  			
 								
 				//self.contactDS.filter({ field: "id", value: view[0].contact_id });				
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
@@ -52676,6 +52729,7 @@
 			this.set("discount", 0);
 			this.set("total_deposit", 0);
 			this.set("total", 0);
+			this.set("remaining", 0);
 			this.set("amtDueColor", banhji.source.amtDueColor);				
 
 			this.dataSource.insert(0, {				
@@ -52691,8 +52745,9 @@
 			   	sub_total 			: 0,
 			   	discount 			: 0,
 			   	tax 				: 0,
-			   	deposit 			: 0,				   		   					   				   	
+			   	deposit 			: 0,			   	
 			   	amount				: 0,
+			   	remaining 			: 0,
 			   	credit_allowed 		: 0,
 			   	rate				: 1,			   	
 			   	locale 				: banhji.locale,			   	
@@ -52857,7 +52912,7 @@
 				}
 
 				self.lineDS.sync();
-				self.saveDeposit();
+				self.saveDeposit(data[0].id);
 				self.uploadFile();
 				
 				return data;
@@ -53634,9 +53689,9 @@
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
 						rate = obj.rate / item.item_prices[0].rate;
-						price = item.item_prices[0].price*rate;						
+						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
-					}					
+					}
 				}
 
 		        if(item.is_catalog=="1"){
@@ -53648,6 +53703,7 @@
 		        		$.each(self.catalogDS.view(), function(index, value){										
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
+								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.name,				
@@ -53655,10 +53711,8 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								fine 				: 0,
 								rate				: obj.rate,
 								locale				: obj.locale,
-								has_vat 			: false,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -53668,15 +53722,16 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		    		data.set("description", item.name);	    		
-			        data.set("price", item.price*rate);
-			        data.set("measurement_id", 0);
-			        data.set("rate", obj.rate);		        	        
+		        	data.set("measurement_id", measurement_id);
+		    		data.set("description", item.name);
+		    		data.set("quantity", 1);	    		
+			        data.set("price", price);
+			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
-		        }else{
-		        	data.set("measurement_id", measurement_id);		        	
+		        }else{	        	
+		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);			        		        
@@ -53685,7 +53740,6 @@
 
 			        this.changes();
 		    	}
-		    			        
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
@@ -54489,9 +54543,9 @@
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
 						rate = obj.rate / item.item_prices[0].rate;
-						price = item.item_prices[0].price*rate;						
+						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
-					}					
+					}
 				}
 
 		        if(item.is_catalog=="1"){
@@ -54503,6 +54557,7 @@
 		        		$.each(self.catalogDS.view(), function(index, value){										
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
+								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.name,				
@@ -54510,10 +54565,8 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								fine 				: 0,
 								rate				: obj.rate,
 								locale				: obj.locale,
-								has_vat 			: false,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -54523,15 +54576,16 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		    		data.set("description", item.name);	    		
-			        data.set("price", item.price*rate);
-			        data.set("measurement_id", 0);
-			        data.set("rate", obj.rate);		        	        
+		        	data.set("measurement_id", measurement_id);
+		    		data.set("description", item.name);
+		    		data.set("quantity", 1);	    		
+			        data.set("price", price);
+			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
-		        }else{
-		        	data.set("measurement_id", measurement_id);		        	
+		        }else{	        	
+		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.name);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);			        		        
@@ -54540,7 +54594,6 @@
 
 			        this.changes();
 		    	}
-		    			        
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
