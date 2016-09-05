@@ -12097,7 +12097,9 @@
 	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Payment Method</span></a>
 	            </li>
 	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Payment Term</span></a>
-	            </li>	                       
+	            </li>	   
+	            <li><a href="#tab4-1" class="glyphicons list" data-toggle="tab"><i></i><span class="strong">Custom Forms</span></a>
+	            </li>	                    
 	        </ul>
 	    </div>
 	    <!-- // Tabs Heading END -->
@@ -12175,6 +12177,27 @@
 	            </div>
 	            <!-- // PAYMENT TERM END -->
 
+	            <!-- Tab Invocice Custom content -->
+	            <div class="tab-pane" id="tab4-1">
+            		
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center">Name</th>
+	            				<th class="center">Form Type</th>
+	            				<th class="center">Last Edited</th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="customerSetting-form-template"
+				                 data-bind="source: txnTemplateDS">				            
+	            		</tbody>
+	            	</table>
+	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
+	            </div>
+	            <!-- // Tab Invoice Custom content END -->
 	        </div>
 	    </div>
 
@@ -38764,6 +38787,15 @@
 			{ id: "Sale_Return", name: "Sale Return" },
 			{ id: "GDN", name: "Delivered Note" }
 	    ],
+	    vendorFormList 		: [
+	    	{ id: "Sale_Order", name: "PO" },
+	    	{ id: "GDN", name: "GRN" },
+			{ id: "Deposit", name: "Deposit" },
+			{ id: "Purchase", name: "Purchase" },
+			{ id: "Sale_Return", name: "Pur.Return" },
+			{ id: "Cash_Sale", name: "PayBill" }
+			
+	    ],
 		weekDayList 			: [
 			{ id: 0, name: 'Sunday' },
 			{ id: 1, name: 'Monday' },
@@ -48269,7 +48301,8 @@
 		lang 				: langVM,		
         contactTypeDS 		: dataStore(apiUrl+"contacts/type"),
         paymentMethodDS		: dataStore(apiUrl+"payment_methods"),
-        paymentTermDS		: dataStore(apiUrl+"payment_terms"),      
+        paymentTermDS		: dataStore(apiUrl+"payment_terms"),    
+        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),  
         contactTypeName 	: "",
         contactTypeAbbr 	: "",
         contactTypeCompany 	: 0,
@@ -48279,7 +48312,7 @@
         paymentTermPeriod 	: "",
         paymentTermPercentage 	: "",
         pageLoad 			: function() {
-        	
+        	this.txnTemplateDS.filter({ field: "moduls", value : "vendor_mg" });
         },	    
         addContactType 		: function(){
         	var name = this.get("contactTypeName");
@@ -48336,6 +48369,7 @@
 	        	this.set("paymentTermPercentage", "");
         	}
         },
+
         goPattern 	: function(e){
         	var data = e.data;        	        	
 
@@ -48345,7 +48379,20 @@
         		banhji.router.navigate('/vendor');
         		banhji.vendor.set("contact_type_id",data.id);
         	}
-        }        
+        }  ,   
+        deleteForm 		: function(e){
+        	var data = e.data;
+        	if(confirm("Do you want to delete it?") == true) {
+        		this.txnTemplateDS.remove(data);
+        		this.txnTemplateDS.sync();
+        	}
+        },
+        goInvoiceCustom : function(){
+
+		    banhji.invoiceCustom.set("selectTypeList", banhji.source.vendorFormList);
+
+		    banhji.router.navigate('/invoice_custom');
+        }   
     });
 
     //Report Vendor
@@ -57221,7 +57268,7 @@
         paymentTermPeriod 	: "",
         paymentTermPercentage 	: "",
         pageLoad 			: function() {
-        	
+        	this.txnTemplateDS.filter({ field: "moduls", value : "customer_mg" });
         },	    
         addContactType 		: function(){
         	var name = this.get("contactTypeName");
@@ -57499,17 +57546,6 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
 			//Save Obj
-			/*this.dataSource.data([]);
-			this.dataSource.insert(0, {
-				user_id			: banhji.source.user_id,
-				transaction_form_id : obj.transaction_form_id,
-				type 			: obj.type,
-				name 			: obj.name,
-				title 			: obj.title,
-				note 			: obj.note,
-				color  			: obj.color,
-				moduls 			: obj.moduls,
-			});*/
 			this.objSync()
 			.then(function(data){ //Success	
 				banhji.customerSetting.txnTemplateDS.fetch();	

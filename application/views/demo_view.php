@@ -43940,7 +43940,7 @@
 					item_id 			: value.item_id,								
 					description 		: value.description,
 					quantity 			: value.quantity,
-					price 				: value.price,													
+					cost 				: value.cost,													
 					amount 	 			: value.amount,
 					discount 			: value.discount,				
 					rate				: value.rate,
@@ -44631,7 +44631,7 @@
 							item_id 			: value.item_id,									
 							description 		: value.description,							
 							quantity 			: value.quantity,
-							price 				: value.price,								
+							cost 				: value.cost,								
 							amount 	 			: value.amount,									
 							rate				: value.rate,
 							locale				: value.locale,
@@ -44755,7 +44755,7 @@
 					item_id 			: value.item_id,								
 					description 		: value.description,
 					quantity 			: value.quantity,
-					price 				: value.price,													
+					cost 				: value.cost,													
 					amount 	 			: value.amount,
 					discount 			: value.discount,				
 					rate				: value.rate,
@@ -45409,7 +45409,7 @@
 							item_id 			: value.item_id,
 							description 		: value.description,
 							quantity 			: value.quantity,
-							price 				: value.price,
+							cost 				: value.cost,
 							amount 	 			: value.amount,
 							rate				: value.rate,
 							locale				: value.locale,
@@ -45533,7 +45533,7 @@
 					item_id 			: value.item_id,
 					description 		: value.description,
 					quantity 			: value.quantity,
-					price 				: value.price,
+					cost 				: value.cost,
 					amount 	 			: value.amount,
 					discount 			: value.discount,
 					rate				: value.rate,
@@ -46659,7 +46659,7 @@
 				//Add Inventory
 				if(item.item_type_id==1){					
 					var inventoryID = item.inventory_account_id,
-					inventoryAmt = (value.quantity*value.price) + value.additional_cost;
+					inventoryAmt = (value.quantity*value.cost) + value.additional_cost;
 					if(inventoryList[inventoryID]===undefined){
 						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmt };						
 					}else{											
@@ -46842,6 +46842,7 @@
 			 		$.each(view, function(index, value){
 			 			self.lineDS.add({					
 							transaction_id 		: obj.id,
+							tax_item_id 		: value.tax_item_id,
 							item_id 			: value.item_id,
 							measurement_id 		: value.measurement_id,							
 							description 		: value.description,				
@@ -46851,7 +46852,8 @@
 							discount 			: value.discount,
 							rate				: value.rate,
 							locale				: value.locale,
-							has_vat 			: value.has_vat,							
+							additional_cost 	: value.additional_cost,
+							additional_applied 	: value.additional_applied,							
 
 							item_prices			: value.item_prices
 						});
@@ -47097,7 +47099,7 @@
 					item_id 			: value.item_id,
 					description 		: value.description,
 					quantity 			: value.quantity,
-					price 				: value.price,
+					cost 				: value.cost,
 					amount 	 			: value.amount,
 					discount 			: value.discount,
 					rate				: value.rate,
