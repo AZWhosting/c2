@@ -54068,6 +54068,13 @@
 		        	}
 		        }
 
+		        //Status
+		    	if(remaining==0){
+		    		obj.set("status", 1);
+		    	}else{
+		    		obj.set("status", 0);
+		    	}
+
 		        //Warning over credit allowed
 		        if(obj.credit_allowed>0 && total>obj.credit_allowed){
 		        	this.set("amtDueColor", "Gold");		        	
@@ -54196,13 +54203,6 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
-
-	    	//Status
-	    	if(obj.amount==0){
-	    		obj.set("status", 1);
-	    	}else{
-	    		obj.set("status", 0);
-	    	}
 	    	
 	    	//Warning over credit allowed
 	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
