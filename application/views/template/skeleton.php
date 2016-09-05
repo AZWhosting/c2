@@ -32,6 +32,7 @@
 <link rel="stylesheet" href="<?php echo base_url()?>assets/style-default-menus-dark.css" >
 <link rel="stylesheet" href="<?php echo base_url()?>assets/blue-gray.css" >
 <link href='https://fonts.googleapis.com/css?family=Content:400,700' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">
 
 <!-- Glyphicons Font Icons -->
 <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/glyphicons/css/glyphicons.css" rel="stylesheet" />
