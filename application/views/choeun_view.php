@@ -20715,7 +20715,7 @@
 				                 data-bind="source: txnTemplateDS">				            
 	            		</tbody>
 	            	</table>
-	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" href="#/invoice_custom" style="width: 110px;"><i></i>Add New</a>
+	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
 	            </div>
 	            <!-- // Tab Invoice Custom content END -->
 
@@ -38754,6 +38754,16 @@
 			{ id: 10, name: 'November' },
 			{ id: 11, name: 'December' }
 		],
+		customerFormList 		: [
+	    	{ id: "Quote", name: "Quotation" },
+			{ id: "Sale_Order", name: "Sale Order" },
+			{ id: "Deposit", name: "Deposit" },
+			{ id: "Cash_Sale", name: "Cash Sale" },
+			{ id: "Invoice", name: "Invoice" },
+			{ id: "Cash_Receipt", name: "Cash Receipt" },
+			{ id: "Sale_Return", name: "Sale Return" },
+			{ id: "GDN", name: "Delivered Note" }
+	    ],
 		weekDayList 			: [
 			{ id: 0, name: 'Sunday' },
 			{ id: 1, name: 'Monday' },
@@ -57165,16 +57175,7 @@
 			this.set("contact_type_id", null);
 		}
 	});
-	var customerList = [
-    	{ id: "Quote", name: "Quotation" },
-		{ id: "Sale_Order", name: "Sale Order" },
-		{ id: "Deposit", name: "Deposit" },
-		{ id: "Cash_Sale", name: "Cash Sale" },
-		{ id: "Invoice", name: "Invoice" },
-		{ id: "Cash_Receipt", name: "Cash Receipt" },
-		{ id: "Sale_Return", name: "Sale Return" },
-		{ id: "GDN", name: "Delivered Note" }
-    ];
+	
 	function activeInvoiceTmp(e){
 		var Active;
 		switch(e) {
@@ -57295,12 +57296,8 @@
         	}
         },
         goInvoiceCustom : function(){
-        	var typeList = [
-		    	{ id: "Quote", name: "Quotation" },
-				{ id: "Sale_Order", name: "Sale Order" }
-		    ];
 
-		    banhji.invoiceCustom.set("selectTypeList", typeList);
+		    banhji.invoiceCustom.set("selectTypeList", banhji.source.customerFormList);
 
 		    banhji.router.navigate('/invoice_custom');
         }      
@@ -57366,6 +57363,7 @@
 		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
 		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
 		obj 				: {type: "Quote", amount: "$500,000.00",title: "Quotation"},
+		objForm	 			: null,
 		company 			: banhji.institute,
 		saveClose 			: false,
 		selectTypeList 		: customerList,
@@ -57391,35 +57389,21 @@
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
-			}else{				
-				if(this.get("isEdit") || this.dataSource.total()==0){
-					this.addEmpty();
-				}								
-			}
-			if(id){
-				this.set("isEdit", true);
-				this.loadObj(id);
 			}else{	
 				var obj = this.get("obj"), self = this;
 				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm10);		
 				this.addRowLineDS();
-				if(this.get("isEdit")){
-					this.set("isEdit", false);								
-					this.dataSource.data([]);					
-					
+				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
-				}
-				
-				this.txnFormDS.query({    			
-					filter: { field:"type", value: obj.type },
-					page: 1,
-					take: 100
-				}).then(function(e){
-					var view = self.txnFormDS.view();
-					self.set("obj", view[0]);
-				});	
+					this.txnFormDS.query({    			
+						filter: { field:"type", value: obj.type },
+						page: 1,
+						take: 100
+					}).then(function(e){
+						var view = self.txnFormDS.view();
+						self.set("objForm", view[0]);
+					});	
+				}	
 				var name = banhji.invoiceForm.get("obj");
 				name.set("title", "Quotation");
 			}
@@ -57468,16 +57452,15 @@
 				var view = self.dataSource.view();
 				self.set("obj", view[0]);
 				
-				
 				banhji.invoiceForm.set("obj", view[0]);	
 				var Index = parseInt(view[0].transaction_form_id);
 				activeInvoiceTmp(Index);
 				self.addRowLineDS();
 
 				self.txnFormDS.filter({ field:"type", value: view[0].type });	
-				var other = self.txnFormDS.view();
-				if(other[0].other == "customer_mg"){
-					self.set("selectTypeList", customerList);
+				var moduls = self.txnFormDS.view();
+				if(moduls[0].moduls == "customer_mg"){
+					self.set("selectTypeList", banhji.source.customerFormList);
 				}
 			});	
 		},		
@@ -57490,13 +57473,13 @@
 				transaction_form_id : 0,
 				type 			: "Quote",
 				name 			: "",
-				title 			: "",
+				title 			: "Quotation",
 				note 			: "",
-				color  			: null
+				color  			: null,
+				moduls 			: "customer_mg",
 	    	});		
 			var obj = this.dataSource.at(0);			
 			this.set("obj", obj);		
-
 		},		
 		objSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -57510,17 +57493,29 @@
 		    this.dataSource.bind("error", function(e){		    		    	
 				dfd.reject(e.errorThrown);    				
 		    });
-
+		    console.log(dfd);
 		    return dfd;	    		    	
 	    }, 	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
 			//Save Obj
+			/*this.dataSource.data([]);
+			this.dataSource.insert(0, {
+				user_id			: banhji.source.user_id,
+				transaction_form_id : obj.transaction_form_id,
+				type 			: obj.type,
+				name 			: obj.name,
+				title 			: obj.title,
+				note 			: obj.note,
+				color  			: obj.color,
+				moduls 			: obj.moduls,
+			});*/
 			this.objSync()
 			.then(function(data){ //Success	
-				//banhji.customerSetting.txnTemplateDS.fetch();	
+				banhji.customerSetting.txnTemplateDS.fetch();	
 				
 				return data;
+				console.log(data);
 			}, function(reason) { //Error
 				$("#ntf1").data("kendoNotification").error(reason);
 			}).then(function(result){				
@@ -57530,7 +57525,7 @@
 					//Save Close					
 					self.set("saveClose", false);
 					self.cancel();
-					window.history.back();
+					//window.history.back();
 				}else{
 					//Save New
 					self.addEmpty();
@@ -68877,7 +68872,7 @@
 				var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
 				loadStyle(Href1);	
 
-				//setTimeout(function(){
+				setTimeout(function(){
 					var validator = $("#example").kendoValidator().data("kendoValidator");
 					var notification = $("#notification").kendoNotification({				    
 					    autoHideAfter: 5000,
@@ -68904,7 +68899,7 @@
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 				        }
 					});
-				//},2000);
+				},2000);
 		        
 						
 			};

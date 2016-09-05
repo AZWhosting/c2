@@ -92,6 +92,7 @@ class Transaction_templates extends REST_Controller {
 					"color" 				=> $value->color,
 					"title" 				=> $value->title,
 					"note" 					=> $value->note,
+					"moduls" 					=> $value->moduls,
 					"created_at" 			=> $value->created_at,
 					"updated_at" 			=> $value->updated_at	
 				);
@@ -108,13 +109,14 @@ class Transaction_templates extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-			$obj->transaction_form_id 		= $value->transaction_form_id;
-			$obj->user_id 					= $value->user_id;
-			$obj->type 						= $value->type;
-			$obj->name 						= $value->name;
-			$obj->title 					= $value->title;
-			$obj->note 						= $value->note;
-			$obj->color 					= $value->color;	
+			isset($value->transaction_form_id)? $obj->transaction_form_id 	= $value->transaction_form_id : "";
+			isset($value->user_id)? 			$obj->user_id 				= $value->user_id : "";
+			isset($value->type)? 				$obj->type 					= $value->type : "";
+			isset($value->name)? 				$obj->name 					= $value->name : "";
+			isset($value->title)? 				$obj->title 				= $value->title : "";
+			isset($value->note)? 				$obj->note 					= $value->note : "";
+			isset($value->moduls)? 				$obj->moduls 					= $value->moduls : "";
+			isset($value->color)? 				$obj->color 				= $value->color : "";	
 						
 			if($obj->save()){
 				$data["results"][] = array(
@@ -126,6 +128,7 @@ class Transaction_templates extends REST_Controller {
 					"color" 				=> $obj->color,
 					"title" 				=> $obj->title,
 					"note" 					=> $obj->note,
+					"moduls" 				=> $obj->moduls,
 					"created_at" 			=> $obj->created_at,
 					"updated_at" 			=> $obj->updated_at
 				);
@@ -146,13 +149,14 @@ class Transaction_templates extends REST_Controller {
 			$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			$obj->transaction_form_id 		= $value->transaction_form_id;
-			$obj->user_id 					= $value->user_id;
-			$obj->type 						= $value->type;
-			$obj->name 						= $value->name;
-			$obj->title 					= $value->title;
-			$obj->note 						= $value->note;
-			$obj->color 					= $value->color;			
+			isset($value->transaction_form_id)? $obj->transaction_form_id 	= $value->transaction_form_id : "";
+			isset($value->user_id)? 			$obj->user_id 				= $value->user_id : "";
+			isset($value->type)? 				$obj->type 					= $value->type : "";
+			isset($value->name)? 				$obj->name 					= $value->name : "";
+			isset($value->title)? 				$obj->title 				= $value->title : "";
+			isset($value->note)? 				$obj->note 					= $value->note : "";
+			isset($value->moduls)? 				$obj->moduls 				= $value->moduls : "";
+			isset($value->color)? 				$obj->color 				= $value->color : "";			
 
 			if($obj->save()){				
 				$data["results"][] = array(
@@ -164,6 +168,7 @@ class Transaction_templates extends REST_Controller {
 					"color" 				=> $obj->color,
 					"title" 				=> $obj->title,
 					"note" 					=> $obj->note,
+					"moduls" 				=> $obj->moduls,
 					"created_at" 			=> $obj->created_at,
 					"updated_at" 			=> $obj->updated_at
 				);		
