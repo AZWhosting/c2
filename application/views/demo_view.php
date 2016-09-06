@@ -8522,10 +8522,9 @@
 			<div class="container-960">					
 				<div id="example" class="k-content">					
 				    
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
-					</div>
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
 
 			        <h2>SUPPLIER</h2>			    		   
 
@@ -8533,35 +8532,32 @@
 
 				    <!-- Top Part -->
 			    	<div class="row-fluid">
-			    		<div class="span6 well">
-
-							<div class="row-fluid">
-
+			    		<div class="span6 well">									
+							<div class="row">
 								<div class="span6">														
 									<!-- Group -->
 									<div class="control-group">										
 										<label for="ddlContactType">Supplier Type <span style="color:red">*</span></label>
 										<input id="ddlContactType" name="ddlContactType"
-											   data-role="dropdownlist"
-											   data-header-template="vendor-type-header-tmpl"
-											   data-option-label="(--- Select ---)"									                   
-							                   data-value-primitive="true"
-							                   data-text-field="name"
-							                   data-value-field="id"
-							                   data-bind="value: obj.contact_type_id,
-							                   			  disabled: obj.is_pattern, 
-							                              source: contactTypeDS,
-							                              events:{change: contactTypeChanges}"
-							                   required data-required-msg="required"
-							                   style="width: 100%;" />									            
+												   data-role="dropdownlist"
+												   data-header-template="vendor-type-header-tmpl"       
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.contact_type_id,
+								                   			  disabled: obj.is_pattern,
+								                              source: contactTypeDS,
+								                              events:{change: typeChanges}"
+								                   data-option-label="(--- Select ---)"
+								                   required data-required-msg="required" style="width: 100%;" />																				            
 									</div>
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6">	
+								<div class="span6" style="padding-right: 0;">	
 									<!-- Group -->
 									<div class="control-group">							
-										<label for="txtAbbr"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>
+										<label for="txtAbbr"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>										
 				              			<br>
 				              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
 					              				data-bind="value: obj.abbr, 
@@ -8574,63 +8570,61 @@
 							                   			  disabled: obj.is_pattern, 
 							                   			  events:{change: checkExistingNumber}"
 							                   placeholder="eg. 001" required data-required-msg="required"
-							                   style="width: 125px;" />
+							                   style="width: 143px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->											
 								</div>
 							</div>
 							
-							<div class="row-fluid">
-								<div class="span6">						
+							<div class="row">
+								<div class="span12">	
 									<!-- Group -->
-									<div class="control-group">
-										<label for="surname"><span data-bind="text: lang.lang.surname"></span> <span style="color:red">*</span></label>
-					              		<input id="surname" name="surname" class="k-textbox" data-bind="value: obj.surname, disabled: obj.is_pattern" 
-							              		placeholder="surname ..." required data-required-msg="required"
+									<div class="control-group">								
+										<label for="fullname">Full Name <span style="color:red">*</span></label>
+							            <input id="fullname" name="fullname" class="k-textbox" 
+							            		data-bind="value: obj.name, 
+							            					disabled: obj.is_pattern,
+							            					attr: { placeholder: phFullname }" 
+							              		required data-required-msg="required"
 							              		style="width: 100%;" />
-									</div>
+									</div>																		
+									<!-- // Group END -->
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="span6">	
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="customerStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
+							            <input id="customerStatus" name="customerStatus" 
+							              				data-role="dropdownlist"
+									            		data-text-field="name"
+						           						data-value-field="id"
+						           						data-value-primitive="true" 
+									            		data-bind="source: statusList, value: obj.status"
+									            		data-option-label="(--- Select ---)"
+									            		required data-required-msg="required" style="width: 100%;" />
+									</div>																		
 									<!-- // Group END -->
 								</div>
 
 								<div class="span6">	
 									<!-- Group -->
 									<div class="control-group">								
-										<label for="name"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
-							            <input id="name" name="name" class="k-textbox" data-bind="value: obj.name, disabled: obj.is_pattern" 
-							              		placeholder="name ..." required data-required-msg="required"
-							              		style="width: 100%;" />
+										<label for="registeredDate"><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></label>
+							            <input id="registeredDate" name="registeredDate" 
+								            		data-role="datepicker"			            		
+					            					data-bind="value: obj.registered_date, disabled: obj.is_pattern" 
+					            					data-format="dd-MM-yyyy"
+					            					data-parse-formats="yyyy-MM-dd" 
+					            					placeholder="dd-MM-yyyy" required data-required-msg="required" style="width: 100%;" />
 									</div>																		
 									<!-- // Group END -->
 								</div>
-							</div>
-							
-							<div class="row-fluid" data-bind="visible: isCompany">
-								<div class="span6">
-									<!-- Group -->
-									<div class="control-group">
-										<label for="companyName"><span data-bind="text: lang.lang.organization_name"></span> </label>
-										<input id="companyName" name="companyName" class="k-textbox" data-bind="value: obj.company, disabled: obj.is_pattern"									
-												placeholder="e.g. PCG & Partner"
-												style="width: 100%;" />	
-									</div>
-									<!-- // Group END -->
-								</div>
-
-								<div class="span6">	
-									<!-- Group -->
-									<div class="control-group">
-										<label for="vatNo">Sale TAX Number</label>								
-					            		<input id="vatNo" name="vatNo" class="k-textbox" data-bind="value: obj.vat_no, disabled: obj.is_pattern" 
-												placeholder="e.g. 01234567897"
-												style="width: 100%;" />												
-									</div>					
-									<!-- // Group END -->
-								</div>
-							</div>
-
+							</div>																					
 						</div>
-
 						<div class="span6">
 							<div class="row-fluid">	
 								<!-- Map -->
@@ -8693,34 +8687,15 @@
 
 						    	<!-- //GENERAL INFO -->
 						        <div class="tab-pane active" id="tab1">
-					            	<table class="table table-borderless table-condensed cart_total">						            	
-					            		<tr>
-							                <td><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></td>
-							              	<td>
-							              		<input id="customerStatus" name="customerStatus" 
-							              				data-role="dropdownlist"
-									            		data-text-field="name"
-						           						data-value-field="id"
-						           						data-value-primitive="true" 
-									            		data-bind="source: statusList, value: obj.status"
-									            		data-option-label="(--- Select ---)"
-									            		required data-required-msg="required" />
-							              	</td>							              	
-							            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
-							              	<td>
-							              		<input id="registered_date" name="registered_date" 
-								            		data-role="datepicker"			            		
-					            					data-bind="value: obj.registered_date, disabled: obj.is_pattern" 
-					            					data-format="dd-MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
-							              	</td>
-							            </tr>
+					            	<table class="table table-borderless table-condensed cart_total">					            		
 							            <tr>
-							                <td><span data-bind="text: lang.lang.gender"></span></td>
-							              	<td><select data-role="dropdownlist" data-bind="source: genders, value: obj.gender"></select></td>							              	
+							                <td>VAT Number</td>
+							              	<td>
+					            				<input class="k-textbox" data-bind="value: obj.vat_no" 
+													placeholder="e.g. 01234567897" style="width: 100%;" />									
+							              	</td>							              	
 							            	<td><span data-bind="text: lang.lang.phone"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" style="width: 100%;" /></td>
 							            </tr>
 							            <tr>
 							            	<td>Country</td>
@@ -8731,35 +8706,33 @@
 									                   data-text-field="name"
 									                   data-value-field="id"
 									                   data-bind="value: obj.country_id,
-									                              source: countryDS" />
+									                              source: countryDS" style="width: 100%;" />
 							              	</td>							            								              	
 							            	<td><span data-bind="text: lang.lang.email"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" />							            	
+							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" style="width: 100%;" />							            	
 							            </tr>
 							            <tr>
 							            	<td>City</td>
-							              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." />							              	
+							              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." style="width: 100%;" />							              	
 							            	<td>Post Code</td>
-							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" />
-							            </tr>
+							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" style="width: 100%;" />
+							            </tr>							            
 							            <tr>
 							            	<td><span data-bind="text: lang.lang.address"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />									            								              	
+							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." style="width: 100%;" />									            								              	
 							            	<td><span data-bind="text: lang.lang.memo"></span></td>
-							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>							              	
+							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." style="width: 100%;" /></td>							              	
 							            </tr>									            
 							            <tr>
 							            	<td>
-							            		<label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label>											            
+							            		<label for="txtBillTo" data-bind="click: copyBillTo">Billed To <i class="icon-share"></i></label>											            
 							            	</td>
 							            	<td>
-							            		<input class="k-textbox" data-bind="value: obj.bill_to" placeholder="bill to ..." />
+							            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="billed to ..."></textarea>
 							            	</td>
+							            	<td>Delivered To</td>
 							            	<td>
-							            		<span data-bind="text: lang.lang.ship_to"></span>										            
-							            	</td>
-							            	<td>
-							            		<input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." />
+							            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="delivered to ..."></textarea>
 							            	</td>
 							            </tr>							            							            							            								            								            			            
 							        </table>
@@ -8983,13 +8956,39 @@
 					<br>											
 					
 					<!-- Form actions -->
-					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-						<span id="notification"></span>
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
 
-						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>						
-						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
-						<span class="btn btn-icon btn-default glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>					
+						<!-- Delete Confirmation -->
+						<div data-role="window"
+			                 data-title="Delete Confirmation"
+			                 data-width="350"
+			                 data-height="200"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'40%',left:'35%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: showConfirm"
+			                 style="text-align:center;">
+			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+			            </div>
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+							</div>
+						</div>
 					</div>
 					<!-- // Form actions END -->
 
@@ -15784,8 +15783,7 @@
 			    	<span class="glyphicons no-js remove_2 pull-right" 
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>						
-					</div>
-
+					
 			        <h2>CUSTOMER</h2>			    		   
 
 				    <br>
@@ -15800,14 +15798,14 @@
 										<label for="ddlContactType"><span data-bind="text: lang.lang.customer_type"></span> <span style="color:red">*</span></label>
 										<input id="ddlContactType" name="ddlContactType"
 												   data-role="dropdownlist"
-												   data-header-template="account-type-header-tmpl"       
+												   data-header-template="customer-type-header-tmpl"       
 								                   data-value-primitive="true"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.contact_type_id,
 								                   			  disabled: obj.is_pattern,
 								                              source: contactTypeDS,
-								                              events:{change: contactTypeChanges}"
+								                              events:{change: typeChanges}"
 								                   data-option-label="(--- Select ---)"
 								                   required data-required-msg="required" style="width: 100%;" />																				            
 									</div>
@@ -15830,7 +15828,7 @@
 							                   			  disabled: obj.is_pattern, 
 							                   			  events:{change: checkExistingNumber}"
 							                   placeholder="eg. 001" required data-required-msg="required"
-							                   style="width: 125px;" />
+							                   style="width: 143px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->											
@@ -16170,13 +16168,39 @@
 					<br>											
 					
 					<!-- Form actions -->
-					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-						<span id="notification"></span>
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
 
-						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>						
-						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
-						<span class="btn btn-icon btn-default glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+						<!-- Delete Confirmation -->
+						<div data-role="window"
+			                 data-title="Delete Confirmation"
+			                 data-width="350"
+			                 data-height="200"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'40%',left:'35%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: showConfirm"
+			                 style="text-align:center;">
+			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+			            </div>
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+							</div>
+						</div>
 					</div>
 					<!-- // Form actions END -->
 
@@ -35290,7 +35314,12 @@
 </script>
 
 <!--- Costomer -->
-<script id="contact-header-tmpl" type="text/x-kendo-tmpl">
+<script id="customer-type-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/customer_setting">+ Add New Customer Type</a>
+    </strong>
+</script>
+<script id="customer-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
     	<a href="\#/customer">+ Add New Customer</a>
     </strong>
@@ -42727,53 +42756,25 @@
 		settlementDiscountDS 	: banhji.source.supplierSettlementDiscountDS,
 		genders					: banhji.source.genderList,
 		statusList 				: banhji.source.statusList,
-        obj 					: null,       
+		isEdit 					: false,
+        obj 					: null,
+        saveClose 				: false,
+		showConfirm 			: false,       
 		originalNo				: null,	
 		isDuplicateNumber 		: false,
-		isCompany 				: false,
-		isEdit 					: false,
+		phFullname 				: "Supplier Name ...",
 		contact_type_id 		: 0,						
 		pageLoad 				: function(id, is_pattern){
 			if(id){
-				this.set("isEdit", true);							
+				this.set("isEdit", true);						
 				this.loadObj(id, is_pattern);
-				this.loadContactPerson(id);				
-			}else{
-				if(this.get("isEdit")){
-					this.set("isEdit", false);
+				this.loadContactPerson(id);
+			}else{				
+				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();
-				}															
-			}			
-		},
-		loadObj 				: function(id, is_pattern){
-			var self = this, para = [];
-
-			para.push({ field:"id", value: id });
-
-			if(is_pattern){
-				para.push({ field:"is_pattern", value: 1 });
-			}
-
-			this.dataSource.query({
-				filter: para,
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.dataSource.view();
-
-				if(view[0].company){
-					self.set("isCompany", true);
-				}else{
-					self.set("isCompany", false);
-				}
-
-				self.set("obj", view[0]);
-				self.loadMap();
-				self.set("originalNo", view[0].number);								
-			});
-		},				
+				}								
+			}	
+		},			
 		//Pattern		
 		applyPattern 			: function(contact_id){
 			var self = this, obj = self.get("obj");
@@ -42839,7 +42840,7 @@
 			banhji.customerSetting.contactTypeDS.sync();			
 			window.history.back();
 		},
-		contactTypeChanges 		: function(){
+		typeChanges 			: function(){
 			var obj = this.get("obj");
 
 			if(obj.contact_type_id){
@@ -42847,15 +42848,8 @@
 				this.applyPattern(type.contact_id);
 				obj.set("abbr", type.abbr);
 
-				if(type.is_company=="1"){
-					this.set("isCompany", true);
-				}else{
-					this.set("isCompany", false);
-					obj.set("company", "");
-					obj.set("vat_no", "");
-				}
+				this.generateNumber();
 			}else{
-				this.set("isCompany", false);
 				obj.set("company", "");
 				obj.set("vat_no", "");
 
@@ -42994,11 +42988,34 @@
 					}
 				}
 			});
+		},
+		//Obj
+		loadObj 				: function(id, is_pattern){
+			var self = this, para = [];
+
+			para.push({ field:"id", value: id });
+
+			if(is_pattern){
+				para.push({ field:"is_pattern", value: 1 });
+			}
+
+			this.dataSource.query({
+				filter: para,
+				page: 1,
+				pageSize: 100
+			}).then(function(e){
+				var view = self.dataSource.view();			
+
+				self.set("obj", view[0]);
+				self.loadMap();
+				self.set("originalNo", view[0].number);								
+			});
 		},		
       	addEmpty 				: function(){
       		var self = this;
       		this.dataSource.data([]);
       		this.contactPersonDS.data([]);
+      		this.set("isEdit", false);
       		this.set("obj", null);
 
       		this.patternDS.query({
@@ -43059,12 +43076,17 @@
 				self.generateNumber();
       		});								
 		},
-		contactSync 			: function(){
+		objSync 				: function(){
 	    	var dfd = $.Deferred();	        
 
 	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
 		    });
 
 		    return dfd;	    		    	
@@ -43072,52 +43094,73 @@
 		save 					: function(){			
 			var self = this;
 
-			if(this.get("isEdit")){
-				this.dataSource.sync();				
-				this.contactPersonDS.sync();
-			}else{
-				this.contactSync().then(function(data){
+			//Save Obj
+			this.objSync()
+			.then(function(data){ //Success												
+				if(self.get("isEdit")==false){
 					self.saveContactPerson(data[0].id);
 					if(data[0].is_pattern){
 						self.savePattern(data[0].contact_type_id, data[0].id);
 					}
-				}).then(function(){
-					self.addEmpty();										
-				});
-			}									
-		},
-		delete 					: function(){
-			var self = this,
-			obj = this.get("obj");
+				}
+				self.contactPersonDS.sync();
+				
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
-			if(!obj.is_pattern){
-				if (confirm("Are you sure, you want to delete it?")) {				
-					this.deleteDS.query({
-					  	filter: { field: "contact_id", value: obj.id },
-					  	page: 1,
-					  	pageSize: 1
-					}).then(function() {
-						var view = self.deleteDS.view();
-
-						if(view.length>0){
-							alert("Sorry, you can not delete it because it is using now.");
-						}else{
-							var data = self.dataSource.get(obj.id);
-					        data.set("deleted", 1);
-					        self.save();
-
-					        window.history.back();				        
-						}
-					});								
-		    	}
-	    	}
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					window.history.back();
+				}else{
+					//Save New
+					self.addEmpty();
+				}
+			});
 		},
 		cancel 					: function(){
 			this.dataSource.cancelChanges();
 			this.contactPersonDS.cancelChanges();
+			this.dataSource.data([]);
+			this.contactPersonDS.data([]);
 			this.set("contact_type_id", 0);
 
-			window.history.back();
+			banhji.userManagement.removeMultiTask("vendor");
+		},
+		delete 					: function(){
+			var self = this, obj = this.get("obj");
+			this.set("showConfirm",false);
+
+			if(obj.status==0){
+				this.deleteDS.query({
+				  	filter: { field: "contact_id", value: obj.id },
+				  	page: 1,
+				  	pageSize: 1
+				}).then(function() {
+					var view = self.deleteDS.view();
+
+					if(view.length>0){
+						alert("Sorry, you can not delete it because it is using now.");
+					}else{
+						obj.set("deleted", 1);
+				        self.dataSource.sync();
+
+				        window.history.back();				        
+					}
+				});
+			}else{
+				alert("Sorry, you can not delete it.");
+			}	    	
+		},
+		openConfirm 			: function(){
+			this.set("showConfirm", true);
+		},
+		closeConfirm 			: function(){
+			this.set("showConfirm", false);
 		}		
 	});
 	banhji.purchaseOrder =  kendo.observable({
@@ -49171,53 +49214,26 @@
 		settlementDiscountDS 	: banhji.source.settlementDiscountDS,
 		genders					: banhji.source.genderList,
 		statusList 				: banhji.source.statusList,
-        obj 					: null,       
+		confirmMessage 			: banhji.source.confirmMessage,
+		isEdit 					: false,
+        obj 					: null,
+        saveClose 				: false,
+		showConfirm 			: false,
 		originalNo				: null,	
 		isDuplicateNumber 		: false,
 		phFullname 				: "Customer Name ...",
-		isEdit 					: false,
 		contact_type_id 		: 0,						
 		pageLoad 				: function(id, is_pattern){
 			if(id){
-				this.set("isEdit", true);							
+				this.set("isEdit", true);						
 				this.loadObj(id, is_pattern);
-				this.loadContactPerson(id);				
-			}else{
-				if(this.get("isEdit")){
-					this.set("isEdit", false);
+				this.loadContactPerson(id);
+			}else{				
+				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();
-				}															
-			}			
-		},
-		loadObj 				: function(id, is_pattern){
-			var self = this, para = [];
-
-			para.push({ field:"id", value: id });
-
-			if(is_pattern){
-				para.push({ field:"is_pattern", value: 1 });
-			}
-
-			this.dataSource.query({
-				filter: para,
-				page: 1,
-				pageSize: 100
-			}).then(function(e){
-				var view = self.dataSource.view();
-
-				if(view[0].company){
-					self.set("isCompany", true);
-				}else{
-					self.set("isCompany", false);
-				}
-
-				self.set("obj", view[0]);
-				self.loadMap();
-				self.set("originalNo", view[0].number);								
-			});
-		},				
+				}								
+			}	
+		},			
 		//Pattern		
 		applyPattern 			: function(contact_id){
 			var self = this, obj = self.get("obj");
@@ -49283,7 +49299,7 @@
 			banhji.customerSetting.contactTypeDS.sync();			
 			window.history.back();
 		},
-		contactTypeChanges 		: function(){
+		typeChanges 			: function(){
 			var obj = this.get("obj");
 
 			if(obj.contact_type_id){
@@ -49291,13 +49307,14 @@
 				this.applyPattern(type.contact_id);
 				obj.set("abbr", type.abbr);
 
-				if(type.is_company=="1"){
-					this.set("phFullname", "Company Name ...");
-				}else{
-					this.set("phFullname", "Customer Name ...");
-				}				
+				this.generateNumber();
 			}else{
-				obj.set("country_id", 0);							
+				obj.set("company", "");
+				obj.set("vat_no", "");
+
+				obj.set("country_id", 0);					
+				obj.set("gender", "M");
+				obj.set("company", "");
 				obj.set("vat_no", "");
 				obj.set("memo", "");
 				obj.set("city", "");
@@ -49430,11 +49447,34 @@
 					}
 				}
 			});
+		},
+		//Obj
+		loadObj 				: function(id, is_pattern){
+			var self = this, para = [];
+
+			para.push({ field:"id", value: id });
+
+			if(is_pattern){
+				para.push({ field:"is_pattern", value: 1 });
+			}
+
+			this.dataSource.query({
+				filter: para,
+				page: 1,
+				pageSize: 100
+			}).then(function(e){
+				var view = self.dataSource.view();
+				
+				self.set("obj", view[0]);
+				self.loadMap();
+				self.set("originalNo", view[0].number);								
+			});
 		},		
       	addEmpty 				: function(){
       		var self = this;
       		this.dataSource.data([]);
       		this.contactPersonDS.data([]);
+      		this.set("isEdit", false);
       		this.set("obj", null);
 
       		this.patternDS.query({
@@ -49496,12 +49536,17 @@
 				self.generateNumber();
       		});								
 		},
-		contactSync 			: function(){
+	    objSync 				: function(){
 	    	var dfd = $.Deferred();	        
 
 	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
 		    });
 
 		    return dfd;	    		    	
@@ -49509,52 +49554,73 @@
 		save 					: function(){			
 			var self = this;
 
-			if(this.get("isEdit")){
-				this.dataSource.sync();				
-				this.contactPersonDS.sync();
-			}else{
-				this.contactSync().then(function(data){
+			//Save Obj
+			this.objSync()
+			.then(function(data){ //Success												
+				if(self.get("isEdit")==false){
 					self.saveContactPerson(data[0].id);
 					if(data[0].is_pattern){
 						self.savePattern(data[0].contact_type_id, data[0].id);
 					}
-				}).then(function(){
-					self.addEmpty();										
-				});
-			}									
-		},
-		delete 					: function(){
-			var self = this,
-			obj = this.get("obj");
+				}
+				self.contactPersonDS.sync();
+				
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
-			if(!obj.is_pattern){
-				if (confirm("Are you sure, you want to delete it?")) {				
-					this.deleteDS.query({
-					  	filter: { field: "contact_id", value: obj.id },
-					  	page: 1,
-					  	pageSize: 1
-					}).then(function() {
-						var view = self.deleteDS.view();
-
-						if(view.length>0){
-							alert("Sorry, you can not delete it because it is using now.");
-						}else{
-							var data = self.dataSource.get(obj.id);
-					        data.set("deleted", 1);
-					        self.save();
-
-					        window.history.back();				        
-						}
-					});								
-		    	}
-	    	}
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					window.history.back();
+				}else{
+					//Save New
+					self.addEmpty();
+				}
+			});
 		},
 		cancel 					: function(){
 			this.dataSource.cancelChanges();
 			this.contactPersonDS.cancelChanges();
+			this.dataSource.data([]);
+			this.contactPersonDS.data([]);
 			this.set("contact_type_id", 0);
 
 			banhji.userManagement.removeMultiTask("customer");
+		},
+		delete 					: function(){
+			var self = this, obj = this.get("obj");
+			this.set("showConfirm",false);
+
+			if(obj.status==0){
+				this.deleteDS.query({
+				  	filter: { field: "contact_id", value: obj.id },
+				  	page: 1,
+				  	pageSize: 1
+				}).then(function() {
+					var view = self.deleteDS.view();
+
+					if(view.length>0){
+						alert("Sorry, you can not delete it because it is using now.");
+					}else{
+						obj.set("deleted", 1);
+				        self.dataSource.sync();
+
+				        window.history.back();				        
+					}
+				});
+			}else{
+				alert("Sorry, you can not delete it.");
+			}	    	
+		},
+		openConfirm 			: function(){
+			this.set("showConfirm", true);
+		},
+		closeConfirm 			: function(){
+			this.set("showConfirm", false);
 		}		
 	});
 	banhji.quote =  kendo.observable({
@@ -66988,21 +67054,14 @@
 				banhji.pageLoaded["vendor"] = true;		             		        	       		         
 
 		        var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-
+												
 		        $("#saveNew").click(function(e){				
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
+		            	vm.save();		            				  
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
@@ -67010,26 +67069,11 @@
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
+						vm.set("saveClose", true);
+		            	vm.save();		            	
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-		            	window.print();
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
 				});	        	
 			}
 
@@ -67872,48 +67916,26 @@
 				banhji.pageLoaded["customer"] = true;		         
 
 		        var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-				
+												
 		        $("#saveNew").click(function(e){				
 					e.preventDefault();
 
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
+					if(validator.validate()){
+		            	vm.save();		            				  
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
 				$("#saveClose").click(function(e){				
 					e.preventDefault();
 
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
+					if(validator.validate()){
+						vm.set("saveClose", true);
+		            	vm.save();		            	
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-		            	vm.save();
-		            	window.print();
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
 				});	        	
 			}
 
