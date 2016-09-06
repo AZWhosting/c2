@@ -17,7 +17,8 @@
   width: 350px !important;
 }
 #ddlMeasurement-list,
-#ddlMesurement-list{
+#ddlMesurement-list,
+#txtPrice-list{
   width: 250px !important;
 }
 #ccbTaxItem-list{

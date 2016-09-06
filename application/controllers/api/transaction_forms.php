@@ -87,7 +87,7 @@ class Transaction_forms extends REST_Controller {
 					"id" 			=> $value->id,					
 					"type" 			=> $value->type,
 					"title" 	 	=> $value->title,
-					"other" 	 	=> $value->other,
+					"moduls" 	 	=> $value->moduls,
 					"note" 	 		=> $value->note,
 					"image_url" 	=> $value->image_url	
 				);
@@ -104,18 +104,18 @@ class Transaction_forms extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Transaction_form(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-			$obj->type 			= $value->type;
-			$obj->title 		= $value->title;
-			$obj->other 		= $value->other;
-			$obj->note 			= $value->note;
-			$obj->image_url 	= $value->image_url;
+			isset($value->type)? 			$obj->type 					= $value->type : "";
+			isset($value->title)? 			$obj->title 				= $value->title : "";
+			isset($value->moduls)? 			$obj->moduls 				= $value->moduls : "";
+			isset($value->note)? 			$obj->note 					= $value->note : "";
+			isset($value->image_url)? 		$obj->image_url 		= $value->image_url : "";
 						
 			if($obj->save()){
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
 					"type" 			=> $obj->type,
 					"title" 	 	=> $obj->title,
-					"other" 	 	=> $obj->other,
+					"moduls" 	 	=> $obj->moduls,
 					"note" 	 		=> $obj->note,
 					"image_url" 	=> $obj->image_url
 				);
@@ -136,18 +136,18 @@ class Transaction_forms extends REST_Controller {
 			$obj = new Transaction_form(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 			
-			$obj->type 			= $value->type;
-			$obj->title 			= $value->title;
-			$obj->other 		= $value->other;
-			$obj->note 			= $value->note;
-			$obj->image_url 	= $value->image_url;			
+			isset($value->type)? 			$obj->type 					= $value->type : "";
+			isset($value->title)? 			$obj->title 				= $value->title : "";
+			isset($value->moduls)? 			$obj->moduls 				= $value->moduls : "";
+			isset($value->note)? 			$obj->note 					= $value->note : "";
+			isset($value->image_url)? 		$obj->image_url 		= $value->image_url : "";		
 
 			if($obj->save()){				
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
 					"type" 			=> $obj->type,
 					"title" 	 	=> $obj->title,
-					"other" 	 	=> $obj->other,
+					"moduls" 	 	=> $obj->moduls,
 					"note" 	 		=> $obj->note,
 					"image_url" 	=> $obj->image_url
 				);		

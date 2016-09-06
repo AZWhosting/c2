@@ -12097,7 +12097,9 @@
 	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Payment Method</span></a>
 	            </li>
 	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Payment Term</span></a>
-	            </li>	                       
+	            </li>	   
+	            <li><a href="#tab4-1" class="glyphicons list" data-toggle="tab"><i></i><span class="strong">Custom Forms</span></a>
+	            </li>	                    
 	        </ul>
 	    </div>
 	    <!-- // Tabs Heading END -->
@@ -12175,6 +12177,27 @@
 	            </div>
 	            <!-- // PAYMENT TERM END -->
 
+	            <!-- Tab Invocice Custom content -->
+	            <div class="tab-pane" id="tab4-1">
+            		
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center">Name</th>
+	            				<th class="center">Form Type</th>
+	            				<th class="center">Last Edited</th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="customerSetting-form-template"
+				                 data-bind="source: txnTemplateDS">				            
+	            		</tbody>
+	            	</table>
+	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
+	            </div>
+	            <!-- // Tab Invoice Custom content END -->
 	        </div>
 	    </div>
 
@@ -20715,7 +20738,7 @@
 				                 data-bind="source: txnTemplateDS">				            
 	            		</tbody>
 	            	</table>
-	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" href="#/invoice_custom" style="width: 110px;"><i></i>Add New</a>
+	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
 	            </div>
 	            <!-- // Tab Invoice Custom content END -->
 
@@ -38754,6 +38777,25 @@
 			{ id: 10, name: 'November' },
 			{ id: 11, name: 'December' }
 		],
+		customerFormList 		: [
+	    	{ id: "Quote", name: "Quotation" },
+			{ id: "Sale_Order", name: "Sale Order" },
+			{ id: "Deposit", name: "Deposit" },
+			{ id: "Cash_Sale", name: "Cash Sale" },
+			{ id: "Invoice", name: "Invoice" },
+			{ id: "Cash_Receipt", name: "Cash Receipt" },
+			{ id: "Sale_Return", name: "Sale Return" },
+			{ id: "GDN", name: "Delivered Note" }
+	    ],
+	    vendorFormList 		: [
+	    	{ id: "Sale_Order", name: "PO" },
+	    	{ id: "GDN", name: "GRN" },
+			{ id: "Deposit", name: "Deposit" },
+			{ id: "Purchase", name: "Purchase" },
+			{ id: "Sale_Return", name: "Pur.Return" },
+			{ id: "Cash_Sale", name: "PayBill" }
+			
+	    ],
 		weekDayList 			: [
 			{ id: 0, name: 'Sunday' },
 			{ id: 1, name: 'Monday' },
@@ -48259,7 +48301,8 @@
 		lang 				: langVM,		
         contactTypeDS 		: dataStore(apiUrl+"contacts/type"),
         paymentMethodDS		: dataStore(apiUrl+"payment_methods"),
-        paymentTermDS		: dataStore(apiUrl+"payment_terms"),      
+        paymentTermDS		: dataStore(apiUrl+"payment_terms"),    
+        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),  
         contactTypeName 	: "",
         contactTypeAbbr 	: "",
         contactTypeCompany 	: 0,
@@ -48269,7 +48312,7 @@
         paymentTermPeriod 	: "",
         paymentTermPercentage 	: "",
         pageLoad 			: function() {
-        	
+        	this.txnTemplateDS.filter({ field: "moduls", value : "vendor_mg" });
         },	    
         addContactType 		: function(){
         	var name = this.get("contactTypeName");
@@ -48326,6 +48369,7 @@
 	        	this.set("paymentTermPercentage", "");
         	}
         },
+
         goPattern 	: function(e){
         	var data = e.data;        	        	
 
@@ -48335,7 +48379,20 @@
         		banhji.router.navigate('/vendor');
         		banhji.vendor.set("contact_type_id",data.id);
         	}
-        }        
+        }  ,   
+        deleteForm 		: function(e){
+        	var data = e.data;
+        	if(confirm("Do you want to delete it?") == true) {
+        		this.txnTemplateDS.remove(data);
+        		this.txnTemplateDS.sync();
+        	}
+        },
+        goInvoiceCustom : function(){
+
+		    banhji.invoiceCustom.set("selectTypeList", banhji.source.vendorFormList);
+
+		    banhji.router.navigate('/invoice_custom');
+        }   
     });
 
     //Report Vendor
@@ -57165,16 +57222,7 @@
 			this.set("contact_type_id", null);
 		}
 	});
-	var customerList = [
-    	{ id: "Quote", name: "Quotation" },
-		{ id: "Sale_Order", name: "Sale Order" },
-		{ id: "Deposit", name: "Deposit" },
-		{ id: "Cash_Sale", name: "Cash Sale" },
-		{ id: "Invoice", name: "Invoice" },
-		{ id: "Cash_Receipt", name: "Cash Receipt" },
-		{ id: "Sale_Return", name: "Sale Return" },
-		{ id: "GDN", name: "Delivered Note" }
-    ];
+	
 	function activeInvoiceTmp(e){
 		var Active;
 		switch(e) {
@@ -57220,7 +57268,7 @@
         paymentTermPeriod 	: "",
         paymentTermPercentage 	: "",
         pageLoad 			: function() {
-        	
+        	this.txnTemplateDS.filter({ field: "moduls", value : "customer_mg" });
         },	    
         addContactType 		: function(){
         	var name = this.get("contactTypeName");
@@ -57295,12 +57343,8 @@
         	}
         },
         goInvoiceCustom : function(){
-        	var typeList = [
-		    	{ id: "Quote", name: "Quotation" },
-				{ id: "Sale_Order", name: "Sale Order" }
-		    ];
 
-		    banhji.invoiceCustom.set("selectTypeList", typeList);
+		    banhji.invoiceCustom.set("selectTypeList", banhji.source.customerFormList);
 
 		    banhji.router.navigate('/invoice_custom');
         }      
@@ -57366,6 +57410,7 @@
 		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
 		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
 		obj 				: {type: "Quote", amount: "$500,000.00",title: "Quotation"},
+		objForm	 			: null,
 		company 			: banhji.institute,
 		saveClose 			: false,
 		selectTypeList 		: customerList,
@@ -57391,35 +57436,21 @@
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
-			}else{				
-				if(this.get("isEdit") || this.dataSource.total()==0){
-					this.addEmpty();
-				}								
-			}
-			if(id){
-				this.set("isEdit", true);
-				this.loadObj(id);
 			}else{	
 				var obj = this.get("obj"), self = this;
 				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm10);		
 				this.addRowLineDS();
-				if(this.get("isEdit")){
-					this.set("isEdit", false);								
-					this.dataSource.data([]);					
-					
+				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
-				}
-				
-				this.txnFormDS.query({    			
-					filter: { field:"type", value: obj.type },
-					page: 1,
-					take: 100
-				}).then(function(e){
-					var view = self.txnFormDS.view();
-					self.set("obj", view[0]);
-				});	
+					this.txnFormDS.query({    			
+						filter: { field:"type", value: obj.type },
+						page: 1,
+						take: 100
+					}).then(function(e){
+						var view = self.txnFormDS.view();
+						self.set("objForm", view[0]);
+					});	
+				}	
 				var name = banhji.invoiceForm.get("obj");
 				name.set("title", "Quotation");
 			}
@@ -57468,16 +57499,15 @@
 				var view = self.dataSource.view();
 				self.set("obj", view[0]);
 				
-				
 				banhji.invoiceForm.set("obj", view[0]);	
 				var Index = parseInt(view[0].transaction_form_id);
 				activeInvoiceTmp(Index);
 				self.addRowLineDS();
 
 				self.txnFormDS.filter({ field:"type", value: view[0].type });	
-				var other = self.txnFormDS.view();
-				if(other[0].other == "customer_mg"){
-					self.set("selectTypeList", customerList);
+				var moduls = self.txnFormDS.view();
+				if(moduls[0].moduls == "customer_mg"){
+					self.set("selectTypeList", banhji.source.customerFormList);
 				}
 			});	
 		},		
@@ -57490,13 +57520,13 @@
 				transaction_form_id : 0,
 				type 			: "Quote",
 				name 			: "",
-				title 			: "",
+				title 			: "Quotation",
 				note 			: "",
-				color  			: null
+				color  			: null,
+				moduls 			: "customer_mg",
 	    	});		
 			var obj = this.dataSource.at(0);			
 			this.set("obj", obj);		
-
 		},		
 		objSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -57510,7 +57540,7 @@
 		    this.dataSource.bind("error", function(e){		    		    	
 				dfd.reject(e.errorThrown);    				
 		    });
-
+		    console.log(dfd);
 		    return dfd;	    		    	
 	    }, 	    
 		save 				: function(){				
@@ -57518,9 +57548,10 @@
 			//Save Obj
 			this.objSync()
 			.then(function(data){ //Success	
-				//banhji.customerSetting.txnTemplateDS.fetch();	
+				banhji.customerSetting.txnTemplateDS.fetch();	
 				
 				return data;
+				console.log(data);
 			}, function(reason) { //Error
 				$("#ntf1").data("kendoNotification").error(reason);
 			}).then(function(result){				
@@ -57530,7 +57561,7 @@
 					//Save Close					
 					self.set("saveClose", false);
 					self.cancel();
-					window.history.back();
+					//window.history.back();
 				}else{
 					//Save New
 					self.addEmpty();
@@ -68877,7 +68908,7 @@
 				var Href1 = '<?php echo base_url(); ?>assets/invoice/invoice.css';
 				loadStyle(Href1);	
 
-				//setTimeout(function(){
+				setTimeout(function(){
 					var validator = $("#example").kendoValidator().data("kendoValidator");
 					var notification = $("#notification").kendoNotification({				    
 					    autoHideAfter: 5000,
@@ -68904,7 +68935,7 @@
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 				        }
 					});
-				//},2000);
+				},2000);
 		        
 						
 			};
