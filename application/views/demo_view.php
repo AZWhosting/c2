@@ -11490,10 +11490,9 @@
 			<div class="container-960">					
 				<div id="example" class="k-content">					
 				    
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
-					</div>
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
 
 			        <h2>PURCHASE RETURN</h2>			    		   
 
@@ -46004,7 +46003,7 @@
 						cost = item.cost*rate;
 					}
 				}
-
+				
 		        if(item.is_catalog=="1"){
 		        	this.catalogDS.query({
 		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
