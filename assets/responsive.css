@@ -17,7 +17,8 @@
   width: 350px !important;
 }
 #ddlMeasurement-list,
-#ddlMesurement-list{
+#ddlMesurement-list,
+#txtPrice-list{
   width: 250px !important;
 }
 #ccbTaxItem-list{
@@ -837,7 +838,10 @@ width: 50% !important;
 .widget-employees [class*="span"].listWrapper > .innerAll:first-of-type {
   padding: 11px;
   width: 100%;
-  height: 99px;
+  height: 106px;
+}
+.select2-container > .k-widget.k-dropdown.k-header > .k-dropdown-wrap.k-state-default{
+  height: 30px;
 }
 .k-widget.k-combobox.k-header .k-dropdown-wrap.k-state-default{
   border-radius: 0 !important;
