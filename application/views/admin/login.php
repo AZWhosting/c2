@@ -254,6 +254,13 @@
               var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
               cognitoUser.authenticateUser(authenticationDetails, {
                 onSuccess: function (result) {
+                  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                    IdentityPoolId : 'us-east-1_56S0nUDS4', // your identity pool id here
+                    Logins : {
+                        // Change the key below according to the specific region your user pool is in.
+                        'arn:aws:cognito-idp:us-east-1:260206821052:userpool/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
+                    }
+                  });
                   banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username});
                       banhji.companyDS.bind('requestEnd', function(e) {
                         var res = e.response;

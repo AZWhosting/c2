@@ -272,27 +272,46 @@
                                           &nbsp;&nbsp;
                                           <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: users.refresh"></i>
                                       </div>
-                                      <table class="clo-xs-12">
-                                          <thead>
-                                            <tr>
-                                                <th>Photo</th>
-                                                <th>Full Name</th>
-                                                <th>Email</th>
-                                                <th>Role</th>
-                                                <th>Last Login</th>
-                                                <th></th>
-                                            </tr>
-                                          </thead>
-                                          <tbody data-row="listview" data-template="user-profile-list" data-bind="source:users.users" data-bind="false">
-                                          </tbody>
-                                      </table>
+                                      
+                                      <div data-role="listview" data-template="user-profile-list" data-bind="source:users.users" data-bind="false" class="row" style="border: 0;">
+                                      </div>
+                                      
                                   </article>
                               </div>
                           </div>
                       </section>
 
                   </div>
-
+                  <div id="userFormConfirm" style="visibility: hidden">
+                    <div class="row">
+                      <divclass="col-md-12 col-sm-12 col-xs-12"></div>
+                        <div class="x_panel" style="width: 94%">
+                            <div class="x_title">
+                                <h2>Edit User</h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <br>
+                                <div id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Code <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="code" data-bind="value: users.code" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button class="btn btn-primary">Cancel</button>
+                                            <button id="userConfirm" class="btn btn-success" data-bind="click: users.confirm">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
               </div>
           </div>
       </div>
@@ -475,16 +494,18 @@
                   </div>
 
                   <div class="col-xs-12 col-md-8 col-lg-9">
-                    <section class="box-typical user-module">
-                      <div data-role="listview" data-bind="source: modules" data-template="user-profile-modules"></div>
+                    <section class="box-typical user-module" id="profile-placeholder">
                     </section>
                   </div>
-
               </div>
           </div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-modules">
+      <button>Assign Module</button>
+      <div data-role="listview" data-bind="source: modules" data-template="user-profile-modules-list"></div>
+    </script>
+    <script type="text/x-kendo-template" id="user-profile-modules-list">
        <div class="col-xs-3 col-md-2 col-lg-2">
           <div>
               <a href="\#/customers">
@@ -492,41 +513,107 @@
               </a>
               <span><span data-bind="text: name"></span></span>
           </div>
-      </div>
+    </div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-list">
-      <tr>
-        <td>
-            <a href="\#">
-                <img width="120px"  src="#=profile_photo#" alt="">
-            </a>
-        </td>
-        <td>#=first_name# #=last_name#</td>
-        <td>#=username#</td>
-        <td>
-          # if(role == "1") {#
-            Admin
-          #} else {#
-            User
-          #}#
-        </td>
-        <td>
-          #=logged_in#
-        </td>
-        <td>
-            <div class="btn-group">
-                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Action
-                </button>
-                <div class="dropdown-menu">
-                    <a href="\#" style="display: none">Test</a>
-                    <a class="dropdown-item" href="\#userlist/#=id#"><span class="font-icon font-icon-edit"></span>Edit</a>
-                    <a class="dropdown-item" href="\#"><span class="font-icon font-icon-cart"></span>Password</a>
-                    <a class="dropdown-item" href="\#profile/#=id#"><span class="font-icon font-icon-speed"></span>View More</a>
+      <section class="box-typical col-md-3" style="margin: 17px;">
+        <div class="profile-card">
+            <div class="profile-card-photo">
+                <img data-bind="attr: {src: profile_photo}">
+            </div>
+            <div class="profile-card-name">
+                <span data-bind="text: last_name"></span>&nbsp;
+                <span data-bind="text: first_name"></span>
+            </div>
+            <div class="profile-card-status">
+              Joined In: <span data-bind="text: joined"></span>
+            </div>
+            <div class="profile-card-status">
+              Logged In: <span data-bind="text: logged_in"></span>
+            </div>
+            <div class="profile-card-status" style="font-weight: bold">
+              # if(role == 1) {#
+                Admin
+              #} else {#
+                User
+              #}#
+            </div>
+            <div class="profile-card-location">
+              <button class="btn btn-primary btn-xs btn-block" data-bind="disabled: is_confirmed, events: {click: showConfirm}" style="margin-bottom: 5px;"><i class="fa fa-folder"></i> Confirm </button>
+              <a href="\#assignto/#=id#"><button class="btn btn-alert btn-block" style="margin-bottom: 5px;">Assign/Reassign</button></a>
+              <button class="btn btn-alert btn-block" style="margin-bottom: 5px;" data-bind="click: showFormEdit">Edit</button>
+              # if(username == userPool.getCurrentUser().username) {#
+                <a href="\#password/#=id#"><button class="btn btn-warning btn-block" style="margin-bottom: 5px;">Change Password</button></a>
+              #} else {#
+                <button class="btn btn-info btn-block" data-bind="click: forgotPassword" style="margin-bottom: 5px;">Forget Password</button>
+              #}#
+              <a href="\#profile/#=id#"><button class="btn btn-default btn-block" style="margin-bottom: 5px;">View</button></a>
+            </div>
+        </div>
+      </section>   
+    </script>
+    <script type="text/x-kendo-template" id="template-assign-module-to-page">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-12">
+                    <i class="fa fa-close pull-right" data-bind="click: backToProfile"></i>
                 </div>
             </div>
-        </td>
-      </tr>
+            <div class="row">
+                <div class="col-lg-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                              <td>Company Subscribed Modules</td>
+                              <td></td>
+                            </tr>
+                        </thead>
+                        <tbody data-role="listview" data-bind="source: cModules" data-template="template-modules-users-company-list-page">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-6">
+                    <table style="width: 100%" class="table">
+                        <thead>
+                            <tr>
+                              <td style="width: 80%">User Access Modules</td>
+                              <td><i class="fa fa-save" data-bind="click: saveAssign" style="cursor: pointer;"></i>&nbsp;
+                              <i class="fa fa-eraser" data-bind="click: cancelAssign" style="cursor: pointer;"></i></td>
+                            </tr>
+                        </thead>
+                        <tbody data-role="listview" data-bind="source: modules" data-template="template-modules-users-module-list-page">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-kendo-template" id="template-user-password">
+      <div class="col-md-12">
+        Old Password: <input class="form-control" type="password" data-bind="value: oldPass"><br>
+        New Password: <input class="form-control" type="password" data-bind="value: newPass"><br>
+        <button class="btn btn-primary btn-block" data-bind="click: changePassword">Confirm</button>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="template-modules-users-company-list-page">
+        <tr>
+            <td>
+                #=name#
+            </td>
+            <td>
+                <i class="fa fa-hand-o-right" data-bind="click: assignTo"></i>
+            </td>
+        </tr>
+    </script>
+    <script type="text/x-kendo-template" id="template-modules-users-module-list-page">
+        <tr>
+            <td>
+                #=name#
+            </td>
+            <td>
+                <i class="fa fa-trash" data-bind="click: removeFrom"></i>
+            </td>
+        </tr>
     </script>
     <script type="text/x-kendo-template" id="user-profile-action">
       <!--Add User-->
@@ -551,7 +638,7 @@
                                     <td>Username *</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" data-bind="value: current.username" class="form-control" id="" placeholder="">
+                                        <input type="text" data-bind="value: current.username" class="form-control"  id="" placeholder="">
                                     </td>
                                 </tr>
                                 <tr>
@@ -593,44 +680,186 @@
                                     <td>Facebook</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
+                                        <input type="Email" data-bind="value: current.facebook" class="form-control" id="" placeholder="">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>LinkedIn</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
+                                        <input type="Email" data-bind="value: current.linkedin" class="form-control" id="" placeholder="">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Twitter</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
+                                        <input type="Email" data-bind="value: current.twitter" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Role</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input id="type"
+                                               data-role="dropdownlist"
+                                               data-bind="source: userRoles, value: current.role"
+                                               data-text-field="name"
+                                               data-value-field="id"
+                                               data-value-primitive="true"
+                                               class="form-control col-md-7 col-xs-12"
+                                               type="text"
+                                               >
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Type</td>
                                     <td>:</td>
                                     <td>
-                                        <select id="exampleSelect" class="form-control">
-                                            <option>Normal</option>
-                                            <option>Developer</option>
-                                        </select>
+                                        <input id="type"
+                                               data-role="dropdownlist"
+                                               data-bind="source: userTypes, value: current.usertype"
+                                               data-text-field="name"
+                                               data-value-field="id"
+                                               data-value-primitive="true"
+                                               class="form-control col-md-7 col-xs-12"
+                                               type="text">
                                     </td>
                                 </tr>
                             </table>
                         </article>
                         <div class="box-generic">
-                            <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
-                                <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
-                                &nbsp; Save
+                          <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
+                              <span class="glyphicon glyphicon-ok"><i></i></span>
+                              &nbsp; Save
+                          </button>
+                          &nbsp;
+                          <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0" data-bind="click: cancel">
+                              <span class="glyphicon glyphicon-remove"><i></i></span>
+                              &nbsp; Cancel
                             </button>
-                            &nbsp;
-                            <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
-                                <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
-                                &nbsp; Cancel
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="user-profile-action-edit">
+      <!--Add User-->
+      <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <section class="box-typical edit-company">
+                        <div class="hidden-print pull-right">
+                            <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
+                        </div>
+                        <h2>User Detail</h2>
+                        <div class="divider"></div>
+                        <div class="col-md-3 col-lg-3">
+                            <img width="240px" data-bind="attr: {src: current.profile_photo}" />
+                            <h3>Profile Picture</h3>
+                            <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                        </div>
+                        <article class="col-md-9 col-lg-9 profile-info-item edit-table">
+                            <table >
+                                <tr>
+                                    <td>Username *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: current.username" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>First Name *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: current.first_name" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: current.last_name" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: current.mobile" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Facebook</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: current.facebook" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>LinkedIn</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: current.linkedin" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Twitter</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: current.twitter" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Role</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input id="type"
+                                               data-role="dropdownlist"
+                                               data-bind="source: userRoles, value: current.role"
+                                               data-text-field="name"
+                                               data-value-field="id"
+                                               data-value-primitive="true"
+                                               class="form-control col-md-7 col-xs-12"
+                                               type="text"
+                                               >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Type</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input id="type"
+                                               data-role="dropdownlist"
+                                               data-bind="source: userTypes, value: current.usertype"
+                                               data-text-field="name"
+                                               data-value-field="id"
+                                               data-value-primitive="true"
+                                               class="form-control col-md-7 col-xs-12"
+                                               type="text">
+                                    </td>
+                                </tr>
+                            </table>
+                        </article>
+                        <div class="box-generic">
+                          <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
+                              <span class="glyphicon glyphicon-ok"><i></i></span>
+                              &nbsp; Save
+                          </button>
+                          &nbsp;
+                          <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0" data-bind="click: cancel">
+                              <span class="glyphicon glyphicon-remove"><i></i></span>
+                              &nbsp; Cancel
                             </button>
                         </div>
                     </section>
@@ -1135,10 +1364,6 @@
           },
           batch: true,
           serverFiltering: true,
-          filter: {
-            field: 'username',
-            value: userPool.getCurrentUser() == null ? "" : userPool.getCurrentUser().username
-          },
           serverPaging: true,
           pageSize: 50
         }),
@@ -1147,8 +1372,7 @@
         },
         code  : '',
         backToProfile: function() {
-          layout.showIn("#main-display-container", index);
-          layout.showIn("#main-display-container", profile);
+          banhji.router.navigate('');
         },
         saveAssign: function() {
           this.modules.sync();
@@ -1193,6 +1417,63 @@
           // index.showIn('#app-placeholder', userlist);
           layout.showIn("#main-display-container", assign);
         },
+        oldPass: null,
+        newPass: null,
+        changePassword: function() {
+          var userData = {
+              Username : userPool.getCurrentUser().username,
+              Pool : userPool
+          };
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData); 
+          if(cognitoUser != null) {
+            cognitoUser.getSession(function(err, session) {
+              if (err) {
+                 alert(err);
+                  return;
+              }
+              console.log('session validity: ' + session.isValid());
+
+              AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId : 'us-east-1_56S0nUDS4', // your identity pool id here
+                Logins : {
+                    // Change the key below according to the specific region your user pool is in.
+                    'arn:aws:cognito-idp:us-east-1:260206821052:userpool/us-east-1_56S0nUDS4' : session.getIdToken().getJwtToken()
+                }
+              });
+            });
+          }
+          cognitoUser.changePassword(this.get('oldPass'), this.get('newPass'), function(err, result) {
+              if (err) {
+                  alert(err);
+                  return;
+              } else {
+                banhji.users.set('oldPass', null);
+                banhji.users.set('newPass', null);
+              }
+              console.log('call result: ' + result);
+          });
+        },
+        forgotPassword: function(e) {
+            e.preventDefault();
+            var userData = {
+                Username : userPool.getCurrentUser().username,
+                Pool : userPool
+            };
+            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+            cognitoUser.forgotPassword({
+                onSuccess: function (result) {
+                    console.log('call result: ' + result);
+                },
+                onFailure: function(err) {
+                    alert(err);
+                },
+                inputVerificationCode() {
+                    var verificationCode = prompt('Please input verification code ' ,'');
+                    var newPassword = prompt('Enter new password ' ,'');
+                    cognitoUser.confirmPassword(verificationCode, newPassword, this);
+                }
+            });
+        },
         refresh: function() {
           $('#user-spinwhile').addClass('fa-spin');
           banhji.users.users.read().then(function() {
@@ -1205,6 +1486,10 @@
         userTypes : [
           {id: 1, name: 'normal'},
           {id: 2, name: 'developer'}
+        ],
+        userRoles: [
+          {id: 1, name: 'Admin'},
+          {id: 2, name: 'User'}
         ],
         showModule: function() {
           layout.showIn("#main-display-container", userlMod);
@@ -1275,7 +1560,7 @@
           if(this.users.hasChanges()) {
             this.users.cancelChanges();
           }
-          banhji.router.navigate('userlist');
+          banhji.router.navigate('');
         },
         cancelAssign: function() {
           if(this.modules.hasChanges()) {
@@ -1283,51 +1568,8 @@
           }
         },
         showFormEdit: function(e) {
-          this.setCurrent(e.data);
-          var win = $('#userFormEdit').kendoWindow({
-            width: "600px",
-            // title: "User Form",
-            visible: false,
-            modal: true,
-            actions: [
-                "Close"
-            ]
-          }).data('kendoWindow');
-          win.center().open();
-          $("#userEdit").click(function() {
-            if(banhji.userDS.at(0).isNew()) {
-              // signup with Cognito
-              // using cognito to sign up
-              var attributeList = [];
-
-              var dataEmail = {
-                  Name : 'email',
-                  Value : userPool.getCurrentUser().username
-              };
-
-              var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
-
-              attributeList.push(attributeEmail);
-
-              userPool.signUp(banhji.users.get('current').username, banhji.users.get('current').password, attributeList, null, function(err, result){
-                  if (err) {
-                      alert(err);
-                      return;
-                  }
-                  alert('Your action was successful.');
-              });
-              // save to database
-            }
-
-            banhji.userDS.sync();
-            banhji.userDS.bind('requestEnd', function(e){
-              var res = e.response, type = e.type;
-              if(res.results.length > 0) {
-                console.log('user created.');
-                win.close();
-              }
-            });
-          });
+          banhji.users.setCurrent(e.data);
+          banhji.router.navigate('userlist/edit');
         },
         showConfirm: function(e){
           this.setCurrent(e.data);
@@ -1384,30 +1626,22 @@
         edit: function(e) {
           banhji.router.navigate('userlist/' + e.data.id);
         },
-        editProfile: function(e) {
-          e.preventDefault();
-          banhji.router.navigate('userlist/' + this.get('current').id);
-        },
-        edit: function(e) {
-          banhji.router.navigate('userlist/' + e.data.id);
-        },
         confirm: function(e) {
           e.preventDefault();
-
-          // var userData = {
-          //     Username : this.get('current').username,
-          //     Pool : userPool
-          // };
-          // var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-          // cognitoUser.confirmRegistration(this.get('code'), true, function(err, result) {
-          //     if (err) {
-          //         alert(err);
-          //         return;
-          //     }
-          //     banhji.users.set('code', '');
-          //     banhji.users.get('current').set('is_confirmed', true);
-          //     banhji.users.save();
-          // });
+          var userData = {
+              Username : banhji.users.get('current').username,
+              Pool : userPool
+          };
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+          cognitoUser.confirmRegistration(banhji.users.get('code'), true, function(err, result) {
+              if (err) {
+                  alert(err);
+                  return;
+              }
+              banhji.users.set('code', '');
+              banhji.users.get('current').set('is_confirmed', true);
+              banhji.users.save();
+          });
         },
         save: function() {
           if(banhji.userDS.at(0).isNew()) {
@@ -1540,6 +1774,7 @@
       var dash = new kendo.View('#template-dashboard', {model: banhji.company});
       var userlist= new kendo.View('#template-userlist-page', {model: banhji.users});
       var userForm= new kendo.View('#user-profile-action', {model: banhji.users});
+      var userEdit= new kendo.View('#user-profile-action-edit', {model: banhji.users});
       var userNew= new kendo.View('#template-userlist-form-new-page', {model: banhji.users});
       var userlMod= new kendo.View('#template-modules-users-page', {model: banhji.users});
       var institute = new kendo.Layout('#template-createcompany-page', {model: banhji.company});
@@ -1548,8 +1783,10 @@
       var loading = new kendo.View('#template-waiting-page');
       var unthau = new kendo.View('#template-unauth-page');
       var modeleView = new kendo.View('#template-modules-page', { model: banhji.company});
-      var profile = new kendo.View('#user-profile', {model: banhji.users});
+      var profile = new kendo.Layout('#user-profile', {model: banhji.users});
+      var profileMod = new kendo.View('#user-profile-modules', {model: banhji.users});
       var assign = new kendo.View('#template-assign-module-to-page', {model: banhji.users});
+      var password = new kendo.View('#template-user-password', {model: banhji.users});
       // router initization
       banhji.router = new kendo.Router({
           init: function() {
@@ -1562,12 +1799,9 @@
                 });
 
                 banhji.profileDS.fetch(function(e){
-                  if(banhji.profileDS.data()[0].role == 1) {
-                    // kendo.bind('#main', banhji.aws);
-                    banhji.router.navigate('/');
-                  } else {
-                     banhji.router.navigate('/profile/' +banhji.profileDS.data()[0].id);
-                  }
+                  // if(banhji.profileDS.data()[0].role != 1) {
+                  //   banhji.router.navigate('/profile/' +banhji.profileDS.data()[0].id);
+                  // }
                   
                   var cognitoUser = userPool.getCurrentUser();
                   if(cognitoUser !== null) {
@@ -1608,9 +1842,10 @@
                 // console.log(e.response.results[0]);
                 banhji.userDS.filter({field: 'id', value: institute.id});
               }
-              layout.showIn("#container", mainDash);
+              
              });
           });
+          layout.showIn("#container", mainDash);
         } else{
           layout.showIn("#container", mainDash);
         }
@@ -1629,7 +1864,10 @@
 
       banhji.router.route('userlist/new', function() {
         layout.showIn("#container", userForm);
-        console.log('new');
+      });
+
+      banhji.router.route('userlist/edit', function() {
+        layout.showIn("#container", userEdit);
       });
 
       banhji.router.route('userlist(/:id)', function(id) {
@@ -1669,7 +1907,24 @@
 
       banhji.router.route('profile/:id', function(id) {
         layout.showIn("#container", profile);
+        profile.showIn("#profile-placeholder", profileMod);
         // layout.showIn("#main-display-container", profile);
+        banhji.users.setCurrent(banhji.users.users.get(id));
+      });
+
+      banhji.router.route('assignto/:id', function(id) {
+        layout.showIn("#container", profile);
+        // profile.showIn("#profile-placeholder", profileMod);
+        banhji.users.setCurrent(banhji.users.users.get(id));
+        banhji.users.modules.filter({field: 'username', value: banhji.users.users.get(id).username});
+        profile.showIn("#profile-placeholder", assign);
+        
+      });
+
+      banhji.router.route('password/:id', function(id) {
+        layout.showIn("#container", profile);
+        // profile.showIn("#profile-placeholder", profileMod);
+        profile.showIn("#profile-placeholder", password);
         banhji.users.setCurrent(banhji.users.users.get(id));
       });
 

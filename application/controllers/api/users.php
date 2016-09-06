@@ -48,11 +48,12 @@ class Users extends REST_Controller {
 				'email' => $u->email,
 				'mobile' => $u->mobile,
 				'role' 	=> $u->role,
+				'usertype' => $u->usertype_id,
 				'facebook' => $u->facebook,
 				'linkedin' => $u->linkedin,
 				'twitter'  => $u->twitter,
 				'company' => array('id' =>$u->institute_id, 'name'=> intval($u->institute_name)),
-				'created_at'=> $u->created_at,
+				'joined'=> $u->created_at,
 				'updated_at'=> $u->updated_at,
 				'logged_in' => $u->logged_in
 			);
@@ -83,6 +84,8 @@ class Users extends REST_Controller {
 			$User->facebook = $user->facebook;
 			$User->linkedin = $user->linkedin;
 			$User->twitter  = $user->twitter;
+			$User->role = $user->role;
+			$user->usertype_id = $user->usertype;
 			$User->is_confirmed = $user->is_confirmed == true ? 1:0;
 			$User->is_disabled = 0;
 			if($User->save()) {
@@ -100,6 +103,7 @@ class Users extends REST_Controller {
 					'linkedin' => $User->linkedin,
 					'twitter' => $User->twitter,
 					'role' 	=> $User->role,
+					'usertype' => $User->usertype_id,
 					'company' => array('id' =>$company->id, 'name'=> $company->name),
 					'created_at'=> $User->created_at,
 					'updated_at'=> $User->updated_at
@@ -128,7 +132,8 @@ class Users extends REST_Controller {
 			$User->last_name = $user->last_name;
 			$User->email = $user->email;
 			$User->mobile = $user->mobile;
-			$User->role = $user->usertype;
+			$User->role = $user->role;
+			$user->usertype_id = $user->usertype;
 			$User->profile_photo_url = $user->profile_photo;
 			$User->facebook = $user->facebook;
 			$User->linkedin = $user->linkedin;
@@ -151,6 +156,7 @@ class Users extends REST_Controller {
 						'linkedin' => $User->linkedin,
 						'twitter' => $User->twitter,
 						'role' 	=> $User->role,
+						'usertype' => $User->usertype_id,
 						'company' => array('id' =>$company->id, 'name'=> $company->name),
 						'created_at'=> $User->created_at,
 						'updated_at'=> $User->updated_at
