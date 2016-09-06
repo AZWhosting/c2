@@ -1,1390 +1,1260 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!-- Meta, title, CSS, favicons, etc. -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/png" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
 
-        <title>Banhji | Admin Center</title>
+    <title>Banhji | Admin Center</title>
 
-        <!--Css default template -->
-        <link rel="stylesheet" href="<?php echo base_url()?>assets/css/lib/lobipanel/lobipanel.min.css">
-        <link rel="stylesheet" href="<?php echo base_url()?>assets/css/lib/jqueryui/jquery-ui.min.css">
-        <link rel="stylesheet" href="<?php echo base_url()?>assets/css/lib/font-awesome/font-awesome.min.css">
-        <link rel="stylesheet" href="<?php echo base_url()?>assets/css/main.css">
+    <!--Css default template -->
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/lib/lobipanel/lobipanel.min.css">
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/lib/jqueryui/jquery-ui.min.css">
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/lib/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/main.css">
 
-        <!-- Custom styling plus plugins -->
-        <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/styles/kendo.common.min.css">
-        <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/styles/kendo.material.min.css">
+    <!-- Custom styling plus plugins -->
+    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/styles/kendo.material.min.css">
 
-         <!-- Custom style -->
-        <link rel="stylesheet" href="<?php echo base_url()?>assets/admin-style.css">
-    </head>
+     <!-- Custom style -->
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/admin-style.css">
+  </head>
 
-    <body class="nav-md">
-        <div id="main" class="body">
-            <div class="main_container" id="placeholder">
-              <div id="menu"></div>
-              <div id="container"></div>
+  <body class="nav-md">
+    <div id="main" class="body">
+        <div class="main_container" id="placeholder">
+          <div id="menu"></div>
+          <div id="container"></div>
+        </div>
+    </div>
+    <script type="text/x-kendo-template" id="header-menu">
+      <header class="site-header">
+          <div class="container-fluid">
+              <a href="<?php echo base_url(); ?>rrd" class="site-logo">
+                  <div class="hidden-xs">
+                      <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">
+                  </div>
+                  <img class="hidden-sm hidden-md hidden-lg" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="">
+              </a>
+
+              <div class="site-header-content">
+                  <div class="site-header-content-in">
+                      <div class="site-header-shown">
+
+                          <div class="dropdown user-menu">
+                              <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <span style="color:#fff;" data-bind="text: currentID.username"></span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
+                                  <a class="dropdown-item" data-bind="attr: {href: profileUrl}"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
+                                  <div class="dropdown-divider"></div>
+                                  <a class="dropdown-item" href="#" data-bind="click: logOut"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+                              </div>
+                          </div>
+                      </div><!--.site-header-shown-->
+                  </div><!--site-header-content-in-->
+              </div><!--.site-header-content-->
+          </div><!--.container-fluid-->
+      </header>
+    </script>
+    <script type="text/x-kendo-template" id="companyDash">
+      <!--Dashbaord Admin-->
+      <div class="page-content">
+          <div class="container" >
+              <div class="row">
+                  <div class="col-xs-12 col-md-4 col-lg-3">
+                      <section class="box-typical">
+                          <div class="profile-card">
+                              <div class="profile-card-photo">
+                                  <img data-bind="attr: {src: userProfile.currentID.profile_photo}">
+                              </div>
+                              <div class="profile-card-name">
+                                  <span data-bind="text: userProfile.currentID.last_name"></span>&nbsp;
+                                  <span data-bind="text: userProfile.currentID.first_name"></span>
+                              </div>
+                              <div class="profile-card-status">
+                                  Registered Email: <span><a href="mailto:somsreypoch@gmail.com">
+                                    <span data-bind="text: userProfile.currentID.username"></span>
+                                  </a></span>
+                              </div>
+                              <div class="profile-card-location">
+                                  Confirm: <span>True</span>
+                              </div>
+                              <button type="button" class="btn goto-banhji">BanhJi App</button>
+                          </div>
+
+                          <div class="profile-statistic tbl">
+                              <div class="tbl-row">
+                                  <div class="tbl-cell">
+                                      <b><span data-bind="text: modules.total"></span></b>
+                                      Assign Module
+                                  </div>
+                                  <div class="tbl-cell">
+                                      <b>1.9M</b>
+                                      Followers
+                                  </div>
+                              </div>
+                          </div>
+                          <ul class="profile-links-list">
+                              <li class="nowrap">
+                                  <i class="font-icon font-icon-fb-fill"></i>
+                                  <a href="#">facebook.com/example</a>
+                              </li>
+                              <li class="nowrap">
+                                  <i class="font-icon font-icon-in-fill"></i>
+                                  <a href="#">linked.in/example</a>
+                              </li>
+                              <li class="nowrap">
+                                  <i class="font-icon font-icon-tw-fill"></i>
+                                  <a href="#">twitter.com/example</a>
+                              </li>
+                          </ul>
+                      </section>
+                  </div>
+
+                  <div class="col-xs-12 col-md-8 col-lg-9">
+
+                      <section class="row">
+                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                              <div class="widget widget-3">
+                                  <div class="widget-head">
+                                      <h4 class="heading">
+                                          <span class="glyphicon glyphicon-user"><i></i></span>
+                                          User</h4>
+                                  </div>
+                                  <div class="widget-body alert alert-primary" style="background: #496cad;">
+                                      <div align="center" class="text-large strong"><span data-bind="text: data"></span></div>
+                                      <a  style="color: #fff;" href="#userlist/new">Add User</a>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                             <div class="widget widget-3">
+                                  <div class="widget-head">
+                                      <h4 class="heading">
+                                          <span class="glyphicon glyphicon-user"><i></i></span>
+                                          Module
+                                      </h4>
+                                  </div>
+                                  <div class="widget-body alert" style="color: #333; background: #d9edf7;">
+                                      <div align="center"  class="text-large strong"><span data-bind="text: appSub"></span></div>
+                                      <a  href="#" data-bind="click: getModule">Modules/Apps</a>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                              <div class="widget widget-3">
+                                  <div class="widget-head">
+                                      <h4 class="heading">
+                                          <span class="glyphicon glyphicon-user"><i></i></span>
+                                          User Join in
+                                      </h4>
+                                  </div>
+                                  <div class="widget-body alert" style="color: #333; background: LightGray">
+                                      <div align="center" class="text-large strong" data-bind="text: lastLogin"></div>
+                                      <a style="color: #fff;" href="#" data-bind="click: getModule">the last 30 days</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </section>
+
+                      <section class="box-typical user-module">
+                          <div data-role="listview" data-bind="source: modules" data-template="company-modules"></div>
+                      </section>
+
+                      <section class="tabs-section">
+                          <div class="tabs-section-nav tabs-section-nav-inline">
+                              <ul class="nav" role="tablist">
+                                  <li class="nav-item">
+                                      <a class="nav-link active" href="#tabs-4-tab-1" role="tab" data-toggle="tab">
+                                          Company Info
+                                      </a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link" href="#tabs-4-tab-2" role="tab" data-toggle="tab">
+                                          Users
+                                      </a>
+                                  </li>
+                              </ul>
+                          </div>
+
+                          <div class="tab-content">
+                              <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1">
+                                  <header class="box-typical-header-sm">
+                                      General Info
+                                  </header>
+                                  <article class="profile-info-item">
+                                      <table >
+                                          <tr>
+                                              <td>Company Name</td>
+                                              <td>:</td>
+                                              <td>PCG & Partners</td>
+                                          </tr>
+                                          <tr>
+                                              <td>Email</td>
+                                              <td>:</td>
+                                              <td>info@banhji.com</td>
+                                          </tr>
+                                          <tr>
+                                              <td>Address</td>
+                                              <td>:</td>
+                                              <td>Parkway Square 1st Floor Room 1.1</td>
+                                          </tr>
+                                          <tr>
+                                              <td>ZIP Code</td>
+                                              <td>:</td>
+                                              <td>54879</td>
+                                          </tr>
+                                          <tr>
+                                              <td>Year Founded</td>
+                                              <td>:</td>
+                                              <td>2015</td>
+                                          </tr>
+                                          <tr>
+                                              <td>Country</td>
+                                              <td>:</td>
+                                              <td>Cambodia</td>
+                                          </tr>
+                                           <tr>
+                                              <td>Industry</td>
+                                              <td>:</td>
+                                              <td>Manufacture of textiles</td>
+                                          </tr>
+                                      </table>
+                                  </article>
+                                  <header class="box-typical-header-sm">Financial Info</header>
+                                  <article class="profile-info-item">
+                                      <table >
+                                          <tr>
+                                              <td>Fiscal Date</td>
+                                              <td>:</td>
+                                              <td>12-31</td>
+                                          </tr>
+                                          <tr>
+                                              <td>Base Currency</td>
+                                              <td>:</td>
+                                              <td>KHR</td>
+                                          </tr>
+                                          <tr>
+                                              <td>Reporting Currency</td>
+                                              <td>:</td>
+                                              <td>USD</td>
+                                          </tr>
+                                          <tr>
+                                              <td>Fiscal Report Date</td>
+                                              <td>:</td>
+                                              <td>01-01</td>
+                                          </tr>
+                                          <tr>
+                                              <td>Tax Regime</td>
+                                              <td>:</td>
+                                              <td>Small</td>
+                                          </tr>
+                                      </table>
+                                  </article>
+                                  <button data-bind="click: addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
+                                      Edit
+                                  </button>
+                              </div>
+
+                              <div style="overflow-y: hidden;" role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2">
+                                  <article class="profile-info-item user">
+                                      <div class="" style="margin-bottom: 10px;">
+                                          <button data-bind="click: users.addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
+                                              Create user
+                                          </button>
+                                          &nbsp;&nbsp;
+                                          <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: users.refresh"></i>
+                                      </div>
+                                      <table class="clo-xs-12">
+                                          <thead>
+                                            <tr>
+                                                <th>Photo</th>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Last Login</th>
+                                                <th></th>
+                                            </tr>
+                                          </thead>
+                                          <tbody data-row="listview" data-template="user-profile-list" data-bind="source:users.users" data-bind="false">
+                                          </tbody>
+                                      </table>
+                                  </article>
+                              </div>
+                          </div>
+                      </section>
+
+                  </div>
+
+              </div>
+          </div>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="company-modules">
+      <div class="col-xs-3 col-md-2 col-lg-2">
+          <div>
+              <a href="<?php echo base_url(); ?>rrd\#/#=href#">
+                  <img data-bind="attr: {src: image_url}">
+              </a>
+              <span><span data-bind="text: name"></span></span>
+          </div>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="company-edit">
+      <!--Edit Company-->
+      <div class="page-content">
+          <div class="container" >
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <section class="box-typical edit-company">
+                        <div class="hidden-print pull-right">
+                            <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
+                        </div>
+                        <h2>Edit Company Info</h2>
+                        <div class="divider"></div>
+                        <header class="box-typical-header-sm">
+                            General Info
+                        </header>
+                        <article class="profile-info-item edit-table">
+                            <table >
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="email" class="form-control" id="" value="" >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ZIP Code</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Year Founded</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Country</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td>Industry</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                            </table>
+                        </article>
+                        <header class="box-typical-header-sm">Financial Info</header>
+                        <article class="profile-info-item edit-table">
+                            <table >
+                                <tr>
+                                    <td>Fiscal Date</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Base Currency</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Reporting Currency</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Fiscal Report Date</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Tax Regime</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                            </table>
+                        </article>
+                        <div class="box-generic">
+                            <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
+                                <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
+                                &nbsp; Save
+                            </button>
+                            &nbsp;
+                            <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
+                                <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
+                                &nbsp; Cancel
+                            </button>
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
-        <script type="text/x-kendo-template" id="header-menu">
-          <header class="site-header">
-              <div class="container-fluid">
-                  <a href="<?php echo base_url(); ?>rrd" class="site-logo">
-                      <div class="hidden-xs">
-                          <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">
-                      </div>
-                      <img class="hidden-sm hidden-md hidden-lg" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="">
-                  </a>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="user-profile">
+      <!--Dashbaord User-->
+      <div class="page-content">
+          <div class="container" >
+              <div class="row">
+                  <div class="col-xs-12 col-md-4 col-lg-3">
+                      <section class="box-typical">
+                          <div class="profile-card">
+                              <div class="profile-card-photo">
+                                  <img data-bind="attr: {src: current.profile_photo}">
+                              </div>
+                              <div class="profile-card-name">
+                                  <span data-bind="text: current.last_name"></span>&nbsp;
+                                  <span data-bind="text: current.first_name"></span>
+                              </div>
+                              <div class="profile-card-status">
+                                  Registered Email: <span><a href="mailto:somsreypoch@gmail.com">
+                                    <span data-bind="text: current.username"></span>
+                                  </a></span>
+                              </div>
+                              <div class="profile-card-location">
+                                  Confirm: <span data-bind="text: is_confirmed"></span>
+                              </div>
+                          </div>
 
-                  <div class="site-header-content">
-                      <div class="site-header-content-in">
-                          <div class="site-header-shown">
-
-                              <div class="dropdown user-menu">
-                                  <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <span style="color:#fff;" data-bind="text: currentID.username"></span>
-                                  </button>
-                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-                                      <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
-                                      <div class="dropdown-divider"></div>
-                                      <a class="dropdown-item" href="#" data-bind="click: logOut"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
-                                  </div>
-                              </div>
-                          </div><!--.site-header-shown-->
-                      </div><!--site-header-content-in-->
-                  </div><!--.site-header-content-->
-              </div><!--.container-fluid-->
-          </header>
-        </script>
-        <script type="text/x-kendo-template" id="companyDash">
-          <!--Dashbaord Admin-->
-          <div class="page-content">
-              <div class="container" >
-                  <div class="row">
-                      <div class="col-xs-12 col-md-4 col-lg-3">
-                          <section class="box-typical">
-                              <div class="profile-card">
-                                  <div class="profile-card-photo">
-                                      <img data-bind="attr: {src: userProfile.currentID.profile_photo}">
-                                  </div>
-                                  <div class="profile-card-name">
-                                      <span data-bind="text: userProfile.currentID.last_name"></span>&nbsp;
-                                      <span data-bind="text: userProfile.currentID.first_name"></span>
-                                  </div>
-                                  <div class="profile-card-status">
-                                      Registered Email: <span><a href="mailto:somsreypoch@gmail.com">
-                                        <span data-bind="text: userProfile.currentID.username"></span>
-                                      </a></span>
-                                  </div>
-                                  <div class="profile-card-location">
-                                      Confirm: <span>True</span>
-                                  </div>
-                                  <button type="button" class="btn goto-banhji">BanhJi App</button>
-                              </div>
-
-                              <div class="profile-statistic tbl">
-                                  <div class="tbl-row">
-                                      <div class="tbl-cell">
-                                          <b><span data-bind="text: modules.total"></span></b>
-                                          Assign Module
-                                      </div>
-                                      <div class="tbl-cell">
-                                          <b>1.9M</b>
-                                          Followers
-                                      </div>
-                                  </div>
-                              </div>
-                              <ul class="profile-links-list">
-                                  <li class="nowrap">
-                                      <i class="font-icon font-icon-fb-fill"></i>
-                                      <a href="#">facebook.com/example</a>
-                                  </li>
-                                  <li class="nowrap">
-                                      <i class="font-icon font-icon-in-fill"></i>
-                                      <a href="#">linked.in/example</a>
-                                  </li>
-                                  <li class="nowrap">
-                                      <i class="font-icon font-icon-tw-fill"></i>
-                                      <a href="#">twitter.com/example</a>
-                                  </li>
-                              </ul>
-                          </section>
-                      </div>
-
-                      <div class="col-xs-12 col-md-8 col-lg-9">
-
-                          <section class="row">
-                              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                  <div class="widget widget-3">
-                                      <div class="widget-head">
-                                          <h4 class="heading">
-                                              <span class="glyphicon glyphicon-user"><i></i></span>
-                                              User</h4>
-                                      </div>
-                                      <div class="widget-body alert alert-primary" style="background: #496cad;">
-                                          <div align="center" class="text-large strong"><span data-bind="text: data"></span></div>
-                                          <a  style="color: #fff;" href="#userlist/new">Add User</a>
-                                      </div>
-                                  </div>
-                              </div>
-
-                              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                 <div class="widget widget-3">
-                                      <div class="widget-head">
-                                          <h4 class="heading">
-                                              <span class="glyphicon glyphicon-user"><i></i></span>
-                                              Module
-                                          </h4>
-                                      </div>
-                                      <div class="widget-body alert" style="color: #333; background: #d9edf7;">
-                                          <div align="center"  class="text-large strong"><span data-bind="text: appSub"></span></div>
-                                          <a  href="#" data-bind="click: getModule">Modules/Apps</a>
-                                      </div>
-                                  </div>
-                              </div>
-
-                              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                  <div class="widget widget-3">
-                                      <div class="widget-head">
-                                          <h4 class="heading">
-                                              <span class="glyphicon glyphicon-user"><i></i></span>
-                                              User Join in
-                                          </h4>
-                                      </div>
-                                      <div class="widget-body alert"style="color: #333; background: LightGray">
-                                          <div align="center" class="text-large strong" data-bind="text: sale">10</div>
-                                          <a style="color: #fff;" href="#" data-bind="click: getModule">the last 30 days</a>
-                                      </div>
-                                  </div>
-                              </div>
-                          </section>
-
-                          <section class="box-typical user-module">
-                              <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/customers">
-                                          <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
-                                      </a>
-                                      <span><span>Customer</span></span>
-                                  </div>
-                              </div>
-                              <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/employees">
-                                          <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
-                                      </a>
-                                      <span><span>Employee</span></span>
-                                  </div>
-                              </div>
-                               <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/vendors">
-                                          <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
-                                      </a>
-                                       <span><span>Supplier</span></span>
-                                  </div>
-                              </div>
-                               <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/inventories">
-                                          <img title="Inventories" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
-                                      </a>
-                                       <span><span>Inventory</span></span>
-                                  </div>
-                              </div>
-
-                              <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/customers">
-                                          <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Customer">
-                                      </a>
-                                      <span><span>Cash MGT.</span></span>
-                                  </div>
-                              </div>
-                               <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/employees">
-                                          <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Employee">
-                                      </a>
-                                      <span><span>Accounting</span></span>
-                                  </div>
-                              </div>
-                               <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/vendors">
-                                          <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Vendor">
-                                      </a>
-                                       <span><span>Report</span></span>
-                                  </div>
-                              </div>
-                          </section>
-
-                          <section class="tabs-section">
-                              <div class="tabs-section-nav tabs-section-nav-inline">
-                                  <ul class="nav" role="tablist">
-                                      <li class="nav-item">
-                                          <a class="nav-link active" href="#tabs-4-tab-1" role="tab" data-toggle="tab">
-                                              Company Info
-                                          </a>
-                                      </li>
-                                      <li class="nav-item">
-                                          <a class="nav-link" href="#tabs-4-tab-2" role="tab" data-toggle="tab">
-                                              Users
-                                          </a>
-                                      </li>
-                                  </ul>
-                              </div>
-
-                              <div class="tab-content">
-                                  <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1">
-                                      <header class="box-typical-header-sm">
-                                          General Info
-                                      </header>
-                                      <article class="profile-info-item">
-                                          <table >
-                                              <tr>
-                                                  <td>Company Name</td>
-                                                  <td>:</td>
-                                                  <td>PCG & Partners</td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Email</td>
-                                                  <td>:</td>
-                                                  <td>info@banhji.com</td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Address</td>
-                                                  <td>:</td>
-                                                  <td>Parkway Square 1st Floor Room 1.1</td>
-                                              </tr>
-                                              <tr>
-                                                  <td>ZIP Code</td>
-                                                  <td>:</td>
-                                                  <td>54879</td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Year Founded</td>
-                                                  <td>:</td>
-                                                  <td>2015</td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Country</td>
-                                                  <td>:</td>
-                                                  <td>Cambodia</td>
-                                              </tr>
-                                               <tr>
-                                                  <td>Industry</td>
-                                                  <td>:</td>
-                                                  <td>Manufacture of textiles</td>
-                                              </tr>
-                                          </table>
-                                      </article>
-                                      <header class="box-typical-header-sm">Financial Info</header>
-                                      <article class="profile-info-item">
-                                          <table >
-                                              <tr>
-                                                  <td>Fiscal Date</td>
-                                                  <td>:</td>
-                                                  <td>12-31</td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Base Currency</td>
-                                                  <td>:</td>
-                                                  <td>KHR</td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Reporting Currency</td>
-                                                  <td>:</td>
-                                                  <td>USD</td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Fiscal Report Date</td>
-                                                  <td>:</td>
-                                                  <td>01-01</td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Tax Regime</td>
-                                                  <td>:</td>
-                                                  <td>Small</td>
-                                              </tr>
-                                          </table>
-                                      </article>
-                                      <button data-bind="click: addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
-                                          Edit
-                                      </button>
-                                  </div>
-
-                                  <div style="overflow-y: hidden;" role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2">
-                                      <article class="profile-info-item user">
-                                          <div class="" style="margin-bottom: 10px;">
-                                              <button data-bind="click: addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
-                                                  Create user
-                                              </button>
-                                              &nbsp;&nbsp;
-                                              <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: users.refresh"></i>
-                                          </div>
-                                          <table class="clo-xs-12">
-                                              <thead>
-                                                <tr>
-                                                    <th>Photo</th>
-                                                    <th>Full Name</th>
-                                                    <th>Email</th>
-                                                    <th>Role</th>
-                                                    <th>Last Login</th>
-                                                    <th></th>
-                                                </tr>
-                                              </thead>
-                                              <tbody data-row="listview" data-template="user-profile-list" data-bind="source:users.users" data-bind="false">
-                                              </tbody>
-                                          </table>
-                                      </article>
-                                  </div>
-                              </div>
-                          </section>
-
-                      </div>
-
+                          <ul class="profile-links-list">
+                              <li class="nowrap">
+                                  <i class="font-icon font-icon-fb-fill"></i>
+                                  <a href="#">facebook.com/example</a>
+                              </li>
+                              <li class="nowrap">
+                                  <i class="font-icon font-icon-in-fill"></i>
+                                  <a href="#">linked.in/example</a>
+                              </li>
+                              <li class="nowrap">
+                                  <i class="font-icon font-icon-tw-fill"></i>
+                                  <a href="#">twitter.com/example</a>
+                              </li>
+                          </ul>
+                      </section>
                   </div>
+
+                  <div class="col-xs-12 col-md-8 col-lg-9">
+                    <section class="box-typical user-module">
+                      <div data-role="listview" data-bind="source: modules" data-template="user-profile-modules"></div>
+                    </section>
+                  </div>
+
               </div>
           </div>
-        </script>
-        <script type="text/x-kendo-template" id="company-edit">
-          <!--Edit Company-->
-          <div class="page-content">
-              <div class="container" >
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <section class="box-typical edit-company">
-                            <div class="hidden-print pull-right">
-                                <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
-                            </div>
-                            <h2>Edit Company Info</h2>
-                            <div class="divider"></div>
-                            <header class="box-typical-header-sm">
-                                General Info
-                            </header>
-                            <article class="profile-info-item edit-table">
-                                <table >
-                                    <tr>
-                                        <td>Company Name</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Email</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="email" class="form-control" id="" value="" >
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Address</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>ZIP Code</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Year Founded</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Country</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                     <tr>
-                                        <td>Industry</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </article>
-                            <header class="box-typical-header-sm">Financial Info</header>
-                            <article class="profile-info-item edit-table">
-                                <table >
-                                    <tr>
-                                        <td>Fiscal Date</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Base Currency</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Reporting Currency</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fiscal Report Date</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tax Regime</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </article>
-                            <div class="box-generic">
-                                <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
-                                    <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
-                                    &nbsp; Save
-                                </button>
-                                &nbsp;
-                                <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
-                                    <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
-                                    &nbsp; Cancel
-                                </button>
-                            </div>
-                        </section>
-                    </div>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="user-profile-modules">
+       <div class="col-xs-3 col-md-2 col-lg-2">
+          <div>
+              <a href="\#/customers">
+                  <img data-bind="attr: {src: img_url}">
+              </a>
+              <span><span data-bind="text: name"></span></span>
+          </div>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="user-profile-list">
+      <tr>
+        <td>
+            <a href="\#">
+                <img width="120px"  src="#=profile_photo#" alt="">
+            </a>
+        </td>
+        <td>#=first_name# #=last_name#</td>
+        <td>#=username#</td>
+        <td>
+          # if(role == "1") {#
+            Admin
+          #} else {#
+            User
+          #}#
+        </td>
+        <td>
+          #=logged_in#
+        </td>
+        <td>
+            <div class="btn-group">
+                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action
+                </button>
+                <div class="dropdown-menu">
+                    <a href="\#" style="display: none">Test</a>
+                    <a class="dropdown-item" href="\#userlist/#=id#"><span class="font-icon font-icon-edit"></span>Edit</a>
+                    <a class="dropdown-item" href="\#"><span class="font-icon font-icon-cart"></span>Password</a>
+                    <a class="dropdown-item" href="\#profile/#=id#"><span class="font-icon font-icon-speed"></span>View More</a>
                 </div>
             </div>
-          </div>
-        </script>
-        <script type="text/x-kendo-template" id="user-profile">
-          <!--Dashbaord User-->
-          <div class="page-content">
-              <div class="container" >
-                  <div class="row">
-                      <div class="col-xs-12 col-md-4 col-lg-3">
-                          <section class="box-typical">
-                              <div class="profile-card">
-                                  <div class="profile-card-photo">
-                                      <img data-bind="attr: {src: current.profile_photo}">
-                                  </div>
-                                  <div class="profile-card-name">
-                                      <span data-bind="text: current.last_name"></span>&nbsp;
-                                      <span data-bind="text: current.first_name"></span>
-                                  </div>
-                                  <div class="profile-card-status">
-                                      Registered Email: <span><a href="mailto:somsreypoch@gmail.com">
-                                        <span data-bind="text: current.username"></span>
-                                      </a></span>
-                                  </div>
-                                  <div class="profile-card-location">
-                                      Confirm: <span data-bind="text: is_confirmed"></span>
-                                  </div>
-                              </div>
-
-                              <ul class="profile-links-list">
-                                  <li class="nowrap">
-                                      <i class="font-icon font-icon-fb-fill"></i>
-                                      <a href="#">facebook.com/example</a>
-                                  </li>
-                                  <li class="nowrap">
-                                      <i class="font-icon font-icon-in-fill"></i>
-                                      <a href="#">linked.in/example</a>
-                                  </li>
-                                  <li class="nowrap">
-                                      <i class="font-icon font-icon-tw-fill"></i>
-                                      <a href="#">twitter.com/example</a>
-                                  </li>
-                              </ul>
-                          </section>
-                      </div>
-
-                      <div class="col-xs-12 col-md-8 col-lg-9">
-
-                          <section class="box-typical user-module">
-                              <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/customers">
-                                          <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
-                                      </a>
-                                      <span><span>Customer</span></span>
-                                  </div>
-                              </div>
-                              <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/employees">
-                                          <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
-                                      </a>
-                                      <span><span>Employee</span></span>
-                                  </div>
-                              </div>
-                               <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/vendors">
-                                          <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
-                                      </a>
-                                       <span><span>Supplier</span></span>
-                                  </div>
-                              </div>
-                               <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/inventories">
-                                          <img title="Inventories" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
-                                      </a>
-                                       <span><span>Inventory</span></span>
-                                  </div>
-                              </div>
-
-                              <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/customers">
-                                          <img title="Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Customer">
-                                      </a>
-                                      <span><span>Cash MGT.</span></span>
-                                  </div>
-                              </div>
-                               <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/employees">
-                                          <img title="Employees" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Employee">
-                                      </a>
-                                      <span><span>Accounting</span></span>
-                                  </div>
-                              </div>
-                               <div class="col-xs-3 col-md-2 col-lg-2">
-                                  <div>
-                                      <a href="#/vendors">
-                                          <img title="Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Vendor">
-                                      </a>
-                                       <span><span>Report</span></span>
-                                  </div>
-                              </div>
-                          </section>
-
-                      </div>
-
-                  </div>
-              </div>
-          </div>
-        </script>
-        <script type="text/x-kendo-template" id="user-profile-list">
-          <tr>
-            <td>
-                <a href="\#">
-                    <img width="120px"  src="#=profile_photo#" alt="">
-                </a>
-            </td>
-            <td>#=first_name# #=last_name#</td>
-            <td>#=username#</td>
-            <td>
-              # if(role == "1") {#
-                Admin
-              #} else {#
-                User
-              #}#
-            </td>
-            <td>-</td>
-            <td>
-                <div class="btn-group">
-                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Action
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="\#" style="display: none">Test</a>
-                        <a class="dropdown-item" href="\#userlist/#=id#"><span class="font-icon font-icon-edit"></span>Edit</a>
-                        <a class="dropdown-item" href="\#"><span class="font-icon font-icon-cart"></span>Password</a>
-                        <a class="dropdown-item" href="\#profile/#=id#"><span class="font-icon font-icon-speed"></span>View More</a>
-                    </div>
-                </div>
-            </td>
-          </tr>
-        </script>
-        <script type="text/x-kendo-template" id="user-profile-action">
-          <!--Add User-->
-          <div class="page-content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <section class="box-typical edit-company">
-                            <div class="hidden-print pull-right">
-                                <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
-                            </div>
-                            <h2>User Detail</h2>
-                            <div class="divider"></div>
-                            <div class="col-md-3 col-lg-3">
-                                <img width="240px" data-bind="attr: {src: current.profile_photo}" />
-                                <h3>Profile Picture</h3>
-                                <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
-                            </div>
-                            <article class="col-md-9 col-lg-9 profile-info-item edit-table">
-                                <table >
-                                    <tr>
-                                        <td>Username *</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" data-bind="value: current.username" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>First Name *</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" data-bind="value: current.first_name" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Last Name *</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" data-bind="value: current.last_name" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Password *</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="password" data-bind="value: current.password" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Phone</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" data-bind="value: current.mobile" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Email</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Type</td>
-                                        <td>:</td>
-                                        <td>
-                                            <select id="exampleSelect" class="form-control">
-                                                <option>Normal</option>
-                                                <option>Developer</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </article>
-                            <div class="box-generic">
-                                <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
-                                    <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
-                                    &nbsp; Save
-                                </button>
-                                &nbsp;
-                                <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
-                                    <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
-                                    &nbsp; Cancel
-                                </button>
-                            </div>
-                        </section>
-                    </div>
+        </td>
+      </tr>
+    </script>
+    <script type="text/x-kendo-template" id="user-profile-action">
+      <!--Add User-->
+      <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <section class="box-typical edit-company">
+                        <div class="hidden-print pull-right">
+                            <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
+                        </div>
+                        <h2>User Detail</h2>
+                        <div class="divider"></div>
+                        <div class="col-md-3 col-lg-3">
+                            <img width="240px" data-bind="attr: {src: current.profile_photo}" />
+                            <h3>Profile Picture</h3>
+                            <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                        </div>
+                        <article class="col-md-9 col-lg-9 profile-info-item edit-table">
+                            <table >
+                                <tr>
+                                    <td>Username *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: current.username" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>First Name *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: current.first_name" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: current.last_name" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Password *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="password" data-bind="value: current.password" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: current.mobile" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Facebook</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>LinkedIn</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Twitter</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Type</td>
+                                    <td>:</td>
+                                    <td>
+                                        <select id="exampleSelect" class="form-control">
+                                            <option>Normal</option>
+                                            <option>Developer</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </article>
+                        <div class="box-generic">
+                            <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0">
+                                <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
+                                &nbsp; Save
+                            </button>
+                            &nbsp;
+                            <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0">
+                                <span class="glyphicon glyphicon-remove" data-bind="click: cancel"><i></i></span>
+                                &nbsp; Cancel
+                            </button>
+                        </div>
+                    </section>
                 </div>
             </div>
-          </div>
-        </script>
-        <!-- cognito -->
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/sjcl.js"></script>
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/moment.js"></script>
-        <!-- For Cognito -->
-        <!--Core Cognito -->
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/aws-cognito-sdk.min.js"></script>
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/amazon-cognito-identity.min.js"></script>
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/aws-sdk.min.js"></script>
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/cred.js"></script>
-        <!--Core Cognito -->
+        </div>
+      </div>
+    </script>
+    <!-- cognito -->
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/sjcl.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/moment.js"></script>
+    <!-- For Cognito -->
+    <!--Core Cognito -->
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/aws-cognito-sdk.min.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/amazon-cognito-identity.min.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/aws-sdk.min.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/cred.js"></script>
+    <!--Core Cognito -->
 
-        <!--Script default template -->
-        <script type="text/javascript" src="<?php echo base_url()?>assets/js/lib/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>assets/js/lib/tether/tether.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>assets/js/lib/bootstrap/bootstrap.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>assets/js/plugins.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>assets/js/lib/jqueryui/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>assets/js/lib/lobipanel/lobipanel.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>assets/js/lib/match-height/jquery.matchHeight.min.js"></script>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>assets/js/app.js"></script>
+    <!--Script default template -->
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/lib/tether/tether.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/lib/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/plugins.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/lib/jqueryui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/lib/lobipanel/lobipanel.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/lib/match-height/jquery.matchHeight.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/app.js"></script>
 
-        <!-- FastClick -->
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/fastclick/lib/fastclick.js"></script>
+    <!-- FastClick -->
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/fastclick/lib/fastclick.js"></script>
 
-        <!-- NProgress -->
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/nprogress/nprogress.js"></script>
+    <!-- NProgress -->
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/nprogress/nprogress.js"></script>
 
-        <!-- bootstrap-wysiwyg -->
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/jquery.hotkeys/jquery.hotkeys.js"></script>
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/google-code-prettify/src/prettify.js"></script>
+    <!-- bootstrap-wysiwyg -->
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/google-code-prettify/src/prettify.js"></script>
 
-        <!-- Custom Theme Scripts -->
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/js/custom.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/js/custom.js"></script>
 
-        <!-- kendoui-->
-        <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/js/kendo.all.min.js"></script>
+    <!-- kendoui-->
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/js/kendo.all.min.js"></script>
 
-        <!-- kendoui-->
-        <script>
-            var banhji = banhji || {};
-            var baseUrl = "<?php echo base_url(); ?>";
-            var institute = null;
-            // Initialize aws userpool
-            var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
-            var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
+    <!-- kendoui-->
+    <script>
+      var banhji = banhji || {};
+      var baseUrl = "<?php echo base_url(); ?>";
+      var institute = null;
+      // Initialize aws userpool
+      var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
+      var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
 
-            banhji.profileDS = new kendo.data.DataSource({
-              transport: {
-                read  : {
-                  url: baseUrl + 'api/profiles',
-                  type: "GET",
-                  dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                  if(operation === 'read') {
-                    return {
-                      limit: options.take,
-                      page: options.page,
-                      filter: options.filter
-                    };
-                  } else {
-                    return {models: kendo.stringify(options.models)};
-                  }
+      banhji.profileDS = new kendo.data.DataSource({
+        transport: {
+          read  : {
+            url: baseUrl + 'api/profiles',
+            type: "GET",
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                limit: options.take,
+                page: options.page,
+                filter: options.filter
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        batch: true,
+        serverFiltering: true,
+        serverPaging: true,
+        filter: {field: 'username', value: userPool.getCurrentUser() == null ? '':userPool.getCurrentUser().username},
+        pageSize: 100
+      });
+
+      banhji.countries = new kendo.data.DataSource({
+        transport: {
+          read  : {
+            url: baseUrl + 'api/banhji/countries',
+            type: "GET",
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                limit: options.take,
+                page: options.page,
+                filter: options.filter
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        batch: true,
+        serverFiltering: true,
+        serverPaging: true,
+        pageSize: 100
+      });
+
+      banhji.industry = new kendo.data.DataSource({
+        transport: {
+          read  : {
+            url: baseUrl + 'api/banhji/industry',
+            type: "GET",
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                limit: options.take,
+                page: options.page,
+                filter: options.filter
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        batch: true,
+        serverFiltering: true,
+        serverPaging: true,
+        pageSize: 100
+      });
+      banhji.currencies = new kendo.data.DataSource({
+        transport: {
+          read  : {
+            url: baseUrl + 'api/monetaries',
+            type: "GET",
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                limit: options.take,
+                page: options.page,
+                filter: options.filter
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        batch: true,
+        serverFiltering: true,
+        serverPaging: true,
+        pageSize: 100
+      });
+
+      banhji.companyDS = new kendo.data.DataSource({
+        transport: {
+          read  : {
+            url: baseUrl + 'api/profiles/company',
+            type: "GET",
+            dataType: 'json'
+          },
+          update  : {
+            url: baseUrl + 'api/profiles/company',
+            type: "PUT",
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                limit: options.take,
+                page: options.page,
+                filter: options.filter
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        batch: true,
+        serverFiltering: true,
+        serverPaging: true,
+        filter: {field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username},
+        pageSize: 1
+      });
+
+      banhji.userDS = new kendo.data.DataSource({
+        transport: {
+          read  : {
+            url: baseUrl + 'api/users',
+            type: "GET",
+            dataType: 'json'
+          },
+          create  : {
+            url: baseUrl + 'api/users',
+            type: "POST",
+            dataType: 'json'
+          },
+          update  : {
+            url: baseUrl + 'api/users',
+            type: "PUT",
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                limit: options.take,
+                page: options.page,
+                filter: options.filter
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        batch: true,
+        serverFiltering: true,
+        serverPaging: true,
+        pageSize: 50
+      });
+
+      banhji.moduleDS = new kendo.data.DataSource({
+        transport: {
+          read  : {
+            url: baseUrl + 'api/profiles/module',
+            type: "GET",
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                limit: options.take,
+                page: options.page,
+                filter: options.filter
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        batch: true,
+        serverFiltering: true,
+        serverPaging: true,
+        pageSize: 50
+      });
+
+      /* view model*/
+      banhji.aws = kendo.observable({
+        password: null,
+        confirm: null,
+        email: null,
+        verificationCode: null,
+        cognitoUser: null,
+        newPass: null,
+        oldPass: null,
+        image: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+        getImage: function(image) {
+
+            banhji.aws.set('image', image);
+
+        },
+        signUp: function() {
+          // e.preventDefault();
+          if(this.get('password') != this.get('confirm')) {
+            alert('Passwords do not match');
+          } else {
+            // using cognito to sign up
+            var attributeList = [];
+
+            var dataEmail = {
+                Name : 'email',
+                Value : this.get('email')
+            };
+
+            var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
+
+            attributeList.push(attributeEmail);
+
+            userPool.signUp(this.get('email'), this.get('password'), attributeList, null, function(err, result){
+                if (err) {
+                    alert(err);
+                    return;
                 }
-              },
-              schema  : {
-                model: {
-                  id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-              },
-              batch: true,
-              serverFiltering: true,
-              serverPaging: true,
-              filter: {field: 'username', value: userPool.getCurrentUser() == null ? '':userPool.getCurrentUser().username},
-              pageSize: 100
+                // update attribute
+                // 2. move to admin page
+                // banhji.awsCognito.set('cognitoUser', result.user);
+                banhji.router.navigate('confirm');
             });
-
-            banhji.countries = new kendo.data.DataSource({
-              transport: {
-                read  : {
-                  url: baseUrl + 'api/banhji/countries',
-                  type: "GET",
-                  dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                  if(operation === 'read') {
-                    return {
-                      limit: options.take,
-                      page: options.page,
-                      filter: options.filter
-                    };
-                  } else {
-                    return {models: kendo.stringify(options.models)};
-                  }
+          }
+        },
+        comfirmCode: function(e) {
+           e.preventDefault();
+            // confirm user verification code after signed up
+            var userData = {
+                Username : userPool.getCurrentUser().username,
+                Pool : userPool
+            };
+            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+            cognitoUser.confirmRegistration(this.get('verificationCode'), true, function(err, result) {
+                if (err) {
+                    alert(err);
+                    return;
                 }
-              },
-              schema  : {
-                model: {
-                  id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-              },
-              batch: true,
-              serverFiltering: true,
-              serverPaging: true,
-              pageSize: 100
+                banhji.router.navigate('index');
             });
+        },
+        resendCode: function(e) {
+          e.preventDefault();
+          alert('code resent');
+        },
+        signIn: function() {
+            var authenticationData = {
+                Username : this.get('email'),
+                Password : this.get('password'),
+            };
+            var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
 
-            banhji.industry = new kendo.data.DataSource({
-              transport: {
-                read  : {
-                  url: baseUrl + 'api/banhji/industry',
-                  type: "GET",
-                  dataType: 'json'
+            var userData = {
+                Username : this.get('email'),
+                Pool : userPool
+            };
+            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+            cognitoUser.authenticateUser(authenticationDetails, {
+                onSuccess: function (result) {
+                    banhji.awsCognito.set('cognitoUser', cognitoUser);
                 },
-                parameterMap: function(options, operation) {
-                  if(operation === 'read') {
-                    return {
-                      limit: options.take,
-                      page: options.page,
-                      filter: options.filter
-                    };
-                  } else {
-                    return {models: kendo.stringify(options.models)};
-                  }
+
+                onFailure: function(err) {
+                    alert(err);
+                },
+
+            });
+        },
+        signOut: function(e){
+          e.preventDefault();
+          var userData = {
+              Username : userPool.getCurrentUser().username,
+              Pool : userPool
+          };
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+          if(cognitoUser != null) {
+              cognitoUser.signOut();
+              window.location.replace("<?php echo base_url(); ?>login");
+          } else {
+              console.log('No user');
+          }
+        },
+        changePassword: function() {
+            var userData = {
+                Username : this.get('email'),
+                Pool : userPool
+            };
+            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+            cognitoUser.changePassword('oldPassword', 'newPassword', function(err, result) {
+                if (err) {
+                    alert(err);
+                    return;
                 }
-              },
-              schema  : {
-                model: {
-                  id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-              },
-              batch: true,
-              serverFiltering: true,
-              serverPaging: true,
-              pageSize: 100
+                console.log('call result: ' + result);
             });
-            banhji.currencies = new kendo.data.DataSource({
-              transport: {
-                read  : {
-                  url: baseUrl + 'api/monetaries',
-                  type: "GET",
-                  dataType: 'json'
+        },
+        forgotPassword: function(e) {
+            e.preventDefault();
+            var userData = {
+                Username : this.get('email'),
+                Pool : userPool
+            };
+            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+            cognitoUser.forgotPassword({
+                onSuccess: function (result) {
+                    console.log('call result: ' + result);
                 },
-                parameterMap: function(options, operation) {
-                  if(operation === 'read') {
-                    return {
-                      limit: options.take,
-                      page: options.page,
-                      filter: options.filter
-                    };
-                  } else {
-                    return {models: kendo.stringify(options.models)};
-                  }
-                }
-              },
-              schema  : {
-                model: {
-                  id: 'id'
+                onFailure: function(err) {
+                    alert(err);
                 },
-                data: 'results',
-                total: 'count'
-              },
-              batch: true,
-              serverFiltering: true,
-              serverPaging: true,
-              pageSize: 100
-            });
-
-            banhji.companyDS = new kendo.data.DataSource({
-              transport: {
-                read  : {
-                  url: baseUrl + 'api/profiles/company',
-                  type: "GET",
-                  dataType: 'json'
-                },
-                update  : {
-                  url: baseUrl + 'api/profiles/company',
-                  type: "PUT",
-                  dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                  if(operation === 'read') {
-                    return {
-                      limit: options.take,
-                      page: options.page,
-                      filter: options.filter
-                    };
-                  } else {
-                    return {models: kendo.stringify(options.models)};
-                  }
-                }
-              },
-              schema  : {
-                model: {
-                  id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-              },
-              batch: true,
-              serverFiltering: true,
-              serverPaging: true,
-              filter: {field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username},
-              pageSize: 1
-            });
-
-            banhji.userDS = new kendo.data.DataSource({
-              transport: {
-                read  : {
-                  url: baseUrl + 'api/users',
-                  type: "GET",
-                  dataType: 'json'
-                },
-                create  : {
-                  url: baseUrl + 'api/users',
-                  type: "POST",
-                  dataType: 'json'
-                },
-                update  : {
-                  url: baseUrl + 'api/users',
-                  type: "PUT",
-                  dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                  if(operation === 'read') {
-                    return {
-                      limit: options.take,
-                      page: options.page,
-                      filter: options.filter
-                    };
-                  } else {
-                    return {models: kendo.stringify(options.models)};
-                  }
-                }
-              },
-              schema  : {
-                model: {
-                  id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-              },
-              batch: true,
-              serverFiltering: true,
-              serverPaging: true,
-              pageSize: 50
-            });
-
-            banhji.moduleDS = new kendo.data.DataSource({
-              transport: {
-                read  : {
-                  url: baseUrl + 'api/profiles/module',
-                  type: "GET",
-                  dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                  if(operation === 'read') {
-                    return {
-                      limit: options.take,
-                      page: options.page,
-                      filter: options.filter
-                    };
-                  } else {
-                    return {models: kendo.stringify(options.models)};
-                  }
-                }
-              },
-              schema  : {
-                model: {
-                  id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-              },
-              batch: true,
-              serverFiltering: true,
-              serverPaging: true,
-              pageSize: 50
-            });
-
-            /* view model*/
-            banhji.aws = kendo.observable({
-                password: null,
-                confirm: null,
-                email: null,
-                verificationCode: null,
-                cognitoUser: null,
-                newPass: null,
-                oldPass: null,
-                image: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
-                getImage: function(image) {
-
-                    banhji.aws.set('image', image);
-
-                },
-                signUp: function() {
-                  // e.preventDefault();
-                  if(this.get('password') != this.get('confirm')) {
-                    alert('Passwords do not match');
-                  } else {
-                    // using cognito to sign up
-                    var attributeList = [];
-
-                    var dataEmail = {
-                        Name : 'email',
-                        Value : this.get('email')
-                    };
-
-                    var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
-
-                    attributeList.push(attributeEmail);
-
-                    userPool.signUp(this.get('email'), this.get('password'), attributeList, null, function(err, result){
-                        if (err) {
-                            alert(err);
-                            return;
-                        }
-                        // update attribute
-                        // 2. move to admin page
-                        // banhji.awsCognito.set('cognitoUser', result.user);
-                        banhji.router.navigate('confirm');
-                    });
-                  }
-                },
-                comfirmCode: function(e) {
-                   e.preventDefault();
-                    // confirm user verification code after signed up
-                    var userData = {
-                        Username : userPool.getCurrentUser().username,
-                        Pool : userPool
-                    };
-                    var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-                    cognitoUser.confirmRegistration(this.get('verificationCode'), true, function(err, result) {
-                        if (err) {
-                            alert(err);
-                            return;
-                        }
-                        banhji.router.navigate('index');
-                    });
-                },
-                resendCode: function(e) {
-                  e.preventDefault();
-                  alert('code resent');
-                },
-                signIn: function() {
-                    var authenticationData = {
-                        Username : this.get('email'),
-                        Password : this.get('password'),
-                    };
-                    var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
-
-                    var userData = {
-                        Username : this.get('email'),
-                        Pool : userPool
-                    };
-                    var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-                    cognitoUser.authenticateUser(authenticationDetails, {
-                        onSuccess: function (result) {
-                            banhji.awsCognito.set('cognitoUser', cognitoUser);
-                        },
-
-                        onFailure: function(err) {
-                            alert(err);
-                        },
-
-                    });
-                },
-                signOut: function(e){
-                  e.preventDefault();
-                  var userData = {
-                      Username : userPool.getCurrentUser().username,
-                      Pool : userPool
-                  };
-                  var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-                  if(cognitoUser != null) {
-                      cognitoUser.signOut();
-                      window.location.replace("<?php echo base_url(); ?>login");
-                  } else {
-                      console.log('No user');
-                  }
-                },
-                changePassword: function() {
-                    var userData = {
-                        Username : this.get('email'),
-                        Pool : userPool
-                    };
-                    var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-                    cognitoUser.changePassword('oldPassword', 'newPassword', function(err, result) {
-                        if (err) {
-                            alert(err);
-                            return;
-                        }
-                        console.log('call result: ' + result);
-                    });
-                },
-                forgotPassword: function(e) {
-                    e.preventDefault();
-                    var userData = {
-                        Username : this.get('email'),
-                        Pool : userPool
-                    };
-                    var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-                    cognitoUser.forgotPassword({
-                        onSuccess: function (result) {
-                            console.log('call result: ' + result);
-                        },
-                        onFailure: function(err) {
-                            alert(err);
-                        },
-                        inputVerificationCode() {
-                            var verificationCode = prompt('Please input verification code ' ,'');
-                            var newPassword = prompt('Enter new password ' ,'');
-                            cognitoUser.confirmPassword(verificationCode, newPassword, this);
-                        }
-                    });
-                },
-                getCurrentUser: function() {
-                    var cognitoUser = null;
-                    if (userPool.getCurrentUser() != null) {
-                        cognitoUser = userPool.getCurrentUser();
-                    }
-                    return cognitoUser;
+                inputVerificationCode() {
+                    var verificationCode = prompt('Please input verification code ' ,'');
+                    var newPassword = prompt('Enter new password ' ,'');
+                    cognitoUser.confirmPassword(verificationCode, newPassword, this);
                 }
             });
+        },
+        getCurrentUser: function() {
+            var cognitoUser = null;
+            if (userPool.getCurrentUser() != null) {
+                cognitoUser = userPool.getCurrentUser();
+            }
+            return cognitoUser;
+        }
+      });
 
-            banhji.profile = kendo.observable({
-              dataSource: banhji.profileDS,
-              logOut    : function() {
-                var userData = {
-                    Username : userPool.getCurrentUser().username,
-                    Pool : userPool
+      banhji.profile = kendo.observable({
+        dataSource: banhji.profileDS,
+        logOut    : function() {
+          var userData = {
+              Username : userPool.getCurrentUser().username,
+              Pool : userPool
+          };
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+          if(cognitoUser != null) {
+              cognitoUser.signOut();
+              window.location.replace("<?php echo base_url(); ?>login");
+          }
+        },
+        currentID : banhji.profileDS.data()[0] || [],
+        profileUrl : function() {
+          return "#profile/" + this.get('currentID').id;
+        }
+
+      });
+
+      banhji.users = kendo.observable({
+        users : banhji.userDS,
+        cModules: banhji.moduleDS,
+        modules: new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/users/modules',
+              type: "GET",
+              dataType: 'json'
+            },
+            create  : {
+              url: baseUrl + 'api/users/modules',
+              type: "POST",
+              dataType: 'json'
+            },
+            destroy  : {
+              url: baseUrl + 'api/users/modules',
+              type: "DELETE",
+              dataType: 'json'
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
                 };
-                var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-                if(cognitoUser != null) {
-                    cognitoUser.signOut();
-                    window.location.replace("<?php echo base_url(); ?>login");
-                }
-              },
-              currentID : banhji.profileDS.data()[0] || [],
-
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          filter: {
+            field: 'username',
+            value: userPool.getCurrentUser() == null ? "" : userPool.getCurrentUser().username
+          },
+          serverPaging: true,
+          pageSize: 50
+        }),
+        getProfile: function(e) {
+          banhji.router.navigate('profile/' + e.data.id);
+        },
+        code  : '',
+        backToProfile: function() {
+          layout.showIn("#main-display-container", index);
+          layout.showIn("#main-display-container", profile);
+        },
+        saveAssign: function() {
+          this.modules.sync();
+          this.modules.bind('requestEnd', function(e){
+            if(e.response.results) {
+              layout.showIn("#main-display-container", index);
+              layout.showIn("#main-display-container", profile);
+            }
+          });
+        },
+        assignTo: function(e) {
+          var existed = false;
+          for(var i = 0; i < this.modules.data().length; i++) {
+            if(e.data.id == this.modules.data()[i].module) {
+              existed = true;
+              alert('User already is assigned to this module');
+              break;
+            }
+          }
+          if(existed === false) {
+            this.modules.add({
+              user: this.get('current').id,
+              module: e.data.id,
+              name: e.data.name,
+              img_url: e.data.image_url
             });
+          }
+        },
+        removeFrom: function(e) {
+          this.modules.remove(e.data);
+        },
+        upload: function() {
+          var fileChooser = document.getElementById('user-image');
+          var file = fileChooser.files[0];
+          var fileReader = new FileReader();
+          fileReader.onload = function(e){
+           banhji.users.get('current').set('profile_photo', e.target.result);
+          }
+          fileReader.readAsDataURL(file);
+        },
+        assign : function() {
+          // index.showIn('#app-placeholder', userlist);
+          layout.showIn("#main-display-container", assign);
+        },
+        refresh: function() {
+          $('#user-spinwhile').addClass('fa-spin');
+          banhji.users.users.read().then(function() {
+            $('#user-spinwhile').removeClass('fa-spin');
+          });
+        },
+        setCurrent: function(current) {
+          this.set('current', current);
+        },
+        userTypes : [
+          {id: 1, name: 'normal'},
+          {id: 2, name: 'developer'}
+        ],
+        showModule: function() {
+          layout.showIn("#main-display-container", userlMod);
+        },
+        showForm: function() {
+          this.users.insert(0, {
+            username: null,
+            first_name: null,
+            last_name: null,
+            email: null,
+            mobile: null,
+            profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+            company: {id: banhji.companyDS.data()[0].id, name:''},
+            usertype: null
+          });
+          this.setCurrent(this.users.at(0));
+          var win = $('#userForm').kendoWindow({
+            width: "600px",
+            // title: "User Form",
+            visible: false,
+            modal: true,
+            actions: [
+                "Close"
+            ],
+              close: function(e) {
+              if(banhji.userDS.hasChanges()) {
+                banhji.userDS.cancelChanges();
+              }
+            }
+          }).data('kendoWindow');
+          win.center().open();
+          $("#userCreate").click(function() {
+            if(banhji.userDS.at(0).isNew()) {
+              // signup with Cognito
+              // using cognito to sign up
+              var attributeList = [];
 
-            banhji.users = kendo.observable({
-              users : banhji.userDS,
-              cModules: banhji.moduleDS,
-              modules: new kendo.data.DataSource({
-                transport: {
-                  read  : {
-                    url: baseUrl + 'api/users/modules',
-                    type: "GET",
-                    dataType: 'json'
-                  },
-                  create  : {
-                    url: baseUrl + 'api/users/modules',
-                    type: "POST",
-                    dataType: 'json'
-                  },
-                  destroy  : {
-                    url: baseUrl + 'api/users/modules',
-                    type: "DELETE",
-                    dataType: 'json'
-                  },
-                  parameterMap: function(options, operation) {
-                    if(operation === 'read') {
-                      return {
-                        limit: options.take,
-                        page: options.page,
-                        filter: options.filter
-                      };
-                    } else {
-                      return {models: kendo.stringify(options.models)};
-                    }
-                  }
-                },
-                schema  : {
-                  model: {
-                    id: 'id'
-                  },
-                  data: 'results',
-                  total: 'count'
-                },
-                batch: true,
-                serverFiltering: true,
-                filter: {
-                  field: 'username',
-                  value: userPool.getCurrentUser() == null ? "" : userPool.getCurrentUser().username
-                },
-                serverPaging: true,
-                pageSize: 50
-              }),
-              getProfile: function(e) {
-                banhji.router.navigate('profile/' + e.data.id);
-              },
-              code  : '',
-              backToProfile: function() {
-                layout.showIn("#main-display-container", index);
-                layout.showIn("#main-display-container", profile);
-              },
-              saveAssign: function() {
-                this.modules.sync();
-                this.modules.bind('requestEnd', function(e){
-                  if(e.response.results) {
-                    layout.showIn("#main-display-container", index);
-                    layout.showIn("#main-display-container", profile);
-                  }
-                });
-              },
-              assignTo: function(e) {
-                var existed = false;
-                for(var i = 0; i < this.modules.data().length; i++) {
-                  if(e.data.id == this.modules.data()[i].module) {
-                    existed = true;
-                    alert('User already is assigned to this module');
-                    break;
-                  }
-                }
-                if(existed === false) {
-                  this.modules.add({
-                    user: this.get('current').id,
-                    module: e.data.id,
-                    name: e.data.name,
-                    img_url: e.data.image_url
-                  });
-                }
-              },
-              removeFrom: function(e) {
-                this.modules.remove(e.data);
-              },
-              upload: function() {
-                var fileChooser = document.getElementById('user-image');
-                var file = fileChooser.files[0];
-                var fileReader = new FileReader();
-                fileReader.onload = function(e){
-                 banhji.users.get('current').set('profile_photo', e.target.result);
-                }
-                fileReader.readAsDataURL(file);
-              },
-              assign : function() {
-                // index.showIn('#app-placeholder', userlist);
-                layout.showIn("#main-display-container", assign);
-              },
-              refresh: function() {
-                $('#user-spinwhile').addClass('fa-spin');
-                banhji.users.users.read().then(function() {
-                  $('#user-spinwhile').removeClass('fa-spin');
-                });
-              },
-              setCurrent: function(current) {
-                this.set('current', current);
-              },
-              userTypes : [
-                {id: 1, name: 'normal'},
-                {id: 2, name: 'developer'}
-              ],
-              showModule: function() {
-                layout.showIn("#main-display-container", userlMod);
-              },
-              showForm: function() {
-                this.users.insert(0, {
-                  username: null,
-                  first_name: null,
-                  last_name: null,
-                  email: null,
-                  mobile: null,
-                  profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
-                  company: {id: banhji.companyDS.data()[0].id, name:''},
-                  usertype: null
-                });
-                this.setCurrent(this.users.at(0));
-                var win = $('#userForm').kendoWindow({
-                  width: "600px",
-                  // title: "User Form",
-                  visible: false,
-                  modal: true,
-                  actions: [
-                      "Close"
-                  ],
-                    close: function(e) {
-                    if(banhji.userDS.hasChanges()) {
-                      banhji.userDS.cancelChanges();
-                    }
-                  }
-                }).data('kendoWindow');
-                win.center().open();
-                $("#userCreate").click(function() {
-                  if(banhji.userDS.at(0).isNew()) {
-                    // signup with Cognito
-                    // using cognito to sign up
-                    var attributeList = [];
+              var dataEmail = {
+                  Name : 'email',
+                  Value : userPool.getCurrentUser().username
+              };
 
-                    var dataEmail = {
-                        Name : 'email',
-                        Value : userPool.getCurrentUser().username
-                    };
+              var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
 
-                    var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
+              attributeList.push(attributeEmail);
 
-                    attributeList.push(attributeEmail);
-
-                    userPool.signUp(banhji.users.get('current').username, banhji.users.get('current').password, attributeList, null, function(err, result){
-                        if (err) {
-                            alert(err);
-                            return;
-                        }
-
-                        banhji.userDS.sync();
-                        banhji.userDS.bind('requestEnd', function(e){
-                          var res = e.response, type = e.type;
-                          if(res.results.length > 0) {
-                            console.log('user created.');
-                            win.close();
-                          }
-                        });
-                        alert('Your action was successful.');
-                    });
-                    // save to database
-                  }
-                });
-              },
-              cancel: function() {
-                if(this.users.hasChanges()) {
-                  this.users.cancelChanges();
-                }
-                banhji.router.navigate('userlist');
-              },
-              cancelAssign: function() {
-                if(this.modules.hasChanges()) {
-                  this.modules.cancelChanges();
-                }
-              },
-              showFormEdit: function(e) {
-                this.setCurrent(e.data);
-                var win = $('#userFormEdit').kendoWindow({
-                  width: "600px",
-                  // title: "User Form",
-                  visible: false,
-                  modal: true,
-                  actions: [
-                      "Close"
-                  ]
-                }).data('kendoWindow');
-                win.center().open();
-                $("#userEdit").click(function() {
-                  if(banhji.userDS.at(0).isNew()) {
-                    // signup with Cognito
-                    // using cognito to sign up
-                    var attributeList = [];
-
-                    var dataEmail = {
-                        Name : 'email',
-                        Value : userPool.getCurrentUser().username
-                    };
-
-                    var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
-
-                    attributeList.push(attributeEmail);
-
-                    userPool.signUp(banhji.users.get('current').username, banhji.users.get('current').password, attributeList, null, function(err, result){
-                        if (err) {
-                            alert(err);
-                            return;
-                        }
-                        alert('Your action was successful.');
-                    });
-                    // save to database
+              userPool.signUp(banhji.users.get('current').username, banhji.users.get('current').password, attributeList, null, function(err, result){
+                  if (err) {
+                      alert(err);
+                      return;
                   }
 
                   banhji.userDS.sync();
@@ -1395,153 +1265,192 @@
                       win.close();
                     }
                   });
-                });
-              },
-              showConfirm: function(e){
-                this.setCurrent(e.data);
-                var win = $('#userFormConfirm').kendoWindow({
-                  width: "600px",
-                  title: e.data,
-                  visible: false,
-                  modal: true,
-                  actions: [
-                      "Close"
-                  ]
-                }).data('kendoWindow');
-                win.center().open();
-                $('#userConfirm').click(function() {
-                  var userData = {
-                      Username : banhji.users.get('current').username,
-                      Pool : userPool
-                  };
-                  var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-                  cognitoUser.confirmRegistration(banhji.users.get('code'), true, function(err, result) {
-                      if (err) {
-                          alert(err);
-                          return;
-                      }
-                      banhji.users.set('code', '');
-                      banhji.users.get('current').set('is_confirmed', true);
-                      banhji.users.save();
-                      win.close();
-                  });
-                });
-              },
-              addUser: function() {
-               this.users.insert(0, {
-                  username: '',
-                  first_name: '',
-                  last_name: '',
-                  email: '',
-                  mobile: '',
-                  profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
-                  company: {id: banhji.companyDS.data()[0].id, name:''},
-                  role: 2,
-                  usertype: 2
-                });
-                this.setCurrent(this.users.at(0));
-                banhji.router.navigate('userlist/new');
-              },
-              editProfile: function(e) {
-                e.preventDefault();
-                banhji.router.navigate('userlist/' + this.get('current').id);
-              },
-              edit: function(e) {
-                banhji.router.navigate('userlist/' + e.data.id);
-              },
-              addUser: function() {
-               this.users.insert(0, {
-                  username: '',
-                  first_name: '',
-                  last_name: '',
-                  email: '',
-                  mobile: '',
-                  profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
-                  company: {id: banhji.companyDS.data()[0].id, name:''},
-                  role: 2,
-                  usertype: 2
-                });
-                this.setCurrent(this.users.at(0));
-                banhji.router.navigate('userlist/new');
-              },
-              editProfile: function(e) {
-                e.preventDefault();
-                banhji.router.navigate('userlist/' + this.get('current').id);
-              },
-              edit: function(e) {
-                banhji.router.navigate('userlist/' + e.data.id);
-              },
-              confirm: function(e) {
-                e.preventDefault();
+                  alert('Your action was successful.');
+              });
+              // save to database
+            }
+          });
+        },
+        cancel: function() {
+          if(this.users.hasChanges()) {
+            this.users.cancelChanges();
+          }
+          banhji.router.navigate('userlist');
+        },
+        cancelAssign: function() {
+          if(this.modules.hasChanges()) {
+            this.modules.cancelChanges();
+          }
+        },
+        showFormEdit: function(e) {
+          this.setCurrent(e.data);
+          var win = $('#userFormEdit').kendoWindow({
+            width: "600px",
+            // title: "User Form",
+            visible: false,
+            modal: true,
+            actions: [
+                "Close"
+            ]
+          }).data('kendoWindow');
+          win.center().open();
+          $("#userEdit").click(function() {
+            if(banhji.userDS.at(0).isNew()) {
+              // signup with Cognito
+              // using cognito to sign up
+              var attributeList = [];
 
-                // var userData = {
-                //     Username : this.get('current').username,
-                //     Pool : userPool
-                // };
-                // var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-                // cognitoUser.confirmRegistration(this.get('code'), true, function(err, result) {
-                //     if (err) {
-                //         alert(err);
-                //         return;
-                //     }
-                //     banhji.users.set('code', '');
-                //     banhji.users.get('current').set('is_confirmed', true);
-                //     banhji.users.save();
-                // });
-              },
-              save: function() {
-                if(banhji.userDS.at(0).isNew()) {
-                  // signup with Cognito
-                  // using cognito to sign up
-                  var attributeList = [];
+              var dataEmail = {
+                  Name : 'email',
+                  Value : userPool.getCurrentUser().username
+              };
 
-                  var dataEmail = {
-                      Name : 'email',
-                      Value : userPool.getCurrentUser().username
-                  };
+              var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
 
-                  var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
+              attributeList.push(attributeEmail);
 
-                  attributeList.push(attributeEmail);
+              userPool.signUp(banhji.users.get('current').username, banhji.users.get('current').password, attributeList, null, function(err, result){
+                  if (err) {
+                      alert(err);
+                      return;
+                  }
+                  alert('Your action was successful.');
+              });
+              // save to database
+            }
 
-                  userPool.signUp(banhji.users.get('current').username, banhji.users.get('current').password, attributeList, null, function(err, result){
-                      if (err) {
-                          alert(err);
-                          return;
-                      }
-                      if(banhji.users.get('current').profile_photo !== "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png") {
-                        var fileChooser = document.getElementById('user-image');
-                        var results = document.getElementById('results');
-                        var file = fileChooser.files[0];
-                        if (file) {
-                          // results.innerHTML = '';
-                          var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-                          bucket.upload(params, function (err, data) {
-                            results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
-                            var loc = data.Location;
-                            banhji.users.get('current').set('profile_photo', loc);
-                            banhji.userDS.sync();
-                            banhji.userDS.bind('requestEnd', function(e){
-                              var res = e.response, type = e.type;
-                              if(res.results.length > 0) {
-                                console.log('user created.');
-                              }
-                            });
-                          });
-                        } else {
-                          results.innerHTML = 'Nothing to upload.';
+            banhji.userDS.sync();
+            banhji.userDS.bind('requestEnd', function(e){
+              var res = e.response, type = e.type;
+              if(res.results.length > 0) {
+                console.log('user created.');
+                win.close();
+              }
+            });
+          });
+        },
+        showConfirm: function(e){
+          this.setCurrent(e.data);
+          var win = $('#userFormConfirm').kendoWindow({
+            width: "600px",
+            title: e.data,
+            visible: false,
+            modal: true,
+            actions: [
+                "Close"
+            ]
+          }).data('kendoWindow');
+          win.center().open();
+          $('#userConfirm').click(function() {
+            var userData = {
+                Username : banhji.users.get('current').username,
+                Pool : userPool
+            };
+            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+            cognitoUser.confirmRegistration(banhji.users.get('code'), true, function(err, result) {
+                if (err) {
+                    alert(err);
+                    return;
+                }
+                banhji.users.set('code', '');
+                banhji.users.get('current').set('is_confirmed', true);
+                banhji.users.save();
+                win.close();
+            });
+          });
+        },
+        addUser: function() {
+         banhji.users.users.insert(0, {
+            username: '',
+            first_name: '',
+            last_name: '',
+            email: '',
+            mobile: '',
+            profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+            company: {id: banhji.companyDS.data()[0].id, name:''},
+            role: 2,
+            facebook: '',
+            linkedin: '',
+            twitter: '',
+            usertype: 2
+          });
+          banhji.users.setCurrent(banhji.users.users.at(0));
+          banhji.router.navigate('userlist/new');
+        },
+        editProfile: function(e) {
+          e.preventDefault();
+          banhji.router.navigate('userlist/' + this.get('current').id);
+        },
+        edit: function(e) {
+          banhji.router.navigate('userlist/' + e.data.id);
+        },
+        editProfile: function(e) {
+          e.preventDefault();
+          banhji.router.navigate('userlist/' + this.get('current').id);
+        },
+        edit: function(e) {
+          banhji.router.navigate('userlist/' + e.data.id);
+        },
+        confirm: function(e) {
+          e.preventDefault();
+
+          // var userData = {
+          //     Username : this.get('current').username,
+          //     Pool : userPool
+          // };
+          // var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+          // cognitoUser.confirmRegistration(this.get('code'), true, function(err, result) {
+          //     if (err) {
+          //         alert(err);
+          //         return;
+          //     }
+          //     banhji.users.set('code', '');
+          //     banhji.users.get('current').set('is_confirmed', true);
+          //     banhji.users.save();
+          // });
+        },
+        save: function() {
+          if(banhji.userDS.at(0).isNew()) {
+            // signup with Cognito
+            // using cognito to sign up
+            var attributeList = [];
+
+            var dataEmail = {
+                Name : 'email',
+                Value : userPool.getCurrentUser().username
+            };
+
+            var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
+
+            attributeList.push(attributeEmail);
+
+            userPool.signUp(banhji.users.get('current').username, banhji.users.get('current').password, attributeList, null, function(err, result){
+                if (err) {
+                    alert(err);
+                    return;
+                }
+                if(banhji.users.get('current').profile_photo !== "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png") {
+                  var fileChooser = document.getElementById('user-image');
+                  var results = document.getElementById('results');
+                  var file = fileChooser.files[0];
+                  if (file) {
+                    // results.innerHTML = '';
+                    var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
+                    bucket.upload(params, function (err, data) {
+                      results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
+                      var loc = data.Location;
+                      banhji.users.get('current').set('profile_photo', loc);
+                      banhji.userDS.sync();
+                      banhji.userDS.bind('requestEnd', function(e){
+                        var res = e.response, type = e.type;
+                        if(res.results.length > 0) {
+                          console.log('user created.');
                         }
-                      } else {
-                        banhji.userDS.sync();
-                        banhji.userDS.bind('requestEnd', function(e){
-                          var res = e.response, type = e.type;
-                          if(res.results.length > 0) {
-                            console.log('user created.');
-                          }
-                        });
-                      }
-                      alert('Your action was successful.');
-                  });
+                      });
+                    });
+                  } else {
+                    results.innerHTML = 'Nothing to upload.';
+                  }
                 } else {
                   banhji.userDS.sync();
                   banhji.userDS.bind('requestEnd', function(e){
@@ -1551,230 +1460,241 @@
                     }
                   });
                 }
+                alert('Your action was successful.');
+            });
+          } else {
+            banhji.userDS.sync();
+            banhji.userDS.bind('requestEnd', function(e){
+              var res = e.response, type = e.type;
+              if(res.results.length > 0) {
+                console.log('user created.');
               }
             });
+          }
+        }
+      });
 
-            banhji.company = kendo.observable({
-              dataStore: banhji.companyDS,
-              data: '',
-              modules: banhji.moduleDS,
-              countries: banhji.countries,
-              industries: banhji.industry,
-              currencies: banhji.currencies,
-              appSub: 0,
-              users   : banhji.users,
-              userProfile: banhji.profile,
-              getModule: function() {
-                index.showIn('#app-placeholder', modeleView);
-              },
-              close: function() {
-                index.showIn('#app-placeholder', dash);
-              },
-              taxRegimes: [
-                {id:'small', value: 'Small'},
-                {id:'medium', value: 'Medium'},
-                {id:'large', value: 'Large'}
-              ],
-              upload: function() {
-                var fileChooser = document.getElementById('companyLogo');
-                var file = fileChooser.files[0];
-                if (file) {
-                  var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-                  bucket.upload(params, function (err, data) {
-                    banhji.company.dataStore.data()[0].set('logo', data.Location);
-                    // banhji.company.get('data').set('logo', data.Location);
-                  });
-                }
-              },
-              edit: function() {
-                // e.preventDefault();
-                index.showIn('#app-placeholder', instEdit);
-                // institute.showIn('#companyInfoPlaceholder', instEdit);
-              },
-              cancel: function() {
-                if(this.dataStore.hasChanges()) {
-                  this.dataStore.cancelChanges();
-                }
-                index.showIn('#app-placeholder', instInfo);
-              },
-              save: function() {
-                this.dataStore.sync();
-                this.dataStore.bind('rquestEnd', function(e){
-                  if(e.response.results.length > 0) {
-                    institute.showIn('#companyInfoPlaceholder', instInfo);
+      banhji.company = kendo.observable({
+        dataStore: banhji.companyDS,
+        data: '',
+        modules: banhji.moduleDS,
+        countries: banhji.countries,
+        industries: banhji.industry,
+        currencies: banhji.currencies,
+        appSub: 0,
+        lastLogin: 0,
+        users   : banhji.users,
+        userProfile: banhji.profile,
+        getModule: function() {
+          index.showIn('#app-placeholder', modeleView);
+        },
+        close: function() {
+          index.showIn('#app-placeholder', dash);
+        },
+        taxRegimes: [
+          {id:'small', value: 'Small'},
+          {id:'medium', value: 'Medium'},
+          {id:'large', value: 'Large'}
+        ],
+        upload: function() {
+          var fileChooser = document.getElementById('companyLogo');
+          var file = fileChooser.files[0];
+          if (file) {
+            var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
+            bucket.upload(params, function (err, data) {
+              banhji.company.dataStore.data()[0].set('logo', data.Location);
+              // banhji.company.get('data').set('logo', data.Location);
+            });
+          }
+        },
+        edit: function() {
+          // e.preventDefault();
+          index.showIn('#app-placeholder', instEdit);
+          // institute.showIn('#companyInfoPlaceholder', instEdit);
+        },
+        cancel: function() {
+          if(this.dataStore.hasChanges()) {
+            this.dataStore.cancelChanges();
+          }
+          index.showIn('#app-placeholder', instInfo);
+        },
+        save: function() {
+          this.dataStore.sync();
+          this.dataStore.bind('rquestEnd', function(e){
+            if(e.response.results.length > 0) {
+              institute.showIn('#companyInfoPlaceholder', instInfo);
+            }
+          });
+        }
+      });
+
+      banhji.module = kendo.observable({
+        dataStore: banhji.moduleDS,
+        fkds: ''
+      });
+
+      // index view
+      var layout = new kendo.Layout('#placeholder');
+      var menu = new kendo.View('#header-menu', {model: banhji.profile});
+      var mainDash = new kendo.Layout('#companyDash', {model: banhji.company});
+      var dash = new kendo.View('#template-dashboard', {model: banhji.company});
+      var userlist= new kendo.View('#template-userlist-page', {model: banhji.users});
+      var userForm= new kendo.View('#user-profile-action', {model: banhji.users});
+      var userNew= new kendo.View('#template-userlist-form-new-page', {model: banhji.users});
+      var userlMod= new kendo.View('#template-modules-users-page', {model: banhji.users});
+      var institute = new kendo.Layout('#template-createcompany-page', {model: banhji.company});
+      var instInfo = new kendo.View('#template-createcompany-info-page', {model: banhji.company});
+      var instEdit = new kendo.View('#template-createcompany-info-edit-page', {model: banhji.company});
+      var loading = new kendo.View('#template-waiting-page');
+      var unthau = new kendo.View('#template-unauth-page');
+      var modeleView = new kendo.View('#template-modules-page', { model: banhji.company});
+      var profile = new kendo.View('#user-profile', {model: banhji.users});
+      var assign = new kendo.View('#template-assign-module-to-page', {model: banhji.users});
+      // router initization
+      banhji.router = new kendo.Router({
+          init: function() {
+              if(userPool.getCurrentUser()) {
+                layout.render("#main");
+                institute = JSON.parse(localStorage.getItem('userData/user')).institute;
+                banhji.profileDS.fetch(function(e){
+                  banhji.profile.set('currentID', banhji.profileDS.data()[0]);
+                  layout.showIn('#menu', menu);
+                });
+
+                banhji.profileDS.fetch(function(e){
+                  if(banhji.profileDS.data()[0].role == 1) {
+                    // kendo.bind('#main', banhji.aws);
+                    banhji.router.navigate('/');
+                  } else {
+                     banhji.router.navigate('/profile/' +banhji.profileDS.data()[0].id);
+                  }
+                  
+                  var cognitoUser = userPool.getCurrentUser();
+                  if(cognitoUser !== null) {
+                    banhji.aws.getImage(banhji.profileDS.data()[0].profile_photo);
+                    cognitoUser.getSession(function(err, result){
+                      if(result) {
+                        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                          IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
+                          Logins: {
+                            'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
+                          }
+                        });
+                      }
+                    });
                   }
                 });
-              }
-            });
-
-            banhji.module = kendo.observable({
-              dataStore: banhji.moduleDS,
-              fkds: ''
-            });
-
-            // index view
-            var layout = new kendo.Layout('#placeholder');
-            var menu = new kendo.View('#header-menu', {model: banhji.profile});
-            var mainDash = new kendo.Layout('#companyDash', {model: banhji.company});
-            var dash = new kendo.View('#template-dashboard', {model: banhji.company});
-            var userlist= new kendo.View('#template-userlist-page', {model: banhji.users});
-            var userForm= new kendo.View('#user-profile-action', {model: banhji.users});
-            var userNew= new kendo.View('#template-userlist-form-new-page', {model: banhji.users});
-            var userlMod= new kendo.View('#template-modules-users-page', {model: banhji.users});
-            var institute = new kendo.Layout('#template-createcompany-page', {model: banhji.company});
-            var instInfo = new kendo.View('#template-createcompany-info-page', {model: banhji.company});
-            var instEdit = new kendo.View('#template-createcompany-info-edit-page', {model: banhji.company});
-            var loading = new kendo.View('#template-waiting-page');
-            var unthau = new kendo.View('#template-unauth-page');
-            var modeleView = new kendo.View('#template-modules-page', { model: banhji.company});
-            var profile = new kendo.View('#user-profile', {model: banhji.users});
-            var assign = new kendo.View('#template-assign-module-to-page', {model: banhji.users});
-            // router initization
-            banhji.router = new kendo.Router({
-                init: function() {
-                    if(userPool.getCurrentUser()) {
-                      layout.render("#main");
-                      institute = JSON.parse(localStorage.getItem('userData/user')).institute;
-                      banhji.profileDS.fetch(function(e){
-                        banhji.profile.set('currentID', banhji.profileDS.data()[0]);
-                        layout.showIn('#menu', menu);
-                      });
-
-                      banhji.profileDS.fetch(function(e){
-                        // if(banhji.profileDS.data()[0].role == 1) {
-                          // kendo.bind('#main', banhji.aws);
-                          if(userPool.getCurrentUser() == null) {
-                            window.location.replace(baseUrl + "login");
-                          } else {
-                            var cognitoUser = userPool.getCurrentUser();
-                            if(cognitoUser !== null) {
-                              banhji.aws.getImage(banhji.profileDS.data()[0].profile_photo);
-                              cognitoUser.getSession(function(err, result){
-                                if(result) {
-                                  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                                    IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
-                                    Logins: {
-                                      'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
-                                    }
-                                  });
-                                }
-                              });
-                            }
-                          }
-                          // banhji.users.modules.filter({
-                          //     field: 'username',
-                          //     value: userPool.getCurrentUser().username
-                          // });
-                      });
-                    } else {
-                      window.location.replace("<?php echo base_url(); ?>login");
-                    }
-                },
-                routeMissing: function(e) {
-                    // banhji.view.layout.showIn("#layout-view", banhji.view.missing);
-                    console.log("no resource found.")
-                }
-            });
-
-            // start here
-            banhji.router.route('/', function() {
-              if(!banhji.companyDS.data()[0]) {
-                banhji.companyDS.fetch(function() {
-                  banhji.company.set('data', banhji.companyDS.data()[0]);
-                  banhji.moduleDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
-                  banhji.moduleDS.bind('requestEnd', function(e){
-                    if(e.response) {
-                      banhji.company.set('appSub', e.response.results.length || 0);
-                      banhji.company.set('data', banhji.companyDS.data()[0].users);
-                      // console.log(banhji.companyDS.data()[0]);
-                      banhji.userDS.filter({field: 'id', value: institute.id});
-                    }
-                    layout.showIn("#container", mainDash);
-                   });
-                });
-              }
-
-            });
-
-            banhji.router.route('userlist', function() {
-              layout.showIn("#main-display-container", index);
-              if(banhji.userDS.data().length > 0) {
-                index.showIn('#app-placeholder', userlist);
               } else {
+                window.location.replace("<?php echo base_url(); ?>login");
+              }
+          },
+          routeMissing: function(e) {
+              // banhji.view.layout.showIn("#layout-view", banhji.view.missing);
+              console.log("no resource found.")
+          }
+      });
+
+      // start here
+      banhji.router.route('/', function() {
+        if(!banhji.companyDS.data()[0]) {
+          banhji.companyDS.fetch(function() {
+            banhji.company.set('data', banhji.companyDS.data()[0]);
+            banhji.moduleDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
+            banhji.moduleDS.bind('requestEnd', function(e){
+              if(e.response) {
+                banhji.company.set('appSub', e.response.results.length || 0);
+                banhji.company.set('data', banhji.companyDS.data()[0].users);
+                banhji.company.set('lastLogin', banhji.companyDS.data()[0].lastLogin);
+                // console.log(e.response.results[0]);
                 banhji.userDS.filter({field: 'id', value: institute.id});
-                // layout.showIn("#main-display-container", index);
-                index.showIn('#app-placeholder', userlist);
               }
-            });
+              layout.showIn("#container", mainDash);
+             });
+          });
+        } else{
+          layout.showIn("#container", mainDash);
+        }
+      });
 
-            banhji.router.route('userlist/new', function() {
-              layout.showIn("#container", profile);
-              console.log('new');
-            });
+      banhji.router.route('userlist', function() {
+        layout.showIn("#main-display-container", index);
+        if(banhji.userDS.data().length > 0) {
+          index.showIn('#app-placeholder', userlist);
+        } else {
+          banhji.userDS.filter({field: 'id', value: institute.id});
+          // layout.showIn("#main-display-container", index);
+          index.showIn('#app-placeholder', userlist);
+        }
+      });
 
-            banhji.router.route('userlist(/:id)', function(id) {
-              if(id) {
-                banhji.users.setCurrent(banhji.users.users.get(id));
-              } else {
-                banhji.users.users.insert(0, {
-                  username: null,
-                  first_name: null,
-                  last_name: null,
-                  email: null,
-                  mobile: null,
-                  password: null,
-                  profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
-                  company: {id: banhji.companyDS.data()[0].id, name:''},
-                  usertype: null
-                });
+      banhji.router.route('userlist/new', function() {
+        layout.showIn("#container", userForm);
+        console.log('new');
+      });
 
-                banhji.users.setCurrent(banhji.users.users.at(0));
-              }
-              layout.showIn("#container", userForm);
-            });
+      banhji.router.route('userlist(/:id)', function(id) {
+        if(id) {
+          banhji.users.setCurrent(banhji.users.users.get(id));
+        } else {
+          banhji.users.users.insert(0, {
+            username: null,
+            first_name: null,
+            last_name: null,
+            email: null,
+            mobile: null,
+            password: null,
+            profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+            company: {id: banhji.companyDS.data()[0].id, name:''},
+            usertype: null
+          });
 
-            banhji.router.route('apps', function() {
-              layout.showIn("#main-display-container", modeleView);
-            });
+          banhji.users.setCurrent(banhji.users.users.at(0));
+        }
+        layout.showIn("#container", userForm);
+      });
 
-            banhji.router.route('apps/:id', function(id) {
-              console.log(id);
-            });
+      banhji.router.route('apps', function() {
+        layout.showIn("#main-display-container", modeleView);
+      });
 
-            banhji.router.route('company', function() {
-              layout.showIn("#main-display-container", index);
-              index.showIn('#app-placeholder', instInfo);
-              // institute.showIn('#companyInfoPlaceholder', instInfo);
-            });
+      banhji.router.route('apps/:id', function(id) {
+        console.log(id);
+      });
 
-            banhji.router.route('profile/:id', function(id) {
-              layout.showIn("#container", profile);
-              // layout.showIn("#main-display-container", profile);
-              banhji.users.setCurrent(banhji.users.users.get(id));
-            });
+      banhji.router.route('company', function() {
+        layout.showIn("#main-display-container", index);
+        index.showIn('#app-placeholder', instInfo);
+        // institute.showIn('#companyInfoPlaceholder', instInfo);
+      });
+
+      banhji.router.route('profile/:id', function(id) {
+        layout.showIn("#container", profile);
+        // layout.showIn("#main-display-container", profile);
+        banhji.users.setCurrent(banhji.users.users.get(id));
+      });
 
 
-            $(document).ready(function() {
-                banhji.router.start();
-                // signout when browser closed
-                // window.addEventListener("beforeunload", function (e) {
-                //   // var confirmationMessage = "\o/";
+      $(document).ready(function() {
+          banhji.router.start();
+          // signout when browser closed
+          // window.addEventListener("beforeunload", function (e) {
+          //   // var confirmationMessage = "\o/";
 
-                //   // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-                //   // return confirmationMessage;                            //Webkit, Safari, Chrome
-                //   var userData = {
-                //       Username : userPool.getCurrentUser().username,
-                //       Pool : userPool
-                //   };
-                //   var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-                //   if(cognitoUser != null) {
-                //       cognitoUser.signOut();
-                //       // window.location.replace("<?php echo base_url(); ?>login");
-                //   } else {
-                //       console.log('No user');
-                //   }
-                // });
-            });
-        </script>
-    </body>
+          //   // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+          //   // return confirmationMessage;                            //Webkit, Safari, Chrome
+          //   var userData = {
+          //       Username : userPool.getCurrentUser().username,
+          //       Pool : userPool
+          //   };
+          //   var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+          //   if(cognitoUser != null) {
+          //       cognitoUser.signOut();
+          //       // window.location.replace("<?php echo base_url(); ?>login");
+          //   } else {
+          //       console.log('No user');
+          //   }
+          // });
+      });
+    </script>
+  </body>
 </html>

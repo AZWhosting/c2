@@ -72,6 +72,55 @@ class Profiles extends REST_Controller {
 		// }
 	}
 
+	// Login
+	function login_post() {
+		$requested_data = $this->post("filter");
+		$filters = $requested_data['filters'];
+		$limit = $this->get('limit') ? $this->get('limit'): 50;
+		$offset= $this->get('offset')? $this->get('offset'): null;
+
+		$users = new User(null);
+		if(isset($filters)) {
+			foreach($filters as $f) {
+				$users->where($f['field'], $f['value']);
+			}
+		}
+		$users->get();
+		$users->logged_in = date('Y-m-d');
+		$users->save();
+		foreach($users as $user) {
+			// $user->module->get();
+			// $modules = array();
+			// if($user->module->exists()) {
+			// 	foreach($user->module as $m) {
+			// 		$modules[] = array(
+			// 			'id' 		=> intval($m->id),
+			// 			'name' 		=> $m->name,
+			// 			'img_url' 	=> $m->image_url,
+			// 			'description'=>$m->description
+			// 		);
+			// 	}
+			// }
+			$data[] = array(
+				'id' => $user->id,
+				'username' 	=> $user->username,
+				'first_name'=> $user->first_name,
+				'last_name' => $user->last_name,
+				'role' 		=> $user->role,
+				'profile_photo'=>$user->profile_photo_url,
+				// 'modules'   => $modules,
+				'created_at'=> $user->created_at,
+				'updated_at'=> $user->updated_at
+			);
+		}
+
+		// if($users->result_count() > 0) {
+			$this->response(array('results'=>$data, 'count'=>1), 200);
+		// } else {
+		// 	$this->response(array('results'=>$data, 'count'=>$users->result_count()), 200);
+		// }
+	}
+
 	// update user information
 	// @param: user data
 	// return userdata
@@ -246,6 +295,7 @@ class Profiles extends REST_Controller {
 		}
 		$user->get_paged($offset, $limit);
 
+
 		foreach($user as $u) {
 			$u->institute->get();
 			if($u->institute->exists()) {
@@ -253,6 +303,11 @@ class Profiles extends REST_Controller {
 				$currency = $u->institute->monetary->get();
 				$report = $u->institute->report_monetary->get();
 				$country = $u->institute->country->get();
+				$lastLogin = new User();
+				$lastLogin->where_related('institute', 'id', $u->institute->id);
+				$lastLogin->where('logged_in <= ', date('Y-m-d'));
+				$lastLogin->where('logged_in >= ', date('Y-m-d', strtotime('-30 days')));
+				$loginCount = $lastLogin->count();
 				$data[] = array(
 					'id' => $u->institute->id,
 					'name'=>$u->institute->name,
@@ -273,7 +328,8 @@ class Profiles extends REST_Controller {
 					'industry' => array('id'=>$industry->id,'type' => $industry->name),
 					'currency' => $currency->id ? array('id'=> $currency->id, 'code' => $currency->code, 'country' => $currency->country, 'locale'=>$currency->locale):array('id'=>null),
 					'country' => array('id' => $country->id, 'name' => $country->name),
-					'users' => $u->institute->user->count()
+					'users' => $u->institute->user->count(),
+					'lastLogin' => $loginCount
 				);
 			} else {
 				$data[] = array();
