@@ -82,9 +82,9 @@
 
                       <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
 
-                      <input type="password" data-bind="value: password, events:{change:signIn}" placeholder="Password " class="login-email"><br>                    
+                      <input type="password" data-bind="value: password, events:{keypress:signIn}" placeholder="Password " class="login-email"><br>                    
 
-                      <input id="loginBtn" type="button" data-bind="click: signIn" class="btn-login" value="Login"><br><br>
+                      <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
                       <div id="loginInformation"></div>
                   </form> 
               </div>
@@ -162,8 +162,8 @@
         banhji.profileDS = new kendo.data.DataSource({
           transport: {
             read  : {
-              url: baseUrl + 'api/profiles',
-              type: "GET",
+              url: baseUrl + 'api/profiles/login',
+              type: "POST",
               dataType: 'json'
             },
             parameterMap: function(options, operation) {
@@ -236,57 +236,108 @@
         banhji.aws = kendo.observable({
           email: null,
           password: null,
-          signIn: function() {
+          signIn: function(e) {
             // var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;  
             // if(this.get('password').match(decimal) != null)  {   
             // layout.showIn("#main-container", watingView);
+            if(e.keyCode == 13) {
+              $("#loginBtn").val("Loging in...");
+              var authenticationData = {
+                  Username : this.get('email'),
+                  Password : this.get('password'),
+              };
+              var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
+              var userData = {
+                  Username : this.get('email'),
+                  Pool : userPool
+              };
+              var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+              cognitoUser.authenticateUser(authenticationDetails, {
+                onSuccess: function (result) {
+                  banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username});
+                      banhji.companyDS.bind('requestEnd', function(e) {
+                        var res = e.response;
+                        if(res.error) {
+                            // console.log()
+                        } else {
+                          var data = res.results[0];
+                          banhji.profileDS.filter({
+                            field: 'username', value: userPool.getCurrentUser().username
+                          });
+                          banhji.profileDS.bind('requestEnd', function(e){
+                            var id = e.response.results[0].id;
+                            if(e.response.results[0].id) {
+                              var user = {
+                                  id: id,
+                                  username: userPool.getCurrentUser().username,
+                                  institute: data
+                              };
+                              localforage.setItem('user', user);
+                              $("#loginBtn").val("Redirecting...");
+                              window.location.replace(baseUrl + "rrd/");
+                            } else {
+                              console.log('bad');
+                            }
+                          });                          
+                        }
+                    });                    
+                },
+                onFailure: function(err) {
+                  // layout.showIn("#main-container", loginView);
+                  $("#loginBtn").val("Login");
+                  $('#loginInformation').text('Please check username/password.');
+                }
+              }); 
+            } 
+          },
+          btnSignIn: function() {
             $("#loginBtn").val("Loging in...");
-            var authenticationData = {
-                Username : this.get('email'),
-                Password : this.get('password'),
-            };
-            var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
-            var userData = {
-                Username : this.get('email'),
-                Pool : userPool
-            };
-            var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-            cognitoUser.authenticateUser(authenticationDetails, {
-              onSuccess: function (result) {
-                banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username});
-                    banhji.companyDS.bind('requestEnd', function(e) {
-                      var res = e.response;
-                      if(res.error) {
-                          // console.log()
-                      } else {
-                        var data = res.results[0];
-                        banhji.profileDS.filter({
-                          field: 'username', value: userPool.getCurrentUser().username
-                        });
-                        banhji.profileDS.bind('requestEnd', function(e){
-                          var id = e.response.results[0].id;
-                          if(e.response.results[0].id) {
-                            var user = {
-                                id: id,
-                                username: userPool.getCurrentUser().username,
-                                institute: data
-                            };
-                            localforage.setItem('user', user);
-                            $("#loginBtn").val("Redirecting...");
-                            window.location.replace(baseUrl + "rrd/");
-                          } else {
-                            console.log('bad');
-                          }
-                        });                          
-                      }
-                  });                    
-              },
-              onFailure: function(err) {
-                // layout.showIn("#main-container", loginView);
-                $("#loginBtn").val("Login");
-                $('#loginInformation').text('Please check username/password.');
-              }
-            });  
+              var authenticationData = {
+                  Username : this.get('email'),
+                  Password : this.get('password'),
+              };
+              var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
+              var userData = {
+                  Username : this.get('email'),
+                  Pool : userPool
+              };
+              var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+              cognitoUser.authenticateUser(authenticationDetails, {
+                onSuccess: function (result) {
+                  banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username});
+                      banhji.companyDS.bind('requestEnd', function(e) {
+                        var res = e.response;
+                        if(res.error) {
+                            // console.log()
+                        } else {
+                          var data = res.results[0];
+                          banhji.profileDS.filter({
+                            field: 'username', value: userPool.getCurrentUser().username
+                          });
+                          banhji.profileDS.bind('requestEnd', function(e){
+                            var id = e.response.results[0].id;
+                            if(e.response.results[0].id) {
+                              var user = {
+                                  id: id,
+                                  username: userPool.getCurrentUser().username,
+                                  institute: data
+                              };
+                              localforage.setItem('user', user);
+                              $("#loginBtn").val("Redirecting...");
+                              window.location.replace(baseUrl + "rrd/");
+                            } else {
+                              console.log('bad');
+                            }
+                          });                          
+                        }
+                    });                    
+                },
+                onFailure: function(err) {
+                  // layout.showIn("#main-container", loginView);
+                  $("#loginBtn").val("Login");
+                  $('#loginInformation').text('Please check username/password.');
+                }
+              }); 
           },
           redirect: function(data) {
               // console.log(data.length > 0);

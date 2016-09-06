@@ -48,9 +48,13 @@ class Users extends REST_Controller {
 				'email' => $u->email,
 				'mobile' => $u->mobile,
 				'role' 	=> $u->role,
+				'facebook' => $u->facebook,
+				'linkedin' => $u->linkedin,
+				'twitter'  => $u->twitter,
 				'company' => array('id' =>$u->institute_id, 'name'=> intval($u->institute_name)),
 				'created_at'=> $u->created_at,
-				'updated_at'=> $u->updated_at
+				'updated_at'=> $u->updated_at,
+				'logged_in' => $u->logged_in
 			);
 		}
 
@@ -76,6 +80,9 @@ class Users extends REST_Controller {
 			$User->email = $user->email;
 			$User->mobile = $user->mobile;
 			$User->profile_photo_url = $user->profile_photo;
+			$User->facebook = $user->facebook;
+			$User->linkedin = $user->linkedin;
+			$User->twitter  = $user->twitter;
 			$User->is_confirmed = $user->is_confirmed == true ? 1:0;
 			$User->is_disabled = 0;
 			if($User->save()) {
@@ -89,6 +96,9 @@ class Users extends REST_Controller {
 					'is_disabled'=> $User->is_diabled == 0 ? FALSE : TRUE,
 					'email' => $User->email,
 					'mobile' => $User->mobile,
+					'facebook' => $User->facebook,
+					'linkedin' => $User->linkedin,
+					'twitter' => $User->twitter,
 					'role' 	=> $User->role,
 					'company' => array('id' =>$company->id, 'name'=> $company->name),
 					'created_at'=> $User->created_at,
@@ -120,6 +130,9 @@ class Users extends REST_Controller {
 			$User->mobile = $user->mobile;
 			$User->role = $user->usertype;
 			$User->profile_photo_url = $user->profile_photo;
+			$User->facebook = $user->facebook;
+			$User->linkedin = $user->linkedin;
+			$User->twitter  = $user->twitter;
 			$User->is_confirmed = 0;
 			$User->is_disabled = 0;
 			if($company->exists()) {
@@ -134,6 +147,9 @@ class Users extends REST_Controller {
 						'is_disabled'=> $User->is_diabled == 0 ? FALSE : TRUE,
 						'email' => $User->email,
 						'mobile' => $User->mobile,
+						'facebook' => $User->facebook,
+						'linkedin' => $User->linkedin,
+						'twitter' => $User->twitter,
 						'role' 	=> $User->role,
 						'company' => array('id' =>$company->id, 'name'=> $company->name),
 						'created_at'=> $User->created_at,
