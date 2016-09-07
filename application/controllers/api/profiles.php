@@ -305,8 +305,8 @@ class Profiles extends REST_Controller {
 				$country = $u->institute->country->get();
 				$lastLogin = new User();
 				$lastLogin->where_related('institute', 'id', $u->institute->id);
-				$lastLogin->where('logged_in <= ', date('Y-m-d'));
-				$lastLogin->where('logged_in >= ', date('Y-m-d', strtotime('-30 days')));
+				$lastLogin->where('created_at <= ', date('Y-m-d'));
+				$lastLogin->where('created_at >= ', date('Y-m-d', strtotime('-30 days')));
 				$loginCount = $lastLogin->count();
 				$data[] = array(
 					'id' => $u->institute->id,
