@@ -115,7 +115,7 @@ class Transaction_templates extends REST_Controller {
 			isset($value->name)? 				$obj->name 					= $value->name : "";
 			isset($value->title)? 				$obj->title 				= $value->title : "";
 			isset($value->note)? 				$obj->note 					= $value->note : "";
-			isset($value->moduls)? 				$obj->moduls 					= $value->moduls : "";
+			isset($value->moduls)? 				$obj->moduls 				= $value->moduls : "";
 			isset($value->color)? 				$obj->color 				= $value->color : "";	
 						
 			if($obj->save()){

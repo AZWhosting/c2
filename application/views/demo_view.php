@@ -12006,6 +12006,8 @@
 	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Payment Method</span></a>
 	            </li>
 	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Payment Term</span></a>
+	            </li>	
+	            <li><a href="#tab4-1" class="glyphicons list" data-toggle="tab"><i></i><span class="strong">Custom Forms</span></a>
 	            </li>	                       
 	        </ul>
 	    </div>
@@ -12083,6 +12085,28 @@
 	            	</table>
 	            </div>
 	            <!-- // PAYMENT TERM END -->
+
+	            <!-- Tab Invocice Custom content -->
+	            <div class="tab-pane" id="tab4-1">
+            		
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center">Name</th>
+	            				<th class="center">Form Type</th>
+	            				<th class="center">Last Edited</th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="customerSetting-form-template"
+				                 data-bind="source: txnTemplateDS">				            
+	            		</tbody>
+	            	</table>
+	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
+	            </div>
+	            <!-- // Tab Invoice Custom content END -->
 
 	        </div>
 	    </div>
@@ -23877,7 +23901,7 @@
                                 	</div>
                                 </div>
 							</div>
-							<div class="span12" style="margin-left:0; margin-top: 10px;">
+							<div class="span12" style="margin-left:0; margin-top: 10px;padding-bottom: 30px;">
 								<h2 class="btn btn-block btn-primary">Form Appearance</h2>
 								<div class="colorPalatte span12">
 									<div class="" style="margin-top: 15px;">
@@ -23892,13 +23916,19 @@
 						</div>
 					</div>
 					<!-- Form actions -->
-					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-						<span id="notification"></span>
-
-						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>									
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>			
+							</div>
+						</div>
 					</div>
-					<!-- // Form actions END -->
+					<!-- // Form actions END -->	
 				</div>							
 			</div>
 		</div>
@@ -25320,13 +25350,13 @@
         	</div>
         	<table class="span12">
         		<tr>
-        			<td style="background: #c6d9f1" width="150"><b>SALE ORDER #</b></td>
+        			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="150"><b>SALE ORDER #</b></td>
         			<td width="100"><b></b></td>
-        			<td width="150" style="background: #c6d9f1"><b>INVOICE #</b></td>
+        			<td width="150" style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>INVOICE #</b></td>
         			<td><b></b></td>
         		</tr>
         		<tr>
-        			<td style="background: #c6d9f1"><b>JOB/ CONTRACT #</b></td>
+        			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>JOB/ CONTRACT #</b></td>
         			<td><b></b></td>
         			<td style="background: #c6d9f1"><b></b></td>
         			<td><b></b></td>
@@ -25335,12 +25365,12 @@
         	<table class="span12" style="margin: 5px 0;">
         		<thead>
         			<tr>
-        				<th width="50">NO</th>
-        				<th>ITEM CODE</th>
-        				<th>DESCRIPTION</th>
-        				<th>UM</th>
-        				<th>QTY</th>
-        				<th>REMARK</th>
+        				<th width="50" style="background: #c6d9f1;">NO</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">ITEM CODE</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">DESCRIPTION</th>
+        				<th style="background: #c6d9f1;">UM</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">QTY</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">REMARK</th>
         			</tr>
         		</thead>
         		<tbody id="formListView" 
@@ -26465,6 +26495,201 @@
         </div>
     </div>
 </script>
+<script id="invoiceForm23" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span3" style="margin-right: 15px;">
+        			<b>Customer Information</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span3">
+        			<b>Delivered to</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title" data-bind="text: obj.title"></p>
+        			<p><b>PO Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>PO No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span3">TERM OF PAYMENT</div>
+        		<div class="span3">MODE OF PAYMENT</div>
+        		<div class="span3">DELIVERY DATE</div>
+        		<div class="span3">SALE REP</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr>
+        				<th width="90">CODE</th>
+        				<th>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>QTY</th>
+        				<th>UNIT PRICE</th>
+        				<th width="80">Total</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template6"
+						data-bind="source: lineDS">
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="120">PREPARED BY</td><td width="100"></td>
+        			<td>POSITION</td><td width="100"></td>
+        			<td>DATE</td><td width="80"></td>
+        		</tr>
+        		<tr>
+        			<td>REVIEWED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>APROVED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>ACCEPTED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm24" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header" style="background:none;">
+        		<div class="span3" style="margin-right: 15px;">
+        			<b>Customer Information</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span6" style="float:right;">
+        			<p class="form-title" data-bind="text: obj.title" style="font-size: 26px"></p>
+        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<table class="span12">
+        		<tr>
+        			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="150"><b>SALE ORDER #</b></td>
+        			<td width="100"><b></b></td>
+        			<td width="150" style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>INVOICE #</b></td>
+        			<td><b></b></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>JOB/ CONTRACT #</b></td>
+        			<td><b></b></td>
+        			<td style="background: #c6d9f1"><b></b></td>
+        			<td><b></b></td>
+        		</tr>
+        	</table>
+        	<table class="span12" style="margin: 5px 0;">
+        		<thead>
+        			<tr>
+        				<th width="50" style="background: #c6d9f1;">NO</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">ITEM CODE</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">DESCRIPTION</th>
+        				<th style="background: #c6d9f1;">UM</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">QTY</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">REMARK</th>
+        			</tr>
+        		</thead>
+        		<tbody id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template14"
+						data-bind="source: lineDS">
+        	</table>
+        	<table class="span12">
+        		<tr>
+        			<td style="background: #c6d9f1" width="150">ISSUED BY</td>
+        			<td width="100"></td>
+        			<td width="150" style="background: #c6d9f1">DATE</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1">DELIVERED BY</td>
+        			<td></td>
+        			<td style="background: #c6d9f1">DATE</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1">RECEIVED BY</td>
+        			<td></td>
+        			<td style="background: #c6d9f1">DATE/TIME</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1">ACKNOWLEDGED BY</td>
+        			<td></td>
+        			<td style="background: #c6d9f1">DATE/TIME</td>
+        			<td></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
 
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
 	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
@@ -27502,7 +27727,7 @@
 								<div class="widget-body padding-none">			
 									<div class="row-fluid row-merge">
 										<div class="listWrapper">
-											<div class="innerAll">							
+											<div class="innerAll" style="padding: 15px 15px 19px;">							
 												<form autocomplete="off" class="form-inline">
 													<div class="widget-search separator bottom">
 														<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
@@ -27523,7 +27748,7 @@
 											                              source: contactDS,
 											                              events:{ change: contactChanges }"
 											                   data-placeholder="Customer..."                    
-											                   style="width: 100%" />									
+											                   style="width: 100%; height: 29px;" />									
 													</div>
 												</form>					
 											</div>
@@ -27696,7 +27921,7 @@
 		            <div class="row-fluid">
 			
 						<!-- Column -->
-						<div class="span5">
+						<div class="span4">
 							
 							<div class="btn-group">
 								<div class="leadcontainer">
@@ -27713,13 +27938,16 @@
 
 							<br>
 
-							<textarea cols="0" rows="2" class="k-textbox" style="width:49%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
-							<textarea cols="0" rows="2" class="k-textbox" style="width:50%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+							<div class="well" style="margin-top:10px;">
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+							</div>
+
 						</div>
 						<!-- Column END -->
 						
 						<!-- Column -->
-						<div class="span7">
+						<div class="span8">
 							<table class="table table-condensed table-striped table-white">
 								<tbody>
 									<tr>
@@ -27859,7 +28087,7 @@
 							<div class="widget-body padding-none">			
 								<div class="row-fluid row-merge">
 									<div class="listWrapper">
-										<div class="innerAll">							
+										<div class="innerAll" style="padding: 15px 15px 19px;">							
 											<form autocomplete="off" class="form-inline">
 												<div class="widget-search separator bottom">
 													<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
@@ -27880,7 +28108,7 @@
 										                              source: contactDS,
 										                              events:{ change: contactChanges }"
 										                   data-placeholder="Supplier..."                    
-										                   style="width: 100%" />									
+										                   style="width: 100%; height: 29px;" />									
 												</div>
 											</form>					
 										</div>
@@ -28012,7 +28240,7 @@
 	            <div class="row-fluid">
 		
 					<!-- Column -->
-					<div class="span5">
+					<div class="span4">
 						
 						<div class="btn-group">
 							<div class="leadcontainer">
@@ -28035,9 +28263,11 @@
 						</div>
 					</div>
 					<!-- Column END -->
+
+					
 					
 					<!-- Column -->
-					<div class="span7">
+					<div class="span8">
 						<table class="table table-condensed table-striped table-white">
 							<tbody>
 								<tr>
@@ -35080,7 +35310,7 @@
 <!-- ***************************
 *	Report Section       *
 **************************** -->
-<script id="reportDashboard" type="text/x-kendo-template" >
+<!-- <script id="reportDashboard" type="text/x-kendo-template" >
 	<div class="row-fluid">
 		<div class="span12 report-module">
 			<h2>No. of Reports/lists by Module</h2>
@@ -35254,6 +35484,368 @@
 		</div>
 
 		
+
+	</div>
+</script> -->
+
+<script id="reportDashboard" type="text/x-kendo-template" >
+	<div class="row-fluid">
+
+		<div class="span6 report-module">
+			<h2>No. of Reports/lists by Module</h2>
+			<ul>
+				<li>
+					<a href="#/customer_report_center">
+						<img title="Report Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+					</a>
+					<div class="span12">17</div>
+				</li>
+				<li>
+					<a href="#/vendor_report_center">
+						<img title="Report Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+					</a>
+					<div class="span12">16</div>
+				</li>
+				<li>
+					<a href="#/item_report_center">
+						<img title="Report Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+					</a>
+					<div class="span12">12</div>
+				</li>
+				<li>
+					<a href="#/cash_report_center">
+						<img title="Report Cash" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
+					</a>
+					<div class="span12">6</div>
+				</li>
+				<li>
+					<a href="#/accounting_report_center">
+						<img title="Report Accounting" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
+					</a>
+					<div class="span12">16</div>
+				</li>
+			</ul>
+
+			<div class="row">
+				<div class="span12" style="margin-top: 20px;">
+					<div class="row-fluid cash-payments">
+						<h2 style="width: 100%;">
+							What is your ability to meet your present obligations (settling debts or possibly meet other 
+							unforeseen demand for cash payments)?
+						</h2>
+						<div class="row">
+							<div class="span12" style="margin-bottom: 20px;">
+								<div class="span6 capital-box">
+									<p class="first-text">Current Ratio</p>
+									<span>3</span>
+									<p class="month">12 months Average</p>
+								</div>
+								<div class="span6 capital-box">
+									<p class="first-text">Quick Ratio</p>
+									<span>1.5</span>
+									<p class="month">12 months Average</p>
+								</div>
+								<div class="span6 capital-box">
+									<p class="first-text">Cash Ratio</p>
+									<span>0.3</span>
+									<p class="month">12 months Average</p>
+								</div>
+								<div class="span6 capital-box">
+									<p class="first-text">Debt Service Coverage Ratio</p>
+									<span>5</span>
+									<p class="month">12 months Average</p>
+								</div>
+							</div>
+
+							<div class="span12 ">
+								<div class="capital-chart">
+									Chart
+								</div>				
+							</div>
+						</div>
+					</div>
+
+							
+				</div>
+			</div>
+
+		</div>
+		<div class="span6">
+			<div class="row">
+				<div class="span12 capital-management" style="margin-bottom: 20px;">
+					<h2 >How efficient is your working capital management? </h2>
+					<div class="row">
+						<div class="span12" style="margin-bottom: 20px;">
+							<div class="span6 capital-box">
+								<p class="first-text">Receivable Collection Days</p>
+								<span>30</span>
+								<p class="month">12 months Average</p>
+							</div>
+							<div class="span6 capital-box">
+								<p class="first-text">Payable Payment Days</p>
+								<span>20</span>
+								<p class="month">12 months Average</p>
+							</div>
+							<div class="span6 capital-box">
+								<p class="first-text">Inventory Turnover Days</p>
+								<span>40</span>
+								<p class="month">12 months Average</p>
+							</div>
+							<div class="span6 capital-box">
+								<p class="first-text">Cash Conversion Cycle</p>
+								<span>50</span>
+								<p class="month">12 months Average</p>
+							</div>
+						</div>
+						<div class="span12">
+							<div class="capital-chart">
+								Chart
+							</div>				
+						</div>
+					</div>
+				</div>
+
+				<div class="span12 financial-block" style="padding: 0 15px;">
+					<h2 >How safe is your long term financial position?</h2>
+						<div class="row-fluid">
+							<div class="span12 financial-box">
+								<p class="first-text">Debt/ Equity Ratio</p>
+								<span>3</span>
+								<p class="month">12 months Average</p>
+							</div>
+							<div class="span12 financial-box">
+								<p class="first-text">Debt/ Asset Ratio</p>
+								<span>1.5</span>
+								<p class="month">1.5 months Average</p>
+							</div>
+						</div>
+					</div>
+				</div>	
+
+				<div class="span12 business-block">
+					<h2 style="margin-left:-15px;">How safe is your long term financial position?</h2>
+					<div class="row">
+						<div class="span4 business-box">
+							<p class="first-text">Earning before interest & tax</p>
+							<span>10%</span>
+							<p class="month">12 months Average</p>
+						</div>
+						<div class="span4 business-box" style="margin-left: 3px; width: 25%;">
+							<p class="first-text">Return on Asset</p>
+							<span>2</span>
+							<p class="month">12 months Average</p>
+						</div>
+						<div class="span4 business-box" style="width: 37%;">
+							<p class="first-text">Return on Capital Employed</p>
+							<span>20%</span>
+							<p class="month">12 months Average</p>
+						</div>
+					</div>
+				</div> 
+
+				<div class="span12 revenue">
+					<h2 style="margin-left: -15px;">Revenue Performance</h2>
+					<div class="row">
+						<div class="span12" style="margin-bottom:20px;">
+							<div class="row">
+								<div class="span6 revenue-box" style="width:49%; margin-right: 3px;">
+									<p class="first-text">Gross Margin</p>
+									<span>13%</span>
+									<p class="month">12 months Average</p>
+								</div>
+								<div class="span6 revenue-box" style="width:50%;">
+									<p class="first-text">Average Sale Growth Rate</p>
+									<span>10%</span>
+									<p class="month">12 months Average</p>
+								</div>
+							</div>
+						</div>
+						<div class="span12">
+							<div class="row">
+								<div class="capital-chart">
+									Chart
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>	
+
+
+		</div>
+
+		<!-- <div class="span12 report-module">
+			<h2>No. of Reports/lists by Module</h2>
+			<ul>
+				<li>
+					<a href="#/customer_report_center">
+						<img title="Report Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+					</a>
+					<div class="span12">17</div>
+				</li>
+				<li>
+					<a href="#/employee_report_center">
+						<img title="Report Employee" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
+					</a>
+					<div class="span12">6</div>
+				</li>
+				<li>
+					<a href="#/vendor_report_center">
+						<img title="Report Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+					</a>
+					<div class="span12">16</div>
+				</li>
+				<li>
+					<a href="#/item_report_center">
+						<img title="Report Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+					</a>
+					<div class="span12">12</div>
+				</li>
+				<li>
+					<a href="#/services_report_center">
+						<img title="Report Services" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/services.png" alt="Service">
+					</a>
+					<div class="span12"></div>
+				</li>
+				<li>
+					<a href="#/cash_report_center">
+						<img title="Report Cash" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
+					</a>
+					<div class="span12">6</div>
+				</li>
+				<li>
+					<a href="#/accounting_report_center">
+						<img title="Report Accounting" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
+					</a>
+					<div class="span12">16</div>
+				</li>
+			</ul>
+		</div> -->
+
+		<!-- <div class="span12 capital-management">
+			<h2>How efficient is your working capital management? </h2>
+			<div class="span6">
+				<div class="span6 capital-box">
+					<p class="first-text">Receivable Collection Days</p>
+					<span>30</span>
+					<p class="month">12 months Average</p>
+				</div>
+				<div class="span6 capital-box">
+					<p class="first-text">Payable Payment Days</p>
+					<span>20</span>
+					<p class="month">12 months Average</p>
+				</div>
+				<div class="span6 capital-box">
+					<p class="first-text">Inventory Turnover Days</p>
+					<span>40</span>
+					<p class="month">12 months Average</p>
+				</div>
+				<div class="span6 capital-box">
+					<p class="first-text">Cash Conversion Cycle</p>
+					<span>50</span>
+					<p class="month">12 months Average</p>
+				</div>
+			</div>
+			<div class="span6 ">
+				<div class="capital-chart">
+					Chart
+				</div>				
+			</div>
+		</div>
+
+		<div class="span12 ">
+			<div class="row-fluid cash-payments">
+				<h2>
+					What is your ability to meet your present obligations (settling debts or possibly meet other 
+					unforeseen demand for cash payments)?
+				</h2>
+				<div class="span6">
+					<div class="span6 capital-box">
+						<p class="first-text">Current Ratio</p>
+						<span>3</span>
+						<p class="month">12 months Average</p>
+					</div>
+					<div class="span6 capital-box">
+						<p class="first-text">Quick Ratio</p>
+						<span>1.5</span>
+						<p class="month">12 months Average</p>
+					</div>
+					<div class="span6 capital-box">
+						<p class="first-text">Cash Ratio</p>
+						<span>0.3</span>
+						<p class="month">12 months Average</p>
+					</div>
+					<div class="span6 capital-box">
+						<p class="first-text">Debt Service Coverage Ratio</p>
+						<span>5</span>
+						<p class="month">12 months Average</p>
+					</div>
+				</div>
+
+				<div class="span6 ">
+					<div class="capital-chart">
+						Chart
+					</div>				
+				</div>
+			</div>
+
+			<div class="row-fluid">				
+				<div class="span6 financial-block">
+					<h2>How safe is your long term financial position?</h2>
+					<div class="span6 financial-box">
+						<p class="first-text">Debt/ Equity Ratio</p>
+						<span>3</span>
+						<p class="month">12 months Average</p>
+					</div>
+					<div class="span6 financial-box">
+						<p class="first-text">Debt/ Asset Ratio</p>
+						<span>1.5</span>
+						<p class="month">1.5 months Average</p>
+					</div>
+				</div>
+				<div class="span6 business-block">
+					<h2>How safe is your long term financial position?</h2>
+					<div class="span4 business-box">
+						<p class="first-text">Earning before interest & tax</p>
+						<span>10%</span>
+						<p class="month">12 months Average</p>
+					</div>
+					<div class="span4 business-box">
+						<p class="first-text">Return on Asset</p>
+						<span>2</span>
+						<p class="month">12 months Average</p>
+					</div>
+					<div class="span4 business-box">
+						<p class="first-text">Return on Capital Employed</p>
+						<span>20%</span>
+						<p class="month">12 months Average</p>
+					</div>
+				</div>
+			</div>			
+		</div>
+
+		<div class="span12 revenue">
+			<h2>Revenue Performance</h2>
+			<div class="span3">
+				<div class="revenue-box">
+					<p class="first-text">Gross Margin</p>
+					<span>13%</span>
+					<p class="month">12 months Average</p>
+				</div>
+				<div class="revenue-box">
+					<p class="first-text">Average Sale Growth Rate</p>
+					<span>10%</span>
+					<p class="month">12 months Average</p>
+				</div>
+			</div>
+			<div class="span9">
+				<div class="capital-chart">
+					Chart
+				</div>
+			</div>
+		</div> -->
 
 	</div>
 </script>
@@ -38697,6 +39289,24 @@
 			{ "id": 2, "name": "Void" }
         ],
 		genderList				: ["M", "F"],
+		customerFormList 		: [
+	    	{ id: "Quote", name: "Quotation" },
+			{ id: "Sale_Order", name: "Sale Order" },
+			{ id: "Deposit", name: "Deposit" },
+			{ id: "Cash_Sale", name: "Cash Sale" },
+			{ id: "Invoice", name: "Invoice" },
+			{ id: "Cash_Receipt", name: "Cash Receipt" },
+			{ id: "Sale_Return", name: "Sale Return" },
+			{ id: "GDN", name: "Delivered Note" }
+	    ],
+	    vendorFormList 		: [
+	    	{ id: "Purchase_Order", name: "Purchase Order" },
+	    	{ id: "GRN", name: "GRN" },
+			{ id: "Deposit", name: "Deposit" },
+			{ id: "Purchase", name: "Purchase" },
+			{ id: "Pur_Return", name: "Pur.Return" },
+			{ id: "PayBill", name: "PayBill" }
+	    ],
 		user_id					: banhji.userData.id,
 		cash_account_id 		: 10,
 		amtDueColor 			: "#D5DBDB",
@@ -48114,7 +48724,8 @@
 		lang 				: langVM,		
         contactTypeDS 		: dataStore(apiUrl+"contacts/type"),
         paymentMethodDS		: dataStore(apiUrl+"payment_methods"),
-        paymentTermDS		: dataStore(apiUrl+"payment_terms"),      
+        paymentTermDS		: dataStore(apiUrl+"payment_terms"),  
+        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),      
         contactTypeName 	: "",
         contactTypeAbbr 	: "",
         contactTypeCompany 	: 0,
@@ -48124,7 +48735,7 @@
         paymentTermPeriod 	: "",
         paymentTermPercentage 	: "",
         pageLoad 			: function() {
-        	
+        	this.txnTemplateDS.filter({ field: "moduls", value : "vendor_mg" });
         },	    
         addContactType 		: function(){
         	var name = this.get("contactTypeName");
@@ -48180,6 +48791,17 @@
 	        	this.set("paymentTermPeriod", "");
 	        	this.set("paymentTermPercentage", "");
         	}
+        },
+        goInvoiceCustom : function(){
+
+		    banhji.invoiceCustom.set("selectTypeList", banhji.source.vendorFormList);
+		    banhji.invoiceCustom.set("selectCustom", "vendor_mg");
+		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm23);
+		    banhji.invoiceCustom.set("formTitle", "PO");
+		    banhji.invoiceCustom.set("formType", "Purchase_Order");
+		    var obj= banhji.invoiceCustom.get("obj");
+		    obj.set("type", "Purchase_Order");
+		    banhji.router.navigate('/invoice_custom');
         },
         goPattern 	: function(e){
         	var data = e.data;        	        	
@@ -57017,16 +57639,6 @@
 			this.set("contact_type_id", null);
 		}
 	});
-	var customerList = [
-    	{ id: "Quote", name: "Quotation" },
-		{ id: "Sale_Order", name: "Sale Order" },
-		{ id: "Deposit", name: "Deposit" },
-		{ id: "Cash_Sale", name: "Cash Sale" },
-		{ id: "Invoice", name: "Invoice" },
-		{ id: "Cash_Receipt", name: "Cash Receipt" },
-		{ id: "Sale_Return", name: "Sale Return" },
-		{ id: "GDN", name: "Delivered Note" }
-    ];
 	function activeInvoiceTmp(e){
 		var Active;
 		switch(e) {
@@ -57054,6 +57666,8 @@
 			case 22: Active = banhji.view.invoiceForm22; break;
 			case 23: Active = banhji.view.invoiceForm1; break;
 			case 24: Active = banhji.view.invoiceForm2; break;
+			case 25: Active = banhji.view.invoiceForm23; break;
+			case 26: Active = banhji.view.invoiceForm24; break;
 		}
 		banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 	};
@@ -57072,7 +57686,7 @@
         paymentTermPeriod 	: "",
         paymentTermPercentage 	: "",
         pageLoad 			: function() {
-        	
+        	this.txnTemplateDS.filter({ field: "moduls", value : "customer_mg" });
         },	    
         addContactType 		: function(){
         	var name = this.get("contactTypeName");
@@ -57147,15 +57761,11 @@
         	}
         },
         goInvoiceCustom : function(){
-        	var typeList = [
-		    	{ id: "Quote", name: "Quotation" },
-				{ id: "Sale_Order", name: "Sale Order" }
-		    ];
 
-		    banhji.invoiceCustom.set("selectTypeList", typeList);
-
+		    banhji.invoiceCustom.set("selectTypeList", banhji.source.customerFormList);
+		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm10);
 		    banhji.router.navigate('/invoice_custom');
-        }      
+        }     
     });
     banhji.job = kendo.observable({
 		lang 				: langVM,		
@@ -57218,53 +57828,61 @@
 		dataSource 			: dataStore(apiUrl + "transaction_templates"),		
 		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
 		obj 				: {type: "Quote", amount: "$500,000.00",title: "Quotation"},
+		objForm	 			: null,
+		formShow			: null,
+		formTitle 			: "Quotation",
+		formType			: "Quote",
 		company 			: banhji.institute,
-		selectTypeList 		: customerList,
+		saveClose 			: false,
+		selectTypeList 		: banhji.source.customerFormList,
 		selectCustom		: "customer_mg",
 		isEdit 				: false,
 		onChange			: function(e) {
 								var obj = this.get("obj"), self = this;
 								this.txnFormDS.query({    			
-									filter: [{ field:"type", value: obj.type },{ field:"other", value: this.selectCustom }],
+									filter: { field:"type", value: obj.type },
 									page: 1,
 									take: 100
 								}).then(function(e){
 									var view = self.txnFormDS.view();
 									if(view.length > 0){
 										banhji.invoiceForm.set("obj", view[0]);
-										self.set("obj", view[0]);	
+										var obj = self.get("obj");
+										obj.set("type", view[0].type);
+										obj.set("title", view[0].title);
+										obj.set("note", view[0].note);
 									}
+									
 								});	
 								setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
 					        },
 		user_id				: banhji.source.user_id,
-		pageLoad 			: function(id, is_recurring){
+		pageLoad 			: function(id){
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
 			}else{	
-				var obj = this.get("obj");
-				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm10);		
-				this.addRowLineDS();
-				if(this.get("isEdit")){
-					this.set("isEdit", false);								
-					this.dataSource.data([]);					
-					
-					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
-				}
 				var obj = this.get("obj"), self = this;
-				this.txnFormDS.query({    			
-					filter: { field:"type", value: obj.type },
-					page: 1,
-					take: 100
-				}).then(function(e){
-					var view = self.txnFormDS.view();
-					self.set("obj", view[0]);
-				});	
+				if(this.formShow === null){ this.formShow = banhji.view.invoiceForm10; }
+				banhji.view.invoiceCustom.showIn('#invFormContent', this.formShow);		
+				this.addRowLineDS();
+				if(this.get("isEdit") || this.dataSource.total()==0){
+					this.addEmpty();
+					this.txnFormDS.query({    			
+						filter: { field:"type", value: obj.type },
+						page: 1,
+						take: 100
+					}).then(function(e){
+						var view = self.txnFormDS.view();
+						var obj = self.get("obj");
+						obj.set("type", view[0].type);
+						obj.set("title", view[0].title);
+						obj.set("note", view[0].note);
+						
+					});	
+				}	
 				var name = banhji.invoiceForm.get("obj");
-				name.set("title", "Quotation");
+				name.set("title", this.formTitle);
 			}
 		},
 		addRowLineDS			: function(e){
@@ -57311,54 +57929,74 @@
 				var view = self.dataSource.view();
 				self.set("obj", view[0]);
 				
-				
 				banhji.invoiceForm.set("obj", view[0]);	
 				var Index = parseInt(view[0].transaction_form_id);
 				activeInvoiceTmp(Index);
 				self.addRowLineDS();
 
 				self.txnFormDS.filter({ field:"type", value: view[0].type });	
-				var other = self.txnFormDS.view();
-				if(other[0].other == "customer_mg"){
-					self.set("selectTypeList", customerList);
+				
+				if(view[0].moduls == "customer_mg"){
+					self.set("selectTypeList", banhji.source.customerFormList);
+				}else if(view[0].moduls == "vendor_mg"){
+					self.set("selectTypeList", banhji.source.vendorFormList);
 				}
 			});	
 		},		
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);		
-			this.set("obj", null);				
+			this.set("obj", null);		
+			this.set("isEdit", false);		
 			this.dataSource.insert(0,{				
 				user_id			: banhji.source.user_id,
 				transaction_form_id : 0,
-				type 			: "Quote",
+				type 			: this.formType,
 				name 			: "",
-				color  			: null
+				title 			: "Quotation",
+				note 			: "",
+				color  			: null,
+				moduls 			: this.selectCustom,
 	    	});		
 			var obj = this.dataSource.at(0);			
-			this.set("obj", obj);					
-		},							    
-	    transactionSync 	: function(){
+			this.set("obj", obj);		
+		},		
+		objSync 			: function(){
 	    	var dfd = $.Deferred();	        
 
 	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
 		    });
 		    return dfd;	    		    	
-	    },	    	    
+	    }, 	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
-	    	
-	    	if(this.get("isEdit")){
-	    		this.dataSource.sync();	    		
-	    	}else{
-	    		//Add brand new transaction
-				this.transactionSync()
-				.then(function(data){
+			//Save Obj
+			this.objSync()
+			.then(function(data){ //Success	
+				banhji.customerSetting.txnTemplateDS.fetch();	
+				
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					//window.history.back();
+				}else{
+					//Save New
 					self.addEmpty();
-					banhji.customerSetting.txnTemplateDS.fetch();											
-				});
-			}
+				}
+			});
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();		
@@ -63790,6 +64428,8 @@
 		invoiceForm20: new kendo.Layout("#invoiceForm20", {model: banhji.invoiceForm}),
 		invoiceForm21: new kendo.Layout("#invoiceForm21", {model: banhji.invoiceForm}),
 		invoiceForm22: new kendo.Layout("#invoiceForm22", {model: banhji.invoiceForm}),
+		invoiceForm23: new kendo.Layout("#invoiceForm23", {model: banhji.invoiceForm}),
+		invoiceForm24: new kendo.Layout("#invoiceForm24", {model: banhji.invoiceForm}),
 		
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.customerSale}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.customerSale}),
@@ -71320,6 +71960,6 @@
 		// 	window.location.replace(baseUrl + "login");
 		// } else {
 		// 	var cognitoUser = userPool.getCurrentUser();
-	 //        if(cognitoUser !== null)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+	 //        if(cognitoUser !== null) 
 	});
-</script>
+	</script>

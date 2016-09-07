@@ -24101,7 +24101,7 @@
                                 	</div>
                                 </div>
 							</div>
-							<div class="span12" style="margin-left:0; margin-top: 10px;">
+							<div class="span12" style="margin-left:0; margin-top: 10px;padding-bottom: 30px;">
 								<h2 class="btn btn-block btn-primary">Form Appearance</h2>
 								<div class="colorPalatte span12">
 									<div class="" style="margin-top: 15px;">
@@ -24118,9 +24118,6 @@
 					<!-- Form actions -->
 					<div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>
-
-						
-
 						<div class="row">
 							<div class="span3">
 								
@@ -25553,13 +25550,13 @@
         	</div>
         	<table class="span12">
         		<tr>
-        			<td style="background: #c6d9f1" width="150"><b>SALE ORDER #</b></td>
+        			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="150"><b>SALE ORDER #</b></td>
         			<td width="100"><b></b></td>
-        			<td width="150" style="background: #c6d9f1"><b>INVOICE #</b></td>
+        			<td width="150" style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>INVOICE #</b></td>
         			<td><b></b></td>
         		</tr>
         		<tr>
-        			<td style="background: #c6d9f1"><b>JOB/ CONTRACT #</b></td>
+        			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>JOB/ CONTRACT #</b></td>
         			<td><b></b></td>
         			<td style="background: #c6d9f1"><b></b></td>
         			<td><b></b></td>
@@ -25568,12 +25565,12 @@
         	<table class="span12" style="margin: 5px 0;">
         		<thead>
         			<tr>
-        				<th width="50">NO</th>
-        				<th>ITEM CODE</th>
-        				<th>DESCRIPTION</th>
-        				<th>UM</th>
-        				<th>QTY</th>
-        				<th>REMARK</th>
+        				<th width="50" style="background: #c6d9f1;">NO</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">ITEM CODE</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">DESCRIPTION</th>
+        				<th style="background: #c6d9f1;">UM</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">QTY</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">REMARK</th>
         			</tr>
         		</thead>
         		<tbody id="formListView" 
@@ -26693,6 +26690,201 @@
         		<tr>
         			<td style="text-align: left;padding-left: 5px;">Doc. Ref.</td>
         			<td style="text-align: left;padding-left: 5px;"><b>AMS02-01</b></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm23" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span3" style="margin-right: 15px;">
+        			<b>Customer Information</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span3">
+        			<b>Delivered to</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title" data-bind="text: obj.title"></p>
+        			<p><b>PO Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>PO No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span3">TERM OF PAYMENT</div>
+        		<div class="span3">MODE OF PAYMENT</div>
+        		<div class="span3">DELIVERY DATE</div>
+        		<div class="span3">SALE REP</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr>
+        				<th width="90">CODE</th>
+        				<th>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>QTY</th>
+        				<th>UNIT PRICE</th>
+        				<th width="80">Total</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template6"
+						data-bind="source: lineDS">
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td style="border:none;" colspan="3"></td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="120">PREPARED BY</td><td width="100"></td>
+        			<td>POSITION</td><td width="100"></td>
+        			<td>DATE</td><td width="80"></td>
+        		</tr>
+        		<tr>
+        			<td>REVIEWED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>APROVED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        		<tr>
+        			<td>ACCEPTED BY</td><td></td>
+        			<td>POSITION</td><td></td>
+        			<td>DATE</td><td></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm24" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header" style="background:none;">
+        		<div class="span3" style="margin-right: 15px;">
+        			<b>Customer Information</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span6" style="float:right;">
+        			<p class="form-title" data-bind="text: obj.title" style="font-size: 26px"></p>
+        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<table class="span12">
+        		<tr>
+        			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="150"><b>SALE ORDER #</b></td>
+        			<td width="100"><b></b></td>
+        			<td width="150" style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>INVOICE #</b></td>
+        			<td><b></b></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>JOB/ CONTRACT #</b></td>
+        			<td><b></b></td>
+        			<td style="background: #c6d9f1"><b></b></td>
+        			<td><b></b></td>
+        		</tr>
+        	</table>
+        	<table class="span12" style="margin: 5px 0;">
+        		<thead>
+        			<tr>
+        				<th width="50" style="background: #c6d9f1;">NO</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">ITEM CODE</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">DESCRIPTION</th>
+        				<th style="background: #c6d9f1;">UM</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">QTY</th>
+        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">REMARK</th>
+        			</tr>
+        		</thead>
+        		<tbody id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template14"
+						data-bind="source: lineDS">
+        	</table>
+        	<table class="span12">
+        		<tr>
+        			<td style="background: #c6d9f1" width="150">ISSUED BY</td>
+        			<td width="100"></td>
+        			<td width="150" style="background: #c6d9f1">DATE</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1">DELIVERED BY</td>
+        			<td></td>
+        			<td style="background: #c6d9f1">DATE</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1">RECEIVED BY</td>
+        			<td></td>
+        			<td style="background: #c6d9f1">DATE/TIME</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td style="background: #c6d9f1">ACKNOWLEDGED BY</td>
+        			<td></td>
+        			<td style="background: #c6d9f1">DATE/TIME</td>
+        			<td></td>
         		</tr>
         	</table>
         </div>
@@ -34862,7 +35054,9 @@
 	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Payment Method</span></a>
 	            </li>
 	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Payment Term</span></a>
-	            </li>	                        
+	            </li>	  
+	            <li><a href="#tab4-1" class="glyphicons list" data-toggle="tab"><i></i><span class="strong">Custom Forms</span></a>
+	            </li>	                      
 	        </ul>
 	    </div>
 	    <!-- // Tabs Heading END -->
@@ -34937,6 +35131,28 @@
 	            	</table>
 	            </div>
 	            <!-- // Tab Block content END -->
+
+	            <!-- Tab Invocice Custom content -->
+	            <div class="tab-pane" id="tab4-1">
+            		
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center">Name</th>
+	            				<th class="center">Form Type</th>
+	            				<th class="center">Last Edited</th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="customerSetting-form-template"
+				                 data-bind="source: txnTemplateDS">				            
+	            		</tbody>
+	            	</table>
+	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
+	            </div>
+	            <!-- // Tab Invoice Custom content END -->
 
 	        </div>
 	    </div>
@@ -38162,7 +38378,7 @@
 			pageSize: 100
 		}),
 		//Item Income / Item Revenue / Customer Revenue / Service Revenue Account
-		incomeAccountDS				: new kendo.data.DataSource({
+		incomeAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38203,7 +38419,7 @@
 			pageSize: 100
 		}),
 		//Expense
-		expenseAccountDS				: new kendo.data.DataSource({
+		expenseAccountDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38788,13 +39004,21 @@
 			{ id: "GDN", name: "Delivered Note" }
 	    ],
 	    vendorFormList 		: [
-	    	{ id: "Sale_Order", name: "PO" },
-	    	{ id: "GDN", name: "GRN" },
+	    	{ id: "Purchase_Order", name: "Purchase Order" },
+	    	{ id: "GRN", name: "GRN" },
 			{ id: "Deposit", name: "Deposit" },
 			{ id: "Purchase", name: "Purchase" },
-			{ id: "Sale_Return", name: "Pur.Return" },
-			{ id: "Cash_Sale", name: "PayBill" }
-			
+			{ id: "Pur_Return", name: "Pur.Return" },
+			{ id: "PayBill", name: "PayBill" }
+	    ],
+	    cashMGTFormList			: [
+	    	{ id: "Cash_Transfer", name: "Transfer" },
+	    	{ id: "Deposit", name: "Deposit" },
+			{ id: "Witdraw", name: "Witdraw" },
+			{ id: "Cash_Advance", name: "Advance" },
+			{ id: "Cash_Payment", name: "Payment" },
+			{ id: "Reimbursement", name: "Reimbursement" },
+			{ id: "Journal", name: "Journal" }
 	    ],
 		weekDayList 			: [
 			{ id: 0, name: 'Sunday' },
@@ -48390,7 +48614,12 @@
         goInvoiceCustom : function(){
 
 		    banhji.invoiceCustom.set("selectTypeList", banhji.source.vendorFormList);
-
+		    banhji.invoiceCustom.set("selectCustom", "vendor_mg");
+		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm23);
+		    banhji.invoiceCustom.set("formTitle", "PO");
+		    banhji.invoiceCustom.set("formType", "Purchase_Order");
+		    var obj= banhji.invoiceCustom.get("obj");
+		    obj.set("type", "Purchase_Order");
 		    banhji.router.navigate('/invoice_custom');
         }   
     });
@@ -57250,6 +57479,8 @@
 			case 22: Active = banhji.view.invoiceForm22; break;
 			case 23: Active = banhji.view.invoiceForm1; break;
 			case 24: Active = banhji.view.invoiceForm2; break;
+			case 25: Active = banhji.view.invoiceForm23; break;
+			case 26: Active = banhji.view.invoiceForm24; break;
 		}
 		banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 	};
@@ -57345,7 +57576,7 @@
         goInvoiceCustom : function(){
 
 		    banhji.invoiceCustom.set("selectTypeList", banhji.source.customerFormList);
-
+		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm10);
 		    banhji.router.navigate('/invoice_custom');
         }      
     });
@@ -57411,23 +57642,30 @@
 		txnFormDS			: dataStore(apiUrl + "transaction_forms"),
 		obj 				: {type: "Quote", amount: "$500,000.00",title: "Quotation"},
 		objForm	 			: null,
+		formShow			: null,
+		formTitle 			: "Quotation",
+		formType			: "Quote",
 		company 			: banhji.institute,
 		saveClose 			: false,
-		selectTypeList 		: customerList,
+		selectTypeList 		: banhji.source.customerFormList,
 		selectCustom		: "customer_mg",
 		isEdit 				: false,
 		onChange			: function(e) {
 								var obj = this.get("obj"), self = this;
 								this.txnFormDS.query({    			
-									filter: [{ field:"type", value: obj.type },{ field:"other", value: this.selectCustom }],
+									filter: { field:"type", value: obj.type },
 									page: 1,
 									take: 100
 								}).then(function(e){
 									var view = self.txnFormDS.view();
 									if(view.length > 0){
 										banhji.invoiceForm.set("obj", view[0]);
-										self.set("obj", view[0]);	
+										var obj = self.get("obj");
+										obj.set("type", view[0].type);
+										obj.set("title", view[0].title);
+										obj.set("note", view[0].note);
 									}
+									
 								});	
 								setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
 					        },
@@ -57438,7 +57676,8 @@
 				this.loadObj(id);
 			}else{	
 				var obj = this.get("obj"), self = this;
-				banhji.view.invoiceCustom.showIn('#invFormContent', banhji.view.invoiceForm10);		
+				if(this.formShow === null){ this.formShow = banhji.view.invoiceForm10; }
+				banhji.view.invoiceCustom.showIn('#invFormContent', this.formShow);		
 				this.addRowLineDS();
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
@@ -57448,11 +57687,15 @@
 						take: 100
 					}).then(function(e){
 						var view = self.txnFormDS.view();
-						self.set("objForm", view[0]);
+						var obj = self.get("obj");
+						obj.set("type", view[0].type);
+						obj.set("title", view[0].title);
+						obj.set("note", view[0].note);
+						
 					});	
 				}	
 				var name = banhji.invoiceForm.get("obj");
-				name.set("title", "Quotation");
+				name.set("title", this.formTitle);
 			}
 		},
 		addRowLineDS			: function(e){
@@ -57505,9 +57748,11 @@
 				self.addRowLineDS();
 
 				self.txnFormDS.filter({ field:"type", value: view[0].type });	
-				var moduls = self.txnFormDS.view();
-				if(moduls[0].moduls == "customer_mg"){
+				
+				if(view[0].moduls == "customer_mg"){
 					self.set("selectTypeList", banhji.source.customerFormList);
+				}else if(view[0].moduls == "vendor_mg"){
+					self.set("selectTypeList", banhji.source.vendorFormList);
 				}
 			});	
 		},		
@@ -57518,12 +57763,12 @@
 			this.dataSource.insert(0,{				
 				user_id			: banhji.source.user_id,
 				transaction_form_id : 0,
-				type 			: "Quote",
+				type 			: this.formType,
 				name 			: "",
 				title 			: "Quotation",
 				note 			: "",
 				color  			: null,
-				moduls 			: "customer_mg",
+				moduls 			: this.selectCustom,
 	    	});		
 			var obj = this.dataSource.at(0);			
 			this.set("obj", obj);		
@@ -57540,7 +57785,6 @@
 		    this.dataSource.bind("error", function(e){		    		    	
 				dfd.reject(e.errorThrown);    				
 		    });
-		    console.log(dfd);
 		    return dfd;	    		    	
 	    }, 	    
 		save 				: function(){				
@@ -57551,7 +57795,6 @@
 				banhji.customerSetting.txnTemplateDS.fetch();	
 				
 				return data;
-				console.log(data);
 			}, function(reason) { //Error
 				$("#ntf1").data("kendoNotification").error(reason);
 			}).then(function(result){				
@@ -64019,6 +64262,8 @@
 		invoiceForm20: new kendo.Layout("#invoiceForm20", {model: banhji.invoiceForm}),
 		invoiceForm21: new kendo.Layout("#invoiceForm21", {model: banhji.invoiceForm}),
 		invoiceForm22: new kendo.Layout("#invoiceForm22", {model: banhji.invoiceForm}),
+		invoiceForm23: new kendo.Layout("#invoiceForm23", {model: banhji.invoiceForm}),
+		invoiceForm24: new kendo.Layout("#invoiceForm24", {model: banhji.invoiceForm}),
 		
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.customerSale}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.customerSale}),
