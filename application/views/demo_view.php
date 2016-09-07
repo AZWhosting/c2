@@ -8148,7 +8148,7 @@
 							<div class="select2-container" style="width: 100%; margin-bottom: 10px;">								
 								<input data-role="dropdownlist"
 									   data-value-primitive="true"
-					                   data-option-lable="Supplier Type..."
+					                   data-option-label="Select Type..."
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: contact_type_id,
@@ -8162,7 +8162,8 @@
 					<span class="results"><span data-bind="text: contactDS.total()"></span> <span data-bind="text: lang.lang.found_search"></span></span>
 
 					<div class="table table-condensed" style="height: 580px;"						 
-						 data-role="grid" 
+						 data-role="grid"
+						 data-auto-bind="false" 
 						 data-bind="source: contactDS"						  
 						 data-row-template="vendorCenter-vendor-list-tmpl"
 						 data-columns="[{title: ''}]"
@@ -8180,15 +8181,14 @@
 
 							        <!-- Tabs -->
 							        <ul class="pull-right">
-							            <li style="font-size: large; color: black; font-weight: bold;">							            	
-							            	<span data-bind="text: obj.surname"></span>
+							            <li style="font-size: large; color: black; font-weight: bold;">
 							            	<span data-bind="text: obj.name"></span>
 							            </li>
-							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-3"><i></i></span>
+							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
 							            </li>							            							            
-							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-3"><i></i></span>
+							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
 							            </li>							            
-							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-3"><i></i></span>
+							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
 							            </li>
 							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
 							            </li>
@@ -8203,7 +8203,7 @@
 							        <div class="tab-content">							           
 
 							            <!-- TRANSACTIONS Tab content -->
-							            <div id="tab1-3" class="tab-pane active box-generic">
+							            <div id="tab1-4" class="tab-pane active box-generic">
 							            	<table class="table table-borderless table-condensed cart_total cash-table">
 								            	<tr>
 								            		<td width="50%">
@@ -8234,44 +8234,46 @@
 							            <!-- // TRANSACTIONS Tab content END -->							            						            
 
 							            <!-- INFO Tab content -->
-							            <div id="tab2-3" class="tab-pane box-generic">
+							            <div id="tab2-4" class="tab-pane box-generic">
 							            	<div class="row-fluid">
 							            		<div class="accounCetner-textedit">
 									            	<table width="100%">
 														<tr>
 															<td width="40%">Supplier Type:</td>
 															<td width="60%">
-																<span class="strong"></span>
+																<span class="strong" data-bind="text: obj.contact_type"></span>
 															</td>
 														</tr>
 														<tr>
 															<td>Number</td>
 															<td>
-																<span class="strong" ></span>
+																<span class="strong" data-bind="text: obj.abbr"></span>
+																-
+																<span class="strong" data-bind="text: obj.number"></span>
 															</td>
 														</tr>
 														<tr>
 															<td>Name:</td>
 															<td>
-																<span></span>
+																<span data-bind="text: obj.name"></span>
 															</td>
 														</tr>
 														<tr>
 															<td>Billed Address:</td>
 															<td>
-																<span ></span>
+																<span data-bind="text: obj.address"></span>
 															</td>
 														</tr>								
 														<tr>
 															<td>Phone:</td>
 															<td>
-																<span ></span>
+																<span data-bind="text: obj.phone"></span>
 															</td>
 														</tr>
 														<tr>
 															<td>Currency:</td>
 															<td>										
-																<span ></span>
+																<span data-bind="text: obj.locale"></span>
 															</td>
 														</tr>
 													</table>
@@ -8283,25 +8285,21 @@
 							            <!-- // INFO Tab content END -->
 
 							            <!-- NOTE Tab content -->
-							            <div id="tab3-3" class="tab-pane box-generic">
+							            <div id="tab3-4" class="tab-pane box-generic">
 
-										    <div class="chat-controls" style="overflow:hidden;">															
-												<form class="margin-none">
-													<div class="row">
-														<div class="span10">
-															<input type="text" name="message" class="input-block-level margin-none" data-bind="value: note" placeholder="កំណត់Memo ...">
-														</div>
-														<div class="span2">
-															<span class="btn btn-block btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.save"></span></span>
-														</div>
-													</div>
-												</form>															
+										    <div>
+												<input type="text" class="k-textbox" 
+														data-bind="value: note, events:{change:saveNoteEnter}" 
+														placeholder="Add memo ..." 
+														style="width: 366px;" />
+												<span class="btn btn-primary" data-bind="click: saveNote">Add</span>
 											</div>
 
 											<br>
 
 									    	<div data-role="grid"
 									    	 	 data-height="100"
+									    	 	 data-auto-bind="false"
 					 							 data-scrollable="{virtual: true}"									                 
 								                 data-row-template="vendorCenter-note-tmpl"
 								                 data-bind="source: noteDS"
@@ -8311,8 +8309,8 @@
 							            <!-- // NOTE Tab content END -->
 
 							            <!-- Attach Tab content -->
-								        <div class="tab-pane" id="tab4-4">							            	
-								            
+								        <div id="tab4-4" class="tab-pane">							            	
+								            <p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
 								            <input id="files" name="files"
 							                   type="file"
 							                   data-role="upload"
@@ -8335,6 +8333,8 @@
 										        		data-auto-bind="false"
 										        		data-bind="source: attachmentDS"></tbody>			        
 										    </table>
+
+										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile"><i></i> Save</span>
 
 								        </div>
 								        <!-- // Attach Tab content END -->								            								            
@@ -15383,12 +15383,12 @@
 							<div class="widget-search separator bottom">
 								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
-									<input type="search" placeholder="Customer ..." data-bind="value: searchText, events:{change: enterSearch}">
+									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
 								</div>
 							</div>						
 							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
 								<input data-role="dropdownlist"
-					                   data-option-label="Customer Type..."
+					                   data-option-label="Select Type..."
 					                   data-value-primitive="true"
 					                   data-text-field="name"
 					                   data-value-field="id"
@@ -15402,8 +15402,7 @@
 					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
 
 					<div class="table table-condensed" style="height: 580px;"						 
-						 data-role="grid"
-						 data-auto-bind="false"						 
+						 data-role="grid"						 
 						 data-bind="source: contactDS"
 						 data-row-template="customerCenter-customer-list-tmpl"
 						 data-columns="[{title: ''}]"
@@ -15422,7 +15421,7 @@
 							        <!-- Tabs -->
 							        <ul class="pull-right">
 							        	<li style="font-size: large; color: black; font-weight: bold;">							            	
-							            	<span data-bind="text: obj.fullname"></span>
+							            	<span data-bind="text: obj.name"></span>
 							            </li>
 							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
 							            </li>							            							            
@@ -15497,37 +15496,39 @@
 														<tr>
 															<td width="40%">Customer Type:</td>
 															<td width="60%">
-																<span class="strong"></span>
+																<span class="strong" data-bind="text: obj.contact_type"></span>
 															</td>
 														</tr>
 														<tr>
 															<td>Number</td>
 															<td>
-																<span class="strong" ></span>
+																<span class="strong" data-bind="text: obj.abbr"></span>
+																-
+																<span class="strong" data-bind="text: obj.number"></span>
 															</td>
 														</tr>
 														<tr>
 															<td>Name:</td>
 															<td>
-																<span></span>
+																<span data-bind="text: obj.name"></span>
 															</td>
 														</tr>
 														<tr>
 															<td>Billed Address:</td>
 															<td>
-																<span ></span>
+																<span data-bind="text: obj.address"></span>
 															</td>
 														</tr>								
 														<tr>
 															<td>Phone:</td>
 															<td>
-																<span ></span>
+																<span data-bind="text: obj.phone"></span>
 															</td>
 														</tr>
 														<tr>
 															<td>Currency:</td>
 															<td>										
-																<span ></span>
+																<span data-bind="text: obj.locale"></span>
 															</td>
 														</tr>
 													</table>
@@ -15539,25 +15540,21 @@
 							            <!-- // INFO Tab content END -->
 
 							            <!-- NOTE Tab content -->
-							            <div id="tab3-4" class="tab-pane box-generic">
+							            <div id="tab3-4" class="tab-pane">
 
-										    <div class="chat-controls" style="overflow: hidden; ">															
-												<form class="margin-none">
-													<div class="row">
-														<div class="span10">
-															<input type="text" name="message" class="input-block-level margin-none" data-bind="value: note" placeholder="កំណត់Memo ...">
-														</div>
-														<div class="span2">
-															<span class="btn btn-block btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.save"></span></span>
-														</div>
-													</div>
-												</form>															
+										    <div>
+												<input type="text" class="k-textbox" 
+														data-bind="value: note, events:{change:saveNoteEnter}" 
+														placeholder="Add memo ..." 
+														style="width: 366px;" />
+												<span class="btn btn-primary" data-bind="click: saveNote">Add</span>
 											</div>
 
 											<br>
 
 									    	<div data-role="grid"
 									    	 	 data-height="100"
+									    	 	 data-auto-bind="false"
 					 							 data-scrollable="{virtual: true}"									                 
 								                 data-row-template="customerCenter-note-tmpl"
 								                 data-bind="source: noteDS"
@@ -15567,8 +15564,8 @@
 							            <!-- // NOTE Tab content END -->
 
 							            <!-- Attach Tab content -->
-								        <div class="tab-pane" id="tab4-4">							            	
-								            
+								        <div id="tab4-4" class="tab-pane">							            	
+								            <p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
 								            <input id="files" name="files"
 							                   type="file"
 							                   data-role="upload"
@@ -15591,6 +15588,8 @@
 										        		data-auto-bind="false"
 										        		data-bind="source: attachmentDS"></tbody>			        
 										    </table>
+
+										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile"><i></i> Save</span>
 
 								        </div>
 								        <!-- // Attach Tab content END -->							            								            
@@ -42451,21 +42450,22 @@
 			pageSize: 100
 		}),
 		contactTypeDS		: banhji.source.supplierTypeDS,
-		noteDS 				: dataStore(apiUrl + 'notes'),		
+		noteDS 				: dataStore(apiUrl + 'notes'),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),		
 		summaryDS 			: dataStore(apiUrl + "transactions"),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",				
-		obj 				: null,
+		obj 				: {id:0},
 		note 				: "",		
 		searchText 			: "",		
-		contact_type_id 	: null,		
-		user_id 			: banhji.source.user_id,
+		contact_type_id 	: null,
 		balance 			: 0,
 		po 					: 0,
 		openInvoice 		: 0,
-		overInvoice 		: 0,		
+		overInvoice 		: 0,
+		user_id 			: banhji.source.user_id,		
 		pageLoad 			: function(id){
 			if(id){
 				this.loadObj(id);
@@ -42482,17 +42482,110 @@
 				this.summaryDS.fetch();
 			}								
 		},
-		loadObj 			: function(id){
-			var self = this;
+		loadData 			: function(){
+			var obj = this.get("obj");
 
-			this.dataSource.bind("requestEnd", function(e){
-				if(e.type=="read"){
-					var data = e.response.results;
-					
-								
-				}
+			this.searchTransaction();
+			this.loadSummary(obj.id);
+			
+			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
+			this.noteDS.query({
+				filter: { field:"contact_id", value: obj.id },
+				sort: { field:"noted_date", dir:"desc" },
+				page: 1,
+				pageSize: 10
 			});
 		},
+		//Upload
+		onSelect 			: function(e){			
+	        // Array with information about the uploaded files
+	        var self = this, 
+	        files = e.files,
+	        obj = this.get("obj");			
+			
+			if(obj.id>0){
+		        // Check the extension of each file and abort the upload if it is not .jpg
+		        $.each(files, function(index, value){
+		            if (value.extension.toLowerCase() === ".jpg"
+		            	|| value.extension.toLowerCase() === ".jpeg"
+		            	|| value.extension.toLowerCase() === ".tiff"
+		            	|| value.extension.toLowerCase() === ".png" 
+		            	|| value.extension.toLowerCase() === ".gif"
+		            	|| value.extension.toLowerCase() === ".pdf"){
+
+		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+
+		            	self.attachmentDS.add({
+		            		contact_id 		: obj.id,
+		            		type 			: "Contact",
+		            		name 			: value.name,
+		            		description 	: "",
+		            		key 			: key,
+		            		url 			: banhji.s3 + key,
+		            		created_at 		: new Date(),
+
+		            		file 			: value.rawFile
+		            	});	            			            		            
+		            }else{
+		            	alert("This type of file is not allowed to attach.");
+		            }
+		        });
+	    	}else{
+	    		alert("Please select a supplier!");
+	    	}
+	    },
+	    removeFile 			: function(e){
+	    	var data = e.data;
+
+	    	if (confirm(banhji.source.confirmMessage)) {
+	    		this.attachmentDS.remove(data);
+	    		this.attachmentDS.sync();
+	    	}	    	
+	    },
+	    uploadFile 			: function(){
+	    	$.each(this.attachmentDS.data(), function(index, value){	    		
+		    	if(!value.id){
+			    	var params = { 
+		            	Body: value.file, 
+		            	Key: value.key 
+		            };
+		            bucket.upload(params, function (err, data) {		                
+	                	// console.log(err, data);
+	                	// var url = data.Location;                
+	            	});
+            	}	            
+            });
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+            	//Delete File
+            	if(e.type=="destroy"){
+	            	if(saved==false && e.response){
+	            		saved = true;
+	            	
+	            		var response = e.response.results;
+	            		$.each(response, function(index, value){            			
+		            		var params = {
+							  	//Bucket: 'STRING_VALUE', /* required */
+							 	Delete: { /* required */
+								    Objects: [ /* required */
+								      	{
+									        Key: value.data.key /* required */
+								      	}
+								      /* more items */
+								    ]
+							  	}
+							};
+							bucket.deleteObjects(params, function(err, data) {
+							  	//console.log(err, data);
+							});
+						});
+	            	}
+            	}
+            });
+	    },
+	    //Obj
 		loadContact 		: function(id){
 			var self = this;			
 			
@@ -42507,9 +42600,7 @@
 			    
 			    if(view.length>0){
 			    	self.set("obj", view[0]);				    	
-			    	self.loadSummary(view[0].id);
-			    	self.loadTransaction(view[0].id);				    	
-			    	self.loadNote(view[0].id);			    	
+			    	self.loadData();		    	
 			    }
 			});			
 		},				
@@ -42546,14 +42637,6 @@
 				self.set("po", kendo.toString(po, "n0"));
 				self.set("openInvoice", kendo.toString(open, "n0"));
 				self.set("overInvoice", kendo.toString(over, "n0"));
-			});
-		},
-		loadTransaction 	: function(id){
-			this.transactionDS.query({
-			  	filter: { field:"contact_id", value: id },
-			  	sort: { field: "issued_date", dir: "desc" },
-			  	page: 1,
-			  	pageSize: 100
 			});
 		},
 		loadBalance 		: function(){
@@ -42608,14 +42691,12 @@
 			});
 		},			
 		selectedRow			: function(e){
-			var id = e.data.id,
-			data = e.data;			
+			var data = e.data;
 			
-			this.set("obj", data);			
-			this.loadSummary(id);
-			this.loadTransaction(id);			
-			this.loadNote(id);
-		},		
+			this.set("obj", data);
+			this.loadData();
+		},
+		//Search		
 		enterSearch 		: function(e){
 			e.preventDefault();
 
@@ -42624,57 +42705,60 @@
 		search 				: function(){
 			var self = this, 
 			para = [],
-      		txtSearch = this.get("searchText"),       		
-      		contact_type_id = this.get("contact_type_id");      		
+      		txtSearch = this.get("searchText"),
+      		contact_type_id = this.get("contact_type_id");
       		
       		if(txtSearch){
-      			para.push(      				
-      				{ field: "number", operator: "like", value: txtSearch },
-      				{ field: "surname", operator: "or_like", value: txtSearch },
-					{ field: "name", operator: "or_like", value: txtSearch },
-					{ field: "company", operator: "or_like", value: txtSearch }
+      			para.push(
+      				{ field: "abbr", operator: "like", value: txtSearch },
+      				{ field: "number", operator: "or_like", value: txtSearch },
+					{ field: "name", operator: "or_like", value: txtSearch }
       			);
-      		}      		
+      		}
 
       		if(contact_type_id){
       			para.push({ field: "contact_type_id", value: contact_type_id });
-      		}      		     		
-      		
+      		}else{
+      			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 2 });
+      		}
+
       		this.contactDS.filter(para);
-      		
+			
 			//Clear search filters
-      		this.set("searchText", "");		      		
-      		this.set("contact_type_id", null);		       			
+      		self.set("searchText", "");
+      		self.set("contact_type_id", 0);
 		},
 		searchTransaction	: function(){
 			var self = this,
-				para = [],
-				obj = this.get("obj"),
 				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
+        		para = [], obj = this.get("obj");
 
-        	//Dates
-        	if(start && end){
-            	para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
-            	para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });            	            	
-            }else if(start){
-            	para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
-            }else if(end){
-            	para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });
-            }else{
-            	
-            }
+        	if(obj.id>0){
+        		para.push({ field:"contact_id", value: obj.id });        	
 
-            para.push({ field:"contact_id", value: obj.id });            
+	        	//Dates
+	        	if(start && end){
+	            	para.push({ field:"issued_date >=", value: start });
+	            	para.push({ field:"issued_date <=", value: end });
+	            }else if(start){
+	            	para.push({ field:"issued_date", value: start });
+	            }else if(end){
+	            	para.push({ field:"issued_date <=", value: end });
+	            }else{
+	            	
+	            }
 
-            this.transactionDS.query({
-            	filter: para,
-            	sort: { field: "issued_date", dir: "desc" },
-            	page: 1,
-            	pageSize: 100
-            });            
-		},	
-		goEditContact 		: function(){
+	            this.transactionDS.query({
+	            	filter: para,
+	            	sort: { field: "issued_date", dir: "desc" },
+	            	page: 1,
+	            	pageSize: 10
+	            });
+            }            
+		},
+		//Links	
+		goEdit 		 		: function(){
 			var obj = this.get("obj");
 
 			banhji.router.navigate('/vendor/'+obj.id);
@@ -42714,30 +42798,29 @@
 
 			banhji.router.navigate('/cashier');
 			banhji.cashier.loadContact(obj.id);
+		},
+		//Note
+		saveNoteEnter 		: function(e){
+			e.preventDefault();
+			this.saveNote();
 		},		
 		saveNote 			: function(){
-			var self = this;
+			var obj = this.get("obj");
 
-			if(this.get("note")!==""){
+			if(obj.id>0 && this.get("note")!==""){
 				this.noteDS.insert(0, {
-					contact_id 	: this.get("obj").id,
+					contact_id 	: obj.id,
 					note 		: this.get("note"),
 					noted_date	: new Date(),
 					created_by 	: this.get("user_id"),
 
 					creator 	: ""
 				});
-				var saved = false;
-				this.noteDS.sync();
-				this.noteDS.bind("requestEnd", function(){
-					if(saved==false){
-						saved = true;
 
-						self.set("note", "");
-					}
-				});
+				this.noteDS.sync();
+				this.set("note", "");					
 			}else{
-				alert("memo is required");
+				alert("Please select a supplier and Memo is required");
 			}
 		}		
 	});
@@ -48871,27 +48954,143 @@
 		}),
 		contactTypeDS  		: banhji.source.customerTypeDS,
 		noteDS 				: dataStore(apiUrl + 'notes'),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		currencyDS  		: banhji.source.currencyDS,
-		outstandingDS 		: dataStore(apiUrl + "contact_reports/outstanding"),
+		summaryDS 			: dataStore(apiUrl + "contact_reports/outstanding"),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",
-		obj 				: null,
+		obj 				: {id:0},
 		note 				: "",
 		searchText 			: "",
 		contact_type_id 	: null,
 		currency_id 		: 0,
-		user_id 			: banhji.source.user_id,
 		balance 			: 0,
 		deposit 			: 0,
 		outInvoice 			: 0,
 		overInvoice 		: 0,
-		pageLoad 			: function(){
-			this.contactDS.fetch();
-			this.transactionDS.fetch();
-			this.outstandingDS.fetch();
+		user_id 			: banhji.source.user_id,
+		pageLoad 			: function(id){
+			if(id){
+				this.loadObj(id);
+			}
+
+			//Refresh
+			if(this.contactDS.total()>0){
+				this.contactDS.fetch();				
+			}
+			if(this.transactionDS.total()>0){
+				this.transactionDS.fetch();
+			}
+			if(this.summaryDS.total()>0){
+				this.summaryDS.fetch();
+			}
 		},
+		loadData 			: function(){
+			var obj = this.get("obj");
+
+			this.searchTransaction();
+			this.loadSummary(obj.id);
+			
+			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
+			this.noteDS.query({
+				filter: { field:"contact_id", value: obj.id },
+				sort: { field:"noted_date", dir:"desc" },
+				page: 1,
+				pageSize: 10
+			});
+		},
+		//Upload
+		onSelect 			: function(e){			
+	        // Array with information about the uploaded files
+	        var self = this, 
+	        files = e.files,
+	        obj = this.get("obj");			
+			
+			if(obj.id>0){
+		        // Check the extension of each file and abort the upload if it is not .jpg
+		        $.each(files, function(index, value){
+		            if (value.extension.toLowerCase() === ".jpg"
+		            	|| value.extension.toLowerCase() === ".jpeg"
+		            	|| value.extension.toLowerCase() === ".tiff"
+		            	|| value.extension.toLowerCase() === ".png" 
+		            	|| value.extension.toLowerCase() === ".gif"
+		            	|| value.extension.toLowerCase() === ".pdf"){
+
+		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+
+		            	self.attachmentDS.add({
+		            		contact_id 		: obj.id,
+		            		type 			: "Contact",
+		            		name 			: value.name,
+		            		description 	: "",
+		            		key 			: key,
+		            		url 			: banhji.s3 + key,
+		            		created_at 		: new Date(),
+
+		            		file 			: value.rawFile
+		            	});	            			            		            
+		            }else{
+		            	alert("This type of file is not allowed to attach.");
+		            }
+		        });
+	    	}else{
+	    		alert("Please select a customer!");
+	    	}
+	    },
+	    removeFile 			: function(e){
+	    	var data = e.data;
+
+	    	if (confirm(banhji.source.confirmMessage)) {
+	    		this.attachmentDS.remove(data);
+	    		this.attachmentDS.sync();
+	    	}	    	
+	    },
+	    uploadFile 			: function(){
+	    	$.each(this.attachmentDS.data(), function(index, value){	    		
+		    	if(!value.id){
+			    	var params = { 
+		            	Body: value.file, 
+		            	Key: value.key 
+		            };
+		            bucket.upload(params, function (err, data) {		                
+	                	// console.log(err, data);
+	                	// var url = data.Location;                
+	            	});
+            	}	            
+            });
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+            	//Delete File
+            	if(e.type=="destroy"){
+	            	if(saved==false && e.response){
+	            		saved = true;
+	            	
+	            		var response = e.response.results;
+	            		$.each(response, function(index, value){            			
+		            		var params = {
+							  	//Bucket: 'STRING_VALUE', /* required */
+							 	Delete: { /* required */
+								    Objects: [ /* required */
+								      	{
+									        Key: value.data.key /* required */
+								      	}
+								      /* more items */
+								    ]
+							  	}
+							};
+							bucket.deleteObjects(params, function(err, data) {
+							  	//console.log(err, data);
+							});
+						});
+	            	}
+            	}
+            });
+	    },
+	    //Summary
 		loadContact 		: function(id){
 			var self = this;
 			
@@ -48906,34 +49105,24 @@
 			    
 			    if(view.length>0){
 			    	self.set("obj", view[0]);
-			    	self.loadOutStandingInvoice(view[0].id);
-			    	self.loadTransaction(view[0].id);
-			    	self.loadNote(view[0].id);
+			    	self.loadData();
 			    }
 			});
 		},
-		loadOutStandingInvoice: function(id){
+		loadSummary 		: function(id){
 			var self = this, obj = this.get("obj");
 
-			this.outstandingDS.query({
+			this.summaryDS.query({
 				filter: { field: "contact_id", value: id },
 				page: 1,
 				pageSize: 100
 			}).then(function(e) {
-				var view = self.outstandingDS.view();
+				var view = self.summaryDS.view();
 
 				self.set("deposit", kendo.toString(view[0].deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
 				self.set("outInvoice", kendo.toString(view[0].open, "n0"));
 				self.set("overInvoice", kendo.toString(view[0].overdue, "n0"));
 				self.set("balance", kendo.toString(view[0].balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
-			});
-		},
-		loadTransaction 	: function(id){
-			this.transactionDS.query({
-			  	filter: { field:"contact_id", value: id },
-			  	sort: { field: "issued_date", dir: "desc" },
-			  	page: 1,
-			  	pageSize: 100
 			});
 		},
 		loadBalance 		: function(){
@@ -48977,70 +49166,14 @@
 			  	page: 1,
 			  	pageSize: 100
 			});
-		},		
-		loadNote 			: function(id){
-			this.noteDS.query({
-				filter: { field:"contact_id", value: id },
-				sort: { field:"noted_date", dir:"desc" },
-				page: 1,
-				pageSize: 100
-			});
-		},			
+		},	
 		selectedRow			: function(e){
-			var id = e.data.id,
-			data = e.data;
+			var data = e.data;
 			
 			this.set("obj", data);
-			this.loadOutStandingInvoice(id);
-			this.loadTransaction(id);
-			this.loadNote(id);
+			this.loadData();
 		},
-		sorterChanges 		: function(){
-			var value = this.get("sorter");
-
-			switch(value){
-			case "today":
-				var today = new Date();
-				
-				this.set("sdate", today);
-				this.set("edate", today);
-			  					
-			  	break;
-			case "week":
-			  	var thisWeek = new Date;
-				var first = thisWeek.getDate() - thisWeek.getDay(); 
-				var last = first + 6;
-
-				var firstDayOfWeek = new Date(thisWeek.setDate(first));
-				var lastDayOfWeek = new Date(thisWeek.setDate(last));
-
-				this.set("sdate", firstDayOfWeek);
-				this.set("edate", lastDayOfWeek);
-				
-			  	break;
-			case "month":
-				var thisMonth = new Date;
-				var firstDayOfMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1);
-				var lastDayOfMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 0);
-
-				this.set("sdate", firstDayOfMonth);
-				this.set("edate", lastDayOfMonth);
-
-			  	break;
-			case "year":
-				var thisYear = new Date();
-			  	var firstDayOfYear = new Date(thisYear.getFullYear(), 0, 1);
-				var lastDayOfYear = new Date(thisYear.getFullYear(), 11, 31);
-
-				this.set("sdate", firstDayOfYear);
-				this.set("edate", lastDayOfYear);
-
-			  	break;
-			default:
-				this.set("sdate", "");
-				this.set("edate", "");
-			}
-		},
+		//Search
 		enterSearch 		: function(e){
 			e.preventDefault();
 
@@ -49054,10 +49187,9 @@
       		
       		if(txtSearch){
       			para.push(
-      				{ field: "number", operator: "like", value: txtSearch },
-      				{ field: "surname", operator: "or_like", value: txtSearch },
-					{ field: "name", operator: "or_like", value: txtSearch },
-					{ field: "company", operator: "or_like", value: txtSearch }
+      				{ field: "abbr", operator: "like", value: txtSearch },
+      				{ field: "number", operator: "or_like", value: txtSearch },
+					{ field: "name", operator: "or_like", value: txtSearch }
       			);
       		}
 
@@ -49068,44 +49200,45 @@
       		}
 
       		this.contactDS.filter(para);
-      		var loaded = false;
-      		this.contactDS.bind("requestEnd", function(){
-      			if(loaded==false){
-      				loaded = true;
-
-      				//Clear search filters
-		      		self.set("searchText", "");
-		      		self.set("contact_type_id", 0);
-		      		self.set("currency_id", 0);
-      			}
-      		});
+			
+			//Clear search filters
+      		self.set("searchText", "");
+      		self.set("contact_type_id", 0);
 		},
 		searchTransaction	: function(){
 			var self = this,
 				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
         		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
-        		para = [];
+        		para = [], obj = this.get("obj");
 
-        	//Dates
-        	if(start && end){
-            	para.push({ field:"issued_date >=", value: start });
-            	para.push({ field:"issued_date <=", value: end });
-            }else if(start){
-            	para.push({ field:"issued_date", value: start });
-            }else if(end){
-            	para.push({ field:"issued_date <=", value: end });
-            }else{
-            	
-            }       
+        	if(obj.id>0){
+        		para.push({ field:"contact_id", value: obj.id });
+        	
+	        	//Dates
+	        	if(start && end){
+	            	para.push({ field:"issued_date >=", value: start });
+	            	para.push({ field:"issued_date <=", value: end });
+	            }else if(start){
+	            	para.push({ field:"issued_date", value: start });
+	            }else if(end){
+	            	para.push({ field:"issued_date <=", value: end });
+	            }else{
+	            	
+	            }
 
-            this.transactionDS.query({
-            	filter: para,
-            	sort: { field: "issued_date", dir: "desc" },
-            	page: 1,
-            	pageSize: 100
-            });            
-		},	
-		goEditContact 		: function(){
+	            this.transactionDS.query({
+	            	filter: para,
+	            	sort: [
+				  		{ field: "issued_date", dir: "desc" },
+				  		{ field: "id", dir: "desc" }
+				  	],
+	            	page: 1,
+	            	pageSize: 10
+	            });
+	        }            
+		},
+		//Links	
+		goEdit 		 		: function(){
 			var obj = this.get("obj");
 
 			banhji.router.navigate('/customer/'+obj.id);
@@ -49170,29 +49303,28 @@
 			banhji.router.navigate('/cash_receipt');
 			banhji.cashReceipt.loadInvoice(obj.id);
 		},
+		//Note
+		saveNoteEnter 		: function(e){
+			e.preventDefault();
+			this.saveNote();
+		},		
 		saveNote 			: function(){
-			var self = this;
+			var obj = this.get("obj");
 
-			if(this.get("note")!==""){
+			if(obj.id>0 && this.get("note")!==""){
 				this.noteDS.insert(0, {
-					contact_id 	: this.get("obj").id,
+					contact_id 	: obj.id,
 					note 		: this.get("note"),
 					noted_date	: new Date(),
 					created_by 	: this.get("user_id"),
 
 					creator 	: ""
 				});
-				var saved = false;
-				this.noteDS.sync();
-				this.noteDS.bind("requestEnd", function(){
-					if(saved==false){
-						saved = true;
 
-						self.set("note", "");
-					}
-				});
+				this.noteDS.sync();
+				this.set("note", "");					
 			}else{
-				alert("required memo...");
+				alert("Please select a customer and Memo is required");
 			}
 		}
 	});
@@ -67826,23 +67958,7 @@
                     }
 
                     dateChanges();
-                }
-
-                function dateChanges(){
-                	var strDate = "";
-
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}
-
-					$("#strDate").text(strDate);
-                }
+                }                
 
                 var start = $("#sdate").kendoDatePicker({
                 	format: "dd-MM-yyyy",
@@ -67893,9 +68009,7 @@
 					// end.value(edate);
 					
 					start.max(end.value());
-                	end.min(start.value());
-
-                	dateChanges();                	
+                	end.min(start.value());      	
                 });
                 
                 start.max(end.value());

@@ -36773,7 +36773,7 @@
 *	Water Section      	  *
 **************************** -->
 <script id="wDashBoard" type="text/x-kendo-template">
-	<div class="container-fluid menu-hidden sidebar-hidden-phone fluid menu-left">
+	<!-- <div class="container-fluid menu-hidden sidebar-hidden-phone fluid menu-left">
 		 
 		<img src="uploads/pictures/Water_Bill.png" width="300" height="100" />	
 		
@@ -36941,8 +36941,267 @@
         	</table> 
 
     	</div>
-    </div>
-    
+    </div> -->
+    <div class="row-fluid">
+		<!-- Left Side -->
+		<div class="span4">
+
+			<!-- Logo of the page -->
+			<table width="100%" cellpadding="10">
+				<tr>
+			        <td valign="top">
+			        	<h2>CASH MODULE</h2>
+			        	<p>
+			        		In here, you can manage your cash information, transactions and reports. Cashflow forecast and other treasury management is coming soon..
+			        	</p>
+			        	<!-- <div class="supplier-icon">
+					       	<div class="span4">
+						       	<a href="#/employee" class="center">
+						       		<img title="Add Employee" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/employees.ico" />
+						       	</a>
+						       </div>
+						    <div class="span4">
+						       	<a href="#/item" class="center">
+						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/item_service" class="center">
+						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       	</a>
+						    </div>
+						</div> -->
+			        </td>
+			 	</tr>
+			</table>
+			<table class="table table-borderless table-condensed table-vertical-center ">
+				<tr>
+					<td class="center">
+						<a href="#/cash_transaction">
+							<img title="Add Cash Transaction" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />
+							C.Transaction
+						</a>						
+					</td>
+					<td class="center">
+						<a href="#/cash_receipt">
+							<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
+							C.Receipt
+						</a>
+					</td>
+					<td class="center">
+						<a href="#/cash_payment">
+							<img title="Add Cash Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_payment.png" width="110" height="200" />
+							C.Payment
+						</a>						
+					</td>					
+				</tr>
+				<tr>
+					<td class="center">
+						<a href="#/cash_advance">
+							<img title="Add Cash Advance" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_advance.png" width="110" height="200" />
+							C.Advance
+						</a>
+					</td>
+					<td class="center">						
+						<a href="#/expense">
+							<img title="Add Expense" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/expense.png" width="110" height="200" />
+							Expense
+						</a>						
+					</td>
+					<td class="center">						
+						<a href="#/currency_rate">
+							<img title="Add Exchange Rate Record" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/currency_record.png" width="110" height="200" />
+							Ex.Rate Record
+						</a>						
+					</td>										
+				</tr>							
+			</table>
+
+		</div>
+
+		<!-- Right Side -->
+		<div class="span8">
+
+			<!-- Summary -->
+			<div class="row-fluid ">
+	
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading">Cash Balance</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert alert-primary">	
+							<div align="center" class="text-large strong" style="font-size: 22pt;" data-bind="text: balance"></div>
+							<table width="100%">
+								<tr align="center">
+									<td>										
+										<span data-bind="text: cashACNumber"></span>
+										<br>
+										<span>Accounts</span>
+									</td>									
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading">Advance</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert-info">
+							
+							<div align="center" class="text-large strong" style="font-size: 22pt;" data-bind="text: totalAdvance"></div>
+							<table width="100%">
+								<tr align="center">
+									<td>										
+										<span data-bind="text: open"></span>
+										<br>
+										<span>Open</span>
+									</td>
+									<td>
+										<span data-bind="text: overDue"></span>
+										<br>
+										<span>Overdue</span>
+									</td>									
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading">Cash Position</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert-info3" style="background-color: LightGray">
+							
+							<div align="center" class="text-large strong" style="font-size: 22pt;" data-bind="text: ar"></div>
+							<table width="100%">
+								<tr align="center">
+									<td>										
+										<span data-bind="text: ar_open"></span>
+										<br>
+										<span>To be Received</span>
+									</td>
+									<td>
+										<span data-bind="text: ar_customer"></span>
+										<br>
+										<span>To be Paid</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+			</div>
+
+			<!-- Top 5 -->
+			<div class="row-fluid">
+				<div class="span4">				
+					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
+				        <thead>
+				            <tr>
+				                <th colspan="2">Top 5 Cash Balance</th>			                
+				            </tr>
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"				        	                 
+			                 data-template="cashDashBoard-top-customer-template"
+			                 data-bind="source: topCashDS"></tbody>			        
+				    </table>			
+				</div>
+				<div class="span4">
+					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
+				        <thead>
+				            <tr>
+				                <th colspan="2">Top 5 Cash Advance</th>		                
+				            </tr>
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"				        	                  
+			                 data-template="cashDashBoard-top-ar-template"
+			                 data-bind="source: topAdvaDS"></tbody>			        
+				    </table>
+				</div>
+				<div class="span4">
+					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
+				        <thead>
+				            <tr>
+				                <th colspan="2">Top 5 Expense Account</span></th>			                		                
+				            </tr>
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="true"                
+			                 data-template="cashDashBoard-top-product-template"
+			                 data-bind="source: topExpsDS"></tbody>			        
+				    </table>
+				</div>		
+			</div>
+
+			<!-- Graph -->
+		    <div class="span12">
+				<div class="home-chart">
+					<!-- Graph -->
+					<div data-role="chart"
+						 data-auto-bind="false"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+		            <!-- End Graph -->      
+				</div>
+			</div>
+		</div>
+	</div> 
 
 
 </script>
