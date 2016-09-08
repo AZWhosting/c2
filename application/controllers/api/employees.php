@@ -28,14 +28,6 @@ class Employees extends REST_Controller {
 		$page = $this->get('page') !== false ? $this->get('page') : 1;
 		$data = array();
 
-
-		// $types = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		// $types->where('parent_id', 3)->get_iterated();
-
-		// foreach($types as $type) {
-		// 	$typeIds[] = $type->id;
-		// }
-
 		$types = new Contact_type(null, null, null, null, $this->_database);
 		$types->where('parent_id', 3)->get();
 		$ctype = array();
@@ -44,6 +36,7 @@ class Employees extends REST_Controller {
 		}
 		$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$employees->where_in('contact_type_id', $ctype);
+		$employees->where('deleted', 0);
 
 
 		$this->benchmark->mark('benchmark_start');
@@ -66,16 +59,18 @@ class Employees extends REST_Controller {
 		$employees->get_paged($page, $limit);
 		if($employees->exists()) {
 			foreach($employees as $row) {
+				$role = $row->contact_type->get();
 				$data[] = array(
 					'id' => $row->id,
-					'surname' => $row->surname,
 					'name' => $row->name,
 					'gender' => $row->gender,
 					'dob' => $row->dob,
 					'phone' => $row->phone,
 					'email' => $row->email,
 					'user_id' => $row->user_id,
-					'address' => $row->address
+					'address' => $row->address,
+					'status' => $row->status,
+					'role'    => $role->exists() ? array('id'=> $role->id, 'name'=>$role->name, 'abbr' => $role->abbr) : array()
 				);
 			}
 			$this->benchmark->mark('benchmark_end');
@@ -100,105 +95,123 @@ class Employees extends REST_Controller {
 		}
 	}
 
-	// public function index_post() {
-	// 	$requested_data = json_decode($this->post('models'));
-	// 	$data = array();
-	// 	$this->benchmark->mark('benchmark_start');
-	// 	foreach($requested_data as $res) {
-	// 		$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_databasey);
-	// 		$employees->surname 	= $res->surname;
-	// 		$employees->name 		= $res->name;
-	// 		$employees->phone 		= $res->phone;
-	// 		$employees->email 		= $res->email;
-	// 		$employees->dob 		= $res->dob;
-	// 		$employees->gender 		= $res->gender;
-	// 		$employees->address 	= $res->address;
-	// 		$employees->user_id 	= $res->user_id;
-	// 		$employees->contact_type_id = 3;
+	public function index_post() {
+		$requested_data = json_decode($this->post('models'));
+		$data = array();
+		$this->benchmark->mark('benchmark_start');
+		foreach($requested_data as $res) {
+			$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$employees->name 		= $res->name;
+			$employees->gender 		= $res->gender;
+			$employees->contact_type_id = $res->role->id;
+			$employees->status = $res->status;
 
-	// 		if($employees->save()) {
-	// 			$data[] = array(
-	// 				'id' => $employees->id,
-	// 				'surname' => $employees->surname,
-	// 				'name' => $employees->name,
-	// 				'gender' => $employees->gender,
-	// 				'dob' => $employees->dob,
-	// 				'phone' => $employees->phone,
-	// 				'email' => $employees->email,
-	// 				'user_id' => $employees->user_id,
-	// 				'address' => $employees->address
-	// 			);
-	// 		}
-	// 	}
+			if($employees->save()) {
+				$data[] = array(
+					'id' => $employees->id,
+					'name' => $employees->name,
+					'status' => $employees->status,
+					'role' => $res->role
+				);
+			}
+		}
 		
-	// 	$this->benchmark->mark('benchmark_end');
-	// 	if(count($data) > 0) {
-	// 		$this->response(array('results'=>$data, 'msg' => 'result found', 'count'=>count($data), 'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')), 201);
-	// 	} else {
-	// 		$this->response(array('results'=>array(), 'msg' => 'no result found', 'count'=>0, 'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')), 200);
-	// 	}
-	// }
+		$this->benchmark->mark('benchmark_end');
+		if(count($data) > 0) {
+			$this->response(array('results'=>$data, 'msg' => 'result found', 'count'=>count($data), 'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')), 201);
+		} else {
+			$this->response(array('results'=>array(), 'msg' => 'no result found', 'count'=>0, 'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')), 200);
+		}
+	}
 
-	// public function index_put() {
-	// 	$requested_data = json_decode($this->put('models'));
-	// 	$data = array();
-	// 	$this->benchmark->mark('benchmark_start');
-	// 	foreach($requested_data as $res) {
-	// 		$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-	// 		$employees->where('id', $res->id)->get();
-	// 		$employees->surname 	= $res->surname;
-	// 		$employees->name 		= $res->name;
-	// 		$employees->phone 		= $res->phone;
-	// 		$employees->email 		= $res->email;
-	// 		// $employees->dob 		= $res->dob;
-	// 		$employees->gender 		= $res->gender;
-	// 		$employees->address 	= $res->address;
-	// 		$employees->user_id 	= $res->user_id;
+	public function index_put() {
+		$requested_data = json_decode($this->put('models'));
+		$data = array();
+		$this->benchmark->mark('benchmark_start');
+		foreach($requested_data as $res) {
+			$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$employees->where('id', $res->id)->get();
+			$employees->name 		= $res->name;
+			$employees->gender 		= $res->gender;
+			$employees->contact_type_id = $res->role->id;
+			$employees->status = $res->status;
 
-	// 		if($employees->save()) {
-	// 			$data[] = array(
-	// 				'id' => $employees->id,
-	// 				'surname' => $employees->surname,
-	// 				'name' => $employees->name,
-	// 				'gender' => $employees->gender,
-	// 				// 'dob' => $employees->dob,
-	// 				'phone' => $employees->phone,
-	// 				'email' => $employees->email,
-	// 				'user_id' => $employees->user_id,
-	// 				'address' => $employees->address
-	// 			);
-	// 		}
-	// 	}
+			if($employees->save()) {
+				$data[] = array(
+					'id' => $employees->id,
+					'name' => $employees->name,
+					'status' => $employees->status,
+					'role' => $res->role
+				);
+			}
+		}
 		
-	// 	$this->benchmark->mark('benchmark_end');
-	// 	if(count($data) > 0) {
-	// 		$this->response(array('results'=>$data, 'msg' => 'result found', 'count'=>count($data), 'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')), 200);
-	// 	} else {
-	// 		$this->response(array('results'=>array(), 'msg' => 'no result found', 'count'=>0, 'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')), 200);
-	// 	}
-	// }
+		$this->benchmark->mark('benchmark_end');
+		if(count($data) > 0) {
+			$this->response(array('results'=>$data, 'msg' => 'result found', 'count'=>count($data), 'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')), 200);
+		} else {
+			$this->response(array('results'=>array(), 'msg' => 'no result found', 'count'=>0, 'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')), 200);
+		}
+	}
 
-	// public function index_delete() {
-	// 	$requested_data = json_decode($this->delete('models'));
-	// 	$data = array();
-	// 	$this->benchmark->mark('benchmark_start');
-	// 	$count = 0;
-	// 	foreach($requested_data as $res) {
-	// 		$employees = new Employee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-	// 		$employees->where('id', $res->id)->get();
-	// 		$employees->deleted = 'true';
+	public function index_delete() {
+		$requested_data = json_decode($this->delete('models'));
+		$data = array();
+		$this->benchmark->mark('benchmark_start');
+		$count = 0;
+		foreach($requested_data as $res) {
+			$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$employees->where('id', $res->id)->get();
+			$employees->deleted = 1;
 
-	// 		if($employees->save()) {
-	// 			$count++;
-	// 		}
-	// 	}
+			if($employees->save()) {
+				$count++;
+			}
+		}
 		
-	// 	$this->benchmark->mark('benchmark_end');
-	// 	if(count($data) > 0) {
-	// 		$this->response(array('results'=>array(), 'msg' => $count .' affected.', 'count'=>$count, 'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')), 201);
-	// 	} else {
-	// 		$this->response(array('results'=>array(), 'msg' => 'no result found', 'count'=>0, 'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')), 200);
-	// 	}
-	// }
-	
+		$this->benchmark->mark('benchmark_end');
+		if(count($data) > 0) {
+			$this->response(array('results'=>array(), 'msg' => $count .' affected.', 'count'=>$count, 'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')), 201);
+		} else {
+			$this->response(array('results'=>array(), 'msg' => 'no result found', 'count'=>0, 'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')), 200);
+		}
+	}
+	public function roles_get() {
+		$requested_data = $this->get('filter');
+		$filters = $requested_data['filters'];
+		$limit = $this->get('limit') !== false ? $this->get('limit') : 100;
+		$page = $this->get('page') !== false ? $this->get('page') : 1;
+		$data = array();
+
+		$types = new Contact_type(null, null, null, null, $this->_database);
+		$types->where('parent_id', 3)->get();
+
+		if($types->exists()) {
+			foreach($types as $row) {
+				$data[] = array(
+					'id' => $row->id,
+					'name' => $row->name
+				);
+			}
+			$this->benchmark->mark('benchmark_end');
+			$this->response(
+				array(
+					'results'=>$data, 
+					'msg' => 'result found',
+					'count'=> count($types), 
+					'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')
+					),
+				200
+			);
+		} else {
+			$this->response(
+				array(
+					'error'=>'no result.', 
+					'msg' => 'no result found', 
+					'generatedIn'=> $this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')
+				),
+				200
+			);
+		}
+	}
 }
