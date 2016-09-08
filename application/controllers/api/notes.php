@@ -94,7 +94,7 @@ class Notes extends REST_Controller {
 					"noted_date"	=> $value->noted_date,
 					"created_by" 	=> $value->created_by,
 
-					"creator" 		=> $creator->surname ." ". $creator->name
+					"creator" 		=> $creator->name
 		 		);
 			}
 		}
@@ -127,7 +127,7 @@ class Notes extends REST_Controller {
 					"noted_date"	=> $obj->noted_date,
 					"created_by" 	=> $obj->created_by,
 
-					"creator" 		=> $creator->surname ." ". $creator->name
+					"creator" 		=> $creator->name
 				);				
 			}		
 		}
@@ -164,7 +164,7 @@ class Notes extends REST_Controller {
 					"noted_date"	=> $obj->noted_date,
 					"created_by" 	=> $obj->created_by,
 
-					"creator" 		=> $creator->surname ." ". $creator->name
+					"creator" 		=> $creator->name
 				);						
 			}
 		}
