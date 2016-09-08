@@ -7879,7 +7879,7 @@
 					<td class="center">						
 						<a href="#/cash_payment">
 							<img title="Add Cash Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_payment.png" width="110" height="200" />
-							PayBill
+							Cash Payment
 						</a>						
 					</td>										
 				</tr>				
@@ -8163,7 +8163,6 @@
 
 					<div class="table table-condensed" style="height: 580px;"						 
 						 data-role="grid"
-						 data-auto-bind="false" 
 						 data-bind="source: contactDS"						  
 						 data-row-template="vendorCenter-vendor-list-tmpl"
 						 data-columns="[{title: ''}]"
@@ -8226,7 +8225,7 @@
 								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit">Deposit</span>
 								            		</td>
 								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goPayBill">Pay Bills</span>								            			
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashPayment">Cash Payment</span>								            			
 								            		</td>
 								            	</tr>								            	
 							            	</table>
@@ -8248,7 +8247,6 @@
 															<td>Number</td>
 															<td>
 																<span class="strong" data-bind="text: obj.abbr"></span>
-																-
 																<span class="strong" data-bind="text: obj.number"></span>
 															</td>
 														</tr>
@@ -8432,12 +8430,10 @@
     	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
     	<td>#=type#</td>
         <td>
-        	#if(type=="Purchase_Order" || type=="GRN" || type=="Purchase_Return"){#
-				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
-			#}else if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
-					<a href="\#/purchase/#=id#"><i></i> #=type#</a>						
+        	#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
+					<a href="\#/purchase/#=id#"><i></i> #=number#</a>						
 			#}else{#
-				#=number#
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
 			#}#        	
         </td>
     	<td class="right">
@@ -8448,7 +8444,7 @@
     		#}#
     	</td>
     	<td>        	
-        	#if(type==="Purchase" || type==="Expense"){#
+        	#if(type==="Credit_Purchase"){#
         		#if(status==="0" || status==="2") {#
         			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
 					#if(dueDate < toDay) {#
@@ -8459,7 +8455,7 @@
 				#} else {#
 					Paid
 				#}#
-        	#}else if(type==="PO" || type==="GRN"){#
+        	#}else if(type==="Purchase_Order" || type==="GRN"){#
         		#if(status==="0"){#
         			Open
         		#}else{#
@@ -8468,18 +8464,10 @@
         	#}#			
 		</td>    	
     	<td align="center">
-			#if(type==="Purchase"){#
-				<a href="\#/purchase/#=id#"><i></i> Send</a>
-
+			#if(type==="Credit_Purchase"){#
 				#if(status==="0" || status==="2"){#					
-					| <a href="\#/purchase/#=id#"><i></i> Pay</a>
+					<a data-bind="click: payBill">Pay</a>
 				#}#
-			#}else if(type==="Expense"){#
-        		<a href="\#/expense/#=id#"><i></i> Send</a>
-
-				#if(status==="0" || status==="2"){#					
-					| <a href="\#/expense/#=id#"><i></i> Pay</a>
-				#}#        	
         	#}else if(type==="GDN"){#        		
         		#if(status==="0"){#
         			
@@ -8491,13 +8479,9 @@
 <script id="vendorCenter-vendor-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
 		<td>
-			<div class="media-body strong">
+			<div class="media-body strong">				
 				<span>#=abbr##=number#</span>
-				#if(company){#
-					<span>#=company#</span>
-				#}else{#
-					<span>#=surname#</span> <span>#=name#</span>
-				#}#
+				<span>#=name#</span>
 			</div>
 		</td>
 	</tr>
@@ -15050,7 +15034,7 @@
 
 
 <!-- ***************************
-*	Customer Section               *
+*	Customer Section           *
 **************************** -->
 <script id="customerDashboard" type="text/x-kendo-template">
 
@@ -15526,7 +15510,6 @@
 															<td>Number</td>
 															<td>
 																<span class="strong" data-bind="text: obj.abbr"></span>
-																-
 																<span class="strong" data-bind="text: obj.number"></span>
 															</td>
 														</tr>
@@ -15709,15 +15692,15 @@
     <tr>    	  	
     	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
     	<td>#=type#</td>
+        <!-- Reference -->
         <td>
-        	#if(type=="Invoice" || type=="Cash_Sale" || type=="Quote" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return" || type=="Cash_Receipt"){#
-				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>						
-			#}else if(type=="Deposit"){#
+        	#if(type=="Deposit"){#
 				<a href="\#/customer_deposit/#=id#"><i></i> #=number#</a>			
 			#}else{#
-				#=number#
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
 			#}#        	
         </td>
+        <!-- Amount -->
     	<td class="right">
     		#if(type=="GDN"){#
     			#=kendo.toString(amount, "n0")#
@@ -15725,7 +15708,8 @@
     			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
     		#}#
     	</td>
-    	<td>        	
+    	<!-- Status -->
+    	<td align="center">        	
         	#if(type==="Invoice"){#
         		#if(status==="0" || status==="2") {#
         			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
@@ -15750,11 +15734,12 @@
         			Approved        			
         		#}#
         	#}#			
-		</td>    	
+		</td>
+		<!-- Actions -->
     	<td align="center">
 			#if(type==="Invoice"){#
 				#if(status==="0" || status==="2"){#
-					<a id="linkPay" name="linkPay" data-bind="click: payInvoice">Pay</a>					
+					<a data-bind="click: payInvoice">Pay</a>					
 				#}#			
         	#}else if(type==="Sale_Order"){#
         		#if(status==="0"){#
@@ -42537,13 +42522,9 @@
 			//Refresh
 			if(this.contactDS.total()>0){
 				this.contactDS.fetch();
-			}
-			if(this.transactionDS.total()>0){
 				this.transactionDS.fetch();
-			}
-			if(this.summaryDS.total()>0){
-				this.summaryDS.fetch();
-			}								
+				this.loadSummary();
+			}							
 		},
 		loadData 			: function(){
 			var obj = this.get("obj");
@@ -42673,12 +42654,12 @@
 			this.summaryDS.query({
 			  	filter: [
 			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", operator:"where_in", value: ["Cash_Purchase","Credit_Purchase", "Purchase_Order"] },
-			  		{ field:"status", value: 0 }
+			  		{ field:"type", operator:"where_in", value: ["Credit_Purchase", "Purchase_Order"] },
+			  		{ field:"status", operator:"where_in", value: [0,2] }
 			  	],
 			  	sort: { field: "issued_date", dir: "desc" },
 			  	page: 1,
-			  	pageSize: 100
+			  	pageSize: 1000
 			}).then(function(){
 				var view = self.summaryDS.view(),
 				balance = 0, open = 0, over = 0, po = 0, today = new Date();
@@ -42708,12 +42689,15 @@
 			this.transactionDS.query({
 			  	filter: [
 			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", operator:"where_in", value:["Purchase","Expense"] },			  		
+			  		{ field:"type", value:"Credit_Purchase" },			  		
 			  		{ field:"status", value: 0 }
 			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
 			  	page: 1,
-			  	pageSize: 100
+			  	pageSize: 10
 			});
 		},
 		loadPO 				: function(){
@@ -42725,9 +42709,12 @@
 			  		{ field:"type", value:"Purchase_Order" },			  		
 			  		{ field:"status", value: 0 }
 			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
 			  	page: 1,
-			  	pageSize: 100
+			  	pageSize: 10
 			});
 		},
 		loadOverInvoice 	: function(){
@@ -42736,23 +42723,18 @@
 			this.transactionDS.query({
 			  	filter: [
 			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", operator:"where_in", value: ["Purchase","Expense"] },
+			  		{ field:"type", operator:"where_in", value: ["Cash_Purchase","Credit_Purchase"] },
 			  		{ field:"due_date <", value: new Date() },
 			  		{ field:"status", value: 0 }
 			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
 			  	page: 1,
-			  	pageSize: 100
+			  	pageSize: 10
 			});
 		},		
-		loadNote 			: function(id){
-			this.noteDS.query({
-				filter: { field:"contact_id", value: id },
-				sort: { field:"noted_date", dir:"desc" },
-				page: 1,
-				pageSize: 100
-			});
-		},			
 		selectedRow			: function(e){
 			var data = e.data;
 			
@@ -42814,7 +42796,10 @@
 
 	            this.transactionDS.query({
 	            	filter: para,
-	            	sort: { field: "issued_date", dir: "desc" },
+	            	sort: [
+				  		{ field: "issued_date", dir: "desc" },
+				  		{ field: "id", dir: "desc" }
+				  	],
 	            	page: 1,
 	            	pageSize: 10
 	            });
@@ -42830,7 +42815,7 @@
 			var obj = this.get("obj");
 
 			banhji.router.navigate('/purchase_order');
-			banhji.po.loadContact(obj.id);			
+			banhji.purchaseOrder.loadContact(obj.id);			
 		},
 		goDeposit			: function(){
 			var obj = this.get("obj");
@@ -42844,7 +42829,7 @@
 			banhji.router.navigate('/purchase');
 			banhji.purchase.loadContact(obj.id);
 		},
-		goPurchaseReturn			: function(){
+		goPurchaseReturn	: function(){
 			var obj = this.get("obj");
 
 			banhji.router.navigate('/purchase_return');
@@ -42856,11 +42841,17 @@
 			banhji.router.navigate('/grn');
 			banhji.grn.loadContact(obj.id);
 		},		
-		goPayBill			: function(){
+		goCashPayment		: function(){
 			var obj = this.get("obj");
 
-			banhji.router.navigate('/cashier');
-			banhji.cashier.loadContact(obj.id);
+			banhji.router.navigate('/cash_payment');
+			banhji.cashPayment.loadContact(obj.id);
+		},
+		payBill 			: function(e){
+			var data = e.data;
+
+			banhji.router.navigate('/cash_payment');
+			banhji.cashPayment.loadInvoice(data.id);
 		},
 		//Note
 		saveNoteEnter 		: function(e){
@@ -42919,7 +42910,6 @@
 			if(id){
 				this.set("isEdit", true);						
 				this.loadObj(id, is_pattern);
-				this.loadContactPerson(id);
 			}else{				
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
@@ -43007,7 +42997,6 @@
 
 			this.numberDS.query({
 				filter:[
-					{ field:"parent_id", operator:"where_related", model:"contact_type", value:2 },
 					{ field:"contact_type_id", value:obj.contact_type_id }
 				],
 				sort: { field:"number", dir:"desc" },
@@ -46558,7 +46547,11 @@
 			this.set("total", 0);
 			this.set("remaining", 0);
 			this.set("additional_cost", 0);
-			this.set("amtDueColor", banhji.source.amtDueColor);				
+			this.set("amtDueColor", banhji.source.amtDueColor);
+
+			//Set Date
+			var duedate = new Date();
+			duedate.setDate(duedate.getDate() + 7);				
 
 			this.dataSource.insert(0, {				
 				contact_id 			: "",
@@ -46582,7 +46575,7 @@
 			   	locale 				: banhji.locale,			   	
 			   	issued_date 		: new Date(),
 			   	bill_date 			: new Date(),
-			   	due_date 			: new Date(),			   	
+			   	due_date 			: duedate,			   	
 			   	bill_to 			: "",
 			   	ship_to 			: "",
 			   	memo 				: "",
@@ -49031,7 +49024,7 @@
 		noteDS 				: dataStore(apiUrl + 'notes'),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		currencyDS  		: banhji.source.currencyDS,
-		summaryDS 			: dataStore(apiUrl + "contact_reports/outstanding"),
+		summaryDS 			: dataStore(apiUrl + "transactions"),
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -49053,13 +49046,9 @@
 
 			//Refresh
 			if(this.contactDS.total()>0){
-				this.contactDS.fetch();				
-			}
-			if(this.transactionDS.total()>0){
+				this.contactDS.fetch();
 				this.transactionDS.fetch();
-			}
-			if(this.summaryDS.total()>0){
-				this.summaryDS.fetch();
+				this.loadSummary();
 			}
 		},
 		loadData 			: function(){
@@ -49188,16 +49177,35 @@
 			var self = this, obj = this.get("obj");
 
 			this.summaryDS.query({
-				filter: { field: "contact_id", value: id },
-				page: 1,
-				pageSize: 100
-			}).then(function(e) {
-				var view = self.summaryDS.view();
+			  	filter: [
+			  		{ field:"contact_id", value: obj.id },
+			  		{ field:"type", operator:"where_in", value: ["Deposit", "Invoice"] },
+			  		{ field:"status", operator:"where_in", value: [0,2] }
+			  	],
+			  	sort: { field: "issued_date", dir: "desc" },
+			  	page: 1,
+			  	pageSize: 1000
+			}).then(function(){
+				var view = self.summaryDS.view(),
+				deposit = 0, open = 0, over = 0, balance = 0, today = new Date();
 
-				self.set("deposit", kendo.toString(view[0].deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
-				self.set("outInvoice", kendo.toString(view[0].open, "n0"));
-				self.set("overInvoice", kendo.toString(view[0].overdue, "n0"));
-				self.set("balance", kendo.toString(view[0].balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
+				$.each(view, function(index, value){
+					if(value.type=="Deposit"){
+						deposit += kendo.parseFloat(value.amount);
+					}else{
+						balance += kendo.parseFloat(value.amount);
+						open++;
+
+						if(new Date(value.due_date)<today){						
+							over++;
+						}
+					}									
+				});
+				
+				self.set("deposit", kendo.toString(deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
+				self.set("outInvoice", kendo.toString(open, "n0"));
+				self.set("overInvoice", kendo.toString(over, "n0"));
+				self.set("balance", kendo.toString(balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
 			});
 		},
 		loadBalance 		: function(){
@@ -49209,9 +49217,12 @@
 			  		{ field:"type", value:"Invoice" },
 			  		{ field:"status", operator:"where_in", value: [0,2] }
 			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
 			  	page: 1,
-			  	pageSize: 100
+			  	pageSize: 10
 			});
 		},
 		loadDeposit 		: function(){
@@ -49222,9 +49233,12 @@
 			  		{ field:"contact_id", value: obj.id },
 			  		{ field:"type", value:"Deposit" }
 			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
 			  	page: 1,
-			  	pageSize: 100
+			  	pageSize: 10
 			});
 		},
 		loadOverInvoice 	: function(){
@@ -49237,9 +49251,12 @@
 			  		{ field:"status", operator:"where_in", value: [0,2] },
 			  		{ field:"due_date <", value: kendo.toString(new Date(), "yyyy-MM-dd") }
 			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
 			  	page: 1,
-			  	pageSize: 100
+			  	pageSize: 10
 			});
 		},	
 		selectedRow			: function(e){
@@ -49373,10 +49390,10 @@
 			banhji.cashReceipt.loadContact(obj.id);
 		},
 		payInvoice			: function(e){
-			var obj = e.data;
+			var data = e.data;
 
 			banhji.router.navigate('/cash_receipt');
-			banhji.cashReceipt.loadInvoice(obj.id);
+			banhji.cashReceipt.loadInvoice(data.id);
 		},
 		//Note
 		saveNoteEnter 		: function(e){
@@ -49524,7 +49541,6 @@
 
 			this.numberDS.query({
 				filter:[
-					{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
 					{ field:"contact_type_id", value:obj.contact_type_id }
 				],
 				sort: { field:"number", dir:"desc" },
@@ -54395,7 +54411,11 @@
 			this.set("total_deposit", 0);
 			this.set("total", 0);
 			this.set("remaining", 0);
-			this.set("amtDueColor", banhji.source.amtDueColor);				
+			this.set("amtDueColor", banhji.source.amtDueColor);
+
+			//Set Date
+			var duedate = new Date();
+			duedate.setDate(duedate.getDate() + 7);				
 
 			this.dataSource.insert(0, {				
 				contact_id 			: "",//Customer
@@ -54417,7 +54437,7 @@
 			   	rate				: 1,			   	
 			   	locale 				: banhji.locale,			   	
 			   	issued_date 		: new Date(),
-			   	due_date 			: new Date(),			   	
+			   	due_date 			: duedate,			   	
 			   	bill_to 			: "",
 			   	ship_to 			: "",
 			   	memo 				: "",
