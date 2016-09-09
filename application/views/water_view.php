@@ -36773,7 +36773,7 @@
 *	Water Section      	  *
 **************************** -->
 <script id="wDashBoard" type="text/x-kendo-template">
-	<div class="container-fluid menu-hidden sidebar-hidden-phone fluid menu-left">
+	<!-- <div class="container-fluid menu-hidden sidebar-hidden-phone fluid menu-left">
 		 
 		<img src="uploads/pictures/Water_Bill.png" width="300" height="100" />	
 		
@@ -36941,8 +36941,280 @@
         	</table> 
 
     	</div>
-    </div>
-    
+    </div> -->
+    <div class="row-fluid">
+		<!-- Left Side -->
+		<div class="span4">
+
+			<!-- Logo of the page -->
+			<table width="100%" cellpadding="10">
+				<tr>
+			        <td valign="top">
+			        	<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_bill.png" width="300" height="100">
+			        	<div class="supplier-icon">
+					       	<div class="span4">
+						       	<a href="#/wNew_customer" class="center">
+						       		<img title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+						       	</a>
+						       </div>
+						   <!--  <div class="span4">
+						       	<a href="#/item" class="center">
+						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/item_service" class="center">
+						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       	</a>
+						    </div> -->
+						</div>
+			        </td>
+			 	</tr>
+			</table>
+			<table class="table table-borderless table-condensed table-vertical-center ">
+				<tr>
+					<td class="center">
+						<a href="#/wReading">
+							<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/reading.png" width="110" height="200" />
+							Reading
+						</a>						
+					</td>
+					<td class="center">
+						<a href="#/wIR_reader">
+							<img title="Add IR Reader" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png" width="110" height="200" />
+							IR Reader
+						</a>
+					</td>
+					<td class="center">
+						<a href="#/wReading_book">
+							<img title="Add Reading Book" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/reading_book.png" width="110" height="200" />
+							R. Book
+						</a>						
+					</td>					
+				</tr>
+				<tr>
+					<td class="center">
+						<a href="#/wInvoice">
+							<img title="Add Create Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/create_invoice.png" width="110" height="200" />
+							W. Invoice
+						</a>
+					</td>
+					<td class="center">						
+						<a href="#/wPrint_center">
+							<img title="Add Print Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/print_invoice.png" width="110" height="200" />
+							Print
+						</a>						
+					</td>
+					<td class="center">						
+						<a href="#/currency_rate">
+							<img title="Receive Water Bill Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/receive_payment.png" width="110" height="200" />
+							Receipt
+						</a>						
+					</td>										
+				</tr>							
+			</table>                
+
+		</div>
+
+		<!-- Right Side -->
+		<div class="span8">
+
+			<!-- Summary -->
+			<div class="row-fluid">
+	
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons coins"><i></i></span>Sale</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert alert-primary">
+							
+							<div align="center" class="text-large strong">0</div>
+							<table width="100%">
+								<tr align="center">
+									<td width="50%">										
+										<span >0</span>
+										<br>
+										<span>Customer</span>
+									</td>
+									<td width="50%">
+										<span >0</span>
+										<br>
+										<span>Meter</span>
+									</td>									
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span>Active Customer</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert-info">
+							
+							<div align="center" class="text-large strong">0</div>
+							<table width="100%">
+								<tr align="center">
+									<td width="33%">										
+										<span>0</span>
+										<br>
+										<span>Active</span>
+									</td>
+									<td width="33%">
+										<span>0</span>
+										<br>
+										<span>Inactive</span>
+									</td>
+									<td width="33%">
+										<span>0</span>
+										<br>
+										<span>Voice</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span>Receivable</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert-info3" style="background-color: LightGray">
+							
+							<div align="center" class="text-large strong">0</div>
+							<table width="100%">
+								<tr align="center">
+									<td width="33%">										
+										<span >0</span>
+										<br>
+										<span>Open</span>
+									</td>
+									<td width="33%">
+										<span >0</span>
+										<br>
+										<span>Customer</span>
+									</td>
+									<td width="33%">
+										<span >0</span>
+										<br>
+										<span>Overdue</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+			</div>
+
+			<!-- Top 5 -->
+			<div class="row-fluid">
+				<div class="span4">								
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				                <th class="center" colspan="2">Top 5 Customers</th>				                			                
+				            </tr>
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"				        	                 
+			                 data-template="customerDashBoard-top-customer-template"
+			                 data-bind="source: topCustomerDS"></tbody>			        
+				    </table>			
+				</div>
+				<div class="span4">					
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>				           
+				            <tr>
+				                <th class="center" colspan="2">Top 5 A/R Balance</th>				                			                
+				            </tr>					        
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"				        	                  
+			                 data-template="customerDashBoard-top-ar-template"
+			                 data-bind="source: topARDS"></tbody>			        
+				    </table>
+				</div>
+				<div class="span4">					
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>				           
+				            <tr>
+				                <th class="center" colspan="2">Top 5 Products</th>				                			                
+				            </tr>					        
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"                
+			                 data-template="customerDashBoard-top-product-template"
+			                 data-bind="source: topProductDS"></tbody>			        
+				    </table>
+				</div>		
+			</div>
+
+			<!-- Graph -->
+		    <div class="span12">
+				<div class="home-chart">
+					<!-- Graph -->
+					<div data-role="chart"
+						 data-auto-bind="false"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+		            <!-- End Graph -->      
+				</div>
+			</div>
+		</div>
+	</div> 
 
 
 </script>

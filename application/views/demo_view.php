@@ -8074,8 +8074,8 @@
 	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 	                 }'                 
 	                 data-series="[
-	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
-	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+	                                 { field: 'sale', name: 'Monthly Purchase', categoryField:'month', color: '#236DA4' },
+	                                 { field: 'order', name: 'Monthly Purchase Order', categoryField:'month', color: '#A6C9E3' }
 	                             ]"	                             
 	                 data-bind="source: graphDS"
 	                 style="height: 250px;" ></div>            
@@ -42348,14 +42348,14 @@
 	**********************/
 	banhji.vendorDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "contact_reports/supplier_summary"),
+		summaryDS 			: dataStore(apiUrl + "contact_reports/supplier_dashboard_summary"),
 		topContactDS 		: dataStore(apiUrl + "contact_reports/top_supplier"),
 		topAPDS 			: dataStore(apiUrl + "contact_reports/top_ap"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_sproduct"),		
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_supplier_product"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "contact_reports/monthly_sale",
+					url: apiUrl + "contact_reports/monthly_purchase",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -48890,10 +48890,10 @@
 	**************************/
 	banhji.customerDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "contact_reports/summary"),
+		summaryDS 			: dataStore(apiUrl + "contact_reports/customer_dashboard_summary"),
 		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
 		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),		
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_customer_product"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -67068,8 +67068,7 @@
 			var vm = banhji.vendorDashboard;
 			banhji.userManagement.addMultiTask("Supplier Dashboard","vendors",null);
 			if(banhji.pageLoaded["vendors"]==undefined){
-				banhji.pageLoaded["vendors"] = true;
-				
+				banhji.pageLoaded["vendors"] = true;				
 								               
 			}
 
