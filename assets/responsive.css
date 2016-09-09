@@ -38,13 +38,23 @@
 }
 
 #cbbContact-list strong{
-  width: 100%;
-  padding: 5px;
+ 
+}
+#cbbContact-list strong a{
+  padding: 5px 200px 5px 0;
+  display: inline-block;
+
 }
 #cbbContact-list strong a:hover{
-  background: red;
+  background: #EBEBEB;
 }
 
+.widget-stats.widget-stats-5{
+  padding-left: 5px !important;
+}
+.widget-stats.widget-stats-5 .txt{
+      padding: 17px 0 0 5px !important;
+}
 
 #txtAmount{
   width: 97% !important;

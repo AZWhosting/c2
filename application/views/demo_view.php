@@ -8407,7 +8407,7 @@
 								<th>Reference No</th>
 								<th>Amount</th>
 								<th>Status</th>
-								<th>Action</th>
+								<th></th>
 							</tr>
 						</thead>	            		
 	            		<tbody data-role="listview"
@@ -8443,7 +8443,7 @@
     			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
     		#}#
     	</td>
-    	<td>        	
+    	<td align="center">        	
         	#if(type==="Credit_Purchase"){#
         		#if(status==="0" || status==="2") {#
         			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
@@ -8463,15 +8463,37 @@
         		#}#        	
         	#}#			
 		</td>    	
+    	<!-- Actions -->
     	<td align="center">
-			#if(type==="Credit_Purchase"){#
-				#if(status==="0" || status==="2"){#					
-					<a data-bind="click: payBill">Pay</a>
-				#}#
-        	#}else if(type==="GDN"){#        		
-        		#if(status==="0"){#
-        			
-        		#}#
+    		#if(type==="Purchase_Order"){#
+        		
+				<div class="btn-group">
+				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Action <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu">
+				    <li><a data-bind="click: poToPurchase">Make Purchase</a></li>
+				    <li><a data-bind="click: poToGRN">Make Received Note</a></li>
+				    <li><a data-bind="click: poToDeposit">Make Deposit</a></li>
+				    <li role="separator" class="divider"></li>
+    				<li><a href="\#">Send</a></li>
+				  </ul>
+				</div>			
+
+			#}else if(type==="Credit_Purchase"){#
+        		
+				<div class="btn-group">
+				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Action <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu">
+				    <li><a data-bind="click: purchaseToCashPayment">Pay Bill</a></li>
+				    <li><a data-bind="click: purchaseToGRN">Make Received Note</a></li>
+				    <li role="separator" class="divider"></li>
+    				<li><a href="\#">Send</a></li>
+				  </ul>
+				</div>
+
         	#}#
 		</td>     	
     </tr>
@@ -15670,7 +15692,7 @@
 								<th>Reference No</th>
 								<th>Amount</th>
 								<th>Status</th>
-								<th>Action</th>
+								<th></th>
 							</tr>
 						</thead>	            		
 	            		<tbody data-role="listview"
@@ -15709,8 +15731,20 @@
     		#}#
     	</td>
     	<!-- Status -->
-    	<td align="center">        	
-        	#if(type==="Invoice"){#
+    	<td align="center">
+    		#if(type==="Quote"){#       		
+				#if(status==="0"){#
+        			Open
+        		#}else{#
+        			Used        			
+        		#}#
+        	#}else if(type==="Sale_Order" || type==="GDN"){#
+        		#if(status==="0"){#
+        			Open
+        		#}else{#
+        			Done        			
+        		#}#
+        	#}else if(type==="Invoice"){#
         		#if(status==="0" || status==="2") {#
         			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
 					#if(dueDate < toDay) {#
@@ -15720,39 +15754,54 @@
 					#}#
 				#} else {#
 					Paid
-				#}#
-        	#}else if(type==="Sale_Order" || type==="GDN"){#
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Done        			
-        		#}#
-        	#}else if(type==="Quote"){#        		
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Approved        			
-        		#}#
-        	#}#			
+				#}#        	
+        	#}#        				
 		</td>
 		<!-- Actions -->
     	<td align="center">
-			#if(type==="Invoice"){#
-				#if(status==="0" || status==="2"){#
-					<a data-bind="click: payInvoice">Pay</a>					
-				#}#			
-        	#}else if(type==="Sale_Order"){#
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}else if(type==="Quote"){#        		        		
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}else if(type==="GDN"){#        		
-        		#if(status==="0"){#
-        			
-        		#}#
+    		#if(type==="Quote"){#
+        		
+				<div class="btn-group">
+				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Action <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu">
+				    <li><a data-bind="click: quoteToSaleOrder">Make Sale Order</a></li>
+				    <li><a data-bind="click: quoteToCashSale">Make Cash Sale</a></li>
+				    <li><a data-bind="click: quoteToInvoice">Make Invoice</a></li>
+				    <li role="separator" class="divider"></li>
+    				<li><a href="\#">Send</a></li>
+				  </ul>
+				</div>
+
+			#}else if(type==="Sale_Order"){#
+        		
+				<div class="btn-group">
+				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Action <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu">
+				    <li><a data-bind="click: soToDeposit">Make Deposit</a></li>
+				    <li><a data-bind="click: soToCashSale">Make Cash Sale</a></li>
+				    <li><a data-bind="click: soToInvoice">Make Invoice</a></li>
+				    <li role="separator" class="divider"></li>
+    				<li><a href="\#">Send</a></li>
+				  </ul>
+				</div>
+
+			#}else if(type==="Invoice"){#
+        		
+				<div class="btn-group">
+				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Action <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu">
+				    <li><a data-bind="click: invoiceToCashReceipt">Receive Payment</a></li>
+				    <li role="separator" class="divider"></li>
+    				<li><a href="\#">Send</a></li>
+				  </ul>
+				</div>
+
         	#}#
 		</td>     	
     </tr>
@@ -27545,7 +27594,7 @@
 								<div class="widget-body padding-none">			
 									<div class="row-fluid row-merge">
 										<div class="listWrapper">
-											<div class="innerAll">							
+											<div class="innerAll" style="padding: 15px 15px 19px;">							
 												<form autocomplete="off" class="form-inline">
 													<div class="widget-search separator bottom">
 														<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
@@ -27566,7 +27615,7 @@
 											                              source: contactDS,
 											                              events:{ change: contactChanges }"
 											                   data-placeholder="Customer..."                    
-											                   style="width: 100%" />									
+											                   style="width: 100%; height: 29px;" />									
 													</div>
 												</form>					
 											</div>
@@ -27902,7 +27951,7 @@
 							<div class="widget-body padding-none">			
 								<div class="row-fluid row-merge">
 									<div class="listWrapper">
-										<div class="innerAll">							
+										<div class="innerAll"  style="padding: 15px 15px 19px;"">							
 											<form autocomplete="off" class="form-inline">
 												<div class="widget-search separator bottom">
 													<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
@@ -27923,7 +27972,7 @@
 										                              source: contactDS,
 										                              events:{ change: contactChanges }"
 										                   data-placeholder="Supplier..."                    
-										                   style="width: 100%" />									
+										                   style="width: 100%; height: 29px;" />									
 												</div>
 											</form>					
 										</div>
@@ -35311,7 +35360,7 @@
 </script>
 <script id="contact-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
-    	<a href="\#/customer">+ Add New Customer</a>
+    	<a href="\#/customer">+ Add New Customer</a></li>
     </strong>
 </script>
 <script id="currency-list-tmpl" type="text/x-kendo-tmpl">
@@ -35589,17 +35638,19 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/customer'>Add New Customer</a></li>  				  				
+  				<li><a href='#/customer'>Add New Customer</a></li>  
+  				<li><a href='#/item'>Add New Inventory</a></li>
+  				<li style="border-bottom: 1px solid #c5c5c5;"><a href='#/item_service'>Add New Service</a></li>  				  				
   				<li><a href='#/quote'>Add Quote</a></li>  				
   				<li><a href='#/sale_order'>Add Sale Order</a></li>
-  				<li><a href='#/gdn'>Add Goods Delivery Address Note</a></li>
+  				<li><a href='#/gdn'>Add Goods Delivery Note</a></li>
   				<li><a href='#/customer_deposit'>Receive Customer Deposit</a></li>
   				<li><a href='#/cash_sale'>Make Cash Sale</a></li>  				
   				<li><a href='#/invoice'>Create Invoice</span></a></li>
   				<li><a href='#/statement'>Prepare Statement</a></li>
   				<li><a href='#/cash_receipt'>Receive Payment</a></li>
   				<!-- <li><a href="#/customerInvoiceSent">Invoice Sent To</a></li> -->
-  				<li><a href='#/job'>Add Job</a></li>
+  				<li style="border-bottom: 1px solid #c5c5c5;"><a href='#/job'>Add Job</a></li>
   				<li><a href='#/customer_recurring'>Customer Recurring List</a></li>  				 				  				 				
   			</ul>
 	  	</li>	  	  	
@@ -53896,6 +53947,14 @@
 				}								
 			}
 		},
+		loadData 			: function(){
+			this.setRate();
+			this.setTerm();
+			this.loadBalance();
+			this.loadDeposit();
+			this.loadReference();
+			this.loadRecurring();
+		},
 		//Upload
 		onSelect 			: function(e){			
 	        // Array with information about the uploaded files
@@ -54073,11 +54132,7 @@
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
-				self.setRate();
-				self.setTerm();
-				self.loadDeposit();
-				self.loadReference();
-				self.loadRecurring();							
+				self.loadData();							
 			});
 		},
 		contactChanges 		: function(){
