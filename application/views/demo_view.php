@@ -8289,19 +8289,20 @@
 												<input type="text" class="k-textbox" 
 														data-bind="value: note, events:{change:saveNoteEnter}" 
 														placeholder="Add memo ..." 
-														style="width: 366px;" />
+														style="width: 350px;" />
 												<span class="btn btn-primary" data-bind="click: saveNote">Add</span>
 											</div>
 
 											<br>
 
-									    	<div data-role="grid"
-									    	 	 data-height="100"
-									    	 	 data-auto-bind="false"
-					 							 data-scrollable="{virtual: true}"									                 
-								                 data-row-template="vendorCenter-note-tmpl"
-								                 data-bind="source: noteDS"
-								                 data-columns="[{title: ''}]"></div>
+									    	<div class="table table-condensed" style="height: 100;"						 
+												 data-role="grid"
+												 data-auto-bind="false"						 
+												 data-bind="source: noteDS"
+												 data-row-template="vendorCenter-note-tmpl"
+												 data-columns="[{title: ''}]"
+												 data-height="100"						 
+												 data-scrollable="{virtual: true}"></div>
 											
 							            </div>
 							            <!-- // NOTE Tab content END -->
@@ -8407,7 +8408,7 @@
 								<th>Reference No</th>
 								<th>Amount</th>
 								<th>Status</th>
-								<th></th>
+								<th>Action</th>
 							</tr>
 						</thead>	            		
 	            		<tbody data-role="listview"
@@ -8465,35 +8466,8 @@
 		</td>    	
     	<!-- Actions -->
     	<td align="center">
-    		#if(type==="Purchase_Order"){#
-        		
-				<div class="btn-group">
-				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    Action <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu">
-				    <li><a data-bind="click: poToPurchase">Make Purchase</a></li>
-				    <li><a data-bind="click: poToGRN">Make Received Note</a></li>
-				    <li><a data-bind="click: poToDeposit">Make Deposit</a></li>
-				    <li role="separator" class="divider"></li>
-    				<li><a href="\#">Send</a></li>
-				  </ul>
-				</div>			
-
-			#}else if(type==="Credit_Purchase"){#
-        		
-				<div class="btn-group">
-				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    Action <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu">
-				    <li><a data-bind="click: purchaseToCashPayment">Pay Bill</a></li>
-				    <li><a data-bind="click: purchaseToGRN">Make Received Note</a></li>
-				    <li role="separator" class="divider"></li>
-    				<li><a href="\#">Send</a></li>
-				  </ul>
-				</div>
-
+    		#if(type==="Credit_Purchase"){#
+        		<a data-bind="click: payBill"><i></i> Pay Bill</a>
         	#}#
 		</td>     	
     </tr>
@@ -15580,13 +15554,14 @@
 
 											<br>
 
-									    	<div data-role="grid"
-									    	 	 data-height="100"
-									    	 	 data-auto-bind="false"
-					 							 data-scrollable="{virtual: true}"									                 
-								                 data-row-template="customerCenter-note-tmpl"
-								                 data-bind="source: noteDS"
-								                 data-columns="[{title: ''}]"></div>
+											<div class="table table-condensed" style="height: 100;"						 
+												 data-role="grid"
+												 data-auto-bind="false"						 
+												 data-bind="source: noteDS"
+												 data-row-template="customerCenter-note-tmpl"
+												 data-columns="[{title: ''}]"
+												 data-height="100"						 
+												 data-scrollable="{virtual: true}"></div>
 											
 							            </div>
 							            <!-- // NOTE Tab content END -->
@@ -15692,7 +15667,7 @@
 								<th>Reference No</th>
 								<th>Amount</th>
 								<th>Status</th>
-								<th></th>
+								<th>Action</th>
 							</tr>
 						</thead>	            		
 	            		<tbody data-role="listview"
@@ -15759,49 +15734,8 @@
 		</td>
 		<!-- Actions -->
     	<td align="center">
-    		#if(type==="Quote"){#
-        		
-				<div class="btn-group">
-				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    Action <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu">
-				    <li><a data-bind="click: quoteToSaleOrder">Make Sale Order</a></li>
-				    <li><a data-bind="click: quoteToCashSale">Make Cash Sale</a></li>
-				    <li><a data-bind="click: quoteToInvoice">Make Invoice</a></li>
-				    <li role="separator" class="divider"></li>
-    				<li><a href="\#">Send</a></li>
-				  </ul>
-				</div>
-
-			#}else if(type==="Sale_Order"){#
-        		
-				<div class="btn-group">
-				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    Action <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu">
-				    <li><a data-bind="click: soToDeposit">Make Deposit</a></li>
-				    <li><a data-bind="click: soToCashSale">Make Cash Sale</a></li>
-				    <li><a data-bind="click: soToInvoice">Make Invoice</a></li>
-				    <li role="separator" class="divider"></li>
-    				<li><a href="\#">Send</a></li>
-				  </ul>
-				</div>
-
-			#}else if(type==="Invoice"){#
-        		
-				<div class="btn-group">
-				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    Action <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu">
-				    <li><a data-bind="click: invoiceToCashReceipt">Receive Payment</a></li>
-				    <li role="separator" class="divider"></li>
-    				<li><a href="\#">Send</a></li>
-				  </ul>
-				</div>
-
+			#if(type==="Invoice"){#
+        		<a data-bind="click: payInvoice"><i></i> Receive Payment</a>
         	#}#
 		</td>     	
     </tr>
@@ -46432,7 +46366,7 @@
 				self.set("obj", view[0]);
 				self.set("original_total", view[0].amount);
 
-				if(view[0].status=="1" || view[0].type=="Cash_Sale"){
+				if(view[0].status=="1" || view[0].type=="Cash_Purchase"){
 					self.set("statusSrc", banhji.source.paidSrc);
 				}else if(view[0].status=="2"){
 					self.set("statusSrc", banhji.source.partialyPaidSrc);

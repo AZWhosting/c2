@@ -36950,13 +36950,10 @@
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td valign="top">
-			        	<h2>WATER MODULE</h2>
-			        	<p>
-			        		In here, you can manage your cash information, transactions and reports. Cashflow forecast and other treasury management is coming soon..
-			        	</p>
+			        	<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_bill.png" width="300" height="100">
 			        	<div class="supplier-icon">
 					       	<div class="span4">
-						       	<a href="#/customer" class="center">
+						       	<a href="#/wNew_customer" class="center">
 						       		<img title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
 						       	</a>
 						       </div>
@@ -36978,19 +36975,19 @@
 				<tr>
 					<td class="center">
 						<a href="#/wReading">
-							<img title="Add Cash Transaction" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />
+							<img title="Add Cash Transaction" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/reading.png" width="110" height="200" />
 							T.Reading
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/wIR_reader">
-							<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
+							<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png" width="110" height="200" />
 							IR.Reader
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/wReading_book">
-							<img title="Add Cash Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_payment.png" width="110" height="200" />
+							<img title="Add Cash Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/reading_book.png" width="110" height="200" />
 							R.Booking
 						</a>						
 					</td>					
@@ -36998,19 +36995,19 @@
 				<tr>
 					<td class="center">
 						<a href="#/wInvoice">
-							<img title="Add Cash Advance" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_advance.png" width="110" height="200" />
+							<img title="Add Cash Advance" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/create_invoice.png" width="110" height="200" />
 							Cr.Invoice
 						</a>
 					</td>
 					<td class="center">						
 						<a href="#/wPrint_center">
-							<img title="Add Expense" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/expense.png" width="110" height="200" />
+							<img title="Add Expense" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/print_invoice.png" width="110" height="200" />
 							Pr.Inovice
 						</a>						
 					</td>
 					<td class="center">						
 						<a href="#/currency_rate">
-							<img title="Add Exchange Rate Record" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/currency_record.png" width="110" height="200" />
+							<img title="Add Exchange Rate Record" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/receive_payment.png" width="110" height="200" />
 							R.Payment
 						</a>						
 					</td>										
@@ -37023,7 +37020,7 @@
 		<div class="span8">
 
 			<!-- Summary -->
-			<div class="row-fluid ">
+			<div class="row-fluid">
 	
 				<!-- Column -->
 				<div class="span4">
@@ -37033,18 +37030,24 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading">Cash Balance</h4>
+							<h4 class="heading"><span class="glyphicons coins"><i></i></span>Sale</h4>
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert alert-primary">	
-							<div align="center" class="text-large strong" style="font-size: 22pt;" data-bind="text: balance"></div>
+						<div class="widget-body alert alert-primary">
+							
+							<div align="center" class="text-large strong">0</div>
 							<table width="100%">
 								<tr align="center">
-									<td>										
-										<span data-bind="text: cashACNumber"></span>
+									<td width="50%">										
+										<span >0</span>
 										<br>
-										<span>Accounts</span>
+										<span>Customer</span>
+									</td>
+									<td width="50%">
+										<span >0</span>
+										<br>
+										<span>Meter</span>
 									</td>									
 								</tr>
 							</table>
@@ -37065,25 +37068,30 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading">Advance</h4>
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span>Active Customer</h4>
 						</div>
 						<!-- // Widget heading END -->
 						
 						<div class="widget-body alert-info">
 							
-							<div align="center" class="text-large strong" style="font-size: 22pt;" data-bind="text: totalAdvance"></div>
+							<div align="center" class="text-large strong">0</div>
 							<table width="100%">
 								<tr align="center">
-									<td>										
-										<span data-bind="text: open"></span>
+									<td width="33%">										
+										<span>0</span>
 										<br>
-										<span>Open</span>
+										<span>Active</span>
 									</td>
-									<td>
-										<span data-bind="text: overDue"></span>
+									<td width="33%">
+										<span>0</span>
 										<br>
-										<span>Overdue</span>
-									</td>									
+										<span>Inactive</span>
+									</td>
+									<td width="33%">
+										<span>0</span>
+										<br>
+										<span>Voice</span>
+									</td>
 								</tr>
 							</table>
 						</div>
@@ -37103,24 +37111,29 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading">Cash Position</h4>
+							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span>Receivable</h4>
 						</div>
 						<!-- // Widget heading END -->
 						
 						<div class="widget-body alert-info3" style="background-color: LightGray">
 							
-							<div align="center" class="text-large strong" style="font-size: 22pt;" data-bind="text: ar"></div>
+							<div align="center" class="text-large strong">0</div>
 							<table width="100%">
 								<tr align="center">
-									<td>										
-										<span data-bind="text: ar_open"></span>
+									<td width="33%">										
+										<span >0</span>
 										<br>
-										<span>To be Received</span>
+										<span>Open</span>
 									</td>
-									<td>
-										<span data-bind="text: ar_customer"></span>
+									<td width="33%">
+										<span >0</span>
 										<br>
-										<span>To be Paid</span>
+										<span>Customer</span>
+									</td>
+									<td width="33%">
+										<span >0</span>
+										<br>
+										<span>Overdue</span>
 									</td>
 								</tr>
 							</table>
@@ -37137,43 +37150,43 @@
 
 			<!-- Top 5 -->
 			<div class="row-fluid">
-				<div class="span4">				
-					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
+				<div class="span4">								
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th colspan="2">Top 5 Cash Balance</th>			                
+				                <th class="center" colspan="2">Top 5 Customers</th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                 
-			                 data-template="cashDashBoard-top-customer-template"
-			                 data-bind="source: topCashDS"></tbody>			        
+			                 data-template="customerDashBoard-top-customer-template"
+			                 data-bind="source: topCustomerDS"></tbody>			        
 				    </table>			
 				</div>
-				<div class="span4">
-					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
-				        <thead>
+				<div class="span4">					
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>				           
 				            <tr>
-				                <th colspan="2">Top 5 Cash Advance</th>		                
-				            </tr>
+				                <th class="center" colspan="2">Top 5 A/R Balance</th>				                			                
+				            </tr>					        
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                  
-			                 data-template="cashDashBoard-top-ar-template"
-			                 data-bind="source: topAdvaDS"></tbody>			        
+			                 data-template="customerDashBoard-top-ar-template"
+			                 data-bind="source: topARDS"></tbody>			        
 				    </table>
 				</div>
-				<div class="span4">
-					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
-				        <thead>
+				<div class="span4">					
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>				           
 				            <tr>
-				                <th colspan="2">Top 5 Expense Account</span></th>			                		                
-				            </tr>
+				                <th class="center" colspan="2">Top 5 Products</th>				                			                
+				            </tr>					        
 				        </thead>
 				        <tbody data-role="listview"
-				        	 data-auto-bind="true"                
-			                 data-template="cashDashBoard-top-product-template"
-			                 data-bind="source: topExpsDS"></tbody>			        
+				        	 data-auto-bind="false"                
+			                 data-template="customerDashBoard-top-product-template"
+			                 data-bind="source: topProductDS"></tbody>			        
 				    </table>
 				</div>		
 			</div>

@@ -37,6 +37,12 @@
   width: 90% !important;
 }
 
+.detailsWrapper .btn-group .dropdown-menu{
+  left: -97px !important;
+  top: 30px !important;
+}
+.detailsWrapper .btn-group .dropdown-menu li a:hover{ cursor: pointer; }
+
 #cbbContact-list strong{
  
 }
@@ -744,6 +750,7 @@ width: 50% !important;
 .row-merge .detailsWrapper,
 .row-merge .detailsWrapper .span6{
   padding: 0;
+
 }
 .row-merge .detailsWrapper{
   margin-left: 10px !important;
@@ -754,6 +761,7 @@ width: 50% !important;
 }
 .row-merge .detailsWrapper .span6 {
     padding: 0;
+    margin-bottom: 10px;
 }
 
 .listWrapper{
