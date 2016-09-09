@@ -744,6 +744,9 @@ width: 50% !important;
 .tabsbar ul li{
   width: 20%;
 }
+.dropdown-backdrop{
+  display: none;
+}
 .tabsbar-2 ul li{
   width: 10%;
 }   

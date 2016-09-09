@@ -9676,9 +9676,10 @@
 														data-text-field="number" 
 							              				data-value-field="id"						              				 
 							              				data-bind="value: obj.reference_id,
+							              							enabled: enableRef,
 							              							source: referenceDS,						              							
 							              							events:{change: referenceChanges}" 
-							              				style="width: 100%" />
+							              				placeholder="Select Reference..." style="width: 100%" />
 											</td>
 										</tr>	
 						            </table>						            
@@ -10150,9 +10151,10 @@
 														data-text-field="number" 
 							              				data-value-field="id"	 
 							              				data-bind="value: obj.reference_id,
+							              							enabled: enableRef,
 							              							source: referenceDS,						              							
 							              							events:{change: referenceChanges}" 
-							              				placeholder="Select Reference" style="width: 100%" />
+							              				placeholder="Select Reference..." style="width: 100%" />
 											</td>
 										</tr>									
 									</table>
@@ -10638,6 +10640,7 @@
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
+								              							enabled: enableRef,
 								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}"
 								              				placeholder="Select Reference..." 
@@ -11562,8 +11565,8 @@
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
-								              							source: referenceDS,
-								              							enabled: bolReference,						              							
+								              							enabled: enableRef,
+								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}"
 								              				placeholder="Type number..." 
 								              				style="width: 100%" />
@@ -15624,7 +15627,7 @@
 								<div class="span6">
 									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
 										<span class="glyphicons circle_exclamation_mark"><i></i></span>
-										<span class="txt"><span data-bind="text: outInvoice"></span> Open</span>
+										<span class="txt"><span data-bind="text: outInvoice"></span> Open Invoice</span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -44213,6 +44216,7 @@
 		saveRecurring 		: false,
 		showConfirm   		: false,
 		statusSrc 			: "",
+		enableRef 	 		: false,
 		total 				: 0,
 		original_total 		: 0,
 		user_id				: banhji.source.user_id,
@@ -44721,12 +44725,19 @@
 		loadReference 		: function(){			
 			var obj = this.get("obj");
 
-			this.referenceDS.filter([
-				{ field: "contact_id", value: obj.contact_id },
-				{ field: "status", value: 0 },
-				{ field: "type", value: "Purchase_Order" },
-				{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-			]);				
+			if(obj.contact_id>0){
+				this.set("enableRef", true);
+
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status", value: 0 },
+					{ field: "type", value: "Purchase_Order" },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);
+			}else{
+				this.set("enableRef", false);
+				obj.set("reference_id", "");
+			}				
 		},
 		referenceChanges 	: function(){
 			var self = this, obj = this.get("obj");
@@ -45025,6 +45036,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		enableRef 	 		: false,
 		total				: 0,			
 		uer_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
@@ -45516,12 +45528,19 @@
 		loadReference 		: function(){
 			var obj = this.get("obj");
 
-			this.referenceDS.filter([
-				{ field: "contact_id", value: obj.contact_id },
-				{ field: "status", value: 0 },
-				{ field: "type", value: "Purchase_Order" },
-				{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-			]);
+			if(obj.contact_id>0){
+				this.set("enableRef", false);
+
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status", value: 0 },
+					{ field: "type", value: "Purchase_Order" },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);
+			}else{
+				this.set("enableRef", false);
+				obj.set("reference_id", "");
+			}
 		},
 		referenceChanges 	: function(){
 			var obj = this.get("obj");
@@ -45879,6 +45898,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		enableRef 	 		: false,
 		isCash 				: true,
 		showDiscount 		: false,
 		showAdditionalCost 	: false,
@@ -46978,22 +46998,24 @@
 			this.journalLineDS.sync();
 		},
 		//Reference					
-		loadReference 		: function(e){			
+		loadReference 		: function(){			
 			var obj = this.get("obj");
 
-			if(obj.reference_type){
-				this.set("bolReference", true);
+			if(obj.contact_id>0){
+				this.set("enableRef", true);
 
 				this.referenceDS.filter([
 					{ field: "contact_id", value: obj.contact_id },
 					{ field: "status", value: 0 },
-					{ field: "type", value: obj.reference_type }
-				]);				
+					{ field: "type", operator:"where_in", value: ["Purchase_Order","GRN"] },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);		
 			}else{
-				this.set("bolReference", false);
+				this.set("enableRef", false);
+				obj.set("reference_id", "");
 			}							
 		},
-		referenceChanges 	: function(e){
+		referenceChanges 	: function(){
 			var self = this, obj = this.get("obj");
 			
 			if(obj.reference_id>0){
