@@ -36950,17 +36950,17 @@
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td valign="top">
-			        	<h2>CASH MODULE</h2>
+			        	<h2>WATER MODULE</h2>
 			        	<p>
 			        		In here, you can manage your cash information, transactions and reports. Cashflow forecast and other treasury management is coming soon..
 			        	</p>
-			        	<!-- <div class="supplier-icon">
+			        	<div class="supplier-icon">
 					       	<div class="span4">
-						       	<a href="#/employee" class="center">
-						       		<img title="Add Employee" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/employees.ico" />
+						       	<a href="#/customer" class="center">
+						       		<img title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
 						       	</a>
 						       </div>
-						    <div class="span4">
+						   <!--  <div class="span4">
 						       	<a href="#/item" class="center">
 						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
 						       	</a>
@@ -36969,53 +36969,53 @@
 						       	<a href="#/item_service" class="center">
 						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
 						       	</a>
-						    </div>
-						</div> -->
+						    </div> -->
+						</div>
 			        </td>
 			 	</tr>
 			</table>
 			<table class="table table-borderless table-condensed table-vertical-center ">
 				<tr>
 					<td class="center">
-						<a href="#/cash_transaction">
+						<a href="#/wReading">
 							<img title="Add Cash Transaction" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />
-							C.Transaction
+							T.Reading
 						</a>						
 					</td>
 					<td class="center">
-						<a href="#/cash_receipt">
+						<a href="#/wIR_reader">
 							<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
-							C.Receipt
+							IR.Reader
 						</a>
 					</td>
 					<td class="center">
-						<a href="#/cash_payment">
+						<a href="#/wReading_book">
 							<img title="Add Cash Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_payment.png" width="110" height="200" />
-							C.Payment
+							R.Booking
 						</a>						
 					</td>					
 				</tr>
 				<tr>
 					<td class="center">
-						<a href="#/cash_advance">
+						<a href="#/wInvoice">
 							<img title="Add Cash Advance" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_advance.png" width="110" height="200" />
-							C.Advance
+							Cr.Invoice
 						</a>
 					</td>
 					<td class="center">						
-						<a href="#/expense">
+						<a href="#/wPrint_center">
 							<img title="Add Expense" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/expense.png" width="110" height="200" />
-							Expense
+							Pr.Inovice
 						</a>						
 					</td>
 					<td class="center">						
 						<a href="#/currency_rate">
 							<img title="Add Exchange Rate Record" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/currency_record.png" width="110" height="200" />
-							Ex.Rate Record
+							R.Payment
 						</a>						
 					</td>										
 				</tr>							
-			</table>
+			</table>                
 
 		</div>
 

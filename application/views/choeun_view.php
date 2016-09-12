@@ -60895,7 +60895,7 @@
 
 	/*************************
 	*	Inventory Section   *
-	**************************/
+	**************************/ 
 	banhji.itemDashBoard = kendo.observable({
 		lang 				: langVM,
 		summaryDS 			: dataStore(apiUrl + "contact_reports/summary"),
