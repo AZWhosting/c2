@@ -57246,6 +57246,7 @@
 			case 24: Active = banhji.view.invoiceForm2; break;
 			case 25: Active = banhji.view.invoiceForm23; break;
 			case 26: Active = banhji.view.invoiceForm24; break;
+			case 27: Active = banhji.view.invoiceForm19; break;
 		}
 		banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 	};

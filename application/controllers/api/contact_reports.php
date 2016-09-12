@@ -1199,7 +1199,7 @@ class Contact_reports extends REST_Controller {
 		}
 
 		//AP			
-		$ap->where_in("type", array("Cash_Purchase", "Credit_Purchase"));
+		$ap->where("type", "Credit_Purchase");
 		$ap->where_in("status", array(0,2));
 		$ap->where("is_recurring", $is_recurring);		
 		$ap->where("deleted", $deleted);		
