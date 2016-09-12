@@ -437,7 +437,7 @@
 							style="width: 100px; height: 100px;">
 						<div class="media-body">
 							<h5>#=name#</h5>
-							<span>#=sku#</span>
+							<span>#=number#</span>
 							<br>
 							<span>#=on_hand#</span>					
 						</div>
@@ -15814,7 +15814,7 @@
 					              						   disabled: obj.is_pattern" 
 					              				placeholder="eg. AB" required data-required-msg="required"
 					              				style="width: 55px;" />
-					              		-
+					              		-					              		
 					              		<input id="txtNumber" name="txtNumber" class="k-textbox"					              			   					                   
 							                   data-bind="value: obj.number, 
 							                   			  disabled: obj.is_pattern, 
@@ -28563,7 +28563,7 @@
 							        <!-- Tabs -->
 							        <ul class="pull-right">
 							            <li style="font-size: large; color: black; font-weight: bold;">
-							            	<span data-bind="text: obj.sku"></span>
+							            	<span data-bind="text: obj.number"></span>
 							            	-
 							            	<span data-bind="text: obj.name"></span>
 							            </li>
@@ -28760,7 +28760,7 @@
 		<td>
 			<div class="media-body">
 				<span class="strong">
-					#=sku# #=name#				
+					#=number# #=name#				
 				</span>
 			</div>
 		</td>
@@ -28798,8 +28798,8 @@
 									<div class="control-group">										
 										<label for="ddlCategory"><span data-bind="text: lang.lang.category"></span> <span style="color:red">*</span></label>										
 										<input id="ddlCategory" id="ddlCategory"
-											   data-option-label="Select Category..."
 											   data-role="dropdownlist"
+											   data-option-label="Select Category..."
 											   data-header-template="item-category-header-tmpl"
 							                   data-value-primitive="true"
 							                   data-text-field="name"
@@ -28807,7 +28807,7 @@
 							                   data-bind="value: obj.category_id,
 							                   			  disabled: obj.is_pattern, 
 							                              source: categoryDS,
-							                              events: {change: loadPattern}"
+							                              events: {change: categoryChanges}"
 							                   required data-required-msg="required" style="width: 100%;" />
 									</div>
 									<!-- // Group END -->
@@ -28835,15 +28835,24 @@
 							</div>
 							
 							<div class="row-fluid">
-								<div class="span6">	
+								<div class="span6">										
 									<!-- Group -->
 									<div class="control-group">							
 										<label for="txtNumber">Number<span style="color:red">*</span></label>
+				              			<br>
+				              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
+					              				data-bind="value: obj.abbr, 
+					              						   disabled: obj.is_pattern" 
+					              				placeholder="eg. AB" required data-required-msg="required"
+					              				style="width: 55px;" />
+				              			-
 				              			<input id="txtNumber" name="txtNumber" class="k-textbox"
-					              				data-bind="value: obj.sku, disabled: obj.is_pattern" 
-					              				placeholder="e.g. ID0001" 
+					              				data-bind="value: obj.number, 
+					              							disabled: obj.is_pattern,
+					              							events:{change: checkExistingNumber}" 
+					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
-					              				style="width: 100%;" />
+					              				style="width: 128px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
@@ -28854,7 +28863,7 @@
 									<div class="control-group">
 										<label for="txtName">Name <span style="color:red">*</span></label>
 					              		<input id="txtName" name="txtName" class="k-textbox" data-bind="value: obj.name, disabled: obj.is_pattern" 
-							              		placeholder="item name..." required data-required-msg="required"
+							              		placeholder="Item name..." required data-required-msg="required"
 							              		style="width: 100%;" />
 									</div>
 									<!-- // Group END -->	
@@ -28862,17 +28871,21 @@
 							</div>
 
 							<div class="row-fluid">
-								<div class="span6">																					
+								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
-										<label for="txtOrderPoint"><span data-bind="text: lang.lang.reorder_point"></span></label>
-										<input data-role="numerictextbox"
-						                   data-format="n0"
-						                   data-min="0"						                   
-						                   data-bind="value: obj.order_point"
-						                   style="width: 100%">
+										<label for="ddlCurrency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>							            
+							            <input id="ddlCurrency" name="ddlCurrency"							            	 
+				              				data-role="dropdownlist"
+				              				data-option-label="(--- Select ---)"
+				              				data-template="currency-list-tmpl"
+				              				data-value-primitive="true"
+						            		data-text-field="code"
+			           						data-value-field="locale"			           						 
+						            		data-bind="source: currencyDS, value: obj.locale"						            		
+						            		required data-required-msg="required" style="width: 100%;" />						            		
 									</div>																		
-									<!-- // Group END -->														
+									<!-- // Group END -->								
 								</div>
 
 								<div class="span6">
@@ -28894,52 +28907,7 @@
 						</div>
 						<div class="span6">
 							<div class="row-fluid">
-								<div class="span6">														
-									<!-- Group -->
-									<div class="control-group">								
-										<label for="txtCost"><span data-bind="text: lang.lang.cost"></span></label>
-							            <input data-role="numerictextbox"
-						                   data-format="n0"
-						                   data-min="0"						                   
-						                   data-bind="value: obj.cost"
-						                   style="width: 100%">
-									</div>																		
-									<!-- // Group END -->
-								</div>
-
-								<div class="span6">	
-									<!-- Group -->
-									<div class="control-group">								
-										<label for="ddlCurrency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>							            
-							            <input id="ddlCurrency" name="ddlCurrency"							            	 
-				              				data-role="dropdownlist"
-				              				data-option-label="(--- Select ---)"
-				              				data-template="currency-list-tmpl"
-				              				data-value-primitive="true"
-						            		data-text-field="code"
-			           						data-value-field="locale"			           						 
-						            		data-bind="source: currencyDS, value: obj.locale"						            		
-						            		required data-required-msg="required" style="width: 100%;" />						            		
-									</div>																		
-									<!-- // Group END -->									
-								</div>
-							</div>
-
-							<div class="row-fluid">
-								<div class="span6">														
-									<!-- Group -->
-									<div class="control-group">								
-										<label for="txtOnhand"><span data-bind="text: lang.lang.quantity"></span></label>
-							            <input data-role="numerictextbox"
-						                   data-format="n0"
-						                   data-min="0"						                   
-						                   data-bind="value: obj.on_hand"
-						                   style="width: 100%">
-									</div>																		
-									<!-- // Group END -->
-								</div>
-
-								<div class="span6">	
+								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="ddlMeasurement"><span data-bind="text: lang.lang.unit_measure"></span> <span style="color:red">*</span></label>
@@ -28954,6 +28922,52 @@
 						                              source: measurementDS"
 						                   required data-required-msg="required"
 						                   style="width: 100%;" />
+									</div>																		
+									<!-- // Group END -->
+								</div>
+
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtCost"><span data-bind="text: lang.lang.cost"></span></label>
+							            <input id="txtCost" name="txtCost" 
+							               data-role="numerictextbox"
+							               data-spinners="false"
+						                   data-format="n0"
+						                   data-min="0"						                   
+						                   data-bind="value: obj.cost"
+						                   style="width: 100%">
+									</div>																		
+									<!-- // Group END -->			
+								</div>
+							</div>
+
+							<div class="row-fluid">
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtOrderPoint"><span data-bind="text: lang.lang.reorder_point"></span></label>
+										<input data-role="numerictextbox"
+										   data-spinners="false"
+						                   data-format="n0"
+						                   data-min="0"						                   
+						                   data-bind="value: obj.order_point"
+						                   style="width: 100%">
+									</div>																		
+									<!-- // Group END -->
+								</div>
+
+								<div class="span6">	
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtPrice"><span data-bind="text: lang.lang.price"></span></label>
+							            <input id="txtPrice" name="txtPrice" 
+							               data-role="numerictextbox"
+							               data-spinners="false"
+						                   data-format="n0"
+						                   data-min="0"						                   
+						                   data-bind="value: obj.price"
+						                   style="width: 100%">
 									</div>																		
 									<!-- // Group END -->											
 								</div>
@@ -28984,12 +28998,9 @@
 						            <li class="span2 glyphicons usd">
 						            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.accounting"></span></span></a>
 						            </li>						            
-						            <li class="span2 glyphicons old_man">
-						            	<a href="#tab3" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.vendor"></span></span></a>
-						            </li>
-						            <li class="span2 glyphicons user">
-						            	<a href="#tab4" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.customer"></span></span></a>
-						            </li>						            					            						            					            
+						            <li class="span2 glyphicons barcode">
+						            	<a href="#tab3" data-toggle="tab"><i></i> Supplier/Customer Codes</a>
+						            </li>					            					            						            					            
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
@@ -28999,7 +29010,6 @@
 						        <div class="tab-pane active" id="tab1">
 
 						        	<div class="row-fluid">
-
 										<div class="span3">														
 											<!-- Group -->
 											<div class="control-group">							
@@ -29027,20 +29037,8 @@
 							              				style="width: 100%;" />					              		
 											</div>
 											<!-- // Group END -->
-										</div>
-
-										<div class="span3">
-											<!-- Group -->
-											<div class="control-group">
-									            <input type="checkbox" data-bind="checked: obj.favorite" />	<span data-bind="text: lang.lang.favorite"></span>
-											</div>																		
-											<!-- // Group END -->
 										</div>										
-
-						        	</div>						        	
-
-							        <div class="row-fluid">										
-
+							        
 										<div class="span3">														
 											<!-- Group -->
 											<div class="control-group">							
@@ -29063,32 +29061,17 @@
 							              				style="width: 100%;" />					              		
 											</div>
 											<!-- // Group END -->
-										</div>
+										</div>												
+							        </div>
 
-										<div class="span3">														
+							        <div class="row-fluid">
+							        	<div class="span3">
 											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtIMEI"><span data-bind="text: lang.lang.imei"></span></label>
-						              			<input id="txtIMEI" name="txtIMEI" class="k-textbox"
-							              				data-bind="value: obj.IMIE" 
-							              				placeholder="e.g. IMEI0001"
-							              				style="width: 100%;" />					              		
-											</div>
+											<div class="control-group">
+									            <input type="checkbox" data-bind="checked: obj.favorite" />	<span data-bind="text: lang.lang.favorite"></span>
+											</div>																		
 											<!-- // Group END -->
 										</div>
-
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtSerialNumber"><span data-bind="text: lang.lang.serial_number"></span></label>
-						              			<input id="txtSerialNumber" name="txtSerialNumber" class="k-textbox"
-							              				data-bind="value: obj.serial_number" 
-							              				placeholder="e.g. 0001"
-							              				style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>
-												
 							        </div>							       
 
 					        	</div>
@@ -29143,51 +29126,50 @@
 					        	</div>
 						        <!-- //ACCOUNTING INFO END -->						        
 
-						        <!-- //VENDOR -->
+						        <!-- //VENDOR/CUSTOMER CODE -->
 						        <div class="tab-pane" id="tab3">
-						        						       
-						        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemVendor"><i></i> <span data-bind="text: lang.lang.new_vendor_item"></span></span>
+
+						        	<div class="row">
+						        		<div class="span6">
+						        			<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemVendor"><i></i> <span data-bind="text: lang.lang.new_vendor_item"></span></span>
 								        	
-						        	<table class="table table-bordered table-white">
-								        <thead>
-								            <tr>
-								                <th><span data-bind="text: lang.lang.name"></span></th>
-								                <th><span data-bind="text: lang.lang.item_code"></span></th>								                
-								                <th width="20px"></th>										               
-								            </tr>
-								        </thead>
-								        <tbody data-role="listview"										        		
-								        		data-auto-bind="false"					        						        		 
-								        		data-template="item-vendor-row-tmpl" 
-								        		data-bind="source: itemVendorDS">
-								        </tbody>										        						        
-								    </table>
+								        	<table class="table table-bordered table-white">
+										        <thead>
+										            <tr>
+										                <th><span data-bind="text: lang.lang.name"></span></th>
+										                <th>Code</th>								                
+										                <th width="20px"></th>										               
+										            </tr>
+										        </thead>
+										        <tbody data-role="listview"										        		
+										        		data-auto-bind="false"					        						        		 
+										        		data-template="item-vendor-row-tmpl" 
+										        		data-bind="source: itemVendorDS">
+										        </tbody>										        						        
+										    </table>
+						        		</div>
+						        		<div class="span6">
+						        			<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemCustomer"><i></i> <span data-bind="text: lang.lang.new_customer_item"></span></span>
+								        	
+								        	<table class="table table-bordered table-white">
+										        <thead>
+										            <tr>
+										                <th><span data-bind="text: lang.lang.name"></span></th>
+										                <th>Code</th>								                
+										                <th width="20px"></th>										               
+										            </tr>
+										        </thead>
+										        <tbody data-role="listview"										        		
+										        		data-auto-bind="false"										        						        		 
+										        		data-template="item-customer-row-tmpl" 
+										        		data-bind="source: itemCustomerDS">
+										        </tbody>										        						        
+										    </table>
+						        		</div>
+						        	</div>
 
 					        	</div>
-						        <!-- //VENDOR END -->
-
-						        <!-- //CUSTOMER -->
-						        <div class="tab-pane" id="tab4">
-						        					       
-						        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemCustomer"><i></i> <span data-bind="text: lang.lang.new_customer_item"></span></span>
-								        	
-						        	<table class="table table-bordered table-white">
-								        <thead>
-								            <tr>
-								                <th><span data-bind="text: lang.lang.name"></span></th>
-								                <th><span data-bind="text: lang.lang.item_code"></span></th>								                
-								                <th width="20px"></th>										               
-								            </tr>
-								        </thead>
-								        <tbody data-role="listview"										        		
-								        		data-auto-bind="false"										        						        		 
-								        		data-template="item-customer-row-tmpl" 
-								        		data-bind="source: itemCustomerDS">
-								        </tbody>										        						        
-								    </table>
-
-					        	</div>
-						        <!-- //CUSTOMER END -->
+						        <!-- //VENDOR/CUSTOMER CODE END -->
 						    </div>
 						</div>
 					</div>					
@@ -29309,7 +29291,7 @@
 										<div class="control-group">							
 											<label for="txtSKU"><span data-bind="text: lang.lang.code"></span> <span style="color:red">*</span></label>
 					              			<input id="txtSKU" name="txtSKU" class="k-textbox"
-						              				data-bind="value: obj.sku" 
+						              				data-bind="value: obj.number" 
 						              				placeholder="e.g. ID0001" 
 						              				required data-required-msg="required"
 						              				style="width: 100%;" />
@@ -29427,7 +29409,7 @@
 										<div class="control-group">							
 											<label for="txtSKU"><span data-bind="text: lang.lang.code"></span> <span style="color:red">*</span></label>
 					              			<input id="txtSKU" name="txtSKU" class="k-textbox"
-						              				data-bind="value: obj.sku" 
+						              				data-bind="value: obj.number" 
 						              				placeholder="e.g. ID0001" 
 						              				required data-required-msg="required"
 						              				style="width: 100%;" />
@@ -29556,7 +29538,7 @@
 			#:banhji.itemAssembly.assemblyDS.indexOf(data)+1#
 		</td>		
 		<td>
-			<span data-bind="text: assembly[0].sku"></span>
+			<span data-bind="text: assembly[0].number"></span>
 			<span data-bind="text: assembly[0].name"></span>
 		</td>
 		<td>
@@ -29656,7 +29638,7 @@
 									<div class="control-group">							
 										<label for="txtSKU">Code <span style="color:red">*</span></label>
 				              			<input id="txtSKU" name="txtSKU" class="k-textbox"
-					              				data-bind="value: obj.sku, disabled: obj.is_pattern" 
+					              				data-bind="value: obj.number, disabled: obj.is_pattern" 
 					              				placeholder="e.g. ID0001" 
 					              				required data-required-msg="required"
 					              				style="width: 100%;" />
@@ -29996,7 +29978,7 @@
 									<div class="control-group">							
 										<label for="txtNumber"><span data-bind="text: lang.lang.number"></span><span style="color:red">*</span></label>
 				              			<input id="txtNumber" name="txtNumber" class="k-textbox"
-					              				data-bind="value: obj.sku, disabled: obj.is_pattern" 
+					              				data-bind="value: obj.number, disabled: obj.is_pattern" 
 					              				placeholder="e.g. ID0001" 
 					              				required data-required-msg="required"
 					              				style="width: 100%;" />
@@ -30408,7 +30390,7 @@
 
 			    		<!-- Widget Heading -->
 						<div class="widget-head" style="font-size: large; font-weight: bold;">
-							<span data-bind="text: obj.sku"></span>
+							<span data-bind="text: obj.number"></span>
 							-
 							<span data-bind="text: obj.name"></span>
 						</div>
@@ -30618,7 +30600,7 @@
 				                	<i></i>
 				                	<h4 data-bind="text: item.name"></h4>
 
-					                Code៖ <span data-bind="text: item.sku"></span> <br>
+					                Code៖ <span data-bind="text: item.number"></span> <br>
 					                Description៖​ <span data-bind="text: item.description"></span> <br>
 					                Quantity៖ <span data-bind="text: item.description"></span> <br>					                
 					                Weighted Average Cost៖ <span data-bind="text: item.cost"></span>
@@ -32813,7 +32795,7 @@
 
 <script id="inventory-position-summary-row-template" type="text/x-kendo-tmpl">
     <tr data-uid="#: uid #">
-        <td>#=sku#</td>
+        <td>#=number#</td>
         <td>#=name#</td>
         <td>#=item_group.length>0?item_group[0].name:''#</td>
         <td>#=category.length>0?category[0].name:''#</td>        
@@ -32829,7 +32811,7 @@
     <tr data-uid="#: uid #">
         <td>#=kendo.toString(invoice.length>0?invoice[0].issued_date:"", "dd-MM-yyyy")#</td>
         <td><a href="\#/#=invoice.length>0?invoice[0].type:''#/#=id#"><i></i> #=invoice.length>0?invoice[0].number:''#</a></td>        
-        <td>#=item[0].sku# #=item[0].name#</td>               
+        <td>#=item[0].number# #=item[0].name#</td>               
         <td align="right">#=unit#</td>
         <td align="right">#=kendo.toString(price, "c", banhji.institute.locale)#</td>
         <td align="right">#=on_hand#</td>         
@@ -32890,7 +32872,7 @@
 		                fileName: 'inventory_sale_by_item_analysis.xlsx'
 		             }"		             		             	                 	                 
 	                 data-columns="[
-	                    { 'title': 'SKU' },
+	                    { 'title': 'number' },
 	                    { 'title': 'Item' },	                    
 	                    { 'field': 'item_group_id', 'title': 'Group' },
 	                    { 'field': 'category_id','title': 'Category' },
@@ -32907,7 +32889,7 @@
 </script>
 <script id="inventory-sale-by-item-row-template" type="text/x-kendo-tmpl">
     <tr data-uid="#: uid #">
-        <td>#=sku#</td>          
+        <td>#=number#</td>          
         <td>#=name#</td>
         <td>#=item_group.length>0?item_group[0].name:''#</td>
         <td>#=category.length>0?category[0].name:''#</td>       
@@ -32988,7 +32970,7 @@
 		<table class="table table-bordered">
 	        <thead>
 	            <tr>
-	                <th>SKU</th>
+	                <th>number</th>
 	                <th>Items</th>
 	                <th>Description</th>
 	                <th>Qty</th>	                
@@ -33007,7 +32989,7 @@
 </script>
 <script id="inventoryList-template" type="text/x-kendo-template">
     <tr>
-    	<td>#=sku#</td>
+    	<td>#=number#</td>
     	<td>#=name#</td>
     	<td>#=description#</td>
     	<td>
@@ -33149,7 +33131,7 @@
 		                fileName: 'inventory_movement_summary.xlsx'
 		             }"		             		             	                 	                 
 	                 data-columns="[
-	                 	{ 'field': 'sku', 'title': 'SKU' },	                    
+	                 	{ 'field': 'number', 'title': 'number' },	                    
 	                    { 'field': 'name', 'title': 'Item' },
 	                    { 'field': 'item_group_id', 'title': 'Group' },
 	                    { 'field': 'category_id', 'title': 'Category' },
@@ -33166,7 +33148,7 @@
 </script>
 <script id="inventory-movement-summary-row-template" type="text/x-kendo-tmpl">
     <tr data-uid="#: uid #">        
-        <td>#=sku#</td>        
+        <td>#=number#</td>        
         <td>#=name#</td>
         <td>#=item_group.length>0?item_group[0].name:''#</td>
         <td>#=category.length>0?category[0].name:''#</td>         
@@ -33234,7 +33216,7 @@
 	                 	{ 'field': 'invoice[0].issued_date', 'title': 'Date' },
 	                 	{ 'field': 'invoice[0].type', 'title': 'Type' },
 	                 	{ 'field': 'invoice[0].number', 'title': 'Reference' },	                 	                 
-	                    { 'field': 'item[0].sku', 'title': 'Item' },	                    	                                  
+	                    { 'field': 'item[0].number', 'title': 'Item' },	                    	                                  
 	                    { 'field': 'unit', 'title': 'Quantity' },
 	                    { 'field': 'cost', 'title': 'Cost' },
 	                    { 'field': 'price', 'title': 'Price' },              
@@ -33249,7 +33231,7 @@
         <td>#=kendo.toString(invoice.length>0?new Date(invoice[0].issued_date):'', "dd-MM-yyyy")#</td>
         <td>#=invoice.length>0?invoice[0].type:''#</td>        
         <td><a href="\#/#=invoice.length>0?invoice[0].type:''#/#=id#"><i></i> #=invoice.length>0?invoice[0].number:''#</a></td>        
-        <td>#=item[0].sku# #=item[0].name#</td>             
+        <td>#=item[0].number# #=item[0].name#</td>             
         <td align="right">#=kendo.toString(unit * movement, "n0")#</td>
         <td align="right">
         	#if(invoice.length>0){#	        	
@@ -34958,7 +34940,7 @@
     </strong>
 </script>
 <script id="item-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=sku# #=name#</span>
+	<span>#=number# #=name#</span>
 	<span class="pull-right">#=on_hand#</span>	
 </script>
 <script id="item-group-header-tmpl" type="text/x-kendo-tmpl">
@@ -36820,7 +36802,7 @@
 
 				this.itemDS.query({
 					filter:[
-						{ field:"sku", operator:"like", value: searchText },					
+						{ field:"number", operator:"like", value: searchText },					
 						{ field:"name", operator:"or_like", value: searchText }
 					],
 					page:1,
@@ -37373,7 +37355,8 @@
 			serverPaging: true,
 			page:1,
 			pageSize: 100
-		}),		
+		}),
+		categoryDS 				: dataStore(apiUrl + "categories"),		
 		//Tax Item
 		taxItemDS				: new kendo.data.DataSource({
 			transport: {
@@ -60566,7 +60549,7 @@
 
 			if(searchText){
 				para.push(      				
-      				{ field: "sku", operator: "like", value: searchText },
+      				{ field: "number", operator: "like", value: searchText },
       				{ field: "name", operator: "or_like", value: searchText }
       			);
 			}        	
@@ -60796,10 +60779,13 @@
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "transactions/line"),
-    	categoryDS 				: dataStore(apiUrl + "categories"),
+    	categoryDS 				: banhji.source.categoryDS,
     	itemGroupDS 			: dataStore(apiUrl + "items/group"),
     	brandDS 	 			: dataStore(apiUrl + "brands"),    	   	   	
     	measurementDS			: dataStore(apiUrl + "measurements"),
+    	numberDS 				: dataStore(apiUrl + "items"),
+    	existingDS 				: dataStore(apiUrl + "items"),
+    	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
     	vendorDS 	 			: banhji.source.supplierDS,
     	customerDS 	 			: banhji.source.customerDS,
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
@@ -60809,10 +60795,13 @@
     	cogsAccountDS 			: banhji.source.cogsAccountDS,
     	inventoryAccountDS 		: banhji.source.inventoryAccountDS,
     	statusList 				: banhji.source.statusList,
-        vendorList 				: [],
-        customerList 			: [],
+    	confirmMessage 			: banhji.source.confirmMessage,
     	obj 	 				: null,
-    	isEdit 					: false,    	
+    	isEdit 					: false,
+    	saveClose 				: false,
+		showConfirm 			: false,
+		originalNo 				: "",
+		isDuplicateNumber 		: false,    	
     	pageLoad 				: function(id, is_pattern){			
 			if(id){
 				this.set("isEdit", true);						
@@ -60822,52 +60811,6 @@
 					this.addEmpty();
 				}								
 			}  																							
-		},
-		//Contact Items
-    	loadVendor 				: function(){
-    		var self = this;
-
-    		this.vendorDS.query({    			
-				filter: { field:"parent_id", operator:"where_related", model:"contact_type", value:2 }
-			}).then(function(e){
-				var view = self.vendorDS.view();
-				
-				$.each(view, function(index, value){
-					self.vendorList.push(value);
-				});		    	
-			});
-    	},
-    	loadCustomer 			: function(){
-    		var self = this;
-
-    		this.customerDS.query({    			
-				filter: { field:"parent_id", operator:"where_related", model:"contact_type", value:1 }
-			}).then(function(e){
-				var view = self.customerDS.view();
-				
-				$.each(view, function(index, value){
-					self.customerList.push(value);
-				});		    	
-			});
-    	},
-    	loadItemContact			: function(id){
-			this.itemVendorDS.query({
-				filter: [ 
-					{ "field":"item_id", value: id },
-					{ "field":"type", value: "vendor" }
-				],
-				page: 1,
-				pageSize: 100
-			});
-
-			this.itemCustomerDS.query({
-				filter: [ 
-					{ "field":"item_id", value: id },
-					{ "field":"type", value: "customer" }
-				],
-				page: 1,
-				pageSize: 100
-			});
 		},
 		//Pattern
 		setPattern 				: function(category_id){
@@ -60912,147 +60855,102 @@
 				}
 			});
 		},
-		//Obj
-		loadObj 				: function(id, is_pattern){
-    		var self = this, para = [];
+		//Item Price
+		addItemPrice 			: function (id) {
+			var obj = this.get("obj");
 
-			para.push({ field:"id", value: id });
-
-			if(is_pattern){
-				para.push({ field:"is_pattern", value: 1 });
-			}
-
-    		this.dataSource.query({    			
-				filter: para,
-			}).then(function(e){
-				var view = self.dataSource.view();
-						    	
-		    	self.set("obj", view[0]);
+      		this.itemPriceDS.add({      			      			
+      			item_id			: id,
+      			measurement_id 	: obj.measurement_id,
+      			price 			: obj.price,
+      			unit_value		: 0,
+      			locale 			: obj.locale
 			});
-    	},    	   	
-      	addEmpty 				: function(){      		
-      		this.dataSource.data([]);
-      		this.itemVendorDS.data([]);
-	      	this.itemCustomerDS.data([]);
 
-	      	this.set("isEdit", false);
-      		this.set("obj", null);
-
-      		this.dataSource.insert(0, {
-      			company_id 				: 0,
-      			contact_id 				: "",
-      			currency_id 			: 0,
-      			category_id 			: 0,
-      			item_type_id 			: 1,      			      			
-      			category_id 			: 0,
-      			item_group_id 			: 0,
-      			item_sub_group_id 		: 0,
-      			brand_id 				: 0,
-      			measurement_id			: 0,
-      			main_id 				: 0,
-      			sku 					: "",
-      			international_code 		: "",
-      			IMEI 					: "",
-      			serial_number 			: "",
-      			supplier_code 			: "",
-      			color_code 				: "",
-      			name 					: "",
-      			description				: "",
-      			measurements 			: "",
-      			catalogs 				: [],
-      			cost 					: 0,
-      			price 					: 0,
-      			amount 					: 0,
-      			rate 					: 1,
-      			locale 					: banhji.locale,
-      			on_hand					: 0,      			      			     			
-      			order_point 			: 0,
-      			income_account_id 		: 0,
-      			cogs_account_id  		: 0,
-      			inventory_account_id 	: 0,
-      			deposit_account_id 		: 0,
-      			transaction_account_id 	: 0,
-      			preferred_vendor_id 	: 0,
-      			image_url 				: "",      			
-      			favorite 				: false,
-      			is_catalog 				: 0,
-      			is_assemble 			: 0,
-      			is_pattern 				: 0,
-      			status 					: 1,
-      			deleted 				: 0
-			});      		
-
-			var obj = this.dataSource.at(0);
-      						
-			this.set("obj", obj);			
+			this.itemPriceDS.sync();
       	},
-      	objSync 				: function(){
-	    	var dfd = $.Deferred();	        
-
-	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
-		    });
-
-		    return dfd;	    		    	
-	    },
-      	cancel 					: function(e){
-      		e.preventDefault();
-
-      		this.dataSource.cancelChanges();
-      		window.history.back();      		
-      	},      	
-      	save 					: function(){
-      		var self = this;
-
-      		if(this.get("isEdit")){
-      			this.dataSource.sync();
-      			this.itemVendorDS.sync();
-      			this.itemCustomerDS.sync();
-      		}else{
-	      		this.objSync().then(function(data){
-	      			$.each(self.itemVendorDS.data(), function(index, value){
-	      				value.set("item_id", data[0].id);
-	      			});
-
-	      			$.each(self.itemCustomerDS.data(), function(index, value){
-	      				value.set("item_id", data[0].id);
-	      			});
-
-	      			if(data[0].is_pattern){
-						self.savePattern(data[0].category_id, data[0].id);
-					}
-
-	      			self.itemVendorDS.sync();
-	      			self.itemCustomerDS.sync();
-	      		}).then(function(){	      			
-	      			self.addEmpty();
-	      		});
-      		}      		      		
-      	},      	
-      	delete 					: function(){			
-	    	var self = this,
-			obj = this.get("obj");
-
-			if (confirm("Are you sure, you want to delete it?")) {				
-				this.deleteDS.query({
-				  	filter: { field: "item_id", value: obj.id },
-				  	page: 1,
-				  	pageSize: 1
-				}).then(function() {
-					var view = self.deleteDS.view();
-
+      	//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj"),
+			originalNo = this.get("originalNo");			
+			
+			if(obj.number!=="" && obj.number!==originalNo){
+				this.existingDS.query({
+					filter: [
+						{ field:"number", value: obj.number },
+						{ field:"contact_type_id", value: obj.contact_type_id }
+					],
+					page: 1,
+					pageSize: 100
+				}).then(function(e){
+					var view = self.existingDS.view();
+					
 					if(view.length>0){
-						alert("Sorry, you can not delete it because it is using now.");
+				 		self.set("isDuplicateNumber", true);						
 					}else{
-						obj.set("deleted",1);
-				        self.save();
-
-				        window.history.back();
+						self.set("isDuplicateNumber", false);
 					}
-				});
-	    	}	    	
-	    },
+				});							
+			}else{
+				this.set("isDuplicateNumber", false);
+			}			
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj");
+
+			this.numberDS.query({
+				filter:[
+					{ field:"category_id", value:obj.category_id }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.numberDS.view();
+
+				if(view.length>0){
+					var lastNo = kendo.parseInt(view[0].number);
+					if(lastNo){
+						lastNo++;
+						obj.set("number",kendo.toString(lastNo, "00000"));
+					}
+				}
+			});
+		},
+		categoryChanges 		: function(){
+			var obj = this.get("obj");
+
+			if(obj.category_id){
+				var category = this.categoryDS.get(obj.category_id);
+				obj.set("abbr", category.abbr);
+
+				this.loadPattern();
+				this.generateNumber();
+			}
+		},
+      	//Item Contact
+		loadItemContact			: function(){
+    		var obj = this.get("obj");
+
+			this.itemVendorDS.query({
+				filter: [ 
+					{ "field":"item_id", value: obj.id },
+					{ "field":"type", value: "vendor" }
+				],
+				page: 1,
+				pageSize: 100
+			});
+
+			this.itemCustomerDS.query({
+				filter: [ 
+					{ "field":"item_id", value: obj.id },
+					{ "field":"type", value: "customer" }
+				],
+				page: 1,
+				pageSize: 100
+			});
+		},
 	    addEmptyItemVendor 		: function(){
 			var item_id = 0;
 			if(this.get("isEdit")){
@@ -61094,6 +60992,197 @@
 
 				this.itemCustomerDS.remove(obj);
 			}
+		},
+		//Obj
+		loadObj 				: function(id, is_pattern){
+    		var self = this, para = [];
+
+			para.push({ field:"id", value: id });
+
+			if(is_pattern){
+				para.push({ field:"is_pattern", value: 1 });
+			}
+
+    		this.dataSource.query({    			
+				filter: para,
+			}).then(function(e){
+				var view = self.dataSource.view();
+						    	
+		    	self.set("obj", view[0]);
+		    	self.set("originalNo", view[0].number);
+		    	self.loadItemContact();
+			});
+    	},    	   	
+      	addEmpty 				: function(){
+      		var self = this;
+
+      		this.dataSource.data([]);
+      		this.itemVendorDS.data([]);
+	      	this.itemCustomerDS.data([]);
+
+	      	this.set("isEdit", false);
+      		this.set("obj", null);
+
+      		this.patternDS.query({
+      			filter:[
+      				{ field:"id", value:1 },
+      				{ field:"is_pattern", value:1 }
+      			],
+      			page:1,
+      			pageSize:1
+      		}).then(function(){
+      			var view = self.patternDS.view(),
+      			cat = self.categoryDS.at(0);
+
+      			self.dataSource.insert(0, {				
+					item_type_id 			: 1,//Inventory Part      			      			
+	      			category_id 			: view[0].category_id,
+	      			item_group_id 			: view[0].item_group_id,
+	      			item_sub_group_id 		: view[0].item_sub_group_id,
+	      			brand_id 				: view[0].brand_id,
+	      			measurement_id			: view[0].measurement_id,
+	      			abbr 					: cat.abbr,
+	      			number 					: "",
+	      			international_code 		: view[0].international_code,
+	      			color_code 				: view[0].color_code,
+	      			name 					: "",
+	      			description				: view[0].description,
+	      			measurements 			: view[0].measurements,
+	      			catalogs 				: view[0].catalogs,
+	      			cost 					: view[0].cost,
+	      			price 					: view[0].price,
+	      			rate 					: 1,
+	      			locale 					: view[0].locale,
+	      			on_hand					: 0,      			      			     			
+	      			order_point 			: view[0].order_point,
+	      			income_account_id 		: view[0].income_account_id,
+	      			cogs_account_id  		: view[0].cogs_account_id,
+	      			inventory_account_id 	: view[0].inventory_account_id,
+	      			deposit_account_id 		: view[0].deposit_account_id,
+	      			transaction_account_id 	: view[0].transaction_account_id,
+	      			preferred_vendor_id 	: view[0].preferred_vendor_id,
+	      			image_url 				: "",      			
+	      			favorite 				: view[0].favorite,
+	      			is_catalog 				: view[0].is_catalog,
+	      			is_assemble 			: view[0].is_assemble,
+	      			is_pattern 				: 0,
+	      			status 					: 1,
+	      			deleted 				: 0								
+				});
+
+				var obj = self.dataSource.at(0);				
+				//Pattern
+				// if(self.get("contact_type_id")>0){
+				// 	obj.set("contact_type_id", self.get("contact_type_id"));
+				// 	obj.set("abbr", "");
+				// 	obj.set("is_pattern", 1);
+				// }
+
+				self.set("obj", obj);
+				self.generateNumber();
+      		});
+      	},
+      	objSync 				: function(){
+	    	var dfd = $.Deferred();	        
+
+	    	this.dataSource.sync();
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
+		    });
+
+		    return dfd;	    		    	
+	    },			
+		save 					: function(){			
+			var self = this, obj = this.get("obj");
+
+			//Edit Mode
+	    	if(this.get("isEdit")){
+	    		//Contact Person has changes
+		    	if(this.contactPersonDS.hasChanges()){
+		    		obj.set("dirty", true);
+		    	}
+	    	}
+
+			//Save Obj
+			this.objSync()
+			.then(function(data){ //Success												
+				if(self.get("isEdit")==false){
+					$.each(self.itemVendorDS.data(), function(index, value){
+	      				value.set("item_id", data[0].id);
+	      			});
+
+	      			$.each(self.itemCustomerDS.data(), function(index, value){
+	      				value.set("item_id", data[0].id);
+	      			});
+
+	      			if(data[0].is_pattern){
+						self.savePattern(data[0].category_id, data[0].id);
+					}
+
+					self.addItemPrice(data[0].id);
+				}
+				
+      			self.itemVendorDS.sync();
+      			self.itemCustomerDS.sync();
+				
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					window.history.back();
+				}else{
+					//Save New
+					self.addEmpty();
+				}
+			});
+		},
+		cancel 					: function(){
+			this.dataSource.cancelChanges();
+			this.itemVendorDS.cancelChanges();
+			this.itemCustomerDS.cancelChanges();
+			this.dataSource.data([]);
+			this.itemVendorDS.data([]);
+			this.itemCustomerDS.data([]);
+
+			banhji.userManagement.removeMultiTask("item");
+		},
+		delete 					: function(){
+			var self = this, obj = this.get("obj");
+			this.set("showConfirm",false);
+
+			this.deleteDS.query({
+			  	filter: { field: "item_id", value: obj.id },
+			  	page: 1,
+			  	pageSize: 1
+			}).then(function() {
+				var view = self.deleteDS.view();
+
+				if(view.length>0){
+					alert("Sorry, you can not delete it because it is using now.");
+				}else{
+					obj.set("deleted", 1);
+			        self.dataSource.sync();
+
+			        window.history.back();				        
+				}
+			});	
+		},
+		openConfirm 			: function(){
+			this.set("showConfirm", true);
+		},
+		closeConfirm 			: function(){
+			this.set("showConfirm", false);
 		}
     });
     banhji.itemCatalog =  kendo.observable({
@@ -61145,7 +61234,7 @@
       			item_type_id 			: 1,      			      			
       			measurement_id			: 0,      			
       			main_id 				: 0,
-      			sku 					: "",
+      			number 					: "",
       			supplier_code 			: "",
       			color_code 				: "",
       			name 					: "",
@@ -61293,7 +61382,7 @@
       			item_type_id 			: 1,      			      			
       			measurement_id			: 0,      			
       			main_id 				: 0,
-      			sku 					: "",
+      			number 					: "",
       			supplier_code 			: "",
       			color_code 				: "",
       			name 					: "",
@@ -61351,7 +61440,7 @@
 		      			price 			: item.item_prices[0].price,
 		      			amount 			: item.item_prices[0].price,
 		      			
-		      			assembly 		: [{ sku:item.sku, name:item.name, description:item.description }],
+		      			assembly 		: [{ number:item.number, name:item.name, description:item.description }],
 		      			currency 		: [item.item_prices[0].currency[0]],
 		      			item_prices 		: item.item_prices		      			
 					});
@@ -61576,7 +61665,7 @@
       			brand_id 				: 0,
       			measurement_id			: 0,
       			main_id 				: 0,
-      			sku 					: "",
+      			number 					: "",
       			international_code 		: "",
       			IMEI 					: "",
       			serial_number 			: "",
@@ -61886,7 +61975,7 @@
       			brand_id 				: 0,
       			measurement_id			: 0,
       			main_id 				: 0,
-      			sku 					: "",
+      			number 					: "",
       			international_code 		: "",
       			IMEI 					: "",
       			serial_number 			: "",
@@ -62281,7 +62370,7 @@
             			transaction_id 			: 0,
 						item_id 			: value.id,
 						measurement_id 		: value.measurement_id,						
-						description 		: value.sku +" "+ value.name,
+						description 		: value.number +" "+ value.name,
 						on_hand 			: value.on_hand,
 						new_qty 			: "",				
 						unit 	 			: "",
@@ -62917,7 +63006,7 @@
 
     		if(searchField!==""){
     			para.push(      				
-      				{ field: "sku", operator: "like", value: searchField },
+      				{ field: "number", operator: "like", value: searchField },
       				{ field: "name", operator: "or_like", value: searchField }
       			);
     		}

@@ -816,7 +816,7 @@ class Contact_reports extends REST_Controller {
 			}									 			
 		}
 
-		$obj->include_related("item", array("sku", "name"), FALSE);		
+		$obj->include_related("item", array("number", "name"), FALSE);		
 		
 		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale"));		
 		$obj->where_related("transaction", "is_recurring", $is_recurring);		
@@ -1642,7 +1642,7 @@ class Contact_reports extends REST_Controller {
 			}									 			
 		}
 
-		$obj->include_related("item", array("sku", "name"), FALSE);		
+		$obj->include_related("item", array("number", "name"), FALSE);		
 		
 		$obj->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase"));		
 		$obj->where_related("transaction", "is_recurring", $is_recurring);		
