@@ -84,7 +84,12 @@
                               <div class="profile-card-location">
                                   Confirm: <span>True</span>
                               </div>
-                              <button type="button" class="btn goto-banhji">BanhJi App</button>
+                          </div>
+                          <div class="profile-statistic tbl">
+                            <button type="button" class="btn btn-block goto-banhji">BanhJi App</button>
+                            <button type="button" class="btn btn-block goto-banhji" data-bind="click: goCompany">Company Info</button>
+                            <button type="button" class="btn btn-block goto-banhji" data-bind="click: goUser">Users</button>
+                            <button type="button" class="btn btn-block goto-banhji" data-bind="click: goEmployee">Employees</button>
                           </div>
 
                           <div class="profile-statistic tbl">
@@ -92,10 +97,6 @@
                                   <div class="tbl-cell">
                                       <b><span data-bind="text: modules.total"></span></b>
                                       Assign Module
-                                  </div>
-                                  <div class="tbl-cell">
-                                      <b>1.9M</b>
-                                      Followers
                                   </div>
                               </div>
                           </div>
@@ -117,18 +118,16 @@
                   </div>
 
                   <div class="col-xs-12 col-md-8 col-lg-9">
-
                       <section class="row">
                           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                               <div class="widget widget-3">
                                   <div class="widget-head">
                                       <h4 class="heading">
-                                          <span class="glyphicon glyphicon-user"><i></i></span>
                                           User</h4>
                                   </div>
                                   <div class="widget-body alert alert-primary" style="background: #496cad;">
                                       <div align="center" class="text-large strong"><span data-bind="text: data"></span></div>
-                                      <a  style="color: #fff;" href="#userlist/new">Add User</a>
+                                      <a  style="color: #fff;" data-bind="click: users.addUser">Add User</a>
                                   </div>
                               </div>
                           </div>
@@ -137,8 +136,7 @@
                              <div class="widget widget-3">
                                   <div class="widget-head">
                                       <h4 class="heading">
-                                          <span class="glyphicon glyphicon-user"><i></i></span>
-                                          Module
+                                          Assigned Module
                                       </h4>
                                   </div>
                                   <div class="widget-body alert" style="color: #333; background: #d9edf7;">
@@ -152,7 +150,6 @@
                               <div class="widget widget-3">
                                   <div class="widget-head">
                                       <h4 class="heading">
-                                          <span class="glyphicon glyphicon-user"><i></i></span>
                                           User Join in
                                       </h4>
                                   </div>
@@ -164,152 +161,9 @@
                           </div>
                       </section>
 
-                      <section class="box-typical user-module">
-                          <div data-role="listview" data-bind="source: modules" data-template="company-modules"></div>
+                      <section class="box-typical user-module" id="placeholder">
+                          
                       </section>
-
-                      <section class="tabs-section">
-                          <div class="tabs-section-nav tabs-section-nav-inline">
-                              <ul class="nav" role="tablist">
-                                  <li class="nav-item">
-                                      <a class="nav-link active" href="#tabs-4-tab-1" role="tab" data-toggle="tab">
-                                          Company Info
-                                      </a>
-                                  </li>
-                                  <li class="nav-item">
-                                      <a class="nav-link" href="#tabs-4-tab-2" role="tab" data-toggle="tab">
-                                          Users
-                                      </a>
-                                  </li>
-                                  <li class="nav-item">
-                                      <a class="nav-link" href="#tabs-4-tab-3" role="tab" data-toggle="tab">
-                                          Employees
-                                      </a>
-                                  </li>
-                              </ul>
-                          </div>
-
-                          <div class="tab-content">
-                              <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1">
-                                  <article class="profile-info-item">
-                                    <img data-bind="attr: {src: current.logo}"><br><br>
-                                    <a href="\#" data-bind="visible: showLogoEdit, events: {click: showLogo}">Edit Logo</a>
-                                    <input type="file" id="companyLogo" data-bind="invisible: showLogoEdit, events: {change: onLogoChange}"><br>
-                                    <button class="btn" data-bind="invisible: showLogoEdit, events: {click: upload}">Save</button>
-                                    <button class="btn" data-bind="invisible: showLogoEdit, events: {click: showLogo}">Cancel</button>
-                                    
-                                  </article>
-                                  <header class="box-typical-header-sm">
-                                      General Info
-                                  </header>
-                                  <article class="profile-info-item">
-                                      <table >
-                                          <tr>
-                                              <td>Company Name</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.name"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Email</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.email"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Address</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.address"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>ZIP Code</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.zip"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Year Founded</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.year_founded"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Country</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.country.name"></span></td>
-                                          </tr>
-                                           <tr>
-                                              <td>Industry</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.industry.type"></span></td>
-                                          </tr>
-                                      </table>
-                                  </article>
-                                  <header class="box-typical-header-sm">Financial Info</header>
-                                  <article class="profile-info-item">
-                                      <table >
-                                          <tr>
-                                              <td>Fiscal Date</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.fiscal_date"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Base Currency</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.currency.code"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Reporting Currency</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.reportCurrency.code"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Fiscal Report Date</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.financial_report_date"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Tax Regime</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.tax_regime"></span></td>
-                                          </tr>
-                                      </table>
-                                  </article>
-                                  <button data-bind="click: edit" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
-                                      Edit
-                                  </button>
-                              </div>
-
-                              <div style="overflow-y: hidden;" role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2">
-                                  <article class="profile-info-item user">
-                                      <div class="" style="margin-bottom: 10px;">
-                                          <button data-bind="click: users.addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
-                                              Create user
-                                          </button>
-                                          &nbsp;&nbsp;
-                                          <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: users.refresh"></i>
-                                      </div>
-                                      
-                                      <div data-role="listview" data-template="user-profile-list" data-bind="source:users.users" data-bind="false" class="row" style="border: 0;">
-                                      </div>
-                                      
-                                  </article>
-                              </div>
-                              <div style="overflow-y: hidden;" role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3">
-                                  <button class="btn" data-bind="click: employees.addNew">Create</button>
-                                  <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: employees.refresh"></i>
-                                  <table class="tbl-typical">
-                                      <thead>
-                                        <tr>
-                                          <th><div>Name</div></th>
-                                          <th><div>Gender</div></th>
-                                          <th align="center"><div>Role#</div></th>
-                                          <th align="center"><div>Status</div></th>
-                                          <th align="center"><div>Action</div></th>
-                                        </tr>
-                                      </thead>
-                                      <tbody data-role="listview" data-bind="source: employees.dataSource" data-template="employee-list">
-                                  </tbody></table>
-                              </div>
-                          </div>
-                      </section>
-
                   </div>
                   <div id="userFormConfirm" style="visibility: hidden">
                     <div class="row">
@@ -345,16 +199,7 @@
           </div>
       </div>
     </script>
-    <script type="text/x-kendo-template" id="company-modules">
-      <div class="col-xs-3 col-md-2 col-lg-2">
-          <div>
-              <a href="<?php echo base_url(); ?>rrd\#/#=href#">
-                  <img data-bind="attr: {src: image_url}">
-              </a>
-              <span><span data-bind="text: name"></span></span>
-          </div>
-      </div>
-    </script>
+    
     <script type="text/x-kendo-template" id="employee-list">
       <tr>
           <td>
@@ -381,63 +226,163 @@
                         <div class="hidden-print pull-right">
                             <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
                         </div>
-                        <h2>Employee Detail</h2>
+                        <h2>Employee Form</h2>
                         <div class="divider"></div>
                         <article class="col-md-12 col-lg-12 profile-info-item edit-table">
+                          <div style="background: #eee;">
                             <table >
+                              <tr>
+                                <td>Employee Type</td>
+                                <td>:</td>
+                                <td>
+                                  <input id="type"
+                                    data-role="dropdownlist"
+                                    data-bind="source: roles, value: current.role, events: {change: typeChange}"
+                                    data-text-field="name"
+                                    data-value-field="id"
+                                    class="form-control col-md-7 col-xs-12"
+                                    type="text"
+                                    data-option-label="--Select--"
+                                  >
+                                </td>
+                              </tr>
                                 <tr>
-                                    <td>Name</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="text" data-bind="value: current.name" class="form-control"  id="" placeholder="">
-                                    </td>
+                                  <td>Name</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="text" data-bind="value: current.name" class="form-control"  id="" placeholder="">
+                                  </td>
                                 </tr>
                                 <tr>
-                                    <td>Gender</td>
+                                    <td>Number</td>
                                     <td>:</td>
                                     <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: genderDS, value: current.gender"
-                                               data-text-field="value"
-                                               data-value-field="id"
-                                               data-value-primitive="true"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text"
-                                               >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Role</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: roles, value: current.role"
-                                               data-text-field="name"
-                                               data-value-field="id"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text"
-                                               >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Status</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: statusDS, value: current.status"
-                                               data-text-field="value"
-                                               data-value-field="id"
-                                               data-value-primitive="true"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text"
-                                               >
+                                      <input id="type"
+                                        data-bind="value: current.abbr"
+                                        class="form-control col-md-7 col-xs-12"
+                                        type="text"
+                                        style="width: 50px;"
+                                      > 
+                                      <input id="type"
+                                        data-bind="value: current.number"
+                                        class="form-control col-md-7 col-xs-12"
+                                        type="text"
+                                        style="width: 150px;"
+                                      >
                                     </td>
                                 </tr>                                
                             </table>
+                          </div>
                         </article>
+                        <section class="tabs-section">
+                          <div class="tabs-section-nav tabs-section-nav-inline">
+                            <ul class="nav" role="tablist">
+                              <li class="nav-item">
+                                <a class="nav-link active" href="#tabs-4-tab-1" role="tab" data-toggle="tab" aria-expanded="false">
+                                  Contact
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="#tabs-4-tab-2" role="tab" data-toggle="tab" aria-expanded="false">
+                                  Accounts
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="#tabs-4-tab-3" role="tab" data-toggle="tab" aria-expanded="false">
+                                  Document
+                                </a>
+                              </li>
+                            </ul>
+                          </div><!--.tabs-section-nav-->
+
+                          <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1" aria-expanded="false">
+                              <table class="table">
+                                <tr>
+                                  <td>status</td>
+                                  <td>
+                                    <input id="type"
+                                     data-role="dropdownlist"
+                                     data-bind="source: statusDS, value: current.status"
+                                     data-text-field="value"
+                                     data-value-field="id"
+                                     data-value-primitive="true"
+                                     class="form-control col-md-7 col-xs-12"
+                                     type="text"
+                                     >
+                                    </td>
+                                  <td></td>
+                                  <td>registered date</td>
+                                  <td><input type="text" data-role="datepicker" data-bind="value: current.registered_date"></td>
+                                </tr>
+                                <tr>
+                                  <td>email</td>
+                                  <td><input type="email" class="k-textbox" data-bind="value: current.email"></td>
+                                  <td></td>
+                                  <td>phone</td>
+                                  <td><input type="phone" class="k-textbox" data-bind="value: current.phone"></td>
+                                </tr>
+                                <tr>
+                                  <td>address</td>
+                                  <td><input type="text" class="k-textbox" data-bind="value: current.address"></td>
+                                  <td></td>
+                                  <td>memo</td>
+                                  <td><input type="text" class="k-textbox" data-bind="value: current.memo"></td>
+                                </tr>
+                                <tr>
+                                  <td>ship to</td>
+                                  <td><input type="text" class="k-textbox" data-bind="value: current.ship_to"></td>
+                                  <td></td>
+                                  <td>bill to</td>
+                                  <td><input type="text" class="k-textbox" data-bind="value:current.bill_to"></td>
+                                </tr>
+                              </table>
+                            </div><!--.tab-pane-->
+                            <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2" aria-expanded="false">
+                              <table class="table">
+                                <tr>
+                                  <td>
+                                    Advance Account<br>
+                                    <input id="type"
+                                      data-role="dropdownlist"
+                                      data-bind="source: statusDS, value: current.status"
+                                      data-text-field="value"
+                                      data-value-field="id"
+                                      data-value-primitive="true"
+                                      class="form-control col-md-7 col-xs-12"
+                                      type="text"
+                                    >
+                                  </td>
+                                  <td>
+                                    Salary Account<br>
+                                    <input id="type"
+                                      data-role="dropdownlist"
+                                      data-bind="source: statusDS, value: current.status"
+                                      data-text-field="value"
+                                      data-value-field="id"
+                                      data-value-primitive="true"
+                                      class="form-control col-md-7 col-xs-12"
+                                      type="text"
+                                    >
+                                  </td>
+                                  <td>
+                                    Currency<br>
+                                    <input id="type"
+                                      data-role="dropdownlist"
+                                      data-bind="source: statusDS, value: current.status"
+                                      data-text-field="value"
+                                      data-value-field="id"
+                                      data-value-primitive="true"
+                                      class="form-control col-md-7 col-xs-12"
+                                      type="text"
+                                    >
+                                  </td>
+                                </tr>
+                              </table>
+                            </div><!--.tab-pane-->
+                            <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3" aria-expanded="false">Tab 3</div><!--.tab-pane-->
+                          </div><!--.tab-content-->
+                        </section>
                         <div class="box-generic">
                           <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
                               <span class="glyphicon glyphicon-ok"><i></i></span>
@@ -452,6 +397,8 @@
                     </section>
                 </div>
             </div>
+
+
         </div>
       </div>
     </script>
@@ -608,6 +555,136 @@
         </div>
       </div>
     </script>
+    <!-- user placeholder -->
+    <script type="text/x-kendo-template" id="template-placeholder-module">
+      <div data-role="listview" data-bind="source: modules" data-template="company-modules"></div>
+    </script>
+    <script type="text/x-kendo-template" id="company-modules">
+      <div class="col-xs-3 col-md-2 col-lg-2">
+          <div>
+              <a href="<?php echo base_url(); ?>rrd\#/#=href#">
+                  <img data-bind="attr: {src: image_url}">
+              </a>
+              <span><span data-bind="text: name"></span></span>
+          </div>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="template-placeholder-company">
+      <article class="profile-info-item">
+        <img data-bind="attr: {src: current.logo}"><br><br>
+        <a href="\#" data-bind="visible: showLogoEdit, events: {click: showLogo}">Edit Logo</a>
+        <input type="file" id="companyLogo" data-bind="invisible: showLogoEdit, events: {change: onLogoChange}"><br>
+        <button class="btn" data-bind="invisible: showLogoEdit, events: {click: upload}">Save</button>
+        <button class="btn" data-bind="invisible: showLogoEdit, events: {click: showLogo}">Cancel</button>   
+      </article>
+        <header class="box-typical-header-sm">
+            General Info
+        </header>
+        <article class="profile-info-item">
+            <table >
+                <tr>
+                    <td>Company Name</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.name"></span></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.email"></span></td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.address"></span></td>
+                </tr>
+                <tr>
+                    <td>ZIP Code</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.zip"></span></td>
+                </tr>
+                <tr>
+                    <td>Year Founded</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.year_founded"></span></td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.country.name"></span></td>
+                </tr>
+                 <tr>
+                    <td>Industry</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.industry.type"></span></td>
+                </tr>
+            </table>
+        </article>
+        <header class="box-typical-header-sm">Financial Info</header>
+        <article class="profile-info-item">
+            <table >
+                <tr>
+                    <td>Fiscal Date</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.fiscal_date"></span></td>
+                </tr>
+                <tr>
+                    <td>Base Currency</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.currency.code"></span></td>
+                </tr>
+                <tr>
+                    <td>Reporting Currency</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.reportCurrency.code"></span></td>
+                </tr>
+                <tr>
+                    <td>Fiscal Report Date</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.financial_report_date"></span></td>
+                </tr>
+                <tr>
+                    <td>Tax Regime</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.tax_regime"></span></td>
+                </tr>
+            </table>
+        </article>
+        <button data-bind="click: edit" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
+            Edit
+        </button>
+    </script>
+    <script type="text/x-kendo-template" id="template-placeholder-user">
+      <article class="profile-info-item user">
+          <div class="" style="margin-bottom: 10px;">
+              <button data-bind="click: addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
+                  Create user
+              </button>
+              &nbsp;&nbsp;
+              <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: users.refresh"></i>
+          </div>
+          
+          <div data-role="listview" data-template="user-profile-list" data-bind="source:users.users" data-bind="false" class="row" style="border: 0;">
+          </div>
+          
+      </article>
+    </script>
+    <script type="text/x-kendo-template" id="template-placeholder-employee">
+      <button class="btn" data-bind="click: addNew">Create</button>
+      <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: employees.refresh"></i>
+      <table class="tbl-typical">
+          <thead>
+            <tr>
+              <th><div>Name</div></th>
+              <th><div>Gender</div></th>
+              <th align="center"><div>Role#</div></th>
+              <th align="center"><div>Status</div></th>
+              <th align="center"><div>Action</div></th>
+            </tr>
+          </thead>
+          <tbody data-role="listview" data-bind="source: employees.dataSource" data-template="employee-list">
+      </tbody></table>
+    </script>
+    <!-- user placeholder -->
     <script type="text/x-kendo-template" id="user-profile">
       <!--Dashbaord User-->
       <div class="page-content">
@@ -713,7 +790,6 @@
             #} else {#
               <button class="btn btn-info btn-block" data-bind="click: forgotPassword" style="margin-bottom: 5px;">Forget Password</button>
             #}#
-            <a href="\#" data-bind="click: getProfile"><button class="btn btn-default btn-block" style="margin-bottom: 5px;">View</button></a>
           </div>
         </div>
       </section>   
@@ -1590,12 +1666,24 @@
           {id: "M", value: "Male"},
           {id: "F", value: "Female"}
         ],
+        typeChange: function(e) {
+          var type = e.sender.dataSource.at(e.sender.selectedIndex - 1);
+          banhji.employees.get('current').set('abbr', type.abbr);
+          console.log();
+        },
         addNew    : function() {
           banhji.employees.dataSource.insert(0, {
             name: null,
             gender: null,
             role: {id: null, name: null},
-            status: 1
+            status: 1,
+            phone: null,
+            email: null,
+            address: null,
+            bill_to: null,
+            ship_to: null,
+            abbr: null,
+            registered_date: new Date()
           });
           banhji.employees.setCurrent(banhji.employees.dataSource.at(0));
           banhji.router.navigate('employee/new');
@@ -2058,6 +2146,15 @@
         users   : banhji.users,
         userProfile: banhji.profile,
         showLogoEdit: true,
+        goUser: function() {
+          mainDash.showIn("#placeholder", user);
+        },
+        goEmployee: function() {
+          mainDash.showIn("#placeholder", employee);
+        },
+        goCompany: function() {
+          mainDash.showIn("#placeholder", company);
+        },
         showLogo: function(e) {
           e.preventDefault();
           this.get('showLogoEdit') == true ? this.set('showLogoEdit', false) : this.set('showLogoEdit', true);
@@ -2123,18 +2220,18 @@
       var layout = new kendo.Layout('#placeholder');
       var menu = new kendo.View('#header-menu', {model: banhji.profile});
       var mainDash = new kendo.Layout('#companyDash', {model: banhji.company});
+      var company = new kendo.Layout('#template-placeholder-company', {model: banhji.company});
       var dash = new kendo.View('#template-dashboard', {model: banhji.company});
-      var userlist= new kendo.View('#template-userlist-page', {model: banhji.users});
+      var user = new kendo.View('#template-placeholder-user', {model: banhji.users});
       var userForm= new kendo.View('#user-profile-action', {model: banhji.users});
       var userEdit= new kendo.View('#user-profile-action-edit', {model: banhji.users});
       var userNew= new kendo.View('#template-userlist-form-new-page', {model: banhji.users});
       var empEdit= new kendo.View('#employee-action', {model: banhji.employees});
-      var userlMod= new kendo.View('#template-modules-users-page', {model: banhji.users});
-      var institute = new kendo.Layout('#template-createcompany-page', {model: banhji.company});
+      var instituteModule = new kendo.View('#template-placeholder-module', {model: banhji.company});
       var instInfo = new kendo.View('#template-createcompany-info-page', {model: banhji.company});
       var instEdit = new kendo.View('#company-edit', {model: banhji.company});
       var loading = new kendo.View('#template-waiting-page');
-      var unthau = new kendo.View('#template-unauth-page');
+      var employee = new kendo.View('#template-placeholder-employee', { model: banhji.employees});
       var modeleView = new kendo.View('#template-modules-page', { model: banhji.company});
       var profile = new kendo.Layout('#user-profile', {model: banhji.users});
       var profileMod = new kendo.View('#user-profile-modules', {model: banhji.users});
@@ -2145,16 +2242,11 @@
         init: function() {
             if(userPool.getCurrentUser()) {
               layout.render("#main");
+              
               institute = JSON.parse(localStorage.getItem('userData/user')).institute;
               banhji.profileDS.fetch(function(e){
                 banhji.profile.set('currentID', banhji.profileDS.data()[0]);
                 layout.showIn('#menu', menu);
-              });
-
-              banhji.profileDS.fetch(function(e){
-                if(banhji.profileDS.data()[0].role != 1) {
-                  banhji.router.navigate('profile/' +banhji.profileDS.data()[0].id);
-              }
                 
                 var cognitoUser = userPool.getCurrentUser();
                 if(cognitoUser !== null) {
@@ -2170,6 +2262,7 @@
                     }
                   });
                 }
+                console.log('init');
               });
             } else {
               window.location.replace("<?php echo base_url(); ?>login");
@@ -2183,10 +2276,21 @@
 
       // start here
       banhji.router.route('/', function() {
-        if(banhji.profileDS.data()[0] && banhji.profileDS.data()[0].role != 1) {
-          banhji.router.navigate("profile/"+banhji.profileDS.data()[0].id);
-        }
-        if(!banhji.companyDS.data()[0]) {
+        console.log('main');
+        if(JSON.parse(localStorage.getItem('userData/user')).role != 1) {
+          banhji.users.users.filter([
+            {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
+            {field: 'id', operator: 'user', value:JSON.parse(localStorage.getItem('userData/user')).id}
+          ]);
+          banhji.users.users.bind('requestEnd', function(e){
+            if(e.response) {
+              banhji.users.setCurrent(e.response.results[0]);
+              banhji.users.modules.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).id});
+              layout.showIn("#container", mainDash);
+              mainDash.showIn("#placeholder", profileMod);
+            }
+          });
+        } else {
           banhji.companyDS.fetch(function() {
             banhji.company.set('data', banhji.companyDS.data()[0]);
             banhji.moduleDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
@@ -2198,13 +2302,11 @@
                 banhji.company.set('lastLogin', banhji.companyDS.data()[0].lastLogin);
                 // console.log(e.response.results[0]);
                 banhji.userDS.filter({field: 'id', value: institute.id});
-              }
-              
-             });
+              }            
+            });
           });
           layout.showIn("#container", mainDash);
-        } else{
-          layout.showIn("#container", mainDash);
+          mainDash.showIn("#placeholder", instituteModule);
         }
       });
 
@@ -2316,6 +2418,7 @@
 
       $(document).ready(function() {
         banhji.router.start();
+        console.log('1');
           // signout when browser closed
           // window.addEventListener("beforeunload", function (e) {
           //   // var confirmationMessage = "\o/";

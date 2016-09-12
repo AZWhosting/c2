@@ -276,6 +276,7 @@
                             if(e.response.results[0].id) {
                               var user = {
                                   id: id,
+                                  role: e.response.results[0].role, 
                                   username: userPool.getCurrentUser().username,
                                   institute: data
                               };
