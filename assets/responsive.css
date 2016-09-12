@@ -37,14 +37,30 @@
   width: 90% !important;
 }
 
+.detailsWrapper .btn-group .dropdown-menu{
+  left: -97px !important;
+  top: 30px !important;
+}
+.detailsWrapper .btn-group .dropdown-menu li a:hover{ cursor: pointer; }
+
 #cbbContact-list strong{
-  width: 100%;
-  padding: 5px;
+ 
+}
+#cbbContact-list strong a{
+  padding: 5px 200px 5px 0;
+  display: inline-block;
+
 }
 #cbbContact-list strong a:hover{
-  background: red;
+  background: #EBEBEB;
 }
 
+.widget-stats.widget-stats-5{
+  padding-left: 5px !important;
+}
+.widget-stats.widget-stats-5 .txt{
+      padding: 17px 0 0 5px !important;
+}
 
 #txtAmount{
   width: 97% !important;
@@ -728,12 +744,16 @@ width: 50% !important;
 .tabsbar ul li{
   width: 20%;
 }
+.dropdown-backdrop{
+  display: none;
+}
 .tabsbar-2 ul li{
   width: 10%;
 }   
 .row-merge .detailsWrapper,
 .row-merge .detailsWrapper .span6{
   padding: 0;
+
 }
 .row-merge .detailsWrapper{
   margin-left: 10px !important;
@@ -744,6 +764,7 @@ width: 50% !important;
 }
 .row-merge .detailsWrapper .span6 {
     padding: 0;
+    margin-bottom: 10px;
 }
 
 .listWrapper{

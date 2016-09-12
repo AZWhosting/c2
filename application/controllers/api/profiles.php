@@ -60,6 +60,9 @@ class Profiles extends REST_Controller {
 				'role' 		=> $user->role,
 				'profile_photo'=>$user->profile_photo_url,
 				// 'modules'   => $modules,
+				'facebook'	=> $user->facebook,
+				'linkedin'	=> $user->linkedin,
+				'twitter' 	=> $user->twitter,
 				'created_at'=> $user->created_at,
 				'updated_at'=> $user->updated_at
 			);

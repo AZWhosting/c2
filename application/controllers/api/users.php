@@ -26,12 +26,16 @@ class Users extends REST_Controller {
 		$filters = $requested_data['filters'];
 		$limit = $this->get('limit') ? $this->get('limit'): 50;
 		$offset= $this->get('offset')? $this->get('offset'): null;
-
+		$data = array();
 		$user = new User();
 
 		if(isset($filters)) {
 			foreach($filters as $f) {
-				$user->where_related_institute($f['field'], $f['value']);
+				if(isset($f['operator'])) {
+					$user->where($f['field'], $f['value']);
+				} else {
+					$user->where_related_institute($f['field'], $f['value']);
+				}				
 			}
 		}
 		$user->include_related('institute', array('id', 'name'));
@@ -71,6 +75,7 @@ class Users extends REST_Controller {
 	// return userdata
 	function index_put() {
 		$requested_data = json_decode($this->put('models'));
+		$data = array();
 		foreach($requested_data as $user) {
 			$company = new Institute();
 			$company->where('id', $user->company->id)->get();
@@ -85,7 +90,7 @@ class Users extends REST_Controller {
 			$User->linkedin = $user->linkedin;
 			$User->twitter  = $user->twitter;
 			$User->role = $user->role;
-			$user->usertype_id = $user->usertype;
+			$User->usertype_id = $user->usertype;
 			$User->is_confirmed = $user->is_confirmed == true ? 1:0;
 			$User->is_disabled = 0;
 			if($User->save()) {

@@ -8074,8 +8074,8 @@
 	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 	                 }'                 
 	                 data-series="[
-	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
-	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+	                                 { field: 'sale', name: 'Monthly Purchase', categoryField:'month', color: '#236DA4' },
+	                                 { field: 'order', name: 'Monthly Purchase Order', categoryField:'month', color: '#A6C9E3' }
 	                             ]"	                             
 	                 data-bind="source: graphDS"
 	                 style="height: 250px;" ></div>            
@@ -8289,19 +8289,20 @@
 												<input type="text" class="k-textbox" 
 														data-bind="value: note, events:{change:saveNoteEnter}" 
 														placeholder="Add memo ..." 
-														style="width: 366px;" />
+														style="width: 350px;" />
 												<span class="btn btn-primary" data-bind="click: saveNote">Add</span>
 											</div>
 
 											<br>
 
-									    	<div data-role="grid"
-									    	 	 data-height="100"
-									    	 	 data-auto-bind="false"
-					 							 data-scrollable="{virtual: true}"									                 
-								                 data-row-template="vendorCenter-note-tmpl"
-								                 data-bind="source: noteDS"
-								                 data-columns="[{title: ''}]"></div>
+									    	<div class="table table-condensed" style="height: 100;"						 
+												 data-role="grid"
+												 data-auto-bind="false"						 
+												 data-bind="source: noteDS"
+												 data-row-template="vendorCenter-note-tmpl"
+												 data-columns="[{title: ''}]"
+												 data-height="100"						 
+												 data-scrollable="{virtual: true}"></div>
 											
 							            </div>
 							            <!-- // NOTE Tab content END -->
@@ -8443,7 +8444,7 @@
     			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
     		#}#
     	</td>
-    	<td>        	
+    	<td align="center">        	
         	#if(type==="Credit_Purchase"){#
         		#if(status==="0" || status==="2") {#
         			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
@@ -8463,15 +8464,10 @@
         		#}#        	
         	#}#			
 		</td>    	
+    	<!-- Actions -->
     	<td align="center">
-			#if(type==="Credit_Purchase"){#
-				#if(status==="0" || status==="2"){#					
-					<a data-bind="click: payBill">Pay</a>
-				#}#
-        	#}else if(type==="GDN"){#        		
-        		#if(status==="0"){#
-        			
-        		#}#
+    		#if(type==="Credit_Purchase"){#
+        		<a data-bind="click: payBill"><i></i> Pay Bill</a>
         	#}#
 		</td>     	
     </tr>
@@ -9680,9 +9676,10 @@
 														data-text-field="number" 
 							              				data-value-field="id"						              				 
 							              				data-bind="value: obj.reference_id,
+							              							enabled: enableRef,
 							              							source: referenceDS,						              							
 							              							events:{change: referenceChanges}" 
-							              				style="width: 100%" />
+							              				placeholder="Select Reference..." style="width: 100%" />
 											</td>
 										</tr>	
 						            </table>						            
@@ -10154,9 +10151,10 @@
 														data-text-field="number" 
 							              				data-value-field="id"	 
 							              				data-bind="value: obj.reference_id,
+							              							enabled: enableRef,
 							              							source: referenceDS,						              							
 							              							events:{change: referenceChanges}" 
-							              				placeholder="Select Reference" style="width: 100%" />
+							              				placeholder="Select Reference..." style="width: 100%" />
 											</td>
 										</tr>									
 									</table>
@@ -10642,6 +10640,7 @@
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
+								              							enabled: enableRef,
 								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}"
 								              				placeholder="Select Reference..." 
@@ -11566,8 +11565,8 @@
 															data-text-field="number" 
 								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
-								              							source: referenceDS,
-								              							enabled: bolReference,						              							
+								              							enabled: enableRef,
+								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}"
 								              				placeholder="Type number..." 
 								              				style="width: 100%" />
@@ -15558,13 +15557,14 @@
 
 											<br>
 
-									    	<div data-role="grid"
-									    	 	 data-height="100"
-									    	 	 data-auto-bind="false"
-					 							 data-scrollable="{virtual: true}"									                 
-								                 data-row-template="customerCenter-note-tmpl"
-								                 data-bind="source: noteDS"
-								                 data-columns="[{title: ''}]"></div>
+											<div class="table table-condensed" style="height: 100;"						 
+												 data-role="grid"
+												 data-auto-bind="false"						 
+												 data-bind="source: noteDS"
+												 data-row-template="customerCenter-note-tmpl"
+												 data-columns="[{title: ''}]"
+												 data-height="100"						 
+												 data-scrollable="{virtual: true}"></div>
 											
 							            </div>
 							            <!-- // NOTE Tab content END -->
@@ -15627,7 +15627,7 @@
 								<div class="span6">
 									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
 										<span class="glyphicons circle_exclamation_mark"><i></i></span>
-										<span class="txt"><span data-bind="text: outInvoice"></span> Open</span>
+										<span class="txt"><span data-bind="text: outInvoice"></span> Open Invoice</span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -15709,8 +15709,20 @@
     		#}#
     	</td>
     	<!-- Status -->
-    	<td align="center">        	
-        	#if(type==="Invoice"){#
+    	<td align="center">
+    		#if(type==="Quote"){#       		
+				#if(status==="0"){#
+        			Open
+        		#}else{#
+        			Used        			
+        		#}#
+        	#}else if(type==="Sale_Order" || type==="GDN"){#
+        		#if(status==="0"){#
+        			Open
+        		#}else{#
+        			Done        			
+        		#}#
+        	#}else if(type==="Invoice"){#
         		#if(status==="0" || status==="2") {#
         			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
 					#if(dueDate < toDay) {#
@@ -15720,39 +15732,13 @@
 					#}#
 				#} else {#
 					Paid
-				#}#
-        	#}else if(type==="Sale_Order" || type==="GDN"){#
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Done        			
-        		#}#
-        	#}else if(type==="Quote"){#        		
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Approved        			
-        		#}#
-        	#}#			
+				#}#        	
+        	#}#        				
 		</td>
 		<!-- Actions -->
     	<td align="center">
 			#if(type==="Invoice"){#
-				#if(status==="0" || status==="2"){#
-					<a data-bind="click: payInvoice">Pay</a>					
-				#}#			
-        	#}else if(type==="Sale_Order"){#
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}else if(type==="Quote"){#        		        		
-        		#if(status==="0"){#
-        			
-        		#}#
-        	#}else if(type==="GDN"){#        		
-        		#if(status==="0"){#
-        			
-        		#}#
+        		<a data-bind="click: payInvoice"><i></i> Receive Payment</a>
         	#}#
 		</td>     	
     </tr>
@@ -27545,7 +27531,7 @@
 								<div class="widget-body padding-none">			
 									<div class="row-fluid row-merge">
 										<div class="listWrapper">
-											<div class="innerAll">							
+											<div class="innerAll" style="padding: 15px 15px 19px;">							
 												<form autocomplete="off" class="form-inline">
 													<div class="widget-search separator bottom">
 														<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
@@ -27566,7 +27552,7 @@
 											                              source: contactDS,
 											                              events:{ change: contactChanges }"
 											                   data-placeholder="Customer..."                    
-											                   style="width: 100%" />									
+											                   style="width: 100%; height: 29px;" />									
 													</div>
 												</form>					
 											</div>
@@ -27902,7 +27888,7 @@
 							<div class="widget-body padding-none">			
 								<div class="row-fluid row-merge">
 									<div class="listWrapper">
-										<div class="innerAll">							
+										<div class="innerAll"  style="padding: 15px 15px 19px;"">							
 											<form autocomplete="off" class="form-inline">
 												<div class="widget-search separator bottom">
 													<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
@@ -27923,7 +27909,7 @@
 										                              source: contactDS,
 										                              events:{ change: contactChanges }"
 										                   data-placeholder="Supplier..."                    
-										                   style="width: 100%" />									
+										                   style="width: 100%; height: 29px;" />									
 												</div>
 											</form>					
 										</div>
@@ -35302,7 +35288,7 @@
 </script>
 <script id="contact-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
-    	<a href="\#/customer">+ Add New Customer</a>
+    	<a href="\#/customer">+ Add New Customer</a></li>
     </strong>
 </script>
 <script id="currency-list-tmpl" type="text/x-kendo-tmpl">
@@ -35580,17 +35566,19 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/customer'>Add New Customer</a></li>  				  				
+  				<li><a href='#/customer'>Add New Customer</a></li>  
+  				<li><a href='#/item'>Add New Inventory</a></li>
+  				<li style="border-bottom: 1px solid #c5c5c5;"><a href='#/item_service'>Add New Service</a></li>  				  				
   				<li><a href='#/quote'>Add Quote</a></li>  				
   				<li><a href='#/sale_order'>Add Sale Order</a></li>
-  				<li><a href='#/gdn'>Add Goods Delivery Address Note</a></li>
+  				<li><a href='#/gdn'>Add Goods Delivery Note</a></li>
   				<li><a href='#/customer_deposit'>Receive Customer Deposit</a></li>
   				<li><a href='#/cash_sale'>Make Cash Sale</a></li>  				
   				<li><a href='#/invoice'>Create Invoice</span></a></li>
   				<li><a href='#/statement'>Prepare Statement</a></li>
   				<li><a href='#/cash_receipt'>Receive Payment</a></li>
   				<!-- <li><a href="#/customerInvoiceSent">Invoice Sent To</a></li> -->
-  				<li><a href='#/job'>Add Job</a></li>
+  				<li style="border-bottom: 1px solid #c5c5c5;"><a href='#/job'>Add Job</a></li>
   				<li><a href='#/customer_recurring'>Customer Recurring List</a></li>  				 				  				 				
   			</ul>
 	  	</li>	  	  	
@@ -42373,14 +42361,14 @@
 	**********************/
 	banhji.vendorDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "contact_reports/supplier_summary"),
+		summaryDS 			: dataStore(apiUrl + "contact_reports/supplier_dashboard_summary"),
 		topContactDS 		: dataStore(apiUrl + "contact_reports/top_supplier"),
 		topAPDS 			: dataStore(apiUrl + "contact_reports/top_ap"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_sproduct"),		
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_supplier_product"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "contact_reports/monthly_sale",
+					url: apiUrl + "contact_reports/monthly_purchase",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -44241,6 +44229,7 @@
 		saveRecurring 		: false,
 		showConfirm   		: false,
 		statusSrc 			: "",
+		enableRef 	 		: false,
 		total 				: 0,
 		original_total 		: 0,
 		user_id				: banhji.source.user_id,
@@ -44749,12 +44738,19 @@
 		loadReference 		: function(){			
 			var obj = this.get("obj");
 
-			this.referenceDS.filter([
-				{ field: "contact_id", value: obj.contact_id },
-				{ field: "status", value: 0 },
-				{ field: "type", value: "Purchase_Order" },
-				{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-			]);				
+			if(obj.contact_id>0){
+				this.set("enableRef", true);
+
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status", value: 0 },
+					{ field: "type", value: "Purchase_Order" },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);
+			}else{
+				this.set("enableRef", false);
+				obj.set("reference_id", "");
+			}				
 		},
 		referenceChanges 	: function(){
 			var self = this, obj = this.get("obj");
@@ -45053,6 +45049,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		enableRef 	 		: false,
 		total				: 0,			
 		uer_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
@@ -45544,12 +45541,19 @@
 		loadReference 		: function(){
 			var obj = this.get("obj");
 
-			this.referenceDS.filter([
-				{ field: "contact_id", value: obj.contact_id },
-				{ field: "status", value: 0 },
-				{ field: "type", value: "Purchase_Order" },
-				{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-			]);
+			if(obj.contact_id>0){
+				this.set("enableRef", false);
+
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "status", value: 0 },
+					{ field: "type", value: "Purchase_Order" },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);
+			}else{
+				this.set("enableRef", false);
+				obj.set("reference_id", "");
+			}
 		},
 		referenceChanges 	: function(){
 			var obj = this.get("obj");
@@ -45907,6 +45911,7 @@
 		saveRecurring 		: false,
 		showConfirm 		: false,
 		statusSrc 			: "",
+		enableRef 	 		: false,
 		isCash 				: true,
 		showDiscount 		: false,
 		showAdditionalCost 	: false,
@@ -46394,7 +46399,7 @@
 				self.set("obj", view[0]);
 				self.set("original_total", view[0].amount);
 
-				if(view[0].status=="1" || view[0].type=="Cash_Sale"){
+				if(view[0].status=="1" || view[0].type=="Cash_Purchase"){
 					self.set("statusSrc", banhji.source.paidSrc);
 				}else if(view[0].status=="2"){
 					self.set("statusSrc", banhji.source.partialyPaidSrc);
@@ -47006,22 +47011,24 @@
 			this.journalLineDS.sync();
 		},
 		//Reference					
-		loadReference 		: function(e){			
+		loadReference 		: function(){			
 			var obj = this.get("obj");
 
-			if(obj.reference_type){
-				this.set("bolReference", true);
+			if(obj.contact_id>0){
+				this.set("enableRef", true);
 
 				this.referenceDS.filter([
 					{ field: "contact_id", value: obj.contact_id },
 					{ field: "status", value: 0 },
-					{ field: "type", value: obj.reference_type }
-				]);				
+					{ field: "type", operator:"where_in", value: ["Purchase_Order","GRN"] },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);		
 			}else{
-				this.set("bolReference", false);
+				this.set("enableRef", false);
+				obj.set("reference_id", "");
 			}							
 		},
-		referenceChanges 	: function(e){
+		referenceChanges 	: function(){
 			var self = this, obj = this.get("obj");
 			
 			if(obj.reference_id>0){
@@ -48896,10 +48903,10 @@
 	**************************/
 	banhji.customerDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "contact_reports/summary"),
+		summaryDS 			: dataStore(apiUrl + "contact_reports/customer_dashboard_summary"),
 		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
 		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),		
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_customer_product"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -53905,6 +53912,14 @@
 				}								
 			}
 		},
+		loadData 			: function(){
+			this.setRate();
+			this.setTerm();
+			this.loadBalance();
+			this.loadDeposit();
+			this.loadReference();
+			this.loadRecurring();
+		},
 		//Upload
 		onSelect 			: function(e){			
 	        // Array with information about the uploaded files
@@ -54082,11 +54097,7 @@
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
 				
-				self.setRate();
-				self.setTerm();
-				self.loadDeposit();
-				self.loadReference();
-				self.loadRecurring();							
+				self.loadData();							
 			});
 		},
 		contactChanges 		: function(){
@@ -67066,8 +67077,7 @@
 			var vm = banhji.vendorDashboard;
 			banhji.userManagement.addMultiTask("Supplier Dashboard","vendors",null);
 			if(banhji.pageLoaded["vendors"]==undefined){
-				banhji.pageLoaded["vendors"] = true;
-				
+				banhji.pageLoaded["vendors"] = true;				
 								               
 			}
 
