@@ -28152,15 +28152,7 @@
 			#:banhji.cashPayment.dataSource.indexOf(data)+1#			
 		</td>		
 		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-		<td>
-			#if(contact.length>0){#
-				#if(contact[0].company==""){#
-					#=contact[0].surname# #=contact[0].name#
-				#}else{#
-					#=contact[0].company#
-				#}#
-			#}#
-		</td>		
+		<td>#=contact[0].name#</td>		
 		<td>#=reference.length>0?reference[0].number:""#</td>
 		<td data-bind="visible: showCheckNo">
 			<input type="text" class="k-textbox" 
@@ -28791,10 +28783,9 @@
 			<div class="container-960">					
 				<div id="example" class="k-content">					
 			    
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
-					</div>
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
 
 			        <h2>INVENTORY FOR SALE</h2>			    		   
 
@@ -37891,6 +37882,7 @@
 			page:1,
 			pageSize: 100
 		}),
+		currencyRateDS			: dataStore(apiUrl + "currencies/rate"),
 		//Item
 		itemDS					: new kendo.data.DataSource({
 			transport: {
@@ -38943,6 +38935,27 @@
 			fiscalDate = new Date(year.getFullYear() +"-"+ banhji.institute.fiscal_date);
 
 			return fiscalDate;
+		},
+		//Rate
+		loadRate 				: function(){
+			this.currencyRateDS.query({
+				filter:[],
+				sort:{ field:"date", dir:"desc"},
+				page:1,
+				pageSize:1000
+			});
+		},
+		getRate					: function(locale, date){
+			var rate = 1;
+			$.each(this.currencyRateDS.data(), function(index, value){
+				if(value.locale==locale && value.date<=date){
+					rate = kendo.parseFloat(value.rate);
+
+					return false;
+				}
+			});
+
+			return rate;
 		}
 	});
 	
@@ -49885,26 +49898,22 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
 
-			if(obj.status==0){
-				this.deleteDS.query({
-				  	filter: { field: "contact_id", value: obj.id },
-				  	page: 1,
-				  	pageSize: 1
-				}).then(function() {
-					var view = self.deleteDS.view();
+			this.deleteDS.query({
+			  	filter: { field: "contact_id", value: obj.id },
+			  	page: 1,
+			  	pageSize: 1
+			}).then(function() {
+				var view = self.deleteDS.view();
 
-					if(view.length>0){
-						alert("Sorry, you can not delete it because it is using now.");
-					}else{
-						obj.set("deleted", 1);
-				        self.dataSource.sync();
+				if(view.length>0){
+					alert("Sorry, you can not delete it because it is using now.");
+				}else{
+					obj.set("deleted", 1);
+			        self.dataSource.sync();
 
-				        window.history.back();				        
-					}
-				});
-			}else{
-				alert("Sorry, you can not delete it.");
-			}	    	
+			        window.history.back();				        
+				}
+			});	
 		},
 		openConfirm 			: function(){
 			this.set("showConfirm", true);
@@ -54865,7 +54874,7 @@
 				//Inventory
 				if(item.item_type_id==1){
 					//Add cogs list
-					var itemCost = (value.quantity*item.cost)/item.rate,
+					var itemCost = value.quantity*item.cost,
 					cogsID = item.cogs_account_id;
 
 					if(cogsList[cogsID]===undefined){
@@ -54988,7 +54997,7 @@
 						segments 	 		: [],								
 						dr 	 				: value.amount,
 						cr 					: 0,				
-						rate				: value.rate,
+						rate				: banhji.source.getRate(value.locale, new Date()),
 						locale				: value.locale
 					});								
 				});							
@@ -55005,7 +55014,7 @@
 						segments 	 		: [],								
 						dr 	 				: 0,
 						cr 					: value.amount,				
-						rate				: value.rate,
+						rate				: banhji.source.getRate(value.locale, new Date()),
 						locale				: value.locale
 					});						
 				});
@@ -71446,5 +71455,6 @@
 
 	$(function() {	
 		banhji.router.start();
+		banhji.source.loadRate();
 	});
 </script>
