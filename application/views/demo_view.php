@@ -29389,6 +29389,155 @@
 		</div>
 	</div>
 </script>
+<!-- <script id="itemAssembly" type="text/x-kendo-template">
+	<div class="customer-background">
+		<div class="container-960">
+			<div id="example" class="k-content">
+				
+					
+				<div class="widget">
+				    <div class="widget-head">
+				    	<span class="btn btn-primary pull-right" 
+								onclick="javascript:window.history.back()">X</span>
+				        
+				        <h4 class="heading glyphicons fins"><i></i> <span data-bind="text: lang.lang.assembly"></span></h4>							        	
+				    </div>
+				    <div class="widget-body">					
+						
+				    	<div class="row-fluid">
+				    		<div class="span6 well">							
+								<div class="row-fluid">
+									<div class="span6">	
+								
+										<div class="control-group">							
+											<label for="txtSKU"><span data-bind="text: lang.lang.code"></span> <span style="color:red">*</span></label>
+					              			<input id="txtSKU" name="txtSKU" class="k-textbox"
+						              				data-bind="value: obj.sku" 
+						              				placeholder="e.g. ID0001" 
+						              				required data-required-msg="required"
+						              				style="width: 100%;" />
+						              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
+										</div>
+										
+									</div>
+
+									<div class="span6">	
+						
+										<div class="control-group">
+											<label for="txtName"><span data-bind="text: lang.lang.items"></span> <span style="color:red">*</span></label>
+						              		<input id="txtName" name="txtName" class="k-textbox" data-bind="value: obj.name" 
+								              		placeholder="Items Name..." required data-required-msg="required"
+								              		style="width: 100%;" />
+										</div>
+							 			
+									</div>								
+								</div>
+
+								<div class="row-fluid">
+									<div class="span6">
+						
+										<div class="control-group">								
+											<label for="txtOnhand"><span data-bind="text: lang.lang.status"></span><span style="color:red">*</span></label>
+								            <input id="ddlStatus" name="ddlStatus" 
+					              				data-role="dropdownlist"
+							            		data-text-field="name"
+				           						data-value-field="id"
+				           						data-value-primitive="true" 
+							            		data-bind="source: statusList, value: obj.status"
+							            		data-option-label="(--- Select ---)"
+							            		required data-required-msg="required" style="width: 100%;" />
+										</div>																		
+														
+									</div>
+
+									<div class="span6">
+										<input type="checkbox" data-bind="checked: obj.favorite" /> <span data-bind="text: lang.lang.favorite"></span>
+									</div>															
+								</div>							
+							</div>
+							<div class="span6">							
+								<div class="row-fluid">
+					
+									<div class="control-group">								
+										<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
+							            <textarea id="txtDescription" cols="0" rows="2" class="k-textbox" 
+											data-bind="value: obj.bill_to" style="width: 100%;"></textarea>
+									</div>																		
+						
+								</div>
+
+								<div class="row-fluid">
+		
+									<div class="control-group">								
+										<label for="items"><span data-bind="text: lang.lang.select_item_for_assemply"></span></label>
+							           
+							            <input data-role="combobox"
+							                   data-placeholder="Select Item..."
+							                   data-value-primitive="true"
+							                   data-auto-bind="false"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: assembly_id,
+							                              source: itemDS"
+							                   style="width: 90%"/>
+
+							            <button type="button" data-role="button" data-bind="click: addItem"><i class="icon-plus"></i></button>
+									</div>																		
+					
+								</div>																											
+							</div>
+						</div>
+
+						<br>
+
+						<table class="table table-bordered table-primary table-striped table-vertical-center">
+					        <thead>
+					            <tr>
+					            	<th width="5%"><span data-bind="text: lang.lang.no"></span></th>				                
+					                <th width="20%"><span data-bind="text: lang.lang.items"></span></th>
+					                <th><span data-bind="text: lang.lang.description"></span></th>
+					                <th width="25%"><span data-bind="text: lang.lang.quantity"></span></th>
+					                <th width="15%"><span data-bind="text: lang.lang.p"></span></th>
+					                <th width="10%"><span data-bind="text: lang.lang.amount"></span></th>
+					                <!---<th width="1%"></th>--->
+					            </tr>
+					        </thead>
+					        <tbody data-role="listview"
+					        		data-auto-bind="false" 
+					        		data-template="itemAssembly-row-template" 
+					        		data-bind="source: assemblyDS"></tbody>				        
+					    </table>
+
+					    <br>
+
+					    <div class="row-fluid">
+						    <div class="span4 pull-right">
+								<div class="well pull-right">
+									សរុប៖	<strong data-bind="text: total"></strong>
+								</div>							
+							</div>
+						</div>
+						
+						<br>											
+								
+	
+						<div align="center">
+							<span id="notification"></span>
+
+							<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
+							<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span> </div>
+
+
+					</div>->
+				</div>
+						
+						
+			</div>
+		</div>
+	</div>
+</script> -->
+
 <script id="itemAssembly" type="text/x-kendo-template">
 	<div class="customer-background">
 		<div class="container-960">
@@ -29537,6 +29686,8 @@
 		</div>
 	</div>
 </script>
+
+
 <script id="itemAssembly-row-template" type="text/x-kendo-tmpl">
 	<tr>
 		<td>
@@ -35315,7 +35466,7 @@
 </script>
 <script id="job-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
-    	<a href="\#/item">+ Add New Job</a>
+    	<a href="\#/jobs">+ Add New Job</a>
     </strong>
 </script>
 <script id="job-list-tmpl" type="text/x-kendo-tmpl">
@@ -35555,13 +35706,19 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/vendor'>New Supplier</a></li>  				  				
+  				<li><a href='#/vendor'>New Supplier</a></li>
+  				<li><a href='#/item'>Add New Inventory</a></li>
+  				<li><a href='#/item_service'>Add New Service</a></li>
+  				<li><a href="#/non_inventory_part">Add New Other Inventory</a></li>
+  				<li style="border-bottom: 1px solid #c5c5c5;"><a href='#/fixed_asset'>Add New Fixed Assets</a></li>  				  				
   				<li><a href='#/purchase_order'>Purchase Order</a></li>
   				<li><a href='#/vendor_deposit'>Deposit</a></li>
   				<li><a href='#/grn'>Goods Received Note</a></li> 
   				<li><a href='#/purchase'>Purchase</a></li>  				
   				<li><a href='#/purchase_return'>Purchase Return</a></li>  				
-  				<li><a href='#/cash_payment'>Pay Bill</a></li>  				 				  				 				
+  				<li><a href='#/cash_payment'>Pay Bill</a></li>
+  				<li style="border-bottom: 1px solid #c5c5c5;"><a href='#/job'>Add Job</a></li>	
+  				<li><a href='#/customer_recurring'>Supplier Recurring List</a></li>  			 				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/vendor_report_center'>REPORTS</a></li>	  	
@@ -35592,7 +35749,7 @@
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href="#/customer_report_center">REPORTS</a></li>	  	
-	  	<li><a href='#/customer_setting' class='glyphicons settings'><i></i></a></li>	  		  	
+	  	<li><a href='#/customer_setting' class='glyphicons settings'><i></i></a></li>
 	</ul>
 </script>
 <script id="cashMenu" type="text/x-kendo-template">
@@ -35669,7 +35826,8 @@
   				<li><a href='#/item'><span data-bind="text: lang.lang.new_item"></span></a></li>
   				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.new_catalog"></span></a></li>
   				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.new_assembly"></span></a></li>
-  				<li><a href='#/item_adjustment'>Item Adjustment</a></li>  				 				  				 				
+  				<li style="border-bottom: 1px solid #c5c5c5;"><a href='#/item_adjustment'>Item Adjustment</a></li>
+  				<li><a href='#/customer_recurring'>Inventory Recurring List</a></li>    				 				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/item_report_center'><span data-bind="text: lang.lang.report"></span></a></li>	  	
