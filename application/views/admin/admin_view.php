@@ -313,7 +313,14 @@
                                     </td>
                                   <td></td>
                                   <td>registered date</td>
-                                  <td><input type="text" data-role="datepicker" data-bind="value: current.registered_date"></td>
+                                  <td>
+                                    <input type="text" 
+                                      data-role="datepicker" 
+                                      data-bind="value: current.registered_date"
+                                      data-format="dd-MM-yyyy"
+                                      data-parse-formats="yyyy-MM-dd"
+                                      >
+                                  </td>
                                 </tr>
                                 <tr>
                                   <td>email</td>
@@ -345,10 +352,12 @@
                                     Advance Account<br>
                                     <input id="type"
                                       data-role="dropdownlist"
-                                      data-bind="source: statusDS, value: current.status"
-                                      data-text-field="value"
+                                      data-bind="source: advanceAC, value: current.account"
+                                      data-text-field="name"
                                       data-value-field="id"
-                                      data-value-primitive="true"
+                                      data-value-primitive="false"
+                                      data-template="employee-account-list"
+                                      data-option-label="--Select One--"
                                       class="form-control col-md-7 col-xs-12"
                                       type="text"
                                     >
@@ -357,10 +366,12 @@
                                     Salary Account<br>
                                     <input id="type"
                                       data-role="dropdownlist"
-                                      data-bind="source: statusDS, value: current.status"
-                                      data-text-field="value"
+                                      data-bind="source: salaryAC, value: current.salary"
+                                      data-text-field="name"
                                       data-value-field="id"
-                                      data-value-primitive="true"
+                                      data-value-primitive="false"
+                                      data-template="employee-account-list"
+                                      data-option-label="--Select One--"
                                       class="form-control col-md-7 col-xs-12"
                                       type="text"
                                     >
@@ -369,10 +380,11 @@
                                     Currency<br>
                                     <input id="type"
                                       data-role="dropdownlist"
-                                      data-bind="source: statusDS, value: current.status"
-                                      data-text-field="value"
-                                      data-value-field="id"
+                                      data-bind="source: currencies, value: current.currency"
+                                      data-text-field="country"
+                                      data-value-field="locale"
                                       data-value-primitive="true"
+                                      data-option-label="--Select Currency"
                                       class="form-control col-md-7 col-xs-12"
                                       type="text"
                                     >
@@ -380,7 +392,16 @@
                                 </tr>
                               </table>
                             </div><!--.tab-pane-->
-                            <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3" aria-expanded="false">Tab 3</div><!--.tab-pane-->
+                            <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3" aria-expanded="false">
+                              <input data-role="upload" type="file" data-bind="events: {select: fileMan.onSelected}" data-show-file-list="false">
+                              <table>
+                                <tbody 
+                                  data-role="listview"
+                                  data-auto-bind="false"
+                                  data-bind="source: fileMan.dataSource" 
+                                  data-template="attachment-list"></tbody>
+                              </table>
+                            </div><!--.tab-pane-->
                           </div><!--.tab-content-->
                         </section>
                         <div class="box-generic">
@@ -397,15 +418,24 @@
                     </section>
                 </div>
             </div>
-
-
         </div>
+        <div id="ntf1" data-role="notification"></div>
       </div>
+    </script>
+    <script type="text/x-kendo-template" id="employee-account-list">
+      <div>
+        <span>#=number#</span>-<span>#=name#</span>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="attachment-list">
+      <tr>
+        <td>#=name# </td><td><button data-bind="click: onRemove">X</button></td>
+      </tr>
     </script>
     <script type="text/x-kendo-template" id="company-edit">
       <!--Edit Company-->
       <div class="page-content">
-          <div class="container" >
+        <div class="container" >
             <div class="row">
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <section class="box-typical edit-company">
@@ -458,7 +488,12 @@
                               <td>Country</td>
                               <td>:</td>
                               <td>
-                                <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.country.name">
+                                <input type="text" 
+                                  class="form-control" 
+                                  data-role="dropdownlist"
+                                  data-bind="source: countries, value: current.country"
+                                  data-text-field="name"
+                                  data-value-field="id">
                               </td>
                             </tr>
                             <tr>
@@ -540,7 +575,7 @@
                         </article>
                         <div class="box-generic">
                           <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
-                              <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
+                              <span class="glyphicon glyphicon-ok"><i></i></span>
                               &nbsp; Save
                           </button>
                           &nbsp;
@@ -553,6 +588,7 @@
                 </div>
             </div>
         </div>
+        <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
     <!-- user placeholder -->
@@ -985,6 +1021,7 @@
                 </div>
             </div>
         </div>
+        <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-action-edit">
@@ -1108,6 +1145,7 @@
                 </div>
             </div>
         </div>
+        <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
     <!-- cognito -->
@@ -1160,6 +1198,119 @@
       var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
       var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
 
+      banhji.fileManagement = kendo.observable({
+        dataSource: new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/attachments',
+              type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            create  : {
+              url: baseUrl + 'api/attachments',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            update  : {
+              url: baseUrl + 'api/attachments',
+              type: "PUT",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            destroy  : {
+              url: baseUrl + 'api/attachments',
+              type: "DELETE",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 50
+        }),
+        fileArray     : [],
+        onRemove      : function(e) {
+          banhji.fileManagement.dataSource.remove(e.data);
+        },
+        onSelected    : function(e) {
+          var files = e.files;
+          var key = 'ATTACH_' + JSON.parse(localStorage.getItem('userData/user')).institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files[0].name;
+          banhji.fileManagement.dataSource.add({
+            transaction_id  : 0,
+            type            : "Contact",
+            name            : files[0].name,
+            contact_id      : null,
+            description     : "",
+            key             : key,
+            url             : "https://s3-ap-southeast-1.amazonaws.com/banhji/"+key,
+            created_at      : new Date(),
+            file: files[0].rawFile
+          });
+        },
+        save                : function(contact_id){
+          $.each(banhji.fileManagement.dataSource.data(), function(index, value){ 
+            banhji.fileManagement.dataSource.at(index).set("contact_id", contact_id);
+            if(!value.id){
+              var params = { 
+                Body: value.file, 
+                Key: value.key
+              };
+              bucket.upload(params, function (err, data) {                    
+                  // console.log(err, data);
+                  // var url = data.Location;               
+              });
+            }                
+          });
+
+          banhji.fileManagement.dataSource.sync();
+          var saved = false;
+          banhji.fileManagement.dataSource.bind("requestEnd", function(e){
+            //Delete File
+            if(e.type=="destroy"){
+              if(saved==false && e.response){
+                saved = true;
+                var response = e.response.results;
+                $.each(response, function(index, value){                  
+                  var params = {
+                    Delete: { /* required */
+                      Objects: [ /* required */
+                        {
+                          Key: value.data.key
+                        }
+                      ]
+                    }
+                  };
+                  bucket.deleteObjects(params, function(err, data) {
+                    //console.log(err, data);
+                  });
+                });
+              }
+            }
+            banhji.fileManagement.dataSource.data([]);
+          });
+        }
+      });
       banhji.profileDS = new kendo.data.DataSource({
         transport: {
           read  : {
@@ -1617,6 +1768,122 @@
           serverPaging: true,
           pageSize: 50
         }),
+        currencies : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + "api/currencies",
+              type: "GET",
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id },
+              dataType: 'json'
+            },        
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  page: options.page,
+                  limit: options.pageSize,
+                  filter: options.filter,
+                  sort: options.sort
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverSorting: true,
+          serverPaging: true,
+          page:1,
+          pageSize: 100
+        }),
+        advanceAC : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + "api/accounts",
+              type: "GET",
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id },
+              dataType: 'json'
+            },        
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  page: options.page,
+                  limit: options.pageSize,
+                  filter: options.filter,
+                  sort: options.sort
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          filter: [
+            { field:"account_type_id", value: 11 },
+            { field:"status", value: 1 }
+          ],
+          sort: { field:"number", dir:"asc" },
+          batch: true,
+          serverFiltering: true,
+          serverSorting: true,
+          serverPaging: true,
+          page:1,
+          pageSize: 100
+        }),
+        salaryAC  : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + "api/accounts",
+              type: "GET",
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id },
+              dataType: 'json'
+            },        
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  page: options.page,
+                  limit: options.pageSize,
+                  filter: options.filter,
+                  sort: options.sort
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          filter: [
+            { field:"account_type_id", value: 37 },
+            { field:"status", value: 1 }
+          ],
+          sort: { field:"number", dir:"asc" },
+          batch: true,
+          serverFiltering: true,
+          serverSorting: true,
+          serverPaging: true,
+          page:1,
+          pageSize: 100
+        }),
+        fileMan   : banhji.fileManagement,
         setCurrent: function(current) {
           this.set('current', current);
         },
@@ -1675,6 +1942,7 @@
           banhji.employees.dataSource.insert(0, {
             name: null,
             gender: null,
+            number: null,
             role: {id: null, name: null},
             status: 1,
             phone: null,
@@ -1683,6 +1951,9 @@
             bill_to: null,
             ship_to: null,
             abbr: null,
+            currency: null,
+            account: {id: 0, name: null},
+            salary: {id: 0, name: null},
             registered_date: new Date()
           });
           banhji.employees.setCurrent(banhji.employees.dataSource.at(0));
@@ -1711,7 +1982,21 @@
           banhji.employees.dataSource.sync();
           banhji.employees.dataSource.bind('requestEnd', function(e){
             if(e.response) {
-              //
+              banhji.employees.fileMan.save(e.response.results[0].id);
+              banhji.employees.addNew();
+              $("#ntf1").data("kendoNotification").success("Data saved.");
+            } else {
+               $("#ntf1").data("kendoNotification").error("Operation failed");
+            }
+          });
+        },
+        saveClose: function() {
+          banhji.employees.dataSource.sync();
+          banhji.employees.dataSource.bind('requestEnd', function(e){
+            if(e.response) {
+              $("#ntf1").data("kendoNotification").success("Data saved.");
+              banhji.employees.fileMan.save(e.response.results[0].id);
+              banhji.router.navigate("");
             } else {
               //
             }
@@ -2045,7 +2330,7 @@
           });
         },
         save: function() {
-          if(banhji.userDS.at(0).isNew()) {
+          if(banhji.users.get('current').isNew()) {
             // signup with Cognito
             // using cognito to sign up
             var attributeList = [];
@@ -2083,15 +2368,15 @@
                         }
                       });
                     });
-                  } else {
-                    results.innerHTML = 'Nothing to upload.';
                   }
                 } else {
                   banhji.userDS.sync();
                   banhji.userDS.bind('requestEnd', function(e){
                     var res = e.response, type = e.type;
                     if(res.results.length > 0) {
-                      console.log('user created.');
+                      $("#ntf1").data("kendoNotification").success("Data saved.");
+                    } else {
+                      $("#ntf1").data("kendoNotification").error("Operation failed.");
                     }
                   });
                 }
@@ -2117,15 +2402,15 @@
                         }
                       });
                     });
-                  } else {
-                    results.innerHTML = 'Nothing to upload.';
                   }
                 } else {
                   banhji.userDS.sync();
                   banhji.userDS.bind('requestEnd', function(e){
                     var res = e.response, type = e.type;
                     if(res.results.length > 0) {
-                      console.log('user created.');
+                      $("#ntf1").data("kendoNotification").success("Data saved.");
+                    } else {
+                      $("#ntf1").data("kendoNotification").error("Operation failed.");
                     }
                   });
                 }
@@ -2204,8 +2489,13 @@
         save: function() {
           this.dataStore.sync();
           this.dataStore.bind('rquestEnd', function(e){
-            if(e.response.results.length > 0) {
+            var res = e.response;
+            if(res.results.length > 0) {
+              $("#ntf1").data("kendoNotification").success("Data saved.");
               institute.showIn('#companyInfoPlaceholder', instInfo);
+              console.log("kdsslfds");
+            } else {
+              $("#ntf1").data("kendoNotification").error("Operation failed.");
             }
           });
         }
@@ -2412,6 +2702,7 @@
         if(banhji.profileDS.data()[0] && banhji.profileDS.data()[0].role != 1) {
           banhji.router.navigate("profile/"+banhji.profileDS.data()[0].id);
         }
+        banhji.fileManagement.dataSource.filter({field: 'contact_id', value: banhji.employees.get('current').id});
         layout.showIn("#container", empEdit);
       });
 
