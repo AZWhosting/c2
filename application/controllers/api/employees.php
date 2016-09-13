@@ -60,12 +60,14 @@ class Employees extends REST_Controller {
 		if($employees->exists()) {
 			foreach($employees as $row) {
 				$role = $row->contact_type->get();
+
 				$data[] = array(
 					'id' => $row->id,
 					'name' => $row->name,
 					'gender' => $row->gender,
 					'abbr' => $row->abbr,
 					'dob' => $row->dob,
+					'number' => $row->number,
 					'phone' => $row->phone,
 					'email' => $row->email,
 					'user_id' => $row->user_id,
@@ -73,6 +75,9 @@ class Employees extends REST_Controller {
 					'status' => $row->status,
 					'ship_to'=> $row->ship_to,
 					'bill_to'=> $row->bill_to,
+					'locale' => $row->locale,
+					'account'=> array("id"=>$row->account_id),
+					'salary'=> array("id"=>$row->salary_account_id),
 					'registered_date' => $row->registered_date,
 					'role'    => $role->exists() ? array('id'=> $role->id, 'name'=>$role->name, 'abbr' => $role->abbr) : array()
 				);
@@ -115,6 +120,10 @@ class Employees extends REST_Controller {
 			$employees->bill_to = $res->bill_to;
 			$employees->registered_date = $res->registered_date;
 			$employees->phone = $res->phone;
+			$employees->locale= $res->locale;
+			$employees->memo = $res->memo;
+			$employees->account_id = $res->account->id;
+			$employees->salary_account_id = $res->salary->id;
 			$employees->address = $res->address;
 			$employees->status = $res->status;
 
@@ -161,7 +170,10 @@ class Employees extends REST_Controller {
 			$employees->bill_to = $res->bill_to;
 			$employees->registered_date = $res->registered_date;
 			$employees->phone = $res->phone;
+			$employees->locale = $res->locale;
+			$employees->memo = $res->memo;
 			$employees->account_id = $res->account->id;
+			$employees->salary_account_id = $res->salary->id;
 			$employees->address = $res->address;
 			$employees->status = $res->status;
 
@@ -175,6 +187,8 @@ class Employees extends REST_Controller {
 					'number' => $employees->number,
 					'ship_to' => $employees->ship_to,
 					'bill_to' => $employees->bill_to,
+					'memo' => $employees->memo,
+					'locale' => $employees->locale,
 					'registered_date' => $employees->registered_date,
 					'address' => $employees->address,
 					'phone' => $employees->phone,
