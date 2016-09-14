@@ -35101,7 +35101,193 @@
 **************************** -->
 <script id="reportDashboard" type="text/x-kendo-template" >
 	<div class="row-fluid">
-		<div class="span12 report-module">
+
+		<div class="span6 report-module">
+			<h2>No. of Reports/lists by Module</h2>
+			<ul>
+				<li>
+					<a href="#/customer_report_center">
+						<img title="Report Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+					</a>
+					<div class="span12">17</div>
+				</li>
+				<li>
+					<a href="#/vendor_report_center">
+						<img title="Report Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+					</a>
+					<div class="span12">16</div>
+				</li>
+				<li>
+					<a href="#/item_report_center">
+						<img title="Report Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+					</a>
+					<div class="span12">12</div>
+				</li>
+				<li>
+					<a href="#/cash_report_center">
+						<img title="Report Cash" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
+					</a>
+					<div class="span12">6</div>
+				</li>
+				<li>
+					<a href="#/accounting_report_center">
+						<img title="Report Accounting" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
+					</a>
+					<div class="span12">16</div>
+				</li>
+			</ul>
+
+			<div class="row">
+				<div class="span12" style="margin-top: 20px;">
+					<div class="row-fluid cash-payments">
+						<h2 style="width: 100%;">
+							What is your ability to meet your present obligations (settling debts or possibly meet other 
+							unforeseen demand for cash payments)?
+						</h2>
+						<div class="row">
+							<div class="span12" style="margin-bottom: 20px;">
+								<div class="span6 capital-box">
+									<p class="first-text">Current Ratio</p>
+									<span>3</span>
+									<p class="month">12 months Average</p>
+								</div>
+								<div class="span6 capital-box">
+									<p class="first-text">Quick Ratio</p>
+									<span>1.5</span>
+									<p class="month">12 months Average</p>
+								</div>
+								<div class="span6 capital-box">
+									<p class="first-text">Cash Ratio</p>
+									<span>0.3</span>
+									<p class="month">12 months Average</p>
+								</div>
+								<div class="span6 capital-box">
+									<p class="first-text">Debt Service Coverage Ratio</p>
+									<span>5</span>
+									<p class="month">12 months Average</p>
+								</div>
+							</div>
+
+							<div class="span12 ">
+								<div class="capital-chart">
+									Chart
+								</div>				
+							</div>
+						</div>
+					</div>
+
+							
+				</div>
+			</div>
+
+		</div>
+		<div class="span6">
+			<div class="row">
+				<div class="span12 capital-management" style="margin-bottom: 20px;">
+					<h2 >How efficient is your working capital management? </h2>
+					<div class="row">
+						<div class="span12" style="margin-bottom: 20px;">
+							<div class="span6 capital-box">
+								<p class="first-text">Receivable Collection Days</p>
+								<span>30</span>
+								<p class="month">12 months Average</p>
+							</div>
+							<div class="span6 capital-box">
+								<p class="first-text">Payable Payment Days</p>
+								<span>20</span>
+								<p class="month">12 months Average</p>
+							</div>
+							<div class="span6 capital-box">
+								<p class="first-text">Inventory Turnover Days</p>
+								<span>40</span>
+								<p class="month">12 months Average</p>
+							</div>
+							<div class="span6 capital-box">
+								<p class="first-text">Cash Conversion Cycle</p>
+								<span>50</span>
+								<p class="month">12 months Average</p>
+							</div>
+						</div>
+						<div class="span12">
+							<div class="capital-chart">
+								Chart
+							</div>				
+						</div>
+					</div>
+				</div>
+
+				<div class="span12 financial-block" style="padding: 0 15px;">
+					<h2 >How safe is your long term financial position?</h2>
+						<div class="row-fluid">
+							<div class="span12 financial-box">
+								<p class="first-text">Debt/ Equity Ratio</p>
+								<span>3</span>
+								<p class="month">12 months Average</p>
+							</div>
+							<div class="span12 financial-box">
+								<p class="first-text">Debt/ Asset Ratio</p>
+								<span>1.5</span>
+								<p class="month">1.5 months Average</p>
+							</div>
+						</div>
+					</div>
+				</div>	
+
+				<div class="span12 business-block">
+					<h2 style="margin-left:-15px;">How safe is your long term financial position?</h2>
+					<div class="row">
+						<div class="span4 business-box">
+							<p class="first-text">Earning before interest & tax</p>
+							<span>10%</span>
+							<p class="month">12 months Average</p>
+						</div>
+						<div class="span4 business-box" style="margin-left: 3px; width: 25%;">
+							<p class="first-text">Return on Asset</p>
+							<span>2</span>
+							<p class="month">12 months Average</p>
+						</div>
+						<div class="span4 business-box" style="width: 37%;">
+							<p class="first-text">Return on Capital Employed</p>
+							<span>20%</span>
+							<p class="month">12 months Average</p>
+						</div>
+					</div>
+				</div> 
+
+				<div class="span12 revenue">
+					<h2 style="margin-left: -15px;">Revenue Performance</h2>
+					<div class="row">
+						<div class="span12" style="margin-bottom:20px;">
+							<div class="row">
+								<div class="span6 revenue-box" style="width:49%; margin-right: 3px;">
+									<p class="first-text">Gross Margin</p>
+									<span>13%</span>
+									<p class="month">12 months Average</p>
+								</div>
+								<div class="span6 revenue-box" style="width:50%;">
+									<p class="first-text">Average Sale Growth Rate</p>
+									<span>10%</span>
+									<p class="month">12 months Average</p>
+								</div>
+							</div>
+						</div>
+						<div class="span12">
+							<div class="row">
+								<div class="capital-chart">
+									Chart
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>	
+
+
+		</div>
+
+		<!-- <div class="span12 report-module">
 			<h2>No. of Reports/lists by Module</h2>
 			<ul>
 				<li>
@@ -35147,9 +35333,9 @@
 					<div class="span12">16</div>
 				</li>
 			</ul>
-		</div>
+		</div> -->
 
-		<div class="span12 capital-management">
+		<!-- <div class="span12 capital-management">
 			<h2>How efficient is your working capital management? </h2>
 			<div class="span6">
 				<div class="span6 capital-box">
@@ -35270,9 +35456,7 @@
 					Chart
 				</div>
 			</div>
-		</div>
-
-		
+		</div> -->
 
 	</div>
 </script>

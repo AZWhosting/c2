@@ -213,7 +213,7 @@
 							</div>
 							<div class="span6">
 								<p>Position</p>
-								<table class="position">
+								<table class="position" style="width: 100%;">
 									<tr>
 										<td>Assets</td>
 										<td></td>
@@ -236,12 +236,12 @@
 						<div class="span12">
 							<div class="span6">
 								<a href="#/customer_balance">
-									<div class="widget-body alert-info welcome-nopadding">
+									<div class="widget-body alert-info welcome-nopadding" >
 										<p>RECEIVABLES</p>
 								
 										<div align="center" class="text-large strong" data-bind="text: ar"></div>
 									
-										<table width="100%">
+										<table width="100%" >
 											<tr align="center">
 												<td>										
 													<span data-bind="text: ar_open"></span>
@@ -266,7 +266,7 @@
 							<div class="span6">
 								
 
-								<div class="widget-body  alert-info welcome-nopadding">
+								<div class="widget-body  alert-info welcome-nopadding" style="width: 100%;">
 									<p>PAYABLES</p>
 							
 									<div align="center" class="text-large strong" data-bind="text: ap"></div>
@@ -9073,13 +9073,15 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i> </a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab2-4" data-toggle="tab"><i></i> </a>
+							            <li class="span1 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i> </a>
+							            </li>
+							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
 							            </li>						            
-							            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
 							            </li>						            								            
 							        </ul>
 							    </div>
@@ -9088,16 +9090,14 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-4">						            
+							        <div class="tab-pane active" id="tab1-5">						            
 							            <table class="table table-borderless table-condensed cart_total">							            
 											<tr>
 												<td>
-													Balance:
-													<span data-bind="text: balance"></span>
-												</td>
+													Balance: <span data-bind="text: balance"></span>
+												</td>										
 												<td>
-													Credit Allowed:
-													<span data-format="n" data-bind="text: obj.credit_allowed"></span>
+													Credit Allowed: <span data-format="n" data-bind="text: obj.credit_allowed"></span>
 												</td>
 											</tr>
 								            <tr>
@@ -9111,13 +9111,66 @@
 															required data-required-msg="required"
 															style="width:100%;" />
 								            	</td>
-								            </tr>
-								            <tr>
+								            </tr>							           
+											<tr>							            				
+												<td>
+								            		Reference	            						            		
+								            	</td>
+								            	<td>
+													<input data-role="combobox"
+															data-template="reference-list-tmpl"
+															data-auto-bind="false"
+								              				data-value-primitive="true"
+															data-text-field="number" 
+								              				data-value-field="id"						              				 
+								              				data-bind="value: obj.reference_id,
+								              							enabled: enableRef,
+								              							source: referenceDS,						              							
+								              							events:{change: referenceChanges}" 
+								              				style="width: 100%" />
+												</td>
+											</tr>	
+							            </table>						            
+							        </div>
+							        <!-- // Options Tab content END -->
+
+							        <!-- Address Tab content -->
+							        <div class="tab-pane" id="tab2-5">
+							        	Billing Address
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
+										
+										Delivery Address
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
+												
+							        </div>
+							        <!-- // Address Tab content END -->
+
+							        <!-- Info Tab content -->
+							        <div class="tab-pane" id="tab3-5">
+							        	
+										<table class="table table-borderless table-condensed cart_total">							                        	
+											<tr>
+												<td>Sale Rep</td>
+												<td>
+													<input id="cbbEmployee" name="cbbEmployee"
+														   data-role="combobox"
+										                   data-value-primitive="true"
+										                   data-header-template="employee-header-tmpl"
+										                   data-template="contact-list-tmpl"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.employee_id,
+										                              source: employeeDS"
+										                   data-placeholder="Type Name..." 
+										                   style="width: 100%" />
+												</td>
+											</tr>
+											<tr>
 												<td>Segments</td>
 												<td>
 													<select data-role="multiselect"
 														   data-value-primitive="true"
-														   data-header-template="segment-header-tmpl"							   
+														   data-header-template="segment-header-tmpl"
 														   data-item-template="segment-list-tmpl"				    
 														   data-value-field="id" 
 														   data-text-field="code"
@@ -9136,42 +9189,31 @@
 														   data-header-template="job-header-tmpl"
 														   data-template="job-list-tmpl"
 														   data-auto-bind="false"				                
-										                   data-value-primitive="true"									                   				   
+										                   data-value-primitive="true"		   
 										                   data-text-field="name"
 										                   data-value-field="id"
 										                   data-bind="value: obj.job_id, 
 										                   			source: jobDS"
-										                   data-option-label="Add job..." 
+										                   data-option-label="Select job..." 
 										                   style="width: 100%" />										
 												</td>
 											</tr>											
-							            </table>						            
-							        </div>
-							        <!-- // Options Tab content END -->
-
-							        <!-- Address Tab content -->
-							        <div class="tab-pane" id="tab2-4">
-							        	Billing Address
-										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
-										
-										Delivery Address
-										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
+							            </table>
 												
 							        </div>
-							        <!-- // Address Tab content END -->
+							        <!-- // Info Tab content END -->
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab3-4">
-
-							        	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>						            	
+							        <div class="tab-pane" id="tab4-5">
+							         	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
 							            
 							            <input id="files" name="files"
-							                   type="file"
-							                   data-role="upload"
-							                   data-show-file-list="false"
-							                   data-bind="events: { 
-					                   				select: onSelect
-							                   }">
+						                   type="file"
+						                   data-role="upload"
+						                   data-show-file-list="false"
+						                   data-bind="events: { 
+				                   				select: onSelect
+						                   }">
 
 							            <table class="table table-bordered">
 									        <thead>
@@ -9189,10 +9231,10 @@
 									    </table>
 
 							        </div>
-							        <!-- // Attach Tab content END -->	        
+							        <!-- // Attach Tab content END -->						        
 
 							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab4-4">							            	
+							        <div class="tab-pane" id="tab5-5">							            	
 							            
 							            <div class="span5">
 
@@ -9626,82 +9668,144 @@
 
 						<div class="box-generic" style="height: 190px;">
 
-						    <!-- Tabs Heading -->
-						    <div class="tabsbar tabsbar-2">
-						        <ul class="row-fluid row-merge">
-						        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i></a>
-						            </li>
-						            <li class="span1 glyphicons adress_book"><a href="#tab2-4" data-toggle="tab"><i></i> Address</a>
-						            </li>						            
-						            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
-						            </li>						            
-						            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i></a>
-						            </li>						            								            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
+							    <!-- Tabs Heading -->
+							    <div class="tabsbar tabsbar-2">
+							        <ul class="row-fluid row-merge">
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i> </a>
+							            </li>
+							            <li class="span1 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i> </a>
+							            </li>
+							            <li class="span1 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i> </a>
+							            </li>
+							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+							            </li>						            
+							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
+							            </li>						            								            
+							        </ul>
+							    </div>
+							    <!-- // Tabs Heading END -->
 
-						    <div class="tab-content">
+							    <div class="tab-content">
 
-						    	<!-- Options Tab content -->
-						        <div class="tab-pane active" id="tab1-4">						            
-						            <table class="table table-borderless table-condensed cart_total">								            							           
-										<tr>
-											<td>Job</td>
-											<td>
-												<input id="ddlJob" name="ddlJob"
-													   data-role="dropdownlist"
-													   data-header-template="job-header-tmpl"
-													   data-template="job-list-tmpl"
-													   data-auto-bind="false"				                
-									                   data-value-primitive="true"									                   				   
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.job_id, 
-									                   			source: jobDS"
-									                   data-option-label="Add job..." 
-									                   style="width: 100%" />										
-											</td>
-										</tr>
-										<tr>							            				
-											<td>
-							            		Reference	            						            		
-							            	</td>
-							            	<td>
-												<input data-role="combobox"
-														data-template="reference-list-tmpl"
-														data-auto-bind="false"
-							              				data-value-primitive="true"
-														data-text-field="number" 
-							              				data-value-field="id"						              				 
-							              				data-bind="value: obj.reference_id,
-							              							enabled: enableRef,
-							              							source: referenceDS,						              							
-							              							events:{change: referenceChanges}" 
-							              				placeholder="Select Reference..." style="width: 100%" />
-											</td>
-										</tr>	
-						            </table>						            
-						        </div>
-						        <!-- // Options Tab content END -->
+							    	<!-- Options Tab content -->
+							        <div class="tab-pane active" id="tab1-5">						            
+							            <table class="table table-borderless table-condensed cart_total">							            
+											<tr>
+												<td>
+													Balance: <span data-bind="text: balance"></span>
+												</td>										
+												<td>
+													Credit Allowed: <span data-format="n" data-bind="text: obj.credit_allowed"></span>
+												</td>
+											</tr>
+								            <tr>
+								            	<td>Expected Date</td>
+								            	<td>
+								            		<input id="txtDueDate" name="txtDueDate" 
+															data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd" 
+															data-bind="value: obj.due_date" 
+															required data-required-msg="required"
+															style="width:100%;" />
+								            	</td>
+								            </tr>							           
+											<tr>							            				
+												<td>
+								            		Reference	            						            		
+								            	</td>
+								            	<td>
+													<input data-role="combobox"
+															data-template="reference-list-tmpl"
+															data-auto-bind="false"
+								              				data-value-primitive="true"
+															data-text-field="number" 
+								              				data-value-field="id"						              				 
+								              				data-bind="value: obj.reference_id,
+								              							enabled: enableRef,
+								              							source: referenceDS,						              							
+								              							events:{change: referenceChanges}" 
+								              				style="width: 100%" />
+												</td>
+											</tr>	
+							            </table>						            
+							        </div>
+							        <!-- // Options Tab content END -->
 
-						        <!-- Address Tab content -->
-						        <div class="tab-pane" id="tab2-4">
-						        	Billing Address
-									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
-									
-									Delivery Address
-									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
-											
-						        </div>
-						        <!-- // Address Tab content END -->
+							        <!-- Address Tab content -->
+							        <div class="tab-pane" id="tab2-5">
+							        	Billing Address
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
+										
+										Delivery Address
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
+												
+							        </div>
+							        <!-- // Address Tab content END -->
 
-						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab3-4">
+							        <!-- Info Tab content -->
+							        <div class="tab-pane" id="tab3-5">
+							        	
+										<table class="table table-borderless table-condensed cart_total">							                        	
+											<tr>
+												<td>Sale Rep</td>
+												<td>
+													<input id="cbbEmployee" name="cbbEmployee"
+														   data-role="combobox"
+										                   data-value-primitive="true"
+										                   data-header-template="employee-header-tmpl"
+										                   data-template="contact-list-tmpl"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.employee_id,
+										                              source: employeeDS"
+										                   data-placeholder="Type Name..." 
+										                   style="width: 100%" />
+												</td>
+											</tr>
+											<tr>
+												<td>Segments</td>
+												<td>
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-header-template="segment-header-tmpl"
+														   data-item-template="segment-list-tmpl"				    
+														   data-value-field="id" 
+														   data-text-field="code"
+														   data-bind="value: obj.segments, 
+														   			source: segmentItemDS,
+														   			events:{ change: segmentChanges }"
+														   data-placeholder="Add Segment.."				   
+														   style="width: 100%" /></select>
+												</td>
+											</tr>
+											<tr>
+												<td>Job</td>
+												<td>
+													<input id="ddlJob" name="ddlJob"
+														   data-role="dropdownlist"
+														   data-header-template="job-header-tmpl"
+														   data-template="job-list-tmpl"
+														   data-auto-bind="false"				                
+										                   data-value-primitive="true"		   
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.job_id, 
+										                   			source: jobDS"
+										                   data-option-label="Select job..." 
+										                   style="width: 100%" />										
+												</td>
+											</tr>											
+							            </table>
+												
+							        </div>
+							        <!-- // Info Tab content END -->
 
-						        	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
-						            
-						            <input id="files" name="files"
+							        <!-- Attach Tab content -->
+							        <div class="tab-pane" id="tab4-5">
+							         	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
+							            
+							            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
 						                   data-show-file-list="false"
@@ -9709,142 +9813,142 @@
 				                   				select: onSelect
 						                   }">
 
-						            <table class="table table-bordered">
-								        <thead>
-								            <tr>			                
-								                <th>File Name</th>
-								                <th>Description</th>
-								                <th>Date</th>
-								                <th style="width: 13%;"></th>                			                
-								            </tr> 
-								        </thead>
-								        <tbody data-role="listview" 
-								        		data-template="attachment-list-tmpl" 
-								        		data-auto-bind="false"
-								        		data-bind="source: attachmentDS"></tbody>			        
-								    </table>
+							            <table class="table table-bordered">
+									        <thead>
+									            <tr>			                
+									                <th>File Name</th>
+									                <th>Description</th>
+									                <th>Date</th>
+									                <th style="width: 13%;"></th>                			                
+									            </tr> 
+									        </thead>
+									        <tbody data-role="listview" 
+									        		data-template="attachment-list-tmpl" 
+									        		data-auto-bind="false"
+									        		data-bind="source: attachmentDS"></tbody>			        
+									    </table>
 
-						        </div>
-						        <!-- // Attach Tab content END -->						        
+							        </div>
+							        <!-- // Attach Tab content END -->						        
 
-						        <!-- Recuring Tab content -->
-						        <div class="tab-pane" id="tab4-4">							            	
-						            
-						            <div class="span5">
+							        <!-- Recuring Tab content -->
+							        <div class="tab-pane" id="tab5-5">							            	
+							            
+							            <div class="span5">
 
-							        	<input data-role="combobox"
-						                   data-placeholder="Select existing recuring ..."
-						                   data-value-primitive="true"
-						                   data-auto-bind="false"
-						                   data-text-field="recurring_name"
-						                   data-value-field="id"
-						                   data-bind="value: obj.recurring_id,
-						                              source: recurringDS,
-						                              events:{ change:applyRecurring }"
-						                   style="width: 100%" />
+								        	<input data-role="combobox"
+							                   data-placeholder="Select existing recuring ..."
+							                   data-value-primitive="true"
+							                   data-auto-bind="false"
+							                   data-text-field="recurring_name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.recurring_id,
+							                              source: recurringDS,
+							                              events:{ change:applyRecurring }"
+							                   style="width: 100%" />
 
-						                <br><br>
+							                <br><br>
 
-						                <div align="right">
-							                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
+							                <div align="right">
+								                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
+								            </div>
+
 							            </div>
 
-						            </div>
+							            <div class="span7">
 
-						            <div class="span7">
-
-							            <table style="width: 100%">
-							            	<tr align="right">
-							            		<td>
-							            			Name
-							            		</td>
-							            		<td>
-							            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
-							            					placeholder="Recurring name.." 
-							            					style="width: 40%;" />
-							            			Start
-									                <input data-role="datepicker"
-															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd"
-															data-bind="value: obj.start_date"
-															style="width: 40%;" />
-							            		</td>
-							            	</tr>
-							            	<tr align="right">
-							            		<td>
-								            		Every
-								            	</td>
-							            		<td>
-								            		<input data-role="numerictextbox"
-									                   data-format="n0"
-									                   data-min="0"								                   
-									                   data-bind="value: obj.interval"
-									                   style="width: 45%;" />
-
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
-										                              events: { change: frequencyChanges }"
-										                   style="width: 45%;" />
-								            	</td>
-							            	</tr>
-								            <tr align="right">
-								            	<td>
-								            		On
-								            	</td>							            	
-								            	<td>
-
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.month,
-										                   			  visible: showMonth,
-										                              source: monthList"										                   
+								            <table style="width: 100%">
+								            	<tr align="right">
+								            		<td>
+								            			Name
+								            		</td>
+								            		<td>
+								            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
+								            					placeholder="Recurring name.." 
+								            					style="width: 40%;" />
+								            			Start
+										                <input data-role="datepicker"
+																data-format="dd-MM-yyyy"
+																data-parse-formats="yyyy-MM-dd"
+																data-bind="value: obj.start_date"
+																style="width: 40%;" />
+								            		</td>
+								            	</tr>
+								            	<tr align="right">
+								            		<td>
+									            		Every
+									            	</td>
+								            		<td>
+									            		<input data-role="numerictextbox"
+										                   data-format="n0"
+										                   data-min="0"								                   
+										                   data-bind="value: obj.interval"
 										                   style="width: 45%;" />
 
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.month_option,
-										                   			  visible: showMonthOption,
-										                              source: monthOptionList,
-										                              events: { change: monthOptionChanges }"										                   
-										                   style="width: 45%;" />
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.frequency,
+											                              source: frequencyList,
+											                              events: { change: frequencyChanges }"
+											                   style="width: 45%;" />
+									            	</td>
+								            	</tr>
+									            <tr align="right">
+									            	<td>
+									            		On
+									            	</td>							            	
+									            	<td>
 
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.week,
-										                   			  visible: showWeek,
-										                              source: weekDayList"										                  
-										                   style="width: 45%;" />										            
-										        
-								            		<input data-role="dropdownlist"									                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.day,
-										                   			  visible: showDay,
-										                              source: dayList"										                   
-										                   style="width: 45%;" />
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.month,
+											                   			  visible: showMonth,
+											                              source: monthList"										                   
+											                   style="width: 45%;" />
 
-								            	</td>
-								            </tr>
-							            </table>
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.month_option,
+											                   			  visible: showMonthOption,
+											                              source: monthOptionList,
+											                              events: { change: monthOptionChanges }"										                   
+											                   style="width: 45%;" />
 
-							        </div>									     
-						            
-						        </div>
-						        <!-- // Recuring Tab content END -->						        								        
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.week,
+											                   			  visible: showWeek,
+											                              source: weekDayList"										                  
+											                   style="width: 45%;" />										            
+											        
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.day,
+											                   			  visible: showDay,
+											                              source: dayList"										                   
+											                   style="width: 45%;" />
 
-						    </div>
-						</div>
+									            	</td>
+									            </tr>
+								            </table>
+
+								        </div>									     
+							            
+							        </div>
+							        <!-- // Recuring Tab content END -->						        								        
+
+							    </div>
+							</div>
 
 				    </div>
 				</div>
@@ -16298,13 +16402,15 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i> </a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab2-4" data-toggle="tab"><i></i> </a>
+							            <li class="span1 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i> </a>
+							            </li>
+							            <li class="span1 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i> </a>
+							            </li>
+							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
 							            </li>						            
-							            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
-							            </li>						            
-							            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i> Recuring</a>
+							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
 							            </li>						            								            
 							        </ul>
 							    </div>
@@ -16313,18 +16419,65 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-4">						            
-							            <table class="table table-borderless table-condensed cart_total">										
+							        <div class="tab-pane active" id="tab1-5">						            
+							            <table class="table table-borderless table-condensed cart_total">							            
+											<tr>
+												<td>
+													Balance: <span data-bind="text: balance"></span>
+												</td>										
+												<td>
+													Credit Allowed: <span data-format="n" data-bind="text: obj.credit_allowed"></span>
+												</td>
+											</tr>
 								            <tr>
+								            	<td>Expected Date</td>
+								            	<td>
+								            		<input id="txtDueDate" name="txtDueDate" 
+															data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd" 
+															data-bind="value: obj.due_date" 
+															required data-required-msg="required"
+															style="width:100%;" />
+								            	</td>
+								            </tr>							           
+											<tr>							            				
 												<td>
-													Balance:
-													<span data-bind="text: balance"></span>
+								            		Reference	            						            		
+								            	</td>
+								            	<td>
+													<input data-role="combobox"
+															data-template="reference-list-tmpl"
+															data-auto-bind="false"
+								              				data-value-primitive="true"
+															data-text-field="number" 
+								              				data-value-field="id"						              				 
+								              				data-bind="value: obj.reference_id,
+								              							enabled: enableRef,
+								              							source: referenceDS,						              							
+								              							events:{change: referenceChanges}" 
+								              				style="width: 100%" />
 												</td>
-												<td>
-													Credit Allowed:
-													<span data-format="n" data-bind="text: obj.credit_allowed"></span>
-												</td>
-											</tr>										
+											</tr>	
+							            </table>						            
+							        </div>
+							        <!-- // Options Tab content END -->
+
+							        <!-- Address Tab content -->
+							        <div class="tab-pane" id="tab2-5">
+							        	Billing Address
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
+										
+										Delivery Address
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
+												
+							        </div>
+							        <!-- // Address Tab content END -->
+
+							        <!-- Info Tab content -->
+							        <div class="tab-pane" id="tab3-5">
+							        	
+										<table class="table table-borderless table-condensed cart_total">							                        	
 											<tr>
 												<td>Sale Rep</td>
 												<td>
@@ -16337,28 +16490,16 @@
 										                   data-value-field="id"
 										                   data-bind="value: obj.employee_id,
 										                              source: employeeDS"
-										                   data-placeholder="Type Name.."
+										                   data-placeholder="Type Name..." 
 										                   style="width: 100%" />
 												</td>
 											</tr>
-								            <tr>
-								            	<td>Valid Until</td>
-								            	<td>
-								            		<input id="txtDueDate" name="txtDueDate" 
-															data-role="datepicker"
-															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd" 
-															data-bind="value: obj.due_date" 
-															required data-required-msg="required"
-															style="width:100%;" />
-								            	</td>
-								            </tr>
 											<tr>
 												<td>Segments</td>
 												<td>
 													<select data-role="multiselect"
 														   data-value-primitive="true"
-														   data-header-template="segment-header-tmpl" 
+														   data-header-template="segment-header-tmpl"
 														   data-item-template="segment-list-tmpl"				    
 														   data-value-field="id" 
 														   data-text-field="code"
@@ -16368,32 +16509,40 @@
 														   data-placeholder="Add Segment.."				   
 														   style="width: 100%" /></select>
 												</td>
+											</tr>
+											<tr>
+												<td>Job</td>
+												<td>
+													<input id="ddlJob" name="ddlJob"
+														   data-role="dropdownlist"
+														   data-header-template="job-header-tmpl"
+														   data-template="job-list-tmpl"
+														   data-auto-bind="false"				                
+										                   data-value-primitive="true"		   
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.job_id, 
+										                   			source: jobDS"
+										                   data-option-label="Select job..." 
+										                   style="width: 100%" />										
+												</td>
 											</tr>											
-							            </table>						            
-							        </div>
-							        <!-- // Options Tab content END -->
-
-							        <!-- Address Tab content -->
-							        <div class="tab-pane" id="tab2-4">
-							        	Billing Address
-										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
-										
-										Delivery Address
-										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
+							            </table>
 												
 							        </div>
-							        <!-- // Address Tab content END -->						        
+							        <!-- // Info Tab content END -->
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab3-4">							            	
-							            <p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+							        <div class="tab-pane" id="tab4-5">
+							         	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
+							            
 							            <input id="files" name="files"
-							                   type="file"
-							                   data-role="upload"
-							                   data-show-file-list="false"
-							                   data-bind="events: { 
-					                   				select: onSelect
-							                   }">
+						                   type="file"
+						                   data-role="upload"
+						                   data-show-file-list="false"
+						                   data-bind="events: { 
+				                   				select: onSelect
+						                   }">
 
 							            <table class="table table-bordered">
 									        <thead>
@@ -16414,7 +16563,7 @@
 							        <!-- // Attach Tab content END -->						        
 
 							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab4-4">							            	
+							        <div class="tab-pane" id="tab5-5">							            	
 							            
 							            <div class="span5">
 
@@ -16439,7 +16588,7 @@
 
 							            <div class="span7">
 
-								            <table class="table table-borderless table-condensed cart_total">
+								            <table style="width: 100%">
 								            	<tr align="right">
 								            		<td>
 								            			Name
@@ -16467,7 +16616,7 @@
 										                   data-bind="value: obj.interval"
 										                   style="width: 45%;" />
 
-									            		<input data-role="dropdownlist"
+									            		<input data-role="dropdownlist"									                   
 											                   data-value-primitive="true"
 											                   data-text-field="name"
 											                   data-value-field="id"
@@ -16483,13 +16632,13 @@
 									            	</td>							            	
 									            	<td>
 
-									            		<input data-role="dropdownlist"
+									            		<input data-role="dropdownlist"									                   
 											                   data-value-primitive="true"
 											                   data-text-field="name"
 											                   data-value-field="id"
 											                   data-bind="value: obj.month,
 											                   			  visible: showMonth,
-											                              source: monthList"                 
+											                              source: monthList"										                   
 											                   style="width: 45%;" />
 
 									            		<input data-role="dropdownlist"									                   
@@ -16499,16 +16648,16 @@
 											                   data-bind="value: obj.month_option,
 											                   			  visible: showMonthOption,
 											                              source: monthOptionList,
-											                              events: { change: monthOptionChanges }"
+											                              events: { change: monthOptionChanges }"										                   
 											                   style="width: 45%;" />
 
-									            		<input data-role="dropdownlist"
+									            		<input data-role="dropdownlist"									                   
 											                   data-value-primitive="true"
 											                   data-text-field="name"
 											                   data-value-field="id"
 											                   data-bind="value: obj.week,
 											                   			  visible: showWeek,
-											                              source: weekDayList"          
+											                              source: weekDayList"										                  
 											                   style="width: 45%;" />										            
 											        
 									            		<input data-role="dropdownlist"									                   
@@ -16527,7 +16676,7 @@
 								        </div>									     
 							            
 							        </div>
-							        <!-- // Recuring Tab content END -->
+							        <!-- // Recuring Tab content END -->						        								        
 
 							    </div>
 							</div>
@@ -17434,60 +17583,50 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 150px;">
+							<div class="box-generic" style="height: 190px;">
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active" ><a href="#tab1-4" data-toggle="tab" ><i></i></a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span1 glyphicons pencil"><a href="#tab2-4" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span2 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i>Recuring</a>
-							            </li>								            
+							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+							            </li>						            
+							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
+							            </li>						            								            
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
 
 							    <div class="tab-content">
 
-							    	<!-- Option Tab content -->
-							    	<div class="tab-pane active" id="tab1-4">
-								       	<table class="table table-borderless table-condensed cart_total">						
+							    	<!-- Options Tab content -->
+							        <div class="tab-pane active" id="tab1-5">						            
+							            <table class="table table-borderless table-condensed cart_total">							            
 											<tr>
-												<td>Deposit To</td>
 												<td>
-													<input id="cbbAccount" name="cbbAccount"
-														   data-role="combobox"                   
-										                   data-value-primitive="true"
-										                   data-header-template="account-header-tmpl"           
-										                   data-template="account-list-tmpl"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                   			  source: depositAccountDS"
-										                   data-placeholder="Add Account.."					                                      
-										                   required data-required-msg="required" style="width: 100%" />
-												</td>						            								            	
-											</tr>
-											<tr>
-												<td>Segment</td>
+													Balance: <span data-bind="text: balance"></span>
+												</td>										
 												<td>
-													<select data-role="multiselect"
-												   data-value-primitive="true"
-												   data-header-template="segment-header-tmpl"
-												   data-item-template="segment-list-tmpl"				    
-												   data-value-field="id" 
-												   data-text-field="code"
-												   data-bind="value: obj.segments, 
-												   			source: segmentItemDS,
-												   			events:{ change: segmentChanges }"
-												   data-placeholder="Add Segment.."				   
-												   style="width: 100%" /></select>
-												</td>													
+													Credit Allowed: <span data-format="n" data-bind="text: obj.credit_allowed"></span>
+												</td>
 											</tr>
+								            <tr>
+								            	<td>Expected Date</td>
+								            	<td>
+								            		<input id="txtDueDate" name="txtDueDate" 
+															data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd" 
+															data-bind="value: obj.due_date" 
+															required data-required-msg="required"
+															style="width:100%;" />
+								            	</td>
+								            </tr>							           
 											<tr>							            				
 												<td>
 								            		Reference	            						            		
@@ -17498,37 +17637,98 @@
 															data-auto-bind="false"
 								              				data-value-primitive="true"
 															data-text-field="number" 
-								              				data-value-field="id"	 
+								              				data-value-field="id"						              				 
 								              				data-bind="value: obj.reference_id,
 								              							enabled: enableRef,
 								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}" 
-								              				placeholder="Select Reference" style="width: 100%" />
+								              				style="width: 100%" />
+												</td>
+											</tr>	
+							            </table>						            
+							        </div>
+							        <!-- // Options Tab content END -->
+
+							        <!-- Address Tab content -->
+							        <div class="tab-pane" id="tab2-5">
+							        	Billing Address
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
+										
+										Delivery Address
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
+												
+							        </div>
+							        <!-- // Address Tab content END -->
+
+							        <!-- Info Tab content -->
+							        <div class="tab-pane" id="tab3-5">
+							        	
+										<table class="table table-borderless table-condensed cart_total">							                        	
+											<tr>
+												<td>Sale Rep</td>
+												<td>
+													<input id="cbbEmployee" name="cbbEmployee"
+														   data-role="combobox"
+										                   data-value-primitive="true"
+										                   data-header-template="employee-header-tmpl"
+										                   data-template="contact-list-tmpl"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.employee_id,
+										                              source: employeeDS"
+										                   data-placeholder="Type Name..." 
+										                   style="width: 100%" />
 												</td>
 											</tr>
-										</table>
-							   		</div>
-							   		<!-- // Option Tab content END -->
-
-							        <!-- Memo Tab content -->
-							        <div class="tab-pane" id="tab2-4">
-							        	<textarea id="memo2" cols="0" rows="4" class="k-textbox" 
-							        		data-bind="value: obj.memo2" style="width:100%;" 
-							        		placeholder="Please enter transaction purpose here ..."></textarea>
+											<tr>
+												<td>Segments</td>
+												<td>
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-header-template="segment-header-tmpl"
+														   data-item-template="segment-list-tmpl"				    
+														   data-value-field="id" 
+														   data-text-field="code"
+														   data-bind="value: obj.segments, 
+														   			source: segmentItemDS,
+														   			events:{ change: segmentChanges }"
+														   data-placeholder="Add Segment.."				   
+														   style="width: 100%" /></select>
+												</td>
+											</tr>
+											<tr>
+												<td>Job</td>
+												<td>
+													<input id="ddlJob" name="ddlJob"
+														   data-role="dropdownlist"
+														   data-header-template="job-header-tmpl"
+														   data-template="job-list-tmpl"
+														   data-auto-bind="false"				                
+										                   data-value-primitive="true"		   
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.job_id, 
+										                   			source: jobDS"
+										                   data-option-label="Select job..." 
+										                   style="width: 100%" />										
+												</td>
+											</tr>											
+							            </table>
+												
 							        </div>
-							        <!-- // Memo Tab content END -->
+							        <!-- // Info Tab content END -->
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab3-4">
-							        	 <p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>						            	
+							        <div class="tab-pane" id="tab4-5">
+							         	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
 							            
 							            <input id="files" name="files"
-							                   type="file"
-							                   data-role="upload"
-							                   data-show-file-list="false"
-							                   data-bind="events: { 
-					                   				select: onSelect
-							                   }">
+						                   type="file"
+						                   data-role="upload"
+						                   data-show-file-list="false"
+						                   data-bind="events: { 
+				                   				select: onSelect
+						                   }">
 
 							            <table class="table table-bordered">
 									        <thead>
@@ -17546,10 +17746,10 @@
 									    </table>
 
 							        </div>
-							        <!-- // Attach Tab content END -->
+							        <!-- // Attach Tab content END -->						        
 
 							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab4-4">							            	
+							        <div class="tab-pane" id="tab5-5">							            	
 							            
 							            <div class="span5">
 
@@ -17662,7 +17862,7 @@
 								        </div>									     
 							            
 							        </div>
-							        <!-- // Recuring Tab content END -->								        
+							        <!-- // Recuring Tab content END -->						        								        
 
 							    </div>
 							</div>
@@ -19160,13 +19360,15 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i> Option</a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab2-4" data-toggle="tab"><i></i> Address</a>
+							            <li class="span1 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i> </a>
+							            </li>
+							            <li class="span1 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i> </a>
+							            </li>
+							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
 							            </li>						            
-							            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
-							            </li>						            
-							            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i> Recuring</a>
+							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> Recuring</a>
 							            </li>						            								            
 							        </ul>
 							    </div>
@@ -19175,41 +19377,28 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-4">						            
-							            <table class="table table-borderless table-condensed cart_total">							           							           
+							        <div class="tab-pane active" id="tab1-5">						            
+							            <table class="table table-borderless table-condensed cart_total">							            
 											<tr>
-												<td>Deliver By</td>
 												<td>
-													<input id="cbbEmployee" name="cbbEmployee"
-														   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-header-template="employee-header-tmpl"
-										                   data-template="contact-list-tmpl"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.employee_id,
-										                              source: employeeDS"
-										                   data-placeholder="Type Name..." 
-										                   style="width: 100%" />
+													Balance: <span data-bind="text: balance"></span>
+												</td>										
+												<td>
+													Credit Allowed: <span data-format="n" data-bind="text: obj.credit_allowed"></span>
 												</td>
 											</tr>
-											<tr>
-												<td>Job</td>
-												<td>
-													<input id="ddlJob" name="ddlJob"
-														   data-role="dropdownlist"
-														   data-header-template="job-header-tmpl"
-														   data-template="job-list-tmpl"
-														   data-auto-bind="false"				                
-										                   data-value-primitive="true"									                   				   
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.job_id, 
-										                   			source: jobDS"
-										                   data-option-label="Add job..." 
-										                   style="width: 100%" />										
-												</td>
-											</tr>
+								            <tr>
+								            	<td>Expected Date</td>
+								            	<td>
+								            		<input id="txtDueDate" name="txtDueDate" 
+															data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd" 
+															data-bind="value: obj.due_date" 
+															required data-required-msg="required"
+															style="width:100%;" />
+								            	</td>
+								            </tr>							           
 											<tr>							            				
 												<td>
 								            		Reference	            						            		
@@ -19233,7 +19422,7 @@
 							        <!-- // Options Tab content END -->
 
 							        <!-- Address Tab content -->
-							        <div class="tab-pane" id="tab2-4">
+							        <div class="tab-pane" id="tab2-5">
 							        	Billing Address
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
@@ -19241,19 +19430,77 @@
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
 												
 							        </div>
-							        <!-- // Address Tab content END -->						        
+							        <!-- // Address Tab content END -->
+
+							        <!-- Info Tab content -->
+							        <div class="tab-pane" id="tab3-5">
+							        	
+										<table class="table table-borderless table-condensed cart_total">							                        	
+											<tr>
+												<td>Sale Rep</td>
+												<td>
+													<input id="cbbEmployee" name="cbbEmployee"
+														   data-role="combobox"
+										                   data-value-primitive="true"
+										                   data-header-template="employee-header-tmpl"
+										                   data-template="contact-list-tmpl"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.employee_id,
+										                              source: employeeDS"
+										                   data-placeholder="Type Name..." 
+										                   style="width: 100%" />
+												</td>
+											</tr>
+											<tr>
+												<td>Segments</td>
+												<td>
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-header-template="segment-header-tmpl"
+														   data-item-template="segment-list-tmpl"				    
+														   data-value-field="id" 
+														   data-text-field="code"
+														   data-bind="value: obj.segments, 
+														   			source: segmentItemDS,
+														   			events:{ change: segmentChanges }"
+														   data-placeholder="Add Segment.."				   
+														   style="width: 100%" /></select>
+												</td>
+											</tr>
+											<tr>
+												<td>Job</td>
+												<td>
+													<input id="ddlJob" name="ddlJob"
+														   data-role="dropdownlist"
+														   data-header-template="job-header-tmpl"
+														   data-template="job-list-tmpl"
+														   data-auto-bind="false"				                
+										                   data-value-primitive="true"		   
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.job_id, 
+										                   			source: jobDS"
+										                   data-option-label="Select job..." 
+										                   style="width: 100%" />										
+												</td>
+											</tr>											
+							            </table>
+												
+							        </div>
+							        <!-- // Info Tab content END -->
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab3-4">
-							        	 <p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>						            	
+							        <div class="tab-pane" id="tab4-5">
+							         	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
 							            
 							            <input id="files" name="files"
-							                   type="file"
-							                   data-role="upload"
-							                   data-show-file-list="false"
-							                   data-bind="events: { 
-					                   				select: onSelect
-							                   }">
+						                   type="file"
+						                   data-role="upload"
+						                   data-show-file-list="false"
+						                   data-bind="events: { 
+				                   				select: onSelect
+						                   }">
 
 							            <table class="table table-bordered">
 									        <thead>
@@ -19274,7 +19521,7 @@
 							        <!-- // Attach Tab content END -->						        
 
 							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab4-4">							            	
+							        <div class="tab-pane" id="tab5-5">							            	
 							            
 							            <div class="span5">
 
@@ -19870,17 +20117,10 @@
 									</tr>
 									<tr>
 										<td class="right">
-											Deposit:
-											<span data-format="n" data-bind="text: total_deposit"></span>										
+											Amount Paid:
 										</td>
 										<td class="right">
-											<input data-role="numerictextbox"
-								                   data-format="n"
-								                   data-spinners="false"
-								                   data-min="0"							                                      
-								                   data-bind="value: obj.deposit,
-								                              events: { change: changes }"
-								                   style="width: 90%; text-align: right;">
+											<span data-format="n" data-bind="text: obj.amount_paid"></span>
 										</td>
 									</tr>
 									<tr>
@@ -21016,7 +21256,7 @@
 						</div>
 					</div>
 					<div class="block-title">
-						<h4 data-bind="text: companyName"></h4>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Sale Summary by Customer</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -21151,7 +21391,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Customer Transaction List</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -21165,11 +21405,11 @@
 								</div>
 								<div class="span4">
 									<p>Cash Sale</p>
-									<span>500</span>
+									<span></span>
 								</div>
 								<div class="span4">
 									<p>Cash Receipt</p>
-									<span>1,200</span>
+									<span></span>
 								</div>
 							</div>
 						</div>
@@ -21181,7 +21421,7 @@
 								</div>
 								<div class="span6">
 									<p>Customer Balance</p>
-									<span>2,200.00</span>
+									<span></span>
 								</div>
 							</div>
 						</div>
@@ -21204,7 +21444,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="3">Total</th>
-								<th colspan="2">(600.00)</th>
+								<th colspan="2" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -21325,7 +21565,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Sale Detail by Customer</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -21518,7 +21758,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Sale Summary by Product/Services</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -21568,7 +21808,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="4">Total</th>
-								<th colspan="4"><span data-bind="text: total"></span></th>
+								<th colspan="4" data-bind="text: total_sale"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -21678,7 +21918,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Deposit Detail By Customer</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -21715,7 +21955,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="4">Total</th>
-								<th colspan="3">(600.00)</th>
+								<th colspan="3" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -21848,7 +22088,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Sale Detail by Product/Service</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -21899,7 +22139,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="4">Total</th>
-								<th colspan="3">(600.00)</th>
+								<th colspan="3" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -21935,15 +22175,6 @@
 
 		#}#
 	#}#
-	<!-- <tr style="font-weight: bold; color: red">
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>		
-	</tr> -->
 </script>
 <script id="customerBalanceSummary" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -22035,7 +22266,7 @@
 					</div>	
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Customer Balance Summary</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -22049,7 +22280,7 @@
 								</div>
 								<div class="span6">
 									<p>Number Customer</p>
-									<span>1,200</span>
+									<span></span>
 								</div>
 							</div>
 						</div>
@@ -22061,7 +22292,7 @@
 								</div>
 								<div class="span6">
 									<p>Open Invoice</p>
-									<span>-</span>
+									<span></span>
 								</div>
 							</div>
 						</div>
@@ -22181,7 +22412,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Customer Balance Detail</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -22350,7 +22581,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Receivable Aging Summary</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -22383,8 +22614,9 @@
 							<tr>
 								<th>CURRENT</th>
 								<th>1-30</th>
-								<th>31-60</th>
-								<th>61-90</th>
+								<th>30</th>
+								<th>30-60</th>
+								<th>60-90</th>
 								<th>OVER 90</th>
 								<th>TOTAL</th>							
 							</tr>
@@ -22396,7 +22628,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="4">Total</th>
-								<th colspan="3">(600.00)</th>
+								<th colspan="3" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -22509,7 +22741,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Receivable Aging Detail</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -22559,7 +22791,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="4">Total</th>
-								<th colspan="3">(600.00)</th>
+								<th colspan="3" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -22692,7 +22924,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>List Invoices Collect</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -22741,7 +22973,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="4">Total</th>
-								<th colspan="3">(600.00)</th>
+								<th colspan="3" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -22922,7 +23154,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="3">Total</th>
-								<th colspan="5">(600.00)</th>
+								<th colspan="5" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -23051,7 +23283,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Invoice List</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -23061,11 +23293,11 @@
 							<div class="total-customer">
 								<div class="span6">
 									<p>Total Sale</p>
-									<span>#</span>
+									<span data-bind="text: totalCreditSale"></span>
 								</div>
 								<div class="span6">
 									<p>Customer Balance</p>
-									<span data-bind="text: total"></span>
+									<span data-bind="text: totalBalance"></span>
 								</div>
 							</div>
 						</div>
@@ -23103,7 +23335,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="4">Total</th>
-								<th colspan="4">(600.00)</th>
+								<th colspan="4" data-bind="text: totalBalance"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -28447,7 +28679,7 @@
 			</div>
 
 			<!-- Graph -->
-			<div class="home-chart">
+			<div class="home-chart" >
 				<div data-role="chart"
 	                 data-legend="{ position: 'top' }"
 	                 data-series-defaults="{ type: 'column' }"
@@ -28843,8 +29075,7 @@
 				              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
 					              				data-bind="value: obj.abbr, 
 					              						   disabled: obj.is_pattern" 
-					              				placeholder="eg. AB" required data-required-msg="required"
-					              				style="width: 55px;" />
+					              				placeholder="eg. AB"           				style="width: 55px;" />
 				              			-
 				              			<input id="txtNumber" name="txtNumber" class="k-textbox"
 					              				data-bind="value: obj.number, 
@@ -28933,7 +29164,7 @@
 							            <input id="txtCost" name="txtCost" 
 							               data-role="numerictextbox"
 							               data-spinners="false"
-						                   data-format="n0"
+						                   data-format="n"
 						                   data-min="0"						                   
 						                   data-bind="value: obj.cost"
 						                   style="width: 100%">
@@ -28949,7 +29180,7 @@
 										<label for="txtOrderPoint"><span data-bind="text: lang.lang.reorder_point"></span></label>
 										<input data-role="numerictextbox"
 										   data-spinners="false"
-						                   data-format="n0"
+						                   data-format="n"
 						                   data-min="0"						                   
 						                   data-bind="value: obj.order_point"
 						                   style="width: 100%">
@@ -28964,7 +29195,7 @@
 							            <input id="txtPrice" name="txtPrice" 
 							               data-role="numerictextbox"
 							               data-spinners="false"
-						                   data-format="n0"
+						                   data-format="n"
 						                   data-min="0"						                   
 						                   data-bind="value: obj.price"
 						                   style="width: 100%">
@@ -28978,7 +29209,7 @@
 								<div class="control-group">								
 									<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
 						            <textarea id="txtDescription" class="k-textbox" 
-										data-bind="value: obj.bill_to" style="width: 100%;height:60px;"></textarea>
+										data-bind="value: obj.description" style="width: 100%;height:60px;"></textarea>
 								</div>																		
 								<!-- // Group END -->
 							</div>
@@ -33641,27 +33872,26 @@
 			</div>
 
 			<!-- Graph -->
-		    <div class="span12">
-				<div class="home-chart">
-					<!-- Graph -->
-					<div data-role="chart"
-						 data-auto-bind="false"
-		                 data-legend="{ position: 'top' }"
-		                 data-series-defaults="{ type: 'column' }"
-		                 data-tooltip='{
-		                    visible: true,
-		                    format: "{0}%",
-		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-		                 }'                 
-		                 data-series="[
-		                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
-		                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
-		                             ]"	                             
-		                 data-bind="source: graphDS"
-		                 style="height: 250px;" ></div>
-		            <!-- End Graph -->      
-				</div>
+			<div class="home-chart">
+				<!-- Graph -->
+				<div data-role="chart"
+					 data-auto-bind="false"
+	                 data-legend="{ position: 'top' }"
+	                 data-series-defaults="{ type: 'column' }"
+	                 data-tooltip='{
+	                    visible: true,
+	                    format: "{0}%",
+	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+	                 }'                 
+	                 data-series="[
+	                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
+	                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
+	                             ]"	                             
+	                 data-bind="source: graphDS"
+	                 style="height: 250px;" ></div>
+	            <!-- End Graph -->      
 			</div>
+		
 		</div>
 	</div>
 </script>
@@ -34698,12 +34928,12 @@
 					</a>
 					<div class="span12">17</div>
 				</li>
-				<li>
+				<!-- <li>
 					<a href="#/employee_report_center">
 						<img title="Report Employee" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
 					</a>
 					<div class="span12">6</div>
-				</li>
+				</li> -->
 				<li>
 					<a href="#/vendor_report_center">
 						<img title="Report Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
@@ -34716,12 +34946,12 @@
 					</a>
 					<div class="span12">12</div>
 				</li>
-				<li>
+				<!-- <li>
 					<a href="#/services_report_center">
 						<img title="Report Services" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/services.png" alt="Service">
 					</a>
 					<div class="span12"></div>
-				</li>
+				</li> -->
 				<li>
 					<a href="#/cash_report_center">
 						<img title="Report Cash" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
@@ -34893,7 +35123,7 @@
 </script>
 <script id="job-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
-    	<a href="\#/jobs">+ Add New Job</a>
+    	<a href="\#/job">+ Add New Job</a>
     </strong>
 </script>
 <script id="job-list-tmpl" type="text/x-kendo-tmpl">
@@ -36870,8 +37100,8 @@
 
 	//DAWINE -----------------------------------------------------------------------------------------
 	banhji.source =  kendo.observable({
-		lang 					: langVM,
-		countryDS				: new kendo.data.DataSource({
+		lang 						: langVM,
+		countryDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "countries",
@@ -36907,7 +37137,7 @@
 			pageSize: 100
 		}),
 		//Contact
-		contactDS				: new kendo.data.DataSource({
+		contactDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts",
@@ -36943,7 +37173,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		customerDS				: new kendo.data.DataSource({
+		customerDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts",
@@ -36980,7 +37210,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		supplierDS				: new kendo.data.DataSource({
+		supplierDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts",
@@ -37017,7 +37247,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		employeeDS				: new kendo.data.DataSource({
+		employeeDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts",
@@ -37054,7 +37284,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		saleRepDS				: new kendo.data.DataSource({
+		saleRepDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts",
@@ -37092,7 +37322,7 @@
 			pageSize: 100
 		}),
 		//Contact Type
-		contactTypeDS			: new kendo.data.DataSource({
+		contactTypeDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts/type",
@@ -37145,7 +37375,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		customerTypeDS			: new kendo.data.DataSource({
+		customerTypeDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts/type",
@@ -37199,7 +37429,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		supplierTypeDS			: new kendo.data.DataSource({
+		supplierTypeDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts/type",
@@ -37254,7 +37484,7 @@
 			pageSize: 100
 		}),
 		//Job
-		jobDS					: new kendo.data.DataSource({
+		jobDS						: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "jobs",
@@ -37290,7 +37520,7 @@
 			pageSize: 100
 		}),
 		//Currency
-		currencyDS				: new kendo.data.DataSource({
+		currencyDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "currencies",
@@ -37326,9 +37556,9 @@
 			page:1,
 			pageSize: 100
 		}),
-		currencyRateDS			: dataStore(apiUrl + "currencies/rate"),
+		currencyRateDS				: dataStore(apiUrl + "currencies/rate"),
 		//Item
-		itemDS					: new kendo.data.DataSource({
+		itemDS						: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "items",
@@ -37364,9 +37594,80 @@
 			page:1,
 			pageSize: 100
 		}),
-		categoryDS 				: dataStore(apiUrl + "categories"),		
+		inventoryCategoryDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "categories",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field: "item_type_id", value: 1 },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		serviceCategoryDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "categories",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field: "item_type_id", value: 4 },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),		
 		//Tax Item
-		taxItemDS				: new kendo.data.DataSource({
+		taxItemDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "tax_items",
@@ -37474,7 +37775,7 @@
 			pageSize: 100
 		}),
 		//Accounting
-		accountDS				: new kendo.data.DataSource({
+		accountDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37511,7 +37812,7 @@
 			page:1,
 			pageSize: 1000
 		}),
-		subAccountDS			: new kendo.data.DataSource({
+		subAccountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37548,7 +37849,7 @@
 			page:1,
 			pageSize: 1000
 		}),
-		accountTypeDS			: new kendo.data.DataSource({
+		accountTypeDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts/type",
@@ -37584,7 +37885,7 @@
 			page:1,
 			pageSize: 1000
 		}),
-		cashAccountDS			: new kendo.data.DataSource({
+		cashAccountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37624,7 +37925,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		advAccountDS			: new kendo.data.DataSource({
+		advAccountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37706,7 +38007,7 @@
 			pageSize: 100
 		}),
 		//Expense
-		expenseAccountDS				: new kendo.data.DataSource({
+		expenseAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37746,7 +38047,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		ARAccountDS				: new kendo.data.DataSource({
+		ARAccountDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37786,7 +38087,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		APAccountDS				: new kendo.data.DataSource({
+		APAccountDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37826,7 +38127,7 @@
 			page:1,
 			pageSize: 100
 		}),		
-		tradeDiscountDS			: new kendo.data.DataSource({
+		tradeDiscountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37946,7 +38247,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		supplierSettlementDiscountDS		: new kendo.data.DataSource({
+		supplierSettlementDiscountDS: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37986,7 +38287,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		prepaidAccountDS		: new kendo.data.DataSource({
+		prepaidAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38026,7 +38327,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		depositAccountDS		: new kendo.data.DataSource({
+		depositAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38066,7 +38367,7 @@
 			page:1,
 			pageSize: 100
 		}),		
-		cogsAccountDS			: new kendo.data.DataSource({
+		cogsAccountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38106,7 +38407,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		inventoryAccountDS		: new kendo.data.DataSource({
+		inventoryAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38147,7 +38448,7 @@
 			pageSize: 100
 		}),
 		//Payment Term, Method, Segment
-		paymentTermDS			: new kendo.data.DataSource({
+		paymentTermDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "payment_terms",
@@ -38182,7 +38483,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		paymentMethodDS			: new kendo.data.DataSource({
+		paymentMethodDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "payment_methods",
@@ -38217,7 +38518,7 @@
 			page:1,
 			pageSize: 100
 		}),				
-		segmentItemDS			: new kendo.data.DataSource({
+		segmentItemDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "segments/item",
@@ -38253,20 +38554,20 @@
 			pageSize: 100
 		}),
 		//Recurring
-		frequencyList 			: [
+		frequencyList 				: [
 			{ id: 'Daily', name: 'Day' },
 			{ id: 'Weekly', name: 'Week' },
 			{ id: 'Monthly', name: 'Month' },
 			{ id: 'Annually', name: 'Annual' }
 		],
-		monthOptionList 		: [
+		monthOptionList 			: [
 			{ id: 'Day', name: 'Day' },
 			{ id: '1st', name: '1st' },
 			{ id: '2nd', name: '2nd' },
 			{ id: '3rd', name: '3rd' },
 			{ id: '4th', name: '4th' }
 		],
-		monthList 				: [
+		monthList 					: [
 			{ id: 0, name: 'January' },
 			{ id: 1, name: 'February' },
 			{ id: 2, name: 'March' },
@@ -38280,7 +38581,7 @@
 			{ id: 10, name: 'November' },
 			{ id: 11, name: 'December' }
 		],
-		weekDayList 			: [
+		weekDayList 				: [
 			{ id: 0, name: 'Sunday' },
 			{ id: 1, name: 'Monday' },
 			{ id: 2, name: 'Tuesday' },
@@ -38289,7 +38590,7 @@
 			{ id: 5, name: 'Friday' },
 			{ id: 6, name: 'Saturday' }
 		],
-		dayList 				: [
+		dayList 					: [
 			{ id: 1, name: '1st' },
 			{ id: 2, name: '2nd' },
 			{ id: 3, name: '3rd' },
@@ -38320,19 +38621,19 @@
 			{ id: 28, name: '28th' },
 			{ id: 0, name: 'Last' }
 		],
-		sortList				: [
+		sortList					: [
 	 		{ text:"All", value: "all" },
 	 		{ text:"Today", value: "today" },
 	 		{ text:"This Week", value: "week" },
 	 		{ text:"This Month", value: "month" },
 	 		{ text:"This Year", value: "year" }
 		],
-		statusList 				: [
+		statusList 					: [
 			{ "id": 1, "name": "Active" },
 			{ "id": 0, "name": "Inactive" },
 			{ "id": 2, "name": "Void" }
         ],
-        customerFormList 		: [
+        customerFormList 			: [
 	    	{ id: "Quote", name: "Quotation" },
 			{ id: "Sale_Order", name: "Sale Order" },
 			{ id: "Deposit", name: "Deposit" },
@@ -38342,7 +38643,7 @@
 			{ id: "Sale_Return", name: "Sale Return" },
 			{ id: "GDN", name: "Delivered Note" }
 	    ],
-	    vendorFormList 		: [
+	    vendorFormList 				: [
 	    	{ id: "Purchase_Order", name: "Purchase Order" },
 	    	{ id: "GRN", name: "GRN" },
 			{ id: "Deposit", name: "Deposit" },
@@ -38350,7 +38651,7 @@
 			{ id: "Pur_Return", name: "Pur.Return" },
 			{ id: "PayBill", name: "PayBill" }
 	    ],
-	    cashMGTFormList			: [
+	    cashMGTFormList				: [
 	    	{ id: "Cash_Transfer", name: "Transfer" },
 	    	{ id: "Deposit", name: "Deposit" },
 			{ id: "Witdraw", name: "Witdraw" },
@@ -38359,21 +38660,21 @@
 			{ id: "Reimbursement", name: "Reimbursement" },
 			{ id: "Journal", name: "Journal" }
 	    ],
-		genderList				: ["M", "F"],
-		user_id					: banhji.userData.id,
-		cash_account_id 		: 10,
-		amtDueColor 			: "#D5DBDB",
-		acceptedSrc				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/accepted.ico",
-		approvedSrc				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/approved.ico",
-		cancelSrc				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/cancel.ico",
-		openSrc 				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/open.ico",
-		paidSrc 				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/paid.ico",
-		partialyPaidSrc 		: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/partialy_paid.ico",
-		usedSrc 				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/used.ico",
-		successMessage 			: "Saved Successful!",
-		errorMessage 			: "Warning, please review it again!",
-		confirmMessage 			: "Are you sure, you want to delete it?",
-		getFiscalDate 			: function(){
+		genderList					: ["M", "F"],
+		user_id						: banhji.userData.id,
+		cash_account_id 			: 10,
+		amtDueColor 				: "#D5DBDB",
+		acceptedSrc					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/accepted.ico",
+		approvedSrc					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/approved.ico",
+		cancelSrc					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/cancel.ico",
+		openSrc 					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/open.ico",
+		paidSrc 					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/paid.ico",
+		partialyPaidSrc 			: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/partialy_paid.ico",
+		usedSrc 					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/used.ico",
+		successMessage 				: "Saved Successful!",
+		errorMessage 				: "Warning, please review it again!",
+		confirmMessage 				: "Are you sure, you want to delete it?",
+		getFiscalDate 				: function(){
 			today = new Date(),
 			year = new Date(),
 			year.setFullYear(year.getFullYear()-1),			
@@ -38382,7 +38683,7 @@
 			return fiscalDate;
 		},
 		//Rate
-		loadRate 				: function(){
+		loadRate 					: function(){
 			this.currencyRateDS.query({
 				filter:[],
 				sort:{ field:"date", dir:"desc"},
@@ -38390,7 +38691,7 @@
 				pageSize:1000
 			});
 		},
-		getRate					: function(locale, date){
+		getRate						: function(locale, date){
 			var rate = 1;
 			$.each(this.currencyRateDS.data(), function(index, value){
 				if(value.locale==locale && value.date<=date){
@@ -55952,7 +56253,7 @@
 			
 			if(data.reference_id>0){
 				var inv = this.invoiceDS.get(data.reference_id);
-				data.set("amount", inv.amount - inv.amount_paid);
+				data.set("amount", inv.amount - (inv.amount_paid + inv.deposit));
 
 				this.changes();
 			}else{
@@ -56006,7 +56307,7 @@
 				
 				self.set("obj", view[0]);
 				
-				self.set("statusSrc", banhji.source.acceptedSrc);
+				self.set("statusSrc", banhji.source.usedSrc);
 
 				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));				
 		        self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
@@ -56039,9 +56340,6 @@
 						}
 					});
 				});
-			}).then(function(){
-				var obj = self.get("obj");
-				obj.set("amount_paid", obj.amount);
 			});				
 		},
 		changes				: function(){
@@ -56522,7 +56820,7 @@
 			}
 
 			//A/R on Cr
-			var ar = (obj.amount - obj.amount_paid) + sumInvoice;						
+			var ar = obj.amount - (obj.amount_paid + obj.deposit);						
 			this.journalLineDS.add({					
 				transaction_id 		: transaction_id,
 				account_id 			: contact.account_id,				
@@ -56631,18 +56929,22 @@
 			if(obj.reference_id>0){
 				var ref = this.referenceDS.get(obj.reference_id);
 				
-				if(ref.type=="Cash_Sale"){
+				obj.set("amount", ref.amount);
+
+				if(ref.type=="Cash_Sale"){					
 					obj.set("amount_paid", ref.amount);
 					this.set("showReturn", true);
 				}else{
-					obj.set("amount_paid", ref.amount_paid);
+					obj.set("amount_paid", ref.amount_paid + ref.deposit);
 					if(ref.status==0){
 						this.set("showReturn", false);
 
 						this.returnDS.data([]);
-						this.addRowOption();
 					}else{
 						this.set("showReturn", true);
+
+						this.returnDS.data([]);
+						this.addRowOption();
 					}
 				}				
 									
@@ -57721,6 +58023,7 @@
 		collectReportDB 	: banhji.collectReport,
 		invoiceListDB 		: banhji.invoiceList,
 		stament     		: banhji.stamentSummary,
+		company 			: banhji.institute,
 		// search button
 		saleDetailSearch 	: function() {
 			this.detailSale.filter({
@@ -59217,7 +59520,7 @@
 
 				if(view.length>0){
 					$.each(view, function(index, value){											
-						var amount_due = value.amount - value.amount_paid;							
+						var amount_due = value.amount - (value.amount_paid + value.deposit);							
 
 						self.dataSource.add({
 		    				contact_id 			: value.contact_id,				
@@ -59251,7 +59554,7 @@
 
 						   	contact				: value.contact,
 						   	amount_paid 		: value.amount_paid,
-						   	reference 			: [{ "number" : value.number, "amount" : value.amount, "issued_date":value.issued_date }]				
+						   	reference 			: [{ "number" : value.number, "amount" : amount_due, "issued_date":value.issued_date }]				
 				    	});						
 					});
 					self.applyTerm();
@@ -59781,7 +60084,7 @@
 
 				if(view.length>0){
 					$.each(view, function(index, value){											
-						var amount_due = value.amount - value.amount_paid;							
+						var amount_due = value.amount - (value.amount_paid + value.deposit);							
 
 						self.dataSource.add({
 		    				contact_id 			: value.contact_id,				
@@ -59815,7 +60118,7 @@
 
 						   	contact				: value.contact,
 						   	amount_paid 		: value.amount_paid,
-						   	reference 			: [{ "number" : value.number, "amount" : value.amount, "issued_date":value.issued_date }]				
+						   	reference 			: [{ "number" : value.number, "amount" : amount_due, "issued_date":value.issued_date }]				
 				    	});						
 					});
 					self.applyTerm();
@@ -60787,7 +61090,7 @@
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "transactions/line"),
-    	categoryDS 				: banhji.source.categoryDS,
+    	categoryDS 				: banhji.source.inventoryCategoryDS,
     	itemGroupDS 			: dataStore(apiUrl + "items/group"),
     	brandDS 	 			: dataStore(apiUrl + "brands"),    	   	   	
     	measurementDS			: dataStore(apiUrl + "measurements"),
@@ -61110,8 +61413,8 @@
 
 			//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Contact Person has changes
-		    	if(this.contactPersonDS.hasChanges()){
+	    		//Contact Item has changes
+		    	if(this.itemVendorDS.hasChanges() || this.itemCustomerDS.hasChanges()){
 		    		obj.set("dirty", true);
 		    	}
 	    	}
@@ -63435,9 +63738,9 @@
 		customerBalanceDetail : new kendo.Layout("#customerBalanceDetail", {model: banhji.customerSale}),
 		receivableAgingSummary : new kendo.Layout("#receivableAgingSummary", {model: banhji.customerSale}),
 		receivableAgingDetail : new kendo.Layout("#receivableAgingDetail", {model: banhji.customerSale}),
-		listInvoicesCollect : new kendo.Layout("#listInvoicesCollect", {model: banhji.listInvoicesCollect}),
-		collectReport : new kendo.Layout("#collectReport", {model: banhji.collectReport}),
-		invoiceList : new kendo.Layout("#invoiceList", {model: banhji.invoiceList}),
+		listInvoicesCollect : new kendo.Layout("#listInvoicesCollect", {model: banhji.customerSale}),
+		collectReport : new kendo.Layout("#collectReport", {model: banhji.customerSale}),
+		invoiceList : new kendo.Layout("#invoiceList", {model: banhji.customerSale}),
 		saleJobEngagement: new kendo.Layout("#saleJobEngagement", {model: banhji.saleJobEngagement}),
 		saleOrderList: new kendo.Layout("#saleOrderList", {model: banhji.saleOrderList}),
 
@@ -68318,6 +68621,8 @@
 					banhji.customerSale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.customerSale.set('totalBalance', kendo.toString(e.response.totalBalance, 'c2'));
+					banhji.customerSale.set('totalCreditSale', kendo.toString(e.response.totalCreditSale, 'c2'));
 				}
 			});
 		}
