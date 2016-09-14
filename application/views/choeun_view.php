@@ -63553,7 +63553,25 @@
 		}    	
     });
 	
-
+    var templateLoader = (function($,host){
+		//Loads external templates from path and injects in to page DOM
+		return{
+			loadExtTemplate: function(path){
+				var tmplLoader = $.get(path)
+					.success(function(result){
+						//Add templates to DOM
+						$("#content").append(result);
+					})
+					.error(function(result){
+						alert("Error Loading Templates -- TODO: Better Error Handling");
+					})
+					
+				tmplLoader.complete(function(){
+					$(host).trigger("TEMPLATE_LOADED", [path]);
+				});
+			}
+		};
+	})(jQuery, document);
 	/* views and layout */
 	banhji.view = {
 		layout 		: new kendo.Layout('#layout', {model: banhji.Layout}),
@@ -68262,7 +68280,7 @@
 		}else{						
 			banhji.view.layout.showIn("#content", banhji.view.invoiceCustom);			
 			kendo.fx($("#slide-form")).slideIn("down").play();
-
+			templateLoader.loadExtTemplate("<?php echo base_url(); ?>assets/invCustom.php");
 			var vm = banhji.invoiceCustom;
 			
 			if(banhji.pageLoaded["invoice_custom"]==undefined){

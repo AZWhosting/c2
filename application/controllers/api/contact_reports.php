@@ -335,6 +335,8 @@ class Contact_reports extends REST_Controller {
 				$arAmount += floatval($value->amount) / floatval($value->rate);
 			}
 
+			$arAmount -= floatval($value->deposit);
+
 			//Group customer
 			if(isset($arCustomer[$value->contact_id])){
 				$arCustomer[$value->contact_id] = 0;
@@ -1235,6 +1237,8 @@ class Contact_reports extends REST_Controller {
 			}else{
 				$apAmount += floatval($value->amount) / floatval($value->rate);
 			}
+
+			$apAmount -= floatval($value->amount);
 
 			//Group customer
 			if(isset($arCustomer[$value->contact_id])){

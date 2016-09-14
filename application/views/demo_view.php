@@ -20117,17 +20117,10 @@
 									</tr>
 									<tr>
 										<td class="right">
-											Deposit:
-											<span data-format="n" data-bind="text: total_deposit"></span>										
+											Amount Paid:
 										</td>
 										<td class="right">
-											<input data-role="numerictextbox"
-								                   data-format="n"
-								                   data-spinners="false"
-								                   data-min="0"							                                      
-								                   data-bind="value: obj.deposit,
-								                              events: { change: changes }"
-								                   style="width: 90%; text-align: right;">
+											<span data-format="n" data-bind="text: obj.amount_paid"></span>
 										</td>
 									</tr>
 									<tr>
@@ -29082,8 +29075,7 @@
 				              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
 					              				data-bind="value: obj.abbr, 
 					              						   disabled: obj.is_pattern" 
-					              				placeholder="eg. AB" required data-required-msg="required"
-					              				style="width: 55px;" />
+					              				placeholder="eg. AB"           				style="width: 55px;" />
 				              			-
 				              			<input id="txtNumber" name="txtNumber" class="k-textbox"
 					              				data-bind="value: obj.number, 
@@ -29172,7 +29164,7 @@
 							            <input id="txtCost" name="txtCost" 
 							               data-role="numerictextbox"
 							               data-spinners="false"
-						                   data-format="n0"
+						                   data-format="n"
 						                   data-min="0"						                   
 						                   data-bind="value: obj.cost"
 						                   style="width: 100%">
@@ -29188,7 +29180,7 @@
 										<label for="txtOrderPoint"><span data-bind="text: lang.lang.reorder_point"></span></label>
 										<input data-role="numerictextbox"
 										   data-spinners="false"
-						                   data-format="n0"
+						                   data-format="n"
 						                   data-min="0"						                   
 						                   data-bind="value: obj.order_point"
 						                   style="width: 100%">
@@ -29203,7 +29195,7 @@
 							            <input id="txtPrice" name="txtPrice" 
 							               data-role="numerictextbox"
 							               data-spinners="false"
-						                   data-format="n0"
+						                   data-format="n"
 						                   data-min="0"						                   
 						                   data-bind="value: obj.price"
 						                   style="width: 100%">
@@ -29217,7 +29209,7 @@
 								<div class="control-group">								
 									<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
 						            <textarea id="txtDescription" class="k-textbox" 
-										data-bind="value: obj.bill_to" style="width: 100%;height:60px;"></textarea>
+										data-bind="value: obj.description" style="width: 100%;height:60px;"></textarea>
 								</div>																		
 								<!-- // Group END -->
 							</div>
@@ -37100,8 +37092,8 @@
 
 	//DAWINE -----------------------------------------------------------------------------------------
 	banhji.source =  kendo.observable({
-		lang 					: langVM,
-		countryDS				: new kendo.data.DataSource({
+		lang 						: langVM,
+		countryDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "countries",
@@ -37137,7 +37129,7 @@
 			pageSize: 100
 		}),
 		//Contact
-		contactDS				: new kendo.data.DataSource({
+		contactDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts",
@@ -37173,7 +37165,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		customerDS				: new kendo.data.DataSource({
+		customerDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts",
@@ -37210,7 +37202,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		supplierDS				: new kendo.data.DataSource({
+		supplierDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts",
@@ -37247,7 +37239,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		employeeDS				: new kendo.data.DataSource({
+		employeeDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts",
@@ -37284,7 +37276,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		saleRepDS				: new kendo.data.DataSource({
+		saleRepDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts",
@@ -37322,7 +37314,7 @@
 			pageSize: 100
 		}),
 		//Contact Type
-		contactTypeDS			: new kendo.data.DataSource({
+		contactTypeDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts/type",
@@ -37375,7 +37367,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		customerTypeDS			: new kendo.data.DataSource({
+		customerTypeDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts/type",
@@ -37429,7 +37421,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		supplierTypeDS			: new kendo.data.DataSource({
+		supplierTypeDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "contacts/type",
@@ -37484,7 +37476,7 @@
 			pageSize: 100
 		}),
 		//Job
-		jobDS					: new kendo.data.DataSource({
+		jobDS						: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "jobs",
@@ -37520,7 +37512,7 @@
 			pageSize: 100
 		}),
 		//Currency
-		currencyDS				: new kendo.data.DataSource({
+		currencyDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "currencies",
@@ -37556,9 +37548,9 @@
 			page:1,
 			pageSize: 100
 		}),
-		currencyRateDS			: dataStore(apiUrl + "currencies/rate"),
+		currencyRateDS				: dataStore(apiUrl + "currencies/rate"),
 		//Item
-		itemDS					: new kendo.data.DataSource({
+		itemDS						: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "items",
@@ -37594,9 +37586,80 @@
 			page:1,
 			pageSize: 100
 		}),
-		categoryDS 				: dataStore(apiUrl + "categories"),		
+		inventoryCategoryDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "categories",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field: "item_type_id", value: 1 },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		serviceCategoryDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "categories",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field: "item_type_id", value: 4 },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),		
 		//Tax Item
-		taxItemDS				: new kendo.data.DataSource({
+		taxItemDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "tax_items",
@@ -37704,7 +37767,7 @@
 			pageSize: 100
 		}),
 		//Accounting
-		accountDS				: new kendo.data.DataSource({
+		accountDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37741,7 +37804,7 @@
 			page:1,
 			pageSize: 1000
 		}),
-		subAccountDS			: new kendo.data.DataSource({
+		subAccountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37778,7 +37841,7 @@
 			page:1,
 			pageSize: 1000
 		}),
-		accountTypeDS			: new kendo.data.DataSource({
+		accountTypeDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts/type",
@@ -37814,7 +37877,7 @@
 			page:1,
 			pageSize: 1000
 		}),
-		cashAccountDS			: new kendo.data.DataSource({
+		cashAccountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37854,7 +37917,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		advAccountDS			: new kendo.data.DataSource({
+		advAccountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37936,7 +37999,7 @@
 			pageSize: 100
 		}),
 		//Expense
-		expenseAccountDS				: new kendo.data.DataSource({
+		expenseAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -37976,7 +38039,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		ARAccountDS				: new kendo.data.DataSource({
+		ARAccountDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38016,7 +38079,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		APAccountDS				: new kendo.data.DataSource({
+		APAccountDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38056,7 +38119,7 @@
 			page:1,
 			pageSize: 100
 		}),		
-		tradeDiscountDS			: new kendo.data.DataSource({
+		tradeDiscountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38176,7 +38239,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		supplierSettlementDiscountDS		: new kendo.data.DataSource({
+		supplierSettlementDiscountDS: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38216,7 +38279,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		prepaidAccountDS		: new kendo.data.DataSource({
+		prepaidAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38256,7 +38319,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		depositAccountDS		: new kendo.data.DataSource({
+		depositAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38296,7 +38359,7 @@
 			page:1,
 			pageSize: 100
 		}),		
-		cogsAccountDS			: new kendo.data.DataSource({
+		cogsAccountDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38336,7 +38399,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		inventoryAccountDS		: new kendo.data.DataSource({
+		inventoryAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -38377,7 +38440,7 @@
 			pageSize: 100
 		}),
 		//Payment Term, Method, Segment
-		paymentTermDS			: new kendo.data.DataSource({
+		paymentTermDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "payment_terms",
@@ -38412,7 +38475,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		paymentMethodDS			: new kendo.data.DataSource({
+		paymentMethodDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "payment_methods",
@@ -38447,7 +38510,7 @@
 			page:1,
 			pageSize: 100
 		}),				
-		segmentItemDS			: new kendo.data.DataSource({
+		segmentItemDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "segments/item",
@@ -38483,20 +38546,20 @@
 			pageSize: 100
 		}),
 		//Recurring
-		frequencyList 			: [
+		frequencyList 				: [
 			{ id: 'Daily', name: 'Day' },
 			{ id: 'Weekly', name: 'Week' },
 			{ id: 'Monthly', name: 'Month' },
 			{ id: 'Annually', name: 'Annual' }
 		],
-		monthOptionList 		: [
+		monthOptionList 			: [
 			{ id: 'Day', name: 'Day' },
 			{ id: '1st', name: '1st' },
 			{ id: '2nd', name: '2nd' },
 			{ id: '3rd', name: '3rd' },
 			{ id: '4th', name: '4th' }
 		],
-		monthList 				: [
+		monthList 					: [
 			{ id: 0, name: 'January' },
 			{ id: 1, name: 'February' },
 			{ id: 2, name: 'March' },
@@ -38510,7 +38573,7 @@
 			{ id: 10, name: 'November' },
 			{ id: 11, name: 'December' }
 		],
-		weekDayList 			: [
+		weekDayList 				: [
 			{ id: 0, name: 'Sunday' },
 			{ id: 1, name: 'Monday' },
 			{ id: 2, name: 'Tuesday' },
@@ -38519,7 +38582,7 @@
 			{ id: 5, name: 'Friday' },
 			{ id: 6, name: 'Saturday' }
 		],
-		dayList 				: [
+		dayList 					: [
 			{ id: 1, name: '1st' },
 			{ id: 2, name: '2nd' },
 			{ id: 3, name: '3rd' },
@@ -38550,19 +38613,19 @@
 			{ id: 28, name: '28th' },
 			{ id: 0, name: 'Last' }
 		],
-		sortList				: [
+		sortList					: [
 	 		{ text:"All", value: "all" },
 	 		{ text:"Today", value: "today" },
 	 		{ text:"This Week", value: "week" },
 	 		{ text:"This Month", value: "month" },
 	 		{ text:"This Year", value: "year" }
 		],
-		statusList 				: [
+		statusList 					: [
 			{ "id": 1, "name": "Active" },
 			{ "id": 0, "name": "Inactive" },
 			{ "id": 2, "name": "Void" }
         ],
-        customerFormList 		: [
+        customerFormList 			: [
 	    	{ id: "Quote", name: "Quotation" },
 			{ id: "Sale_Order", name: "Sale Order" },
 			{ id: "Deposit", name: "Deposit" },
@@ -38572,7 +38635,7 @@
 			{ id: "Sale_Return", name: "Sale Return" },
 			{ id: "GDN", name: "Delivered Note" }
 	    ],
-	    vendorFormList 		: [
+	    vendorFormList 				: [
 	    	{ id: "Purchase_Order", name: "Purchase Order" },
 	    	{ id: "GRN", name: "GRN" },
 			{ id: "Deposit", name: "Deposit" },
@@ -38580,7 +38643,7 @@
 			{ id: "Pur_Return", name: "Pur.Return" },
 			{ id: "PayBill", name: "PayBill" }
 	    ],
-	    cashMGTFormList			: [
+	    cashMGTFormList				: [
 	    	{ id: "Cash_Transfer", name: "Transfer" },
 	    	{ id: "Deposit", name: "Deposit" },
 			{ id: "Witdraw", name: "Witdraw" },
@@ -38589,21 +38652,21 @@
 			{ id: "Reimbursement", name: "Reimbursement" },
 			{ id: "Journal", name: "Journal" }
 	    ],
-		genderList				: ["M", "F"],
-		user_id					: banhji.userData.id,
-		cash_account_id 		: 10,
-		amtDueColor 			: "#D5DBDB",
-		acceptedSrc				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/accepted.ico",
-		approvedSrc				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/approved.ico",
-		cancelSrc				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/cancel.ico",
-		openSrc 				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/open.ico",
-		paidSrc 				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/paid.ico",
-		partialyPaidSrc 		: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/partialy_paid.ico",
-		usedSrc 				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/used.ico",
-		successMessage 			: "Saved Successful!",
-		errorMessage 			: "Warning, please review it again!",
-		confirmMessage 			: "Are you sure, you want to delete it?",
-		getFiscalDate 			: function(){
+		genderList					: ["M", "F"],
+		user_id						: banhji.userData.id,
+		cash_account_id 			: 10,
+		amtDueColor 				: "#D5DBDB",
+		acceptedSrc					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/accepted.ico",
+		approvedSrc					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/approved.ico",
+		cancelSrc					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/cancel.ico",
+		openSrc 					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/open.ico",
+		paidSrc 					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/paid.ico",
+		partialyPaidSrc 			: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/partialy_paid.ico",
+		usedSrc 					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/used.ico",
+		successMessage 				: "Saved Successful!",
+		errorMessage 				: "Warning, please review it again!",
+		confirmMessage 				: "Are you sure, you want to delete it?",
+		getFiscalDate 				: function(){
 			today = new Date(),
 			year = new Date(),
 			year.setFullYear(year.getFullYear()-1),			
@@ -38612,7 +38675,7 @@
 			return fiscalDate;
 		},
 		//Rate
-		loadRate 				: function(){
+		loadRate 					: function(){
 			this.currencyRateDS.query({
 				filter:[],
 				sort:{ field:"date", dir:"desc"},
@@ -38620,7 +38683,7 @@
 				pageSize:1000
 			});
 		},
-		getRate					: function(locale, date){
+		getRate						: function(locale, date){
 			var rate = 1;
 			$.each(this.currencyRateDS.data(), function(index, value){
 				if(value.locale==locale && value.date<=date){
@@ -56182,7 +56245,7 @@
 			
 			if(data.reference_id>0){
 				var inv = this.invoiceDS.get(data.reference_id);
-				data.set("amount", inv.amount - inv.amount_paid);
+				data.set("amount", inv.amount - (inv.amount_paid + inv.deposit));
 
 				this.changes();
 			}else{
@@ -56236,7 +56299,7 @@
 				
 				self.set("obj", view[0]);
 				
-				self.set("statusSrc", banhji.source.acceptedSrc);
+				self.set("statusSrc", banhji.source.usedSrc);
 
 				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));				
 		        self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
@@ -56269,9 +56332,6 @@
 						}
 					});
 				});
-			}).then(function(){
-				var obj = self.get("obj");
-				obj.set("amount_paid", obj.amount);
 			});				
 		},
 		changes				: function(){
@@ -56752,7 +56812,7 @@
 			}
 
 			//A/R on Cr
-			var ar = (obj.amount - obj.amount_paid) + sumInvoice;						
+			var ar = obj.amount - (obj.amount_paid + obj.deposit);						
 			this.journalLineDS.add({					
 				transaction_id 		: transaction_id,
 				account_id 			: contact.account_id,				
@@ -56861,18 +56921,22 @@
 			if(obj.reference_id>0){
 				var ref = this.referenceDS.get(obj.reference_id);
 				
-				if(ref.type=="Cash_Sale"){
+				obj.set("amount", ref.amount);
+
+				if(ref.type=="Cash_Sale"){					
 					obj.set("amount_paid", ref.amount);
 					this.set("showReturn", true);
 				}else{
-					obj.set("amount_paid", ref.amount_paid);
+					obj.set("amount_paid", ref.amount_paid + ref.deposit);
 					if(ref.status==0){
 						this.set("showReturn", false);
 
 						this.returnDS.data([]);
-						this.addRowOption();
 					}else{
 						this.set("showReturn", true);
+
+						this.returnDS.data([]);
+						this.addRowOption();
 					}
 				}				
 									
@@ -59448,7 +59512,7 @@
 
 				if(view.length>0){
 					$.each(view, function(index, value){											
-						var amount_due = value.amount - value.amount_paid;							
+						var amount_due = value.amount - (value.amount_paid + value.deposit);							
 
 						self.dataSource.add({
 		    				contact_id 			: value.contact_id,				
@@ -59482,7 +59546,7 @@
 
 						   	contact				: value.contact,
 						   	amount_paid 		: value.amount_paid,
-						   	reference 			: [{ "number" : value.number, "amount" : value.amount, "issued_date":value.issued_date }]				
+						   	reference 			: [{ "number" : value.number, "amount" : amount_due, "issued_date":value.issued_date }]				
 				    	});						
 					});
 					self.applyTerm();
@@ -60012,7 +60076,7 @@
 
 				if(view.length>0){
 					$.each(view, function(index, value){											
-						var amount_due = value.amount - value.amount_paid;							
+						var amount_due = value.amount - (value.amount_paid + value.deposit);							
 
 						self.dataSource.add({
 		    				contact_id 			: value.contact_id,				
@@ -60046,7 +60110,7 @@
 
 						   	contact				: value.contact,
 						   	amount_paid 		: value.amount_paid,
-						   	reference 			: [{ "number" : value.number, "amount" : value.amount, "issued_date":value.issued_date }]				
+						   	reference 			: [{ "number" : value.number, "amount" : amount_due, "issued_date":value.issued_date }]				
 				    	});						
 					});
 					self.applyTerm();
@@ -61018,7 +61082,7 @@
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "transactions/line"),
-    	categoryDS 				: banhji.source.categoryDS,
+    	categoryDS 				: banhji.source.inventoryCategoryDS,
     	itemGroupDS 			: dataStore(apiUrl + "items/group"),
     	brandDS 	 			: dataStore(apiUrl + "brands"),    	   	   	
     	measurementDS			: dataStore(apiUrl + "measurements"),
@@ -61341,8 +61405,8 @@
 
 			//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Contact Person has changes
-		    	if(this.contactPersonDS.hasChanges()){
+	    		//Contact Item has changes
+		    	if(this.itemVendorDS.hasChanges() || this.itemCustomerDS.hasChanges()){
 		    		obj.set("dirty", true);
 		    	}
 	    	}
