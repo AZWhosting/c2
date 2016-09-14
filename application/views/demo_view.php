@@ -10,7 +10,7 @@
 	<div class="menu-hidden sidebar-hidden-phone menu-left hidden-print">
 		<div class="navbar main" id="main-menu">
 			<ul class="topnav">
-				<li><a href="#"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" style="height: 40px;"></a></li>
+				<li><a href="#" data-bind="click: checkRole"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" style="height: 40px;"></a></li>
 			</ul>
 			<form class="navbar-form pull-left">
 				<div class="btn-group">
@@ -35617,6 +35617,14 @@
 		multiTaskList 		: [],
 		searchText : "",
 		searchType : "contacts",
+		checkRole  : function(e) {
+			e.preventDefault();
+		if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
+            banhji.router.navigate("");
+          } else {
+           	window.location.replace("<?php echo base_url(); ?>admin");
+          }
+		},
 		searchContact: function() {
 			this.set("searchType", "contacts");
 

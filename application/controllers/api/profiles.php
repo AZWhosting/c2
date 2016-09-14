@@ -40,18 +40,6 @@ class Profiles extends REST_Controller {
 		}
 		$users->get_iterated();
 		foreach($users as $user) {
-			// $user->module->get();
-			// $modules = array();
-			// if($user->module->exists()) {
-			// 	foreach($user->module as $m) {
-			// 		$modules[] = array(
-			// 			'id' 		=> intval($m->id),
-			// 			'name' 		=> $m->name,
-			// 			'img_url' 	=> $m->image_url,
-			// 			'description'=>$m->description
-			// 		);
-			// 	}
-			// }
 			$data[] = array(
 				'id' => $user->id,
 				'username' 	=> $user->username,
@@ -63,6 +51,12 @@ class Profiles extends REST_Controller {
 				'facebook'	=> $user->facebook,
 				'linkedin'	=> $user->linkedin,
 				'twitter' 	=> $user->twitter,
+				'joined'	=> $user->created_at,
+				'logged_in' => $user->logged_in,
+				'role' 	=> $user->role,
+				'mobile'	=> $user->mobile,
+				'email' 	=> $user->email,
+				'usertype' 	=> $user->usertype_id,				
 				'created_at'=> $user->created_at,
 				'updated_at'=> $user->updated_at
 			);
@@ -132,20 +126,38 @@ class Profiles extends REST_Controller {
 		foreach($requested_data as $user) {
 			$User = new User(null);
 			$User->where('username', $user->username)->get();
+			$User->username = $user->username;
+			$User->email = $user->email;
+			$User->mobile = $user->mobile;
+			$User->linkedin = $user->linkedin;
+			$User->facebook = $user->facebook;
+			$User->twitter = $user->twitter;
 			$User->first_name= $user->first_name;
 			$User->last_name = $user->last_name;
 			$User->profile_photo_url = $user->profile_photo;
-			$User->usertype_id=$user->usertype->id;
-			$User->save();
+			$User->role = $user->role;
+			$User->usertype_id=$user->usertype;
 
 			if($User->save()) {
 				$data[] = array(
-					'username' 	=> $User->username,
-					'first_name'=> $User->first_name,
-					'last_name' => $User->last_name,
-					'profile_photo'=>$User->profile_photo_url,
-					'created_at'=> $User->created_at,
-					'updated_at'=> $User->updated_at
+					'id' => $user->id,
+				'username' 	=> $User->username,
+				'first_name'=> $User->first_name,
+				'last_name' => $User->last_name,
+				'role' 		=> $User->role,
+				'profile_photo'=>$User->profile_photo_url,
+				// 'modules'   => $modules,
+				'facebook'	=> $User->facebook,
+				'linkedin'	=> $User->linkedin,
+				'twitter' 	=> $User->twitter,
+				'joined'	=> $User->created_at,
+				'logged_in' => $User->logged_in,
+				'role' 		=> $User->role,
+				'mobile'	=> $User->mobile,
+				'email' 	=> $User->email,
+				'usertype' 	=> $User->usertype_id,				
+				'created_at'=> $User->created_at,
+				'updated_at'=> $User->updated_at
 				);
 			}
 		}
@@ -165,9 +177,15 @@ class Profiles extends REST_Controller {
 		foreach($requested_data as $user) {
 			$User = new User(null);
 			$User->username = $user->username;
+			$User->email = $user->email;
+			$User->mobile = $user->mobile;
+			$User->linkedin = $user->linkedin;
+			$User->facebook = $user->facebook;
+			$User->twitter = $user->twitter;
 			$User->first_name= $user->first_name;
 			$User->last_name = $user->last_name;
 			$User->profile_photo_url = $user->profile_photo;
+			$User->role = $user->role;
 			$User->usertype_id=$user->usertype->id;
 			if($User->save()) {
 				$data[] = array(

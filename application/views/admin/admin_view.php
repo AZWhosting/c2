@@ -50,8 +50,6 @@
                                   <span style="color:#fff;" data-bind="text: currentID.username"></span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-                                  <a class="dropdown-item" data-bind="attr: {href: profileUrl}"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
-                                  <div class="dropdown-divider"></div>
                                   <a class="dropdown-item" href="#" data-bind="click: logOut"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
                               </div>
                           </div>
@@ -81,53 +79,42 @@
                                     <span data-bind="text: userProfile.currentID.username"></span>
                                   </a></span>
                               </div>
-                              <div class="profile-card-location">
-                                  Confirm: <span>True</span>
-                              </div>
+                               <div class="profile-card-status">
+                              <strong>Joined In</strong>: <span data-bind="text: userProfile.currentID.joined"></span>
+                          </div>
+                          <div class="profile-card-status">
+                              <strong>Logged In</strong>: <span data-bind="text: userProfile.currentID.logged_in"></span>
+                          </div>
+                          <div class="profile-card-status">
+                              <strong>Assigned Role</strong>: <span data-bind="text: userProfile.getRole"></span>
+                          </div>
                           </div>
                           <div class="profile-statistic tbl">
-                            <button type="button" class="btn btn-block goto-banhji">BanhJi App</button>
-                            <button type="button" class="btn btn-block goto-banhji" data-bind="click: goCompany">Company Info</button>
-                            <button type="button" class="btn btn-block goto-banhji" data-bind="click: goUser">Users</button>
-                            <button type="button" class="btn btn-block goto-banhji" data-bind="click: goEmployee">Employees</button>
-                          </div>
+                            <a href="<?php echo base_url(); ?>rrd" type="button" class="btn btn-block goto-banhji" style="background-color: #001933;">Go to BanhJi App</a>
+                            <button type="button" class="btn btn-block goto-banhji" data-bind="click: goModule">Assigned Modules</button>
+                            <button type="button" class="btn btn-block goto-banhji" data-bind="click: goProfile">View/ Edit Profile</button>
+                            <button type="button" class="btn btn-block goto-banhji" data-bind="click: userProfile.goPassword">Change Password</button>
 
-                          <div class="profile-statistic tbl">
-                              <div class="tbl-row">
-                                  <div class="tbl-cell">
-                                      <b><span data-bind="text: modules.total"></span></b>
-                                      Assign Module
-                                  </div>
-                              </div>
+                            <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goCompany">Company Info</button>
+                            <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goUser">Users List</button>
+                            <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goEmployee">Employees List</button>
+                            
                           </div>
-                          <ul class="profile-links-list">
-                              <li class="nowrap">
-                                  <i class="font-icon font-icon-fb-fill"></i>
-                                  <a data-bind="attr: {href: userProfile.currentID.facebook}"><span data-bind="text: userProfile.currentID.facebook"></span></a>
-                              </li>
-                              <li class="nowrap">
-                                  <i class="font-icon font-icon-in-fill"></i>
-                                  <a data-bind="attr: {href: userProfile.currentID.linkedin}><span data-bind="text: userProfile.currentID.linkedin"></span></a>
-                              </li>
-                              <li class="nowrap">
-                                  <i class="font-icon font-icon-tw-fill"></i>
-                                  <a data-bind="attr: {href: userProfile.currentID.twitter}><span data-bind="text: userProfile.currentID.twitter"></span></a>
-                              </li>
-                          </ul>
+                          
                       </section>
                   </div>
 
                   <div class="col-xs-12 col-md-8 col-lg-9">
-                      <section class="row">
+                      <section class="row" data-bind="visible:users.showAdmin">
                           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                               <div class="widget widget-3">
                                   <div class="widget-head">
                                       <h4 class="heading">
-                                          User</h4>
+                                          Total Users</h4>
                                   </div>
                                   <div class="widget-body alert alert-primary" style="background: #496cad;">
                                       <div align="center" class="text-large strong"><span data-bind="text: data"></span></div>
-                                      <a  style="color: #fff;" data-bind="click: users.addUser">Add User</a>
+                                      <a style="color: #fff;">Users</a>
                                   </div>
                               </div>
                           </div>
@@ -136,12 +123,12 @@
                              <div class="widget widget-3">
                                   <div class="widget-head">
                                       <h4 class="heading">
-                                          Assigned Module
+                                          Core/ Subscribed Modules
                                       </h4>
                                   </div>
                                   <div class="widget-body alert" style="color: #333; background: #d9edf7;">
                                       <div align="center"  class="text-large strong"><span data-bind="text: appSub"></span></div>
-                                      <a  href="#" data-bind="click: getModule">Modules/Apps</a>
+                                      <a>Assigned Modules</a>
                                   </div>
                               </div>
                           </div>
@@ -685,7 +672,7 @@
                 </tr>
             </table>
         </article>
-        <button data-bind="click: edit" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
+        <button data-bind="click: edit" data-role="button" class="btn" role="button" aria-disabled="false" tabindex="0">
             Edit
         </button>
     </script>
@@ -722,63 +709,126 @@
     </script>
     <!-- user placeholder -->
     <script type="text/x-kendo-template" id="user-profile">
-      <!--Dashbaord User-->
       <div class="page-content">
-        <div class="container" >
-          <div class="row">
-            <div class="col-xs-12 col-md-4 col-lg-3">
-                      <section class="box-typical">
-                          <div class="profile-card">
-                              <div class="profile-card-photo">
-                                  <img data-bind="attr: {src: current.profile_photo}">
-                              </div>
-                              <div class="profile-card-name">
-                                  <span data-bind="text: current.last_name"></span>&nbsp;
-                                  <span data-bind="text: current.first_name"></span>
-                              </div>
-                              <div class="profile-card-status">
-                                  Registered Email: <span><a href="mailto:somsreypoch@gmail.com">
-                                    <span data-bind="text: current.username"></span>
-                                  </a></span>
-                              </div>
-                              <div class="profile-card-location">
-                                  Confirm: <span>True</span>
-                              </div>
-                              <button type="button" class="btn goto-banhji">BanhJi App</button>
-                          </div>
-
-                          <ul class="profile-links-list">
-                            <li class="nowrap">
-                                <i class="font-icon font-icon-phone"></i>
-                                <span data-bind="text: current.mobile"></span>
-                            </li>
-                            <li class="nowrap">
-                                <i class="font-icon font-icon-mail"></i>
-                                <span data-bind="text: current.email"></span>
-                            </li>
-                            <li class="nowrap">
-                                <i class="font-icon font-icon-fb-fill"></i>
-                                <a data-bind="attr: {href: current.facebook}"><span data-bind="text: current.facebook"></span></a>
-                            </li>
-                            <li class="nowrap">
-                                <i class="font-icon font-icon-in-fill"></i>
-                                <a data-bind="attr: {href: current.linkedin}""><span data-bind="text: current.linkedin"></span></a>
-                            </li>
-                            <li class="nowrap">
-                                <i class="font-icon font-icon-tw-fill"></i>
-                                <a data-bind="attr: {href: current.twitter}""><span data-bind="text: current.twitter"></span></a>
-                            </li>
-                          </ul>
-                          <button data-bind="click: editProfile">Edit</button>
-                      </section>
-                  </div>
-
-            <div class="col-xs-12 col-md-8 col-lg-9">
-              <section class="box-typical user-module" id="profile-placeholder">
-              </section>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <section class="box-typical edit-company">
+                        <div class="hidden-print pull-right">
+                            <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
+                        </div>
+                        <h2>Profile Detail</h2>
+                        <div class="divider"></div>
+                        <div class="col-md-3 col-lg-3">
+                            <img width="240px" data-bind="attr: {src: currentID.profile_photo}" />
+                            <h3>Profile Picture</h3>
+                            <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                        </div>
+                        <article class="col-md-9 col-lg-9 profile-info-item edit-table">
+                            <table >
+                                <tr>
+                                    <td>Username *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: currentID.username" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>First Name *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: currentID.first_name" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: currentID.last_name" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: currentID.mobile" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: currentID.email" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Facebook</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: currentID.facebook" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>LinkedIn</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: currentID.linkedin" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Twitter</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: currentID.twitter" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr data-bind="visible:users.showAdmin">
+                                    <td>Role</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input id="type"
+                                               data-role="dropdownlist"
+                                               data-bind="source: userRoles, value: currentID.role"
+                                               data-text-field="name"
+                                               data-value-field="id"
+                                               data-value-primitive="true"
+                                               class="form-control col-md-7 col-xs-12"
+                                               type="text"
+                                               >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Type</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input id="type"
+                                               data-role="dropdownlist"
+                                               data-bind="source: userTypes, value: currentID.usertype"
+                                               data-text-field="name"
+                                               data-value-field="id"
+                                               data-value-primitive="true"
+                                               class="form-control col-md-7 col-xs-12"
+                                               type="text">
+                                    </td>
+                                </tr>
+                            </table>
+                        </article>
+                        <div class="box-generic">
+                          <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
+                              <span class="glyphicon glyphicon-ok"><i></i></span>
+                              &nbsp; Save
+                          </button>
+                          &nbsp;
+                          <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0" data-bind="click: cancel">
+                              <span class="glyphicon glyphicon-remove"><i></i></span>
+                              &nbsp; Cancel
+                            </button>
+                        </div>
+                    </section>
+                </div>
             </div>
-          </div>
         </div>
+        <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-modules">
@@ -975,7 +1025,7 @@
                                         <input type="Email" data-bind="value: current.twitter" class="form-control" id="" placeholder="">
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr data-bind="visible:showAdmin">
                                     <td>Role</td>
                                     <td>:</td>
                                     <td>
@@ -1316,6 +1366,11 @@
           read  : {
             url: baseUrl + 'api/profiles',
             type: "GET",
+            dataType: 'json'
+          },
+          update  : {
+            url: baseUrl + 'api/profiles',
+            type: "PUT",
             dataType: 'json'
           },
           parameterMap: function(options, operation) {
@@ -1699,6 +1754,78 @@
 
       banhji.profile = kendo.observable({
         dataSource: banhji.profileDS,
+        showAdmin: function() {
+          if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+        userTypes : [
+          {id: 1, name: 'normal'},
+          {id: 2, name: 'developer'}
+        ],
+        userRoles: [
+          {id: 1, name: 'Admin'},
+          {id: 2, name: 'User'}
+        ],
+        upload: function() {
+          var fileChooser = document.getElementById('user-image');
+          var file = fileChooser.files[0];
+          var fileReader = new FileReader();
+          fileReader.onload = function(e){
+            banhji.profile.get('currentID').set('profile_photo', e.target.result);
+          }
+          fileReader.readAsDataURL(file);
+        },
+        oldPass: null,
+        newPass: null,
+        changePassword: function() {
+          var userData = {
+              Username : userPool.getCurrentUser().username,
+              Pool : userPool
+          };
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData); 
+          if(cognitoUser != null) {
+            cognitoUser.getSession(function(err, session) {
+              if (err) {
+                 alert(err);
+                  return;
+              }
+              console.log('session validity: ' + session.isValid());
+
+              AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId : 'us-east-1_56S0nUDS4', // your identity pool id here
+                Logins : {
+                    // Change the key below according to the specific region your user pool is in.
+                    'arn:aws:cognito-idp:us-east-1:260206821052:userpool/us-east-1_56S0nUDS4' : session.getIdToken().getJwtToken()
+                }
+              });
+            });
+          }
+          cognitoUser.changePassword(this.get('oldPass'), this.get('newPass'), function(err, result) {
+              if (err) {
+                  alert(err);
+                  return;
+              } else {
+                banhji.users.set('oldPass', null);
+                banhji.users.set('newPass', null);
+              }
+              console.log('call result: ' + result);
+          });
+        },
+        getRole   : function() {
+          var role = ""
+          if(banhji.profile.get('currentID').role == "1") {
+            role = "Admin";
+          } else {
+            role = "User";
+          }
+          return role;
+        },
+        goPassword: function() {
+          mainDash.showIn("#placeholder", password);
+        },
         logOut    : function() {
           var userData = {
               Username : userPool.getCurrentUser().username,
@@ -1713,8 +1840,34 @@
         currentID : banhji.profileDS.data()[0] || [],
         profileUrl : function() {
           return "#profile/" + this.get('currentID').id;
+        },
+        cancel    : function() {
+          if(banhji.profile.dataSource.hasChanges()) {
+            banhji.profile.dataSource.cancelChanges();
+          }
+          banhji.router.navigate("");
+        },
+        save      : function() {
+          var fileChooser = document.getElementById('user-image');
+          var results = document.getElementById('results');
+          var file = fileChooser.files[0];
+          if (file) {
+            var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
+            bucket.upload(params, function (err, data) {
+              // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
+              var loc = data.Location;
+              banhji.profile.get('currentID').set('profile_photo', loc);
+              banhji.profile.dataSource.sync();
+            });
+          } else {
+            banhji.profile.dataSource.sync();
+          }
+          banhji.profile.dataSource.bind('requestEnd', function(e){
+            if(e.response) {
+              alert("Operation saved");
+            }
+          });
         }
-
       });
 
       banhji.employees = kendo.observable({
@@ -2007,6 +2160,13 @@
       banhji.users = kendo.observable({
         users : banhji.userDS,
         cModules: banhji.moduleDS,
+        showAdmin: function() {
+          if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
+            return true;
+          } else {
+            return false;
+          }
+        },
         modules: new kendo.data.DataSource({
           transport: {
             read  : {
@@ -2383,37 +2543,35 @@
                 alert('Your action was successful.');
             });
           } else {
-            if(banhji.users.get('current').profile_photo !== "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png") {
-                  var fileChooser = document.getElementById('user-image');
-                  var results = document.getElementById('results');
-                  var file = fileChooser.files[0];
-                  if (file) {
-                    // results.innerHTML = '';
-                    var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-                    bucket.upload(params, function (err, data) {
-                      // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
-                      var loc = data.Location;
-                      banhji.users.get('current').set('profile_photo', loc);
-                      banhji.userDS.sync();
-                      banhji.userDS.bind('requestEnd', function(e){
-                        var res = e.response, type = e.type;
-                        if(res.results.length > 0) {
-                          console.log('user created.');
-                        }
-                      });
-                    });
+            var fileChooser = document.getElementById('user-image');
+            var results = document.getElementById('results');
+            var file = fileChooser.files[0];
+            if (file) {
+              // results.innerHTML = '';
+              var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
+              bucket.upload(params, function (err, data) {
+                // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
+                var loc = data.Location;
+                banhji.users.get('current').set('profile_photo', loc);
+                banhji.userDS.sync();
+                banhji.userDS.bind('requestEnd', function(e){
+                  var res = e.response, type = e.type;
+                  if(res.results.length > 0) {
+                    console.log('user created.');
                   }
+                });
+              });
+            } else {
+              banhji.userDS.sync();
+              banhji.userDS.bind('requestEnd', function(e){
+                var res = e.response, type = e.type;
+                if(res.results.length > 0) {
+                  $("#ntf1").data("kendoNotification").success("Data saved.");
                 } else {
-                  banhji.userDS.sync();
-                  banhji.userDS.bind('requestEnd', function(e){
-                    var res = e.response, type = e.type;
-                    if(res.results.length > 0) {
-                      $("#ntf1").data("kendoNotification").success("Data saved.");
-                    } else {
-                      $("#ntf1").data("kendoNotification").error("Operation failed.");
-                    }
-                  });
+                  $("#ntf1").data("kendoNotification").error("Operation failed.");
                 }
+              });
+            }
           }
         }
       });
@@ -2443,6 +2601,13 @@
         showLogo: function(e) {
           e.preventDefault();
           this.get('showLogoEdit') == true ? this.set('showLogoEdit', false) : this.set('showLogoEdit', true);
+        },
+        goModule    : function() {
+          banhji.moduleDS.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id});
+          mainDash.showIn("#placeholder", instituteModule);
+        },
+        goProfile   : function() {
+          banhji.router.navigate("profile");
         },
         onLogoChange: function() {
           var fileChooser = document.getElementById('companyLogo');
@@ -2487,7 +2652,17 @@
           banhji.router.navigate('');
         },
         save: function() {
-          this.dataStore.sync();
+          // var file = fileChooser.files[0];
+          // if (file) {
+          //   var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
+          //   bucket.upload(params, function (err, data) {
+          //     banhji.company.dataStore.data()[0].set('logo', data.Location);
+          //     banhji.company.dataStore.sync();
+          //   });
+          // } else {
+          //   this.dataStore.sync();
+          // }
+          
           this.dataStore.bind('rquestEnd', function(e){
             var res = e.response;
             if(res.results.length > 0) {
@@ -2523,10 +2698,10 @@
       var loading = new kendo.View('#template-waiting-page');
       var employee = new kendo.View('#template-placeholder-employee', { model: banhji.employees});
       var modeleView = new kendo.View('#template-modules-page', { model: banhji.company});
-      var profile = new kendo.Layout('#user-profile', {model: banhji.users});
+      var profile = new kendo.Layout('#user-profile', {model: banhji.profile});
       var profileMod = new kendo.View('#user-profile-modules', {model: banhji.users});
       var assign = new kendo.View('#template-assign-module-to-page', {model: banhji.users});
-      var password = new kendo.View('#template-user-password', {model: banhji.users});
+      var password = new kendo.View('#template-user-password', {model: banhji.profile});
       // router initization
       banhji.router = new kendo.Router({
         init: function() {
@@ -2566,7 +2741,6 @@
 
       // start here
       banhji.router.route('/', function() {
-        console.log('main');
         if(JSON.parse(localStorage.getItem('userData/user')).role != 1) {
           banhji.users.users.filter([
             {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
@@ -2591,7 +2765,10 @@
                 banhji.company.set('data', banhji.companyDS.data()[0].users);
                 banhji.company.set('lastLogin', banhji.companyDS.data()[0].lastLogin);
                 // console.log(e.response.results[0]);
-                banhji.userDS.filter({field: 'id', value: institute.id});
+                banhji.userDS.filter([
+                  {field: 'id', value: institute.id},
+                  {field: 'id <>', operator: "user", value: JSON.parse(localStorage.getItem('userData/user')).id}
+                ]);
               }            
             });
           });
@@ -2650,24 +2827,24 @@
         layout.showIn("#container", instEdit);
       });
 
-      banhji.router.route('profile/:id', function(id) {
+      banhji.router.route('profile', function() {
         layout.showIn("#container", profile);
-        if(banhji.users.get('current')){
-          profile.showIn("#profile-placeholder", profileMod);
-          banhji.users.modules.filter({field: 'id', value: id});
-        } else {
-          banhji.users.users.filter([
-            {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
-            {field: 'id', operator: 'user', value: id}
-            ]);
-          banhji.users.users.bind('requestEnd', function(e){
-            if(e.response) {
-              banhji.users.setCurrent(e.response.results[0]);
-              banhji.users.modules.filter({field: 'id', value: id});
-              profile.showIn("#profile-placeholder", profileMod);
-            }
-          });
-        }
+        // if(banhji.users.get('current')){
+        //   profile.showIn("#profile-placeholder", profileMod);
+        //   banhji.users.modules.filter({field: 'id', value: id});
+        // } else {
+        //   banhji.users.users.filter([
+        //     {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
+        //     {field: 'id', operator: 'user', value: id}
+        //     ]);
+        //   banhji.users.users.bind('requestEnd', function(e){
+        //     if(e.response) {
+        //       banhji.users.setCurrent(e.response.results[0]);
+        //       banhji.users.modules.filter({field: 'id', value: id});
+        //       profile.showIn("#profile-placeholder", profileMod);
+        //     }
+        //   });
+        // }
         
         // banhji.users.setCurrent(banhji.users.users.get(id));
       });
@@ -2676,19 +2853,18 @@
         if(banhji.profileDS.data()[0] && banhji.profileDS.data()[0].role != 1) {
           banhji.router.navigate("profile/"+banhji.profileDS.data()[0].id);
         }
-        layout.showIn("#container", profile);
+        // layout.showIn("#container", profile);
         // profile.showIn("#profile-placeholder", profileMod);
         banhji.users.setCurrent(banhji.users.users.get(id));
-        banhji.users.modules.filter({field: 'username', value: banhji.users.users.get(id).username});
-        profile.showIn("#profile-placeholder", assign);
-        
+        // banhji.users.modules.filter({field: 'username', value: banhji.users.users.get(id).username});
+        // layout.showIn("#container", mainDash);
+        mainDash.showIn("#placeholder", assign);
+        // profile.showIn("#profile-placeholder", assign);
       });
 
-      banhji.router.route('password/:id', function(id) {
-        layout.showIn("#container", profile);
-        // profile.showIn("#profile-placeholder", profileMod);
-        profile.showIn("#profile-placeholder", password);
-        banhji.users.setCurrent(banhji.users.users.get(id));
+      banhji.router.route('password', function() {
+        mainDash.showIn("#placeholder", password);
+        // profile.showIn("#profile-placeholder", password);
       });
 
       banhji.router.route('employee/new', function(){
