@@ -29264,141 +29264,23 @@
 	</tr>
 </script>
 <script id="itemCatalog" type="text/x-kendo-template">
-	<div class="customer-background">
-		<div class="container-960">
-			<div id="example" class="k-content">
-				
-				<!-- Collapsible Widget -->			
-				<div class="widget">
-				    <div class="widget-head">
-				    	<span class="btn btn-primary pull-right" 
-								onclick="javascript:window.history.back()">X</span>
-				        
-				        <h4 class="heading glyphicons sampler"><i></i> <span data-bind="text: lang.lang.catalogs"></span></h4>							        	
-				    </div>
-				    <div class="widget-body">					
-						
-				    	<div class="row-fluid">
-				    		<div class="span6 well">							
-								<div class="row-fluid">
-									<div class="span6">	
-										<!-- Group -->
-										<div class="control-group">							
-											<label for="txtSKU"><span data-bind="text: lang.lang.code"></span> <span style="color:red">*</span></label>
-					              			<input id="txtSKU" name="txtSKU" class="k-textbox"
-						              				data-bind="value: obj.sku" 
-						              				placeholder="e.g. ID0001" 
-						              				required data-required-msg="required"
-						              				style="width: 100%;" />
-						              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
-										</div>
-										<!-- // Group END -->		
-									</div>
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
 
-									<div class="span6">	
-										<!-- Group -->
-										<div class="control-group">
-											<label for="txtName"><span data-bind="text: lang.lang.items"></span><span style="color:red">*</span></label>
-						              		<input id="txtName" name="txtName" class="k-textbox" data-bind="value: obj.name" 
-								              		placeholder="Items Name..." required data-required-msg="required"
-								              		style="width: 100%;" />
-										</div>
-										<!-- // Group END -->	 			
-									</div>								
-								</div>
+					<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
 
-								<div class="row-fluid">
-									<div class="span6">
-										<!-- Group -->
-										<div class="control-group">								
-											<label for="txtOnhand"><span data-bind="text: lang.lang.status"></span><span style="color:red">*</span></label>
-								            <input id="ddlStatus" name="ddlStatus" 
-					              				data-role="dropdownlist"
-							            		data-text-field="name"
-				           						data-value-field="id"
-				           						data-value-primitive="true" 
-							            		data-bind="source: statusList, value: obj.status"
-							            		data-option-label="(--- Select ---)"
-							            		required data-required-msg="required" style="width: 100%;" />
-										</div>																		
-										<!-- // Group END -->										
-									</div>
+			        <h2>Item Catalog</h2>
+			        <br>
 
-									<div class="span6">
-										<input type="checkbox" data-bind="checked: obj.favorite" /> <span data-bind="text: lang.lang.favorite"></span>
-									</div>															
-								</div>							
-							</div>
-							<div class="span6">							
-								<div class="row-fluid">
-									<!-- Group -->
-									<div class="control-group">								
-										<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
-							            <textarea id="txtDescription" cols="0" rows="2" class="k-textbox" 
-											data-bind="value: obj.bill_to" style="width: 100%;"></textarea>
-									</div>																		
-									<!-- // Group END -->
-								</div>
-
-								<div class="row-fluid">
-									<!-- Group -->
-									<div class="control-group">								
-										<label for="items"><span data-bind="text: lang.lang.select_item_for_catalogs"></span></label>
-
-										<select data-role="multiselect"
-							                   data-placeholder="Select..."
-							                   data-value-primitive="true"
-							                   data-text-field="name"
-							                   data-value-field="id"
-							                   data-bind="value: obj.catalogs,
-							                              source: itemDS"
-							                   style="width: 100%"
-							            ></select>						            
-									</div>																		
-									<!-- // Group END -->
-								</div>																											
-							</div>
-						</div>
-						
-						<br>											
-								
-						<!-- Form actions -->
-						<div align="center">
-							<span id="notification"></span>
-
-							<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-							<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-							<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-						</div>
-						<!-- // Form actions END -->
-
-					</div> <!-- End Widget-Body List -->
-				</div>
-				<!-- // Collapsible Widget END -->				
-						
-			</div>
-		</div>
-	</div>
-</script>
-
-<!-- <script id="itemAssembly" type="text/x-kendo-template">
-	<div class="customer-background">
-		<div class="container-960">
-			<div id="example" class="k-content">
-				
-				
-				<div class="widget">
-				    <div class="widget-head">
-				    	<span class="btn btn-primary pull-right" 
-								onclick="javascript:window.history.back()">X</span>
-				        
-				        <h4 class="heading glyphicons fins"><i></i> <span data-bind="text: lang.lang.assembly"></span></h4>							        	
-				    </div>
-				    <div class="widget-body">					
-						
-				    	<div class="row-fluid">
-				    		<div class="span6 well">							
-								<div class="row-fluid">
+			        <!-- Upper Part -->
+					<div class="row">
+						<div class="span6">
+							<div class="box-generic well" style="height: 190px;">				
+								<div class="row">
 									<div class="span6">	
 								
 										<div class="control-group">							
@@ -29425,7 +29307,7 @@
 									</div>								
 								</div>
 
-								<div class="row-fluid">
+								<div class="row">
 									<div class="span6">
 								
 										<div class="control-group">								
@@ -29442,92 +29324,63 @@
 																	
 									</div>
 
-									<div class="span6">
+									<div class="span6"  style="margin-top: 25px;">
 										<input type="checkbox" data-bind="checked: obj.favorite" /> <span data-bind="text: lang.lang.favorite"></span>
 									</div>															
-								</div>							
-							</div>
-							<div class="span6">							
-								<div class="row-fluid">
-									
+								</div>
+
+							</div>						
+						</div>					   
+
+						<div class="span6" style="padding-left:0;">
+							<div class="span12">
+								<div class="row">
 									<div class="control-group">								
 										<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
 							            <textarea id="txtDescription" cols="0" rows="2" class="k-textbox" 
-											data-bind="value: obj.bill_to" style="width: 100%;"></textarea>
-									</div>																		
-								
-								</div>
+											data-bind="value: obj.bill_to" style="width: 100%; height: 49px;"></textarea>
+									</div>
 
-								<div class="row-fluid">
-			
-									<div class="control-group">								
-										<label for="items"><span data-bind="text: lang.lang.select_item_for_assemply"></span></label>
-							           
-							            <input data-role="combobox"
-							                   data-placeholder="Select Item..."
+									<div class="control-group" style="margin-top: 9px;">								
+										<label for="items"><span data-bind="text: lang.lang.select_item_for_catalogs"></span></label>
+
+										<select data-role="multiselect"
+							                   data-placeholder="Select..."
 							                   data-value-primitive="true"
-							                   data-auto-bind="false"
 							                   data-text-field="name"
 							                   data-value-field="id"
-							                   data-bind="value: assembly_id,
+							                   data-bind="value: obj.catalogs,
 							                              source: itemDS"
-							                   style="width: 90%"/>
-
-							            <button type="button" data-role="button" data-bind="click: addItem"><i class="icon-plus"></i></button>
-									</div>																		
-							
-								</div>																											
+							                   style="width: 100%"
+							            ></select>						            
+									</div>
+								</div>
 							</div>
-						</div>
-
-						<br>
-
-						<table class="table table-bordered table-primary table-striped table-vertical-center">
-					        <thead>
-					            <tr>
-					            	<th width="5%"><span data-bind="text: lang.lang.no"></span></th>				                
-					                <th width="20%"><span data-bind="text: lang.lang.items"></span></th>
-					                <th><span data-bind="text: lang.lang.description"></span></th>
-					                <th width="25%"><span data-bind="text: lang.lang.quantity"></span></th>
-					                <th width="15%"><span data-bind="text: lang.lang.p"></span></th>
-					                <th width="10%"><span data-bind="text: lang.lang.amount"></span></th>
-					                
-					            </tr>
-					        </thead>
-					        <tbody data-role="listview"
-					        		data-auto-bind="false" 
-					        		data-template="itemAssembly-row-template" 
-					        		data-bind="source: assemblyDS"></tbody>				        
-					    </table>
-
-					    <br>
-
-					    <div class="row-fluid">
-						    <div class="span4 pull-right">
-								<div class="well pull-right">
-									សរុប៖	<strong data-bind="text: total"></strong>
-								</div>							
-							</div>
-						</div>
-						
-						<br>											
-			
-						<div align="center">
-							<span id="notification"></span>
-
-							<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-							<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-							<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span> </div>
-						
-
+					    </div>					   
 					</div>
-				</div>			
-						
+
+				    <!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->
+				</div>
 			</div>
 		</div>
 	</div>
-</script> -->
-
+</script>
 <script id="itemAssembly" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background" style="overflow: hidden;">
@@ -29538,7 +29391,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2>Assembly</h2>
+			        <h2>Item Assembly</h2>
 			        <br>
 
 			        <!-- Upper Part -->
@@ -30896,78 +30749,95 @@
 	</div>
 </script>
 <script id="itemAdjustment" type="text/x-kendo-template">
-	<div class="customer-background">
-		<div class="container-960">
-			<div id="example" class="k-content">
-				
-				<!-- Collapsible Widget -->			
-				<div class="widget">
-				    <div class="widget-head">
-				    	<span class="btn btn-primary pull-right" 
-								onclick="javascript:window.history.back()">X</span>
-				        
-				        <h4 class="heading glyphicons sort"><i></i> <span data-bind="text: lang.lang.item_adjustment"></span></h4>							        	
-				    </div>
-				    <div class="widget-body">
-				    	<table>
-				    		<tr>
-				    			<td>
-							    	<input data-role="dropdownlist"
-									   data-option-label="(--- Category ---)"
-					                   data-auto-bind="false"
-					                   data-header-template="item-category-header-tmpl"
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: category_id,
-					                              source: categoryDS,			                              
-					                              events: {
-					                                change: categoryChanges
-					                              }"/>
-				            	</td>
-				            	<td>
-					            	<select data-role="multiselect"
-							           data-placeholder="item group ..."
-							           data-value-primitive="true"
-							           data-text-field="name"
-							           data-value-field="id"
-							           data-bind="value: selectedItemGroup,
-							                      source: itemGroupDS,
-							                      enabled: isCategorySelected"
-							           style="width: 200px;" 
-							    	></select>
-							    </td>
-							    <td>
-							    	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-					          		|
-									<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
-								</td>
-							</tr>
-						</table>
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
 
-						<br>
+					<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
 
-				    	<div data-role="grid"
-				    		data-auto-bind="false" 
-				    		data-bind="source: lineDS" 
-				    		data-toolbar="['excel']" 
-				    		data-excel='{ fileName: "item_adjustment.xlsx" }'
-				    		data-row-template="itemAdjustment-row-template" 
-				    		data-columns='[			    			
-				    			{ title: "No.", width:"5%" },
-				    			{ title: "Description" },
-				    			{ title: "Quantity" },
-				    			{ title: "New Qty" },
-				    			{ title: "Adjustment" }
-				    		]'></div>
+			        <h2>Item Adjustment</h2>
+			        <br>
 
-						<br>
-						
-						<div class="row-fluid">
-							<div class="span5">				
-								<table class="table table-borderless table-condensed cart_total">
-									<tr>
-										<td><span data-bind="text: lang.lang.counter"></span></td>
+			        <!-- Upper Part -->
+					<div class="row">
+						<div class="span4" style="padding-left: 15px;">
+							<div class="box-generic well" style="height: 190px;">				
+								<div class="row">
+									<div class="span12" >
+								
+										<div class="control-group">								
+											<label for="txtOnhand"><span data-bind="text: lang.lang.date"></span></span><span style="color:red">*</span></label>
+								            <input id="issuedDate" name="issuedDate" 
+													data-role="datepicker"
+													data-format="dd-MM-yyyy" 
+													data-bind="value: obj.issued_date" 
+													required data-required-msg="required"  style="width: 100%;" />
+										</div>																		
+																	
+									</div>
+
+									<div class="span12" style="margin-top: 10px;">	
+								
+										<div class="control-group">							
+											<label for="txtSKU"><span>Category</span> <span style="color:red">*</span></label>
+					              			<input data-role="dropdownlist"
+											   data-option-label="(--- Category ---)"
+							                   data-auto-bind="false"
+							                   data-header-template="item-category-header-tmpl"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: category_id,
+							                              source: categoryDS,			                              
+							                              events: {
+							                                change: categoryChanges
+					                              }" style="width: 100%;"/>
+										</div>
+									
+									</div>
+
+									<div class="span12" style="margin-top: 10px;">	
+									
+										<div class="control-group">
+											<label for="txtName"><span>Item Group</span> <span style="color:red">*</span></label>
+						              		<select data-role="multiselect"
+									           data-placeholder="item group ..."
+									           data-value-primitive="true"
+									           data-text-field="name"
+									           data-value-field="id"
+									           data-bind="value: selectedItemGroup,
+									                      source: itemGroupDS,
+									                      enabled: isCategorySelected"
+									           style="width: 100%;" 
+									    	></select>
+										</div>
+									
+									</div>								
+								</div>
+
+								<div class="row" style="margin-top: 10px;">
+									
+
+									<div class="span12"  style="margin-top: 20px;">
+										<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+					          			|
+										<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
+									</div>															
+								</div>
+
+							</div>						
+						</div>					   
+
+						<div class="span8" style="padding-left:0;">
+							<div class="box-generic" style="height: 190px;">
+								<table class="table table-borderless table-condensed cart_total" style="margin-bottom:0;">										
+						            <tr>
+										<td>
+											<span data-bind="text: lang.lang.counter"></span>
+										</td>
 										<td>
 											<input id="cbbReader" name="cbbReader" 
 							    				   data-role="combobox"
@@ -30983,11 +30853,7 @@
 								                   required data-required-msg="required"
 								                   style="width: 100%" />
 										</td>
-									</tr>					          
-									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.number"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" readonly /></td>
-									</tr>
+									</tr>										
 									<tr>
 										<td><span data-bind="text: lang.lang.segment"></span></td>
 										<td>
@@ -31000,30 +30866,11 @@
 												   data-placeholder="(--- Select ---)"
 												   style="width: 100%" /></select>
 										</td>
-									</tr>								
-								</table>
-							</div>
-
-						    <div class="span2">
-						    	
-						    </div>
-
-							<div class="span5">
-								<table class="table table-borderless table-condensed cart_total">
-									<tr>
-										<td><span data-bind="text: lang.lang.date"></span></td>
-										<td>
-											<input id="issuedDate" name="issuedDate" 
-													data-role="datepicker"
-													data-format="dd-MM-yyyy" 
-													data-bind="value: obj.issued_date" 
-													required data-required-msg="required" />
-										</td>
 									</tr>
-									<tr>
-										<td><span data-bind="text: lang.lang.adjustment_account"></span></td>
-										<td>
-											<input data-role="dropdownlist"
+						            <tr>
+						            	<td><span data-bind="text: lang.lang.adjustment_account"></span></td>
+						            	<td>
+						            		<input data-role="dropdownlist"
 												   data-option-label="(--- Select ---)"							                   
 								                   data-value-primitive="true"
 								                   data-text-field="name"
@@ -31031,37 +30878,44 @@
 								                   data-header-template="account-header-tmpl"
 								                   data-bind="value: obj.account_id,
 								                              source: accountDS"
-								                   style="width: 100%;"
-								           
+								                   style="width: 100%;" />
+						            	</td>
+						            </tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.memo"></span></td>
+										<td>
+											<textarea cols="0" rows="2" class="k-textbox" data-bind="value: obj.memo" style="width: 100%; resize: none; height:96px;"></textarea>
 										</td>
-									</tr>																					
-						            <tr>
-						            	<td><span data-bind="text: lang.lang.memo"></span></td>
-						    			<td>
-						    				<textarea cols="0" rows="2" class="k-textbox" data-bind="value: obj.memo" style="width: 100%"></textarea>
-						    			</td>
-									</tr>								
-								</table>           		          	
-						    </div>
-						</div>
-						
-						<!-- Form actions -->
-						<div align="center">
-							<span id="notification"></span>
+									</tr>											
+					            </table>
+							</div>
+					    </div>					   
+					</div>
 
-							<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-							<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-							<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-						</div>
-						<!-- // Form actions END -->
+					<!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
 
-					</div> <!-- End Widget-Body List -->
-				</div>
-				<!-- // Collapsible Widget END -->				
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->
+				
+				</div>				
 			</div>			
 		</div>
 	</div>
 </script>
+
 <script id="itemAdjustment-row-template" type="text/x-kendo-tmpl">
     <tr data-uid="#: uid #"> 
     	<td>
@@ -35247,7 +35101,193 @@
 **************************** -->
 <script id="reportDashboard" type="text/x-kendo-template" >
 	<div class="row-fluid">
-		<div class="span12 report-module">
+
+		<div class="span6 report-module">
+			<h2>No. of Reports/lists by Module</h2>
+			<ul>
+				<li>
+					<a href="#/customer_report_center">
+						<img title="Report Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+					</a>
+					<div class="span12">17</div>
+				</li>
+				<li>
+					<a href="#/vendor_report_center">
+						<img title="Report Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+					</a>
+					<div class="span12">16</div>
+				</li>
+				<li>
+					<a href="#/item_report_center">
+						<img title="Report Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+					</a>
+					<div class="span12">12</div>
+				</li>
+				<li>
+					<a href="#/cash_report_center">
+						<img title="Report Cash" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
+					</a>
+					<div class="span12">6</div>
+				</li>
+				<li>
+					<a href="#/accounting_report_center">
+						<img title="Report Accounting" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
+					</a>
+					<div class="span12">16</div>
+				</li>
+			</ul>
+
+			<div class="row">
+				<div class="span12" style="margin-top: 20px;">
+					<div class="row-fluid cash-payments">
+						<h2 style="width: 100%;">
+							What is your ability to meet your present obligations (settling debts or possibly meet other 
+							unforeseen demand for cash payments)?
+						</h2>
+						<div class="row">
+							<div class="span12" style="margin-bottom: 20px;">
+								<div class="span6 capital-box">
+									<p class="first-text">Current Ratio</p>
+									<span>3</span>
+									<p class="month">12 months Average</p>
+								</div>
+								<div class="span6 capital-box">
+									<p class="first-text">Quick Ratio</p>
+									<span>1.5</span>
+									<p class="month">12 months Average</p>
+								</div>
+								<div class="span6 capital-box">
+									<p class="first-text">Cash Ratio</p>
+									<span>0.3</span>
+									<p class="month">12 months Average</p>
+								</div>
+								<div class="span6 capital-box">
+									<p class="first-text">Debt Service Coverage Ratio</p>
+									<span>5</span>
+									<p class="month">12 months Average</p>
+								</div>
+							</div>
+
+							<div class="span12 ">
+								<div class="capital-chart">
+									Chart
+								</div>				
+							</div>
+						</div>
+					</div>
+
+							
+				</div>
+			</div>
+
+		</div>
+		<div class="span6">
+			<div class="row">
+				<div class="span12 capital-management" style="margin-bottom: 20px;">
+					<h2 >How efficient is your working capital management? </h2>
+					<div class="row">
+						<div class="span12" style="margin-bottom: 20px;">
+							<div class="span6 capital-box">
+								<p class="first-text">Receivable Collection Days</p>
+								<span>30</span>
+								<p class="month">12 months Average</p>
+							</div>
+							<div class="span6 capital-box">
+								<p class="first-text">Payable Payment Days</p>
+								<span>20</span>
+								<p class="month">12 months Average</p>
+							</div>
+							<div class="span6 capital-box">
+								<p class="first-text">Inventory Turnover Days</p>
+								<span>40</span>
+								<p class="month">12 months Average</p>
+							</div>
+							<div class="span6 capital-box">
+								<p class="first-text">Cash Conversion Cycle</p>
+								<span>50</span>
+								<p class="month">12 months Average</p>
+							</div>
+						</div>
+						<div class="span12">
+							<div class="capital-chart">
+								Chart
+							</div>				
+						</div>
+					</div>
+				</div>
+
+				<div class="span12 financial-block" style="padding: 0 15px;">
+					<h2 >How safe is your long term financial position?</h2>
+						<div class="row-fluid">
+							<div class="span12 financial-box">
+								<p class="first-text">Debt/ Equity Ratio</p>
+								<span>3</span>
+								<p class="month">12 months Average</p>
+							</div>
+							<div class="span12 financial-box">
+								<p class="first-text">Debt/ Asset Ratio</p>
+								<span>1.5</span>
+								<p class="month">1.5 months Average</p>
+							</div>
+						</div>
+					</div>
+				</div>	
+
+				<div class="span12 business-block">
+					<h2 style="margin-left:-15px;">How safe is your long term financial position?</h2>
+					<div class="row">
+						<div class="span4 business-box">
+							<p class="first-text">Earning before interest & tax</p>
+							<span>10%</span>
+							<p class="month">12 months Average</p>
+						</div>
+						<div class="span4 business-box" style="margin-left: 3px; width: 25%;">
+							<p class="first-text">Return on Asset</p>
+							<span>2</span>
+							<p class="month">12 months Average</p>
+						</div>
+						<div class="span4 business-box" style="width: 37%;">
+							<p class="first-text">Return on Capital Employed</p>
+							<span>20%</span>
+							<p class="month">12 months Average</p>
+						</div>
+					</div>
+				</div> 
+
+				<div class="span12 revenue">
+					<h2 style="margin-left: -15px;">Revenue Performance</h2>
+					<div class="row">
+						<div class="span12" style="margin-bottom:20px;">
+							<div class="row">
+								<div class="span6 revenue-box" style="width:49%; margin-right: 3px;">
+									<p class="first-text">Gross Margin</p>
+									<span>13%</span>
+									<p class="month">12 months Average</p>
+								</div>
+								<div class="span6 revenue-box" style="width:50%;">
+									<p class="first-text">Average Sale Growth Rate</p>
+									<span>10%</span>
+									<p class="month">12 months Average</p>
+								</div>
+							</div>
+						</div>
+						<div class="span12">
+							<div class="row">
+								<div class="capital-chart">
+									Chart
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>	
+
+
+		</div>
+
+		<!-- <div class="span12 report-module">
 			<h2>No. of Reports/lists by Module</h2>
 			<ul>
 				<li>
@@ -35293,9 +35333,9 @@
 					<div class="span12">16</div>
 				</li>
 			</ul>
-		</div>
+		</div> -->
 
-		<div class="span12 capital-management">
+		<!-- <div class="span12 capital-management">
 			<h2>How efficient is your working capital management? </h2>
 			<div class="span6">
 				<div class="span6 capital-box">
@@ -35416,9 +35456,7 @@
 					Chart
 				</div>
 			</div>
-		</div>
-
-		
+		</div> -->
 
 	</div>
 </script>

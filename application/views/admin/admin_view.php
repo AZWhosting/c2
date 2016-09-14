@@ -50,8 +50,6 @@
                                   <span style="color:#fff;" data-bind="text: currentID.username"></span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-                                  <a class="dropdown-item" data-bind="attr: {href: profileUrl}"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
-                                  <div class="dropdown-divider"></div>
                                   <a class="dropdown-item" href="#" data-bind="click: logOut"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
                               </div>
                           </div>
@@ -81,54 +79,42 @@
                                     <span data-bind="text: userProfile.currentID.username"></span>
                                   </a></span>
                               </div>
-                              <div class="profile-card-location">
-                                  Confirm: <span>True</span>
-                              </div>
-                              <button type="button" class="btn goto-banhji">BanhJi App</button>
+                               <div class="profile-card-status">
+                              <strong>Joined In</strong>: <span data-bind="text: userProfile.currentID.joined"></span>
                           </div>
-
+                          <div class="profile-card-status">
+                              <strong>Logged In</strong>: <span data-bind="text: userProfile.currentID.logged_in"></span>
+                          </div>
+                          <div class="profile-card-status">
+                              <strong>Assigned Role</strong>: <span data-bind="text: userProfile.getRole"></span>
+                          </div>
+                          </div>
                           <div class="profile-statistic tbl">
-                              <div class="tbl-row">
-                                  <div class="tbl-cell">
-                                      <b><span data-bind="text: modules.total"></span></b>
-                                      Assign Module
-                                  </div>
-                                  <div class="tbl-cell">
-                                      <b>1.9M</b>
-                                      Followers
-                                  </div>
-                              </div>
+                            <a href="<?php echo base_url(); ?>rrd" type="button" class="btn btn-block goto-banhji" style="background-color: #001933;">Go to BanhJi App</a>
+                            <button type="button" class="btn btn-block goto-banhji" data-bind="click: goModule">Assigned Modules</button>
+                            <button type="button" class="btn btn-block goto-banhji" data-bind="click: goProfile">View/ Edit Profile</button>
+                            <button type="button" class="btn btn-block goto-banhji" data-bind="click: userProfile.goPassword">Change Password</button>
+
+                            <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goCompany">Company Info</button>
+                            <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goUser">Users List</button>
+                            <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goEmployee">Employees List</button>
+                            
                           </div>
-                          <ul class="profile-links-list">
-                              <li class="nowrap">
-                                  <i class="font-icon font-icon-fb-fill"></i>
-                                  <a data-bind="attr: {href: userProfile.currentID.facebook}"><span data-bind="text: userProfile.currentID.facebook"></span></a>
-                              </li>
-                              <li class="nowrap">
-                                  <i class="font-icon font-icon-in-fill"></i>
-                                  <a data-bind="attr: {href: userProfile.currentID.linkedin}><span data-bind="text: userProfile.currentID.linkedin"></span></a>
-                              </li>
-                              <li class="nowrap">
-                                  <i class="font-icon font-icon-tw-fill"></i>
-                                  <a data-bind="attr: {href: userProfile.currentID.twitter}><span data-bind="text: userProfile.currentID.twitter"></span></a>
-                              </li>
-                          </ul>
+                          
                       </section>
                   </div>
 
                   <div class="col-xs-12 col-md-8 col-lg-9">
-
-                      <section class="row">
+                      <section class="row" data-bind="visible:users.showAdmin">
                           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                               <div class="widget widget-3">
                                   <div class="widget-head">
                                       <h4 class="heading">
-                                          <span class="glyphicon glyphicon-user"><i></i></span>
-                                          User</h4>
+                                          Total Users</h4>
                                   </div>
                                   <div class="widget-body alert alert-primary" style="background: #496cad;">
                                       <div align="center" class="text-large strong"><span data-bind="text: data"></span></div>
-                                      <a  style="color: #fff;" href="#userlist/new">Add User</a>
+                                      <a style="color: #fff;">Users</a>
                                   </div>
                               </div>
                           </div>
@@ -137,13 +123,12 @@
                              <div class="widget widget-3">
                                   <div class="widget-head">
                                       <h4 class="heading">
-                                          <span class="glyphicon glyphicon-user"><i></i></span>
-                                          Module
+                                          Core/ Subscribed Modules
                                       </h4>
                                   </div>
                                   <div class="widget-body alert" style="color: #333; background: #d9edf7;">
                                       <div align="center"  class="text-large strong"><span data-bind="text: appSub"></span></div>
-                                      <a  href="#" data-bind="click: getModule">Modules/Apps</a>
+                                      <a>Assigned Modules</a>
                                   </div>
                               </div>
                           </div>
@@ -152,7 +137,6 @@
                               <div class="widget widget-3">
                                   <div class="widget-head">
                                       <h4 class="heading">
-                                          <span class="glyphicon glyphicon-user"><i></i></span>
                                           User Join in
                                       </h4>
                                   </div>
@@ -164,152 +148,9 @@
                           </div>
                       </section>
 
-                      <section class="box-typical user-module">
-                          <div data-role="listview" data-bind="source: modules" data-template="company-modules"></div>
+                      <section class="box-typical user-module" id="placeholder">
+                          
                       </section>
-
-                      <section class="tabs-section">
-                          <div class="tabs-section-nav tabs-section-nav-inline">
-                              <ul class="nav" role="tablist">
-                                  <li class="nav-item">
-                                      <a class="nav-link active" href="#tabs-4-tab-1" role="tab" data-toggle="tab">
-                                          Company Info
-                                      </a>
-                                  </li>
-                                  <li class="nav-item">
-                                      <a class="nav-link" href="#tabs-4-tab-2" role="tab" data-toggle="tab">
-                                          Users
-                                      </a>
-                                  </li>
-                                  <li class="nav-item">
-                                      <a class="nav-link" href="#tabs-4-tab-3" role="tab" data-toggle="tab">
-                                          Employees
-                                      </a>
-                                  </li>
-                              </ul>
-                          </div>
-
-                          <div class="tab-content">
-                              <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1">
-                                  <article class="profile-info-item">
-                                    <img data-bind="attr: {src: current.logo}"><br><br>
-                                    <a href="\#" data-bind="visible: showLogoEdit, events: {click: showLogo}">Edit Logo</a>
-                                    <input type="file" id="companyLogo" data-bind="invisible: showLogoEdit, events: {change: onLogoChange}"><br>
-                                    <button class="btn" data-bind="invisible: showLogoEdit, events: {click: upload}">Save</button>
-                                    <button class="btn" data-bind="invisible: showLogoEdit, events: {click: showLogo}">Cancel</button>
-                                    
-                                  </article>
-                                  <header class="box-typical-header-sm">
-                                      General Info
-                                  </header>
-                                  <article class="profile-info-item">
-                                      <table >
-                                          <tr>
-                                              <td>Company Name</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.name"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Email</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.email"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Address</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.address"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>ZIP Code</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.zip"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Year Founded</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.year_founded"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Country</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.country.name"></span></td>
-                                          </tr>
-                                           <tr>
-                                              <td>Industry</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.industry.type"></span></td>
-                                          </tr>
-                                      </table>
-                                  </article>
-                                  <header class="box-typical-header-sm">Financial Info</header>
-                                  <article class="profile-info-item">
-                                      <table >
-                                          <tr>
-                                              <td>Fiscal Date</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.fiscal_date"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Base Currency</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.currency.code"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Reporting Currency</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.reportCurrency.code"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Fiscal Report Date</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.financial_report_date"></span></td>
-                                          </tr>
-                                          <tr>
-                                              <td>Tax Regime</td>
-                                              <td>:</td>
-                                              <td><span data-bind="text:current.tax_regime"></span></td>
-                                          </tr>
-                                      </table>
-                                  </article>
-                                  <button data-bind="click: edit" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
-                                      Edit
-                                  </button>
-                              </div>
-
-                              <div style="overflow-y: hidden;" role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2">
-                                  <article class="profile-info-item user">
-                                      <div class="" style="margin-bottom: 10px;">
-                                          <button data-bind="click: users.addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
-                                              Create user
-                                          </button>
-                                          &nbsp;&nbsp;
-                                          <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: users.refresh"></i>
-                                      </div>
-                                      
-                                      <div data-role="listview" data-template="user-profile-list" data-bind="source:users.users" data-bind="false" class="row" style="border: 0;">
-                                      </div>
-                                      
-                                  </article>
-                              </div>
-                              <div style="overflow-y: hidden;" role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3">
-                                  <button class="btn" data-bind="click: employees.addNew">Create</button>
-                                  <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: employees.refresh"></i>
-                                  <table class="tbl-typical">
-                                      <thead>
-                                        <tr>
-                                          <th><div>Name</div></th>
-                                          <th><div>Gender</div></th>
-                                          <th align="center"><div>Role#</div></th>
-                                          <th align="center"><div>Status</div></th>
-                                          <th align="center"><div>Action</div></th>
-                                        </tr>
-                                      </thead>
-                                      <tbody data-role="listview" data-bind="source: employees.dataSource" data-template="employee-list">
-                                  </tbody></table>
-                              </div>
-                          </div>
-                      </section>
-
                   </div>
                   <div id="userFormConfirm" style="visibility: hidden">
                     <div class="row">
@@ -345,16 +186,7 @@
           </div>
       </div>
     </script>
-    <script type="text/x-kendo-template" id="company-modules">
-      <div class="col-xs-3 col-md-2 col-lg-2">
-          <div>
-              <a href="<?php echo base_url(); ?>rrd\#/#=href#">
-                  <img data-bind="attr: {src: image_url}">
-              </a>
-              <span><span data-bind="text: name"></span></span>
-          </div>
-      </div>
-    </script>
+    
     <script type="text/x-kendo-template" id="employee-list">
       <tr>
           <td>
@@ -381,63 +213,184 @@
                         <div class="hidden-print pull-right">
                             <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
                         </div>
-                        <h2>Employee Detail</h2>
+                        <h2>Employee Form</h2>
                         <div class="divider"></div>
                         <article class="col-md-12 col-lg-12 profile-info-item edit-table">
+                          <div style="background: #eee;">
                             <table >
+                              <tr>
+                                <td>Employee Type</td>
+                                <td>:</td>
+                                <td>
+                                  <input id="type"
+                                    data-role="dropdownlist"
+                                    data-bind="source: roles, value: current.role, events: {change: typeChange}"
+                                    data-text-field="name"
+                                    data-value-field="id"
+                                    class="form-control col-md-7 col-xs-12"
+                                    type="text"
+                                    data-option-label="--Select--"
+                                  >
+                                </td>
+                              </tr>
                                 <tr>
-                                    <td>Name</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="text" data-bind="value: current.name" class="form-control"  id="" placeholder="">
-                                    </td>
+                                  <td>Name</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="text" data-bind="value: current.name" class="form-control"  id="" placeholder="">
+                                  </td>
                                 </tr>
                                 <tr>
-                                    <td>Gender</td>
+                                    <td>Number</td>
                                     <td>:</td>
                                     <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: genderDS, value: current.gender"
-                                               data-text-field="value"
-                                               data-value-field="id"
-                                               data-value-primitive="true"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text"
-                                               >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Role</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: roles, value: current.role"
-                                               data-text-field="name"
-                                               data-value-field="id"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text"
-                                               >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Status</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: statusDS, value: current.status"
-                                               data-text-field="value"
-                                               data-value-field="id"
-                                               data-value-primitive="true"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text"
-                                               >
+                                      <input id="type"
+                                        data-bind="value: current.abbr"
+                                        class="form-control col-md-7 col-xs-12"
+                                        type="text"
+                                        style="width: 50px;"
+                                      > 
+                                      <input id="type"
+                                        data-bind="value: current.number"
+                                        class="form-control col-md-7 col-xs-12"
+                                        type="text"
+                                        style="width: 150px;"
+                                      >
                                     </td>
                                 </tr>                                
                             </table>
+                          </div>
                         </article>
+                        <section class="tabs-section">
+                          <div class="tabs-section-nav tabs-section-nav-inline">
+                            <ul class="nav" role="tablist">
+                              <li class="nav-item">
+                                <a class="nav-link active" href="#tabs-4-tab-1" role="tab" data-toggle="tab" aria-expanded="false">
+                                  Contact
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="#tabs-4-tab-2" role="tab" data-toggle="tab" aria-expanded="false">
+                                  Accounts
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="#tabs-4-tab-3" role="tab" data-toggle="tab" aria-expanded="false">
+                                  Document
+                                </a>
+                              </li>
+                            </ul>
+                          </div><!--.tabs-section-nav-->
+
+                          <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1" aria-expanded="false">
+                              <table class="table">
+                                <tr>
+                                  <td>status</td>
+                                  <td>
+                                    <input id="type"
+                                     data-role="dropdownlist"
+                                     data-bind="source: statusDS, value: current.status"
+                                     data-text-field="value"
+                                     data-value-field="id"
+                                     data-value-primitive="true"
+                                     class="form-control col-md-7 col-xs-12"
+                                     type="text"
+                                     >
+                                    </td>
+                                  <td></td>
+                                  <td>registered date</td>
+                                  <td>
+                                    <input type="text" 
+                                      data-role="datepicker" 
+                                      data-bind="value: current.registered_date"
+                                      data-format="dd-MM-yyyy"
+                                      data-parse-formats="yyyy-MM-dd"
+                                      >
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>email</td>
+                                  <td><input type="email" class="k-textbox" data-bind="value: current.email"></td>
+                                  <td></td>
+                                  <td>phone</td>
+                                  <td><input type="phone" class="k-textbox" data-bind="value: current.phone"></td>
+                                </tr>
+                                <tr>
+                                  <td>address</td>
+                                  <td><input type="text" class="k-textbox" data-bind="value: current.address"></td>
+                                  <td></td>
+                                  <td>memo</td>
+                                  <td><input type="text" class="k-textbox" data-bind="value: current.memo"></td>
+                                </tr>
+                                <tr>
+                                  <td>ship to</td>
+                                  <td><input type="text" class="k-textbox" data-bind="value: current.ship_to"></td>
+                                  <td></td>
+                                  <td>bill to</td>
+                                  <td><input type="text" class="k-textbox" data-bind="value:current.bill_to"></td>
+                                </tr>
+                              </table>
+                            </div><!--.tab-pane-->
+                            <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2" aria-expanded="false">
+                              <table class="table">
+                                <tr>
+                                  <td>
+                                    Advance Account<br>
+                                    <input id="type"
+                                      data-role="dropdownlist"
+                                      data-bind="source: advanceAC, value: current.account"
+                                      data-text-field="name"
+                                      data-value-field="id"
+                                      data-value-primitive="false"
+                                      data-template="employee-account-list"
+                                      data-option-label="--Select One--"
+                                      class="form-control col-md-7 col-xs-12"
+                                      type="text"
+                                    >
+                                  </td>
+                                  <td>
+                                    Salary Account<br>
+                                    <input id="type"
+                                      data-role="dropdownlist"
+                                      data-bind="source: salaryAC, value: current.salary"
+                                      data-text-field="name"
+                                      data-value-field="id"
+                                      data-value-primitive="false"
+                                      data-template="employee-account-list"
+                                      data-option-label="--Select One--"
+                                      class="form-control col-md-7 col-xs-12"
+                                      type="text"
+                                    >
+                                  </td>
+                                  <td>
+                                    Currency<br>
+                                    <input id="type"
+                                      data-role="dropdownlist"
+                                      data-bind="source: currencies, value: current.currency"
+                                      data-text-field="country"
+                                      data-value-field="locale"
+                                      data-value-primitive="true"
+                                      data-option-label="--Select Currency"
+                                      class="form-control col-md-7 col-xs-12"
+                                      type="text"
+                                    >
+                                  </td>
+                                </tr>
+                              </table>
+                            </div><!--.tab-pane-->
+                            <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3" aria-expanded="false">
+                              <input data-role="upload" type="file" data-bind="events: {select: fileMan.onSelected}" data-show-file-list="false">
+                              <table>
+                                <tbody 
+                                  data-role="listview"
+                                  data-auto-bind="false"
+                                  data-bind="source: fileMan.dataSource" 
+                                  data-template="attachment-list"></tbody>
+                              </table>
+                            </div><!--.tab-pane-->
+                          </div><!--.tab-content-->
+                        </section>
                         <div class="box-generic">
                           <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
                               <span class="glyphicon glyphicon-ok"><i></i></span>
@@ -453,12 +406,23 @@
                 </div>
             </div>
         </div>
+        <div id="ntf1" data-role="notification"></div>
       </div>
+    </script>
+    <script type="text/x-kendo-template" id="employee-account-list">
+      <div>
+        <span>#=number#</span>-<span>#=name#</span>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="attachment-list">
+      <tr>
+        <td>#=name# </td><td><button data-bind="click: onRemove">X</button></td>
+      </tr>
     </script>
     <script type="text/x-kendo-template" id="company-edit">
       <!--Edit Company-->
       <div class="page-content">
-          <div class="container" >
+        <div class="container" >
             <div class="row">
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <section class="box-typical edit-company">
@@ -511,7 +475,12 @@
                               <td>Country</td>
                               <td>:</td>
                               <td>
-                                <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.country.name">
+                                <input type="text" 
+                                  class="form-control" 
+                                  data-role="dropdownlist"
+                                  data-bind="source: countries, value: current.country"
+                                  data-text-field="name"
+                                  data-value-field="id">
                               </td>
                             </tr>
                             <tr>
@@ -593,7 +562,7 @@
                         </article>
                         <div class="box-generic">
                           <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
-                              <span class="glyphicon glyphicon-ok" data-bind="click: cancel"><i></i></span>
+                              <span class="glyphicon glyphicon-ok"><i></i></span>
                               &nbsp; Save
                           </button>
                           &nbsp;
@@ -606,66 +575,260 @@
                 </div>
             </div>
         </div>
+        <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
-    <script type="text/x-kendo-template" id="user-profile">
-      <!--Dashbaord User-->
-      <div class="page-content">
-        <div class="container" >
-          <div class="row">
-            <div class="col-xs-12 col-md-4 col-lg-3">
-                      <section class="box-typical">
-                          <div class="profile-card">
-                              <div class="profile-card-photo">
-                                  <img data-bind="attr: {src: current.profile_photo}">
-                              </div>
-                              <div class="profile-card-name">
-                                  <span data-bind="text: current.last_name"></span>&nbsp;
-                                  <span data-bind="text: current.first_name"></span>
-                              </div>
-                              <div class="profile-card-status">
-                                  Registered Email: <span><a href="mailto:somsreypoch@gmail.com">
-                                    <span data-bind="text: current.username"></span>
-                                  </a></span>
-                              </div>
-                              <div class="profile-card-location">
-                                  Confirm: <span>True</span>
-                              </div>
-                              <button type="button" class="btn goto-banhji">BanhJi App</button>
-                          </div>
-
-                          <ul class="profile-links-list">
-                            <li class="nowrap">
-                                <i class="font-icon font-icon-phone"></i>
-                                <span data-bind="text: current.mobile"></span>
-                            </li>
-                            <li class="nowrap">
-                                <i class="font-icon font-icon-mail"></i>
-                                <span data-bind="text: current.email"></span>
-                            </li>
-                            <li class="nowrap">
-                                <i class="font-icon font-icon-fb-fill"></i>
-                                <a data-bind="attr: {href: current.facebook}"><span data-bind="text: current.facebook"></span></a>
-                            </li>
-                            <li class="nowrap">
-                                <i class="font-icon font-icon-in-fill"></i>
-                                <a data-bind="attr: {href: current.linkedin}""><span data-bind="text: current.linkedin"></span></a>
-                            </li>
-                            <li class="nowrap">
-                                <i class="font-icon font-icon-tw-fill"></i>
-                                <a data-bind="attr: {href: current.twitter}""><span data-bind="text: current.twitter"></span></a>
-                            </li>
-                          </ul>
-                          <button data-bind="click: editProfile">Edit</button>
-                      </section>
-                  </div>
-
-            <div class="col-xs-12 col-md-8 col-lg-9">
-              <section class="box-typical user-module" id="profile-placeholder">
-              </section>
-            </div>
+    <!-- user placeholder -->
+    <script type="text/x-kendo-template" id="template-placeholder-module">
+      <div data-role="listview" data-bind="source: modules" data-template="company-modules"></div>
+    </script>
+    <script type="text/x-kendo-template" id="company-modules">
+      <div class="col-xs-3 col-md-2 col-lg-2">
+          <div>
+              <a href="<?php echo base_url(); ?>rrd\#/#=href#">
+                  <img data-bind="attr: {src: image_url}">
+              </a>
+              <span><span data-bind="text: name"></span></span>
           </div>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="template-placeholder-company">
+      <article class="profile-info-item">
+        <img data-bind="attr: {src: current.logo}"><br><br>
+        <a href="\#" data-bind="visible: showLogoEdit, events: {click: showLogo}">Edit Logo</a>
+        <input type="file" id="companyLogo" data-bind="invisible: showLogoEdit, events: {change: onLogoChange}"><br>
+        <button class="btn" data-bind="invisible: showLogoEdit, events: {click: upload}">Save</button>
+        <button class="btn" data-bind="invisible: showLogoEdit, events: {click: showLogo}">Cancel</button>   
+      </article>
+        <header class="box-typical-header-sm">
+            General Info
+        </header>
+        <article class="profile-info-item">
+            <table >
+                <tr>
+                    <td>Company Name</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.name"></span></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.email"></span></td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.address"></span></td>
+                </tr>
+                <tr>
+                    <td>ZIP Code</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.zip"></span></td>
+                </tr>
+                <tr>
+                    <td>Year Founded</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.year_founded"></span></td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.country.name"></span></td>
+                </tr>
+                 <tr>
+                    <td>Industry</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.industry.type"></span></td>
+                </tr>
+            </table>
+        </article>
+        <header class="box-typical-header-sm">Financial Info</header>
+        <article class="profile-info-item">
+            <table >
+                <tr>
+                    <td>Fiscal Date</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.fiscal_date"></span></td>
+                </tr>
+                <tr>
+                    <td>Base Currency</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.currency.code"></span></td>
+                </tr>
+                <tr>
+                    <td>Reporting Currency</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.reportCurrency.code"></span></td>
+                </tr>
+                <tr>
+                    <td>Fiscal Report Date</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.financial_report_date"></span></td>
+                </tr>
+                <tr>
+                    <td>Tax Regime</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.tax_regime"></span></td>
+                </tr>
+            </table>
+        </article>
+        <button data-bind="click: edit" data-role="button" class="btn" role="button" aria-disabled="false" tabindex="0">
+            Edit
+        </button>
+    </script>
+    <script type="text/x-kendo-template" id="template-placeholder-user">
+      <article class="profile-info-item user">
+          <div class="" style="margin-bottom: 10px;">
+              <button data-bind="click: addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
+                  Create user
+              </button>
+              &nbsp;&nbsp;
+              <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: users.refresh"></i>
+          </div>
+          
+          <div data-role="listview" data-template="user-profile-list" data-bind="source:users.users" data-bind="false" class="row" style="border: 0;">
+          </div>
+          
+      </article>
+    </script>
+    <script type="text/x-kendo-template" id="template-placeholder-employee">
+      <button class="btn" data-bind="click: addNew">Create</button>
+      <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: employees.refresh"></i>
+      <table class="tbl-typical">
+          <thead>
+            <tr>
+              <th><div>Name</div></th>
+              <th><div>Gender</div></th>
+              <th align="center"><div>Role#</div></th>
+              <th align="center"><div>Status</div></th>
+              <th align="center"><div>Action</div></th>
+            </tr>
+          </thead>
+          <tbody data-role="listview" data-bind="source: employees.dataSource" data-template="employee-list">
+      </tbody></table>
+    </script>
+    <!-- user placeholder -->
+    <script type="text/x-kendo-template" id="user-profile">
+      <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <section class="box-typical edit-company">
+                        <div class="hidden-print pull-right">
+                            <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
+                        </div>
+                        <h2>Profile Detail</h2>
+                        <div class="divider"></div>
+                        <div class="col-md-3 col-lg-3">
+                            <img width="240px" data-bind="attr: {src: currentID.profile_photo}" />
+                            <h3>Profile Picture</h3>
+                            <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                        </div>
+                        <article class="col-md-9 col-lg-9 profile-info-item edit-table">
+                            <table >
+                                <tr>
+                                    <td>Username *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: currentID.username" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>First Name *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: currentID.first_name" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: currentID.last_name" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: currentID.mobile" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: currentID.email" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Facebook</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: currentID.facebook" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>LinkedIn</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: currentID.linkedin" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Twitter</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="Email" data-bind="value: currentID.twitter" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr data-bind="visible:users.showAdmin">
+                                    <td>Role</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input id="type"
+                                               data-role="dropdownlist"
+                                               data-bind="source: userRoles, value: currentID.role"
+                                               data-text-field="name"
+                                               data-value-field="id"
+                                               data-value-primitive="true"
+                                               class="form-control col-md-7 col-xs-12"
+                                               type="text"
+                                               >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Type</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input id="type"
+                                               data-role="dropdownlist"
+                                               data-bind="source: userTypes, value: currentID.usertype"
+                                               data-text-field="name"
+                                               data-value-field="id"
+                                               data-value-primitive="true"
+                                               class="form-control col-md-7 col-xs-12"
+                                               type="text">
+                                    </td>
+                                </tr>
+                            </table>
+                        </article>
+                        <div class="box-generic">
+                          <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
+                              <span class="glyphicon glyphicon-ok"><i></i></span>
+                              &nbsp; Save
+                          </button>
+                          &nbsp;
+                          <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0" data-bind="click: cancel">
+                              <span class="glyphicon glyphicon-remove"><i></i></span>
+                              &nbsp; Cancel
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
+        <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-modules">
@@ -713,7 +876,6 @@
             #} else {#
               <button class="btn btn-info btn-block" data-bind="click: forgotPassword" style="margin-bottom: 5px;">Forget Password</button>
             #}#
-            <a href="\#" data-bind="click: getProfile"><button class="btn btn-default btn-block" style="margin-bottom: 5px;">View</button></a>
           </div>
         </div>
       </section>   
@@ -863,7 +1025,7 @@
                                         <input type="Email" data-bind="value: current.twitter" class="form-control" id="" placeholder="">
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr data-bind="visible:showAdmin">
                                     <td>Role</td>
                                     <td>:</td>
                                     <td>
@@ -909,6 +1071,7 @@
                 </div>
             </div>
         </div>
+        <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-action-edit">
@@ -1032,6 +1195,7 @@
                 </div>
             </div>
         </div>
+        <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
     <!-- cognito -->
@@ -1084,11 +1248,129 @@
       var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
       var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
 
+      banhji.fileManagement = kendo.observable({
+        dataSource: new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/attachments',
+              type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            create  : {
+              url: baseUrl + 'api/attachments',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            update  : {
+              url: baseUrl + 'api/attachments',
+              type: "PUT",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            destroy  : {
+              url: baseUrl + 'api/attachments',
+              type: "DELETE",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 50
+        }),
+        fileArray     : [],
+        onRemove      : function(e) {
+          banhji.fileManagement.dataSource.remove(e.data);
+        },
+        onSelected    : function(e) {
+          var files = e.files;
+          var key = 'ATTACH_' + JSON.parse(localStorage.getItem('userData/user')).institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files[0].name;
+          banhji.fileManagement.dataSource.add({
+            transaction_id  : 0,
+            type            : "Contact",
+            name            : files[0].name,
+            contact_id      : null,
+            description     : "",
+            key             : key,
+            url             : "https://s3-ap-southeast-1.amazonaws.com/banhji/"+key,
+            created_at      : new Date(),
+            file: files[0].rawFile
+          });
+        },
+        save                : function(contact_id){
+          $.each(banhji.fileManagement.dataSource.data(), function(index, value){ 
+            banhji.fileManagement.dataSource.at(index).set("contact_id", contact_id);
+            if(!value.id){
+              var params = { 
+                Body: value.file, 
+                Key: value.key
+              };
+              bucket.upload(params, function (err, data) {                    
+                  // console.log(err, data);
+                  // var url = data.Location;               
+              });
+            }                
+          });
+
+          banhji.fileManagement.dataSource.sync();
+          var saved = false;
+          banhji.fileManagement.dataSource.bind("requestEnd", function(e){
+            //Delete File
+            if(e.type=="destroy"){
+              if(saved==false && e.response){
+                saved = true;
+                var response = e.response.results;
+                $.each(response, function(index, value){                  
+                  var params = {
+                    Delete: { /* required */
+                      Objects: [ /* required */
+                        {
+                          Key: value.data.key
+                        }
+                      ]
+                    }
+                  };
+                  bucket.deleteObjects(params, function(err, data) {
+                    //console.log(err, data);
+                  });
+                });
+              }
+            }
+            banhji.fileManagement.dataSource.data([]);
+          });
+        }
+      });
       banhji.profileDS = new kendo.data.DataSource({
         transport: {
           read  : {
             url: baseUrl + 'api/profiles',
             type: "GET",
+            dataType: 'json'
+          },
+          update  : {
+            url: baseUrl + 'api/profiles',
+            type: "PUT",
             dataType: 'json'
           },
           parameterMap: function(options, operation) {
@@ -1472,6 +1754,78 @@
 
       banhji.profile = kendo.observable({
         dataSource: banhji.profileDS,
+        showAdmin: function() {
+          if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+        userTypes : [
+          {id: 1, name: 'normal'},
+          {id: 2, name: 'developer'}
+        ],
+        userRoles: [
+          {id: 1, name: 'Admin'},
+          {id: 2, name: 'User'}
+        ],
+        upload: function() {
+          var fileChooser = document.getElementById('user-image');
+          var file = fileChooser.files[0];
+          var fileReader = new FileReader();
+          fileReader.onload = function(e){
+            banhji.profile.get('currentID').set('profile_photo', e.target.result);
+          }
+          fileReader.readAsDataURL(file);
+        },
+        oldPass: null,
+        newPass: null,
+        changePassword: function() {
+          var userData = {
+              Username : userPool.getCurrentUser().username,
+              Pool : userPool
+          };
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData); 
+          if(cognitoUser != null) {
+            cognitoUser.getSession(function(err, session) {
+              if (err) {
+                 alert(err);
+                  return;
+              }
+              console.log('session validity: ' + session.isValid());
+
+              AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId : 'us-east-1_56S0nUDS4', // your identity pool id here
+                Logins : {
+                    // Change the key below according to the specific region your user pool is in.
+                    'arn:aws:cognito-idp:us-east-1:260206821052:userpool/us-east-1_56S0nUDS4' : session.getIdToken().getJwtToken()
+                }
+              });
+            });
+          }
+          cognitoUser.changePassword(this.get('oldPass'), this.get('newPass'), function(err, result) {
+              if (err) {
+                  alert(err);
+                  return;
+              } else {
+                banhji.users.set('oldPass', null);
+                banhji.users.set('newPass', null);
+              }
+              console.log('call result: ' + result);
+          });
+        },
+        getRole   : function() {
+          var role = ""
+          if(banhji.profile.get('currentID').role == "1") {
+            role = "Admin";
+          } else {
+            role = "User";
+          }
+          return role;
+        },
+        goPassword: function() {
+          mainDash.showIn("#placeholder", password);
+        },
         logOut    : function() {
           var userData = {
               Username : userPool.getCurrentUser().username,
@@ -1486,8 +1840,34 @@
         currentID : banhji.profileDS.data()[0] || [],
         profileUrl : function() {
           return "#profile/" + this.get('currentID').id;
+        },
+        cancel    : function() {
+          if(banhji.profile.dataSource.hasChanges()) {
+            banhji.profile.dataSource.cancelChanges();
+          }
+          banhji.router.navigate("");
+        },
+        save      : function() {
+          var fileChooser = document.getElementById('user-image');
+          var results = document.getElementById('results');
+          var file = fileChooser.files[0];
+          if (file) {
+            var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
+            bucket.upload(params, function (err, data) {
+              // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
+              var loc = data.Location;
+              banhji.profile.get('currentID').set('profile_photo', loc);
+              banhji.profile.dataSource.sync();
+            });
+          } else {
+            banhji.profile.dataSource.sync();
+          }
+          banhji.profile.dataSource.bind('requestEnd', function(e){
+            if(e.response) {
+              alert("Operation saved");
+            }
+          });
         }
-
       });
 
       banhji.employees = kendo.observable({
@@ -1541,6 +1921,122 @@
           serverPaging: true,
           pageSize: 50
         }),
+        currencies : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + "api/currencies",
+              type: "GET",
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id },
+              dataType: 'json'
+            },        
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  page: options.page,
+                  limit: options.pageSize,
+                  filter: options.filter,
+                  sort: options.sort
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverSorting: true,
+          serverPaging: true,
+          page:1,
+          pageSize: 100
+        }),
+        advanceAC : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + "api/accounts",
+              type: "GET",
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id },
+              dataType: 'json'
+            },        
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  page: options.page,
+                  limit: options.pageSize,
+                  filter: options.filter,
+                  sort: options.sort
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          filter: [
+            { field:"account_type_id", value: 11 },
+            { field:"status", value: 1 }
+          ],
+          sort: { field:"number", dir:"asc" },
+          batch: true,
+          serverFiltering: true,
+          serverSorting: true,
+          serverPaging: true,
+          page:1,
+          pageSize: 100
+        }),
+        salaryAC  : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + "api/accounts",
+              type: "GET",
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id },
+              dataType: 'json'
+            },        
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  page: options.page,
+                  limit: options.pageSize,
+                  filter: options.filter,
+                  sort: options.sort
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          filter: [
+            { field:"account_type_id", value: 37 },
+            { field:"status", value: 1 }
+          ],
+          sort: { field:"number", dir:"asc" },
+          batch: true,
+          serverFiltering: true,
+          serverSorting: true,
+          serverPaging: true,
+          page:1,
+          pageSize: 100
+        }),
+        fileMan   : banhji.fileManagement,
         setCurrent: function(current) {
           this.set('current', current);
         },
@@ -1590,12 +2086,28 @@
           {id: "M", value: "Male"},
           {id: "F", value: "Female"}
         ],
+        typeChange: function(e) {
+          var type = e.sender.dataSource.at(e.sender.selectedIndex - 1);
+          banhji.employees.get('current').set('abbr', type.abbr);
+          console.log();
+        },
         addNew    : function() {
           banhji.employees.dataSource.insert(0, {
             name: null,
             gender: null,
+            number: null,
             role: {id: null, name: null},
-            status: 1
+            status: 1,
+            phone: null,
+            email: null,
+            address: null,
+            bill_to: null,
+            ship_to: null,
+            abbr: null,
+            currency: null,
+            account: {id: 0, name: null},
+            salary: {id: 0, name: null},
+            registered_date: new Date()
           });
           banhji.employees.setCurrent(banhji.employees.dataSource.at(0));
           banhji.router.navigate('employee/new');
@@ -1623,7 +2135,21 @@
           banhji.employees.dataSource.sync();
           banhji.employees.dataSource.bind('requestEnd', function(e){
             if(e.response) {
-              //
+              banhji.employees.fileMan.save(e.response.results[0].id);
+              banhji.employees.addNew();
+              $("#ntf1").data("kendoNotification").success("Data saved.");
+            } else {
+               $("#ntf1").data("kendoNotification").error("Operation failed");
+            }
+          });
+        },
+        saveClose: function() {
+          banhji.employees.dataSource.sync();
+          banhji.employees.dataSource.bind('requestEnd', function(e){
+            if(e.response) {
+              $("#ntf1").data("kendoNotification").success("Data saved.");
+              banhji.employees.fileMan.save(e.response.results[0].id);
+              banhji.router.navigate("");
             } else {
               //
             }
@@ -1634,6 +2160,13 @@
       banhji.users = kendo.observable({
         users : banhji.userDS,
         cModules: banhji.moduleDS,
+        showAdmin: function() {
+          if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
+            return true;
+          } else {
+            return false;
+          }
+        },
         modules: new kendo.data.DataSource({
           transport: {
             read  : {
@@ -1957,7 +2490,7 @@
           });
         },
         save: function() {
-          if(banhji.userDS.at(0).isNew()) {
+          if(banhji.users.get('current').isNew()) {
             // signup with Cognito
             // using cognito to sign up
             var attributeList = [];
@@ -1995,52 +2528,50 @@
                         }
                       });
                     });
-                  } else {
-                    results.innerHTML = 'Nothing to upload.';
                   }
                 } else {
                   banhji.userDS.sync();
                   banhji.userDS.bind('requestEnd', function(e){
                     var res = e.response, type = e.type;
                     if(res.results.length > 0) {
-                      console.log('user created.');
+                      $("#ntf1").data("kendoNotification").success("Data saved.");
+                    } else {
+                      $("#ntf1").data("kendoNotification").error("Operation failed.");
                     }
                   });
                 }
                 alert('Your action was successful.');
             });
           } else {
-            if(banhji.users.get('current').profile_photo !== "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png") {
-                  var fileChooser = document.getElementById('user-image');
-                  var results = document.getElementById('results');
-                  var file = fileChooser.files[0];
-                  if (file) {
-                    // results.innerHTML = '';
-                    var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-                    bucket.upload(params, function (err, data) {
-                      // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
-                      var loc = data.Location;
-                      banhji.users.get('current').set('profile_photo', loc);
-                      banhji.userDS.sync();
-                      banhji.userDS.bind('requestEnd', function(e){
-                        var res = e.response, type = e.type;
-                        if(res.results.length > 0) {
-                          console.log('user created.');
-                        }
-                      });
-                    });
-                  } else {
-                    results.innerHTML = 'Nothing to upload.';
+            var fileChooser = document.getElementById('user-image');
+            var results = document.getElementById('results');
+            var file = fileChooser.files[0];
+            if (file) {
+              // results.innerHTML = '';
+              var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
+              bucket.upload(params, function (err, data) {
+                // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
+                var loc = data.Location;
+                banhji.users.get('current').set('profile_photo', loc);
+                banhji.userDS.sync();
+                banhji.userDS.bind('requestEnd', function(e){
+                  var res = e.response, type = e.type;
+                  if(res.results.length > 0) {
+                    console.log('user created.');
                   }
+                });
+              });
+            } else {
+              banhji.userDS.sync();
+              banhji.userDS.bind('requestEnd', function(e){
+                var res = e.response, type = e.type;
+                if(res.results.length > 0) {
+                  $("#ntf1").data("kendoNotification").success("Data saved.");
                 } else {
-                  banhji.userDS.sync();
-                  banhji.userDS.bind('requestEnd', function(e){
-                    var res = e.response, type = e.type;
-                    if(res.results.length > 0) {
-                      console.log('user created.');
-                    }
-                  });
+                  $("#ntf1").data("kendoNotification").error("Operation failed.");
                 }
+              });
+            }
           }
         }
       });
@@ -2058,9 +2589,25 @@
         users   : banhji.users,
         userProfile: banhji.profile,
         showLogoEdit: true,
+        goUser: function() {
+          mainDash.showIn("#placeholder", user);
+        },
+        goEmployee: function() {
+          mainDash.showIn("#placeholder", employee);
+        },
+        goCompany: function() {
+          mainDash.showIn("#placeholder", company);
+        },
         showLogo: function(e) {
           e.preventDefault();
           this.get('showLogoEdit') == true ? this.set('showLogoEdit', false) : this.set('showLogoEdit', true);
+        },
+        goModule    : function() {
+          banhji.moduleDS.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id});
+          mainDash.showIn("#placeholder", instituteModule);
+        },
+        goProfile   : function() {
+          banhji.router.navigate("profile");
         },
         onLogoChange: function() {
           var fileChooser = document.getElementById('companyLogo');
@@ -2105,10 +2652,25 @@
           banhji.router.navigate('');
         },
         save: function() {
-          this.dataStore.sync();
+          // var file = fileChooser.files[0];
+          // if (file) {
+          //   var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
+          //   bucket.upload(params, function (err, data) {
+          //     banhji.company.dataStore.data()[0].set('logo', data.Location);
+          //     banhji.company.dataStore.sync();
+          //   });
+          // } else {
+          //   this.dataStore.sync();
+          // }
+          
           this.dataStore.bind('rquestEnd', function(e){
-            if(e.response.results.length > 0) {
+            var res = e.response;
+            if(res.results.length > 0) {
+              $("#ntf1").data("kendoNotification").success("Data saved.");
               institute.showIn('#companyInfoPlaceholder', instInfo);
+              console.log("kdsslfds");
+            } else {
+              $("#ntf1").data("kendoNotification").error("Operation failed.");
             }
           });
         }
@@ -2123,38 +2685,33 @@
       var layout = new kendo.Layout('#placeholder');
       var menu = new kendo.View('#header-menu', {model: banhji.profile});
       var mainDash = new kendo.Layout('#companyDash', {model: banhji.company});
+      var company = new kendo.Layout('#template-placeholder-company', {model: banhji.company});
       var dash = new kendo.View('#template-dashboard', {model: banhji.company});
-      var userlist= new kendo.View('#template-userlist-page', {model: banhji.users});
+      var user = new kendo.View('#template-placeholder-user', {model: banhji.users});
       var userForm= new kendo.View('#user-profile-action', {model: banhji.users});
       var userEdit= new kendo.View('#user-profile-action-edit', {model: banhji.users});
       var userNew= new kendo.View('#template-userlist-form-new-page', {model: banhji.users});
       var empEdit= new kendo.View('#employee-action', {model: banhji.employees});
-      var userlMod= new kendo.View('#template-modules-users-page', {model: banhji.users});
-      var institute = new kendo.Layout('#template-createcompany-page', {model: banhji.company});
+      var instituteModule = new kendo.View('#template-placeholder-module', {model: banhji.company});
       var instInfo = new kendo.View('#template-createcompany-info-page', {model: banhji.company});
       var instEdit = new kendo.View('#company-edit', {model: banhji.company});
       var loading = new kendo.View('#template-waiting-page');
-      var unthau = new kendo.View('#template-unauth-page');
+      var employee = new kendo.View('#template-placeholder-employee', { model: banhji.employees});
       var modeleView = new kendo.View('#template-modules-page', { model: banhji.company});
-      var profile = new kendo.Layout('#user-profile', {model: banhji.users});
+      var profile = new kendo.Layout('#user-profile', {model: banhji.profile});
       var profileMod = new kendo.View('#user-profile-modules', {model: banhji.users});
       var assign = new kendo.View('#template-assign-module-to-page', {model: banhji.users});
-      var password = new kendo.View('#template-user-password', {model: banhji.users});
+      var password = new kendo.View('#template-user-password', {model: banhji.profile});
       // router initization
       banhji.router = new kendo.Router({
         init: function() {
             if(userPool.getCurrentUser()) {
               layout.render("#main");
+              
               institute = JSON.parse(localStorage.getItem('userData/user')).institute;
               banhji.profileDS.fetch(function(e){
                 banhji.profile.set('currentID', banhji.profileDS.data()[0]);
                 layout.showIn('#menu', menu);
-              });
-
-              banhji.profileDS.fetch(function(e){
-                if(banhji.profileDS.data()[0].role != 1) {
-                  banhji.router.navigate('profile/' +banhji.profileDS.data()[0].id);
-              }
                 
                 var cognitoUser = userPool.getCurrentUser();
                 if(cognitoUser !== null) {
@@ -2170,6 +2727,7 @@
                     }
                   });
                 }
+                console.log('init');
               });
             } else {
               window.location.replace("<?php echo base_url(); ?>login");
@@ -2183,10 +2741,20 @@
 
       // start here
       banhji.router.route('/', function() {
-        if(banhji.profileDS.data()[0] && banhji.profileDS.data()[0].role != 1) {
-          banhji.router.navigate("profile/"+banhji.profileDS.data()[0].id);
-        }
-        if(!banhji.companyDS.data()[0]) {
+        if(JSON.parse(localStorage.getItem('userData/user')).role != 1) {
+          banhji.users.users.filter([
+            {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
+            {field: 'id', operator: 'user', value:JSON.parse(localStorage.getItem('userData/user')).id}
+          ]);
+          banhji.users.users.bind('requestEnd', function(e){
+            if(e.response) {
+              banhji.users.setCurrent(e.response.results[0]);
+              banhji.users.modules.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).id});
+              layout.showIn("#container", mainDash);
+              mainDash.showIn("#placeholder", profileMod);
+            }
+          });
+        } else {
           banhji.companyDS.fetch(function() {
             banhji.company.set('data', banhji.companyDS.data()[0]);
             banhji.moduleDS.filter({field: 'id', value: banhji.companyDS.data()[0].id});
@@ -2197,14 +2765,15 @@
                 banhji.company.set('data', banhji.companyDS.data()[0].users);
                 banhji.company.set('lastLogin', banhji.companyDS.data()[0].lastLogin);
                 // console.log(e.response.results[0]);
-                banhji.userDS.filter({field: 'id', value: institute.id});
-              }
-              
-             });
+                banhji.userDS.filter([
+                  {field: 'id', value: institute.id},
+                  {field: 'id <>', operator: "user", value: JSON.parse(localStorage.getItem('userData/user')).id}
+                ]);
+              }            
+            });
           });
           layout.showIn("#container", mainDash);
-        } else{
-          layout.showIn("#container", mainDash);
+          mainDash.showIn("#placeholder", instituteModule);
         }
       });
 
@@ -2258,24 +2827,24 @@
         layout.showIn("#container", instEdit);
       });
 
-      banhji.router.route('profile/:id', function(id) {
+      banhji.router.route('profile', function() {
         layout.showIn("#container", profile);
-        if(banhji.users.get('current')){
-          profile.showIn("#profile-placeholder", profileMod);
-          banhji.users.modules.filter({field: 'id', value: id});
-        } else {
-          banhji.users.users.filter([
-            {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
-            {field: 'id', operator: 'user', value: id}
-            ]);
-          banhji.users.users.bind('requestEnd', function(e){
-            if(e.response) {
-              banhji.users.setCurrent(e.response.results[0]);
-              banhji.users.modules.filter({field: 'id', value: id});
-              profile.showIn("#profile-placeholder", profileMod);
-            }
-          });
-        }
+        // if(banhji.users.get('current')){
+        //   profile.showIn("#profile-placeholder", profileMod);
+        //   banhji.users.modules.filter({field: 'id', value: id});
+        // } else {
+        //   banhji.users.users.filter([
+        //     {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
+        //     {field: 'id', operator: 'user', value: id}
+        //     ]);
+        //   banhji.users.users.bind('requestEnd', function(e){
+        //     if(e.response) {
+        //       banhji.users.setCurrent(e.response.results[0]);
+        //       banhji.users.modules.filter({field: 'id', value: id});
+        //       profile.showIn("#profile-placeholder", profileMod);
+        //     }
+        //   });
+        // }
         
         // banhji.users.setCurrent(banhji.users.users.get(id));
       });
@@ -2284,19 +2853,18 @@
         if(banhji.profileDS.data()[0] && banhji.profileDS.data()[0].role != 1) {
           banhji.router.navigate("profile/"+banhji.profileDS.data()[0].id);
         }
-        layout.showIn("#container", profile);
+        // layout.showIn("#container", profile);
         // profile.showIn("#profile-placeholder", profileMod);
         banhji.users.setCurrent(banhji.users.users.get(id));
-        banhji.users.modules.filter({field: 'username', value: banhji.users.users.get(id).username});
-        profile.showIn("#profile-placeholder", assign);
-        
+        // banhji.users.modules.filter({field: 'username', value: banhji.users.users.get(id).username});
+        // layout.showIn("#container", mainDash);
+        mainDash.showIn("#placeholder", assign);
+        // profile.showIn("#profile-placeholder", assign);
       });
 
-      banhji.router.route('password/:id', function(id) {
-        layout.showIn("#container", profile);
-        // profile.showIn("#profile-placeholder", profileMod);
-        profile.showIn("#profile-placeholder", password);
-        banhji.users.setCurrent(banhji.users.users.get(id));
+      banhji.router.route('password', function() {
+        mainDash.showIn("#placeholder", password);
+        // profile.showIn("#profile-placeholder", password);
       });
 
       banhji.router.route('employee/new', function(){
@@ -2310,12 +2878,14 @@
         if(banhji.profileDS.data()[0] && banhji.profileDS.data()[0].role != 1) {
           banhji.router.navigate("profile/"+banhji.profileDS.data()[0].id);
         }
+        banhji.fileManagement.dataSource.filter({field: 'contact_id', value: banhji.employees.get('current').id});
         layout.showIn("#container", empEdit);
       });
 
 
       $(document).ready(function() {
         banhji.router.start();
+        console.log('1');
           // signout when browser closed
           // window.addEventListener("beforeunload", function (e) {
           //   // var confirmationMessage = "\o/";

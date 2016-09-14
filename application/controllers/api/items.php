@@ -156,7 +156,8 @@ class Items extends REST_Controller {
 					"brand_id" 				=> $value->brand_id,					
 					"measurement_id" 		=> $value->measurement_id,					
 					"main_id" 				=> $value->main_id,
-					"sku" 					=> $value->sku,
+					"abbr" 					=> $value->abbr,
+					"number" 				=> $value->number,
 					"international_code" 	=> $value->international_code,
 					"imei" 					=> $value->imei,
 					"serial_number" 		=> $value->serial_number,
@@ -217,7 +218,8 @@ class Items extends REST_Controller {
 			isset($value->brand_id) 				? $obj->brand_id 				= $value->brand_id : "";
 			isset($value->measurement_id) 			? $obj->measurement_id 			= $value->measurement_id : "";		
 			isset($value->main_id) 					? $obj->main_id 				= $value->main_id : "";
-			isset($value->sku) 						? $obj->sku 					= $value->sku : "";
+			isset($value->abbr) 					? $obj->abbr 					= $value->abbr : "";
+			isset($value->number) 					? $obj->number 					= $value->number : "";
 			isset($value->international_code) 		? $obj->international_code 		= $value->international_code : "";
 			isset($value->imei) 					? $obj->imei 					= $value->imei : "";
 			isset($value->serial_number) 			? $obj->serial_number 			= $value->serial_number : "";
@@ -262,7 +264,8 @@ class Items extends REST_Controller {
 					"brand_id" 				=> $obj->brand_id,					
 					"measurement_id" 		=> $obj->measurement_id,					
 					"main_id" 				=> $obj->main_id,
-					"sku" 					=> $obj->sku,
+					"abbr" 					=> $obj->abbr,
+					"number" 				=> $obj->number,
 					"international_code" 	=> $obj->international_code,
 					"imei" 					=> $obj->imei,
 					"serial_number" 		=> $obj->serial_number,
@@ -321,7 +324,8 @@ class Items extends REST_Controller {
 			isset($value->brand_id) 				? $obj->brand_id 				= $value->brand_id : "";
 			isset($value->measurement_id) 			? $obj->measurement_id 			= $value->measurement_id : "";		
 			isset($value->main_id) 					? $obj->main_id 				= $value->main_id : "";
-			isset($value->sku) 						? $obj->sku 					= $value->sku : "";
+			isset($value->abbr) 					? $obj->abbr 					= $value->abbr : "";
+			isset($value->number) 					? $obj->number 					= $value->number : "";
 			isset($value->international_code) 		? $obj->international_code 		= $value->international_code : "";
 			isset($value->imei) 					? $obj->imei 					= $value->imei : "";
 			isset($value->serial_number) 			? $obj->serial_number 			= $value->serial_number : "";
@@ -367,7 +371,8 @@ class Items extends REST_Controller {
 					"brand_id" 				=> $obj->brand_id,					
 					"measurement_id" 		=> $obj->measurement_id,					
 					"main_id" 				=> $obj->main_id,
-					"sku" 					=> $obj->sku,
+					"abbr" 					=> $obj->abbr,
+					"number" 				=> $obj->number,
 					"international_code" 	=> $obj->international_code,
 					"imei" 					=> $obj->imei,
 					"serial_number" 		=> $obj->serial_number,
@@ -528,9 +533,8 @@ class Items extends REST_Controller {
 	function assembly_post() {
 		$models = json_decode($this->post('models'));				
 		$data["results"] = array();
-		$data["count"] = 0;
-				
-		$sku = "";
+		$data["count"] = 0;				
+		
 		foreach ($models as $value) {
 			$obj = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -970,7 +974,7 @@ class Items extends REST_Controller {
 
 		$last_no = "";		
 		if(count($inv)>0){
-			$last_no = $inv->sku;
+			$last_no = $inv->number;
 		}
 		$no = 0;
 		$curr_YY = 0;
@@ -1135,7 +1139,7 @@ class Items extends REST_Controller {
 					"item_id" 		=> $value->item_id,
 					"category_id" 	=> $value->category_id,
 					"item_group_id" => $value->item_group_id,					
-					"sku"			=> $value->sku,
+					"number"			=> $value->number,
 					"name" 			=> $value->name,									
 					"category" 		=> $value->category->get_raw()->result(),
 					"item_group" 	=> $value->item_group->get_raw()->result(),
@@ -1257,7 +1261,7 @@ class Items extends REST_Controller {
 					"item_id" 		=> $value->item_id,
 					"category_id" 	=> $value->category_id,
 					"item_group_id" => $value->item_group_id,					
-					"sku"			=> $value->sku,
+					"number"			=> $value->number,
 					"name" 			=> $value->name,									
 					"category" 		=> $value->category->get_raw()->result(),
 					"item_group" 	=> $value->item_group->get_raw()->result(),
@@ -1337,7 +1341,7 @@ class Items extends REST_Controller {
 					"id" 			=> $value->id,					
 					"category_id" 	=> $value->category_id,
 					"item_group_id" => $value->item_group_id,					
-					"sku"			=> $value->sku,
+					"number"			=> $value->number,
 					"name" 			=> $value->name,									
 					"category" 		=> $value->category->get_raw()->result(),
 					"item_group" 	=> $value->item_group->get_raw()->result(),					
@@ -1421,7 +1425,7 @@ class Items extends REST_Controller {
 					"id" 			=> $value->id,					
 					"category_id" 	=> $value->category_id,
 					"item_group_id" => $value->item_group_id,					
-					"sku"			=> $value->sku,
+					"number"			=> $value->number,
 					"name" 			=> $value->name,									
 					"category" 		=> $value->category->get_raw()->result(),
 					"item_group" 	=> $value->item_group->get_raw()->result(),

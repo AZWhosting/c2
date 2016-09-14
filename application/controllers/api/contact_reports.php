@@ -335,6 +335,8 @@ class Contact_reports extends REST_Controller {
 				$arAmount += floatval($value->amount) / floatval($value->rate);
 			}
 
+			$arAmount -= floatval($value->deposit);
+
 			//Group customer
 			if(isset($arCustomer[$value->contact_id])){
 				$arCustomer[$value->contact_id] = 0;
@@ -816,7 +818,7 @@ class Contact_reports extends REST_Controller {
 			}									 			
 		}
 
-		$obj->include_related("item", array("sku", "name"), FALSE);		
+		$obj->include_related("item", array("number", "name"), FALSE);		
 		
 		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale"));		
 		$obj->where_related("transaction", "is_recurring", $is_recurring);		
@@ -1199,7 +1201,7 @@ class Contact_reports extends REST_Controller {
 		}
 
 		//AP			
-		$ap->where_in("type", array("Cash_Purchase", "Credit_Purchase"));
+		$ap->where("type", "Credit_Purchase");
 		$ap->where_in("status", array(0,2));
 		$ap->where("is_recurring", $is_recurring);		
 		$ap->where("deleted", $deleted);		
@@ -1235,6 +1237,8 @@ class Contact_reports extends REST_Controller {
 			}else{
 				$apAmount += floatval($value->amount) / floatval($value->rate);
 			}
+
+			$apAmount -= floatval($value->amount);
 
 			//Group customer
 			if(isset($arCustomer[$value->contact_id])){
@@ -1642,7 +1646,7 @@ class Contact_reports extends REST_Controller {
 			}									 			
 		}
 
-		$obj->include_related("item", array("sku", "name"), FALSE);		
+		$obj->include_related("item", array("number", "name"), FALSE);		
 		
 		$obj->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase"));		
 		$obj->where_related("transaction", "is_recurring", $is_recurring);		

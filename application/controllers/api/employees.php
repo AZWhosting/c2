@@ -60,16 +60,25 @@ class Employees extends REST_Controller {
 		if($employees->exists()) {
 			foreach($employees as $row) {
 				$role = $row->contact_type->get();
+
 				$data[] = array(
 					'id' => $row->id,
 					'name' => $row->name,
 					'gender' => $row->gender,
+					'abbr' => $row->abbr,
 					'dob' => $row->dob,
+					'number' => $row->number,
 					'phone' => $row->phone,
 					'email' => $row->email,
 					'user_id' => $row->user_id,
 					'address' => $row->address,
 					'status' => $row->status,
+					'ship_to'=> $row->ship_to,
+					'bill_to'=> $row->bill_to,
+					'locale' => $row->locale,
+					'account'=> array("id"=>$row->account_id),
+					'salary'=> array("id"=>$row->salary_account_id),
+					'registered_date' => $row->registered_date,
 					'role'    => $role->exists() ? array('id'=> $role->id, 'name'=>$role->name, 'abbr' => $role->abbr) : array()
 				);
 			}
@@ -103,15 +112,35 @@ class Employees extends REST_Controller {
 			$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$employees->name 		= $res->name;
 			$employees->gender 		= $res->gender;
+			$employees->abbr 		= $res->abbr;
 			$employees->contact_type_id = $res->role->id;
+			$employees->number = $res->number;
+			$employees->email = $res->email;
+			$employees->ship_to = $res->ship_to;
+			$employees->bill_to = $res->bill_to;
+			$employees->registered_date = $res->registered_date;
+			$employees->phone = $res->phone;
+			$employees->locale= $res->locale;
+			$employees->memo = $res->memo;
+			$employees->account_id = $res->account->id;
+			$employees->salary_account_id = $res->salary->id;
+			$employees->address = $res->address;
 			$employees->status = $res->status;
 
 			if($employees->save()) {
 				$data[] = array(
 					'id' => $employees->id,
 					'name' => $employees->name,
+					'abbr' => $emplohyees->abbr,
 					'status' => $employees->status,
-					'role' => $res->role
+					'role' => $res->role,
+					'number' => $employees->number,
+					'ship_to' => $employees->ship_to,
+					'bill_to' => $employees->bill_to,
+					'registered_date' => $employees->registered_date,
+					'address' => $employees->address,
+					'phone' => $employees->phone,
+					'email' => $employees->email
 				);
 			}
 		}
@@ -133,15 +162,37 @@ class Employees extends REST_Controller {
 			$employees->where('id', $res->id)->get();
 			$employees->name 		= $res->name;
 			$employees->gender 		= $res->gender;
+			$employees->abbr 		= $res->abbr;
 			$employees->contact_type_id = $res->role->id;
+			$employees->number = $res->number;
+			$employees->email = $res->email;
+			$employees->ship_to = $res->ship_to;
+			$employees->bill_to = $res->bill_to;
+			$employees->registered_date = $res->registered_date;
+			$employees->phone = $res->phone;
+			$employees->locale = $res->locale;
+			$employees->memo = $res->memo;
+			$employees->account_id = $res->account->id;
+			$employees->salary_account_id = $res->salary->id;
+			$employees->address = $res->address;
 			$employees->status = $res->status;
 
 			if($employees->save()) {
 				$data[] = array(
 					'id' => $employees->id,
 					'name' => $employees->name,
+					'abbr' => $employees->abbr,
 					'status' => $employees->status,
-					'role' => $res->role
+					'role' => $res->role,
+					'number' => $employees->number,
+					'ship_to' => $employees->ship_to,
+					'bill_to' => $employees->bill_to,
+					'memo' => $employees->memo,
+					'locale' => $employees->locale,
+					'registered_date' => $employees->registered_date,
+					'address' => $employees->address,
+					'phone' => $employees->phone,
+					'email' => $employees->email
 				);
 			}
 		}
@@ -190,7 +241,8 @@ class Employees extends REST_Controller {
 			foreach($types as $row) {
 				$data[] = array(
 					'id' => $row->id,
-					'name' => $row->name
+					'name' => $row->name,
+					'abbr' => $row->abbr
 				);
 			}
 			$this->benchmark->mark('benchmark_end');

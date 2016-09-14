@@ -288,7 +288,7 @@ class Transactions extends REST_Controller {
 					$paid->where("is_recurring",0);
 					$paid->where("deleted",0);
 					$paid->get();
-					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
+					$amount_paid = floatval($paid->amount) + floatval($paid->discount) + floatval($paid->deposit);
 
 					//Update invoice status
 					$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
