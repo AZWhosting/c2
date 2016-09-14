@@ -20270,7 +20270,7 @@
 			<i class="icon-trash" data-bind="events: { click: removeRowOption }"></i>					
 		</td>			
 		<td>
-			<input id="ddlOption-#:uid#" name="ddlOption-#:uid#"
+			<input id="ddlOption" name="ddlOption-#:uid#"
 				   data-role="dropdownlist"				                      			   
                    data-text-field="name"
                    data-value-field="id"
@@ -20293,7 +20293,7 @@
                    placeholder="Select Invoice..." 
                    style="width: 100%" />
 
-            <input id="ddlAccount-#:uid#" name="ddlAccount-#:uid#"
+            <input id="ddlAccount" name="ddlAccount-#:uid#"
 				   data-role="dropdownlist"
 				   data-template="account-list-tmpl"				                      			   
                    data-text-field="name"
@@ -20396,7 +20396,7 @@
 						<tfoot>
 							<tr>
 								<th>Total</th>
-								<th><span data-bind="text: count"></span></th>
+								<th colspan="7"><span data-bind="text: count"></span></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -20428,6 +20428,8 @@
 		<td></td>
 		<td></td>
 		<td></td>		
+		<td></td>
+		<td></td>
 		<td></td>
 		<td></td>
 	</tr>
