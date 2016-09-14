@@ -17614,19 +17614,7 @@
 												<td>
 													Credit Allowed: <span data-format="n" data-bind="text: obj.credit_allowed"></span>
 												</td>
-											</tr>
-								            <tr>
-								            	<td>Expected Date</td>
-								            	<td>
-								            		<input id="txtDueDate" name="txtDueDate" 
-															data-role="datepicker"
-															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd" 
-															data-bind="value: obj.due_date" 
-															required data-required-msg="required"
-															style="width:100%;" />
-								            	</td>
-								            </tr>							           
+											</tr>   
 											<tr>							            				
 												<td>
 								            		Reference	            						            		
@@ -54298,8 +54286,10 @@
 		        	//Status
 			        if(remaining==0){
 			    		obj.set("status", 1);
-			    	}else{
+			    	}else if(remaining==total){
 			    		obj.set("status", 0);
+			    	}else{
+			    		obj.set("status", 2);
 			    	}
 		        }
 
