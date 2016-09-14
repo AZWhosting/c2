@@ -92,14 +92,14 @@ class Itemreports extends REST_Controller {
 
 		foreach ($temp as $key => $value) {
 			$data["results"][] = array(
-				'id' 	=> $key,
-				'item' 	=> $value['name'],
-				'cost'	=> $value['cost'],
-				'price'	=> $value['price'],
+				'id' 		=> $key,
+				'item' 		=> $value['name'],
+				'cost'		=> $value['cost'],
+				'price'		=> $value['price'],
 				'onHand'	=> $value['onHand'],
 				'currency'	=> $value['currency_code'],
-				'so'	=> $value['so'],
-				'po'	=> $value['po']
+				'so'		=> isset($value['so'])?$value['so']:"",
+				'po'		=> $value['po']
 			);
 		}
 
@@ -109,7 +109,7 @@ class Itemreports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	function postion_detail_get() {
+	function position_detail_get() {
 		$filters 	= $this->get("filter");
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
@@ -122,6 +122,7 @@ class Itemreports extends REST_Controller {
 		$service = 0;
 		$onHand = 0;
 		$total =0;
+		$temp = array();
 
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
@@ -226,24 +227,24 @@ class Itemreports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = array();
 		$data["count"] = 0;
-		$is_pattern = 0;
+		// $is_pattern = 0;
 		$deleted = 0;
 		$itemSale = 0;
 		$service = 0;
 		$onHand = 0;
-		$total =0;
+		$total = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$obj->where('deleted', 0);
 		$obj->where('is_recurring', 0);
-		$obj->where('is_pattern', 0);
+		// $obj->where('is_pattern', 0);
 		$obj->where_in('type', array('Cash_Sale', 'Invoice'));
 
-		if(isset($filters)) {
-			foreach($filters as $filter) {
-				$obj->where($filter['field'], $filter['value']);
-			}
-		}
+		// if(isset($filters)) {
+		// 	foreach($filters as $filter) {
+		// 		$obj->where($filter['field'], $filter['value']);
+		// 	}
+		// }
 
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -260,12 +261,12 @@ class Itemreports extends REST_Controller {
 						'id' => $itemLine->item_id,
 						'name' => $itemLine->item_name,
 					),
-					'qty' => $itemLine->quanity * ,
+					'qty' => $itemLine->quanity ,
 					'price' => $itemLine->price,
 					'amount' => $itemLine->amount,
 					'cost' => $itemLine->cost,
 					'gpm' => $gpm
-				)
+				);
 				$total += $gpm;
 				$onHand += floatval($itemLine->item_on_hand);
 			}
@@ -285,12 +286,13 @@ class Itemreports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = array();
 		$data["count"] = 0;
-		$is_pattern = 0;
+		// $is_pattern = 0;
 		$deleted = 0;
 		$gpm = 0;
 		$turnover = 0;
 		$onHand = 0;
 		$total =0;
+		$adjustment = 0;
 		$temp = array();
 
 		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -305,13 +307,13 @@ class Itemreports extends REST_Controller {
 				$journalLines->where('account_id', $value->cogs_account_id);
 				$journalLines->where_related('transaction', 'deleted', 0);
 				$journalLines->where_related('transaction', 'is_recurring', 0);
-				$journalLines->where_related('transaction', 'is_pattern', 0);
+				// $journalLines->where_related('transaction', 'is_pattern', 0);
 				$journalLines->where_in_related('transaction', 'type', array('Invoice', 'Cash_Sale'));
 				$journalLines->include_related('transaction', array('id','issued_date', 'type'));
 				$journalLines->get();
 
-				if($adj->exists()) {
-					foreach($adj as $ad) {
+				if($obj->exists()) {
+					foreach($obj as $ad) {
 						$adjustment += floatval($ad->quanity) * $ad->movement;
 					}
 				}
@@ -320,7 +322,7 @@ class Itemreports extends REST_Controller {
 				$itemLines->where('item_id', $value->id);
 				$itemLines->where_related('transaction', 'deleted', 0);
 				$itemLines->where_related('transaction', 'is_recurring', 0);
-				$itemLines->where_related('transaction', 'is_pattern', 0);
+				// $itemLines->where_related('transaction', 'is_pattern', 0);
 				$itemLines->where_in_related('transaction', 'type', array('Invoice', 'Cash_Sale'));
 				$itemLines->get();
 
@@ -330,7 +332,7 @@ class Itemreports extends REST_Controller {
 					}
 				}
 
-				if($journalLine->exists()) {
+				if($journalLines->exists()) {
 					foreach($journalLines as $line) {
 						if(isset($temp["$value->id"])) {
 							$temp["$value->id"]['dr'] += $line->dr;
@@ -370,7 +372,7 @@ class Itemreports extends REST_Controller {
 				'id' 	=> $key,
 				'cogs' 	=> $cogs,
 				'onHand'=> $value['onhand'],
-				'turnover'=> $cogs/floatval($value['onhand']);
+				'turnover'=> $cogs/floatval($value['onhand'])
 			);
 		}
 		$data['onhand'] = $onHand;
@@ -386,7 +388,7 @@ class Itemreports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = array();
 		$data["count"] = 0;
-		$is_pattern = 0;
+		// $is_pattern = 0;
 		$deleted = 0;
 		$itemSale = 0;
 		$service = 0;
@@ -397,7 +399,7 @@ class Itemreports extends REST_Controller {
 		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$obj->where_related('transaction', 'deleted', 0);
 		$obj->where_related('transaction', 'is_recurring', 0);
-		$obj->where_related('transaction', 'is_pattern', 0);
+		// $obj->where_related('transaction', 'is_pattern', 0);
 		$obj->where_in_related('transaction', 'type', array('Cash_Sale', 'Invoice', 'Cash_Purchase', 'Credit_Purchase'));
 
 		$obj->get_iterated();
@@ -408,7 +410,7 @@ class Itemreports extends REST_Controller {
 				$adj->where('item_id', $value->item_id);
 				$adj->where_related('transaction', 'deleted', 0);
 				$adj->where_related('transaction', 'is_recurring', 0);
-				$adj->where_related('transaction', 'is_pattern', 0);
+				// $adj->where_related('transaction', 'is_pattern', 0);
 				$adj->where_related('transaction', 'type', 'Adjustment');
 				$adj->get();
 
@@ -423,7 +425,7 @@ class Itemreports extends REST_Controller {
 					$temp["$value->item_id"]['sale'] 	 	+= $value->movement == -1 ? $value->quantity : 0;
 				} else {
 					$item = $value->item->get();
-					$temp["$value->item_id"]['item']		= array("id" = $item->id, "name" => $item->name);
+					$temp["$value->item_id"]['item']		= array("id" => $item->id, "name" => $item->name);
 					$temp["$value->item_id"]['purchase'] 	= $value->movement == 1 ? $value->quantity : 0;
 					$temp["$value->item_id"]['sale'] 	 	= $value->movement == -1 ? $value->quantity : 0;
 					$temp["$value->item_id"]['adjustment'] 	= $adjustment;
@@ -451,10 +453,11 @@ class Itemreports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = array();
 		$data["count"] = 0;
-		$is_pattern = 0;
+		// $is_pattern = 0;
 		$deleted = 0;
 		$gpm = 0;
 		$service = 0;
+		$adjustment = 0;
 		$onHand = 0;
 		$total =0;
 		$temp = array();
@@ -471,13 +474,13 @@ class Itemreports extends REST_Controller {
 				$journalLines->where('account_id', $value->inventory_account_id);
 				$journalLines->where_related('transaction', 'deleted', 0);
 				$journalLines->where_related('transaction', 'is_recurring', 0);
-				$journalLines->where_related('transaction', 'is_pattern', 0);
+				// $journalLines->where_related('transaction', 'is_pattern', 0);
 				$journalLines->where_in_related('transaction', 'type', array('Cash_Purchase', 'Credit_Purcahse', 'Invoice', 'Cash_Sale'));
 				$journalLines->include_related('transaction', array('id','issued_date', 'type'));
 				$journalLines->get();
 
-				if($adj->exists()) {
-					foreach($adj as $ad) {
+				if($obj->exists()) {
+					foreach($obj as $ad) {
 						$adjustment += floatval($ad->quanity) * $ad->movement;
 					}
 				}
@@ -486,7 +489,7 @@ class Itemreports extends REST_Controller {
 				$itemLines->where('item_id', $value->id);
 				$itemLines->where_related('transaction', 'deleted', 0);
 				$itemLines->where_related('transaction', 'is_recurring', 0);
-				$itemLines->where_related('transaction', 'is_pattern', 0);
+				// $itemLines->where_related('transaction', 'is_pattern', 0);
 				$itemLines->where_in_related('transaction', 'type', array('Invoice', 'Cash_Sale'));
 				$itemLines->get();
 
@@ -496,11 +499,11 @@ class Itemreports extends REST_Controller {
 					}
 				}
 
-				if($journalLine->exists()) {
+				if($journalLines->exists()) {
 					foreach($journalLines as $line) {
 						$adjustment = 0;
 						$adj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$adj->where_related('transaction_id', $line->transaction_id);
+						$adj->where_related('transaction', 'id', $line->transaction_id);
 						$adj->get();
 						if($adj->exists()) {
 							foreach($adj as $ad) {
@@ -545,7 +548,7 @@ class Itemreports extends REST_Controller {
 		foreach ($temp as $key => $value) {
 			$data["results"][] = $value;
 		}
-		$data['gpm'] = $grm;
+		$data['gpm'] = $gpm;
 		$data['count'] = count($temp);
 		$this->response($data, 200);
 	}
