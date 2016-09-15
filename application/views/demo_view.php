@@ -10110,11 +10110,10 @@
 			<input id="ddlMesurement"
 					data-role="dropdownlist"
 					data-header-template="item-measurement-header-tmpl"            
-                   data-text-field="measurement"
-                   data-value-field="measurement_id"
+                   data-text-field="name"
+                   data-value-field="id"
                    data-bind="value: measurement_id,
-                   			  source: item_prices,
-                   			  events:{ change: measurementChanges }"
+                   			  source: measurementDS"
                    data-option-label="UM"
                    style="width: 57%;" />
 		</td>						
@@ -11377,7 +11376,7 @@
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
 
-			<input id="txtPrice" name="txtPrice-#:uid#"
+			<input id="txtMeasurement-#:uid#" name="txtMeasurement-#:uid#"
 				   data-role="dropdownlist"
                    data-header-template="item-measurement-header-tmpl"
                    data-text-field="name"
@@ -43528,15 +43527,7 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var cost = 0, rate = 1, measurement_id = 0;
-
-				if(item.item_type_id=="1" || item.item_type_id=="4"){
-					if(item.item_prices.length>0){
-						rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
-						cost = item.cost*rate;
-						measurement_id = item.measurement_id;
-					}
-				}
+				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
 		        	this.catalogDS.query({
@@ -43564,19 +43555,17 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		        	data.set("measurement_id", measurement_id);
+		        	data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);
-			        data.set("rate", rate);
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();		     
 		        }else{	        	
-		    		data.set("measurement_id", measurement_id);
+		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);			        		        
-			        data.set("rate", rate);			        
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();
 		    	}
@@ -44320,15 +44309,7 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var cost = 0, rate = 1, measurement_id = 0;
-
-				if(item.item_type_id=="1" || item.item_type_id=="4"){
-					if(item.item_prices.length>0){
-						rate = obj.rate / item.rate;
-						cost = item.cost*rate;
-						measurement_id = item.measurement_id;
-					}
-				}
+				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
 		        	this.catalogDS.query({
@@ -44346,7 +44327,7 @@
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
-								rate				: obj.rate / value.rate,
+								rate				: obj.rate,
 								locale				: obj.locale,						
 
 								item_prices 		: []
@@ -44356,40 +44337,22 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		        	data.set("measurement_id", measurement_id);
+		        	data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);
-			        data.set("rate", rate);
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();		     
 		        }else{	        	
-		    		data.set("measurement_id", measurement_id);
+		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);			        		        
-			        data.set("rate", rate);			        
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();
 		    	}
 	        }                	        	
-		},
-		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
-
-			if(data.measurement_id>0){
-				$.each(data.item_prices, function(index, value){
-					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
-				        data.set("cost", value.cost*rate);				       			       
-				        
-						return false;
-					}
-				});	    		
-		        	        
-		        this.changes();
-	        }	                	        	
-		},
+		},		
 		//Obj
 		loadObj 			: function(id, is_recurring){
 			var self = this, para = [];
@@ -46065,15 +46028,8 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var cost = 0, rate = 1;
+				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-				if(item.item_type_id=="1" || item.item_type_id=="4"){
-					if(item.item_prices.length>0){
-						rate = obj.rate / item.rate;
-						cost = item.cost*rate;
-					}
-				}
-				
 		        if(item.is_catalog=="1"){
 		        	this.catalogDS.query({
 		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
@@ -46090,7 +46046,7 @@
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
-								rate				: obj.rate / value.rate,
+								rate				: obj.rate,
 								locale				: obj.locale,						
 
 								item_prices 		: []
@@ -46103,16 +46059,14 @@
 		        	data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);
-			        data.set("rate", rate);
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);			        		        
-			        data.set("rate", rate);			        
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();
 		    	}
@@ -46744,6 +46698,7 @@
 				if(item.item_type_id==1){					
 					var inventoryID = item.inventory_account_id,
 					inventoryAmt = (value.quantity*value.cost) + value.additional_cost;
+
 					if(inventoryList[inventoryID]===undefined){
 						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmt };						
 					}else{											
@@ -47467,14 +47422,7 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var cost = 0, rate = 1;
-
-				if(item.item_type_id=="1" || item.item_type_id=="4"){
-					if(item.item_prices.length>0){
-						rate = obj.rate / item.rate;
-						cost = item.cost*rate;
-					}
-				}
+				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
 		        	this.catalogDS.query({
@@ -47492,7 +47440,7 @@
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
-								rate				: obj.rate / value.rate,
+								rate				: obj.rate,
 								locale				: obj.locale,						
 
 								item_prices 		: []
@@ -47505,16 +47453,14 @@
 		        	data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);
-			        data.set("rate", rate);
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);			        		        
-			        data.set("rate", rate);			        
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();
 		    	}
@@ -47903,6 +47849,7 @@
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
 					taxID = taxItem.account_id,
 					taxAmt = amount * taxItem.rate;
+
 					if(taxList[taxID]===undefined){
 						taxList[taxID]={"id": taxID, "amount": taxAmt};						
 					}else{											
@@ -47916,16 +47863,16 @@
 
 				//Inventory
 				if(item.item_type_id==1){
-
 					//Add inventory list
-					var inventoryID = item.inventory_account_id;					
+					var inventoryID = item.inventory_account_id;
+
 					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": amount, "rate": item.rate, "locale": item.locale};						
+						inventoryList[inventoryID]={"id": inventoryID, "amount": amount};						
 					}else{											
 						if(inventoryList[inventoryID].id===inventoryID){
 							inventoryList[inventoryID].amount += amount;
 						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": amount, "rate": item.rate, "locale": item.locale};
+							inventoryList[inventoryID]={"id": inventoryID, "amount": amount};
 						}
 					}
 				}					  	
@@ -48022,8 +47969,8 @@
 						segments 	 		: [],								
 						dr 	 				: 0,
 						cr 					: value.amount,				
-						rate				: value.rate,
-						locale				: value.locale
+						rate				: obj.rate,
+						locale				: obj.locale
 					});						
 				});
 			}
@@ -50010,11 +49957,11 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = item.measurement_id;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
+						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
 						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
 					}
@@ -50052,7 +49999,6 @@
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
-			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
@@ -50060,8 +50006,7 @@
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
-			        data.set("rate", rate);
+			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -50069,12 +50014,12 @@
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
+			var data = e.data, obj = this.get("obj");			
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
 				        data.set("price", value.price*rate);				       			       
 				        
 						return false;
@@ -50852,11 +50797,11 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = item.measurement_id;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
+						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
 						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
 					}
@@ -50894,7 +50839,6 @@
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
-			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
@@ -50902,8 +50846,7 @@
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
-			        data.set("rate", rate);
+			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -50911,12 +50854,12 @@
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
+			var data = e.data, obj = this.get("obj");			
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
 				        data.set("price", value.price*rate);				       			       
 				        
 						return false;
@@ -52645,11 +52588,11 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = item.measurement_id;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
+						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
 						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
 					}
@@ -52687,7 +52630,6 @@
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
-			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
@@ -52695,8 +52637,7 @@
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
-			        data.set("rate", rate);
+			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -52704,12 +52645,12 @@
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
+			var data = e.data, obj = this.get("obj");			
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
 				        data.set("price", value.price*rate);				       			       
 				        
 						return false;
@@ -53141,7 +53082,7 @@
 					//Add cogs list
 					var itemCost = value.quantity*item.cost,
 					cogsID = item.cogs_account_id,
-					itemRate = banhji.source.getRate(item.locale, new Date());
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(cogsList[cogsID]===undefined){
 						cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
@@ -54012,11 +53953,11 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = item.measurement_id;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
+						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
 						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
 					}
@@ -54054,7 +53995,6 @@
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
-			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
@@ -54062,8 +54002,7 @@
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
-			        data.set("rate", rate);
+			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -54071,12 +54010,12 @@
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
+			var data = e.data, obj = this.get("obj");			
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
 				        data.set("price", value.price*rate);				       			       
 				        
 						return false;
@@ -54509,7 +54448,7 @@
 					//Add cogs list
 					var itemCost = value.quantity*item.cost,
 					cogsID = item.cogs_account_id,
-					itemRate = banhji.source.getRate(item.locale, new Date());
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(cogsList[cogsID]===undefined){
 						cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
@@ -54631,7 +54570,7 @@
 						segments 	 		: [],								
 						dr 	 				: value.amount,
 						cr 					: 0,				
-						rate				: banhji.source.getRate(value.locale, new Date()),
+						rate				: value.rate,
 						locale				: value.locale
 					});								
 				});							
@@ -54648,7 +54587,7 @@
 						segments 	 		: [],								
 						dr 	 				: 0,
 						cr 					: value.amount,				
-						rate				: banhji.source.getRate(value.locale, new Date()),
+						rate				: value.rate,
 						locale				: value.locale
 					});						
 				});
@@ -55160,11 +55099,11 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = item.measurement_id;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
+						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
 						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
 					}
@@ -55202,7 +55141,6 @@
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
-			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
@@ -55210,8 +55148,7 @@
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
-			        data.set("rate", rate);
+			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -55219,12 +55156,12 @@
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
+			var data = e.data, obj = this.get("obj");			
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
 				        data.set("price", value.price*rate);				       			       
 				        
 						return false;
@@ -55995,7 +55932,7 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = item.measurement_id;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
@@ -56037,7 +55974,6 @@
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
-			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
@@ -56045,8 +55981,7 @@
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
-			        data.set("rate", rate);
+			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -56054,12 +55989,12 @@
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
+			var data = e.data, obj = this.get("obj");			
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
 				        data.set("price", value.price*rate);				       			       
 				        
 						return false;
@@ -56239,7 +56174,7 @@
 	        obj.set("tax", tax);			
 			obj.set("amount", total);
 			obj.set("remaining", remaining);			    	
-		},					
+		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
@@ -56562,29 +56497,30 @@
 
 				//Inventory
 				if(item.item_type_id==1){
-					var itemCost = value.quantity * item.cost;
+					var itemCost = value.quantity * item.cost,
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					//Add inventory list
 					var inventoryID = item.inventory_account_id;					
 					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost};						
+						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
 					}else{											
 						if(inventoryList[inventoryID].id===inventoryID){
 							inventoryList[inventoryID].amount += itemCost;
 						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost};
+							inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": itemRate, "locale": item.locale};
 						}
 					}
 
 					//Add cogs list
 					var cogsID = item.cogs_account_id;				
 					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": itemCost};						
+						cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
 					}else{											
 						if(cogsList[cogsID].id===cogsID){
 							cogsList[cogsID].amount += itemCost;
 						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": itemCost};
+							cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": itemRate, "locale": item.locale};
 						}
 					}
 				}					  	
@@ -56734,8 +56670,8 @@
 						segments 	 		: [],								
 						dr 	 				: value.amount,
 						cr 					: 0,				
-						rate				: obj.rate,
-						locale				: obj.locale
+						rate				: value.rate,
+						locale				: value.locale
 					});						
 				});
 			}
@@ -56752,8 +56688,8 @@
 						segments 	 		: [],								
 						dr 	 				: 0,
 						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
+						rate				: value.rate,
+						locale				: value.locale
 					});						
 				});
 			}
