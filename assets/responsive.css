@@ -13,12 +13,15 @@
 #cbbAccounts-list,
 #ddlVendor-list,
 #ddlPaymentMethod-list,
-#ddlAccount-list{
+#ddlAccount-list
+{
   width: 350px !important;
 }
 #ddlMeasurement-list,
 #ddlMesurement-list,
-#txtPrice-list{
+#txtPrice-list,
+#ddlAccount-list,
+#ddlOption-list{
   width: 250px !important;
 }
 #ccbTaxItem-list{
