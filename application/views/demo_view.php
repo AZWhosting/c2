@@ -35245,15 +35245,30 @@
 </script>
 
 <script id="reference-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=number# : #=kendo.toString(amount, "c", locale)#</span>
-	<span class="pull-right">
-		#if(status==1){#
-			Paid
-		#}else if(status==2){#
-			Partially Paid
+	<span>
+		#=number# :
+		#if(type=="GDN" || type=="GRN"){# 
+			#=kendo.toString(amount, "n")#
 		#}else{#
-			Open
+			#=kendo.toString(amount, "c", locale)#
 		#}#
+	</span>
+	<span class="pull-right">
+		#if(type=="GDN" || type=="GRN"){# 
+			#if(status==1){#
+				Used			
+			#}else{#
+				Open
+			#}#
+		#}else{#
+			#if(status==1){#
+				Paid
+			#}else if(status==2){#
+				Partially Paid
+			#}else{#
+				Open
+			#}#
+		#}#		
 	</span>
 </script>
 <script id="attachment-list-tmpl" type="text/x-kendo-tmpl">
@@ -55336,7 +55351,7 @@
 			}else{
 				obj.set("reference_id", 0);
 			}
-			
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
