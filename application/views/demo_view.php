@@ -29195,13 +29195,24 @@
 							</div>
 
 							<div class="row-fluid">
-								<!-- Group -->
-								<div class="control-group">								
-									<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
-						            <textarea id="txtDescription" class="k-textbox" 
-										data-bind="value: obj.description" style="width: 100%;height:60px;"></textarea>
-								</div>																		
-								<!-- // Group END -->
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtPurchaseDescription">Purchase Description</label>
+							            <textarea id="txtPurchaseDescription" class="k-textbox" 
+											data-bind="value: obj.purchase_description" style="width: 100%;height:60px;"></textarea>
+									</div>																		
+									<!-- // Group END -->
+								</div>
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtSaleDescription">Sale Description</label>
+							            <textarea id="txtSaleDescription" class="k-textbox" 
+											data-bind="value: obj.sale_description" style="width: 100%;height:60px;"></textarea>
+									</div>																		
+									<!-- // Group END -->
+								</div>
 							</div>
 
 						</div>
@@ -29258,6 +29269,18 @@
 							              				style="width: 100%;" />					              		
 											</div>
 											<!-- // Group END -->
+										</div>
+
+										<div class="span3">														
+											<!-- Group -->
+											<div class="control-group">							
+												<label for="txtColorCode">Color Code</label>
+						              			<input id="txtColorCode" name="txtColorCode" class="k-textbox"
+							              				data-bind="value: obj.color_code" 
+							              				placeholder="e.g. #FF0000"
+							              				style="width: 100%;" />					              		
+											</div>
+											<!-- // Group END -->
 										</div>										
 							        
 										<div class="span3">														
@@ -29271,18 +29294,7 @@
 											</div>
 											<!-- // Group END -->
 										</div>
-
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtColorCode">Color Code</label>
-						              			<input id="txtColorCode" name="txtColorCode" class="k-textbox"
-							              				data-bind="value: obj.color_code" 
-							              				placeholder="e.g. #FF0000"
-							              				style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>												
+																						
 							        </div>
 
 							        <div class="row-fluid">
@@ -29584,6 +29596,21 @@
 							</div>
 					    </div>					   
 					</div>
+
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				            	<th width="5%"><span data-bind="text: lang.lang.no"></span></th>				                
+				                <th width="20%"><span data-bind="text: lang.lang.items"></span></th>
+				                <th><span data-bind="text: lang.lang.description"></span></th>
+				                <th width="25%"><span data-bind="text: lang.lang.quantity"></span></th>
+				                <th width="15%"><span data-bind="text: lang.lang.p"></span></th>
+				                <th width="10%"><span data-bind="text: lang.lang.amount"></span></th>
+				                
+				            </tr>
+				        </thead>
+				        <tbody></tbody>				        
+				    </table>
 
 				    <!-- Form actions -->
 					<div class="box-generic bg-action-button">
@@ -31117,6 +31144,21 @@
 							</div>
 					    </div>					   
 					</div>
+
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				            	<th width="5%"><span data-bind="text: lang.lang.no"></span></th>				                
+				                <th width="20%"><span data-bind="text: lang.lang.items"></span></th>
+				                <th><span data-bind="text: lang.lang.description"></span></th>
+				                <th width="25%"><span data-bind="text: lang.lang.quantity"></span></th>
+				                <th width="15%"><span data-bind="text: lang.lang.p"></span></th>
+				                <th width="10%"><span data-bind="text: lang.lang.amount"></span></th>
+				                
+				            </tr>
+				        </thead>
+				        <tbody></tbody>				        
+				    </table>
 
 					<!-- Form actions -->
 					<div class="box-generic bg-action-button">
@@ -43456,27 +43498,10 @@
 		},
 		//Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},	
 	    segmentChanges 		: function(e) {
 			var dataArr = this.get("obj").segments,
@@ -43507,7 +43532,7 @@
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.rate;
+						rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 						cost = item.cost*rate;
 						measurement_id = item.measurement_id;
 					}
@@ -43525,11 +43550,11 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.measurement_id,								
-								description 		: value.name,				
+								description 		: value.purchase_description,				
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
-								rate				: obj.rate / value.rate,
+								rate				: obj.rate,
 								locale				: obj.locale,						
 
 								item_prices 		: []
@@ -43540,7 +43565,7 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", cost);
 			        data.set("rate", rate);
@@ -43548,7 +43573,7 @@
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", cost);			        		        
 			        data.set("rate", rate);			        
@@ -44264,27 +44289,10 @@
 	    },
 		//Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment	
 	    segmentChanges 		: function(e) {
@@ -44334,7 +44342,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.measurement_id,								
-								description 		: value.name,				
+								description 		: value.purchase_description,				
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
@@ -44349,7 +44357,7 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", cost);
 			        data.set("rate", rate);
@@ -44357,7 +44365,7 @@
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", cost);			        		        
 			        data.set("rate", rate);			        
@@ -45083,27 +45091,10 @@
 	    },
 		//Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment
 		segmentChanges 		: function(e) {
@@ -46061,28 +46052,11 @@
 	    },
 		//Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
-		},	    
+			obj.set("rate", rate);						
+		},
 		//Item		
 		itemChanges 		: function(e){								
 			var self = this, 
@@ -46112,7 +46086,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.measurement_id,								
-								description 		: value.name,				
+								description 		: value.purchase_description,				
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
@@ -46127,7 +46101,7 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", cost);
 			        data.set("rate", rate);
@@ -46135,7 +46109,7 @@
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", cost);			        		        
 			        data.set("rate", rate);			        
@@ -47462,27 +47436,10 @@
 	    },
 	    //Currency Rate
 	    setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment
 	    segmentChanges 		: function(e) {
@@ -47531,7 +47488,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.measurement_id,								
-								description 		: value.name,				
+								description 		: value.purchase_description,				
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
@@ -47546,7 +47503,7 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", cost);
 			        data.set("rate", rate);
@@ -47554,7 +47511,7 @@
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", cost);			        		        
 			        data.set("rate", rate);			        
@@ -50075,7 +50032,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
-								description 		: value.name,				
+								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
@@ -50092,7 +50049,7 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
 			        data.set("rate", rate);		        	        
@@ -50101,7 +50058,7 @@
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);			        		        
 			        data.set("rate", rate);
@@ -50864,27 +50821,10 @@
 		},
 		//Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));										
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment		
 	    segmentChanges 		: function(e) {
@@ -50934,7 +50874,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
-								description 		: value.name,				
+								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
@@ -50951,7 +50891,7 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
 			        data.set("rate", rate);		        	        
@@ -50960,7 +50900,7 @@
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);			        		        
 			        data.set("rate", rate);
@@ -51756,27 +51696,10 @@
 	    },
 		//Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment
 		segmentChanges 		: function(e) {
@@ -52744,7 +52667,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
-								description 		: value.name,				
+								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
@@ -52761,7 +52684,7 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
 			        data.set("rate", rate);		        	        
@@ -52770,7 +52693,7 @@
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);			        		        
 			        data.set("rate", rate);
@@ -54111,7 +54034,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
-								description 		: value.name,				
+								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
@@ -54128,7 +54051,7 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
 			        data.set("rate", rate);		        	        
@@ -54137,7 +54060,7 @@
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);			        		        
 			        data.set("rate", rate);
@@ -55259,7 +55182,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
-								description 		: value.name,				
+								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
@@ -55276,7 +55199,7 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
 			        data.set("rate", rate);		        	        
@@ -55285,7 +55208,7 @@
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);			        		        
 			        data.set("rate", rate);
@@ -56076,7 +55999,7 @@
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
+						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
 						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
 					}
@@ -56094,7 +56017,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
-								description 		: value.name,				
+								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
@@ -56111,7 +56034,7 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
 			        data.set("rate", rate);		        	        
@@ -56120,7 +56043,7 @@
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);			        		        
 			        data.set("rate", rate);
@@ -59352,44 +59275,15 @@
 	    },
 	    //Currency Rate		
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),			
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj");
 
-			var uniqueLocale = [];
-			$.each(this.dataSource.data(), function(index, value){							
-			    if($.inArray(value.locale, uniqueLocale) === -1) uniqueLocale.push(value.locale);
+			$.each(this.dataSource.data(), function(index, value){
+				var rate = banhji.source.getRate(value.locale, new Date(obj.issued_date));				
+				
+				value.set("rate", rate);				
 			});
 
-			$.each(uniqueLocale, function(ind, locale){				
-				self.currencyRateDS.query({
-					filter: [
-						{ field:"locale", value: locale },
-						{ field:"date <=", value: date }
-					],
-					sort: { field:"date", dir:"desc" },
-					page: 1,
-					pageSize: 1
-				}).then(function(){
-					var view = self.currencyRateDS.view();
-					
-					if(view.length>0){
-						$.each(self.dataSource.data(), function(index, value){
-							if(value.locale==locale){
-								value.set("rate",view[0].rate);
-							}
-						});									
-					}else{
-						$.each(self.dataSource.data(), function(index, value){
-							if(value.locale==locale){
-								value.set("rate",1);
-							}
-						});					
-					}
-
-					self.changes();
-				});
-			});					
+			this.changes();			
 		},
 		//Search		
 		search 				: function(){
@@ -59916,44 +59810,15 @@
 	    },
 	    //Currency Rate		
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),			
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj");
 
-			var uniqueLocale = [];
-			$.each(this.dataSource.data(), function(index, value){							
-			    if($.inArray(value.locale, uniqueLocale) === -1) uniqueLocale.push(value.locale);
+			$.each(this.dataSource.data(), function(index, value){
+				var rate = banhji.source.getRate(value.locale, new Date(obj.issued_date));				
+				
+				value.set("rate", rate);				
 			});
 
-			$.each(uniqueLocale, function(ind, locale){				
-				self.currencyRateDS.query({
-					filter: [
-						{ field:"locale", value: locale },
-						{ field:"date <=", value: date }
-					],
-					sort: { field:"date", dir:"desc" },
-					page: 1,
-					pageSize: 1
-				}).then(function(){
-					var view = self.currencyRateDS.view();
-					
-					if(view.length>0){
-						$.each(self.dataSource.data(), function(index, value){
-							if(value.locale==locale){
-								value.set("rate",view[0].rate);
-							}
-						});									
-					}else{
-						$.each(self.dataSource.data(), function(index, value){
-							if(value.locale==locale){
-								value.set("rate",1);
-							}
-						});					
-					}
-
-					self.changes();
-				});
-			});					
+			this.changes();			
 		},
 		//Search		
 		search 				: function(){
@@ -61270,7 +61135,8 @@
 	      			international_code 		: view[0].international_code,
 	      			color_code 				: view[0].color_code,
 	      			name 					: "",
-	      			description				: view[0].description,
+	      			purchase_description	: view[0].purchase_description,
+	      			sale_description		: view[0].sale_description,
 	      			measurements 			: view[0].measurements,
 	      			catalogs 				: view[0].catalogs,
 	      			cost 					: view[0].cost,
