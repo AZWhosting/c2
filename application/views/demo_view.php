@@ -9655,15 +9655,7 @@
 
 							    	<!-- Options Tab content -->
 							        <div class="tab-pane active" id="tab1-5">						            
-							            <table class="table table-borderless table-condensed cart_total">							            
-											<tr>
-												<td>
-													Balance: <span data-bind="text: balance"></span>
-												</td>										
-												<td>
-													Credit Allowed: <span data-format="n" data-bind="text: obj.credit_allowed"></span>
-												</td>
-											</tr>
+							            <table class="table table-borderless table-condensed cart_total">											
 								            <tr>
 								            	<td>Expected Date</td>
 								            	<td>
@@ -9712,23 +9704,7 @@
 							        <!-- Info Tab content -->
 							        <div class="tab-pane" id="tab3-5">
 							        	
-										<table class="table table-borderless table-condensed cart_total">							                        	
-											<tr>
-												<td>Sale Rep</td>
-												<td>
-													<input id="cbbEmployee" name="cbbEmployee"
-														   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-header-template="employee-header-tmpl"
-										                   data-template="contact-list-tmpl"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.employee_id,
-										                              source: employeeDS"
-										                   data-placeholder="Type Name..." 
-										                   style="width: 100%" />
-												</td>
-											</tr>
+										<table class="table table-borderless table-condensed cart_total">											
 											<tr>
 												<td>Segments</td>
 												<td>
@@ -43215,7 +43191,7 @@
 	banhji.purchaseOrder =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
-		journalLineDS		: dataStore(apiUrl + "journal_lines"),
+		deleteDS  			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		jobDS				: dataStore(apiUrl + "jobs"),
@@ -43270,8 +43246,7 @@
 		monthOptionList 	: banhji.source.monthOptionList,
 		monthList 			: banhji.source.monthList,
 		weekDayList 		: banhji.source.weekDayList,
-		dayList 			: banhji.source.dayList,
-	    showDeposit 		: false,	    
+		dayList 			: banhji.source.dayList,	    	    
 		showMonthOption 	: false,
 		showMonth 			: false,
 		showWeek 			: false,
@@ -43283,6 +43258,7 @@
 		saveRecurring 		: false,
 		showConfirm   		: false,
 		statusSrc 			: "",
+		showDeposit 		: false,
 		showDiscount 		: false,
 		showRequiredDate 	: false,
 		sub_total 			: 0,
@@ -43824,7 +43800,6 @@
 			
 	        this.deleteDS.query({
 	        	filter:[
-	        		{ field:"type", operator:"where_in", value:["Cash_Purchase","Credit_Purchase"] },
 	        		{ field:"reference_id", value:obj.id },
 	        	],
 	        	page:1,
@@ -44039,6 +44014,7 @@
 	banhji.grn =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
@@ -44455,6 +44431,15 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
 
+	    	//Reference
+	    	if(obj.reference_id>0){
+				var ref = this.referenceDS.get(obj.reference_id);
+				ref.set("status", 1);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -44538,7 +44523,7 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
-			
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.attachmentDS.data([]);
@@ -44553,7 +44538,6 @@
 			
 	        this.deleteDS.query({
 	        	filter:[
-	        		{ field:"type", operator:"where_in", value:["Cash_Purchase","Credit_Purchase"] },
 	        		{ field:"reference_id", value:obj.id },
 	        	],
 	        	page:1,
@@ -44826,6 +44810,7 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),						
 		lineDS  			: dataStore(apiUrl + "account_lines"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "account_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
@@ -44871,7 +44856,7 @@
 			pageSize: 100
 		}),
 		contactDS 			: banhji.source.supplierDS,
-		depositAccountDS 	: banhji.source.depositAccountDS,
+		depositAccountDS 	: banhji.source.prepaidAccountDS,
 		segmentItemDS 		: banhji.source.segmentItemDS,
 		accountDS 			: banhji.source.cashAccountDS,
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -45182,6 +45167,15 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
 
+	    	//Reference
+	    	if(obj.reference_id>0){
+				var ref = this.referenceDS.get(obj.reference_id);
+				ref.set("deposit", obj.amount);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -45209,16 +45203,7 @@
 		    	}else{
 	    			obj.set("is_recurring", 1);
 		    	}
-	    	}
-
-	    	//Reference
-	    	if(obj.reference_id>0){
-				var ref = this.referenceDS.get(obj.reference_id);
-				ref.set("deposit", obj.amount);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
+	    	}	    	
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
@@ -45597,6 +45582,7 @@
 	banhji.purchase =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		accountLineDS  		: dataStore(apiUrl + "account_lines"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		additionalCostDS 	: dataStore(apiUrl + "transactions"),
@@ -46479,6 +46465,15 @@
 	        	alert("Over credit allowed!");		        	
 	        }
 
+	        //Reference
+	    	if(obj.reference_id>0){
+	    		var ref = this.referenceDS.get(obj.reference_id);				
+				ref.set("status", 1);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -46510,16 +46505,7 @@
 	    				value.set("is_recurring", 1);
 	    			});
 		    	}
-	    	}
-
-	    	//Reference
-	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);				
-				ref.set("status", 1);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
+	    	}	    	
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
@@ -47146,7 +47132,8 @@
 	});
 	banhji.purchaseReturn =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),		
+		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
@@ -47804,6 +47791,35 @@
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });			
 
 			banhji.userManagement.removeMultiTask("purchase_return");
+		},
+		delete 				: function(){
+			var self = this, obj = this.get("obj");
+			this.set("showConfirm",false);			
+			
+	        this.deleteDS.query({
+	        	filter:[
+	        		{ field:"reference_id", value:obj.id },
+	        	],
+	        	page:1,
+	        	pageSize:1
+	        }).then(function(){
+	        	var view = self.deleteDS.view();
+
+	        	if(view.length>0){
+	        		alert("Sorry, you can not delete it.");
+	        	}else{
+	        		obj.set("deleted", 1);
+			        self.dataSource.sync();
+
+			        window.history.back();
+	        	}
+	        });		    	    	
+		},
+		openConfirm 		: function(){
+			this.set("showConfirm", true);
+		},
+		closeConfirm 		: function(){
+			this.set("showConfirm", false);
 		},
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
@@ -49651,6 +49667,7 @@
 	banhji.quote =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),			
@@ -50293,14 +50310,24 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
 
-			if(obj.status==0){
-				obj.set("deleted", 1);
-		        self.dataSource.sync();
+			this.deleteDS.query({
+	        	filter:[
+	        		{ field:"reference_id", value:obj.id },
+	        	],
+	        	page:1,
+	        	pageSize:1
+	        }).then(function(){
+	        	var view = self.deleteDS.view();
 
-		        window.history.back();
-			}else{
-				alert("Sorry, you can not delete it.");
-			}	    	
+	        	if(view.length>0){
+	        		alert("Sorry, you can not delete it.");
+	        	}else{
+	        		obj.set("deleted", 1);
+			        self.dataSource.sync();
+
+			        window.history.back();
+	        	}
+	        });
 		},
 		openConfirm 		: function(){
 			this.set("showConfirm", true);
@@ -51774,6 +51801,15 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
 
+	    	//Reference
+	    	if(obj.reference_id>0){
+				var ref = this.referenceDS.get(obj.reference_id);
+				ref.set("deposit", obj.amount);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -51801,16 +51837,7 @@
 		    	}else{
 	    			obj.set("is_recurring", 1);
 		    	}
-	    	}
-
-	    	//Reference
-	    	if(obj.reference_id>0){
-				var ref = this.referenceDS.get(obj.reference_id);
-				ref.set("deposit", obj.amount);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
+	    	}	    	
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
@@ -51896,8 +51923,7 @@
 			
 	        this.deleteDS.query({
 	        	filter:[
-	        		{ field:"type", value:"Sale_Order" },
-	        		{ field:"reference_id", value:obj.id },
+	        		{ field:"reference_id", value:obj.id }
 	        	],
 	        	page:1,
 	        	pageSize:1
@@ -52879,6 +52905,15 @@
 	        	alert("Over credit allowed!");		        	
 	        }
 
+	        //Reference
+	    	if(obj.reference_id>0){
+	    		var ref = this.referenceDS.get(obj.reference_id);				
+				ref.set("status", 1);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -52907,15 +52942,6 @@
 	    			obj.set("is_recurring", 1);
 		    	}
 	    	}
-
-	    	//Reference
-	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);				
-				ref.set("status", 1);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
@@ -53002,8 +53028,7 @@
 			
 	        this.deleteDS.query({
 	        	filter:[
-	        		{ field:"type", value:"Sale_Return" },
-	        		{ field:"reference_id", value:obj.id },
+	        		{ field:"reference_id", value:obj.id }
 	        	],
 	        	page:1,
 	        	pageSize:1
@@ -53476,6 +53501,7 @@
 	banhji.invoice =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
@@ -54259,6 +54285,15 @@
 	        	alert("Over credit allowed!");		        	
 	        }
 
+	        //Reference
+	    	if(obj.reference_id>0){
+	    		var ref = this.referenceDS.get(obj.reference_id);				
+				ref.set("status", 1);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -54287,15 +54322,6 @@
 	    			obj.set("is_recurring", 1);
 		    	}
 	    	}
-
-	    	//Reference
-	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);				
-				ref.set("status", 1);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
@@ -54380,14 +54406,24 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        if(obj.status==0){
-				obj.set("deleted", 1);
-		        self.dataSource.sync();
+	        this.deleteDS.query({
+	        	filter:[
+	        		{ field:"reference_id", value:obj.id }
+	        	],
+	        	page:1,
+	        	pageSize:1
+	        }).then(function(){
+	        	var view = self.deleteDS.view();
 
-		        window.history.back();
-			}else{
-				alert("Sorry, you can not delete it.");
-			}		    	    	
+	        	if(view.length>0){
+	        		alert("Sorry, you can not delete it.");
+	        	}else{
+	        		obj.set("deleted", 1);
+			        self.dataSource.sync();
+
+			        window.history.back();
+	        	}
+	        });		    	    	
 		},
 		openConfirm 		: function(){
 			this.set("showConfirm", true);
@@ -55292,6 +55328,15 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
 
+	    	//Reference
+	    	if(obj.reference_id>0){
+	    		var ref = this.referenceDS.get(obj.reference_id);				
+				ref.set("status", 1);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+			
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -55320,15 +55365,6 @@
 	    			obj.set("is_recurring", 1);
 		    	}
 	    	}
-
-	    	//Reference
-	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);				
-				ref.set("status", 1);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
@@ -55400,7 +55436,7 @@
 			
 	        this.deleteDS.query({
 	        	filter:[
-	        		{ field:"reference_id", value:obj.id },
+	        		{ field:"reference_id", value:obj.id }
 	        	],
 	        	page:1,
 	        	pageSize:1
@@ -56422,7 +56458,7 @@
 			
 	        this.deleteDS.query({
 	        	filter:[
-	        		{ field:"reference_id", value:obj.id },
+	        		{ field:"reference_id", value:obj.id }
 	        	],
 	        	page:1,
 	        	pageSize:1
