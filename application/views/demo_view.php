@@ -9111,25 +9111,7 @@
 															required data-required-msg="required"
 															style="width:100%;" />
 								            	</td>
-								            </tr>							           
-											<tr>							            				
-												<td>
-								            		Reference	            						            		
-								            	</td>
-								            	<td>
-													<input data-role="combobox"
-															data-template="reference-list-tmpl"
-															data-auto-bind="false"
-								              				data-value-primitive="true"
-															data-text-field="number" 
-								              				data-value-field="id"						              				 
-								              				data-bind="value: obj.reference_id,
-								              							enabled: enableRef,
-								              							source: referenceDS,						              							
-								              							events:{change: referenceChanges}" 
-								              				style="width: 100%" />
-												</td>
-											</tr>	
+								            </tr>
 							            </table>						            
 							        </div>
 							        <!-- // Options Tab content END -->
@@ -9148,23 +9130,7 @@
 							        <!-- Info Tab content -->
 							        <div class="tab-pane" id="tab3-5">
 							        	
-										<table class="table table-borderless table-condensed cart_total">							                        	
-											<tr>
-												<td>Sale Rep</td>
-												<td>
-													<input id="cbbEmployee" name="cbbEmployee"
-														   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-header-template="employee-header-tmpl"
-										                   data-template="contact-list-tmpl"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.employee_id,
-										                              source: employeeDS"
-										                   data-placeholder="Type Name..." 
-										                   style="width: 100%" />
-												</td>
-											</tr>
+										<table class="table table-borderless table-condensed cart_total">											
 											<tr>
 												<td>Segments</td>
 												<td>
@@ -38723,9 +38689,11 @@
 			});
 		},
 		getRate						: function(locale, date){
-			var rate = 0;
+			var rate = 0, lastRate = 1;
 			$.each(this.currencyRateDS.data(), function(index, value){				
 				if(value.locale == locale){
+					lastRate = kendo.parseFloat(value.rate);
+
 					if(date >= new Date(value.date)){
 						rate = kendo.parseFloat(value.rate);
 
@@ -38733,6 +38701,11 @@
 					}
 				}
 			});
+
+			//If no rate, use the last rate
+			if(rate==0){
+				rate = lastRate;
+			}
 
 			return rate;
 		}
@@ -43245,8 +43218,6 @@
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
-		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
 		jobDS				: dataStore(apiUrl + "jobs"),
 		measurementDS	 	: dataStore(apiUrl + "measurements"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),			
@@ -43287,18 +43258,12 @@
 			pageSize: 100
 		}),		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.supplierDS,
 		itemDS  			: banhji.source.itemDS,
 		taxItemDS  			: banhji.source.supplierTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
-		segmentItemDS		: banhji.source.segmentItemDS,		
-		referenceTypes 		: [
-			{ id:"Sale_Order", name:"Sale Order" },
-			{ id:"Quote", name:"Quote" },
-			{ id:"GDN", name:"Goods Delivery Address Note" }
-		],
+		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -43844,6 +43809,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
+			this.dataSource.data([]);
+			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });			
 
 			banhji.userManagement.removeMultiTask("purchase_order");
@@ -44568,6 +44538,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			
+			this.dataSource.data([]);
+			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });			
 
 			banhji.userManagement.removeMultiTask("grn");
@@ -45314,8 +45289,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });
 			
 			banhji.userManagement.removeMultiTask("vendor_deposit");
@@ -46632,6 +46610,8 @@
 			this.lineDS.data([]);
 			this.accountLineDS.data([]);
 			this.additionalCostDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });
 
 			banhji.userManagement.removeMultiTask("purchase");
@@ -47816,8 +47796,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });			
 
 			banhji.userManagement.removeMultiTask("purchase_return");
@@ -50297,8 +50280,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("quote");
@@ -51151,8 +51137,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("sale_order");
@@ -51892,8 +51881,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
 			
 			banhji.userManagement.removeMultiTask("customer_deposit");
@@ -52995,8 +52987,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
 
 			banhji.userManagement.removeMultiTask("cash_sale");
@@ -54372,8 +54367,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("invoice");
@@ -55387,8 +55385,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("gdn");
@@ -56406,8 +56407,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("sale_return");
