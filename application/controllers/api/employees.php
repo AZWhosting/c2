@@ -76,6 +76,8 @@ class Employees extends REST_Controller {
 					'ship_to'=> $row->ship_to,
 					'bill_to'=> $row->bill_to,
 					'locale' => $row->locale,
+					'memo' => $row->memo,
+					'is_fulltime' => $row->is_fulltime == 0 ? FALSE : TRUE,
 					'account'=> array("id"=>$row->account_id),
 					'salary'=> array("id"=>$row->salary_account_id),
 					'registered_date' => $row->registered_date,
@@ -122,6 +124,7 @@ class Employees extends REST_Controller {
 			$employees->phone = $res->phone;
 			$employees->locale= $res->locale;
 			$employees->memo = $res->memo;
+			$employees->is_fulltime = $res->is_fulltime == true ? 1:0;
 			$employees->account_id = $res->account->id;
 			$employees->salary_account_id = $res->salary->id;
 			$employees->address = $res->address;
@@ -137,6 +140,8 @@ class Employees extends REST_Controller {
 					'number' => $employees->number,
 					'ship_to' => $employees->ship_to,
 					'bill_to' => $employees->bill_to,
+					'memo' => $employees->memo,
+					'is_fulltime' => $employees->is_fulltime == 0 ? FALSE : TRUE,
 					'registered_date' => $employees->registered_date,
 					'address' => $employees->address,
 					'phone' => $employees->phone,
@@ -172,6 +177,7 @@ class Employees extends REST_Controller {
 			$employees->phone = $res->phone;
 			$employees->locale = $res->locale;
 			$employees->memo = $res->memo;
+			$employees->is_fulltime = $res->is_fulltime == true ? 1:0;
 			$employees->account_id = $res->account->id;
 			$employees->salary_account_id = $res->salary->id;
 			$employees->address = $res->address;
@@ -191,6 +197,8 @@ class Employees extends REST_Controller {
 					'locale' => $employees->locale,
 					'registered_date' => $employees->registered_date,
 					'address' => $employees->address,
+					'memo' => $employees->memo,
+					'is_fulltime' => $employees->is_fulltime == 0 ? FALSE : TRUE,
 					'phone' => $employees->phone,
 					'email' => $employees->email
 				);

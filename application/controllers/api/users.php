@@ -346,6 +346,7 @@ class Users extends REST_Controller {
 					'user'  => intval($u->id),
 					'module' 		=> intval($m->id),
 					'name' 	=> $m->name,
+					'href'  => $m->href,
 					'img_url' 	=> $m->image_url,
 					'description'=>$m->description
 				);
