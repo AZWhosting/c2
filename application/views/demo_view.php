@@ -19307,15 +19307,7 @@
 
 							    	<!-- Options Tab content -->
 							        <div class="tab-pane active" id="tab1-5">						            
-							            <table class="table table-borderless table-condensed cart_total">							            
-											<tr>
-												<td>
-													Balance: <span data-bind="text: balance"></span>
-												</td>										
-												<td>
-													Credit Allowed: <span data-format="n" data-bind="text: obj.credit_allowed"></span>
-												</td>
-											</tr>
+							            <table class="table table-borderless table-condensed cart_total">											
 								            <tr>
 								            	<td>Expected Date</td>
 								            	<td>
@@ -21336,11 +21328,11 @@
 								</div>
 								<div class="span4">
 									<p>Cash Sale</p>
-									<span></span>
+									<span data-bind="text: totalCashSale"></span>
 								</div>
 								<div class="span4">
 									<p>Cash Receipt</p>
-									<span></span>
+									<span data-bind="text: totalCashReceipt"></span>
 								</div>
 							</div>
 						</div>
@@ -21352,7 +21344,7 @@
 								</div>
 								<div class="span6">
 									<p>Customer Balance</p>
-									<span></span>
+									<span data-bind="text: customerBalance"></span>
 								</div>
 							</div>
 						</div>
@@ -21388,6 +21380,7 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
+		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -21548,7 +21541,7 @@
 	<hr>
 	<br>
 </script>
-<script id="saleDetailCustomerReportItem" type="text/x-kendo-template">
+<script id="saleDetailCustomerReportItem" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
@@ -21562,33 +21555,21 @@
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
+			#for(var x = 0; x < items[i].lines.length; x++) {#
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
 				<td>#=items[i].number#</td>
 				<td>#=items[i].memo#</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td align="right">#=kendo.toString(items[i].amount, 'c2')#</td>
+				<td>#=items[i].lines[x].name#</td>
+				<td>#=items[i].lines[x].quantity#</td>
+				<td>#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
+				<td align="right">#=kendo.toString(items[i].lines[x].amount, 'c2')#</td>
 			</tr>
-				#if(items[i].lines.length >0) {#
-					#for(var x = 0; x < items[i].lines.length; x++) {#
-						<tr style="font-weight: italic">
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td>#=items[i].lines[x].name#</td>
-							<td>#=items[i].lines[x].quantity#</td>
-							<td>#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
-							<td align="right">#=kendo.toString(items[i].lines[x].amount, 'c2')#</td>
-						</tr>
-					#}#
-				#}#
+			#}#
 		#}#
 	#}#
-	<tr style="font-weight: 700; ">
+	<tr style="font-weight: 700;">
 		<td></td>
 		<td></td>
 		<td></td>
@@ -21596,7 +21577,7 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td align="right">#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="saleSummaryProduct" type="text/x-kendo-template">
@@ -21739,7 +21720,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="4">Total</th>
-								<th colspan="4" data-bind="text: total_sale"></th>
+								<th colspan="4"><span data-bind="text: total"></span></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -21754,9 +21735,9 @@
 		<td>#=group#</td>
 		<td>#=qty#</td>
 		<td>#=kendo.toString(amount, 'c2')#</td>
-		<td>#=avg_price#</td>		
-		<td>#=cost#</td>
-		<td>#=gross_profit_margin#</td>
+		<td>#=kendo.toString(avg_price, 'c2')#</td>	
+		<td>#=kendo.toString(cost, 'c2')#</td>	
+		<td>#=kendo.toString(gross_profit_margin, 'p')#</td>			
 	</tr>
 </script>
 <script id="depositDetailCustomer" type="text/x-kendo-template">
@@ -21886,11 +21867,10 @@
 						<tfoot>
 							<tr>
 								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
+								<th colspan="3" span data-bind="text: total"></th>
 							</tr>
 						</tfoot>
 					</table>
-
 
 				</div>
 			</div>
@@ -22041,11 +22021,11 @@
 							<div class="total-customer">
 								<div class="span6">
 									<p>Number of Product Sale</p>
-									<span>-</span>
+									<span data-bind="text: productSale"></span>
 								</div>
 								<div class="span6">
 									<p>Qty on Hand</p>
-									<span>-</span>
+									<span data-bind="text: totalQty"></span>
 								</div>
 							</div>
 						</div>
@@ -22099,13 +22079,22 @@
 				<td>#=items[i].date#</td>
 				<td>#=items[i].number#</td>
 				<td>#=items[i].memo#</td>
-				<td>#=items[i].qty#</td>
-				<td>#=items[i].price#</td>
-				<td align="right">#=items[i].amount#</td>
+				<td>#=kendo.toString(items[i].qty, 'n0')#</td>
+				<td>#=kendo.toString(items[i].price, 'c2')#</td>
+				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
 		#}#
 	#}#
+	<!-- <tr style="font-weight: bold; color: red">
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>		
+	</tr> -->
 </script>
 <script id="customerBalanceSummary" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -22211,7 +22200,7 @@
 								</div>
 								<div class="span6">
 									<p>Number Customer</p>
-									<span></span>
+									<span data-bind="text: count"></span>
 								</div>
 							</div>
 						</div>
@@ -22223,7 +22212,7 @@
 								</div>
 								<div class="span6">
 									<p>Open Invoice</p>
-									<span></span>
+									<span data-bind="text: openInvoice"></span>
 								</div>
 							</div>
 						</div>
@@ -22526,16 +22515,14 @@
 								</div>
 								<div class="span6">
 									<p>Average Aging</p>
-									<span>-</span>
+									<span data-bind="text: aging"></span>
 								</div>
 							</div>
 						</div>
 						<div class="span7">
 							<div class="total-customer">
-								<div class="span6">
-									<p>Customer Balance</p>
-									<span data-bind="text: total"></span>
-								</div>
+								<p>Customer Balance</p>
+								<span data-bind="text: total"></span>
 							</div>
 						</div>
 					</div>
@@ -22543,11 +22530,11 @@
 					<table class="table table-borderless table-condensed ">
 						<thead>
 							<tr>
+								<th>Name</th>
 								<th>CURRENT</th>
 								<th>1-30</th>
-								<th>30</th>
-								<th>30-60</th>
-								<th>60-90</th>
+								<th>31-60</th>
+								<th>61-90</th>
 								<th>OVER 90</th>
 								<th>TOTAL</th>							
 							</tr>
@@ -22680,14 +22667,8 @@
 					<div class="row-fluid">
 						<div class="span5">
 							<div class="total-customer">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Cash Receipt</p>
-									<span>-</span>
-								</div>	
+								<p>Total Sale</p>
+								<span data-bind="text: total"></span>
 							</div>
 						</div>
 						<div class="span7">
@@ -22698,7 +22679,7 @@
 								</div>
 								<div class="span6">
 									<p>Average Aging</p>
-									<span>-</span>
+									<span data-bind="text: aging"></span>	
 								</div>
 							</div>
 						</div>
@@ -22757,7 +22738,8 @@
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
+	<tr style="font-weight: bold; color: black">
+		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -22862,15 +22844,9 @@
 
 					<div class="row-fluid">
 						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Customer Balance</p>
-									<span>-</span>
-								</div>
+							<div class="total-customer">								
+								<p>Total Sale</p>
+								<span data-bind="text: total"></span>								
 							</div>
 						</div>
 						<div class="span7">
@@ -22881,7 +22857,7 @@
 								</div>
 								<div class="span6">
 									<p>Average Aging</p>
-									<span>-</span>
+									<span data-bind="text: aging"></span>
 								</div>
 							</div>
 						</div>
@@ -22898,7 +22874,7 @@
 							</tr>
 						</thead>
 						<tbody data-role="listview"
-									 data-bind="source: listInvoice.dataSource"
+									 data-bind="source: listInvoicesCollect.dataSource"
 									 data-template="listInvoicesCollectlist-temp"
 						></tbody>
 						<tfoot>
@@ -23046,7 +23022,7 @@
 							<div class="total-customer">
 								<div class="span6">
 									<p>Total Sale</p>
-									<span>#</span>
+									<span data-bind="text: total"></span>
 								</div>
 								<div class="span6">
 									<p>Customer Balance</p>
@@ -23062,7 +23038,7 @@
 								</div>
 								<div class="span6">
 									<p>Number</p>
-									<span>-</span>
+									<span data-bind="text: totalInvoice"></span>
 								</div>
 							</div>
 						</div>
@@ -23240,7 +23216,7 @@
 								</div>
 								<div class="span6">
 									<p>Number</p>
-									<span>-</span>
+									<span data-bind="text: totalInvoice"></span>
 								</div>
 							</div>
 						</div>
@@ -23558,7 +23534,7 @@
 
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Sale by Job/Engagement</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -23604,7 +23580,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="4">Total</th>
-								<th colspan="3">(600.00)</th>
+								<th colspan="3" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -23744,7 +23720,7 @@
 					</div>
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Sale Order List</h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
@@ -23754,11 +23730,11 @@
 							<div class="total-customer">
 								<div class="span6">
 									<p>Product Items</p>
-									<span>#</span>
+									<span data-bind="text: total"></span>
 								</div>
 								<div class="span6">
 									<p>Product Items on Hand</p>
-									<span>-</span>
+									<span data-bind="text: count"></span>
 								</div>	
 							</div>
 						</div>
@@ -23766,11 +23742,11 @@
 							<div class="total-customer">
 								<div class="span6">
 									<p>Customer Order</p>
-									<span>#</span>
+									<span data-bind="text: customer"></span>
 								</div>
 								<div class="span6">
 									<p>Order</p>
-									<span>-</span>
+									<span data-bind="text: order"></span>
 								</div>
 							</div>
 						</div>
@@ -23796,7 +23772,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="4">Total</th>
-								<th colspan="4">(600.00)</th>
+								<th colspan="4" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -30562,10 +30538,197 @@
 		</td>		
 	</tr>
 </script>
+
+
 <script id="priceList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+
+					<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+			        <h2>Item Prices</h2>
+			        <br>
+
+			        <div class="widget-body">
+
+				    	<div class="widget widget-heading-simple widget-body-simple">
+
+			
+							<div class="widget-head" style="font-size: large; font-weight: bold;">
+								<span data-bind="text: obj.number"></span>
+								-
+								<span data-bind="text: obj.name"></span>
+							</div>
+						
+										
+							<div class="widget-body">
+
+
+								<div class="row-fluid">
+									<div class="span3" style="padding-left:0;">
+									
+								
+										<a href="" class="widget-stats widget-stats-gray widget-stats-1">
+											<span class="glyphicons cart_in"><i></i><span class="txt">Weighted Avg Cost</span></span>
+											<div class="clearfix"></div>
+											<span class="count"><span data-format="n" data-bind="text: obj.cost" style="font-size: xx-large;"></span></span>
+										</a>
+								
+										
+									</div>
+									<div class="span3">
+									
+								
+										<a href="" class="widget-stats widget-stats-1">
+											<span class="glyphicons cart_out"><i></i><span class="txt">Avg Price</span></span>
+											<div class="clearfix"></div>
+											<span class="count"><span data-format="n" data-bind="text: obj.price" style="font-size: xx-large;"></span></span>
+										</a>
+								
+										
+									</div>
+									<div class="span2">
+									
+		
+										<a href="" class="widget-stats widget-stats-gray widget-stats-2">
+											<span class="count"><span data-format="n0" data-bind="text: obj.on_hand"></span></span>
+											<span class="txt">On Hand</span>
+										</a>
+								
+										
+									</div>
+									<div class="span2">
+									
+							
+										<a href="" class="widget-stats widget-stats-2">
+											<span class="count"><span data-format="n0" data-bind="text: on_po"></span></span>
+											<span class="txt">On PO</span>
+										</a>
+					
+										
+									</div>
+									<div class="span2">
+									
+						
+										<a href="" class="widget-stats widget-stats-gray widget-stats-2">
+											<span class="count"><span data-format="n0" data-bind="text: on_so"></span></span>
+											<span class="txt">On SO</span>
+										</a>
+									
+										
+									</div>
+									
+								</div>
+					
+															
+							</div>
+						</div>
+
+						<div id="priceList-window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
+							<table>
+								<tr>
+									<td>Price</td>
+									<td style="padding: 0 0 10px;">
+										<input data-role="numerictextbox"		                   
+						                   data-min="0"		                   
+						                   data-bind="value: priceList.price" />
+									</td>
+								</tr>
+								<tr>
+									<td>Currency</td>
+									<td style="padding: 0 0 10px;">
+										<input data-role="dropdownlist"
+											   data-option-label="(--- Select ---)"
+											   data-template="currency-list-tmpl"			                   
+							                   data-value-primitive="true"
+							                   data-text-field="code"
+							                   data-value-field="locale"
+							                   data-bind="value: priceList.locale,
+							                              source: currencyDS" />
+									</td>
+								</tr>
+								<tr>
+									<td>Unit Price</td>
+									<td style="padding: 0 0 10px;">
+										<input data-role="numerictextbox"		                   
+						                   data-min="0"		                   
+						                   data-bind="value: priceList.unit_value" />
+									</td>
+								</tr>
+								<tr>
+									<td>Unit</td>
+									<td style="padding: 0 0 10px;">
+										<input data-role="dropdownlist"
+											   data-option-label="(--- Select ---)"			                   
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: priceList.measurement_id,
+							                              source: unitDS" />
+									</td>
+								</tr>
+							</table>
+
+							<br>
+
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
+						</div>				
+
+						<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i></button>
+						Set New Price
+						</br>
+						</br>
+						<table class="table table-bordered table-primary table-striped table-vertical-center">
+					        <thead>
+					            <tr>	            	
+					            	<th>Price</th>			            		                
+					                <th>Unit Value</th>
+					                <th>Unit Measurement</th>			                
+					                <th></th>	                
+					            </tr>
+					        </thead>
+					        <tbody data-template="priceList-template"
+					        	data-auto-bind="false"			        	
+					        	data-bind="source: dataSource"></tbody>
+					    </table>
+
+						<br>
+
+						<table class="table table-bordered table-primary table-striped table-vertical-center">
+					        <thead>
+					            <tr>	            	
+					            	<th>Date</th>
+					            	<th>Type</th>	                
+					                <th>Reference No</th>				               
+					                <th>Quantity</th>
+					                <th>Cost</th>
+					                <th>Price</th>			                	                
+					            </tr>
+					        </thead>
+					        <tbody data-template="priceList-movement-tmpl"
+					        	data-auto-bind="false"
+					        	data-pageable="true" 
+					        	data-bind="source: recordDS"></tbody>
+					    </table>
+					    <div id="pager" class="k-pager-wrap"
+				             data-role="pager" data-bind="source: recordDS"></div>					
+
+					</div>
+
+			    </div>
+			</div>
+		</div>
+	</div>
+</script>
+<!-- <script id="priceList" type="text/x-kendo-template">
 	<div class="container-960">		
 		<div id="example" class="k-content">
-			<!-- Collapsible Widget -->			
+	
 			<div class="widget">
 			    <div class="widget-head">
 			    	<span class="btn btn-primary pull-right" 
@@ -30577,73 +30740,73 @@
 
 			    	<div class="widget widget-heading-simple widget-body-simple">
 
-			    		<!-- Widget Heading -->
+		
 						<div class="widget-head" style="font-size: large; font-weight: bold;">
 							<span data-bind="text: obj.number"></span>
 							-
 							<span data-bind="text: obj.name"></span>
 						</div>
-						<!-- // Widget Heading END -->
+					
 									
 						<div class="widget-body">
 
-							<!-- Row -->
+
 							<div class="row-fluid">
 								<div class="span3">
 								
-									<!-- Stats Widget -->
+							
 									<a href="" class="widget-stats widget-stats-gray widget-stats-1">
 										<span class="glyphicons cart_in"><i></i><span class="txt">Weighted Avg Cost</span></span>
 										<div class="clearfix"></div>
 										<span class="count"><span data-format="n" data-bind="text: obj.cost" style="font-size: xx-large;"></span></span>
 									</a>
-									<!-- // Stats Widget END -->
+							
 									
 								</div>
 								<div class="span3">
 								
-									<!-- Stats Widget -->
+							
 									<a href="" class="widget-stats widget-stats-1">
 										<span class="glyphicons cart_out"><i></i><span class="txt">Avg Price</span></span>
 										<div class="clearfix"></div>
 										<span class="count"><span data-format="n" data-bind="text: obj.price" style="font-size: xx-large;"></span></span>
 									</a>
-									<!-- // Stats Widget END -->
+							
 									
 								</div>
 								<div class="span2">
 								
-									<!-- Stats Widget -->
+	
 									<a href="" class="widget-stats widget-stats-gray widget-stats-2">
 										<span class="count"><span data-format="n0" data-bind="text: obj.on_hand"></span></span>
 										<span class="txt">On Hand</span>
 									</a>
-									<!-- // Stats Widget END -->
+							
 									
 								</div>
 								<div class="span2">
 								
-									<!-- Stats Widget -->
+						
 									<a href="" class="widget-stats widget-stats-2">
 										<span class="count"><span data-format="n0" data-bind="text: on_po"></span></span>
 										<span class="txt">On PO</span>
 									</a>
-									<!-- // Stats Widget END -->
+				
 									
 								</div>
 								<div class="span2">
 								
-									<!-- Stats Widget -->
+					
 									<a href="" class="widget-stats widget-stats-gray widget-stats-2">
 										<span class="count"><span data-format="n0" data-bind="text: on_so"></span></span>
 										<span class="txt">On SO</span>
 									</a>
-									<!-- // Stats Widget END -->
+								
 									
 								</div>
 								
 							</div>
-							<!-- // Row END -->
+				
 														
 						</div>
 					</div>
@@ -30737,13 +30900,12 @@
 				    <div id="pager" class="k-pager-wrap"
 			             data-role="pager" data-bind="source: recordDS"></div>					
 
-				</div> <!-- End Widget-Body List -->
-			</div>
-			<!-- // Collapsible Widget END -->			
+				</div>
+			</div>		
 			
 		</div>
 	</div>
-</script>
+</script> -->
 <script id="priceList-template" type="text/x-kendo-template">
     <tr>
     	<td>#=kendo.toString(price, "c", locale)#</td>    	
@@ -49028,7 +49190,7 @@
 					if(value.type=="Deposit"){
 						deposit += kendo.parseFloat(value.amount);
 					}else{
-						balance += kendo.parseFloat(value.amount);
+						balance += kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit);
 						open++;
 
 						if(new Date(value.due_date)<today){						
@@ -57757,7 +57919,7 @@
 			banhji.receivableDetail.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
 		}
 	});
-	banhji.listInvoice = kendo.observable({
+	banhji.listInvoicesCollect = kendo.observable({
 
 		dataSource 		: dataStore(apiUrl + "sales/invoice2collect"),
 		filterDB	 		: [
@@ -57848,7 +58010,8 @@
 		startDate 			: new Date(),
 		endDate				: new Date(),
 		sorter				: '',
-		openInvoice 		: 0,		
+		openInvoice 		: 0,
+		company 			: banhji.institute,		
 		sortList			: banhji.source.sortList, 
 		//line to sale summary
 		saleSummary         : banhji.saleSummaryCustomer,
@@ -57860,14 +58023,12 @@
 		saleJob  			: banhji.saleJob,
 		saleOrderDB 		: banhji.saleOrderReport,
 		summaryBalance 		: banhji.summaryBalance,
-		saleDetail 			: banhji.saleDetail,
+		saleDetail 			: banhji.saleDetailReport,
 		receivableAging 	: banhji.receivableAging,
 		receivableDetail 	: banhji.receivableDetail,
-		listInvoice 		: banhji.listInvoice,
+		listInvoicesCollect : banhji.listInvoicesCollect,
 		collectReportDB 	: banhji.collectReport,
 		invoiceListDB 		: banhji.invoiceList,
-		stament     		: banhji.stamentSummary,
-		company 			: banhji.institute,
 		// search button
 		saleDetailSearch 	: function() {
 			this.detailSale.filter({
@@ -63511,8 +63672,8 @@
 		listInvoicesCollect : new kendo.Layout("#listInvoicesCollect", {model: banhji.customerSale}),
 		collectReport : new kendo.Layout("#collectReport", {model: banhji.customerSale}),
 		invoiceList : new kendo.Layout("#invoiceList", {model: banhji.customerSale}),
-		saleJobEngagement: new kendo.Layout("#saleJobEngagement", {model: banhji.saleJobEngagement}),
-		saleOrderList: new kendo.Layout("#saleOrderList", {model: banhji.saleOrderList}),
+		saleJobEngagement: new kendo.Layout("#saleJobEngagement", {model: banhji.customerSale}),
+		saleOrderList: new kendo.Layout("#saleOrderList", {model: banhji.customerSale}),
 
 		//Cashier
 		cashier: new kendo.Layout("#cashier", {model: banhji.cashier}),
@@ -68230,6 +68391,10 @@
 					kendo.culture(banhji.locale);
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
 					banhji.customerSale.set('cashSale', kendo.toString(e.response.cashSale, 'c2'));
+					banhji.customerSale.set('totalCashSale', kendo.toString(e.response.totalCashSale, 'c2'));
+					banhji.customerSale.set('totalCashReceipt', kendo.toString(e.response.totalCashReceipt, 'c2'));
+					banhji.customerSale.set('customerBalance', kendo.toString(e.response.customerBalance, 'c2'));
+					banhji.customerSale.set('totalSale', kendo.toString(e.response.totalSale, 'c2'));
 				}
 			});
 		}
@@ -68248,7 +68413,7 @@
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));	
 					banhji.customerSale.set('total_sale', kendo.toString(e.response.total_sale, 'c2'));
 					banhji.customerSale.set('total_avg', kendo.toString(e.response.total_avg, 'c2'));	
-					banhji.customerSale.set('gpm', kendo.toString(e.response.gpm, 'n'));				
+					banhji.customerSale.set('gpm', kendo.toString(e.response.gpm, 'p'));				
 				}
 			});
 		}
@@ -68280,6 +68445,8 @@
 					banhji.customerSale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));					
+					banhji.customerSale.set('totalQty', kendo.toString(e.response.totalQty, 'n0'));	
+					banhji.customerSale.set('productSale', kendo.toString(e.response.productSale, 'n0'));	
 				}
 			});
 		}
@@ -68295,6 +68462,7 @@
 					banhji.customerSale.set('count', e.response.count);
 					kendo.culture(banhji.locale);					
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.customerSale.set('openInvoice', kendo.toString(e.response.openInvoice, 'n0'));
 				}
 			});
 		}
@@ -68311,7 +68479,7 @@
 					banhji.customerSale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));	
-					banhji.customerSale.set('openInvoice', kendo.toString(e.response.openInvoice, 'n'));				
+					banhji.customerSale.set('openInvoice', kendo.toString(e.response.openInvoice, 'n0'));				
 				}
 			});
 		}
@@ -68328,6 +68496,7 @@
 					kendo.culture(banhji.locale);
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
 					banhji.customerSale.set('cashSale', kendo.toString(e.response.cashSale, 'c2'));
+					banhji.customerSale.set('aging', kendo.toString(e.response.aging, '0'));
 				}
 			});
 		}
@@ -68344,6 +68513,7 @@
 					banhji.customerSale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.customerSale.set('aging', kendo.toString(e.response.aging, '0'));
 				}
 			});
 		}
@@ -68354,12 +68524,13 @@
 			banhji.router.navigate('/manage');
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.listInvoicesCollect);
-			banhji.customerSale.listInvoice.dataSource.read();
-			banhji.customerSale.listInvoice.dataSource.bind('requestEnd', function(e){
+			banhji.customerSale.listInvoicesCollect.dataSource.read();
+			banhji.customerSale.listInvoicesCollect.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.customerSale.set('aging', kendo.toString(e.response.aging, '0'));
 				}
 			});
 		}
@@ -68376,6 +68547,7 @@
 					banhji.customerSale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.customerSale.set('totalInvoice', kendo.toString(e.response.totalInvoice, 'n0'));
 				}
 			});
 		}
@@ -68390,9 +68562,9 @@
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
-					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
-					banhji.customerSale.set('totalBalance', kendo.toString(e.response.totalBalance, 'c2'));
 					banhji.customerSale.set('totalCreditSale', kendo.toString(e.response.totalCreditSale, 'c2'));
+					banhji.customerSale.set('totalBalance', kendo.toString(e.response.totalBalance, 'c2'));
+					banhji.customerSale.set('totalInvoice', kendo.toString(e.response.totalInvoice, 'n0'));
 				}
 			});
 		}
@@ -68441,6 +68613,8 @@
 					banhji.customerSale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.customerSale.set('order', kendo.toString(e.response.order, 'n0'));
+					banhji.customerSale.set('customer', kendo.toString(e.response.customer, 'n0'));
 				}
 			});
 		}
