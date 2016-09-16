@@ -7897,7 +7897,7 @@
 				<div class="span4">
 				
 					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
+					<a href="#/expense_purchase_summary_supplier"><div class="widget widget-3 customer-border">
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
@@ -7930,7 +7930,7 @@
 						</div>
 						<!-- // Widget footer END -->
 						
-					</div>
+					</div></a>
 					<!-- // Widget END -->
 					
 				</div>
@@ -7940,7 +7940,7 @@
 				<div class="span4">
 				
 					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
+					<a href="#/sale_summary_customer"><div class="widget widget-3 customer-border">
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
@@ -7948,7 +7948,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert-info">
+						<a href="#/open_purchase_order"><div class="widget-body alert-info">
 							
 							<div align="center" class="text-large strong" data-bind="text: order"></div>
 							<table width="100%">
@@ -7965,7 +7965,7 @@
 									</td>									
 								</tr>
 							</table>
-						</div>
+						</div></a>
 						<!-- // Widget footer END -->
 						
 					</div>
@@ -7978,7 +7978,7 @@
 				<div class="span4">
 				
 					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
+					<a href="#/sale_summary_customer"><div class="widget widget-3 customer-border">
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
@@ -7986,7 +7986,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert-info3" style="background-color: LightGray">
+						<a href="#/suppliers_balance_summary"><div class="widget-body alert-info3" style="background-color: LightGray">
 							
 							<div align="center" class="text-large strong" data-bind="text: ap"></div>
 							<table width="100%">
@@ -8008,7 +8008,7 @@
 									</td>
 								</tr>
 							</table>
-						</div>
+						</div></a>
 						<!-- // Widget footer END -->
 						
 					</div>
@@ -15197,7 +15197,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert alert-primary">
+						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary">
 							
 							<div align="center" class="text-large strong" data-bind="text: sale"></div>
 							<table width="100%">
@@ -15219,7 +15219,7 @@
 									</td>
 								</tr>
 							</table>
-						</div>
+						</div></a>
 						<!-- // Widget footer END -->
 						
 					</div>
@@ -15232,7 +15232,7 @@
 				<div class="span4">
 				
 					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
+					<a href="#/sale_order_list"><div class="widget widget-3 customer-border">
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
@@ -15257,7 +15257,7 @@
 									</td>									
 								</tr>
 							</table>
-						</div>
+						</div></a>
 						<!-- // Widget footer END -->
 						
 					</div>
@@ -15278,7 +15278,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert-info3" style="background-color: LightGray">
+						<a href="#/customer_balance_summary"><div class="widget-body alert-info3" style="background-color: LightGray">
 							
 							<div align="center" class="text-large strong" data-bind="text: ar"></div>
 							<table width="100%">
@@ -15300,7 +15300,7 @@
 									</td>
 								</tr>
 							</table>
-						</div>
+						</div></a>
 						<!-- // Widget footer END -->
 						
 					</div>
@@ -28451,7 +28451,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert alert-primary" >
+						<a href="#/inventory_position_summary"><div class="widget-body alert alert-primary" >
 							
 							<div align="center" class="text-large strong" >0</div>
 							<table width="100%">
@@ -28473,7 +28473,7 @@
 									</td>
 								</tr>
 							</table>
-						</div>
+						</div></a>
 						<!-- // Widget footer END -->
 						
 					</div>
@@ -28492,7 +28492,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert-info" >
+						<a href="#/inventory_sale_item_analysis"><div class="widget-body alert-info" >
 							
 							<div align="center" class="text-large strong">0</div>
 							<table width="100%">
@@ -28514,7 +28514,7 @@
 									</td>
 								</tr>
 							</table>
-						</div>
+						</div></a>
 						<!-- // Widget footer END -->
 						
 					</div>
@@ -28533,7 +28533,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert-info3" style="background-color: LightGray">
+						<a href="#/inventory_turn_over_list"><div class="widget-body alert-info3" style="background-color: LightGray">
 							
 							<div align="center" class="text-large strong" >0</div>
 							<table width="100%">
@@ -28555,7 +28555,7 @@
 									</td>
 								</tr>
 							</table>
-						</div>
+						</div></a>
 						<!-- // Widget footer END -->
 						
 					</div>
