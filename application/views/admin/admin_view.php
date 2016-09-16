@@ -105,7 +105,7 @@
                   </div>
 
                   <div class="col-xs-12 col-md-8 col-lg-9">
-                      <section class="row" data-bind="visible:users.showAdmin">
+                      <section class="row" data-bind="visible:users.showAdmin" style="text-align:center;">
                           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                               <div class="widget widget-3">
                                   <div class="widget-head">
@@ -142,7 +142,7 @@
                                   </div>
                                   <div class="widget-body alert" style="color: #333; background: LightGray">
                                       <div align="center" class="text-large strong" data-bind="text: lastLogin"></div>
-                                      <a style="color: #fff;" href="#" data-bind="click: getModule">the last 30 days</a>
+                                      <a style="color: #000;" href="#" data-bind="click: getModule">the last 30 days</a>
                                   </div>
                               </div>
                           </div>
@@ -172,7 +172,7 @@
                                     </div>
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4" style="margin-top:10px;">
                                             <button class="btn btn-primary">Cancel</button>
                                             <button id="userConfirm" class="btn btn-success" data-bind="click: users.confirm">Confirm</button>
                                         </div>
@@ -197,9 +197,9 @@
           <td>
             #=status == 1 ? "Active" : "Inactive"#
           </td>
-          <td>
-            <button data-bind="click: edit">Edit</button>
-            <button data-bind="click: remove">Remove</button>
+          <td align="center">
+            <button data-bind="click: edit" style="padding: 0px 15px;">Edit</button>
+            <button data-bind="click: remove" style="padding: 0px 15px;">Remove</button>
           </td>
       </tr>
     </script>
@@ -222,6 +222,11 @@
                                 <td>Employee Type</td>
                                 <td>:</td>
                                 <td>
+                                  <input type="checkbox" data-bind="checked: current.is_fulltime">&nbsp;
+                                  Full-Time
+                                </td>
+                                <td>Role:</td>
+                                <td>
                                   <input id="type"
                                     data-role="dropdownlist"
                                     data-bind="source: roles, value: current.role, events: {change: typeChange}"
@@ -239,6 +244,7 @@
                                   <td>
                                       <input type="text" data-bind="value: current.name" class="form-control"  id="" placeholder="">
                                   </td>
+                                  <td></td><td></td>
                                 </tr>
                                 <tr>
                                     <td>Number</td>
@@ -257,6 +263,7 @@
                                         style="width: 150px;"
                                       >
                                     </td>
+                                    <td></td><td></td>
                                 </tr>                                
                             </table>
                           </div>
@@ -381,7 +388,7 @@
                             </div><!--.tab-pane-->
                             <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3" aria-expanded="false">
                               <input data-role="upload" type="file" data-bind="events: {select: fileMan.onSelected}" data-show-file-list="false">
-                              <table>
+                              <table class="table">
                                 <tbody 
                                   data-role="listview"
                                   data-auto-bind="false"
@@ -580,7 +587,7 @@
     </script>
     <!-- user placeholder -->
     <script type="text/x-kendo-template" id="template-placeholder-module">
-      <div data-role="listview" data-bind="source: modules" data-template="company-modules"></div>
+      <div style="border:none;" data-role="listview" data-bind="source: modules" data-template="company-modules"></div>
     </script>
     <script type="text/x-kendo-template" id="company-modules">
       <div class="col-xs-3 col-md-2 col-lg-2">
@@ -692,7 +699,7 @@
       </article>
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-employee">
-      <button class="btn" data-bind="click: addNew">Create</button>
+      <button class="btn" data-bind="click: addNew" style="margin-bottom: 10px;">Create</button>
       <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: employees.refresh"></i>
       <table class="tbl-typical">
           <thead>
@@ -2093,18 +2100,20 @@
         },
         addNew    : function() {
           banhji.employees.dataSource.insert(0, {
-            name: null,
-            gender: null,
-            number: null,
-            role: {id: null, name: null},
+            name: "",
+            gender: "",
+            number: "",
+            is_fulltime: false,
+            role: {id: 0, name: ""},
             status: 1,
-            phone: null,
-            email: null,
-            address: null,
-            bill_to: null,
-            ship_to: null,
-            abbr: null,
-            currency: null,
+            phone: "",
+            email: "",
+            address: "",
+            memo: "",
+            bill_to: "",
+            ship_to: "",
+            abbr: "",
+            currency: "",
             account: {id: 0, name: null},
             salary: {id: 0, name: null},
             registered_date: new Date()

@@ -280,6 +280,7 @@
                                   username: userPool.getCurrentUser().username,
                                   institute: data
                               };
+                              console.log(e.response.results[0].role);
                               localforage.setItem('user', user);
                               $("#loginBtn").val("Redirecting...");
                               window.location.replace(baseUrl + "rrd/");
@@ -326,9 +327,10 @@
                             var id = e.response.results[0].id;
                             if(e.response.results[0].id) {
                               var user = {
-                                  id: id,
-                                  username: userPool.getCurrentUser().username,
-                                  institute: data
+                                id: id,
+                                username: userPool.getCurrentUser().username,
+                                role: e.response.results[0].role,
+                                institute: data
                               };
                               localforage.setItem('user', user);
                               $("#loginBtn").val("Redirecting...");
