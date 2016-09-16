@@ -19307,15 +19307,7 @@
 
 							    	<!-- Options Tab content -->
 							        <div class="tab-pane active" id="tab1-5">						            
-							            <table class="table table-borderless table-condensed cart_total">							            
-											<tr>
-												<td>
-													Balance: <span data-bind="text: balance"></span>
-												</td>										
-												<td>
-													Credit Allowed: <span data-format="n" data-bind="text: obj.credit_allowed"></span>
-												</td>
-											</tr>
+							            <table class="table table-borderless table-condensed cart_total">											
 								            <tr>
 								            	<td>Expected Date</td>
 								            	<td>
@@ -49028,7 +49020,7 @@
 					if(value.type=="Deposit"){
 						deposit += kendo.parseFloat(value.amount);
 					}else{
-						balance += kendo.parseFloat(value.amount);
+						balance += kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit);
 						open++;
 
 						if(new Date(value.due_date)<today){						
