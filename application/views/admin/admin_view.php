@@ -832,11 +832,11 @@
       </div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-modules">
-      <div data-role="listview" data-bind="source: modules" data-template="user-profile-modules-list"></div>
+      <div style="border: none;" data-role="listview" data-bind="source: modules" data-template="user-profile-modules-list"></div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-modules-list">
       <div class="col-xs-3 col-md-2 col-lg-2">
-        <div>
+        <div >
             <a href="\#/customers">
                 <img data-bind="attr: {src: img_url}">
             </a>

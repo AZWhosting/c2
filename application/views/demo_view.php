@@ -9111,25 +9111,7 @@
 															required data-required-msg="required"
 															style="width:100%;" />
 								            	</td>
-								            </tr>							           
-											<tr>							            				
-												<td>
-								            		Reference	            						            		
-								            	</td>
-								            	<td>
-													<input data-role="combobox"
-															data-template="reference-list-tmpl"
-															data-auto-bind="false"
-								              				data-value-primitive="true"
-															data-text-field="number" 
-								              				data-value-field="id"						              				 
-								              				data-bind="value: obj.reference_id,
-								              							enabled: enableRef,
-								              							source: referenceDS,						              							
-								              							events:{change: referenceChanges}" 
-								              				style="width: 100%" />
-												</td>
-											</tr>	
+								            </tr>
 							            </table>						            
 							        </div>
 							        <!-- // Options Tab content END -->
@@ -9148,23 +9130,7 @@
 							        <!-- Info Tab content -->
 							        <div class="tab-pane" id="tab3-5">
 							        	
-										<table class="table table-borderless table-condensed cart_total">							                        	
-											<tr>
-												<td>Sale Rep</td>
-												<td>
-													<input id="cbbEmployee" name="cbbEmployee"
-														   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-header-template="employee-header-tmpl"
-										                   data-template="contact-list-tmpl"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.employee_id,
-										                              source: employeeDS"
-										                   data-placeholder="Type Name..." 
-										                   style="width: 100%" />
-												</td>
-											</tr>
+										<table class="table table-borderless table-condensed cart_total">											
 											<tr>
 												<td>Segments</td>
 												<td>
@@ -9689,15 +9655,7 @@
 
 							    	<!-- Options Tab content -->
 							        <div class="tab-pane active" id="tab1-5">						            
-							            <table class="table table-borderless table-condensed cart_total">							            
-											<tr>
-												<td>
-													Balance: <span data-bind="text: balance"></span>
-												</td>										
-												<td>
-													Credit Allowed: <span data-format="n" data-bind="text: obj.credit_allowed"></span>
-												</td>
-											</tr>
+							            <table class="table table-borderless table-condensed cart_total">											
 								            <tr>
 								            	<td>Expected Date</td>
 								            	<td>
@@ -9746,23 +9704,7 @@
 							        <!-- Info Tab content -->
 							        <div class="tab-pane" id="tab3-5">
 							        	
-										<table class="table table-borderless table-condensed cart_total">							                        	
-											<tr>
-												<td>Sale Rep</td>
-												<td>
-													<input id="cbbEmployee" name="cbbEmployee"
-														   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-header-template="employee-header-tmpl"
-										                   data-template="contact-list-tmpl"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.employee_id,
-										                              source: employeeDS"
-										                   data-placeholder="Type Name..." 
-										                   style="width: 100%" />
-												</td>
-											</tr>
+										<table class="table table-borderless table-condensed cart_total">											
 											<tr>
 												<td>Segments</td>
 												<td>
@@ -10110,11 +10052,10 @@
 			<input id="ddlMesurement"
 					data-role="dropdownlist"
 					data-header-template="item-measurement-header-tmpl"            
-                   data-text-field="measurement"
-                   data-value-field="measurement_id"
+                   data-text-field="name"
+                   data-value-field="id"
                    data-bind="value: measurement_id,
-                   			  source: item_prices,
-                   			  events:{ change: measurementChanges }"
+                   			  source: measurementDS"
                    data-option-label="UM"
                    style="width: 57%;" />
 		</td>						
@@ -11377,7 +11318,7 @@
 					data-bind="value: quantity, events: {change : changes}"
 					required data-required-msg="required" style="width: 40%;" />
 
-			<input id="txtPrice" name="txtPrice-#:uid#"
+			<input id="txtMeasurement-#:uid#" name="txtMeasurement-#:uid#"
 				   data-role="dropdownlist"
                    data-header-template="item-measurement-header-tmpl"
                    data-text-field="name"
@@ -17614,19 +17555,7 @@
 												<td>
 													Credit Allowed: <span data-format="n" data-bind="text: obj.credit_allowed"></span>
 												</td>
-											</tr>
-								            <tr>
-								            	<td>Expected Date</td>
-								            	<td>
-								            		<input id="txtDueDate" name="txtDueDate" 
-															data-role="datepicker"
-															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd" 
-															data-bind="value: obj.due_date" 
-															required data-required-msg="required"
-															style="width:100%;" />
-								            	</td>
-								            </tr>							           
+											</tr>   
 											<tr>							            				
 												<td>
 								            		Reference	            						            		
@@ -20270,7 +20199,7 @@
 			<i class="icon-trash" data-bind="events: { click: removeRowOption }"></i>					
 		</td>			
 		<td>
-			<input id="ddlOption-#:uid#" name="ddlOption-#:uid#"
+			<input id="ddlOption" name="ddlOption-#:uid#"
 				   data-role="dropdownlist"				                      			   
                    data-text-field="name"
                    data-value-field="id"
@@ -20293,7 +20222,7 @@
                    placeholder="Select Invoice..." 
                    style="width: 100%" />
 
-            <input id="ddlAccount-#:uid#" name="ddlAccount-#:uid#"
+            <input id="ddlAccount" name="ddlAccount-#:uid#"
 				   data-role="dropdownlist"
 				   data-template="account-list-tmpl"				                      			   
                    data-text-field="name"
@@ -20396,7 +20325,7 @@
 						<tfoot>
 							<tr>
 								<th>Total</th>
-								<th><span data-bind="text: count"></span></th>
+								<th colspan="7"><span data-bind="text: count"></span></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -20428,6 +20357,8 @@
 		<td></td>
 		<td></td>
 		<td></td>		
+		<td></td>
+		<td></td>
 		<td></td>
 		<td></td>
 	</tr>
@@ -29205,13 +29136,24 @@
 							</div>
 
 							<div class="row-fluid">
-								<!-- Group -->
-								<div class="control-group">								
-									<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
-						            <textarea id="txtDescription" class="k-textbox" 
-										data-bind="value: obj.description" style="width: 100%;height:60px;"></textarea>
-								</div>																		
-								<!-- // Group END -->
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtPurchaseDescription">Purchase Description</label>
+							            <textarea id="txtPurchaseDescription" class="k-textbox" 
+											data-bind="value: obj.purchase_description" style="width: 100%;height:60px;"></textarea>
+									</div>																		
+									<!-- // Group END -->
+								</div>
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtSaleDescription">Sale Description</label>
+							            <textarea id="txtSaleDescription" class="k-textbox" 
+											data-bind="value: obj.sale_description" style="width: 100%;height:60px;"></textarea>
+									</div>																		
+									<!-- // Group END -->
+								</div>
 							</div>
 
 						</div>
@@ -29268,6 +29210,18 @@
 							              				style="width: 100%;" />					              		
 											</div>
 											<!-- // Group END -->
+										</div>
+
+										<div class="span3">														
+											<!-- Group -->
+											<div class="control-group">							
+												<label for="txtColorCode">Color Code</label>
+						              			<input id="txtColorCode" name="txtColorCode" class="k-textbox"
+							              				data-bind="value: obj.color_code" 
+							              				placeholder="e.g. #FF0000"
+							              				style="width: 100%;" />					              		
+											</div>
+											<!-- // Group END -->
 										</div>										
 							        
 										<div class="span3">														
@@ -29281,18 +29235,7 @@
 											</div>
 											<!-- // Group END -->
 										</div>
-
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtColorCode">Color Code</label>
-						              			<input id="txtColorCode" name="txtColorCode" class="k-textbox"
-							              				data-bind="value: obj.color_code" 
-							              				placeholder="e.g. #FF0000"
-							              				style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>												
+																						
 							        </div>
 
 							        <div class="row-fluid">
@@ -29594,6 +29537,21 @@
 							</div>
 					    </div>					   
 					</div>
+
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				            	<th width="5%"><span data-bind="text: lang.lang.no"></span></th>				                
+				                <th width="20%"><span data-bind="text: lang.lang.items"></span></th>
+				                <th><span data-bind="text: lang.lang.description"></span></th>
+				                <th width="25%"><span data-bind="text: lang.lang.quantity"></span></th>
+				                <th width="15%"><span data-bind="text: lang.lang.p"></span></th>
+				                <th width="10%"><span data-bind="text: lang.lang.amount"></span></th>
+				                
+				            </tr>
+				        </thead>
+				        <tbody></tbody>				        
+				    </table>
 
 				    <!-- Form actions -->
 					<div class="box-generic bg-action-button">
@@ -31127,6 +31085,21 @@
 							</div>
 					    </div>					   
 					</div>
+
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				            	<th width="5%"><span data-bind="text: lang.lang.no"></span></th>				                
+				                <th width="20%"><span data-bind="text: lang.lang.items"></span></th>
+				                <th><span data-bind="text: lang.lang.description"></span></th>
+				                <th width="25%"><span data-bind="text: lang.lang.quantity"></span></th>
+				                <th width="15%"><span data-bind="text: lang.lang.p"></span></th>
+				                <th width="10%"><span data-bind="text: lang.lang.amount"></span></th>
+				                
+				            </tr>
+				        </thead>
+				        <tbody></tbody>				        
+				    </table>
 
 					<!-- Form actions -->
 					<div class="box-generic bg-action-button">
@@ -35272,15 +35245,30 @@
 </script>
 
 <script id="reference-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=number# : #=kendo.toString(amount, "c", locale)#</span>
-	<span class="pull-right">
-		#if(status==1){#
-			Paid
-		#}else if(status==2){#
-			Partially Paid
+	<span>
+		#=number# :
+		#if(type=="GDN" || type=="GRN"){# 
+			#=kendo.toString(amount, "n")#
 		#}else{#
-			Open
+			#=kendo.toString(amount, "c", locale)#
 		#}#
+	</span>
+	<span class="pull-right">
+		#if(type=="GDN" || type=="GRN"){# 
+			#if(status==1){#
+				Used			
+			#}else{#
+				Open
+			#}#
+		#}else{#
+			#if(status==1){#
+				Paid
+			#}else if(status==2){#
+				Partially Paid
+			#}else{#
+				Open
+			#}#
+		#}#		
 	</span>
 </script>
 <script id="attachment-list-tmpl" type="text/x-kendo-tmpl">
@@ -38692,14 +38680,23 @@
 			});
 		},
 		getRate						: function(locale, date){
-			var rate = 1;
-			$.each(this.currencyRateDS.data(), function(index, value){
-				if(value.locale==locale && value.date<=date){
-					rate = kendo.parseFloat(value.rate);
+			var rate = 0, lastRate = 1;
+			$.each(this.currencyRateDS.data(), function(index, value){				
+				if(value.locale == locale){
+					lastRate = kendo.parseFloat(value.rate);
 
-					return false;
+					if(date >= new Date(value.date)){
+						rate = kendo.parseFloat(value.rate);
+
+						return false;
+					}
 				}
 			});
+
+			//If no rate, use the last rate
+			if(rate==0){
+				rate = lastRate;
+			}
 
 			return rate;
 		}
@@ -43209,11 +43206,9 @@
 	banhji.purchaseOrder =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
-		journalLineDS		: dataStore(apiUrl + "journal_lines"),
+		deleteDS  			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
-		referenceDS			: dataStore(apiUrl + "transactions"),
-		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
 		jobDS				: dataStore(apiUrl + "jobs"),
 		measurementDS	 	: dataStore(apiUrl + "measurements"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),			
@@ -43254,26 +43249,19 @@
 			pageSize: 100
 		}),		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.supplierDS,
 		itemDS  			: banhji.source.itemDS,
 		taxItemDS  			: banhji.source.supplierTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
-		segmentItemDS		: banhji.source.segmentItemDS,		
-		referenceTypes 		: [
-			{ id:"Sale_Order", name:"Sale Order" },
-			{ id:"Quote", name:"Quote" },
-			{ id:"GDN", name:"Goods Delivery Address Note" }
-		],
+		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
 		monthOptionList 	: banhji.source.monthOptionList,
 		monthList 			: banhji.source.monthList,
 		weekDayList 		: banhji.source.weekDayList,
-		dayList 			: banhji.source.dayList,
-	    showDeposit 		: false,	    
+		dayList 			: banhji.source.dayList,	    	    
 		showMonthOption 	: false,
 		showMonth 			: false,
 		showWeek 			: false,
@@ -43285,6 +43273,7 @@
 		saveRecurring 		: false,
 		showConfirm   		: false,
 		statusSrc 			: "",
+		showDeposit 		: false,
 		showDiscount 		: false,
 		showRequiredDate 	: false,
 		sub_total 			: 0,
@@ -43464,27 +43453,10 @@
 		},
 		//Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},	
 	    segmentChanges 		: function(e) {
 			var dataArr = this.get("obj").segments,
@@ -43511,15 +43483,7 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var cost = 0, rate = 1, measurement_id = 0;
-
-				if(item.item_type_id=="1" || item.item_type_id=="4"){
-					if(item.item_prices.length>0){
-						rate = obj.rate / item.rate;
-						cost = item.cost*rate;
-						measurement_id = item.measurement_id;
-					}
-				}
+				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
 		        	this.catalogDS.query({
@@ -43533,11 +43497,11 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.measurement_id,								
-								description 		: value.name,				
+								description 		: value.purchase_description,				
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
-								rate				: obj.rate / value.rate,
+								rate				: obj.rate,
 								locale				: obj.locale,						
 
 								item_prices 		: []
@@ -43547,19 +43511,17 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		        	data.set("measurement_id", item.measurement_id);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);
-			        data.set("rate", rate);
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();		     
 		        }else{	        	
-		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("measurement_id", item.measurement_id);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);			        		        
-			        data.set("rate", rate);			        
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();
 		    	}
@@ -43838,6 +43800,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
+			this.dataSource.data([]);
+			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });			
 
 			banhji.userManagement.removeMultiTask("purchase_order");
@@ -43848,7 +43815,6 @@
 			
 	        this.deleteDS.query({
 	        	filter:[
-	        		{ field:"type", operator:"where_in", value:["Cash_Purchase","Credit_Purchase"] },
 	        		{ field:"reference_id", value:obj.id },
 	        	],
 	        	page:1,
@@ -44063,6 +44029,7 @@
 	banhji.grn =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
@@ -44272,27 +44239,10 @@
 	    },
 		//Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment	
 	    segmentChanges 		: function(e) {
@@ -44320,15 +44270,7 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var cost = 0, rate = 1, measurement_id = 0;
-
-				if(item.item_type_id=="1" || item.item_type_id=="4"){
-					if(item.item_prices.length>0){
-						rate = obj.rate / item.rate;
-						cost = item.cost*rate;
-						measurement_id = item.measurement_id;
-					}
-				}
+				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
 		        	this.catalogDS.query({
@@ -44342,11 +44284,11 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.measurement_id,								
-								description 		: value.name,				
+								description 		: value.purchase_description,				
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
-								rate				: obj.rate / value.rate,
+								rate				: obj.rate,
 								locale				: obj.locale,						
 
 								item_prices 		: []
@@ -44356,40 +44298,22 @@
 		        		self.changes();
 		        	});
 		        }else if(item.is_assemble=="1"){
-		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		        	data.set("measurement_id", item.measurement_id);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);
-			        data.set("rate", rate);
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();		     
 		        }else{	        	
-		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("measurement_id", item.measurement_id);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);			        		        
-			        data.set("rate", rate);			        
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();
 		    	}
 	        }                	        	
-		},
-		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
-
-			if(data.measurement_id>0){
-				$.each(data.item_prices, function(index, value){
-					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
-				        data.set("cost", value.cost*rate);				       			       
-				        
-						return false;
-					}
-				});	    		
-		        	        
-		        this.changes();
-	        }	                	        	
-		},
+		},		
 		//Obj
 		loadObj 			: function(id, is_recurring){
 			var self = this, para = [];
@@ -44522,6 +44446,15 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
 
+	    	//Reference
+	    	if(obj.reference_id>0){
+				var ref = this.referenceDS.get(obj.reference_id);
+				ref.set("status", 1);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -44605,6 +44538,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
+			this.dataSource.data([]);
+			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });			
 
 			banhji.userManagement.removeMultiTask("grn");
@@ -44615,7 +44553,6 @@
 			
 	        this.deleteDS.query({
 	        	filter:[
-	        		{ field:"type", operator:"where_in", value:["Cash_Purchase","Credit_Purchase"] },
 	        		{ field:"reference_id", value:obj.id },
 	        	],
 	        	page:1,
@@ -44888,6 +44825,7 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),						
 		lineDS  			: dataStore(apiUrl + "account_lines"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "account_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
@@ -44933,7 +44871,7 @@
 			pageSize: 100
 		}),
 		contactDS 			: banhji.source.supplierDS,
-		depositAccountDS 	: banhji.source.depositAccountDS,
+		depositAccountDS 	: banhji.source.prepaidAccountDS,
 		segmentItemDS 		: banhji.source.segmentItemDS,
 		accountDS 			: banhji.source.cashAccountDS,
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -45091,27 +45029,10 @@
 	    },
 		//Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment
 		segmentChanges 		: function(e) {
@@ -45261,6 +45182,15 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
 
+	    	//Reference
+	    	if(obj.reference_id>0){
+				var ref = this.referenceDS.get(obj.reference_id);
+				ref.set("deposit", obj.amount);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -45288,16 +45218,7 @@
 		    	}else{
 	    			obj.set("is_recurring", 1);
 		    	}
-	    	}
-
-	    	//Reference
-	    	if(obj.reference_id>0){
-				var ref = this.referenceDS.get(obj.reference_id);
-				ref.set("deposit", obj.amount);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
+	    	}	    	
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
@@ -45368,8 +45289,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });
 			
 			banhji.userManagement.removeMultiTask("vendor_deposit");
@@ -45673,6 +45597,7 @@
 	banhji.purchase =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		accountLineDS  		: dataStore(apiUrl + "account_lines"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		additionalCostDS 	: dataStore(apiUrl + "transactions"),
@@ -46069,28 +45994,11 @@
 	    },
 		//Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
-		},	    
+			obj.set("rate", rate);						
+		},
 		//Item		
 		itemChanges 		: function(e){								
 			var self = this, 
@@ -46099,15 +46007,8 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var cost = 0, rate = 1;
+				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-				if(item.item_type_id=="1" || item.item_type_id=="4"){
-					if(item.item_prices.length>0){
-						rate = obj.rate / item.rate;
-						cost = item.cost*rate;
-					}
-				}
-				
 		        if(item.is_catalog=="1"){
 		        	this.catalogDS.query({
 		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
@@ -46120,11 +46021,11 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.measurement_id,								
-								description 		: value.name,				
+								description 		: value.purchase_description,				
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
-								rate				: obj.rate / value.rate,
+								rate				: obj.rate,
 								locale				: obj.locale,						
 
 								item_prices 		: []
@@ -46135,18 +46036,16 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);
-			        data.set("rate", rate);
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);			        		        
-			        data.set("rate", rate);			        
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();
 		    	}
@@ -46581,6 +46480,15 @@
 	        	alert("Over credit allowed!");		        	
 	        }
 
+	        //Reference
+	    	if(obj.reference_id>0){
+	    		var ref = this.referenceDS.get(obj.reference_id);				
+				ref.set("status", 1);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -46612,16 +46520,7 @@
 	    				value.set("is_recurring", 1);
 	    			});
 		    	}
-	    	}
-
-	    	//Reference
-	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);				
-				ref.set("status", 1);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
+	    	}	    	
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
@@ -46712,6 +46611,8 @@
 			this.lineDS.data([]);
 			this.accountLineDS.data([]);
 			this.additionalCostDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });
 
 			banhji.userManagement.removeMultiTask("purchase");
@@ -46778,6 +46679,7 @@
 				if(item.item_type_id==1){					
 					var inventoryID = item.inventory_account_id,
 					inventoryAmt = (value.quantity*value.cost) + value.additional_cost;
+
 					if(inventoryList[inventoryID]===undefined){
 						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmt };						
 					}else{											
@@ -47245,7 +47147,8 @@
 	});
 	banhji.purchaseReturn =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
-		lineDS  			: dataStore(apiUrl + "transactions/line"),		
+		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),		
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
@@ -47470,27 +47373,10 @@
 	    },
 	    //Currency Rate
 	    setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment
 	    segmentChanges 		: function(e) {
@@ -47518,14 +47404,7 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var cost = 0, rate = 1;
-
-				if(item.item_type_id=="1" || item.item_type_id=="4"){
-					if(item.item_prices.length>0){
-						rate = obj.rate / item.rate;
-						cost = item.cost*rate;
-					}
-				}
+				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
 		        	this.catalogDS.query({
@@ -47539,11 +47418,11 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.measurement_id,								
-								description 		: value.name,				
+								description 		: value.purchase_description,				
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
-								rate				: obj.rate / value.rate,
+								rate				: obj.rate,
 								locale				: obj.locale,						
 
 								item_prices 		: []
@@ -47554,18 +47433,16 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);
-			        data.set("rate", rate);
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("cost", cost);			        		        
-			        data.set("rate", rate);			        
+			        data.set("cost", item.cost*rate);
 
 			        this.changes();
 		    	}
@@ -47921,11 +47798,43 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });			
 
 			banhji.userManagement.removeMultiTask("purchase_return");
+		},
+		delete 				: function(){
+			var self = this, obj = this.get("obj");
+			this.set("showConfirm",false);			
+			
+	        this.deleteDS.query({
+	        	filter:[
+	        		{ field:"reference_id", value:obj.id },
+	        	],
+	        	page:1,
+	        	pageSize:1
+	        }).then(function(){
+	        	var view = self.deleteDS.view();
+
+	        	if(view.length>0){
+	        		alert("Sorry, you can not delete it.");
+	        	}else{
+	        		obj.set("deleted", 1);
+			        self.dataSource.sync();
+
+			        window.history.back();
+	        	}
+	        });		    	    	
+		},
+		openConfirm 		: function(){
+			this.set("showConfirm", true);
+		},
+		closeConfirm 		: function(){
+			this.set("showConfirm", false);
 		},
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
@@ -47954,6 +47863,7 @@
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
 					taxID = taxItem.account_id,
 					taxAmt = amount * taxItem.rate;
+
 					if(taxList[taxID]===undefined){
 						taxList[taxID]={"id": taxID, "amount": taxAmt};						
 					}else{											
@@ -47967,16 +47877,16 @@
 
 				//Inventory
 				if(item.item_type_id==1){
-
 					//Add inventory list
-					var inventoryID = item.inventory_account_id;					
+					var inventoryID = item.inventory_account_id;
+
 					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": amount, "rate": item.rate, "locale": item.locale};						
+						inventoryList[inventoryID]={"id": inventoryID, "amount": amount};						
 					}else{											
 						if(inventoryList[inventoryID].id===inventoryID){
 							inventoryList[inventoryID].amount += amount;
 						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": amount, "rate": item.rate, "locale": item.locale};
+							inventoryList[inventoryID]={"id": inventoryID, "amount": amount};
 						}
 					}
 				}					  	
@@ -48073,8 +47983,8 @@
 						segments 	 		: [],								
 						dr 	 				: 0,
 						cr 					: value.amount,				
-						rate				: value.rate,
-						locale				: value.locale
+						rate				: obj.rate,
+						locale				: obj.locale
 					});						
 				});
 			}
@@ -49772,6 +49682,7 @@
 	banhji.quote =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),			
@@ -50061,11 +49972,11 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = item.measurement_id;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
+						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
 						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
 					}
@@ -50083,7 +49994,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
-								description 		: value.name,				
+								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
@@ -50100,19 +50011,17 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
-			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
-			        data.set("rate", rate);
+			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -50120,12 +50029,12 @@
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
+			var data = e.data, obj = this.get("obj");			
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
 				        data.set("price", value.price*rate);				       			       
 				        
 						return false;
@@ -50403,8 +50312,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("quote");
@@ -50413,14 +50325,24 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
 
-			if(obj.status==0){
-				obj.set("deleted", 1);
-		        self.dataSource.sync();
+			this.deleteDS.query({
+	        	filter:[
+	        		{ field:"reference_id", value:obj.id },
+	        	],
+	        	page:1,
+	        	pageSize:1
+	        }).then(function(){
+	        	var view = self.deleteDS.view();
 
-		        window.history.back();
-			}else{
-				alert("Sorry, you can not delete it.");
-			}	    	
+	        	if(view.length>0){
+	        		alert("Sorry, you can not delete it.");
+	        	}else{
+	        		obj.set("deleted", 1);
+			        self.dataSource.sync();
+
+			        window.history.back();
+	        	}
+	        });
 		},
 		openConfirm 		: function(){
 			this.set("showConfirm", true);
@@ -50872,27 +50794,10 @@
 		},
 		//Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));										
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment		
 	    segmentChanges 		: function(e) {
@@ -50920,11 +50825,11 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = item.measurement_id;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
+						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
 						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
 					}
@@ -50942,7 +50847,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
-								description 		: value.name,				
+								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
@@ -50959,19 +50864,17 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
-			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
-			        data.set("rate", rate);
+			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -50979,12 +50882,12 @@
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
+			var data = e.data, obj = this.get("obj");			
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
 				        data.set("price", value.price*rate);				       			       
 				        
 						return false;
@@ -51276,8 +51179,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("sale_order");
@@ -51764,27 +51670,10 @@
 	    },
 		//Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment
 		segmentChanges 		: function(e) {
@@ -51927,6 +51816,15 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
 
+	    	//Reference
+	    	if(obj.reference_id>0){
+				var ref = this.referenceDS.get(obj.reference_id);
+				ref.set("deposit", obj.amount);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -51954,16 +51852,7 @@
 		    	}else{
 	    			obj.set("is_recurring", 1);
 		    	}
-	    	}
-
-	    	//Reference
-	    	if(obj.reference_id>0){
-				var ref = this.referenceDS.get(obj.reference_id);
-				ref.set("deposit", obj.amount);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
+	    	}	    	
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
@@ -52034,8 +51923,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
 			
 			banhji.userManagement.removeMultiTask("customer_deposit");
@@ -52046,8 +51938,7 @@
 			
 	        this.deleteDS.query({
 	        	filter:[
-	        		{ field:"type", value:"Sale_Order" },
-	        		{ field:"reference_id", value:obj.id },
+	        		{ field:"reference_id", value:obj.id }
 	        	],
 	        	page:1,
 	        	pageSize:1
@@ -52469,6 +52360,15 @@
 				}								
 			}
 		},
+		loadData 			: function(){
+			var obj = this.get("obj");
+
+			this.setRate();
+	    	this.loadDeposit();
+	    	this.loadBalance();
+	    	this.loadReference();
+	    	this.loadRecurring();
+		},
 		//Upload
 		onSelect 			: function(e){			
 	        // Array with information about the uploaded files
@@ -52629,12 +52529,9 @@
 		    	obj.set("payment_method_id", view[0].payment_method_id);		    	
 		    	obj.set("locale", view[0].locale);				
 				obj.set("bill_to", view[0].bill_to);
-				obj.set("ship_to", view[0].ship_to);
-				
-				self.setRate();				
-				self.loadDeposit();
-				self.loadReference();
-				self.loadRecurring();							
+				obj.set("ship_to", view[0].ship_to);				
+							
+				self.loadData();							
 			});
 		},
 		contactChanges 		: function(){
@@ -52649,11 +52546,7 @@
 		    	obj.set("bill_to", contact.bill_to);
 		    	obj.set("ship_to", contact.ship_to);
 
-		    	this.setRate();		    	
-		    	this.loadDeposit();
-		    	this.loadBalance();
-		    	this.loadReference();
-		    	this.loadRecurring();	    	
+		    	this.loadData();	    	
 	    	}else{
 	    		this.set("total_deposit", 0);
 	    	}
@@ -52697,27 +52590,10 @@
 		},
 	    //Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"), 
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment	
 	    segmentChanges 		: function(e) {
@@ -52745,11 +52621,11 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = item.measurement_id;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
+						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
 						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
 					}
@@ -52767,7 +52643,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
-								description 		: value.name,				
+								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
@@ -52784,19 +52660,17 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
-			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
-			        data.set("rate", rate);
+			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -52804,12 +52678,12 @@
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
+			var data = e.data, obj = this.get("obj");			
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
 				        data.set("price", value.price*rate);				       			       
 				        
 						return false;
@@ -53046,6 +52920,15 @@
 	        	alert("Over credit allowed!");		        	
 	        }
 
+	        //Reference
+	    	if(obj.reference_id>0){
+	    		var ref = this.referenceDS.get(obj.reference_id);				
+				ref.set("status", 1);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -53074,15 +52957,6 @@
 	    			obj.set("is_recurring", 1);
 		    	}
 	    	}
-
-	    	//Reference
-	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);				
-				ref.set("status", 1);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
@@ -53154,8 +53028,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });
 
 			banhji.userManagement.removeMultiTask("cash_sale");
@@ -53166,8 +53043,7 @@
 			
 	        this.deleteDS.query({
 	        	filter:[
-	        		{ field:"type", value:"Sale_Return" },
-	        		{ field:"reference_id", value:obj.id },
+	        		{ field:"reference_id", value:obj.id }
 	        	],
 	        	page:1,
 	        	pageSize:1
@@ -53239,28 +53115,29 @@
 				//Inventory
 				if(item.item_type_id==1){
 					//Add cogs list
-					var itemCost = (value.quantity*item.cost)/item.rate,
-					cogsID = item.cogs_account_id;
+					var itemCost = value.quantity*item.cost,
+					cogsID = item.cogs_account_id,
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": item.rate, "locale": item.locale};						
+						cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
 					}else{											
 						if(cogsList[cogsID].id===cogsID){
 							cogsList[cogsID].amount += itemCost;
 						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": item.rate, "locale": item.locale};
+							cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": itemRate, "locale": item.locale};
 						}
 					}						
 
 					//Add inventory list
 					var inventoryID = item.inventory_account_id;
 					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": item.rate, "locale": item.locale};						
+						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
 					}else{											
 						if(inventoryList[inventoryID].id===inventoryID){
 							inventoryList[inventoryID].amount += itemCost;
 						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": item.rate, "locale": item.locale};
+							inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": itemRate, "locale": item.locale};
 						}
 					}
 				}					  	
@@ -53639,6 +53516,7 @@
 	banhji.invoice =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
@@ -54066,27 +53944,10 @@
 		},
 	    //Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Payment Term
 		setTerm 			: function(){
@@ -54128,11 +53989,11 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = item.measurement_id;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
+						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
 						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
 					}
@@ -54150,7 +54011,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
-								description 		: value.name,				
+								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
@@ -54167,19 +54028,17 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
-			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
-			        data.set("rate", rate);
+			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -54187,12 +54046,12 @@
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
+			var data = e.data, obj = this.get("obj");			
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
 				        data.set("price", value.price*rate);				       			       
 				        
 						return false;
@@ -54296,8 +54155,10 @@
 		        	//Status
 			        if(remaining==0){
 			    		obj.set("status", 1);
-			    	}else{
+			    	}else if(remaining==total){
 			    		obj.set("status", 0);
+			    	}else{
+			    		obj.set("status", 2);
 			    	}
 		        }
 
@@ -54439,6 +54300,15 @@
 	        	alert("Over credit allowed!");		        	
 	        }
 
+	        //Reference
+	    	if(obj.reference_id>0){
+	    		var ref = this.referenceDS.get(obj.reference_id);				
+				ref.set("status", 1);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -54467,15 +54337,6 @@
 	    			obj.set("is_recurring", 1);
 		    	}
 	    	}
-
-	    	//Reference
-	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);				
-				ref.set("status", 1);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
@@ -54547,8 +54408,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("invoice");
@@ -54557,14 +54421,24 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);			
 			
-	        if(obj.status==0){
-				obj.set("deleted", 1);
-		        self.dataSource.sync();
+	        this.deleteDS.query({
+	        	filter:[
+	        		{ field:"reference_id", value:obj.id }
+	        	],
+	        	page:1,
+	        	pageSize:1
+	        }).then(function(){
+	        	var view = self.deleteDS.view();
 
-		        window.history.back();
-			}else{
-				alert("Sorry, you can not delete it.");
-			}		    	    	
+	        	if(view.length>0){
+	        		alert("Sorry, you can not delete it.");
+	        	}else{
+	        		obj.set("deleted", 1);
+			        self.dataSource.sync();
+
+			        window.history.back();
+	        	}
+	        });		    	    	
 		},
 		openConfirm 		: function(){
 			this.set("showConfirm", true);
@@ -54622,22 +54496,23 @@
 				if(item.item_type_id==1){
 					//Add cogs list
 					var itemCost = value.quantity*item.cost,
-					cogsID = item.cogs_account_id;
+					cogsID = item.cogs_account_id,
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": item.rate, "locale": item.locale};						
+						cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
 					}else{											
 						if(cogsList[cogsID].id===cogsID){
 							cogsList[cogsID].amount += itemCost;
 						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": item.rate, "locale": item.locale};
+							cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": itemRate, "locale": item.locale};
 						}
 					}						
 
 					//Add inventory list
 					var inventoryID = item.inventory_account_id;
 					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": item.rate, "locale": item.locale};						
+						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
 					}else{											
 						if(inventoryList[inventoryID].id===inventoryID){
 							inventoryList[inventoryID].amount += itemCost;
@@ -54744,7 +54619,7 @@
 						segments 	 		: [],								
 						dr 	 				: value.amount,
 						cr 					: 0,				
-						rate				: banhji.source.getRate(value.locale, new Date()),
+						rate				: value.rate,
 						locale				: value.locale
 					});								
 				});							
@@ -54761,7 +54636,7 @@
 						segments 	 		: [],								
 						dr 	 				: 0,
 						cr 					: value.amount,				
-						rate				: banhji.source.getRate(value.locale, new Date()),
+						rate				: value.rate,
 						locale				: value.locale
 					});						
 				});
@@ -55242,27 +55117,10 @@
 	    },
 	    //Currency Rate
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment	
 	    segmentChanges 		: function(e) {
@@ -55290,11 +55148,11 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = item.measurement_id;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
+						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
 						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
 					}
@@ -55312,7 +55170,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
-								description 		: value.name,				
+								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
@@ -55329,19 +55187,17 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
-			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
-			        data.set("rate", rate);
+			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -55349,12 +55205,12 @@
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
+			var data = e.data, obj = this.get("obj");			
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
 				        data.set("price", value.price*rate);				       			       
 				        
 						return false;
@@ -55487,6 +55343,15 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
 
+	    	//Reference
+	    	if(obj.reference_id>0){
+	    		var ref = this.referenceDS.get(obj.reference_id);				
+				ref.set("status", 1);
+				this.referenceDS.sync();
+			}else{
+				obj.set("reference_id", 0);
+			}
+
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -55515,15 +55380,6 @@
 	    			obj.set("is_recurring", 1);
 		    	}
 	    	}
-
-	    	//Reference
-	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);				
-				ref.set("status", 1);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
@@ -55580,8 +55436,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("gdn");
@@ -55592,7 +55451,7 @@
 			
 	        this.deleteDS.query({
 	        	filter:[
-	        		{ field:"reference_id", value:obj.id },
+	        		{ field:"reference_id", value:obj.id }
 	        	],
 	        	page:1,
 	        	pageSize:1
@@ -56094,27 +55953,10 @@
 	    },
 		//Currency Rate		
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			obj.set("rate", rate);						
 		},
 		//Segment	
 	    segmentChanges 		: function(e) {
@@ -56142,11 +55984,11 @@
 			item = this.itemDS.get(data.item_id);
 
 			if(data.item_id>0){
-				var price = 0, rate = 1, measurement_id = 0;
+				var price = 0, rate = 1, measurement_id = item.measurement_id;
 
 				if(item.item_type_id=="1" || item.item_type_id=="4"){
 					if(item.item_prices.length>0){
-						rate = obj.rate / item.item_prices[0].rate;
+						rate = obj.rate / banhji.source.getRate(item.item_prices[0].locale, new Date(obj.issued_date));
 						price = item.item_prices[0].price*rate;
 						measurement_id = item.item_prices[0].measurement_id;
 					}
@@ -56164,7 +56006,7 @@
 								tax_item_id 		: 0,
 								item_id 			: value.id,
 								measurement_id 		: value.item_prices[0].measurement_id,								
-								description 		: value.name,				
+								description 		: value.sale_description,				
 								quantity 	 		: 1,
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
@@ -56181,19 +56023,17 @@
 		        	});
 		        }else if(item.is_assemble=="1"){
 		        	data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("price", price);
-			        data.set("rate", rate);		        	        
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
-		    		data.set("description", item.name);
+		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);	    		
-			        data.set("price", price);			        		        
-			        data.set("rate", rate);
+			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -56201,12 +56041,12 @@
 	        }                	        	
 		},
 		measurementChanges 	: function(e){										
-			var self = this, data = e.data, obj = this.get("obj");			
+			var data = e.data, obj = this.get("obj");			
 
 			if(data.measurement_id>0){
 				$.each(data.item_prices, function(index, value){
 					if(value.measurement_id==data.measurement_id){
-						var rate = obj.rate / value.rate;						
+						var rate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));						
 				        data.set("price", value.price*rate);				       			       
 				        
 						return false;
@@ -56386,7 +56226,7 @@
 	        obj.set("tax", tax);			
 			obj.set("amount", total);
 			obj.set("remaining", remaining);			    	
-		},					
+		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
@@ -56618,8 +56458,11 @@
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
+			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
 			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:1 });			
 
 			banhji.userManagement.removeMultiTask("sale_return");
@@ -56630,7 +56473,7 @@
 			
 	        this.deleteDS.query({
 	        	filter:[
-	        		{ field:"reference_id", value:obj.id },
+	        		{ field:"reference_id", value:obj.id }
 	        	],
 	        	page:1,
 	        	pageSize:1
@@ -56709,29 +56552,30 @@
 
 				//Inventory
 				if(item.item_type_id==1){
-					var itemCost = value.quantity * item.cost;
+					var itemCost = value.quantity * item.cost,
+					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 					//Add inventory list
 					var inventoryID = item.inventory_account_id;					
 					if(inventoryList[inventoryID]===undefined){
-						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost};						
+						inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
 					}else{											
 						if(inventoryList[inventoryID].id===inventoryID){
 							inventoryList[inventoryID].amount += itemCost;
 						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost};
+							inventoryList[inventoryID]={"id": inventoryID, "amount": itemCost, "rate": itemRate, "locale": item.locale};
 						}
 					}
 
 					//Add cogs list
 					var cogsID = item.cogs_account_id;				
 					if(cogsList[cogsID]===undefined){
-						cogsList[cogsID]={"id": cogsID, "amount": itemCost};						
+						cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
 					}else{											
 						if(cogsList[cogsID].id===cogsID){
 							cogsList[cogsID].amount += itemCost;
 						}else{
-							cogsList[cogsID]={"id": cogsID, "amount": itemCost};
+							cogsList[cogsID]={"id": cogsID, "amount": itemCost, "rate": itemRate, "locale": item.locale};
 						}
 					}
 				}					  	
@@ -56881,8 +56725,8 @@
 						segments 	 		: [],								
 						dr 	 				: value.amount,
 						cr 					: 0,				
-						rate				: obj.rate,
-						locale				: obj.locale
+						rate				: value.rate,
+						locale				: value.locale
 					});						
 				});
 			}
@@ -56899,8 +56743,8 @@
 						segments 	 		: [],								
 						dr 	 				: 0,
 						cr 					: value.amount,				
-						rate				: obj.rate,
-						locale				: obj.locale
+						rate				: value.rate,
+						locale				: value.locale
 					});						
 				});
 			}
@@ -58894,28 +58738,11 @@
 			});				
 		},			
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"), 
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
-
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
-		},															
+			obj.set("rate", rate);						
+		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
@@ -59439,44 +59266,15 @@
 	    },
 	    //Currency Rate		
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),			
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj");
 
-			var uniqueLocale = [];
-			$.each(this.dataSource.data(), function(index, value){							
-			    if($.inArray(value.locale, uniqueLocale) === -1) uniqueLocale.push(value.locale);
+			$.each(this.dataSource.data(), function(index, value){
+				var rate = banhji.source.getRate(value.locale, new Date(obj.issued_date));				
+				
+				value.set("rate", rate);				
 			});
 
-			$.each(uniqueLocale, function(ind, locale){				
-				self.currencyRateDS.query({
-					filter: [
-						{ field:"locale", value: locale },
-						{ field:"date <=", value: date }
-					],
-					sort: { field:"date", dir:"desc" },
-					page: 1,
-					pageSize: 1
-				}).then(function(){
-					var view = self.currencyRateDS.view();
-					
-					if(view.length>0){
-						$.each(self.dataSource.data(), function(index, value){
-							if(value.locale==locale){
-								value.set("rate",view[0].rate);
-							}
-						});									
-					}else{
-						$.each(self.dataSource.data(), function(index, value){
-							if(value.locale==locale){
-								value.set("rate",1);
-							}
-						});					
-					}
-
-					self.changes();
-				});
-			});					
+			this.changes();			
 		},
 		//Search		
 		search 				: function(){
@@ -60003,44 +59801,15 @@
 	    },
 	    //Currency Rate		
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),			
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj");
 
-			var uniqueLocale = [];
-			$.each(this.dataSource.data(), function(index, value){							
-			    if($.inArray(value.locale, uniqueLocale) === -1) uniqueLocale.push(value.locale);
+			$.each(this.dataSource.data(), function(index, value){
+				var rate = banhji.source.getRate(value.locale, new Date(obj.issued_date));				
+				
+				value.set("rate", rate);				
 			});
 
-			$.each(uniqueLocale, function(ind, locale){				
-				self.currencyRateDS.query({
-					filter: [
-						{ field:"locale", value: locale },
-						{ field:"date <=", value: date }
-					],
-					sort: { field:"date", dir:"desc" },
-					page: 1,
-					pageSize: 1
-				}).then(function(){
-					var view = self.currencyRateDS.view();
-					
-					if(view.length>0){
-						$.each(self.dataSource.data(), function(index, value){
-							if(value.locale==locale){
-								value.set("rate",view[0].rate);
-							}
-						});									
-					}else{
-						$.each(self.dataSource.data(), function(index, value){
-							if(value.locale==locale){
-								value.set("rate",1);
-							}
-						});					
-					}
-
-					self.changes();
-				});
-			});					
+			this.changes();			
 		},
 		//Search		
 		search 				: function(){
@@ -61357,7 +61126,8 @@
 	      			international_code 		: view[0].international_code,
 	      			color_code 				: view[0].color_code,
 	      			name 					: "",
-	      			description				: view[0].description,
+	      			purchase_description	: view[0].purchase_description,
+	      			sale_description		: view[0].sale_description,
 	      			measurements 			: view[0].measurements,
 	      			catalogs 				: view[0].catalogs,
 	      			cost 					: view[0].cost,
