@@ -118,6 +118,8 @@ class Items extends REST_Controller {
 					$itemIn = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$itemIn->select_sum("quantity");
 					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
+					$itemIn->where_related("transaction", "is_recurring", 0);
+					$itemIn->where_related("transaction", "deleted", 0);
 					$itemIn->where("item_id", $value->id);
 					$itemIn->where("movement", 1);
 					$itemIn->get();
@@ -125,10 +127,12 @@ class Items extends REST_Controller {
 					$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$itemOut->select_sum("quantity");
 					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
+					$itemOut->where_related("transaction", "is_recurring", 0);
+					$itemOut->where_related("transaction", "deleted", 0);
 					$itemOut->where("item_id", $value->id);
 					$itemOut->where("movement", -1);
-					$itemOut->get();
-
+					$itemOut->get();					
+					
 					$on_hand = floatval($itemIn->quantity) - floatval($itemOut->quantity);
 				}
 
