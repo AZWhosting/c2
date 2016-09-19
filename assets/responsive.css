@@ -13,7 +13,9 @@
 #cbbAccounts-list,
 #ddlVendor-list,
 #ddlPaymentMethod-list,
-#ddlAccount-list
+#ddlAccount-list,
+#cbbVendor-list,
+#cbbCustomer-list
 {
   width: 350px !important;
 }
