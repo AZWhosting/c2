@@ -29692,8 +29692,6 @@
 		</div>
 	</div>
 </script>
-
-
 <script id="itemAssembly-row-template" type="text/x-kendo-tmpl">
 	<tr>
 		<td>
@@ -30241,10 +30239,10 @@
 						    <div class="tabsbar tabsbar-1">
 						        <ul class="row-fluid row-merge">						            
 						            <li class="span2 glyphicons circle_info active">
-						            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.info"></span></span></a>
+						            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.info"></span></span></a>
 						            </li>
 						            <li class="span2 glyphicons usd">
-						            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.accounting"></span></span></a>
+						            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.accounting"></span></span></a>
 						            </li>						            
 						            <li class="span2 glyphicons barcode">						            	
 						            	<a href="#tab3" data-toggle="tab"><i></i> Supplier/Customer Codes</a>
@@ -37548,6 +37546,42 @@
 				total: 'count'
 			},
 			filter: { field: "item_type_id", value: 1 },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		nonInventoryPartCategoryDS	: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "categories",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field: "item_type_id", value: 2 },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -61835,7 +61869,7 @@
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "transactions/line"),
-    	categoryDS 				: banhji.source.inventoryCategoryDS,
+    	categoryDS 				: banhji.source.nonInventoryPartCategoryDS,
     	itemGroupDS 			: dataStore(apiUrl + "items/group"),
     	brandDS 	 			: dataStore(apiUrl + "brands"),    	   	   	
     	measurementDS			: dataStore(apiUrl + "measurements"),
@@ -61846,9 +61880,6 @@
     	customerDS 	 			: banhji.source.customerDS,
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
-    	currencyDS 	 			: banhji.source.currencyDS,  	
-    	incomeAccountDS 		: banhji.source.incomeAccountDS,
-    	cogsAccountDS 			: banhji.source.cogsAccountDS,
     	inventoryAccountDS 		: banhji.source.inventoryAccountDS,
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
@@ -61882,49 +61913,53 @@
 			window.history.back();
 		},
 		loadPattern 			: function(){
-			var self = this, obj = self.get("obj"), cat = this.categoryDS.get(obj.category_id);
+			var self = this, obj = self.get("obj");
 
-			this.patternDS.query({
-				filter: [
-					{ field:"id", value: cat.item_id },
-					{ field:"is_pattern", value: 1 }
-				],
-				page: 1,
-				pageSize: 1
-			}).then(function(data){
-				var view = self.patternDS.view();				
+			if(obj.category_id){
+				var cat = this.categoryDS.get(obj.category_id);
 
-				if(view.length>0){
-					obj.set("locale", view[0].locale);
-					obj.set("measurement_id", view[0].measurement_id);
-					obj.set("income_account_id", view[0].income_account_id);
-					obj.set("cogs_account_id", view[0].cogs_account_id);
-					obj.set("settlement_discount_id", view[0].settlement_discount_id);
-					obj.set("inventory_account_id", view[0].inventory_account_id);					
-				}else{
-					obj.set("locale", banhji.locale);
-					obj.set("measurement_id", 0);
-					obj.set("income_account_id", 0);
-					obj.set("cogs_account_id", 0);
-					obj.set("settlement_discount_id", 0);
-					obj.set("inventory_account_id", 0);
-				}
-			});
+				this.patternDS.query({
+					filter: [
+						{ field:"id", value: cat.item_id },
+						{ field:"is_pattern", value: 1 }
+					],
+					page: 1,
+					pageSize: 1
+				}).then(function(){
+					var view = self.patternDS.view();				
+
+					if(view.length>0){
+		      			obj.set("item_group_id", view[0].item_group_id),
+		      			obj.set("brand_id", view[0].brand_id),
+		      			obj.set("measurement_id", view[0].measurement_id),
+		      			obj.set("abbr", cat.abbr),
+		      			obj.set("number", ""),
+		      			obj.set("name", ""),
+		      			obj.set("purchase_description", view[0].purchase_description),
+		      			obj.set("sale_description", view[0].sale_description),
+		      			obj.set("measurements", view[0].measurements),
+		      			obj.set("color_code", view[0].color_code),
+		      			obj.set("international_code", view[0].international_code),
+		      			obj.set("inventory_account_id", view[0].inventory_account_id),
+		      			obj.set("favorite", view[0].favorite)
+					}else{
+		      			obj.set("item_group_id", ""),
+		      			obj.set("brand_id", ""),
+		      			obj.set("measurement_id", ""),
+		      			obj.set("abbr", ""),
+		      			obj.set("number", ""),
+		      			obj.set("name", ""),
+		      			obj.set("purchase_description", ""),
+		      			obj.set("sale_description", ""),
+		      			obj.set("measurements", ""),
+		      			obj.set("color_code", ""),
+		      			obj.set("international_code", ""),
+		      			obj.set("inventory_account_id", ""),
+		      			obj.set("favorite", false)
+					}
+				});
+			}
 		},
-		//Item Price
-		addItemPrice 			: function (id) {
-			var obj = this.get("obj");
-
-      		this.itemPriceDS.add({      			      			
-      			item_id			: id,
-      			measurement_id 	: obj.measurement_id,
-      			price 			: obj.price,
-      			unit_value		: 0,
-      			locale 			: obj.locale
-			});
-
-			this.itemPriceDS.sync();
-      	},
       	//Number      	
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
@@ -61935,7 +61970,7 @@
 				this.existingDS.query({
 					filter: [
 						{ field:"number", value: obj.number },
-						{ field:"contact_type_id", value: obj.contact_type_id }
+						{ field:"item_type_id", value: obj.item_type_id }
 					],
 					page: 1,
 					pageSize: 100
@@ -61978,9 +62013,6 @@
 			var obj = this.get("obj");
 
 			if(obj.category_id){
-				var category = this.categoryDS.get(obj.category_id);
-				obj.set("abbr", category.abbr);
-
 				this.loadPattern();
 				this.generateNumber();
 			}
@@ -62081,7 +62113,7 @@
 
       		this.patternDS.query({
       			filter:[
-      				{ field:"id", value:1 },
+      				{ field:"id", value:2 },
       				{ field:"is_pattern", value:1 }
       			],
       			page:1,
@@ -62091,50 +62123,27 @@
       			cat = self.categoryDS.at(0);
 
       			self.dataSource.insert(0, {				
-					item_type_id 			: 1,//Inventory Part      			      			
+					item_type_id 			: 1,//Non Inventory Part      			      			
 	      			category_id 			: view[0].category_id,
 	      			item_group_id 			: view[0].item_group_id,
-	      			item_sub_group_id 		: view[0].item_sub_group_id,
 	      			brand_id 				: view[0].brand_id,
 	      			measurement_id			: view[0].measurement_id,
 	      			abbr 					: cat.abbr,
 	      			number 					: "",
-	      			international_code 		: view[0].international_code,
-	      			color_code 				: view[0].color_code,
 	      			name 					: "",
 	      			purchase_description	: view[0].purchase_description,
 	      			sale_description		: view[0].sale_description,
 	      			measurements 			: view[0].measurements,
-	      			catalogs 				: view[0].catalogs,
-	      			cost 					: view[0].cost,
-	      			price 					: view[0].price,
-	      			rate 					: 1,
-	      			locale 					: view[0].locale,
-	      			on_hand					: 0,      			      			     			
-	      			order_point 			: view[0].order_point,
-	      			income_account_id 		: view[0].income_account_id,
-	      			cogs_account_id  		: view[0].cogs_account_id,
+	      			color_code 				: view[0].color_code,
+	      			international_code 		: view[0].international_code,
 	      			inventory_account_id 	: view[0].inventory_account_id,
-	      			deposit_account_id 		: view[0].deposit_account_id,
-	      			transaction_account_id 	: view[0].transaction_account_id,
-	      			preferred_vendor_id 	: view[0].preferred_vendor_id,
-	      			image_url 				: "",      			
 	      			favorite 				: view[0].favorite,
-	      			is_catalog 				: view[0].is_catalog,
-	      			is_assemble 			: view[0].is_assemble,
 	      			is_pattern 				: 0,
 	      			status 					: 1,
 	      			deleted 				: 0								
 				});
 
-				var obj = self.dataSource.at(0);				
-				//Pattern
-				// if(self.get("contact_type_id")>0){
-				// 	obj.set("contact_type_id", self.get("contact_type_id"));
-				// 	obj.set("abbr", "");
-				// 	obj.set("is_pattern", 1);
-				// }
-
+				var obj = self.dataSource.at(0);
 				self.set("obj", obj);
 				self.generateNumber();
       		});
@@ -62180,8 +62189,6 @@
 	      			if(data[0].is_pattern){
 						self.savePattern(data[0].category_id, data[0].id);
 					}
-
-					self.addItemPrice(data[0].id);
 				}
 				
       			self.itemVendorDS.sync();
