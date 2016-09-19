@@ -60275,10 +60275,10 @@
 	**************************/
 	banhji.itemDashBoard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "contact_reports/summary"),
+		summaryDS 			: dataStore(apiUrl + "contact_reports/supplier_dashboard_summary"),
 		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
 		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_supplier_product"),
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -69233,25 +69233,15 @@
 			if(banhji.pageLoaded["non_inventory_part"]==undefined){
 				banhji.pageLoaded["non_inventory_part"] = true;				
 
-				vm.loadVendor();
-				vm.loadCustomer();							
-
 				var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-
+												
 		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					//e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
+		            	vm.save();		            				  
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
@@ -69259,26 +69249,11 @@
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
+						vm.set("saveClose", true);
+		            	vm.save();		            	
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-		            	window.print();
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
 				});
 			}
 
