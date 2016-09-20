@@ -1848,7 +1848,7 @@
 <script id="saleTax" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
-			<div class="container-960">					
+			<div class="container-960" style="overflow: hidden;">					
 			<div id="example" class="k-content">
 
 				<div class="hidden-print">
@@ -1935,12 +1935,13 @@
 					</table>
 
 					<br>
-
-					<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
-					<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
+					<div style="text-align: center;">
+						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
+						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span> 
+					</div> 
 				</div>
 						
-                <div class="row-fluid">
+                <div class="row">
 	                <div class="span12 table-tax">	                					
 		            	<table class="table table-condensed">
 		            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
@@ -2006,15 +2007,16 @@
 					</table>
 
 					<br>
-
-					<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i>Save</span>
-					<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i>Close</span>  
+					<div style="text-align: center;">
+						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i>Save</span>
+						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i>Close</span>
+					</div>  
 				</div>
 
 				<h3 data-bind="text: taxName"></h3>
 
-				<div class="row-fluid">
-	            	<div class="span8">		                	
+				<div class="row">
+	            	<div class="span8" style="padding-left: 30px;">		                	
 					    <table class="table table-bordered table-white">
 		            		<thead>
 		            			<tr>
@@ -2641,7 +2643,7 @@
 				#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.institute.locale)#
 			#}#
 		</td>
-		<td class="right"><i class="icon-paper-clip"></i></td>  			
+		<td></td>  			
     </tr>    
     #}# 
     <tr>
@@ -2656,7 +2658,7 @@
     	<td class="right strong" style="border-top-color: black; color: black;">
     		#=kendo.toString(sumCr, "c0", banhji.institute.locale)#
     	</td>
-    	<td class="right"><i class="icon-paper-clip"></i></td>  	
+    	<td class="right" style="padding-right: 8px !important;"><i class="icon-paper-clip"></i></td>  	
     </tr>  
 </script>
 <script id="generalLedger" type="text/x-kendo-template">
@@ -13710,9 +13712,6 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
@@ -13726,7 +13725,7 @@
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
+	<tr style="font-weight: bold; color:\#000;">
 		<td></td>
 		<td></td>
 		<td></td>
@@ -23792,7 +23791,7 @@
 		<td>#=kendo.toString(cost, 'c2')#</td>
 		<td>#=kendo.toString(qty, 'n')#</td>
 		<td>#=kendo.toString(price, 'c2')#</td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
+		<td align="right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 
@@ -30145,7 +30144,7 @@
 							                   data-bind="value: obj.category_id,
 							                   			  disabled: obj.is_pattern, 
 							                              source: categoryDS,
-							                              events: {change: loadPattern}"
+							                              events: {change: categoryChanges}"
 							                   required data-required-msg="required" style="width: 100%;" />
 									</div>
 									<!-- // Group END -->
@@ -30364,7 +30363,7 @@
 					        	</div>
 						        <!-- //INFO END -->
 
-						        <!-- //ACCOUNTING INFO -->
+						        <!-- //ACCOUNTING -->
 						        <div class="tab-pane" id="tab2">
 						        	<div class="row-fluid">										
 										<div class="span12">
@@ -30383,7 +30382,7 @@
 										</div>												
 							        </div>							        
 					        	</div>
-						        <!-- //ACCOUNTING INFO END -->						        
+						        <!-- //ACCOUNTING END -->						        
 
 						        <!-- //VENDOR/CUSTOMER CODE -->
 						        <div class="tab-pane" id="tab3">
@@ -35117,7 +35116,7 @@
     </strong>
 </script>
 <script id="item-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=number# #=name#</span>
+	<span>#=abbr##=number# #=name#</span>
 	<span class="pull-right">#=on_hand#</span>	
 </script>
 <script id="item-group-header-tmpl" type="text/x-kendo-tmpl">
@@ -42602,7 +42601,7 @@
 			  	filter: [
 			  		{ field:"contact_id", value: obj.id },
 			  		{ field:"type", value:"Credit_Purchase" },			  		
-			  		{ field:"status", value: 0 }
+			  		{ field:"status", operator:"where_in", value: [0,2] }
 			  	],
 			  	sort: [
 			  		{ field: "issued_date", dir: "desc" },
@@ -60741,7 +60740,7 @@
 			}			
 		}		
 	});	
-	banhji.itemPrice =  kendo.observable({
+	banhji.itemPrice = kendo.observable({
 		lang 				: langVM,    	
     	dataSource 			: dataStore(apiUrl + "item_prices"),
     	itemDS 				: dataStore(apiUrl + "items"),
@@ -60886,7 +60885,7 @@
 	    	}	    	
 	    }
     });	
-    banhji.item =  kendo.observable({
+    banhji.item = kendo.observable({
     	lang 					: langVM,    	
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
@@ -60938,7 +60937,8 @@
 			window.history.back();
 		},
 		loadPattern 			: function(){
-			var self = this, obj = self.get("obj"), cat = this.categoryDS.get(obj.category_id);
+			var self = this, obj = self.get("obj"), 
+			cat = this.categoryDS.get(obj.category_id);
 
 			this.patternDS.query({
 				filter: [
@@ -60951,19 +60951,45 @@
 				var view = self.patternDS.view();				
 
 				if(view.length>0){
-					obj.set("locale", view[0].locale);
-					obj.set("measurement_id", view[0].measurement_id);
-					obj.set("income_account_id", view[0].income_account_id);
-					obj.set("cogs_account_id", view[0].cogs_account_id);
-					obj.set("settlement_discount_id", view[0].settlement_discount_id);
-					obj.set("inventory_account_id", view[0].inventory_account_id);					
+	      			obj.set("item_group_id", view[0].item_group_id),
+	      			obj.set("brand_id", view[0].brand_id),
+	      			obj.set("measurement_id", view[0].measurement_id),
+	      			obj.set("abbr", cat.abbr),
+	      			obj.set("number", ""),
+	      			obj.set("international_code", view[0].international_code),
+	      			obj.set("color_code", view[0].color_code),
+	      			obj.set("name", ""),
+	      			obj.set("purchase_description", view[0].purchase_description),
+	      			obj.set("sale_description", view[0].sale_description),
+	      			obj.set("measurements", view[0].measurements),	      			
+	      			obj.set("cost", view[0].cost),
+	      			obj.set("price", view[0].price),
+	      			obj.set("locale", view[0].locale),	      			     			
+	      			obj.set("order_point", view[0].order_point),
+	      			obj.set("income_account_id", view[0].income_account_id),
+	      			obj.set("cogs_account_id", view[0].cogs_account_id),
+	      			obj.set("inventory_account_id", view[0].inventory_account_id),
+	      			obj.set("favorite", view[0].favorite)	      						
 				}else{
-					obj.set("locale", banhji.locale);
-					obj.set("measurement_id", 0);
-					obj.set("income_account_id", 0);
-					obj.set("cogs_account_id", 0);
-					obj.set("settlement_discount_id", 0);
-					obj.set("inventory_account_id", 0);
+					obj.set("item_group_id", ""),
+	      			obj.set("brand_id", ""),
+	      			obj.set("measurement_id", ""),
+	      			obj.set("abbr", ""),
+	      			obj.set("number", ""),
+	      			obj.set("international_code", ""),
+	      			obj.set("color_code", ""),
+	      			obj.set("name", ""),
+	      			obj.set("purchase_description", ""),
+	      			obj.set("sale_description", ""),
+	      			obj.set("measurements", ""),	      			
+	      			obj.set("cost", ""),
+	      			obj.set("price", ""),
+	      			obj.set("locale", ""),	      			     			
+	      			obj.set("order_point", ""),
+	      			obj.set("income_account_id", ""),
+	      			obj.set("cogs_account_id", ""),
+	      			obj.set("inventory_account_id", ""),
+	      			obj.set("favorite", false)
 				}
 			});
 		},
@@ -61064,13 +61090,10 @@
 			});
 		},
 	    addEmptyItemVendor 		: function(){
-			var item_id = 0;
-			if(this.get("isEdit")){
-				item_id = this.get("obj").id;
-			}
-
+			var obj = this.get("obj");
+			
 			this.itemVendorDS.add({
-				item_id 	: item_id,					 			
+				item_id 	: obj.id,					 			
 				contact_id 	: "",
 				code 		: "",      				
 				type 		: "vendor"
@@ -61085,13 +61108,10 @@
 			}
 		},
 		addEmptyItemCustomer 	: function(){
-			var item_id = 0;
-			if(this.get("isEdit")){
-				item_id = this.get("obj").id;
-			}
+			var obj = this.get("obj");
 
 			this.itemCustomerDS.add({
-				item_id 	: item_id,					 			
+				item_id 	: obj.id,					 			
 				contact_id 	: "",
 				code 		: "",      				
 				type 		: "customer"
@@ -61150,7 +61170,6 @@
 					item_type_id 			: 1,//Inventory Part      			      			
 	      			category_id 			: view[0].category_id,
 	      			item_group_id 			: view[0].item_group_id,
-	      			item_sub_group_id 		: view[0].item_sub_group_id,
 	      			brand_id 				: view[0].brand_id,
 	      			measurement_id			: view[0].measurement_id,
 	      			abbr 					: cat.abbr,
@@ -61160,24 +61179,15 @@
 	      			name 					: "",
 	      			purchase_description	: view[0].purchase_description,
 	      			sale_description		: view[0].sale_description,
-	      			measurements 			: view[0].measurements,
-	      			catalogs 				: view[0].catalogs,
+	      			measurements 			: view[0].measurements,	      			
 	      			cost 					: view[0].cost,
 	      			price 					: view[0].price,
-	      			rate 					: 1,
-	      			locale 					: view[0].locale,
-	      			on_hand					: 0,      			      			     			
+	      			locale 					: view[0].locale,	      			     			
 	      			order_point 			: view[0].order_point,
 	      			income_account_id 		: view[0].income_account_id,
 	      			cogs_account_id  		: view[0].cogs_account_id,
 	      			inventory_account_id 	: view[0].inventory_account_id,
-	      			deposit_account_id 		: view[0].deposit_account_id,
-	      			transaction_account_id 	: view[0].transaction_account_id,
-	      			preferred_vendor_id 	: view[0].preferred_vendor_id,
-	      			image_url 				: "",      			
 	      			favorite 				: view[0].favorite,
-	      			is_catalog 				: view[0].is_catalog,
-	      			is_assemble 			: view[0].is_assemble,
 	      			is_pattern 				: 0,
 	      			status 					: 1,
 	      			deleted 				: 0								
@@ -62007,7 +62017,6 @@
     	measurementDS			: dataStore(apiUrl + "measurements"),
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
-    	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
     	vendorDS 	 			: banhji.source.supplierDS,
     	customerDS 	 			: banhji.source.customerDS,
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
@@ -62172,13 +62181,10 @@
 			});
 		},
 	    addEmptyItemVendor 		: function(){
-			var item_id = 0;
-			if(this.get("isEdit")){
-				item_id = this.get("obj").id;
-			}
-
+			var obj = this.get("obj");
+			
 			this.itemVendorDS.add({
-				item_id 	: item_id,					 			
+				item_id 	: obj.id,					 			
 				contact_id 	: "",
 				code 		: "",      				
 				type 		: "vendor"
@@ -62193,13 +62199,10 @@
 			}
 		},
 		addEmptyItemCustomer 	: function(){
-			var item_id = 0;
-			if(this.get("isEdit")){
-				item_id = this.get("obj").id;
-			}
+			var obj = this.get("obj");
 
 			this.itemCustomerDS.add({
-				item_id 	: item_id,					 			
+				item_id 	: obj.id,					 			
 				contact_id 	: "",
 				code 		: "",      				
 				type 		: "customer"
@@ -62255,7 +62258,7 @@
       			cat = self.categoryDS.at(0);
 
       			self.dataSource.insert(0, {				
-					item_type_id 			: 1,//Non Inventory Part      			      			
+					item_type_id 			: 2,//Non Inventory Part      			      			
 	      			category_id 			: view[0].category_id,
 	      			item_group_id 			: view[0].item_group_id,
 	      			brand_id 				: view[0].brand_id,
