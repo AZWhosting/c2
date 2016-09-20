@@ -29224,7 +29224,7 @@
 					        	</div>
 						        <!-- //INFO END -->
 
-						        <!-- //ACCOUNTING INFO -->
+						        <!-- //ACCOUNTING -->
 						        <div class="tab-pane" id="tab2">
 						        	<div class="row-fluid">						            	
 										<div class="span4">
@@ -29271,7 +29271,7 @@
 										</div>												
 							        </div>							        
 					        	</div>
-						        <!-- //ACCOUNTING INFO END -->						        
+						        <!-- //ACCOUNTING END -->						        
 
 						        <!-- //VENDOR/CUSTOMER CODE -->
 						        <div class="tab-pane" id="tab3">
@@ -29739,10 +29739,9 @@
 			<div class="container-960">					
 				<div id="example" class="k-content">					
 			    
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
-					</div>
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
 
 			        <h2>SERVICE</h2>			    		   
 
@@ -29796,12 +29795,20 @@
 								<div class="span6">	
 									<!-- Group -->
 									<div class="control-group">							
-										<label for="txtSKU">Code <span style="color:red">*</span></label>
-				              			<input id="txtSKU" name="txtSKU" class="k-textbox"
-					              				data-bind="value: obj.number, disabled: obj.is_pattern" 
-					              				placeholder="e.g. ID0001" 
+										<label for="txtNumber">Number<span style="color:red">*</span></label>
+				              			<br>
+				              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
+					              				data-bind="value: obj.abbr, 
+					              						   disabled: obj.is_pattern" 
+					              				placeholder="eg. AB" style="width: 55px;" />
+				              			-
+				              			<input id="txtNumber" name="txtNumber" class="k-textbox"
+					              				data-bind="value: obj.number, 
+					              							disabled: obj.is_pattern,
+					              							events:{change: checkExistingNumber}" 
+					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
-					              				style="width: 100%;" />
+					              				style="width: 128px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
@@ -29886,13 +29893,24 @@
 							</div>							
 
 							<div class="row-fluid">
-								<!-- Group -->
-								<div class="control-group">								
-									<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
-						            <textarea id="txtDescription" cols="0" rows="3" class="k-textbox" 
-										data-bind="value: obj.bill_to" style="width: 100%;"></textarea>
-								</div>																		
-								<!-- // Group END -->
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtPurchaseDescription">Purchase Description</label>
+							            <textarea id="txtPurchaseDescription" class="k-textbox" 
+											data-bind="value: obj.purchase_description" style="resize:none; width: 100%;height:95px;"></textarea>
+									</div>																		
+									<!-- // Group END -->
+								</div>
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtSaleDescription">Sale Description</label>
+							            <textarea id="txtSaleDescription" class="k-textbox" 
+											data-bind="value: obj.sale_description" style="resize:none; width: 100%;height:95px;"></textarea>
+									</div>																		
+									<!-- // Group END -->
+								</div>
 							</div>
 
 						</div>
@@ -29907,18 +29925,15 @@
 						            <li class="span2 glyphicons usd active">
 						            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.accounting"></span></span></a>
 						            </li>						            
-						            <li class="span2 glyphicons old_man">
-						            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.vendor"></span></span></a>
+						            <li class="span2 glyphicons barcode">
+						            	<a href="#tab2" data-toggle="tab"><i></i> Supplier/Customer Codes</a>
 						            </li>
-						            <li class="span2 glyphicons user">
-						            	<a href="#tab3" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.customer"></span></span></a>
-						            </li>						            					            						            					            
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
 
 						    <div class="tab-content">
-						        <!-- //ACCOUNTING INFO -->
+						        <!-- //ACCOUNTING -->
 						        <div class="tab-pane active" id="tab1">
 						        	<div class="row-fluid">						            	
 										<div class="span6">
@@ -29951,53 +29966,52 @@
 										</div>																					
 							        </div>							        
 					        	</div>
-						        <!-- //ACCOUNTING INFO END -->						        
+						        <!-- //ACCOUNTING END -->						        
 
-						        <!-- //VENDOR -->
+						        <!-- //VENDOR/CUSTOMER CODE -->
 						        <div class="tab-pane" id="tab2">
-						        						       
-						        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemVendor"><i></i> <span data-bind="text: lang.lang.new_vendor_item"></span></span>
+
+						        	<div class="row">
+						        		<div class="span6">
+						        			<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemVendor"><i></i> <span data-bind="text: lang.lang.new_vendor_item"></span></span>
 								        	
-						        	<table class="table table-bordered table-white">
-								        <thead>
-								            <tr>
-								                <th><span data-bind="text: lang.lang.name"></span></th>
-								                <th><span data-bind="text: lang.lang.item_code"></span></th>								                
-								                <th width="20px"></th>										               
-								            </tr>
-								        </thead>
-								        <tbody data-role="listview"										        		
-								        		data-auto-bind="false"										        						        		 
-								        		data-template="itemService-vendor-row-tmpl" 
-								        		data-bind="source: itemVendorDS">
-								        </tbody>										        						        
-								    </table>
+								        	<table class="table table-bordered table-white">
+										        <thead>
+										            <tr>
+										                <th><span data-bind="text: lang.lang.name"></span></th>
+										                <th>Code</th>								                
+										                <th width="20px"></th>										               
+										            </tr>
+										        </thead>
+										        <tbody data-role="listview"										        		
+										        		data-auto-bind="false"					        						        		 
+										        		data-template="item-vendor-row-tmpl" 
+										        		data-bind="source: itemVendorDS">
+										        </tbody>										        						        
+										    </table>
+						        		</div>
+						        		<div class="span6">
+						        			<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemCustomer"><i></i> <span data-bind="text: lang.lang.new_customer_item"></span></span>
+								        	
+								        	<table class="table table-bordered table-white">
+										        <thead>
+										            <tr>
+										                <th><span data-bind="text: lang.lang.name"></span></th>
+										                <th>Code</th>								                
+										                <th width="20px"></th>										               
+										            </tr>
+										        </thead>
+										        <tbody data-role="listview"										        		
+										        		data-auto-bind="false"										        						        		 
+										        		data-template="item-customer-row-tmpl" 
+										        		data-bind="source: itemCustomerDS">
+										        </tbody>										        						        
+										    </table>
+						        		</div>
+						        	</div>
 
 					        	</div>
-						        <!-- //VENDOR END -->
-
-						        <!-- //CUSTOMER -->
-						        <div class="tab-pane" id="tab3">
-						        					       
-						        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemCustomer"><i></i> <span data-bind="text: lang.lang.new_customer_item"></span></span>
-								        	
-						        	<table class="table table-bordered table-white">
-								        <thead>
-								            <tr>
-								                <th><span data-bind="text: lang.lang.name"></span></th>
-								                <th><span data-bind="text: lang.lang.item_code"></span></th>								                
-								                <th width="20px"></th>										               
-								            </tr>
-								        </thead>
-								        <tbody data-role="listview"										        		
-								        		data-auto-bind="false"										        						        		 
-								        		data-template="itemService-customer-row-tmpl" 
-								        		data-bind="source: itemCustomerDS">
-								        </tbody>										        						        
-								    </table>
-
-					        	</div>
-						        <!-- //CUSTOMER END -->
+						        <!-- //VENDOR/CUSTOMER CODE END -->
 						    </div>
 						</div>
 					</div>					
@@ -30005,14 +30019,39 @@
 					<br>											
 							
 					<!-- Form actions -->
-					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-						<span id="notification"></span>
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
 
-						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
-						<!-- <span id="saveSend" class="btn btn-icon btn-warning glyphicons envelope" style="width: 80px;"><i></i> Save Send</span>										 -->
-						<span id="savePrint" class="btn btn-icon btn-default glyphicons print" data-bind="click: cancel" style="width: 80px;"><i></i> Save Print</span>
-						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+						<!-- Delete Confirmation -->
+						<div data-role="window"
+			                 data-title="Delete Confirmation"
+			                 data-width="350"
+			                 data-height="200"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'40%',left:'35%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: showConfirm"
+			                 style="text-align:center;">
+			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+			            </div>
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+							</div>
+						</div>
 					</div>
 					<!-- // Form actions END -->
 
@@ -43657,6 +43696,7 @@
 				discount 			: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,
+				movement 			: 1,
 				required_date 		: new Date(),
 
 				item_prices 		: []
@@ -43852,6 +43892,8 @@
 							amount 	 			: value.amount,									
 							rate				: value.rate,
 							locale				: value.locale,
+							movement 			: value.movement,
+							required_date		: value.required_date,
 							
 							item_prices 		: value.item_prices
 						});
@@ -44386,7 +44428,7 @@
 				amount 				: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,							
-				movement 			: -1,
+				movement 			: 1,
 
 				item_prices 		: []
 			});																	
@@ -44594,6 +44636,7 @@
 							discount 			: value.discount,
 							rate				: value.rate,
 							locale				: value.locale,
+							movement 			: value.movement,
 
 							item_prices			: value.item_prices
 						});
@@ -44647,6 +44690,7 @@
 							amount 	 			: value.amount,									
 							rate				: value.rate,
 							locale				: value.locale,
+							movement 			: value.movement,
 							
 							item_prices 		: value.item_prices
 						});
@@ -46343,7 +46387,7 @@
 
 			//Set Date
 			var duedate = new Date();
-			duedate.setDate(duedate.getDate() + 7);				
+			duedate.setDate(duedate.getDate() + 30);				
 
 			this.dataSource.insert(0, {				
 				contact_id 			: "",
@@ -46649,14 +46693,14 @@
 				if(item.item_type_id==1){					
 					var inventoryID = item.inventory_account_id,
 					inventoryAmt = (value.quantity*value.cost) + value.additional_cost;
-
+					
 					if(inventoryList[inventoryID]===undefined){
 						inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmt };						
 					}else{											
 						if(inventoryList[inventoryID].id===inventoryID){
 							inventoryList[inventoryID].amount += inventoryAmt;
 						}else{
-							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmt};
+							inventoryList[inventoryID]={"id": inventoryID, "amount": inventoryAmt };
 						}
 					}
 				}					  	
@@ -46844,6 +46888,7 @@
 							discount 			: value.discount,
 							rate				: value.rate,
 							locale				: value.locale,
+							movement 			: value.movement,
 							additional_cost 	: value.additional_cost,
 							additional_applied 	: value.additional_applied,							
 
@@ -48053,7 +48098,8 @@
 							amount 				: value.amount,
 							discount 			: value.discount,
 							rate				: value.rate,
-							locale				: value.locale,													
+							locale				: value.locale,
+							movement 			: value.movement,													
 
 							item_prices			: value.item_prices
 						});
@@ -50170,6 +50216,7 @@
 				discount 			: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,
+				movement 			: -1,
 
 				item_prices 		: []
 			});																	
@@ -50364,6 +50411,7 @@
 							amount 	 			: value.amount,									
 							rate				: value.rate,
 							locale				: value.locale,
+							movement 			: value.movement,
 							
 							item_prices 		: value.item_prices
 						});
@@ -51027,6 +51075,7 @@
 				discount 			: 0,				
 				rate				: obj.rate,
 				locale				: obj.locale,
+				movement 			: -1,
 				required_date 		: new Date(),
 
 				item_prices 		: []
@@ -51235,6 +51284,8 @@
 							discount 			: value.discount,
 							rate				: value.rate,
 							locale				: value.locale,
+							movement 			: value.movement,
+							required_date 		: value.required_date,
 
 							item_prices			: value.item_prices
 						});
@@ -51288,6 +51339,8 @@
 							amount 	 			: value.amount,									
 							rate				: value.rate,
 							locale				: value.locale,
+							movement 			: value.movement,
+							required_date 		: value.required_date,
 							
 							item_prices 		: value.item_prices
 						});
@@ -53283,7 +53336,8 @@
 							discount 			: value.discount,
 							fine 				: value.fine,
 							rate				: value.rate,
-							locale				: value.locale,							
+							locale				: value.locale,
+							movement 			: value.movement,							
 
 							item_prices			: value.item_prices
 						});
@@ -53339,6 +53393,7 @@
 							amount 	 			: value.amount,
 							rate				: value.rate,
 							locale				: value.locale,
+							movement 			: value.movement,
 							
 							item_prices 		: value.item_prices
 						});
@@ -54662,7 +54717,8 @@
 							amount 				: value.amount,
 							discount 			: value.discount,
 							rate				: value.rate,
-							locale				: value.locale,							
+							locale				: value.locale,
+							movement 			: value.movement,							
 
 							item_prices			: value.item_prices
 						});
@@ -54718,6 +54774,7 @@
 							amount 	 			: value.amount,
 							rate				: value.rate,
 							locale				: value.locale,
+							movement 			: value.movement,
 							
 							item_prices 		: value.item_prices
 						});
@@ -55492,7 +55549,8 @@
 							amount 				: value.amount,
 							discount 			: value.discount,
 							rate				: value.rate,
-							locale				: value.locale,							
+							locale				: value.locale,
+							movement 			: vlaue.movement,							
 
 							item_prices			: value.item_prices
 						});
@@ -55548,6 +55606,7 @@
 							amount 	 			: value.amount,
 							rate				: value.rate,
 							locale				: value.locale,
+							movement 			: value.movement,
 							
 							item_prices 		: value.item_prices
 						});
@@ -56783,7 +56842,8 @@
 							discount 			: value.discount,
 							fine 				: value.fine,
 							rate				: value.rate,
-							locale				: value.locale,													
+							locale				: value.locale,
+							movement 			: value.movement,													
 
 							item_prices			: value.item_prices
 						});
@@ -60689,20 +60749,18 @@
     	soDS 				: dataStore(apiUrl + "transactions/line"),
     	currencyDS  		: banhji.source.currencyDS,
     	unitDS	   			: dataStore(apiUrl + "measurements"),
-
     	obj 				: null,
     	priceList 			: null,
     	on_po 				: 0,
     	on_so 				: 0,
-    	
-    	pageLoad 		: function(id){    		
+    	pageLoad 			: function(id){    		
     		this.dataSource.filter({ field:"item_id", value: id });    		
     		this.recordDS.filter({ field:"item_id", value: id });    		
     		this.loadObj(id);
     		this.countPO(id);
     		this.countSO(id);
     	},
-    	loadObj 	: function(id){
+    	loadObj 			: function(id){
     		var self = this;
 
     		this.itemDS.query({    			
@@ -60713,7 +60771,7 @@
 		    	self.set("obj", view[0]);
 			});
     	},
-    	countPO 		: function(id){
+    	countPO 			: function(id){
     		var self = this;
 
     		this.poDS.query({
@@ -60740,7 +60798,7 @@
 	    		}
 	    	});
     	},
-    	countSO 		: function(id){
+    	countSO 			: function(id){
     		var self = this;
 
     		this.soDS.query({
@@ -60767,20 +60825,20 @@
 	    		}
 	    	});
     	},
-    	openWindow		: function(){
+    	openWindow			: function(){
       		this.addEmpty();
 
          	var window = $("#priceList-window").data("kendoWindow");
           	window.title("តំលៃ");          	
           	window.center().open();         	
       	},
-      	closeWindow 	: function(){	      		
+      	closeWindow 		: function(){	      		
       		this.dataSource.cancelChanges();
 
       		var window = $("#priceList-window").data("kendoWindow");          	         	
           	window.close();          	
       	},      	
-      	addEmpty 		: function () {
+      	addEmpty 			: function () {
       		this.dataSource.add({      			      			
       			item_id			: this.get("obj").id,
       			measurement_id 	: 0,
@@ -60797,14 +60855,14 @@
       						
 			this.set("priceList", obj);	
       	},      	 	
-      	save 			: function(){
+      	save 				: function(){
       		this.dataSource.sync();
       		banhji.itemCenter.itemDS.fetch();
 
       		var window = $("#priceList-window").data("kendoWindow");          	         	
           	window.close(); 		
       	},
-      	edit 			: function(e){
+      	edit 				: function(e){
       		var data = e.data;
       		
       		this.set("priceList", data);
@@ -60813,12 +60871,17 @@
           	window.title("តំលៃ");          	
           	window.center().open();       		
       	},      	
-      	delete 			: function(e){
+      	delete 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {        
 		        var data = e.data;
-		        this.dataSource.remove(data);
-		        this.dataSource.sync();
-		        banhji.itemCenter.dataSource.fetch();
+
+		        if(this.dataSource.total()>1){
+			        this.dataSource.remove(data);
+			        this.dataSource.sync();
+			        banhji.itemCenter.dataSource.fetch();
+		    	}else{
+		    		alert("Sorry, you can't delete it!");
+		    	}
 	    	}	    	
 	    }
     });	
@@ -61567,118 +61630,54 @@
 	    }
     });
 	banhji.itemService =  kendo.observable({
-    	lang 				: langVM,    	
-    	dataSource 			: dataStore(apiUrl + "items"),
-    	patternDS 			: dataStore(apiUrl + "items"),
-    	deleteDS 			: dataStore(apiUrl + "transactions/line"),
-    	categoryDS 			: dataStore(apiUrl + "categories"),
-    	itemGroupDS 		: dataStore(apiUrl + "items/group"),    	  	   	
-    	measurementDS		: dataStore(apiUrl + "measurements"),
-    	vendorDS 	 		: dataStore(apiUrl + "contacts"),
-    	customerDS 	 		: dataStore(apiUrl + "contacts"),
-    	itemVendorDS 	 	: dataStore(apiUrl + "items/contact"),
-    	itemCustomerDS 	 	: dataStore(apiUrl + "items/contact"),
-    	currencyDS 	 		: banhji.source.currencyDS,  	
-    	incomeAccountDS 	: banhji.source.incomeAccountDS,
-    	cogsAccountDS 		: banhji.source.cogsAccountDS,    	
-    	statusList 			: banhji.source.statusList,
-        vendorList 			: [],
-        customerList 		: [],
-    	obj 	 			: null,
-    	isEdit 				: false,    	
-    	pageLoad 			: function(id, is_pattern){			
+    	lang 					: langVM,    	
+    	dataSource 				: dataStore(apiUrl + "items"),
+    	patternDS 				: dataStore(apiUrl + "items"),
+    	deleteDS 				: dataStore(apiUrl + "transactions/line"),
+    	numberDS 				: dataStore(apiUrl + "items"),
+    	existingDS 				: dataStore(apiUrl + "items"),
+    	categoryDS 				: banhji.source.serviceCategoryDS,
+    	itemGroupDS 			: dataStore(apiUrl + "items/group"),    	  	   	
+    	measurementDS			: dataStore(apiUrl + "measurements"),
+    	vendorDS 	 			: dataStore(apiUrl + "contacts"),
+    	customerDS 	 			: dataStore(apiUrl + "contacts"),
+    	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
+    	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
+    	currencyDS 	 			: banhji.source.currencyDS,  	
+    	incomeAccountDS 		: banhji.source.incomeAccountDS,
+    	cogsAccountDS 			: banhji.source.cogsAccountDS,    	
+    	statusList 				: banhji.source.statusList,
+        confirmMessage 			: banhji.source.confirmMessage,
+    	obj 	 				: null,
+    	isEdit 					: false,
+    	saveClose 				: false,
+		showConfirm 			: false,
+		originalNo 				: "",
+		isDuplicateNumber 		: false,
+    	pageLoad 				: function(id, is_pattern){			
 			if(id){
-				this.set("isEdit", true);							
+				this.set("isEdit", true);						
 				this.loadObj(id, is_pattern);
-				this.loadItemContact(id);
 			}else{				
-				if(this.get("isEdit")){
-					this.set("isEdit", false);
-					
-					this.dataSource.data([]);					
-					
+				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
 				}								
 			}  																							
 		},
-    	loadObj 			: function(id, is_pattern){
-    		var self = this, para = [];
-
-			para.push({ field:"id", value: id });
-
-			if(is_pattern){
-				para.push({ field:"is_pattern", value: 1 });
-			}
-
-    		this.dataSource.query({    			
-				filter: para,
-			}).then(function(e){
-				var view = self.dataSource.view();
-						    	
-		    	self.set("obj", view[0]);
-			});
-    	},
-    	loadVendorItem 		: function(){
-    		var self = this;
-
-    		this.vendorDS.query({    			
-				filter: { field:"parent_id", operator:"where_related", model:"contact_type", value:2 }
-			}).then(function(e){
-				var view = self.vendorDS.view();
-				
-				$.each(view, function(index, value){
-					self.vendorList.push(value);
-				});		    	
-			});
-    	},
-    	loadCustomerItem 	: function(){
-    		var self = this;
-
-    		this.customerDS.query({    			
-				filter: { field:"parent_id", operator:"where_related", model:"contact_type", value:1 }
-			}).then(function(e){
-				var view = self.customerDS.view();
-				
-				$.each(view, function(index, value){
-					self.customerList.push(value);
-				});		    	
-			});
-    	},
-    	loadItemContact		: function(id){
-			this.itemVendorDS.query({
-				filter: [ 
-					{ "field":"item_id", value: id },
-					{ "field":"type", value: "vendor" }
-				],
-				page: 1,
-				pageSize: 100
-			});
-
-			this.itemCustomerDS.query({
-				filter: [ 
-					{ "field":"item_id", value: id },
-					{ "field":"type", value: "customer" }
-				],
-				page: 1,
-				pageSize: 100
-			});
-		},
 		//Pattern
-		setPattern 			: function(category_id){
+		setPattern 				: function(category_id){
 			var obj = this.get("obj");
 
 			obj.set("category_id", category_id);
 			obj.set("is_pattern", 1);
 		},
-		savePattern 		: function(category_id, item_id){
+		savePattern 			: function(category_id, item_id){
 			var data = banhji.itemSetting.categoryDS.get(category_id);
 			data.set("item_id", item_id);
 			banhji.itemSetting.categoryDS.sync();			
 			window.history.back();
 		},
-		loadPattern 		: function(){
+		loadPattern 			: function(){
 			var self = this, obj = self.get("obj"), cat = this.categoryDS.get(obj.category_id);
 
 			this.patternDS.query({
@@ -61692,146 +61691,107 @@
 				var view = self.patternDS.view();				
 
 				if(view.length>0){
+					obj.set("measurement_id", view[0].measurement_id),
+	      			obj.set("abbr", cat.abbr),
+	      			obj.set("purchase_description", view[0].purchase_description),
+	      			obj.set("sale_description", view[0].sale_description),
 					obj.set("locale", view[0].locale);
-					obj.set("measurement_id", view[0].measurement_id);
 					obj.set("income_account_id", view[0].income_account_id);
-					obj.set("cogs_account_id", view[0].cogs_account_id);
-					obj.set("settlement_discount_id", view[0].settlement_discount_id);
-					obj.set("inventory_account_id", view[0].inventory_account_id);					
+					obj.set("cogs_account_id", view[0].cogs_account_id);					
 				}else{
+					obj.set("measurement_id", 0),
+	      			obj.set("abbr", ""),
+	      			obj.set("purchase_description", ""),
+	      			obj.set("sale_description", ""),
 					obj.set("locale", banhji.locale);
-					obj.set("measurement_id", 0);
 					obj.set("income_account_id", 0);
 					obj.set("cogs_account_id", 0);
-					obj.set("settlement_discount_id", 0);
-					obj.set("inventory_account_id", 0);
 				}
 			});
-		},    	   	
-      	addEmpty 			: function(){      		
-      		this.dataSource.data([]);
-      		this.itemVendorDS.data([]);
-	      	this.itemCustomerDS.data([]);
-      		this.set("obj", null);
-
-      		this.dataSource.add({
-      			company_id 				: 0,
-      			contact_id 				: "",
-      			currency_id 			: 0,
-      			category_id 			: 0,
-      			item_type_id 			: 4, //Service Type      			      			
-      			category_id 			: 0,
-      			item_group_id 			: 0,
-      			item_sub_group_id 		: 0,
-      			brand_id 				: 0,
-      			measurement_id			: 0,
-      			main_id 				: 0,
-      			number 					: "",
-      			international_code 		: "",
-      			IMEI 					: "",
-      			serial_number 			: "",
-      			supplier_code 			: "",
-      			color_code 				: "",
-      			name 					: "",
-      			description				: "",
-      			measurements 			: "",
-      			catalogs 				: [],
-      			cost 					: 0,
-      			price 					: 0,
-      			amount 					: 0,
-      			rate 					: 1,
-      			locale 					: banhji.locale,
-      			on_hand					: 0,      			      			     			
-      			order_point 			: 0,
-      			income_account_id 		: 0,
-      			cogs_account_id  		: 0,
-      			inventory_account_id 	: 0,
-      			deposit_account_id 		: 0,
-      			transaction_account_id 	: 0,
-      			preferred_vendor_id 	: 0,
-      			image_url 				: "",      			
-      			favorite 				: false,
-      			is_catalog 				: 0,
-      			is_assemble 			: 0,
-      			is_pattern 				: 0,
-      			status 					: 1,
-      			deleted 				: 0
-			});      		
-
-			var data = this.dataSource.data();
-			var obj = data[data.length - 1];
-      						
-			this.set("obj", obj);			
-      	},
-      	objSync 			: function(){
-	    	var dfd = $.Deferred();	        
-
-	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
-		    });
-
-		    return dfd;	    		    	
-	    },
-      	cancel 				: function(e){
-      		e.preventDefault();
-
-      		this.dataSource.cancelChanges();
-      		window.history.back();      		
-      	},      	
-      	save 				: function(){
-      		var self = this;
-
-      		if(this.get("isEdit")){
-      			this.dataSource.sync();
-      			this.itemVendorDS.sync();
-      			this.itemCustomerDS.sync();
-      		}else{
-	      		this.objSync().then(function(data){
-	      			$.each(self.itemVendorDS.data(), function(index, value){
-	      				value.set("item_id", data[0].id);
-	      			});
-
-	      			$.each(self.itemCustomerDS.data(), function(index, value){
-	      				value.set("item_id", data[0].id);
-	      			});
-
-	      			if(data[0].is_pattern){
-						self.savePattern(data[0].category_id, data[0].id);
-					}
-
-	      			self.itemVendorDS.sync();
-	      			self.itemCustomerDS.sync();
-	      		}).then(function(){
-	      			self.addEmpty();
-	      		});
-      		}      		      		
-      	},      	
-      	delete 				: function(){			
-	    	var self = this,
-			obj = this.get("obj");
-
-			if (confirm("Are you sure, you want to delete it?")) {				
-				this.deleteDS.query({
-				  	filter: { field: "item_id", value: obj.id },
-				  	page: 1,
-				  	pageSize: 1
-				}).then(function() {
-					var view = self.deleteDS.view();
-
+		},
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj"),
+			originalNo = this.get("originalNo");			
+			
+			if(obj.number!=="" && obj.number!==originalNo){
+				this.existingDS.query({
+					filter: [
+						{ field:"number", value: obj.number },
+						{ field:"contact_type_id", value: obj.contact_type_id }
+					],
+					page: 1,
+					pageSize: 100
+				}).then(function(e){
+					var view = self.existingDS.view();
+					
 					if(view.length>0){
-						alert("Sorry, you can not delete it because it is using now.");
+				 		self.set("isDuplicateNumber", true);						
 					}else{
-						var data = self.dataSource.get(obj.id);
-				        self.dataSource.remove(data);
-				        self.save();
-
-				        window.history.back();
+						self.set("isDuplicateNumber", false);
 					}
-				});
-	    	}	    	
-	    },
-	    addEmptyItemVendor 	: function(){
+				});							
+			}else{
+				this.set("isDuplicateNumber", false);
+			}			
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj");
+
+			this.numberDS.query({
+				filter:[
+					{ field:"category_id", value:obj.category_id }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.numberDS.view();
+
+				if(view.length>0){
+					var lastNo = kendo.parseInt(view[0].number);
+					if(lastNo){
+						lastNo++;
+						obj.set("number",kendo.toString(lastNo, "00000"));
+					}
+				}
+			});
+		},
+		categoryChanges 		: function(){
+			var obj = this.get("obj");
+
+			if(obj.category_id){
+				var category = this.categoryDS.get(obj.category_id);
+				obj.set("abbr", category.abbr);
+
+				this.loadPattern();
+				this.generateNumber();
+			}
+		},
+      	//Item Contact
+		loadItemContact			: function(){
+    		var obj = this.get("obj");
+
+			this.itemVendorDS.query({
+				filter: [ 
+					{ "field":"item_id", value: obj.id },
+					{ "field":"type", value: "vendor" }
+				],
+				page: 1,
+				pageSize: 100
+			});
+
+			this.itemCustomerDS.query({
+				filter: [ 
+					{ "field":"item_id", value: obj.id },
+					{ "field":"type", value: "customer" }
+				],
+				page: 1,
+				pageSize: 100
+			});
+		},
+	    addEmptyItemVendor 		: function(){
 			var item_id = 0;
 			if(this.get("isEdit")){
 				item_id = this.get("obj").id;
@@ -61844,7 +61804,7 @@
 				type 		: "vendor"
 			});								
 		},
-		deleteItemVendor 	: function(e){
+		deleteItemVendor 		: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
 				var d = e.data,
 				obj = this.itemVendorDS.getByUid(d.uid);
@@ -61865,13 +61825,185 @@
 				type 		: "customer"
 			});								
 		},
-		deleteItemCustomer 	: function(e){
+		deleteItemCustomer 		: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
 				var d = e.data,
 				obj = this.itemCustomerDS.getByUid(d.uid);
 
 				this.itemCustomerDS.remove(obj);
 			}
+		},
+		//Obj
+		loadObj 				: function(id, is_pattern){
+    		var self = this, para = [];
+
+			para.push({ field:"id", value: id });
+
+			if(is_pattern){
+				para.push({ field:"is_pattern", value: 1 });
+			}
+
+    		this.dataSource.query({    			
+				filter: para,
+			}).then(function(e){
+				var view = self.dataSource.view();
+						    	
+		    	self.set("obj", view[0]);
+		    	self.set("originalNo", view[0].number);
+		    	self.loadItemContact();
+			});
+    	},    	   	
+      	addEmpty 				: function(){
+      		var self = this;
+
+      		this.dataSource.data([]);
+      		this.itemVendorDS.data([]);
+	      	this.itemCustomerDS.data([]);
+
+	      	this.set("isEdit", false);
+      		this.set("obj", null);
+
+      		this.patternDS.query({
+      			filter:[
+      				{ field:"id", value: 3 },
+      				{ field:"is_pattern", value: 1 }
+      			],
+      			page:1,
+      			pageSize:1
+      		}).then(function(){
+      			var view = self.patternDS.view(),
+      			cat = self.categoryDS.at(0);
+
+      			self.dataSource.insert(0, {				
+					item_type_id 			: 4,//Service      			      			
+	      			category_id 			: view[0].category_id,
+	      			item_group_id 			: view[0].item_group_id,
+	      			measurement_id			: view[0].measurement_id,
+	      			abbr 					: cat.abbr,
+	      			number 					: "",
+	      			name 					: "",
+	      			purchase_description	: view[0].purchase_description,
+	      			sale_description		: view[0].sale_description,
+	      			locale 					: view[0].locale,
+	      			income_account_id 		: view[0].income_account_id,
+	      			cogs_account_id  		: view[0].cogs_account_id,
+	      			favorite 				: view[0].favorite,
+	      			is_pattern 				: 0,
+	      			status 					: 1							
+				});
+
+				var obj = self.dataSource.at(0);				
+				//Pattern
+				// if(self.get("contact_type_id")>0){
+				// 	obj.set("contact_type_id", self.get("contact_type_id"));
+				// 	obj.set("abbr", "");
+				// 	obj.set("is_pattern", 1);
+				// }
+
+				self.set("obj", obj);
+				self.generateNumber();
+      		});
+      	},
+		objSync 				: function(){
+	    	var dfd = $.Deferred();	        
+
+	    	this.dataSource.sync();
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
+		    });
+
+		    return dfd;	    		    	
+	    },			
+		save 					: function(){			
+			var self = this, obj = this.get("obj");
+
+			//Edit Mode
+	    	if(this.get("isEdit")){
+	    		//Contact Item has changes
+		    	if(this.itemVendorDS.hasChanges() || this.itemCustomerDS.hasChanges()){
+		    		obj.set("dirty", true);
+		    	}
+	    	}
+
+			//Save Obj
+			this.objSync()
+			.then(function(data){ //Success												
+				if(self.get("isEdit")==false){
+					$.each(self.itemVendorDS.data(), function(index, value){
+	      				value.set("item_id", data[0].id);
+	      			});
+
+	      			$.each(self.itemCustomerDS.data(), function(index, value){
+	      				value.set("item_id", data[0].id);
+	      			});
+
+	      			if(data[0].is_pattern){
+						self.savePattern(data[0].category_id, data[0].id);
+					}
+				}
+				
+      			self.itemVendorDS.sync();
+      			self.itemCustomerDS.sync();
+				
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					window.history.back();
+				}else{
+					//Save New
+					self.addEmpty();
+				}
+			});
+		},
+		cancel 					: function(){
+			this.dataSource.cancelChanges();
+			this.itemVendorDS.cancelChanges();
+			this.itemCustomerDS.cancelChanges();
+			
+			this.dataSource.data([]);
+			this.itemVendorDS.data([]);
+			this.itemCustomerDS.data([]);
+
+			banhji.userManagement.removeMultiTask("item_service");
+		},
+		delete 					: function(){
+			var self = this, obj = this.get("obj");
+			this.set("showConfirm",false);
+
+			this.deleteDS.query({
+			  	filter: { field: "item_id", value: obj.id },
+			  	page: 1,
+			  	pageSize: 1
+			}).then(function() {
+				var view = self.deleteDS.view();
+
+				if(view.length>0){
+					alert("Sorry, you can not delete it because it is using now.");
+				}else{
+					obj.set("deleted", 1);
+			        self.dataSource.sync();
+
+			        window.history.back();				        
+				}
+			});	
+		},
+		openConfirm 			: function(){
+			this.set("showConfirm", true);
+		},
+		closeConfirm 			: function(){
+			this.set("showConfirm", false);
 		}
     });
 	banhji.nonInventoryPart =  kendo.observable({
@@ -69042,7 +69174,7 @@
 				var validator = $("#example").kendoValidator().data("kendoValidator");
 												
 		        $("#saveNew").click(function(e){				
-					//e.preventDefault();
+					e.preventDefault();
 
 					if(validator.validate()){
 		            	vm.save();		            				  
@@ -69178,25 +69310,15 @@
 			if(banhji.pageLoaded["item_service"]==undefined){
 				banhji.pageLoaded["item_service"] = true;				
 
-				vm.loadVendorItem();
-				vm.loadCustomerItem();							
-
 				var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-
+												
 		        $("#saveNew").click(function(e){				
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
+		            	vm.save();		            				  
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
@@ -69204,26 +69326,11 @@
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
+						vm.set("saveClose", true);
+		            	vm.save();		            	
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-		            	window.print();
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
 				});
 			}
 
@@ -69246,7 +69353,7 @@
 				var validator = $("#example").kendoValidator().data("kendoValidator");
 												
 		        $("#saveNew").click(function(e){				
-					//e.preventDefault();
+					e.preventDefault();
 
 					if(validator.validate()){
 		            	vm.save();		            				  
