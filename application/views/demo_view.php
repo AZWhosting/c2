@@ -11971,7 +11971,7 @@
 			<i class="icon-trash" data-bind="events: { click: removeRowOption }"></i>					
 		</td>			
 		<td>
-			<input id="ddlOption-#:uid#" name="ddlOption-#:uid#"
+			<input id="ddlOption" name="ddlOption-#:uid#"
 				   data-role="dropdownlist"				                      			   
                    data-text-field="name"
                    data-value-field="id"
@@ -11982,7 +11982,7 @@
                    style="width: 100%" />            
 		</td>
 		<td>
-			<input id="cbbInvoice-#:uid#" name="cbbInvoice-#:uid#"
+			<input id="cbbInvoice" name="cbbInvoice-#:uid#"
 				   data-role="combobox"
 				   data-template="reference-list-tmpl"				                      			   
                    data-text-field="number"
@@ -11994,7 +11994,7 @@
                    placeholder="Select Invoice..." 
                    style="width: 100%" />
 
-            <input id="ddlAccount-#:uid#" name="ddlAccount-#:uid#"
+            <input id="ddlAccount" name="ddlAccount-#:uid#"
 				   data-role="dropdownlist"
 				   data-template="account-list-tmpl"				                      			   
                    data-text-field="name"

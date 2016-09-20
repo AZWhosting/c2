@@ -15,7 +15,8 @@
 #ddlPaymentMethod-list,
 #ddlAccount-list,
 #cbbVendor-list,
-#cbbCustomer-list
+#cbbCustomer-list,
+#cbbInvoice-list
 {
   width: 350px !important;
 }
@@ -23,6 +24,7 @@
 #ddlMesurement-list,
 #txtPrice-list,
 #ddlAccount-list,
+#ddlOption-list,
 #ddlOption-list{
   width: 250px !important;
 }

@@ -34,6 +34,9 @@ class Itemreports extends REST_Controller {
 		$deleted = 0;
 		$temp = array();
 		$total =0;
+		$totalService =0;
+		$totalProduct = 0;
+		$totalOnhand =0;
 
 		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$obj->where("item_type_id", 1);
@@ -67,6 +70,9 @@ class Itemreports extends REST_Controller {
 				$out->where('item_id', $value->id);
 				$out->where('movement', -1);
 				$out->get();
+
+				$item = new Item_Type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				
 				foreach($line as $trx) {
 					if(isset($temp["$trx->item_id"])) {
 						if($line->transaction_type == "Purchase_Order") {
@@ -86,6 +92,13 @@ class Itemreports extends REST_Controller {
 						$temp["$trx->item_id"]['onHand'] = $in->quantity - $out->quantity;
 						$temp["$trx->item_id"]['currency_code'] = $value->locale;
 					}
+					if($item->id == 4) {						
+						$totalService += 1;
+					}
+					if($item->id == 1) {						
+						$totalService += 1;
+					}
+					$totalOnhand += $value->onHand;
 				}
 			}
 		}			
@@ -98,13 +111,15 @@ class Itemreports extends REST_Controller {
 				'price'		=> $value['price'],
 				'onHand'	=> $value['onHand'],
 				'currency'	=> $value['currency_code'],
-				'so'		=> isset($value['so'])?$value['so']:"",
+				'so'		=> isset($value['so'])? $value['so'] : 0,
 				'po'		=> $value['po']
 			);
 		}
 
 		// Response Data
-		$data['total'] = $total;
+		$data['totalService'] = $totalService;
+		$data['totalProduct'] = $totalProduct;
+		$data['totalOnhand'] = $totalOnhand;
 		$data['count'] = count($temp);
 		$this->response($data, 200);
 	}
@@ -121,6 +136,7 @@ class Itemreports extends REST_Controller {
 		$itemSale = 0;
 		$service = 0;
 		$onHand = 0;
+		$totalOnhand = 0;
 		$total =0;
 		$temp = array();
 
@@ -147,8 +163,9 @@ class Itemreports extends REST_Controller {
 				$line->get();
 
 				foreach($line as $trx) {
-					$inventory = $trx->item->get();
+					
 					$itemLine = $trx->item_line->get();
+					$inventory = $itemLine->item->get();
 					if(isset($temp["$value->id"])) {
 						$temp["$value->id"]['transactions'][] = array(
 							'id' => $trx->id,
@@ -190,7 +207,7 @@ class Itemreports extends REST_Controller {
 						$onHand += $in->quantity - $out->quantity;
 					}
 					
-					if($inventory->item_type == 1) {
+					if($inventory->item_type_id == 1) {
 						$itemSale++;
 					} else {
 						$service++;
@@ -201,13 +218,14 @@ class Itemreports extends REST_Controller {
 		foreach ($temp as $key => $value) {
 			$data["results"][] = array(
 				'id' 	=> $key,
-				'item' 	=> $value['name'],
+				'item' 	=> $value['name'],			
 				'avg_cost'	=> $value['avg_cost'],
 				'price'	=> $value['price'],
 				'onHand'	=> $value['onHand'],
 				'currency'	=> $value['currency_code'],
 				'transactions' => $value['transactions']
 			);
+			$totalOnhand += $onHand;
 			$total += floatval($value['onHand']) * floatval($value['avg_cost']);
 		}
 
@@ -215,7 +233,7 @@ class Itemreports extends REST_Controller {
 		$data['total'] = $total;
 		$data['item'] = $itemSale;
 		$data['service'] = $service;
-		$data['onHand'] = $onHand;
+		$data['totalOnhand'] = $totalOnhand;
 		$this->response($data, 200);
 	}
 
