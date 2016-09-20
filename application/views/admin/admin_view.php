@@ -514,7 +514,7 @@
                                     <input type="text" 
                                       data-role="datepicker" 
                                       class="form-control"
-                                      data-format="dd-mm" 
+                                      data-format="dd-M" 
                                       data-bind="value: current.fiscal_date">
                                   </td>
                                 </tr>
@@ -881,7 +881,7 @@
             # if(username == userPool.getCurrentUser().username) {#
               <a href="\#password/#=id#"><button class="btn btn-warning btn-block" style="margin-bottom: 5px;">Change Password</button></a>
             #} else {#
-              <button class="btn btn-info btn-block" data-bind="click: forgotPassword" style="margin-bottom: 5px;">Forget Password</button>
+              <button class="btn btn-info btn-block" data-bind="click: forgotPassword" style="margin-bottom: 5px; background: \#001933; border-color: \#001933;">Forget Password</button>
             #}#
           </div>
         </div>
