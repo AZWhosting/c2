@@ -1,5 +1,5 @@
 #cbbContact-list,
-#ccbItem-list,
+
 #cbbCurrency-list,
 #ddlRA-list,
 #ddlDepositAccount-list,
@@ -19,6 +19,10 @@
 #cbbInvoice-list
 {
   width: 350px !important;
+}
+
+#ccbItem-list{
+  width: 470px !important;
 }
 #ddlMeasurement-list,
 #ddlMesurement-list,
