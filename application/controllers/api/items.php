@@ -513,9 +513,8 @@ class Items extends REST_Controller {
 					"quantity" 			=> $value->quantity,
 					"unit_value" 		=> $value->unit_value,
 					"price" 			=> $value->price,
-					"amount" 			=> $value->amount,					 					
- 					
- 					"currency" 			=> $value->currency->get_raw()->result(),
+					"amount" 			=> $value->amount,
+ 					"locale" 			=> $value->locale,
  					"item_price" 		=> $itemPrice,
  					"assembly" 			=> $value->assembly->get_raw()->result()					
 				);

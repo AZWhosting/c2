@@ -7858,7 +7858,7 @@
 							GRN
 						</a>
 					</td>
-					<td class="center">
+					<td class="center" style="width:121px;">
 						<a href="#/vendor_deposit">
 							<img title="Add Supplier Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/supplier_deposit.png" width="110" height="200" />
 							Deposit
@@ -15125,7 +15125,7 @@
 							Sale Order
 						</a>
 					</td>
-					<td class="center">
+					<td class="center" >
 						<a href="#/customer_deposit">
 							<img title="Add Customer Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png" width="110" height="200" />
 							Deposit
@@ -29566,35 +29566,45 @@
 								<div class="row">
 									<div class="span6">	
 								
+										<!-- Group -->
 										<div class="control-group">							
-											<label for="txtSKU"><span data-bind="text: lang.lang.code"></span> <span style="color:red">*</span></label>
-					              			<input id="txtSKU" name="txtSKU" class="k-textbox"
-						              				data-bind="value: obj.number" 
-						              				placeholder="e.g. ID0001" 
+											<label for="txtNumber">Number<span style="color:red">*</span></label>
+					              			<br>
+					              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
+						              				data-bind="value: obj.abbr, 
+						              						   disabled: obj.is_pattern" 
+						              				placeholder="eg. AB" style="width: 55px;" />
+					              			-
+					              			<input id="txtNumber" name="txtNumber" class="k-textbox"
+						              				data-bind="value: obj.number, 
+						              							disabled: obj.is_pattern,
+						              							events:{change: checkExistingNumber}" 
+						              				placeholder="e.g. 0001" 
 						              				required data-required-msg="required"
-						              				style="width: 100%;" />
+						              				style="width: 128px;" />
 						              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 										</div>
+										<!-- // Group END -->
 									
 									</div>
 
-									<div class="span6">	
-									
+									<div class="span6">									
 										<div class="control-group">
-											<label for="txtName"><span data-bind="text: lang.lang.items"></span> <span style="color:red">*</span></label>
+											<label for="txtName"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
 						              		<input id="txtName" name="txtName" class="k-textbox" data-bind="value: obj.name" 
 								              		placeholder="Items Name..." required data-required-msg="required"
 								              		style="width: 100%;" />
-										</div>
-									
+										</div>									
 									</div>								
 								</div>
 
 								<div class="row">
-									<div class="span6">
-								
+									<div class="span6"  style="margin-top: 25px;">
+										<input type="checkbox" data-bind="checked: obj.favorite" /> <span data-bind="text: lang.lang.favorite"></span>
+									</div>
+									<div class="span6">								
 										<div class="control-group">								
-											<label for="txtOnhand"><span data-bind="text: lang.lang.status"></span><span style="color:red">*</span></label>
+											<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span><span style="color:red">*</span></label>
 								            <input id="ddlStatus" name="ddlStatus" 
 					              				data-role="dropdownlist"
 							            		data-text-field="name"
@@ -29603,13 +29613,8 @@
 							            		data-bind="source: statusList, value: obj.status"
 							            		data-option-label="(--- Select ---)"
 							            		required data-required-msg="required" style="width: 100%;" />
-										</div>																		
-																	
-									</div>
-
-									<div class="span6"  style="margin-top: 25px;">
-										<input type="checkbox" data-bind="checked: obj.favorite" /> <span data-bind="text: lang.lang.favorite"></span>
-									</div>															
+										</div>																	
+									</div>																								
 								</div>
 
 							</div>						
@@ -29619,25 +29624,19 @@
 							<div class="span12">
 								<div class="row">
 									<div class="control-group">								
-										<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
-							            <textarea id="txtDescription" cols="0" rows="2" class="k-textbox" 
-											data-bind="value: obj.bill_to" style="width: 100%; height: 49px;"></textarea>
+										<label for="txtPurchaseDescription">Purchase Description</label>
+							            <textarea id="txtPurchaseDescription" name="txtPurchaseDescription" 
+							            	cols="0" rows="2" class="k-textbox" 
+											data-bind="value: obj.purchase_description" 
+											style="width: 100%; height: 44px;"></textarea>
 									</div>
 
-									<div class="control-group" style="margin-top: 10px;">								
-										<label for="items"><span data-bind="text: lang.lang.select_item_for_assemply"></span></label>
-							           
-							            <input data-role="combobox"
-							                   data-placeholder="Select Item..."
-							                   data-value-primitive="true"
-							                   data-auto-bind="false"
-							                   data-text-field="name"
-							                   data-value-field="id"
-							                   data-bind="value: assembly_id,
-							                              source: itemDS"
-							                   style="width: 90%"/>
-
-							            <button type="button" data-role="button" data-bind="click: addItem"><i class="icon-plus"></i></button>
+									<div class="control-group">								
+										<label for="txtDescription">Sale Description</label>
+							            <textarea id="txtSaleDescription" name="txtSaleDescription" 
+							            	cols="0" rows="2" class="k-textbox" 
+											data-bind="value: obj.sale_description" 
+											style="width: 100%; height: 44px;"></textarea>
 									</div>																		
 								</div>
 							</div>
@@ -29656,20 +29655,43 @@
 				                
 				            </tr>
 				        </thead>
-				        <tbody></tbody>				        
+				        <tbody data-role="listview"
+				        		data-auto-bind="false" 
+				        		data-template="itemAssembly-row-template"				        		
+				        		data-bind="source: lineDS"></tbody>				        
 				    </table>
 
-				    <div class="row">
-					    <div class="span4 pull-right">
-							<div class="well pull-right">
-								សរុប៖	<strong data-bind="text: total"></strong>
-							</div>							
-						</div>
+				    <button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
+
+				    
+					<div align="right">
+						សរុប៖	<strong data-bind="text: total"></strong>
 					</div>
+
+					<br>						
 
 				    <!-- Form actions -->
 					<div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>
+
+						<!-- Delete Confirmation -->
+						<div data-role="window"
+			                 data-title="Delete Confirmation"
+			                 data-width="350"
+			                 data-height="200"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'40%',left:'35%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: showConfirm"
+			                 style="text-align:center;">
+			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+			            </div>
+			            <!-- // Delete Confirmation -->
 
 						<div class="row">
 							<div class="span3">
@@ -29679,11 +29701,12 @@
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
 							</div>
 						</div>
 					</div>
 					<!-- // Form actions END -->
+
 				</div>
 			</div>
 		</div>
@@ -29696,8 +29719,16 @@
 			#:banhji.itemAssembly.assemblyDS.indexOf(data)+1#
 		</td>		
 		<td>
-			<span data-bind="text: assembly[0].number"></span>
-			<span data-bind="text: assembly[0].name"></span>
+			<input id="ccbItem" name="ccbItem-#:uid#"
+				   data-role="combobox"
+				   data-template="item-list-tmpl"                   			   
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: item_id, 
+                   			  source: itemDS,
+                   			  events:{ change: itemChanges }"
+                   placeholder="Add Item..." 
+                   required data-required-msg="required" style="width: 100%" />			
 		</td>
 		<td>
 			<span data-bind="text: assembly[0].description"></span>
@@ -31157,8 +31188,7 @@
 				        <thead>
 				            <tr>
 				            	<th width="5%"><span data-bind="text: lang.lang.no"></span></th>				                
-				                <th><span data-bind="text: lang.lang.items"></span></th>
-				                <th><span data-bind="text: lang.lang.description"></span></th>
+				                <th>Item</th>
 				                <th>QOH</th>
 				                <th>Quantity Count</th>
 				                <th>Different</th>
@@ -31186,7 +31216,7 @@
 							</div>
 							<div class="span9" align="right">
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save Close</span>
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>								
 							</div>
 						</div>
@@ -31203,8 +31233,7 @@
     	<td>
 			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
 			#:banhji.itemAdjustment.lineDS.indexOf(data)+1#			
-		</td>   	
-    	<td>#=item.abbr##=item.number# #=item.name#</td>
+		</td>
     	<td>#=description#</td>
     	<td align="right">#=kendo.toString(on_hand, "n")#</td>
     	<td align="right">
@@ -31213,7 +31242,7 @@
                    data-format="n0"
                    data-min="0"
                    data-spinners="false"                   
-                   data-bind="value: new_qty,
+                   data-bind="value: quantity_adjusted,
                    			  events:{ change: onChange }"
                    style="width: 100px;">    		
     	</td>
@@ -33885,7 +33914,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
 				        <thead>
 				            <tr>
-				                <th colspan="2" align="center">Top 5 Cash Balance</th>			                
+				                <th colspan="2" style="text-align: center;">Top 5 Cash Balance</th>			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -33898,7 +33927,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
 				        <thead>
 				            <tr>
-				                <th colspan="2" align="center">Top 5 Cash Advance</th>		                
+				                <th colspan="2" style="text-align: center;">Top 5 Cash Advance</th>		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -33911,7 +33940,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center text-table">
 				        <thead>
 				            <tr>
-				                <th colspan="2" align="center">Top 5 Expense Account</span></th>			                		                
+				                <th colspan="2" style="text-align: center;">Top 5 Expense Account</span></th>			                		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -61574,17 +61603,13 @@
     });
 	banhji.itemAssembly =  kendo.observable({
 		lang 				: langVM,    	
-    	dataSource 			: dataStore(apiUrl + "items"),
+    	dataSource 			: dataStore(apiUrl + "items"),    	
     	itemDS 				: banhji.source.itemDS,
     	assemblyDS 			: dataStore(apiUrl + "items/assembly"),
-    	    	   	
     	statusList 			: banhji.source.statusList,
-
     	obj 	 			: null,
-    	assembly_id			: "",
     	isEdit 				: false,
     	total 				: 0,
-    	
     	pageLoad 			: function(id){			
 			if(id){
 				this.set("isEdit", true);							
@@ -61654,29 +61679,15 @@
       		this.assemblyDS.data([]);
       		this.set("obj", null);
 
-      		this.dataSource.add({
-      			company_id 				: 0,
-      			contact_id 				: 0,      			
-      			category_id 			: 9,
-      			brand_id 				: 0,
+      		this.dataSource.add({      			 			
+      			category_id 			: 9,      			
       			item_type_id 			: 1,      			      			
-      			measurement_id			: 0,      			
-      			main_id 				: 0,
-      			number 					: "",
-      			supplier_code 			: "",
-      			color_code 				: "",
+      			measurement_id			: 0,
+      			number 					: "",      			
       			name 					: "",
-      			description				: "",
-      			cost 					: "",
-      			on_hand					: 0,      			     			
-      			order_point 			: 0,
-      			income_account_id 		: 0,
-      			cogs_account_id  		: 0,
-      			inventory_account_id 	: 0,
-      			deposit_account_id 		: 0,
-      			transaction_account_id 	: 0,
-      			preferred_vendor_id 	: 0,
-      			image_url 				: "",      			
+      			purchase_description	: "",
+      			sale_description 		: "",
+      			price 					: "",
       			favorite 				: false,
       			status 					: 1,
       			is_assemble 			: 1,
@@ -61688,46 +61699,19 @@
       						
 			this.set("obj", obj);			
       	},
-      	addItem 			: function(){      		
-      		var assembly_id = this.get("assembly_id"),
-      		isExisting = false,
-      		item = this.itemDS.get(assembly_id),
-      		item_id = 0, obj = this.get("obj");
-			
-			if(this.get("isEdit")){
-				item_id = obj.id;
-			}
-      		
-      		if(item){
-	      		if(this.assemblyDS.total()>0){
-	      			$.each(this.assemblyDS.data(), function(index, value){
-	      				if(value.assembly_id==assembly_id){
-	      					isExisting = true;
+      	addRow 				: function(){      		
+      		var obj = this.get("obj");			
+	      		    			
+      		this.assemblyDS.add({
+      			item_id 		: "",
+      			assembly_id 	: obj.id,
+      			quantity 		: 1,
+      			price 			: 0,
+      			amount 			: 0,
+      			locale 			: obj.locale    			
+			});
 
-	      					return false;
-	      				}
-	      			});
-	      		}
-	      		
-	      		if(isExisting===false){	      			
-		      		this.assemblyDS.add({
-		      			item_id 		: item_id,
-		      			assembly_id 	: assembly_id,
-		      			currency_id 	: item.item_prices[0].currency_id,
-		      			measurement_id 	: item.item_prices[0].measurement_id,
-		      			quantity 		: 1,
-		      			unit_value 		: 0,
-		      			price 			: item.item_prices[0].price,
-		      			amount 			: item.item_prices[0].price,
-		      			
-		      			assembly 		: [{ number:item.number, name:item.name, description:item.description }],
-		      			currency 		: [item.item_prices[0].currency[0]],
-		      			item_prices 		: item.item_prices		      			
-					});
-
-					this.changes();	      		
-				}
-			}			
+			this.changes();					
       	},
       	removeItem 			: function(e){
       		e.preventDefault();
@@ -62712,6 +62696,7 @@
 			pageSize: 100
 		}),
 		obj 					: null,
+		isEdit 					: false,
 		saveClose 				: false,
 		savePrint 				: false,
 		searchText 				: "",
@@ -62877,13 +62862,11 @@
 						measurement_id 		: value.measurement_id,						
 						description 		: value.purchase_description,
 						on_hand 			: value.on_hand,
-						new_qty 			: "",				
+						quantity_adjusted 	: "",				
 						quantity 	 		: 0,
 						rate				: banhji.source.getRate(value.locale, new Date(obj.issued_date)),
 						locale				: value.locale,
-						movement 			: 1,
-
-						item 				: value					
+						movement 			: 1				
             		});
             	});
             });
@@ -62899,8 +62882,8 @@
 		onChange 				: function(e) {
       		var data = e.data;            
             
-            if(kendo.parseInt(data.new_qty)>0){
-            	var diff = data.new_qty - data.on_hand;
+            if(data.quantity_adjusted){
+            	var diff = data.quantity_adjusted - data.on_hand;
 
             	data.set("quantity", diff);         
 		        
@@ -62931,13 +62914,25 @@
     		var self = this;
 
     		this.dataSource.query({    			
-				filter: { field:"id", value: id }
+				filter: { field:"id", value: id },
+				page:1,
+				pageSize:100
 			}).then(function(e){
 				var view = self.dataSource.view();
 						    	
-		    	self.set("obj", view[0]);
-		    	self.lineDS.filter({ field:"transaction_id", value: id });
+		    	self.set("obj", view[0]);		    	
 		    	self.journalLineDS.filter({ field:"transaction_id", value: id });
+		    	self.lineDS.filter({ field:"transaction_id", value: id });
+		    	self.lineDS.bind("requestEnd", function(e){
+		    		if(e.type=="read"){
+		    			var response = e.response.results;
+
+		    			$.each(response, function(index, value){		    				
+		    				var qty = value.quantity*value.movement;
+		    				value.quantity = qty;
+		    			});
+		    		}
+		    	});
 			});
     	},
         addEmpty 		 		: function(){							
@@ -62953,22 +62948,20 @@
 				transaction_template_id : "",				
 				employee_id 			: "",
 				job_id 					: "",
-				account_id 	 			: 0,				
- 	    		number 					: "",
+				account_id 	 			: 0,
 			   	type					: "Adjustment",			   				   
 			   	rate					: banhji.source.getRate(banhji.locale, new Date()),			   	
 			   	locale 					: banhji.locale,			   	
 			   	issued_date 			: new Date(),			   	
 			   	memo 					: "",
 			   	memo2 					: "",
-			   	is_journal 				: 1,
-
-			   	segments 				: []				
+			   	segments 				: [],
+			   	is_journal 				: 1
 	    	});		    		
 			
 			var obj = this.dataSource.at(0);	
 			this.set("obj", obj);			
-		},
+		},		
 	    objSync 				: function(){
 	    	var dfd = $.Deferred();	        
 
@@ -62987,27 +62980,35 @@
 		save 					: function(){			
 			var self = this, obj = this.get("obj");
 
-			//Edit Mode
-	    	if(this.get("isEdit")){
-	    		//Line has changes
-		    	if(this.lineDS.hasChanges()){
-		    		obj.set("dirty", true);
+			//Remove empty row
+			$.each(this.lineDS.view(), function(index, value){
+		  		if(!value.quantity_adjusted){
+		  			self.lineDS.remove(value);
+		  		}
+		  	});			
 
-		    		$.each(this.journalLineDS.data(), function(index, value){
-						value.set("deleted", 1);										
-					});
+			// //Edit Mode
+	  //   	if(this.get("isEdit")){
+	  //   		//Line has changes
+		 //    	if(this.lineDS.hasChanges()){
+		 //    		obj.set("dirty", true);
 
-					this.addJournal(obj.id);
-		    	}
-	    	}
+		 //    		$.each(this.journalLineDS.data(), function(index, value){
+			// 			value.set("deleted", 1);										
+			// 		});
+
+			// 		this.addJournal(obj.id);
+		 //    	}
+	  //   	}
 
 			//Save Obj
 			this.objSync()
 			.then(function(data){ //Success												
 				if(self.get("isEdit")==false){
 					//Item Line
-					$.each(self.lineDS.data(), function(index, value){
+					$.each(self.lineDS.data(), function(index, value){						
 	      				value.set("transaction_id", data[0].id);
+	      				value.set("quantity", Math.abs(value.quantity));	      				
 	      			});
 
 	      			//Attachment
@@ -63067,7 +63068,7 @@
 				accountID = item.inventory_account_id,
 				itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date)),
 				itemCost = value.quantity*(item.cost/itemRate);
-					
+				
 				if(inventoryList[accountID]===undefined){
 					inventoryList[accountID]={"id": accountID, "amount": itemCost, "rate": itemRate, "locale": item.locale};						
 				}else{											
@@ -63081,11 +63082,12 @@
 
 			//Start journal		
 			if(!jQuery.isEmptyObject(inventoryList)){
-				var gainPositive = 0, gainNegative = 0;							
-				$.each(inventoryList, function(index, value){
-					if(value.amount>0){
-						gainPositive += value.amount;
+				var gainLoss = 0;
 
+				$.each(inventoryList, function(index, value){
+					gainLoss += value.amount;
+
+					if(value.amount>0){
 						//Add +Positive Inventory On Dr
 						self.journalLineDS.add({					
 							transaction_id 		: transaction_id,
@@ -63093,14 +63095,12 @@
 							description 		: "",
 							reference_no 		: "",
 							segments 	 		: [],								
-							dr 	 				: value.amount,
+							dr 	 				: Math.abs(value.amount),
 							cr 					: 0,				
 							rate				: value.rate,
 							locale				: value.locale
 						});
-					}else{
-						gainNegative += (value.amount*-1);
-						
+					}else{						
 						//Add -Negative Inventory On Cr
 						self.journalLineDS.add({					
 							transaction_id 		: transaction_id,
@@ -63109,42 +63109,32 @@
 							reference_no 		: "",
 							segments 	 		: [],								
 							dr 	 				: 0,
-							cr 					: value.amount,				
+							cr 					: Math.abs(value.amount),				
 							rate				: value.rate,
 							locale				: value.locale
 						});
 					}								
 				});
 
-				//Add -Negative Gain Or Loss On Dr
-				if(gainNegative>0){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: obj.account_id,			
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: gainNegative,
-						cr 					: 0,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});
+				//Add Gain Or Loss Account
+				var dr = 0, cr = 0;
+				if(gainLoss>0){					
+					cr = Math.abs(gainLoss);
+				}else{
+					dr = Math.abs(gainLoss);
 				}
 
-				//Add +Positive Gain Or Loss On Cr
-				if(gainPositive>0){
-					self.journalLineDS.add({					
-						transaction_id 		: transaction_id,
-						account_id 			: obj.account_id,				
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: [],								
-						dr 	 				: 0,
-						cr 					: gainPositive,				
-						rate				: obj.rate,
-						locale				: obj.locale
-					});
-				}							
+				self.journalLineDS.add({					
+					transaction_id 		: transaction_id,
+					account_id 			: obj.account_id,			
+					description 		: "",
+					reference_no 		: "",
+					segments 	 		: [],								
+					dr 	 				: dr,
+					cr 					: cr,				
+					rate				: obj.rate,
+					locale				: obj.locale
+				});				
 			}			
 
 			this.journalLineDS.sync();
