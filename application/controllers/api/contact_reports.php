@@ -714,11 +714,13 @@ class Contact_reports extends REST_Controller {
 		$customer = [];
 
 		//Group by contact_id
-		foreach($obj as $value) {			
+		foreach($obj as $value) {
+			$amt = floatval($value->amount) - (floatval($value->amount_paid) + floatval($value->deposit));
+						
 			if(isset($customer[$value->contact_id])){
-				$customer[$value->contact_id]['amount'] += (floatval($value->amount) - floatval($value->amount_paid)) / floatval($value->rate);
+				$customer[$value->contact_id]['amount'] += $amt / floatval($value->rate);
 			} else {
-				$customer[$value->contact_id]['amount'] = (floatval($value->amount) - floatval($value->amount_paid)) / floatval($value->rate);
+				$customer[$value->contact_id]['amount'] = $amt / floatval($value->rate);
 			}					
 		}		
 
@@ -1238,7 +1240,7 @@ class Contact_reports extends REST_Controller {
 				$apAmount += floatval($value->amount) / floatval($value->rate);
 			}
 
-			$apAmount -= floatval($value->amount);
+			$apAmount -= floatval($value->deposit);
 
 			//Group customer
 			if(isset($arCustomer[$value->contact_id])){
@@ -1532,7 +1534,7 @@ class Contact_reports extends REST_Controller {
 			}									 			
 		}
 
-		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase"));
+		$obj->where("type", "Credit_Purchase");
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring", $is_recurring);		
 		$obj->where("deleted", $deleted);		
@@ -1542,11 +1544,13 @@ class Contact_reports extends REST_Controller {
 		$customer = [];
 
 		//Group by contact_id
-		foreach($obj as $value) {			
+		foreach($obj as $value) {
+			$amt = floatval($value->amount) - (floatval($value->amount_paid) + floatval($value->deposit));
+
 			if(isset($customer[$value->contact_id])){
-				$customer[$value->contact_id]['amount'] += (floatval($value->amount) - floatval($value->amount_paid)) / floatval($value->rate);
+				$customer[$value->contact_id]['amount'] += $amt / floatval($value->rate);
 			} else {
-				$customer[$value->contact_id]['amount'] = (floatval($value->amount) - floatval($value->amount_paid)) / floatval($value->rate);
+				$customer[$value->contact_id]['amount'] = $amt / floatval($value->rate);
 			}					
 		}		
 
