@@ -34015,9 +34015,6 @@
 	<tr data-uid="#: uid #">
 		<td>#:banhji.cashDashboard.topCashDS.indexOf(data)+1#</td>		
 		<td>
-<<<<<<< HEAD
-			<span>#=name#</span>
-=======
 			<span>
 				#if(name.length>15){#
 					#=name.substring(0, 15)#...
@@ -34025,7 +34022,6 @@
 					#=name#
 				#}#
 			</span>
->>>>>>> a6ff663d07eaf187a2b22a7d0dbef5c4db3344ad
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>		
 	</tr>
