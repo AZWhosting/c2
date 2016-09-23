@@ -73,6 +73,19 @@
       padding: 17px 0 0 5px !important;
 }
 
+
+.box-generic-noborder{
+  border: #ccc 1px solid;
+  padding-bottom: 15px;
+  height: auto; 
+  margin-bottom: 15px; 
+  overflow: hidden;
+  min-height: 190px;
+}
+.box-generic-noborder .tab-content{
+ padding:0 15px ;
+}
+
 #txtAmount{
   width: 97% !important;
 }

@@ -1160,7 +1160,7 @@
 			    	<div class="row-fluid">
 			    		<div class="span8 well">							
 							<div class="row-fluid">
-								<div class="span6">						
+								<div class="span6" style="padding-left: 15px;">						
 									<!-- Group -->
 									<div class="control-group">
 										<label for="txtName">Item Name <span style="color:red">*</span></label>
@@ -1188,7 +1188,7 @@
 								</div>								
 							</div>
 							<div class="row-fluid">
-								<div class="span6">						
+								<div class="span6" style="padding-left: 15px;">						
 									<!-- Group -->
 									<div class="control-group">
 										<label for="ddlAccount">Account <span style="color:red">*</span></label>
@@ -1227,7 +1227,7 @@
 						<div class="span4">
 							<div class="row-fluid">
 								<!-- Group -->
-								<div class="control-group">								
+								<div class="control-group" style="padding-right: 0;">								
 									<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
 						            <textarea id="txtDescription" name="txtDescription" class="k-textbox" 
 										data-bind="value: obj.description" style="height: 110px; width: 100%;"></textarea>
@@ -1238,17 +1238,16 @@
 					</div>									
 
 					<br>											
-							
-					<!-- Form actions -->
+			
 					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
 						<span id="notification"></span>
 
 						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>															 -->
+						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>															 
 						<span class="btn btn-icon btn-default glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
 						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
 					</div>
-					<!-- // Form actions END -->
+					
 
 				</div>
 			</div>
@@ -1332,7 +1331,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 150px;">
+							<div class="box-generic-noborder" >
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -5586,7 +5585,7 @@
 <script id="segment" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
-			<div class="container-960">					
+			<div class="container-960" style="overflow: hidden;">					
 			<div id="example" class="k-content">
 
 				<div class="hidden-print">
@@ -5645,13 +5644,14 @@
 					</table>
 
 					<br>
-
-					<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
-					<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
+					<div style="text-align: center;">
+						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
+						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
+					</div>
 				</div>
 						
                 <div class="row-fluid">
-	                <div class="span12 table-segment">	                					
+	                <div class="span12 table-segment" style="padding: 0;">	                					
 		            	<table class="table table-condensed">
 		            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
 		            			<tr>
@@ -5718,9 +5718,10 @@
 					</table>
 
 					<br>
-
-					<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i>Save</span>
-					<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i>Close</span>  
+					<div style="text-align: center;">
+						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i>Save</span>
+						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i>Close</span>  
+					</div>
 				</div>
 
 				<h3 data-bind="text: objName"></h3>
@@ -6866,7 +6867,7 @@
 
 					<div class="span8">
 
-						<div class="box-generic" style="height: 150px;">
+						<div class="box-generic-noborder">
 
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
@@ -7336,7 +7337,7 @@
 
 					<div class="span8">
 
-						<div class="box-generic" style="height: 190px;">
+						<div class="box-generic-noborder">
 
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
@@ -9070,7 +9071,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 190px;">
+							<div class="box-generic-noborder" >
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -9632,7 +9633,7 @@
 
 					<div class="span8">
 
-						<div class="box-generic" style="height: 190px;">
+						<div class="box-generic-noborder">
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -10129,7 +10130,7 @@
 
 					<div class="span8">
 
-						<div class="box-generic" style="height: 150px;">
+						<div class="box-generic-noborder">
 
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
@@ -10150,7 +10151,7 @@
 
 						    	<!-- Option Tab content -->
 						    	<div class="tab-pane active" id="tab1-4">
-							       	<table class="table table-borderless table-condensed cart_total">						
+							       	<table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">						
 										<tr>
 											<td style="width: 15%">Deposit To</td>
 											<td style="width: 40%">
@@ -10586,7 +10587,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 190px;">
+							<div class="box-generic-noborder">
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -11577,7 +11578,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 190px;">
+							<div class="box-generic-noborder">
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -11598,7 +11599,7 @@
 
 							    	<!-- Options Tab content -->
 							        <div class="tab-pane active" id="tab1-4">						            
-							            <table class="table table-borderless table-condensed cart_total">										
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">										
 											<tr>							            				
 												<td>Related Purchase</td>
 								            	<td>
@@ -16335,7 +16336,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 190px;">
+							<div class="box-generic-noborder" >
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -16358,7 +16359,7 @@
 
 							    	<!-- Options Tab content -->
 							        <div class="tab-pane active" id="tab1-5">						            
-							            <table class="table table-borderless table-condensed cart_total">							            
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">							            
 											<tr>
 												<td>
 													Balance: <span data-bind="text: balance"></span>
@@ -16924,7 +16925,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 190px;">
+							<div class="box-generic-noborder" >
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -17519,7 +17520,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 190px;">
+							<div class="box-generic-noborder" style="height: 190px;">
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -18016,7 +18017,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 190px;">
+							<div class="box-generic-noborder" >
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -18039,7 +18040,7 @@
 
 							    	<!-- Options Tab content -->
 							        <div class="tab-pane active" id="tab1-5">						            
-							            <table class="table table-borderless table-condensed cart_total">							            
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">							            
 											<tr>
 												<td>
 													Balance:
@@ -18651,7 +18652,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 190px;">
+							<div class="box-generic-noborder">
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -18674,7 +18675,7 @@
 
 							    	<!-- Options Tab content -->
 							        <div class="tab-pane active" id="tab1-5">						            
-							            <table class="table table-borderless table-condensed cart_total">							            
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">							            
 											<tr>
 												<td>
 													Balance:
@@ -19279,7 +19280,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 190px;">
+							<div class="box-generic-noborder" style="height: 190px;">
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -19791,7 +19792,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 190px;">
+							<div class="box-generic-noborder" style="height: 190px;">
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -27256,7 +27257,7 @@
 
 					<div class="span8">
 
-						<div class="box-generic" style="height: 150px;">
+						<div class="box-generic-noborder">
 
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
@@ -27703,7 +27704,7 @@
 
 						<div class="span8">
 
-							<div class="box-generic" style="height: 190px;">
+							<div class="box-generic-noborder" >
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
@@ -27720,7 +27721,7 @@
 
 							    	<!-- Options Tab content -->
 							        <div class="tab-pane active" id="tab1-2">						            
-							            <table class="table table-borderless table-condensed cart_total">
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
 							            	<tr>
 												<td>Date</td>
 												<td class="right">
@@ -28060,7 +28061,7 @@
 
 					<div class="span8">
 
-						<div class="box-generic" style="height: 190px;">
+						<div class="box-generic-noborder">
 
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
@@ -28075,7 +28076,7 @@
 
 						    	<!-- Options Tab content -->
 						        <div class="tab-pane active" id="tab1-1">						            
-						            <table class="table table-borderless table-condensed cart_total">
+						            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
 						            	<tr>
 											<td>Date</td>
 											<td class="right">
@@ -29628,7 +29629,7 @@
 							            <textarea id="txtPurchaseDescription" name="txtPurchaseDescription" 
 							            	cols="0" rows="2" class="k-textbox" 
 											data-bind="value: obj.purchase_description" 
-											style="width: 100%; height: 44px;"></textarea>
+											style="width: 100%; height: 44px; resize: none;"></textarea>
 									</div>
 
 									<div class="control-group">								
@@ -29636,7 +29637,7 @@
 							            <textarea id="txtSaleDescription" name="txtSaleDescription" 
 							            	cols="0" rows="2" class="k-textbox" 
 											data-bind="value: obj.sale_description" 
-											style="width: 100%; height: 44px;"></textarea>
+											style="width: 100%; height: 44px;resize: none;"></textarea>
 									</div>																		
 								</div>
 							</div>
@@ -31027,160 +31028,160 @@
 						</div>					   
 
 						<div class="span8" style="padding-left:0;">							
+							<div class=" box-generic-noborder">
+							    <!-- Tabs Heading -->
+							    <div class="tabsbar tabsbar-2">
+							        <ul class="row-fluid row-merge">
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i> </a>
+							            </li>						            
+							            <li class="span1 glyphicons pen"><a href="#tab2-4" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons circle_info"><a href="#tab3-4" data-toggle="tab"><i></i></a>
+								        </li>
+							            <li class="span1 glyphicons paperclip"><a href="#tab4-4" data-toggle="tab"><i></i></a>
+							            </li>			            								            
+							        </ul>
+							    </div>
+							    <!-- // Tabs Heading END -->
 
-						    <!-- Tabs Heading -->
-						    <div class="tabsbar tabsbar-2">
-						        <ul class="row-fluid row-merge">
-						        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i> </a>
-						            </li>						            
-						            <li class="span1 glyphicons pen"><a href="#tab2-4" data-toggle="tab"><i></i></a>
-						            </li>
-						            <li class="span1 glyphicons circle_info"><a href="#tab3-4" data-toggle="tab"><i></i></a>
-							        </li>
-						            <li class="span1 glyphicons paperclip"><a href="#tab4-4" data-toggle="tab"><i></i></a>
-						            </li>			            								            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
+							    <div class="tab-content">
 
-						    <div class="tab-content">
+							    	<!-- Options Tab content -->
+							        <div class="tab-pane active" id="tab1-4">						            
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+							            	<tr>
+												<td>Date</td>
+												<td class="right">
+													<input id="issuedDate" name="issuedDate" 
+															data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd" 
+															data-bind="value: obj.issued_date, 
+																		events:{ change : setRate }" 
+															required data-required-msg="required"
+															style="width:100%;" />
+												</td>
+											</tr>											
+								            <tr>
+												<td>
+													Staff
+												</td>
+												<td>
+													<input id="cbbReader" name="cbbReader" 
+									    				   data-role="combobox"
+										                   data-placeholder="Select ..."
+										                   data-auto-bind="false"
+										                   data-value-primitive="true"
+										                   data-filter="startswith"							                   
+										                   data-min-length="3"							                   
+										                   data-text-field="name"
+										                   data-value-field="id"							                   
+										                   data-bind="value: obj.contact_id,
+										                              source: contactDS"
+										                   style="width: 100%" />
+												</td>
+											</tr>										
+								            <tr>
+								            	<td><span data-bind="text: lang.lang.adjustment_account"></span></td>
+								            	<td>
+								            		<input id="ddlAccount" name="ddlAccount"
+								            			   data-role="dropdownlist"
+														   data-option-label="Select Account..."
+														   data-header-template="account-header-tmpl"							                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"									                   
+										                   data-bind="value: obj.account_id,
+										                              source: accountDS"
+										                   required data-required-msg="required" style="width: 100%;" />
+								            	</td>
+								            </tr>
+							            </table>						            
+							        </div>
+							        <!-- // Options Tab content END -->
 
-						    	<!-- Options Tab content -->
-						        <div class="tab-pane active" id="tab1-4">						            
-						            <table class="table table-borderless table-condensed cart_total">
-						            	<tr>
-											<td>Date</td>
-											<td class="right">
-												<input id="issuedDate" name="issuedDate" 
-														data-role="datepicker"
-														data-format="dd-MM-yyyy"
-														data-parse-formats="yyyy-MM-dd" 
-														data-bind="value: obj.issued_date, 
-																	events:{ change : setRate }" 
-														required data-required-msg="required"
-														style="width:100%;" />
-											</td>
-										</tr>											
-							            <tr>
-											<td>
-												Staff
-											</td>
-											<td>
-												<input id="cbbReader" name="cbbReader" 
-								    				   data-role="combobox"
-									                   data-placeholder="Select ..."
-									                   data-auto-bind="false"
-									                   data-value-primitive="true"
-									                   data-filter="startswith"							                   
-									                   data-min-length="3"							                   
-									                   data-text-field="name"
-									                   data-value-field="id"							                   
-									                   data-bind="value: obj.contact_id,
-									                              source: contactDS"
-									                   style="width: 100%" />
-											</td>
-										</tr>										
-							            <tr>
-							            	<td><span data-bind="text: lang.lang.adjustment_account"></span></td>
-							            	<td>
-							            		<input id="ddlAccount" name="ddlAccount"
-							            			   data-role="dropdownlist"
-													   data-option-label="Select Account..."
-													   data-header-template="account-header-tmpl"							                   
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"									                   
-									                   data-bind="value: obj.account_id,
-									                              source: accountDS"
-									                   required data-required-msg="required" style="width: 100%;" />
-							            	</td>
-							            </tr>
-						            </table>						            
-						        </div>
-						        <!-- // Options Tab content END -->
+							        <!-- Memo Tab content -->
+							        <div class="tab-pane" id="tab2-4">
+							        	<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+										<br>						
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+							        </div>
+							        <!-- // Memo Tab content END -->
 
-						        <!-- Memo Tab content -->
-						        <div class="tab-pane" id="tab2-4">
-						        	<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-									<br>						
-									<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
-						        </div>
-						        <!-- // Memo Tab content END -->
+							        <!-- Info Tab content -->
+							        <div class="tab-pane" id="tab3-4">
+							        	
+										<table class="table table-borderless table-condensed cart_total">							            					            	
+											<tr>
+												<td>Segments</td>
+												<td>
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-header-template="segment-header-tmpl"								   
+														   data-item-template="segment-list-tmpl"				    
+														   data-value-field="id" 
+														   data-text-field="code"
+														   data-bind="value: obj.segments, 
+														   			source: segmentItemDS,
+														   			events:{ change: segmentChanges }"
+														   data-placeholder="Add Segment.."				   
+														   style="width: 100%" /></select>
+												</td>
+											</tr>
+											<tr>
+												<td>Job</td>
+												<td>
+													<input id="ddlJob" name="ddlJob"
+														   data-role="dropdownlist"
+														   data-header-template="job-header-tmpl"
+														   data-template="job-list-tmpl"
+														   data-auto-bind="false"				                
+										                   data-value-primitive="true"									                   				   
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.job_id, 
+										                   			source: jobDS"
+										                   data-option-label="Add job..." 
+										                   style="width: 100%" />										
+												</td>
+											</tr>											
+							            </table>
+												
+							        </div>
+							        <!-- // Info Tab content END -->
+							        
+							        <!-- Attach Tab content -->
+							        <div class="tab-pane" id="tab4-4">
+							         	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
+							            
+							            <input id="files" name="files"
+						                   type="file"
+						                   data-role="upload"
+						                   data-show-file-list="false"
+						                   data-bind="events: { 
+				                   				select: onSelect
+						                   }">
 
-						        <!-- Info Tab content -->
-						        <div class="tab-pane" id="tab3-4">
-						        	
-									<table class="table table-borderless table-condensed cart_total">							            					            	
-										<tr>
-											<td>Segments</td>
-											<td>
-												<select data-role="multiselect"
-													   data-value-primitive="true"
-													   data-header-template="segment-header-tmpl"								   
-													   data-item-template="segment-list-tmpl"				    
-													   data-value-field="id" 
-													   data-text-field="code"
-													   data-bind="value: obj.segments, 
-													   			source: segmentItemDS,
-													   			events:{ change: segmentChanges }"
-													   data-placeholder="Add Segment.."				   
-													   style="width: 100%" /></select>
-											</td>
-										</tr>
-										<tr>
-											<td>Job</td>
-											<td>
-												<input id="ddlJob" name="ddlJob"
-													   data-role="dropdownlist"
-													   data-header-template="job-header-tmpl"
-													   data-template="job-list-tmpl"
-													   data-auto-bind="false"				                
-									                   data-value-primitive="true"									                   				   
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.job_id, 
-									                   			source: jobDS"
-									                   data-option-label="Add job..." 
-									                   style="width: 100%" />										
-											</td>
-										</tr>											
-						            </table>
-											
-						        </div>
-						        <!-- // Info Tab content END -->
-						        
-						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab4-4">
-						         	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
-						            
-						            <input id="files" name="files"
-					                   type="file"
-					                   data-role="upload"
-					                   data-show-file-list="false"
-					                   data-bind="events: { 
-			                   				select: onSelect
-					                   }">
+							            <table class="table table-bordered">
+									        <thead>
+									            <tr>			                
+									                <th>File Name</th>
+									                <th>Description</th>
+									                <th>Date</th>
+									                <th style="width: 13%;"></th>                			                
+									            </tr> 
+									        </thead>
+									        <tbody data-role="listview" 
+									        		data-template="attachment-list-tmpl" 
+									        		data-auto-bind="false"
+									        		data-bind="source: attachmentDS"></tbody>			        
+									    </table>
 
-						            <table class="table table-bordered">
-								        <thead>
-								            <tr>			                
-								                <th>File Name</th>
-								                <th>Description</th>
-								                <th>Date</th>
-								                <th style="width: 13%;"></th>                			                
-								            </tr> 
-								        </thead>
-								        <tbody data-role="listview" 
-								        		data-template="attachment-list-tmpl" 
-								        		data-auto-bind="false"
-								        		data-bind="source: attachmentDS"></tbody>			        
-								    </table>
+							        </div>
+							        <!-- // Attach Tab content END -->							        
 
-						        </div>
-						        <!-- // Attach Tab content END -->							        
-
-						    </div>							
-
+							    </div>							
+							</div>
 					    </div>					   
 					</div>
 
@@ -33979,7 +33980,13 @@
 	<tr data-uid="#: uid #">
 		<td>#:banhji.cashDashboard.topCashDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=number#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>		
 	</tr>
@@ -33988,7 +33995,13 @@
 	<tr>
 		<td>#:banhji.cashDashboard.topAdvaDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>
 	</tr>
@@ -33997,7 +34010,13 @@
 	<tr data-uid="#: uid #">
 		<td>#:banhji.cashDashboard.topExpsDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=name#</span>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>		
 	</tr>
@@ -35518,16 +35537,16 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>  				  				
-  				<li><a href='#/quote'>Quote</a></li>  				
-  				<li><a href='#/sale_order'>Sale Order</a></li>
-  				<li><a href='#/gdn'>Goods Delivery Address Note</a></li>
+  				<li><a href='#/quote'>Add Quote</a></li>  				
+  				<li><a href='#/sale_order'>Add Sale Order</a></li>
+  				<li><a href='#/gdn'>Add Goods Delivery Note</a></li>
   				<li><a href='#/customer_deposit'>Deposit</a></li>
   				<li><a href='#/cash_sale'>Cash Sale</a></li>  				
   				<li><a href='#/invoice'><span data-bind="text: lang.invoice"></span></a></li>
   				<li><a href='#/statement'>Statement</a></li>
   				<li><a href='#/cash_receipt'>Receive Payment</a></li>
   				<li><a href="#/customerInvoiceSent">Invoice Sent To</a></li>
-  				<li><a href='#/customer'><span data-bind="text: lang.new_customer"></span></a></li> 				  				 				
+  				<li><a href='#/customer'>Add <span data-bind="text: lang.new_customer"></span></a></li> 				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/cash_report_center'>REPORTS</a></li>	  	
