@@ -26633,12 +26633,12 @@
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
         	<div class="span7">
-        		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+        		<div class="logo" style="width: 40%">
+	            	<img style="width: " data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span5">
-        		<div class="span12">
+        		<div class="span12" style="margin-bottom: 10px;">
         			<img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" />
         		</div>
         		<div class="span12">

@@ -177,7 +177,7 @@ class Items extends REST_Controller {
 				   	"image_url" 			=> $value->image_url,
 				   	"favorite" 				=> $value->favorite=="true"?true:false,
 				   	"is_catalog" 			=> $value->is_catalog,
-				   	"is_assemble" 			=> $value->is_assemble,
+				   	"is_assembly" 			=> $value->is_assembly,
 				   	"is_pattern" 			=> intval($value->is_pattern),				  
 				   	"status" 				=> $value->status,
 				   	"deleted" 				=> $value->deleted, 					
@@ -240,7 +240,7 @@ class Items extends REST_Controller {
 		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
 		   	isset($value->favorite) 				? $obj->favorite 				= $value->favorite : "";
 		   	isset($value->is_catalog) 				? $obj->is_catalog 				= $value->is_catalog : "";
-		   	isset($value->is_assemble) 				? $obj->is_assemble 			= $value->is_assemble : "";
+		   	isset($value->is_assembly) 				? $obj->is_assembly 			= $value->is_assembly : "";
 		   	isset($value->is_pattern) 				? $obj->is_pattern 				= $value->is_pattern : "";
 		   	isset($value->status) 					? $obj->status 					= $value->status : "";	   	
 		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
@@ -287,7 +287,7 @@ class Items extends REST_Controller {
 				   	"image_url" 			=> $obj->image_url,
 				   	"favorite" 				=> $obj->favorite=="true"?true:false,
 				   	"is_catalog" 			=> $obj->is_catalog,
-				   	"is_assemble" 			=> $obj->is_assemble,
+				   	"is_assembly" 			=> $obj->is_assembly,
 				   	"is_pattern" 			=> intval($obj->is_pattern),				  
 				   	"status" 				=> $obj->status,
 				   	"deleted" 				=> $obj->deleted
@@ -348,7 +348,7 @@ class Items extends REST_Controller {
 		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
 		   	isset($value->favorite) 				? $obj->favorite 				= $value->favorite : "";
 		   	isset($value->is_catalog) 				? $obj->is_catalog 				= $value->is_catalog : "";
-		   	isset($value->is_assemble) 				? $obj->is_assemble 			= $value->is_assemble : "";
+		   	isset($value->is_assembly) 				? $obj->is_assembly 			= $value->is_assembly : "";
 		   	isset($value->is_pattern) 				? $obj->is_pattern 				= $value->is_pattern : "";
 		   	isset($value->status) 					? $obj->status 					= $value->status : "";	   	
 		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
@@ -396,7 +396,7 @@ class Items extends REST_Controller {
 				   	"image_url" 			=> $obj->image_url,
 				   	"favorite" 				=> $obj->favorite=="true"?true:false,
 				   	"is_catalog" 			=> $obj->is_catalog,
-				   	"is_assemble" 			=> $obj->is_assemble,
+				   	"is_assembly" 			=> $obj->is_assembly,
 				   	"is_pattern" 			=> intval($obj->is_pattern),				  
 				   	"status" 				=> $obj->status,
 				   	"deleted" 				=> $obj->deleted
@@ -1030,7 +1030,7 @@ class Items extends REST_Controller {
 		//Total Inventory Value
 		$item->where("item_type_id", 1);
 		$item->where("is_catalog", 0);
-		$item->where("is_assemble", 0);
+		$item->where("is_assembly", 0);
 		$item->get();
 
 		$total_cost = 0; $total_cogs = 0; $as_of = date("Y-m-d"); $sdate = date("Y-m-d");
@@ -1109,7 +1109,7 @@ class Items extends REST_Controller {
 		
 		$obj->where("item_type_id", 1);
 		$obj->where("is_catalog", 0);
-		$obj->where("is_assemble", 0);		
+		$obj->where("is_assembly", 0);		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -1228,7 +1228,7 @@ class Items extends REST_Controller {
 		
 		$obj->where("item_type_id", 1);
 		$obj->where("is_catalog", 0);
-		$obj->where("is_assemble", 0);		
+		$obj->where("is_assembly", 0);		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -1292,7 +1292,7 @@ class Items extends REST_Controller {
 		
 		$obj->where("item_type_id", 1);
 		$obj->where("is_catalog", 0);
-		$obj->where("is_assemble", 0);		
+		$obj->where("is_assembly", 0);		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -1371,7 +1371,7 @@ class Items extends REST_Controller {
 		
 		$obj->where("item_type_id", 1);
 		$obj->where("is_catalog", 0);
-		$obj->where("is_assemble", 0);		
+		$obj->where("is_assembly", 0);		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
