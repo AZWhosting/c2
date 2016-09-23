@@ -26654,76 +26654,53 @@
         			</table>
         		</div>
         	</div>
-        	<div class="span12 clear mid-header" style="background:none;">
-        		<div class="span3" style="margin-right: 15px;">
-        			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
-        			</p>
+        	<div class="span12" style="margin-top: 10px;">
+		    	<div class="span6" style="">
+		    		<table class="span12">
+						<tr>
+							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Recieve From</td>
+							<td data-bind="text: obj.issued_date"></td>
+						</tr>
+						<tr>
+							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Contact Address</td>
+							<td data-bind="text: obj.number"></td>
+						</tr>
+						<tr>
+							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Purpose</td>
+							<td data-bind="text: obj.number"></td>
+						</tr>
+					</table>
+		    	</div>
+		    	<div class="span5" style="float:right">
+		    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
+		    		<div class="span12 main-color order-price">
+		    			<p><span style="color:#fff;text-align: center;" >USD 2,700.00</span></p>
+		    		</div>
+		    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
+		    	</div>
+		    </div>
+        	<div class="span12" style="margin-top: 5px">
+        		<div class="span5">
+        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Reference Document</p>
+        			<table class="span12">
+						<tr>
+							<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
+							<td data-bind="text: obj.issued_date"></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
+							<td data-bind="text: obj.number"></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
+							<td data-bind="text: obj.number"></td>
+						</tr>
+					</table>
         		</div>
-        		<div class="span6" style="float:right;">
-        			<p class="form-title" data-bind="text: obj.title" style="font-size: 26px"></p>
-        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
-        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
+        		<div class="span6" style="float:right">
+
         		</div>
         	</div>
-        	<table class="span12">
-        		<tr>
-        			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="150"><b>SALE ORDER #</b></td>
-        			<td width="100"><b></b></td>
-        			<td width="150" style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>INVOICE #</b></td>
-        			<td><b></b></td>
-        		</tr>
-        		<tr>
-        			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>JOB/ CONTRACT #</b></td>
-        			<td><b></b></td>
-        			<td style="background: #c6d9f1"><b></b></td>
-        			<td><b></b></td>
-        		</tr>
-        	</table>
-        	<table class="span12" style="margin: 5px 0;">
-        		<thead>
-        			<tr>
-        				<th width="50" style="background: #c6d9f1;">NO</th>
-        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">ITEM CODE</th>
-        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">DESCRIPTION</th>
-        				<th style="background: #c6d9f1;">UM</th>
-        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">QTY</th>
-        				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">REMARK</th>
-        			</tr>
-        		</thead>
-        		<tbody id="formListView" 
-        				data-role="listview"
-						data-auto-bind="false"
-						data-template="invoiceForm-lineDS-template14"
-						data-bind="source: lineDS">
-        	</table>
-        	<table class="span12">
-        		<tr>
-        			<td style="background: #c6d9f1" width="150">ISSUED BY</td>
-        			<td width="100"></td>
-        			<td width="150" style="background: #c6d9f1">DATE</td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td style="background: #c6d9f1">DELIVERED BY</td>
-        			<td></td>
-        			<td style="background: #c6d9f1">DATE</td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td style="background: #c6d9f1">RECEIVED BY</td>
-        			<td></td>
-        			<td style="background: #c6d9f1">DATE/TIME</td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td style="background: #c6d9f1">ACKNOWLEDGED BY</td>
-        			<td></td>
-        			<td style="background: #c6d9f1">DATE/TIME</td>
-        			<td></td>
-        		</tr>
-        	</table>
         </div>
     </div>
 </script>

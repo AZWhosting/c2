@@ -84,8 +84,8 @@ class Items extends REST_Controller {
 	    		}
 			}									 			
 		}
-
-		$obj->include_related("item_type", "name");
+		
+		$obj->include_related("category", "name");
 		$obj->where("is_pattern", $is_pattern);
 		$obj->where("deleted", $deleted);			
 		
@@ -180,10 +180,9 @@ class Items extends REST_Controller {
 				   	"is_assembly" 			=> $value->is_assembly,
 				   	"is_pattern" 			=> intval($value->is_pattern),				  
 				   	"status" 				=> $value->status,
-				   	"deleted" 				=> $value->deleted, 					
+				   	"deleted" 				=> $value->deleted,
  					
- 					"item_type" 			=> $value->item_type_name,
-				   	"measurement"			=> [],//$value->measurement->get()->name,
+ 					"category" 				=> $value->category_name,
 				   	"item_prices"			=> $itemPrice
 				);
 			}
@@ -425,199 +424,7 @@ class Items extends REST_Controller {
 		//Response data
 		$this->response($data, 200);
 	}
-
-	//GET ASSEMBLY
-	function assembly_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		$obj = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-
-		//Sort
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-		
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);		    			    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{	    			
-	    			$obj->where($value["field"], $value["value"]);	    				    			
-	    		}
-			}									 			
-		}		
-		
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;							
-
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				$pl = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				
-				$itemPrice = array();				
-				foreach ($pl->get_by_id($value->assembly_id) as $p) {
-					$priceList[] = array(
-						"id" 			=> $p->id,
-						"currency_id" 	=> $p->currency_id,
-						"product_id" 	=> $p->product_id,
-						"measurement_id"=> $p->measurement_id,
-						"price" 		=> floatval($p->price),
-						"unit_value" 	=> floatval($p->unit_value),
-						
-						"measurement" 	=> $p->measurement->get()->name,
-						"currency" 		=> $p->currency->get_raw()->result()
-					); 
-				}
-
-				$data["results"][] = array(
-					"id" 				=> $value->id,
-					"item_id" 			=> $value->item_id,
-					"assembly_id" 		=> $value->assembly_id,
-					"currency_id" 		=> $value->currency_id,
-					"measurement_id" 	=> $value->measurement_id,
-					"quantity" 			=> $value->quantity,
-					"unit_value" 		=> $value->unit_value,
-					"price" 			=> $value->price,
-					"amount" 			=> $value->amount,
- 					"locale" 			=> $value->locale,
- 					"item_price" 		=> $itemPrice,
- 					"assembly" 			=> $value->assembly->get_raw()->result()					
-				);
-			}
-		}		
-
-		//Response Data		
-		$this->response($data, 200);	
-	}	
 	
-	//POST ASSEMBLY
-	function assembly_post() {
-		$models = json_decode($this->post('models'));				
-		$data["results"] = array();
-		$data["count"] = 0;				
-		
-		foreach ($models as $value) {
-			$obj = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-			$obj->item_id 			= $value->item_id;
-			$obj->assembly_id 		= $value->assembly_id;
-			$obj->currency_id 		= $value->currency_id;
-			$obj->measurement_id 	= $value->measurement_id;
-			$obj->quantity 			= $value->quantity;
-			$obj->unit_value 		= $value->unit_value;
-			$obj->price 			= $value->price;
-			$obj->amount 			= $value->amount;			
-			
-	   		if($obj->save()){
-			   	$data["results"][] = array(
-			   		"id" 				=> $obj->id,
-					"item_id" 			=> $obj->item_id,
-					"assembly_id" 		=> $obj->assembly_id,
-					"currency_id" 		=> $obj->currency_id,
-					"measurement_id" 	=> $obj->measurement_id,
-					"quantity" 			=> $obj->quantity,
-					"unit_value" 		=> $obj->unit_value,
-					"price" 			=> $obj->price,
-					"amount" 			=> $obj->amount
-			   	);
-		    }	
-		}
-		
-		$data["count"] = count($data["results"]);
-		$this->response($data, 201);		
-	}
-	
-	//PUT ASSEMBLY
-	function assembly_put() {
-		$models = json_decode($this->put('models'));
-		$data["results"] = array();
-		$data["count"] = 0;
-
-		foreach ($models as $value) {			
-			$obj = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->get_by_id($value->id);
-
-			$obj->item_id 			= $value->item_id;
-			$obj->assembly_id 		= $value->assembly_id;
-			$obj->currency_id 		= $value->currency_id;
-			$obj->measurement_id 	= $value->measurement_id;
-			$obj->quantity 			= $value->quantity;
-			$obj->unit_value 		= $value->unit_value;
-			$obj->price 			= $value->price;
-			$obj->amount 			= $value->amount;
-
-			if($obj->save()){				
-				//Results
-				$data["results"][] = array(
-					"id" 				=> $obj->id,
-					"item_id" 			=> $obj->item_id,
-					"assembly_id" 		=> $obj->assembly_id,
-					"currency_id" 		=> $obj->currency_id,
-					"measurement_id" 	=> $obj->measurement_id,
-					"quantity" 			=> $obj->quantity,
-					"unit_value" 		=> $obj->unit_value,
-					"price" 			=> $obj->price,
-					"amount" 			=> $obj->amount
-				);						
-			}
-		}
-		$data["count"] = count($data["results"]);
-
-		$this->response($data, 200);
-	}
-	
-	//DELETE ASSEMBLY
-	function assembly_delete() {
-		$models = json_decode($this->delete('models'));
-
-		foreach ($models as $key => $value) {
-			$obj = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where("id", $value->id)->get();
-			
-			$data["results"][] = array(
-				"data"   => $value,
-				"status" => $obj->delete()
-			);							
-		}
-
-		//Response data
-		$this->response($data, 200);
-	}
 
 
 	//GET ITEM GROUP
