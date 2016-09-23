@@ -33845,7 +33845,7 @@
 	<tr data-uid="#: uid #">
 		<td>#:banhji.cashDashboard.topCashDS.indexOf(data)+1#</td>		
 		<td>
-			<span>#=number#</span>
+			<span>#=name#</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
 		</td>		
 	</tr>
@@ -33894,7 +33894,7 @@
 						 data-role="grid" 
 						 data-bind="source: dataStore"
 						 data-auto-bind="true" 
-						 data-row-template="cashCenter-customer-list-tmpl"
+						 data-row-template="cashCenter-list-tmpl"
 						 data-columns="[{title: ''}]"
 						 data-selectable=true
 						 data-height="600"						 
@@ -33956,6 +33956,7 @@
 								            	</tr>
 								            	
 							            	</table>
+							            	<button data-bind="click: goEdit">Edit</button>
 							            </div>
 							            <!-- // Transactions Tab content END -->
 							        </div>
@@ -33964,15 +33965,40 @@
 						</div>
 
 						<div class="span6">
-							<div class="row-fluid">
-								<div class="span12">
-									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
-										<span class="glyphicons coins"><i></i></span>
-										<span class="txt">Balance<span data-bind="text: balance" style="font-size:medium;"></span></span>
+							<div class="row-fluid" >
+								<div class="span12" style="margin-bottom: 10px;">
+									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadTransaction" style=" width: 425px; height:114px; background:#424242; margin-left:0;">
+										<span class="glyphicons coins"><i></i></span>										
+										<span class="txt">
+											Balance as of today
+											<span data-bind="text: balance"></span>
+										</span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
-								
+							</div>							
+							
+							<div class="row-fluid">
+								<div class="span6">
+									<div class="widget-stats widget-stats-info widget-stats-5">
+										<span class="glyphicons adjust_alt"><i></i></span>
+										<span class="txt">
+											<span data-bind="text: nature"></span>
+											Nature Balance
+										</span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="span6">
+									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadTransaction">
+										<span class="glyphicons random"><i></i></span>										
+										<span class="txt">
+											<span data-bind="text: totalTxn"></span>
+											Transactions											
+										</span>										
+										<div class="clearfix"></div>
+									</div>
+								</div>
 							</div>																					
 						</div>											          	
 		          	</div>
@@ -33987,15 +34013,18 @@
 					                      source: sortList,                              
 					                      events: { change: sorterChanges }" />
 
-						<input
+						<input data-role="datepicker"
 							   class="sdate"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					           			  max: edate"
 					           placeholder="From ..." >
 
 					    <input data-role="datepicker"
 					    	   class="edate"
 					    	   data-format="dd-MM-yyyy"
 					           data-bind="value: edate,
-					                      events: { change: dateChanges }"
+					                      min: sdate"
 					           placeholder="To ..." >
 					    
 					    <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
@@ -34025,6 +34054,40 @@
 			</div>			
 		</div>
 	</div>		
+</script>
+<script id="cashCenter-list-tmpl" type="text/x-kendo-tmpl">
+	<tr data-bind="click: selectedRow">
+		<td>
+			<div class="media-body">
+				#if(sub_of_id>0){#
+					&nbsp;&nbsp;
+					<span>
+						#=number#				
+					</span>
+					-
+					<span>
+						#if(name.length>25){#
+							#=name.substring(0, 25)#...
+						#}else{#
+							#=name#
+						#}#
+					</span>
+				#}else{#
+					<span class="strong">
+						#=number#				
+					</span>
+					-
+					<span class="strong">
+						#if(name.length>25){#
+							#=name.substring(0, 25)#...
+						#}else{#
+							#=name#
+						#}#
+					</span>
+				#}#				
+			</div>
+		</td>
+	</tr>
 </script>
 <script id="cashCenter-transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>    	  	
@@ -35470,6 +35533,31 @@
 	var apiUrl = baseUrl + 'api/';
 	banhji.s3 = "https://banhji.s3.amazonaws.com/";	
 	banhji.token = null;
+	// custom widget for min and max
+	kendo.data.binders.widget.max = kendo.data.Binder.extend({
+        init: function(widget, bindings, options) {
+            //call the base constructor
+            kendo.data.Binder.fn.init.call(this, widget.element[0], bindings, options);
+        },
+        refresh: function() {
+            var that = this,
+            value = that.bindings["max"].get(); //get the value from the View-Model
+            $(that.element).data("kendoDatePicker").max(value); //update the widget
+        }
+    });
+
+    kendo.data.binders.widget.min = kendo.data.Binder.extend({
+        init: function(widget, bindings, options) {
+            //call the base constructor
+            kendo.data.Binder.fn.init.call(this, widget.element[0], bindings, options);
+        },
+        refresh: function() {
+            var that = this,
+            value = that.bindings["min"].get(); //get the value from the View-Model
+            $(that.element).data("kendoDatePicker").min(value); //update the widget
+        }
+    });
+	// end of custom widget
 	banhji.pageLoaded = {};	
 	// Initializing AWS Cognito service
 	var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
@@ -60261,12 +60349,97 @@
 	});
 
 	banhji.cashCenter = kendo.observable({
-		dataStore 	: banhji.source.cashAccountDS,
-		summaryDS  	: dataStore(apiUrl + 'centers/accounting_summary'),
+		dataStore 			: banhji.source.cashAccountDS,
+		summaryDS  			: dataStore(apiUrl + 'centers/accounting_summary'),
 		transactionDS  		: dataStore(apiUrl + 'centers/accounting_txn'),
-		balance 	: 0,
-		obj 		: null,
-		searchText 	: null,
+		accountTypeDS 		: banhji.source.accountTypeDS,
+		balance 			: 0,
+		sortList			: banhji.source.sortList,
+		sorter 				: "all",
+		sdate 				: "",
+		edate 				: "",
+		obj 				: null,
+		searchText 			: null,
+		totalTxn 			: 0,
+		sorterChanges: function(event){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	value = event.sender.selectedIndex;
+
+			switch(value){
+				case 1:								
+					banhji.cashCenter.set('sdate', today);
+					banhji.cashCenter.set('edate', today);
+													  					
+				  	break;
+				case 2:			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					banhji.cashCenter.set('sdate', new Date(today.setDate(first)));
+					banhji.cashCenter.set('edate', new Date(today.setDate(last)));						
+					
+				  	break;
+				case 3:							  	
+					banhji.cashCenter.set('sdate', new Date(today.getFullYear(), today.getMonth(), 1));
+					banhji.cashCenter.set('edate', new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case 4:				
+				  	banhji.cashCenter.set('edate', new Date(today.getFullYear(), 0, 1));
+				  	banhji.cashCenter.set('edate', new Date(today.getFullYear(), 11, 31));
+
+				  	break;									  
+			}
+		},
+		searchTransaction: function() {
+			var self = this, obj = this.get("obj");
+			var para = [],
+				obj = this.get("obj"),
+				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+			this.set('balance', 'Loading');
+			var para = [],
+				obj = this.get("obj"),
+				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+			this.set('balance', 'Loading');
+			this.summaryDS.query({
+			  	filter: [
+			  		{ field:"account_id", value: obj.id },
+			  		{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(this.get("sdate"), 'yyyy-MM-dd') },
+			  		{ field:"issued_date <=", operator:"where_related", model:"transaction", value: kendo.toString(this.get("edate"), 'yyyy-MM-dd') }
+			  	],
+			  	page: 1,
+			  	pageSize: 100
+			}).then(function(){
+				var view = self.summaryDS.view();				
+				
+				if(view.length>0){
+					banhji.cashCenter.set("balance", kendo.toString(view[0].balance, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
+				}else{
+					banhji.cashCenter.set("balance", 0);
+				}
+			});
+			this.transactionDS.query({
+			  	filter: [
+			  		{ field:"account_id", value: obj.id },
+			  		{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(this.get("sdate"), 'yyyy-MM-dd') },
+			  		{ field:"issued_date <=", operator:"where_related", model:"transaction", value: kendo.toString(this.get("edate"), 'yyyy-MM-dd') }
+			  	],
+			  	page: 1,
+			  	pageSize: 100
+			}).then(function(){
+				var view = self.summaryDS.view();				
+				
+				if(view.length>0){
+					banhji.cashCenter.set('totalTxn', banhji.cashCenter.transactionDS.data().length);
+				}else{
+					banhji.cashCenter.set('totalTxn', 0);
+				}
+			});
+		},
 		goCashTransaction: function() {
 			banhji.router.navigate('/cash_transaction');
 		},
@@ -60285,8 +60458,33 @@
 		goExchange: function() {
 			banhji.router.navigate('/currency_rate');
 		},
+		typeName: null,
+		nature: null,
+		goEdit 				: function(){
+			var obj = this.get("obj");
+			banhji.router.navigate('/account/'+obj.id);
+		},
 		selectedRow	: function(e) {
 			this.set('obj', e.data);
+			var data = e.data,
+
+			sub = this.dataStore.get(data.sub_of_id),
+			type = this.accountTypeDS.get(data.account_type_id);
+			
+			if(data.sub_of_id>0){
+				this.set("subName", sub.name);
+			}else{
+				this.set("subName", "");
+			}
+
+			// this.set("typeName", type.name);
+			this.set("nature", type.nature);
+
+			// this.set("obj", data);
+			// this.loadSummary();
+			// this.searchTransaction();
+			//
+			
 			var self = this, obj = this.get("obj");
 			var para = [],
 				obj = this.get("obj"),
@@ -60329,6 +60527,8 @@
             	filter: para,            	
             	page: 1,
             	pageSize: 100
+            }).then(function(){
+            	banhji.cashCenter.set('totalTxn', banhji.cashCenter.transactionDS.data().length);
             });
 		},
 		search 		: function() {
@@ -69869,129 +70069,29 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.cashMenu);
 			var blank = new kendo.View('#blank-tmpl');
 			var vm = banhji.cashCenter;
-
+			banhji.cashCenter.accountTypeDS.read();
 			banhji.userManagement.addMultiTask("Cash Center","cash_center",null);
 
 			if(banhji.pageLoaded["cash_center"]==undefined){
 				banhji.pageLoaded["cash_center"] = true;
-				var start = $(".sdate"),
-					end = $(".edate");
+	   //              var sorter = $(".sorter").change(function(){
+    
 
-                if(start) {
-					start = $(".sdate").kendoDatePicker({
-	                	format: "dd-MM-yyyy",
-	                    change: startChange
-	                }).data("kendoDatePicker");
-	                console.log(start);
-				} 
-				if(end) {
-					$(".edate").kendoDatePicker({
-	                	format: "dd-MM-yyyy",
-	                    change: endChange
-	                }).data("kendoDatePicker");
-				}
-				if( start && end) {
-					function startChange() {
-	                    var startDate = start.value(),
-	                    endDate = end.value();
-
-	                    if (startDate) {
-	                        startDate = new Date(startDate);
-	                        startDate.setDate(startDate.getDate());
-	                        end.min(startDate);
-	                    } else if (endDate) {
-	                        start.max(new Date(endDate));
-	                    } else {
-	                        endDate = new Date();
-	                        start.max(endDate);
-	                        end.min(endDate);
-	                    }
-
-	                    dateChanges();
-	                }
-
-	                function endChange() {
-	                    var endDate = end.value(),
-	                    startDate = start.value();
-
-	                    if (endDate) {
-	                        endDate = new Date(endDate);
-	                        endDate.setDate(endDate.getDate());
-	                        start.max(endDate);
-	                    } else if (startDate) {
-	                        end.min(new Date(startDate));
-	                    } else {
-	                        endDate = new Date();
-	                        start.max(endDate);
-	                        end.min(endDate);
-	                    }
-
-	                    dateChanges();
-	                }
-
-	                function dateChanges(){
-	                	var strDate = "";
-
-						if(start.value() && end.value()){
-							strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-						}else if(start.value()){
-							strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-						}else if(end.value()){
-							strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-						}else{
-							strDate = "";
-						}
-
-						$(".strDate").text(strDate);
-	                }
-	                var sorter = $(".sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $(".sorter").val();
-
-					switch(value){
-					case "today":								
-						sdate = today;
-															  					
-					  	break;
-					case "week":			  	
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
-					  	break;
-					case "month":							  	
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":				
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-											  
-					}
-
-					start.value(sdate);
-					end.value(edate);
+				// 	start.value(sdate);
+				// 	end.value(edate);
 					
-					start.max(end.value());
-                	end.min(start.value());
+				// 	start.max(end.value());
+    //             	end.min(start.value());
 
-                	dateChanges();                	
-                });
+    //             	dateChanges();                	
+    //             });
 
-	                var test = $(".start");
-	                console.log(test);
+	   //              var test = $(".start");
+	   //              console.log(test);
 	                
-	                start.max(end.value());
-	                end.min(start.value());	
-				}
+	   //              start.max(end.value());
+	   //              end.min(start.value());	
+				// }
                 		               
 			}				
 		// }

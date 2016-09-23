@@ -60,7 +60,6 @@ class Employees extends REST_Controller {
 		if($employees->exists()) {
 			foreach($employees as $row) {
 				$role = $row->contact_type->get();
-
 				$data[] = array(
 					'id' => $row->id,
 					'name' => $row->name,
@@ -76,6 +75,7 @@ class Employees extends REST_Controller {
 					'ship_to'=> $row->ship_to,
 					'bill_to'=> $row->bill_to,
 					'locale' => $row->locale,
+					'userid'=> $row->user_id,
 					'memo' => $row->memo,
 					'is_fulltime' => $row->is_fulltime == 0 ? FALSE : TRUE,
 					'account'=> array("id"=>$row->account_id),
@@ -129,6 +129,7 @@ class Employees extends REST_Controller {
 			$employees->salary_account_id = $res->salary->id;
 			$employees->address = $res->address;
 			$employees->status = $res->status;
+			$employees->user_id= $res->userid;
 
 			if($employees->save()) {
 				$data[] = array(
@@ -145,7 +146,8 @@ class Employees extends REST_Controller {
 					'registered_date' => $employees->registered_date,
 					'address' => $employees->address,
 					'phone' => $employees->phone,
-					'email' => $employees->email
+					'email' => $employees->email,
+					'userid' => $employees->user_id
 				);
 			}
 		}
@@ -182,6 +184,7 @@ class Employees extends REST_Controller {
 			$employees->salary_account_id = $res->salary->id;
 			$employees->address = $res->address;
 			$employees->status = $res->status;
+			$employees->user_id= $res->userid;
 
 			if($employees->save()) {
 				$data[] = array(
@@ -200,7 +203,8 @@ class Employees extends REST_Controller {
 					'memo' => $employees->memo,
 					'is_fulltime' => $employees->is_fulltime == 0 ? FALSE : TRUE,
 					'phone' => $employees->phone,
-					'email' => $employees->email
+					'email' => $employees->email,
+					'userid' => $employees->userid
 				);
 			}
 		}
