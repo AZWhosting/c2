@@ -677,7 +677,7 @@ class Transactions extends REST_Controller {
 					"on_po" 			=> floatval($value->on_po),
 					"on_so" 			=> floatval($value->on_so),
 					"quantity" 			=> floatval($value->quantity),					   	
-				   	"quantity_actual" 	=> floatval($value->quantity_actual),
+				   	"quantity_adjusted" => floatval($value->quantity_adjusted),
 				   	"cost"				=> floatval($value->cost),
 				   	"price"				=> floatval($value->price),
 				   	"price_avg" 		=> floatval($value->price_avg),					   	
@@ -722,6 +722,8 @@ class Transactions extends REST_Controller {
 					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
 					$itemIn->where("item_id", $value->item_id);
 					$itemIn->where("movement", 1);
+					$itemIn->where_related("transaction", "is_recurring", 0);
+					$itemIn->where_related("transaction", "deleted", 0);
 					$itemIn->get();
 
 					$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -729,6 +731,8 @@ class Transactions extends REST_Controller {
 					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
 					$itemOut->where("item_id", $value->item_id);
 					$itemOut->where("movement", -1);
+					$itemOut->where_related("transaction", "is_recurring", 0);
+					$itemOut->where_related("transaction", "deleted", 0);
 					$itemOut->get();					
 					
 					$onHand = floatval($itemIn->quantity) - floatval($itemOut->quantity);					
@@ -751,6 +755,10 @@ class Transactions extends REST_Controller {
 						$item->cost = ($lastCost + $currentCost) / $totalQty;
 					}
 
+					if($transaction->type=="Adjustment"){
+						$obj->on_hand = $value->on_hand;
+					}
+
 					if($item->save()){
 						$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -758,13 +766,19 @@ class Transactions extends REST_Controller {
 						$po->select_sum("quantity");
 						$po->where_related("transaction", "type", "PO");
 						$po->where_related("transaction", "status", 0);
+						$po->where_related("transaction", "is_recurring", 0);
+						$po->where_related("transaction", "deleted", 0);
+						$po->get();
 
 						$so->select_sum("quantity");
 						$so->where_related("transaction", "type", "SO");
 						$so->where_related("transaction", "status", 0);
+						$so->where_related("transaction", "is_recurring", 0);
+						$so->where_related("transaction", "deleted", 0);
+						$so->get();
 
-						$obj->on_po = $po->get()->quantity;
-						$obj->on_so = $so->get()->quantity;
+						$obj->on_po = $po->quantity;
+						$obj->on_so = $so->quantity;
 					}
 				}
 			}			
@@ -774,11 +788,11 @@ class Transactions extends REST_Controller {
 			isset($value->measurement_id)	? $obj->measurement_id		= $value->measurement_id : "";
 			isset($value->tax_item_id)		? $obj->tax_item_id			= $value->tax_item_id : "";
 		   	isset($value->description)		? $obj->description 		= $value->description : "";
-		   	// isset($value->on_hand)		? $obj->on_hand 			= $value->on_hand : "";
+		   	// isset($value->on_hand)			? $obj->on_hand 			= $value->on_hand : "";
 		   	// isset($value->on_po)			? $obj->on_po 				= $value->on_po : "";
 		   	// isset($value->on_so)			? $obj->on_so 				= $value->on_so : "";
 		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";	   
-		   	isset($value->quantity_actual)	? $obj->quantity_actual 	= $value->quantity_actual : "";
+		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
 		   	isset($value->cost)				? $obj->cost 				= $value->cost : "";
 		   	isset($value->price)			? $obj->price 				= $value->price : "";
 		   	//isset($value->price_avg)		? $obj->price_avg 			= $value->price_avg : "";	   	
@@ -803,7 +817,7 @@ class Transactions extends REST_Controller {
 					"on_po" 			=> floatval($obj->on_po),
 					"on_so" 			=> floatval($obj->on_so),
 					"quantity" 			=> floatval($obj->quantity),					   	
-				   	"quantity_actual" 	=> floatval($obj->quantity_actual),
+				   	"quantity_adjusted" => floatval($obj->quantity_adjusted),
 				   	"cost"				=> floatval($obj->cost),
 				   	"price"				=> floatval($obj->price),
 				   	"price_avg" 		=> floatval($obj->price_avg),					   	
@@ -835,25 +849,25 @@ class Transactions extends REST_Controller {
 			$obj->get_by_id($value->id);			
 
 			//Updat record item: old - new			
-			if(isset($value->item_id)){
-				if($value->item_id>0){
-					$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$item->get_by_id($value->item_id);
+			// if(isset($value->item_id)){
+			// 	if($value->item_id>0){
+			// 		$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 		$item->get_by_id($value->item_id);
 					
-					if($item->item_type_id=="1"){
-						$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$transaction->get_by_id($value->transaction_id);
+			// 		if($item->item_type_id=="1"){
+			// 			$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 			$transaction->get_by_id($value->transaction_id);
 
-						if($transaction->type=='Invoice' || $transaction->type=='Cash_Sale' || $transaction->type=='Cash_Purchase' || $transaction->type=='Credit_Purchase'){						
-						    $item->on_hand += floatval($obj->quantity) - floatval($value->quantity);	
-						}else if($transaction->type=='Adjustment'){ 
-						    $item->on_hand += floatval($obj->quantity) - (floatval($value->quantity) * floatval($value->movement));						     
-						}						
+			// 			if($transaction->type=='Invoice' || $transaction->type=='Cash_Sale' || $transaction->type=='Cash_Purchase' || $transaction->type=='Credit_Purchase'){						
+			// 			    $item->on_hand += floatval($obj->quantity) - floatval($value->quantity);	
+			// 			}else if($transaction->type=='Adjustment'){ 
+			// 			    $item->on_hand += floatval($obj->quantity) - (floatval($value->quantity) * floatval($value->movement));						     
+			// 			}						
 
-						$item->save();
-					}
-				}
-			}
+			// 			$item->save();
+			// 		}
+			// 	}
+			// }
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";			
 			isset($value->item_id)			? $obj->item_id				= $value->item_id : "";			
@@ -864,7 +878,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->on_po)			? $obj->on_po 				= $value->on_po : "";
 		   	isset($value->on_so)			? $obj->on_so 				= $value->on_so : "";
 		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";	   
-		   	isset($value->quantity_actual)	? $obj->quantity_actual 	= $value->quantity_actual : "";
+		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
 		   	isset($value->cost)				? $obj->cost 				= $value->cost : "";
 		   	isset($value->price)			? $obj->price 				= $value->price : "";
 		   	isset($value->price_avg)		? $obj->price_avg 			= $value->price_avg : "";	   	
@@ -890,7 +904,7 @@ class Transactions extends REST_Controller {
 					"on_po" 			=> floatval($obj->on_po),
 					"on_so" 			=> floatval($obj->on_so),
 					"quantity" 			=> floatval($obj->quantity),					   	
-				   	"quantity_actual" 	=> floatval($obj->quantity_actual),
+				   	"quantity_adjusted" => floatval($obj->quantity_adjusted),
 				   	"cost"				=> floatval($obj->cost),
 				   	"price"				=> floatval($obj->price),
 				   	"price_avg" 		=> floatval($obj->price_avg),					   	
@@ -990,9 +1004,6 @@ class Transactions extends REST_Controller {
 		//Deposit
 		case "Deposit":
 		  	$header = "DE";
-		  	break;
-		case "Credit":
-		  	$header = "CC";
 		  	break;		
 		case "eDeposit":
 		  	$header = "ED";

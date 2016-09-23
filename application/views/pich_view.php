@@ -16696,9 +16696,9 @@
 			#:banhji.quote.lineDS.indexOf(data)+1#			
 		</td>		
 		<td>
+			
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-header-template="item-header-tmpl"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -17292,7 +17292,6 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-header-template="item-header-tmpl"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -18393,7 +18392,6 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-header-template="item-header-tmpl"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -19020,7 +19018,6 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-header-template="item-header-tmpl"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -19526,7 +19523,6 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-header-template="item-header-tmpl"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -19957,7 +19953,6 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   data-header-template="item-header-tmpl"
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -35535,9 +35530,10 @@
     	<a href="\#/item_service">+ Add New Service</a>
     </strong>
 </script>
-<script id="item-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=sku# #=name#</span>
-	<span class="pull-right">#=on_hand#</span>	
+<script id="item-list-tmpl" type="text/x-kendo-tmpl">	
+	<span style="width:40%; float: left">#=number# #=name#</span>
+	<span style="width:30%; text-align: center;">Inverntory for Sale</span>
+	<span style="width:30%; text-align: right;" class="pull-right">#=on_hand#</span>
 </script>
 <script id="item-group-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
