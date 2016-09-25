@@ -1715,56 +1715,14 @@ class Contact_reports extends REST_Controller {
 		$is_recurring = 0;
 		$deleted = 0;		
 		
-		$purchase = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$order = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$ap = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$product = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-		$creditPurchase = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$item = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {	    			    			
-    			if($value["field"]=="is_recurring"){
-    				$is_recurring = $value["value"];
-    			}else if($value["field"]=="deleted"){
-    				$deleted = $value["value"];
-    			}else{
-    				$purchase->where($value["field"], $value["value"]);
-    				$order->where($value["field"], $value["value"]);
-    				$ap->where($value["field"], $value["value"]);
-    				$product->where_related("transaction", $value["field"], $value["value"]);
-    				$creditPurchase->where($value["field"], $value["value"]);
+	    	foreach ($filters as $value) {
+    				$item->where_related("transaction", $value["field"], $value["value"]);    				
     			}	    		
 			}									 			
-		}
-		
-		//Purchase			
-		$purchase->where_in("type", array("Cash_Purchase","Credit_Purchase"));
-		$purchase->where("is_recurring", $is_recurring);		
-		$purchase->where("deleted", $deleted);		
-		$purchase->get_iterated();
-
-		//Puchase Count Customer
-		$purchaseAmount = 0;
-		$purchaseSupplier = [];
-		$purchaseSupplierCount = 0;
-		foreach($purchase as $value) {
-			//Total sale
-			$item = $value->item_line->count();
-			$purchaseAmount += floatval($value->amount) / floatval($value->rate);
-
-			//Group customer
-			if(isset($purchaseSupplier[$value->contact_id])){
-				$purchaseSupplier[$value->contact_id] = 0;
-			} else {
-				$purchaseSupplier[$value->contact_id] = 0;
-
-				$purchaseSupplierCount++;
-			}
-
-			if($item > 0) {
-				$productCount += $item;
-			}							
 		}
 
 		//Purchase Count Product

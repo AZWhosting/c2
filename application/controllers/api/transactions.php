@@ -1043,7 +1043,7 @@ class Transactions extends REST_Controller {
 		case "Adjustment":
 		  	$header = "AD";
 		  	break;
-		case "Interal_Usage":
+		case "Internal_Usage":
 		  	$header = "IU";
 		  	break;
 		//Accounting
