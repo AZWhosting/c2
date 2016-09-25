@@ -1095,7 +1095,7 @@ class Contact_reports extends REST_Controller {
 
 
 
-	//Supplier Section
+	//SUPPLIER
 	//GET SUPPLIER DASHBOARD SUMMARY
 	function supplier_dashboard_summary_get() {		
 		$filters 	= $this->get("filter")["filters"];		
@@ -1700,6 +1700,200 @@ class Contact_reports extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
+
+
+
+	//ITEM
+	//GET ITEM DASHBOARD SUMMARY
+	function item_dashboard_summary_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
+		$deleted = 0;		
+		
+		$purchase = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$order = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$ap = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$product = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$creditPurchase = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {	    			    			
+    			if($value["field"]=="is_recurring"){
+    				$is_recurring = $value["value"];
+    			}else if($value["field"]=="deleted"){
+    				$deleted = $value["value"];
+    			}else{
+    				$purchase->where($value["field"], $value["value"]);
+    				$order->where($value["field"], $value["value"]);
+    				$ap->where($value["field"], $value["value"]);
+    				$product->where_related("transaction", $value["field"], $value["value"]);
+    				$creditPurchase->where($value["field"], $value["value"]);
+    			}	    		
+			}									 			
+		}
+		
+		//Purchase			
+		$purchase->where_in("type", array("Cash_Purchase","Credit_Purchase"));
+		$purchase->where("is_recurring", $is_recurring);		
+		$purchase->where("deleted", $deleted);		
+		$purchase->get_iterated();
+
+		//Puchase Count Customer
+		$purchaseAmount = 0;
+		$purchaseSupplier = [];
+		$purchaseSupplierCount = 0;
+		foreach($purchase as $value) {
+			//Total sale
+			$item = $value->item_line->count();
+			$purchaseAmount += floatval($value->amount) / floatval($value->rate);
+
+			//Group customer
+			if(isset($purchaseSupplier[$value->contact_id])){
+				$purchaseSupplier[$value->contact_id] = 0;
+			} else {
+				$purchaseSupplier[$value->contact_id] = 0;
+
+				$purchaseSupplierCount++;
+			}
+
+			if($item > 0) {
+				$productCount += $item;
+			}							
+		}
+
+		//Purchase Count Product
+		$purchaseProduct = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$purchaseProduct->is_related_to($purchase);		
+		$purchaseProduct->where("item_id >", 0);
+
+		//Purchase Count Order
+		$purchaseOrder = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$purchaseOrder->is_related_to($purchase);
+		$purchaseOrder->where("status", 1);		
+		$purchaseOrder->where("type", "Purchase_Order");		
+
+		//Order					
+		$order->where("type", "Purchase_Order");
+		$order->where("is_recurring", $is_recurring);		
+		$order->where("deleted", $deleted);		
+		$order->get_iterated();
+
+		$orderCount = 0;		
+		$orderAmount = 0;
+		$orderOpen = 0;
+		$orderAvg = 0;
+		foreach($order as $value) {
+			$orderCount++;
+
+			if($value->status==0){
+				$orderOpen++;
+			}
+
+			$orderAmount += floatval($value->amount) / floatval($value->rate);
+		}
+
+		if($orderCount>0){
+			$orderAvg = $orderAmount / $orderCount;
+		}
+
+		//AP			
+		$ap->where("type", "Credit_Purchase");
+		$ap->where_in("status", array(0,2));
+		$ap->where("is_recurring", $is_recurring);		
+		$ap->where("deleted", $deleted);		
+		$ap->get_iterated();
+
+		$apAmount = 0;
+		$apCustomer = [];
+		$apCustomerCount = 0;
+		$apCount = 0;
+		$apOpen = 0;
+		$apOverDue = 0;
+		$today = date("Y-m-d");
+		foreach($ap as $value) {
+			$apCount++;
+
+			//Open
+			if($value->status==0){
+				$apOpen++;
+			}
+
+			//Overdue
+			if($value->due_date<$today){
+				$apOverDue++;
+			}
+
+			//Sum amount
+			if($value->status==2){
+				$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$paid->select_sum("amount");
+				$paid->where("reference_id", $value->id);
+				$paid->get();
+				$apAmount += (floatval($value->amount) - floatval($paid->amount)) / floatval($value->rate);
+			}else{
+				$apAmount += floatval($value->amount) / floatval($value->rate);
+			}
+
+			$apAmount -= floatval($value->deposit);
+
+			//Group customer
+			if(isset($arCustomer[$value->contact_id])){
+				$apCustomer[$value->contact_id] = 0;
+			} else {
+				$apCustomer[$value->contact_id] = 0;
+
+				$apCustomerCount++;
+			}			
+		}
+
+		//Credit Purchase			
+		$creditPurchase->where("type", "Credit_Purchase");
+		$creditPurchase->where("is_recurring", $is_recurring);		
+		$creditPurchase->where("deleted", $deleted);		
+		$creditPurchase->get_iterated();
+		
+		$creditPurchaseAmount = 0;		
+		foreach($creditPurchase as $value) {			
+			$creditPurchaseAmount += floatval($value->amount) / floatval($value->rate);									
+		}		
+		
+	    $startDate = $this->fiscalDate;
+		$endDate = new DateTime();
+		$totalDay = $endDate->diff($startDate)->format("%a");
+		
+		$collectionDay = 0;
+		if($creditPurchaseAmount>0){
+			$collectionDay = ($apAmount / $creditPurchaseAmount) * $totalDay;
+		}
+		//Results
+		$data["results"][] = array(
+			'id' 				=> 0,
+			'purchase' 			=> $purchaseAmount,						
+			'purchase_supplier' => $purchaseSupplierCount,
+			'purchase_product' 	=> $productCount,
+			'purchase_order' 	=> $purchaseOrder->count(),
+			'order' 			=> $order->result_count(),
+			'order_avg' 		=> $orderAvg,
+			'order_open'		=> $orderOpen,			
+			'ap' 				=> $apAmount,
+			'ap_open' 			=> $apOpen,
+			'ap_supplier' 		=> $apCustomerCount,
+			'ap_overdue' 		=> $apOverDue,
+			'collection_day' 	=> $collectionDay
+		);
+
+		$data["count"] = count($data["results"]);		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
 	
 }
 /* End of file customer_reports.php */
