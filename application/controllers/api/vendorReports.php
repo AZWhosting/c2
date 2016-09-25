@@ -1382,9 +1382,10 @@ class Vendorreports extends REST_Controller {
 								$customers["$fullname"]['90'] += floatval($value->amount) / floatval($value->rate);
 							}else if(intval($diff)>30){
 								$customers["$fullname"]['60'] += floatval($value->amount) / floatval($value->rate);
-							}else{
-								$customers["$fullname"]['30'] += floatval($value->amount) / floatval($value->rate);
 							}
+							// }else{
+							// 	$customers["$fullname"]['30'] += floatval($value->amount) / floatval($value->rate);
+							// }
 						}else{
 							$outstanding =0;
 							// $customers["$fullname"]['<30'] += floatval($value->amount) / floatval($value->rate);

@@ -1556,8 +1556,7 @@ class Items extends REST_Controller {
 	    		}
 			}									 			
 		}
-
-		$obj->where_in_related("transaction","type",["Invoice","Cash_Sale","Cash_Purchase","Credit_Purchase"]);
+		
 		$obj->where_related("transaction","is_recurring",0);
 		$obj->where_related("transaction","deleted",0);
 		$obj->order_by_related("transaction", "issued_date", "desc");
@@ -1581,8 +1580,7 @@ class Items extends REST_Controller {
 						"locale" 		=> $value->locale,
 						"movement" 		=> $value->movement,
 						
-						"invoice" 		=> $value->transaction->get_raw()->result(),						
-						"item" 			=> $value->item->get_raw()->result()								
+						"invoice" 		=> $value->transaction->get_raw()->result()						
 					);
 				}
 			}
