@@ -1095,7 +1095,7 @@ class Contact_reports extends REST_Controller {
 
 
 
-	//Supplier Section
+	//SUPPLIER
 	//GET SUPPLIER DASHBOARD SUMMARY
 	function supplier_dashboard_summary_get() {		
 		$filters 	= $this->get("filter")["filters"];		
@@ -1699,7 +1699,8 @@ class Contact_reports extends REST_Controller {
 
 		//Response Data		
 		$this->response($data, 200);	
-	}
+	}	
+
 	
 }
 /* End of file customer_reports.php */
