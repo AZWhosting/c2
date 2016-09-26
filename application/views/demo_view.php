@@ -44559,9 +44559,16 @@
 			if(data.item_id>0){
 				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
-		        if(item.is_catalog=="1"){
+		        if(item.is_catalog=="1"){		        	
+		        	var catalogList = [];
+		        	$.each(item.catalogs, function(index, value){
+		        		catalogList.push(value);
+		        	});
+		        	
 		        	this.catalogDS.query({
-		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
+		        		filter: { field:"id", operator:"where_in", value:catalogList },
+		        		page:1,
+		        		pageSize:100
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
@@ -44575,8 +44582,10 @@
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
-								rate				: obj.rate,
-								locale				: obj.locale,						
+								discount 			: 0,
+								rate				: obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date)),
+								locale				: obj.locale,
+								movement 			: 1,								
 
 								item_prices 		: []
 							});								
@@ -45350,8 +45359,15 @@
 				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
+		        	var catalogList = [];
+		        	$.each(item.catalogs, function(index, value){
+		        		catalogList.push(value);
+		        	});
+		        	
 		        	this.catalogDS.query({
-		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
+		        		filter: { field:"id", operator:"where_in", value:catalogList },
+		        		page:1,
+		        		pageSize:100
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
@@ -45365,8 +45381,10 @@
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
-								rate				: obj.rate,
-								locale				: obj.locale,						
+								discount 			: 0,
+								rate				: obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date)),
+								locale				: obj.locale,
+								movement 			: 1,								
 
 								item_prices 		: []
 							});								
@@ -47089,8 +47107,15 @@
 				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
+		        	var catalogList = [];
+		        	$.each(item.catalogs, function(index, value){
+		        		catalogList.push(value);
+		        	});
+		        	
 		        	this.catalogDS.query({
-		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
+		        		filter: { field:"id", operator:"where_in", value:catalogList },
+		        		page:1,
+		        		pageSize:100
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
@@ -47104,8 +47129,10 @@
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
-								rate				: obj.rate,
-								locale				: obj.locale,						
+								discount 			: 0,
+								rate				: obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date)),
+								locale				: obj.locale,
+								movement 			: 1,								
 
 								item_prices 		: []
 							});								
@@ -48487,8 +48514,15 @@
 				var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 		        if(item.is_catalog=="1"){
+		        	var catalogList = [];
+		        	$.each(item.catalogs, function(index, value){
+		        		catalogList.push(value);
+		        	});
+		        	
 		        	this.catalogDS.query({
-		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
+		        		filter: { field:"id", operator:"where_in", value:catalogList },
+		        		page:1,
+		        		pageSize:100
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
@@ -48502,8 +48536,10 @@
 								quantity 	 		: 1,
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
-								rate				: obj.rate,
-								locale				: obj.locale,						
+								discount 			: 0,
+								rate				: obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date)),
+								locale				: obj.locale,
+								movement 			: 1,								
 
 								item_prices 		: []
 							});								
@@ -51084,8 +51120,13 @@
 				}
 				
 		        if(item.is_catalog=="1"){
+		        	var catalogList = [];
+		        	$.each(item.catalogs, function(index, value){
+		        		catalogList.push(value);
+		        	});
+
 		        	this.catalogDS.query({
-		        		filter: { field:"id", operator:"where_in", value:["16","17"] },
+		        		filter: { field:"id", operator:"where_in", value:catalogList },
 		        		page:1,
 		        		pageSize:100
 		        	}).then(function(){
@@ -51941,8 +51982,15 @@
 				}
 
 		        if(item.is_catalog=="1"){
+		        	var catalogList = [];
+		        	$.each(item.catalogs, function(index, value){
+		        		catalogList.push(value);
+		        	});
+		        	
 		        	this.catalogDS.query({
-		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
+		        		filter: { field:"id", operator:"where_in", value:catalogList },
+		        		page:1,
+		        		pageSize:100
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
@@ -51957,7 +52005,7 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								rate				: obj.rate,
+								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -53742,8 +53790,15 @@
 				}
 
 		        if(item.is_catalog=="1"){
+		        	var catalogList = [];
+		        	$.each(item.catalogs, function(index, value){
+		        		catalogList.push(value);
+		        	});
+		        	
 		        	this.catalogDS.query({
-		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
+		        		filter: { field:"id", operator:"where_in", value:catalogList },
+		        		page:1,
+		        		pageSize:100
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
@@ -53758,7 +53813,7 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								rate				: obj.rate,
+								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -55112,8 +55167,15 @@
 				}
 
 		        if(item.is_catalog=="1"){
+		        	var catalogList = [];
+		        	$.each(item.catalogs, function(index, value){
+		        		catalogList.push(value);
+		        	});
+		        	
 		        	this.catalogDS.query({
-		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
+		        		filter: { field:"id", operator:"where_in", value:catalogList },
+		        		page:1,
+		        		pageSize:100
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
@@ -55128,7 +55190,7 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								rate				: obj.rate,
+								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -56273,8 +56335,15 @@
 				}
 
 		        if(item.is_catalog=="1"){
+		        	var catalogList = [];
+		        	$.each(item.catalogs, function(index, value){
+		        		catalogList.push(value);
+		        	});
+		        	
 		        	this.catalogDS.query({
-		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
+		        		filter: { field:"id", operator:"where_in", value:catalogList },
+		        		page:1,
+		        		pageSize:100
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
@@ -56289,7 +56358,7 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								rate				: obj.rate,
+								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -57111,8 +57180,15 @@
 				}
 
 		        if(item.is_catalog=="1"){
+		        	var catalogList = [];
+		        	$.each(item.catalogs, function(index, value){
+		        		catalogList.push(value);
+		        	});
+		        	
 		        	this.catalogDS.query({
-		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
+		        		filter: { field:"id", operator:"where_in", value:catalogList },
+		        		page:1,
+		        		pageSize:100
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
@@ -57127,7 +57203,7 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								rate				: obj.rate,
+								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
 								locale				: obj.locale,
 								movement 			: -1,								
 
