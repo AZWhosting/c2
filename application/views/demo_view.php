@@ -6902,7 +6902,7 @@
 						                   data-role="upload"
 						                   data-show-file-list="false"
 						                   data-bind="events: { 
-				                   				select: onSelect
+				                   				select: fileMan.onSelected
 						                   }">
 
 						            <table class="table table-bordered">
@@ -6915,9 +6915,9 @@
 								            </tr> 
 								        </thead>
 								        <tbody data-role="listview" 
-								        		data-template="attachment-list-tmpl" 
+								        		data-template="attachment-rith-list-tmpl" 
 								        		data-auto-bind="false"
-								        		data-bind="source: attachmentDS"></tbody>			        
+								        		data-bind="source: fileMan.dataSource"></tbody>			        
 								    </table>
 
 						        </div>
@@ -27292,7 +27292,7 @@
 						                   data-role="upload"
 						                   data-show-file-list="false"
 						                   data-bind="events: { 
-				                   				select: onSelect
+				                   				select: fileMan.onSelected
 						                   }">
 
 							            <table class="table table-bordered">
@@ -27305,9 +27305,9 @@
 									            </tr> 
 									        </thead>
 									        <tbody data-role="listview" 
-									        		data-template="attachment-list-tmpl" 
+									        		data-template="attachment-rith-list-tmpl" 
 									        		data-auto-bind="false"
-									        		data-bind="source: attachmentDS"></tbody>			        
+									        		data-bind="source: fileMan.dataSource"></tbody>			        
 									    </table>
 
 							        </div>
@@ -35502,6 +35502,28 @@
 		#}#		
 	</span>
 </script>
+<script id="attachment-rith-list-tmpl" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+			<input id="txtName-#:uid#" name="txtName-#:uid#" 
+					type="text" class="k-textbox" 
+					data-bind="value: name" />
+		</td>
+		<td>
+			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
+					type="text" class="k-textbox" 
+					data-bind="value: description"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td>#=kendo.toString(created_at, "dd-MM-yyyy")#</td>
+		<td>
+			#if(id){#
+				<a href="#=url#" target="_blank" class="btn-action glyphicons download btn-default"><i></i></a>
+			#}#
+			<span class="btn-action glyphicons remove_2 btn-danger" data-bind="click: onRemove"><i></i></span>			
+		</td>
+	</tr>
+</script>
 <script id="attachment-list-tmpl" type="text/x-kendo-tmpl">
 	<tr>
 		<td>
@@ -35758,6 +35780,123 @@
 	var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
 	// Initializing AWS S3 Service
 	var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
+	
+	//file Management
+	banhji.fileManagement = kendo.observable({
+        dataSource: new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/attachments',
+              type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            create  : {
+              url: baseUrl + 'api/attachments',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            update  : {
+              url: baseUrl + 'api/attachments',
+              type: "PUT",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            destroy  : {
+              url: baseUrl + 'api/attachments',
+              type: "DELETE",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 50
+        }),
+        fileArray     : [],
+        onRemove      : function(e) {
+          banhji.fileManagement.dataSource.remove(e.data);
+        },
+        onSelected    : function(e) {
+          var files = e.files;
+          var key = 'ATTACH_' + JSON.parse(localStorage.getItem('userData/user')).institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files[0].name;
+          banhji.fileManagement.dataSource.add({
+            transaction_id  : 0,
+            type            : "Contact",
+            name            : files[0].name,
+            contact_id      : null,
+            description     : "",
+            key             : key,
+            url             : "https://s3-ap-southeast-1.amazonaws.com/banhji/"+key,
+            created_at      : new Date(),
+            file: files[0].rawFile
+          });
+        },
+        save                : function(contact_id){
+          $.each(banhji.fileManagement.dataSource.data(), function(index, value){ 
+            banhji.fileManagement.dataSource.at(index).set("contact_id", contact_id);
+            if(!value.id){
+              var params = { 
+                Body: value.file, 
+                Key: value.key
+              };
+              bucket.upload(params, function (err, data) {                    
+                  // console.log(err, data);
+                  // var url = data.Location;               
+              });
+            }                
+          });
+
+          banhji.fileManagement.dataSource.sync();
+          var saved = false;
+          banhji.fileManagement.dataSource.bind("requestEnd", function(e){
+            //Delete File
+            if(e.type=="destroy"){
+              if(saved==false && e.response){
+                saved = true;
+                var response = e.response.results;
+                $.each(response, function(index, value){                  
+                  var params = {
+                    Delete: { /* required */
+                      Objects: [ /* required */
+                        {
+                          Key: value.data.key
+                        }
+                      ]
+                    }
+                  };
+                  bucket.deleteObjects(params, function(err, data) {
+                    //console.log(err, data);
+                  });
+                });
+              }
+            }
+            banhji.fileManagement.dataSource.data([]);
+          });
+        }
+    });
+	// end file management
+
 	banhji.companyDS = new kendo.data.DataSource({
       transport: {
         read  : {
@@ -41358,7 +41497,8 @@
 		monthOptionList 	: banhji.source.monthOptionList,
 		monthList 			: banhji.source.monthList,
 		weekDayList 		: banhji.source.weekDayList,
-		dayList 			: banhji.source.dayList,		
+		dayList 			: banhji.source.dayList,
+		fileMan   			: banhji.fileManagement,	
 		showMonthOption 	: false,
 		showMonth 			: false,
 		showWeek 			: false,
@@ -41601,6 +41741,9 @@
 					self.addEmpty();
 				});
 			}
+			this.dataSource.bind('requestEnd', function(e){
+				banhji.employees.fileMan.save(e.response.results[0].id);
+			});
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
@@ -41844,7 +41987,8 @@
 		total				: 0,
 		credit 		 		: 0,
 		remain 				: 0,			
-		uer_id				: banhji.source.user_id,																	
+		uer_id				: banhji.source.user_id,
+		fileMan   			: banhji.fileManagement,																	
 		pageLoad 			: function(id, is_recurring){
 			if(id){
 				this.set("isEdit", true);							
@@ -59038,7 +59182,8 @@
 		monthOptionList 	: banhji.source.monthOptionList,
 		monthList 			: banhji.source.monthList,
 		weekDayList 		: banhji.source.weekDayList,
-		dayList 			: banhji.source.dayList,				
+		dayList 			: banhji.source.dayList,
+		fileMan 			: banhji.fileManagement,			
 		showRef 			: true,
 		showName 			: false,
 		showSegment 		: false,
@@ -59299,6 +59444,9 @@
 					self.addEmpty();
 				});
 			}
+			this.dataSource.bind('requestEnd', function(e){
+				banhji.employees.fileMan.save(e.response.results[0].id);
+			});
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
