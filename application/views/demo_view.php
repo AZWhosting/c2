@@ -50995,10 +50995,12 @@
 						measurement_id = item.item_prices[0].measurement_id;
 					}
 				}
-
+				
 		        if(item.is_catalog=="1"){
 		        	this.catalogDS.query({
-		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
+		        		filter: { field:"id", operator:"where_in", value:["16","17"] },
+		        		page:1,
+		        		pageSize:100
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
@@ -51013,7 +51015,7 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								rate				: obj.rate,
+								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
 								locale				: obj.locale,
 								movement 			: -1,								
 
