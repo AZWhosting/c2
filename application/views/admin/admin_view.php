@@ -244,7 +244,19 @@
                                   <td>
                                       <input type="text" data-bind="value: current.name" class="form-control"  id="" placeholder="">
                                   </td>
-                                  <td></td><td></td>
+                                  <td>Link User</td>
+                                  <td>
+                                    <input id="type"
+                                      data-role="dropdownlist"
+                                      data-bind="source: users, value: current.userid"
+                                      data-text-field="username"
+                                      data-value-field="id"
+                                      data-primitive-value="true"
+                                      class="form-control col-md-7 col-xs-12"
+                                      type="text"
+                                      data-option-label="--Select--"
+                                    >
+                                  </td>
                                 </tr>
                                 <tr>
                                     <td>Number</td>
@@ -690,7 +702,7 @@
                   Create user
               </button>
               &nbsp;&nbsp;
-              <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: users.refresh"></i>
+              <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: refresh"></i>
           </div>
           
           <div data-role="listview" data-template="user-profile-list" data-bind="source:users.users" data-bind="false" class="row" style="border: 0;">
@@ -700,7 +712,7 @@
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-employee">
       <button class="btn" data-bind="click: addNew" style="margin-bottom: 10px;">Create</button>
-      <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: employees.refresh"></i>
+      <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: refresh"></i>
       <table class="tbl-typical">
           <thead>
             <tr>
@@ -787,35 +799,6 @@
                                     <td>:</td>
                                     <td>
                                         <input type="Email" data-bind="value: currentID.twitter" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr data-bind="visible:users.showAdmin">
-                                    <td>Role</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: userRoles, value: currentID.role"
-                                               data-text-field="name"
-                                               data-value-field="id"
-                                               data-value-primitive="true"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text"
-                                               >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Type</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: userTypes, value: currentID.usertype"
-                                               data-text-field="name"
-                                               data-value-field="id"
-                                               data-value-primitive="true"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text">
                                     </td>
                                 </tr>
                             </table>
@@ -1048,17 +1031,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Type</td>
-                                    <td>:</td>
+                                    <td></td>
+                                    <td></td>
                                     <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: userTypes, value: current.usertype"
-                                               data-text-field="name"
-                                               data-value-field="id"
-                                               data-value-primitive="true"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text">
                                     </td>
                                 </tr>
                             </table>
@@ -1831,7 +1806,8 @@
           return role;
         },
         goPassword: function() {
-          mainDash.showIn("#placeholder", password);
+          banhji.router.navigate('passwordChange');
+          // mainDash.showIn("#placeholder", password);
         },
         logOut    : function() {
           var userData = {
@@ -1928,6 +1904,7 @@
           serverPaging: true,
           pageSize: 50
         }),
+        users : banhji.userDS,
         currencies : new kendo.data.DataSource({
           transport: {
             read  : {
@@ -2114,6 +2091,7 @@
             ship_to: "",
             abbr: "",
             currency: "",
+            userid: 0,
             account: {id: 0, name: null},
             salary: {id: 0, name: null},
             registered_date: new Date()
@@ -2138,7 +2116,7 @@
           if(banhji.employees.dataSource.hasChanges()) {
             banhji.employees.dataSource.cancelChanges();
           }
-          banhji.router.navigate("");
+          banhji.router.navigate("employeelist");
         },
         save      : function() {
           banhji.employees.dataSource.sync();
@@ -2224,14 +2202,15 @@
         },
         code  : '',
         backToProfile: function() {
-          banhji.router.navigate('');
+          banhji.router.navigate('userlist');
         },
         saveAssign: function() {
           this.modules.sync();
           this.modules.bind('requestEnd', function(e){
             if(e.response.results) {
-              layout.showIn("#main-display-container", index);
-              layout.showIn("#main-display-container", profile);
+              banhji.router.navigate('userlist');
+              // layout.showIn("#main-display-container", index);
+              // layout.showIn("#main-display-container", profile);
             }
           });
         },
@@ -2412,12 +2391,13 @@
           if(this.users.hasChanges()) {
             this.users.cancelChanges();
           }
-          banhji.router.navigate('');
+          banhji.router.navigate('userlist');
         },
         cancelAssign: function() {
           if(this.modules.hasChanges()) {
             this.modules.cancelChanges();
           }
+          banhji.router.navigate('userlist');
         },
         showFormEdit: function(e) {
           banhji.users.setCurrent(e.data);
@@ -2599,21 +2579,25 @@
         userProfile: banhji.profile,
         showLogoEdit: true,
         goUser: function() {
-          mainDash.showIn("#placeholder", user);
+          banhji.router.navigate('userlist');
+          // mainDash.showIn("#placeholder", user);
         },
         goEmployee: function() {
-          mainDash.showIn("#placeholder", employee);
+          banhji.router.navigate('employeelist');
+          // mainDash.showIn("#placeholder", employee);
         },
         goCompany: function() {
-          mainDash.showIn("#placeholder", company);
+          banhji.router.navigate('company');
+          // mainDash.showIn("#placeholder", company);
         },
         showLogo: function(e) {
           e.preventDefault();
           this.get('showLogoEdit') == true ? this.set('showLogoEdit', false) : this.set('showLogoEdit', true);
         },
         goModule    : function() {
-          banhji.moduleDS.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id});
-          mainDash.showIn("#placeholder", instituteModule);
+          // banhji.moduleDS.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id});
+          // mainDash.showIn("#placeholder", instituteModule);
+          banhji.router.navigate("");
         },
         goProfile   : function() {
           banhji.router.navigate("profile");
@@ -2800,33 +2784,24 @@
         layout.showIn("#container", userEdit);
       });
 
-      banhji.router.route('userlist(/:id)', function(id) {
-        if(id) {
-          banhji.users.setCurrent(banhji.users.users.get(id));
-        } else {
-          banhji.users.users.insert(0, {
-            username: null,
-            first_name: null,
-            last_name: null,
-            email: null,
-            mobile: null,
-            password: null,
-            profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
-            company: {id: banhji.companyDS.data()[0].id, name:''},
-            usertype: null
-          });
-
-          banhji.users.setCurrent(banhji.users.users.at(0));
-        }
-        layout.showIn("#container", userForm);
+      banhji.router.route('userlist', function(id) {
+        layout.showIn("#container", mainDash);
+        mainDash.showIn("#placeholder", user);
       });
 
-      banhji.router.route('apps', function() {
-        layout.showIn("#main-display-container", modeleView);
+      banhji.router.route('employeelist', function(){
+        layout.showIn("#container", mainDash);
+        mainDash.showIn("#placeholder", employee);
       });
 
-      banhji.router.route('apps/:id', function(id) {
-        console.log(id);
+      banhji.router.route('company', function(){
+        layout.showIn("#container", mainDash);
+        mainDash.showIn("#placeholder", company);
+      });
+
+      banhji.router.route('passwordChange', function(){
+        layout.showIn("#container", mainDash);
+        mainDash.showIn("#placeholder", password);
       });
 
       banhji.router.route('company/edit', function() {

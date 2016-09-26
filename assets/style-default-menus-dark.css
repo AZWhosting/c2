@@ -4586,6 +4586,7 @@ div.glyphicons.glyphicon-primary i:before {
   -o-transition: color 0.5s ease;
   -ms-transition: color 0.5s ease;
   transition: color 0.5s ease;
+  text-align: center;
 }
 .tabsbar.tabsbar-2 ul li a i {
   height: 39px;
