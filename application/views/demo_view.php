@@ -26688,6 +26688,300 @@
         </div>
     </div>
 </script>
+<script id="invoiceForm25" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span12">
+	        	<div class="span7">
+	        		<div class="logo" style="width: 40%">
+		            	<img style="width: " data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+		            </div>
+	        	</div>
+	        	<div class="span5">
+	        		<div class="span12" style="margin-bottom: 10px;">
+	        			<img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" />
+	        		</div>
+	        		<div class="span12">
+	        			<table class="span12">
+	        				<tr>
+	        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Date</td>
+	        					<td data-bind="text: obj.issued_date"></td>
+	        				</tr>
+	        				<tr>
+	        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Receipt No.</td>
+	        					<td data-bind="text: obj.number"></td>
+	        				</tr>
+	        			</table>
+	        		</div>
+	        	</div>
+	        </div>
+        	<div class="span12" style="margin-top: 10px;">
+		    	<div class="span6" style="">
+		    		<table class="span12">
+						<tr>
+							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Recieve From</td>
+							<td data-bind="text: obj.issued_date"></td>
+						</tr>
+						<tr>
+							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Contact Address</td>
+							<td data-bind="text: obj.number"></td>
+						</tr>
+						<tr>
+							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Purpose</td>
+							<td data-bind="text: obj.number"></td>
+						</tr>
+					</table>
+		    	</div>
+		    	<div class="span5" style="float:right">
+		    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
+		    		<div class="span12 main-color order-price">
+		    			<p><span style="color:#fff;text-align: center;" >USD 2,700.00</span></p>
+		    		</div>
+		    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
+		    	</div>
+		    </div>
+        	<div class="span12" style="margin-top: 5px">
+        		<div class="span5">
+        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Reference Document</p>
+        			<table class="span12">
+						<tr>
+							<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
+							<td data-bind="text: obj.issued_date"></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
+							<td data-bind="text: obj.number"></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
+							<td data-bind="text: obj.number"></td>
+						</tr>
+					</table>
+        		</div>
+        		<div class="span6" style="float:right">
+        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Mode of payment</p>
+        			<div class="span12">
+        				<div class="span4">
+        					<input type="radio" /> Cash<br>
+        					<input type="radio" /> Direct debit<br>
+        					<input type="radio" /> In-kind
+        				</div>
+        				<div class="span4">
+        					<input type="radio" /> Bank transfer<br>
+        					<input type="radio" /> Check<br>
+        					<input type="radio" /> Others:
+        				</div>
+        				<div class="span4">
+        					Bank Acc:<br>
+        					Check No.<br>
+        					
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="span12">
+        		<div class="span8">
+        			<p style="color:black;margin: 10px 0;">The official receipt is considered official only it bears the offical stamp of PCG & Partners and the genuin signature of PCG & Partners officers.</p>
+        		</div>
+        	</div>
+        	<div class="span12">
+        		<div class="span5">
+        			<p>On behalf of PCG & Partners Co., Ltd</p>
+        			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
+        			<p style="font-weight: bold;">Sothy Lalinda</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p>Paid By:</p>
+        			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
+        			<p style="font-weight: bold;"></p>
+        		</div>
+        	</div>
+
+        	<div class="span12 copywatermark">
+	        	<div class="span12" style="margin-top: 20px;border-top: 1px solid #000;padding-top: 15px;">
+		        	<div class="span7">
+		        		<div class="logo" style="width: 40%">
+			            	<img style="width: " data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+			            </div>
+		        	</div>
+		        	<div class="span5">
+		        		<div class="span12" style="margin-bottom: 10px;">
+		        			<img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" />
+		        		</div>
+		        		<div class="span12">
+		        			<table class="span12">
+		        				<tr>
+		        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Date</td>
+		        					<td data-bind="text: obj.issued_date"></td>
+		        				</tr>
+		        				<tr>
+		        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Receipt No.</td>
+		        					<td data-bind="text: obj.number"></td>
+		        				</tr>
+		        			</table>
+		        		</div>
+		        	</div>
+		        </div>
+	        	<div class="span12" style="margin-top: 10px;">
+			    	<div class="span6" style="">
+			    		<table class="span12">
+							<tr>
+								<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Recieve From</td>
+								<td data-bind="text: obj.issued_date"></td>
+							</tr>
+							<tr>
+								<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Contact Address</td>
+								<td data-bind="text: obj.number"></td>
+							</tr>
+							<tr>
+								<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Purpose</td>
+								<td data-bind="text: obj.number"></td>
+							</tr>
+						</table>
+			    	</div>
+			    	<div class="span5" style="float:right">
+			    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
+			    		<div class="span12 main-color order-price">
+			    			<p><span style="color:#fff;text-align: center;" >USD 2,700.00</span></p>
+			    		</div>
+			    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
+			    	</div>
+			    </div>
+	        	<div class="span12" style="margin-top: 5px">
+	        		<div class="span5">
+	        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Reference Document</p>
+	        			<table class="span12">
+							<tr>
+								<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
+								<td data-bind="text: obj.issued_date"></td>
+							</tr>
+							<tr>
+								<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
+								<td data-bind="text: obj.number"></td>
+							</tr>
+							<tr>
+								<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
+								<td data-bind="text: obj.number"></td>
+							</tr>
+						</table>
+	        		</div>
+	        		<div class="span6" style="float:right">
+	        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Mode of payment</p>
+	        			<div class="span12">
+	        				<div class="span4">
+	        					<input type="radio" /> Cash<br>
+	        					<input type="radio" /> Direct debit<br>
+	        					<input type="radio" /> In-kind
+	        				</div>
+	        				<div class="span4">
+	        					<input type="radio" /> Bank transfer<br>
+	        					<input type="radio" /> Check<br>
+	        					<input type="radio" /> Others:
+	        				</div>
+	        				<div class="span4">
+	        					Bank Acc:<br>
+	        					Check No.<br>
+	        					
+	        				</div>
+	        			</div>
+	        		</div>
+	        	</div>
+	        	<div class="span12">
+	        		<div class="span8">
+	        			<p style="color:black;margin: 10px 0;">The official receipt is considered official only it bears the offical stamp of PCG & Partners and the genuin signature of PCG & Partners officers.</p>
+	        		</div>
+	        	</div>
+	        	<div class="span12">
+	        		<div class="span5">
+	        			<p>On behalf of PCG & Partners Co., Ltd</p>
+	        			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
+	        			<p style="font-weight: bold;">Sothy Lalinda</p>
+	        		</div>
+	        		<div class="span4" style="float:right;">
+	        			<p>Paid By:</p>
+	        			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
+	        			<p style="font-weight: bold;"></p>
+	        		</div>
+	        	</div>
+	        </div>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm26" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span7">
+        		<div class="logo" style="width: 40%">
+	            	<img style="width: " data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span5">
+        		<div class="span12" style="margin-bottom: 10px;">
+        			<img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" />
+        		</div>
+        		<div class="span12">
+        			<table class="span12">
+        				<tr>
+        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Date</td>
+        					<td data-bind="text: obj.issued_date"></td>
+        				</tr>
+        				<tr>
+        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Receipt No.</td>
+        					<td data-bind="text: obj.number"></td>
+        				</tr>
+        			</table>
+        		</div>
+        	</div>
+        	<div class="span12" style="margin-top: 10px;">
+		    	<div class="span6" style="">
+		    		<table class="span12">
+						<tr>
+							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Recieve From</td>
+							<td data-bind="text: obj.issued_date"></td>
+						</tr>
+						<tr>
+							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Contact Address</td>
+							<td data-bind="text: obj.number"></td>
+						</tr>
+						<tr>
+							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Purpose</td>
+							<td data-bind="text: obj.number"></td>
+						</tr>
+					</table>
+		    	</div>
+		    	<div class="span5" style="float:right">
+		    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
+		    		<div class="span12 main-color order-price">
+		    			<p><span style="color:#fff;text-align: center;" >USD 2,700.00</span></p>
+		    		</div>
+		    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
+		    	</div>
+		    </div>
+        	<div class="span12" style="margin-top: 5px">
+        		<div class="span5">
+        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Reference Document</p>
+        			<table class="span12">
+						<tr>
+							<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
+							<td data-bind="text: obj.issued_date"></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
+							<td data-bind="text: obj.number"></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
+							<td data-bind="text: obj.number"></td>
+						</tr>
+					</table>
+        		</div>
+        		<div class="span6" style="float:right">
+
+        		</div>
+        	</div>
+        </div>
+    </div>
+</script>
 
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
 	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
@@ -31656,7 +31950,7 @@
 					    </div>
 					</div>
 					
-					<div>
+					<div class="row-fluid">
 						<h4>To:</h4>
 
 						<input id="cbbItem" name="cbbItem"
@@ -31700,23 +31994,24 @@
 							
 							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
 
-							<div class="btn-group">
-								<div class="leadcontainer">
-									
-								</div>
-								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-									<li>
-										<input type="checkbox" data-bind="checked: showRef" /> REF
-									</li>
-									<li>
-										<input type="checkbox" data-bind="checked: showName" /> NAME
-									</li>
-									<li>
-										<input type="checkbox" data-bind="checked: showSegment" /> SEGMENT
-									</li>								
-								</ul>
-							</div>						
+							<!-- Add New Item -->
+							<ul class="topnav addNew">
+								<li role="presentation" class="dropdown ">
+							  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							  			Add New Item
+				    					<span class="caret"></span>
+							  		</a>
+						  			<ul class="dropdown-menu addNewItem">  				  				
+						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add New Services</a></li>
+						  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
+						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  			</ul>
+							  	</li>				
+							</ul>
+							<!--End Add New Item -->						
 							
 						</div>
 						<!-- Column END -->
@@ -39694,6 +39989,14 @@
 			{ id: "Purchase", name: "Purchase" },
 			{ id: "Pur_Return", name: "Pur.Return" },
 			{ id: "PayBill", name: "PayBill" }
+	    ],
+	    cashFormList 				: [
+	    	{ id: "Cash_Transfer", name: "Cash Transaction" },
+	    	{ id: "Cash_Receipt", name: "Cash Receipt" },
+			{ id: "Cash_Payment", name: "Cash Payment" },
+			{ id: "Cash_Advance", name: "Cash Advance" },
+			{ id: "Reimbursement", name: "Reimbursement" },
+			{ id: "Advance_Settlement", name: "Advance Settlement" }
 	    ],
 	    cashMGTFormList				: [
 	    	{ id: "Cash_Transfer", name: "Transfer" },
@@ -58209,6 +58512,8 @@
 			case 24: Active = banhji.view.invoiceForm2; break;
 			case 25: Active = banhji.view.invoiceForm23; break;
 			case 26: Active = banhji.view.invoiceForm24; break;
+			case 27: Active = banhji.view.invoiceForm19; break;
+			case 28: Active = banhji.view.invoiceForm25; break;
 		}
 		banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 	};
@@ -58648,6 +58953,110 @@
 			window.history.back();
 		}    
 	});
+
+	/*************************
+	*	Cash Section   *
+	**************************/
+    banhji.cashSetting =  kendo.observable({
+		lang 				: langVM,		
+        contactTypeDS 		: banhji.source.customerTypeDS,
+        paymentMethodDS		: dataStore(apiUrl+"payment_methods"),
+        paymentTermDS		: dataStore(apiUrl+"payment_terms"),
+        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
+        contactTypeName 	: "",
+        contactTypeAbbr 	: "",
+        contactTypeCompany 	: 0,
+        paymentMethodName 	: "",
+        paymentTermName 	: "",
+        paymentTermNetDue	: "",
+        paymentTermPeriod 	: "",
+        paymentTermPercentage 	: "",
+        pageLoad 			: function() {
+        	this.txnTemplateDS.filter({ field: "moduls", value : "cash_mg" });
+        },	    
+        addContactType 		: function(){
+        	var name = this.get("contactTypeName");
+
+        	if(name!==""){
+	        	this.contactTypeDS.add({
+	        		parent_id 	: 1,
+	        		name 		: name,
+	        		abbr 		: this.get("contactTypeAbbr"),
+	        		description : "",
+	        		is_company 	: this.get("contactTypeCompany"),
+	        		is_system 	: 0
+	        	});
+
+	        	this.contactTypeDS.sync();
+
+	        	this.set("contactTypeName", "");
+	        	this.set("contactTypeAbbr", "");
+	        	this.set("contactTypeCompany", 0);
+        	}
+        },
+        addPaymentMethod 		: function(){
+        	var name = this.get("paymentMethodName");
+
+        	if(name!==""){
+	        	this.paymentMethodDS.add({	        		
+	        		name 		: name,
+	        		description : "",
+	        		is_system 	: 0
+	        	});
+
+	        	this.paymentMethodDS.sync();
+
+	        	this.set("paymentMethodName", "");
+        	}
+        },
+        addPaymentTerm 		: function(){
+        	var name = this.get("paymentTermName");
+
+        	if(name!==""){
+	        	this.paymentTermDS.add({	        		
+	        		name 				: name,
+	        		net_due 			: this.get("paymentTermNetDue"),
+	        		discount_period 	: this.get("paymentTermPeriod"),
+	        		discount_percentage : this.get("paymentTermPercentage"),
+	        		is_system 			: 0
+	        	});
+
+	        	this.paymentTermDS.sync();
+
+	        	this.set("paymentTermName", "");
+	        	this.set("paymentTermNetDue", "");
+	        	this.set("paymentTermPeriod", "");
+	        	this.set("paymentTermPercentage", "");
+        	}
+        },
+        goPattern 	: function(e){
+        	var data = e.data;        	        	
+
+        	if(kendo.parseInt(data.contact_id)>0){        		        	
+	        	banhji.router.navigate('/customer/'+data.contact_id+'/1');   	
+        	}else{
+        		banhji.router.navigate('/customer');
+        		banhji.customer.set("contact_type_id",data.id);
+        	}
+        },
+        deleteForm 		: function(e){
+        	var data = e.data;
+        	if(confirm("Do you want to delete it?") == true) {
+        		this.txnTemplateDS.remove(data);
+        		this.txnTemplateDS.sync();
+        	}
+        },
+        goInvoiceCustom : function(){
+        	banhji.invoiceCustom.set("selectCustom", "cash_mg");
+		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm15);
+		    banhji.invoiceCustom.set("formTitle", "Cash Transfer");
+		    banhji.invoiceCustom.set("formType", "Cash_Transfer");
+		    var obj= banhji.invoiceCustom.get("obj");
+		    obj.set("type", "Cash_Transfer");
+		    banhji.invoiceCustom.set("selectTypeList", banhji.source.cashFormList);
+		    banhji.router.navigate('/invoice_custom');
+        }      
+    });
 
 	//Report Customer
 	banhji.saleSummaryCustomer = kendo.observable({
@@ -61638,6 +62047,8 @@
 		ar_customer : 0
 	});
 
+	
+
 	/*************************
 	*	Inventory Section   *
 	**************************/
@@ -64507,7 +64918,7 @@
 			}				
 		},
 		//Item		
-		itemChanges 		: function(e){								
+		itemChanges 			: function(e){								
 			var self = this, 
 			data = e.data,
 			obj = this.get("obj"), 
@@ -64525,8 +64936,15 @@
 				}
 
 		        if(item.is_catalog=="1"){
+		        	var catalogList = [];
+		        	$.each(item.catalogs, function(index, value){
+		        		catalogList.push(value);
+		        	});
+		        	
 		        	this.catalogDS.query({
-		        		filter: { field:"id", operator:"where_in", value:item.catalogs }
+		        		filter: { field:"id", operator:"where_in", value:catalogList },
+		        		page:1,
+		        		pageSize:100
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
@@ -64541,7 +64959,7 @@
 								price 				: value.item_prices[0].price*rate,												
 								amount 				: value.item_prices[0].price*rate,
 								discount 			: 0,
-								rate				: obj.rate,
+								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -64570,7 +64988,7 @@
 		    	}
 	        }                	        	
 		},		
-		onChange 				: function(e) {
+		changes 				: function(e) {
       		var data = e.data;            
             
             if(data.quantity_adjusted){
@@ -64626,7 +65044,7 @@
 		    	});
 			});
     	},
-		changes				: function(){
+		changes					: function(){
 			var self = this, obj = this.get("obj");
 
 			if(this.lineDS.total()>0){			
@@ -64698,7 +65116,7 @@
 				obj.set("remaining", remaining);									    	
 	    	}	
 		},					
-		addEmpty 		 	: function(){
+		addEmpty 		 		: function(){
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.journalLineDS.data([]);
@@ -64743,7 +65161,7 @@
 			this.setRate();	
 			this.addRow();
 		},
-		addRow 				: function(){				
+		addRow 					: function(){				
 			var obj = this.get("obj");
 									
 			this.lineDS.add({					
@@ -64763,7 +65181,7 @@
 				movement 			: -1
 			});																	
 		},		
-		removeRow 			: function(e){						
+		removeRow 				: function(e){						
 			var data = e.data;
 			if(this.lineDS.total()>1){				
 				this.lineDS.remove(data);
@@ -64786,28 +65204,21 @@
 		    return dfd;	    		    	
 	    },			
 		save 					: function(){			
-			var self = this, obj = this.get("obj");
+			var self = this, obj = this.get("obj");					
 
-			//Remove empty row
-			$.each(this.lineDS.view(), function(index, value){
-		  		if(!value.quantity_adjusted){
-		  			self.lineDS.remove(value);
-		  		}
-		  	});			
+			//Edit Mode
+	    	if(this.get("isEdit")){
+	    		//Line has changes
+		    	if(this.lineDS.hasChanges()){
+		    		obj.set("dirty", true);
 
-			// //Edit Mode
-	  //   	if(this.get("isEdit")){
-	  //   		//Line has changes
-		 //    	if(this.lineDS.hasChanges()){
-		 //    		obj.set("dirty", true);
+		    		$.each(this.journalLineDS.data(), function(index, value){
+						value.set("deleted", 1);										
+					});
 
-		 //    		$.each(this.journalLineDS.data(), function(index, value){
-			// 			value.set("deleted", 1);										
-			// 		});
-
-			// 		this.addJournal(obj.id);
-		 //    	}
-	  //   	}
+					this.addJournal(obj.id);
+		    	}
+	    	}
 
 			//Save Obj
 			this.objSync()
@@ -64816,7 +65227,6 @@
 					//Item Line
 					$.each(self.lineDS.data(), function(index, value){						
 	      				value.set("transaction_id", data[0].id);
-	      				value.set("quantity", Math.abs(value.quantity));	      				
 	      			});
 
 	      			//Attachment
@@ -64862,7 +65272,7 @@
 			this.lineDS.data([]);
 			this.journalLineDS.data([]);			
 
-			banhji.userManagement.removeMultiTask("item_adjustment");
+			banhji.userManagement.removeMultiTask("internal_usage");
 		},
 		//Journal	        
 	    addJournal 				: function(transaction_id){
@@ -70881,6 +71291,25 @@
 		}
 	});
 
+	banhji.router.route("/cash_setting", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashSetting);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.cashMenu);
+
+			var vm = banhji.cashSetting;
+			banhji.userManagement.addMultiTask("Cash Setting","cash_setting",null);
+			if(banhji.pageLoaded["cash_setting"]==undefined){
+				banhji.pageLoaded["cash_setting"] = true;
+				
+				vm.contactTypeDS.filter({ field:"parent_id", value:1 });
+			}
+
+			vm.pageLoad();			     		
+		}
+	});
 
 
 	/*************************
