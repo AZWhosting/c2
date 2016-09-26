@@ -389,3 +389,6 @@ pre {
     width: 55px;
     float:left;
 }
+.copywatermark {
+	background: url(img/copywatermark.png) no-repeat center center;
+}

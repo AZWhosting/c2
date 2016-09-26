@@ -92,13 +92,7 @@
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Documents</span>
 						</li>
 					</ul>
-					<ul id="module-image">
-						<li style="text-align:center;">
-							<a href="#/cashs">
-								<img title="Cash Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000">Cash MGT.</span>
-						</li>
+					<ul id="module-image">						
 						<li style="text-align:center;">
 							<a href="#/accounting">
 								<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
@@ -117,27 +111,40 @@
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings"></span></span>
 							</a>
 						</li>
-					</ul>
-				</div>
-				
-				<div class="span12" style="padding-left: 0; margin-left: 0; margin-top: 30px;">
-					<h4 style="margin-left: 35px; width: 450px;"><span data-bind="text: lang.lang.subcribed_industry_modules"></span></h4>
-					<ul id="module-image">
-						<li style="text-align:center;">
-							<a href="#">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/web_store.png" alt="Customer">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.web_store"></span></span>
-						</li>
 						<li style="text-align:center;">
 							<a href="#/sale_tax">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.png" alt="Tax">
+								<img title="Sale Tax" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.png" alt="Tax">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax"></span></span>
 						</li>
-					</ul>	
+					</ul>
 				</div>
-			</div>	
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="span12" style="width: 100%; padding: 0 5px;">
+					<div class="home-chart" style="width: 95%; padding: 0 15px;">
+						<!-- Graph -->
+						<div data-role="chart"
+							 data-auto-bind="false"
+			                 data-legend="{ position: 'top' }"
+			                 data-series-defaults="{ type: 'column' }"
+			                 data-tooltip='{
+			                    visible: true,
+			                    format: "{0}%",
+			                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+			                 }'                 
+			                 data-series="[
+			                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
+			                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
+			                             ]"	                             
+			                 data-bind="source: graphDS"
+			                 style="height: 240px;" ></div>
+			            <!-- End Graph -->      
+					</div>
+				</div>
+			</div>
+			<br>
+			<br>
 		</div>
 		
 		<!-- Welcome -->
@@ -294,27 +301,7 @@
 							</div>
 						</div>
 
-						<div class="span12">
-							<div class="home-chart">
-								<!-- Graph -->
-								<div data-role="chart"
-									 data-auto-bind="false"
-					                 data-legend="{ position: 'top' }"
-					                 data-series-defaults="{ type: 'column' }"
-					                 data-tooltip='{
-					                    visible: true,
-					                    format: "{0}%",
-					                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-					                 }'                 
-					                 data-series="[
-					                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
-					                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
-					                             ]"	                             
-					                 data-bind="source: graphDS"
-					                 style="height: 250px;" ></div>
-					            <!-- End Graph -->      
-							</div>
-						</div>
+						
 					</div><!--End Chart Board -->
 					
 				</div>
@@ -521,20 +508,40 @@
 							<img title="Add Account" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/journal.png" width="110" height="200" />
 							Journal
 						</a>						
+					</td>					
+					<td class="center">
+						<a href="#/cash_transaction">
+							<img title="Add Cash Transaction" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />
+							C.Transaction
+						</a>						
+					</td>
+					<td class="center">
+						<a href="#/cash_advance">
+							<img title="Add Cash Advance" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_advance.png" width="110" height="200" />
+							C.Advance
+						</a>
+					</td>		
+				</tr>
+				<tr>
+					<td class="center">						
+						<a href="#/expense">
+							<img title="Add Expense" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/expense.png" width="110" height="200" />
+							Expense
+						</a>						
+					</td>
+					<td class="center">						
+						<a href="#/currency_rate">
+							<img title="Add Exchange Rate Record" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/currency_record.png" width="110" height="200" />
+							Ex.Rate Record
+						</a>						
 					</td>
 					<td class="center">
 						<a href="#/segment">
 							<img title="Add Segment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/segment.png" width="110" height="200" />
 							Segment
 						</a>
-					</td>
-					<td class="center">
-						<a href="#/">
-							<img title="Add Importing Batch" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/importing_batch.png" width="110" height="200" />
-							Import Batch
-						</a>
-					</td>				
-				</tr>						
+					</td>			
+				</tr>								
 			</table>
 
 		</div>
@@ -2182,6 +2189,7 @@
 								<h3><a href="#/recent_transactions_list">Recent Transactions List</a></h3>
 							</td>
 							<td width="50%">
+								<h3><a href="#/">Period-End Closing Checklist</a></h3>
 							</td>
 						</tr>
 						<tr>
@@ -2199,7 +2207,7 @@
 							<td width="50%">
 							</td>
 							<td width="50%">
-								<h3><a href="#/">Period-End Closing Checklist</a></h3>
+								
 							</td>
 						</tr>
 						<tr>
@@ -2289,6 +2297,66 @@
 					</table>
 				</div>
 			</div>
+
+			<div class="row-fluid sale-report">
+				<h2>CASH POSITION</h2>
+				<p>
+					The following reports provide summary and detailed reports on employee related transactions.  
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/">Cash Position Report</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Cash Payment Report</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price.  
+
+
+								</p>
+								
+							</td>
+							<td >
+								<p>
+									Lists of all transactions related to and grouped by each inventory with analysis of average gross profit margin.
+
+
+								</p>
+							</td>
+							
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/">Cash Receipt Report</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/">Reconciliation Report</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<p>
+									Lists individual inventory movement transactions by date for each inventory within a period of time.
+
+
+								</p>
+							</td>
+							<td >
+								<p>
+									List of all cash related reconciliation reports.
+								</p>
+							</td>
+						</tr>
+					</table>					
+				</div>
+			</div>
+
 			<div class="row-fluid recevable-report">
 				<h2>OTHER REPORTS/ LISTS</h2>
 				<div class="row-fluid">
@@ -2315,17 +2383,35 @@
 							
 						</tr>
 						<tr>
-							<td >
+							<td>
+								<h3><a href="#/">Realized Exchange Gains & Losses</a></h3>
 							</td>
+							<td width="50%">
+								<h3><a href="#/">Unrealized Exchange Gains & Losses</a></h3>								
+							</td>						
+						</tr>
+						<tr>
 							<td >
+								<p>
+									This detailed report lists foreign transactions that are closed (referred to as realized gains and losses) and totals the gains and losses due to changes in exchange rates.
 
+
+								</p>
+								
 							</td>
-							
+							<td >
+								<p>
+									This summary report lists your foreign accounts and calculates the potential gain or loss for each account.
+
+
+								</p>
+							</td>							
 						</tr>
 						
 					</table>
 				</div>
 			</div>
+
 		</div>
 		<div class="span5">
 			<span class="pull-right glyphicons no-js remove_2" 
@@ -20168,7 +20254,7 @@
                    style="width: 100%" />            
 		</td>
 		<td>
-			<input id="cbbInvoice-#:uid#" name="cbbInvoice-#:uid#"
+			<input id="cbbInvoice" name="cbbInvoice-#:uid#"
 				   data-role="combobox"
 				   data-template="reference-list-tmpl"				                      			   
                    data-text-field="number"
@@ -27849,9 +27935,10 @@
 							</div>
 
 							<br>
-
-							<textarea cols="0" rows="2" class="k-textbox" style="width:49%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
-							<textarea cols="0" rows="2" class="k-textbox" style="width:50%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+							<div class="well" style="overflow: hidden;">
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+							</div>
 						</div>
 						<!-- Column END -->
 						
