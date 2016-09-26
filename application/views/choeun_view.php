@@ -32143,7 +32143,9 @@
 	            <li><a href="#tab3-1" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong">Measurement</span></a>
 	            </li>
 	            <li><a href="#tab4-1" class="glyphicons certificate" data-toggle="tab"><i></i><span class="strong">Brand</span></a>
-	            </li>	            
+	            </li>	
+	            <li><a href="#tab5-1" class="glyphicons list" data-toggle="tab"><i></i><span class="strong">Custom Forms</span></a>
+	            </li>            
 	        </ul>
 	    </div>
 	    <!-- // Tabs Heading END -->
@@ -32268,7 +32270,29 @@
 				                data-bind="source: brandDS"></tbody>
 	            	</table>		            
 	            </div>
-	            <!-- // Tab Brand Type content END -->	            
+	            <!-- // Tab Brand Type content END -->	
+
+	            <!-- Tab Invocice Custom content -->
+	            <div class="tab-pane" id="tab5-1">
+            		
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center">Name</th>
+	            				<th class="center">Form Type</th>
+	            				<th class="center">Last Edited</th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="customerSetting-form-template"
+				                 data-bind="source: txnTemplateDS">				            
+	            		</tbody>
+	            	</table>
+	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
+	            </div>
+	            <!-- // Tab Invoice Custom content END -->            
 
 	        </div>
 	    </div>
@@ -65364,7 +65388,8 @@
         itemGroupDS 		: dataStore(apiUrl + "items/group"),        
         measurementDS		: dataStore(apiUrl + "measurements"),
         brandDS 			: dataStore(apiUrl + "brands"),
-        itemTypeDS 			: dataStore(apiUrl + "item_types"),        
+        itemTypeDS 			: dataStore(apiUrl + "item_types"),     
+        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),   
         category_code 		: "",
         category_name 		: "",
         category_abbr 		: "",
@@ -65378,8 +65403,8 @@
         brand_name 			: "",
         brand_abbr 			: "",        
         pageLoad 			: function() {
-        	
-        },        
+        	this.txnTemplateDS.filter({ field: "moduls", value : "item_mg" });
+        },
         addCategory 		: function(){
         	var self = this, 
         	name = this.get("category_name"),
@@ -65489,6 +65514,17 @@
 	        		banhji.nonInventoryPart.setPattern(data.id);
 	        	}        		
         	}
+        },
+        goInvoiceCustom : function(){
+
+		    banhji.invoiceCustom.set("selectTypeList", banhji.source.itemFormList);
+		    banhji.invoiceCustom.set("selectCustom", "item_mg");
+		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm26);
+		    banhji.invoiceCustom.set("formTitle", "PO");
+		    banhji.invoiceCustom.set("formType", "Purchase_Order");
+		    var obj= banhji.invoiceCustom.get("obj");
+		    obj.set("type", "Purchase_Order");
+		    banhji.router.navigate('/invoice_custom');
         } 
     });
     banhji.serviceSetting =  kendo.observable({

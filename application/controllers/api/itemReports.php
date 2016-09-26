@@ -587,7 +587,7 @@ class Itemreports extends REST_Controller {
 			}
 		}
 		foreach ($temp as $key => $value) {
-			$data["results"][] = $value;
+			$data["results"]= $value;
 		}
 		$data['gpm'] = $gpm;
 		$data['count'] = count($temp);
