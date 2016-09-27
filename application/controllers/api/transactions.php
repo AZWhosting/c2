@@ -1009,6 +1009,12 @@ class Transactions extends REST_Controller {
 		//Deposit
 		case "Deposit":
 		  	$header = "DE";
+		  	break;
+		case "Customer_Deposit":
+		  	$header = "CD";
+		  	break;
+		case "Vendor_Deposit":
+		  	$header = "VD";
 		  	break;		
 		case "eDeposit":
 		  	$header = "ED";
