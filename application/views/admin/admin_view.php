@@ -449,6 +449,8 @@
                             <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: close"><i></i></span>
                         </div>
                         <h2>Edit Company Info</h2>
+                        <img data-bind="attr: {src: current.logo}"><br>
+                        <input type="file" id="companyLogo" data-bind="events: {change: onLogoChange}">
                         <div class="divider"></div>
                         <header class="box-typical-header-sm">
                           General Info
@@ -613,11 +615,7 @@
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-company">
       <article class="profile-info-item">
-        <img data-bind="attr: {src: current.logo}"><br><br>
-        <a href="\#" data-bind="visible: showLogoEdit, events: {click: showLogo}">Edit Logo</a>
-        <input type="file" id="companyLogo" data-bind="invisible: showLogoEdit, events: {change: onLogoChange}"><br>
-        <button class="btn" data-bind="invisible: showLogoEdit, events: {click: upload}">Save</button>
-        <button class="btn" data-bind="invisible: showLogoEdit, events: {click: showLogo}">Cancel</button>   
+        <img data-bind="attr: {src: current.logo}">   
       </article>
         <header class="box-typical-header-sm">
             General Info
@@ -694,6 +692,7 @@
         <button data-bind="click: edit" data-role="button" class="btn" role="button" aria-disabled="false" tabindex="0">
             Edit
         </button>
+        <div id="ntf1" data-role="notification"></div>
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-user">
       <article class="profile-info-item user">
@@ -895,15 +894,18 @@
                     <thead>
                         <tr>
                           <td style="width: 80%">User Access Modules</td>
-                          <td><i class="fa fa-save" data-bind="click: saveAssign" style="cursor: pointer;"></i>&nbsp;
-                          <i class="fa fa-eraser" data-bind="click: cancelAssign" style="cursor: pointer;"></i></td>
+                          <td>
+                          </td>
                         </tr>
                     </thead>
                     <tbody data-role="listview" data-bind="source: modules" data-template="template-modules-users-module-list-page">
                     </tbody>
-                </table>
+                </table><br>
+                <button class="btn" data-bind="click: saveAssign" style="cursor: pointer;">Save</button>
+                <button class="btn" data-bind="click: cancelAssign" style="cursor: pointer;">Cancel</button>
             </div>
         </div>
+        <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="template-user-password">
@@ -911,22 +913,23 @@
         Old Password: <input class="form-control" type="password" data-bind="value: oldPass"><br>
         New Password: <input class="form-control" type="password" data-bind="value: newPass"><br>
         <button class="btn btn-primary btn-block" data-bind="click: changePassword">Confirm</button>
+        <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="template-modules-users-company-list-page">
       <tr>
           <td>
-              #=name#
+            <img src="#=image_url#" width="100"> #=name#
           </td>
           <td>
-              <i class="fa fa-hand-o-right" data-bind="click: assignTo"></i>
+            <i class="fa fa-hand-o-right" data-bind="click: assignTo"></i>
           </td>
       </tr>
     </script>
     <script type="text/x-kendo-template" id="template-modules-users-module-list-page">
       <tr>
           <td>
-              #=name#
+            <img src="#=img_url#" width="100"> #=name#
           </td>
           <td>
               <i class="fa fa-trash" data-bind="click: removeFrom"></i>
@@ -937,121 +940,121 @@
       <!--Add User-->
       <div class="page-content">
         <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <section class="box-typical edit-company">
-                        <div class="hidden-print pull-right">
-                            <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
-                        </div>
-                        <h2>User Detail</h2>
-                        <div class="divider"></div>
-                        <div class="col-md-3 col-lg-3">
-                            <img width="240px" data-bind="attr: {src: current.profile_photo}" />
-                            <h3>Profile Picture</h3>
-                            <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
-                        </div>
-                        <article class="col-md-9 col-lg-9 profile-info-item edit-table">
-                            <table >
-                                <tr>
-                                    <td>Username *</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="text" data-bind="value: current.username" class="form-control"  id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>First Name *</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="text" data-bind="value: current.first_name" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Last Name *</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="text" data-bind="value: current.last_name" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Password *</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="password" data-bind="value: current.password" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Phone</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="text" data-bind="value: current.mobile" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Facebook</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.facebook" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>LinkedIn</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.linkedin" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Twitter</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.twitter" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr data-bind="visible:showAdmin">
-                                    <td>Role</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: userRoles, value: current.role"
-                                               data-text-field="name"
-                                               data-value-field="id"
-                                               data-value-primitive="true"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text"
-                                               >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                    </td>
-                                </tr>
-                            </table>
-                        </article>
-                        <div class="box-generic">
-                          <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
-                              <span class="glyphicon glyphicon-ok"><i></i></span>
-                              &nbsp; Save
+          <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                  <section class="box-typical edit-company">
+                      <div class="hidden-print pull-right">
+                          <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
+                      </div>
+                      <h2>User Detail</h2>
+                      <div class="divider"></div>
+                      <div class="col-md-3 col-lg-3">
+                          <img width="240px" data-bind="attr: {src: current.profile_photo}" />
+                          <h3>Profile Picture</h3>
+                          <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                      </div>
+                      <article class="col-md-9 col-lg-9 profile-info-item edit-table">
+                          <table >
+                              <tr>
+                                  <td>Username *</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="text" data-bind="disabled: editable, value: current.username" class="form-control"  id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>First Name *</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="text" data-bind="value: current.first_name" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Last Name *</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="text" data-bind="value: current.last_name" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Password *</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="password" data-bind="value: current.password" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Phone</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="text" data-bind="value: current.mobile" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Email</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Facebook</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="Email" data-bind="value: current.facebook" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>LinkedIn</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="Email" data-bind="value: current.linkedin" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Twitter</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="Email" data-bind="value: current.twitter" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr data-bind="visible:showAdmin">
+                                  <td>Role</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input id="type"
+                                             data-role="dropdownlist"
+                                             data-bind="source: userRoles, value: current.role"
+                                             data-text-field="name"
+                                             data-value-field="id"
+                                             data-value-primitive="true"
+                                             class="form-control col-md-7 col-xs-12"
+                                             type="text"
+                                             >
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td>
+                                  </td>
+                              </tr>
+                          </table>
+                      </article>
+                      <div class="box-generic">
+                        <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
+                            <span class="glyphicon glyphicon-ok"><i></i></span>
+                            &nbsp; Save
+                        </button>
+                        &nbsp;
+                        <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0" data-bind="click: cancel">
+                            <span class="glyphicon glyphicon-remove"><i></i></span>
+                            &nbsp; Cancel
                           </button>
-                          &nbsp;
-                          <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0" data-bind="click: cancel">
-                              <span class="glyphicon glyphicon-remove"><i></i></span>
-                              &nbsp; Cancel
-                            </button>
-                        </div>
-                    </section>
-                </div>
-            </div>
+                      </div>
+                  </section>
+              </div>
+          </div>
         </div>
         <div id="ntf1" data-role="notification"></div>
       </div>
@@ -1079,7 +1082,7 @@
                                     <td>Username *</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" data-bind="value: current.username" class="form-control" id="" placeholder="">
+                                        <input type="text" data-bind="disabled: editable, value: current.username" class="form-control" id="" placeholder="">
                                     </td>
                                 </tr>
                                 <tr>
@@ -1290,19 +1293,19 @@
           var key = 'ATTACH_' + JSON.parse(localStorage.getItem('userData/user')).institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files[0].name;
           banhji.fileManagement.dataSource.add({
             transaction_id  : 0,
-            type            : "Contact",
+            type            : "Transaction",
             name            : files[0].name,
             contact_id      : null,
             description     : "",
             key             : key,
             url             : "https://s3-ap-southeast-1.amazonaws.com/banhji/"+key,
             created_at      : new Date(),
-            file: files[0].rawFile
+            file            : files[0].rawFile
           });
         },
         save                : function(contact_id){
           $.each(banhji.fileManagement.dataSource.data(), function(index, value){ 
-            banhji.fileManagement.dataSource.at(index).set("contact_id", contact_id);
+            banhji.fileManagement.dataSource.at(index).set("transaction_id", contact_id);
             if(!value.id){
               var params = { 
                 Body: value.file, 
@@ -1787,13 +1790,14 @@
           }
           cognitoUser.changePassword(this.get('oldPass'), this.get('newPass'), function(err, result) {
               if (err) {
-                  alert(err);
+                  $("#ntf1").data("kendoNotification").error("Operation failed.");
                   return;
               } else {
+                $("#ntf1").data("kendoNotification").success("Data saved.");
                 banhji.users.set('oldPass', null);
                 banhji.users.set('newPass', null);
+                banhji.router.navigate("");
               }
-              console.log('call result: ' + result);
           });
         },
         getRole   : function() {
@@ -1846,8 +1850,12 @@
             banhji.profile.dataSource.sync();
           }
           banhji.profile.dataSource.bind('requestEnd', function(e){
-            if(e.response) {
-              alert("Operation saved");
+            var res = e.response;
+            if(res.results.length > 0) {
+              $("#ntf1").data("kendoNotification").success("Data saved.");
+              banhji.router.navigate("");
+            } else {
+              $("#ntf1").data("kendoNotification").error("Operation failed.");
             }
           });
         }
@@ -2125,6 +2133,7 @@
               banhji.employees.fileMan.save(e.response.results[0].id);
               banhji.employees.addNew();
               $("#ntf1").data("kendoNotification").success("Data saved.");
+              banhji.router.navigate('employeelist');
             } else {
                $("#ntf1").data("kendoNotification").error("Operation failed");
             }
@@ -2153,6 +2162,14 @@
           } else {
             return false;
           }
+        },
+        editable: function() {
+          if(banhji.users.get('current').isNew()) {
+            return false;
+          } else {
+            return true;
+          }
+          // return true;
         },
         modules: new kendo.data.DataSource({
           transport: {
@@ -2207,10 +2224,12 @@
         saveAssign: function() {
           this.modules.sync();
           this.modules.bind('requestEnd', function(e){
-            if(e.response.results) {
+            var res = e.response;
+            if(res.results.length > 0) {
+              $("#ntf1").data("kendoNotification").success("Data saved.");
               banhji.router.navigate('userlist');
-              // layout.showIn("#main-display-container", index);
-              // layout.showIn("#main-display-container", profile);
+            } else {
+              $("#ntf1").data("kendoNotification").error("Operation failed.");
             }
           });
         },
@@ -2513,7 +2532,10 @@
                       banhji.userDS.bind('requestEnd', function(e){
                         var res = e.response, type = e.type;
                         if(res.results.length > 0) {
-                          console.log('user created.');
+                          $("#ntf1").data("kendoNotification").success("Data saved.");
+                          banhji.router.navigate('userlist');
+                        } else {
+                          $("#ntf1").data("kendoNotification").error("Operation failed.");
                         }
                       });
                     });
@@ -2524,12 +2546,12 @@
                     var res = e.response, type = e.type;
                     if(res.results.length > 0) {
                       $("#ntf1").data("kendoNotification").success("Data saved.");
+                      banhji.router.navigate('userlist');
                     } else {
                       $("#ntf1").data("kendoNotification").error("Operation failed.");
                     }
                   });
                 }
-                alert('Your action was successful.');
             });
           } else {
             var fileChooser = document.getElementById('user-image');
@@ -2610,6 +2632,7 @@
            banhji.company.get('current').set('logo', e.target.result);
           }
           fileReader.readAsDataURL(file);
+          banhji.company.set('logoChange', true);
         },
         setCurrent: function(current) {
           this.set('current', current);
@@ -2618,6 +2641,7 @@
           index.showIn('#app-placeholder', modeleView);
         },
         close: function() {
+          banhji.company.dataStore.cancelChanges();
           banhji.router.navigate('');
         },
         taxRegimes: [
@@ -2638,6 +2662,7 @@
         edit: function() {
           banhji.router.navigate('company/edit');
         },
+        logoChange: false,
         cancel: function() {
           if(this.dataStore.hasChanges()) {
             this.dataStore.cancelChanges();
@@ -2645,27 +2670,30 @@
           banhji.router.navigate('');
         },
         save: function() {
-          // var file = fileChooser.files[0];
-          // if (file) {
-          //   var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-          //   bucket.upload(params, function (err, data) {
-          //     banhji.company.dataStore.data()[0].set('logo', data.Location);
-          //     banhji.company.dataStore.sync();
-          //   });
-          // } else {
-          //   this.dataStore.sync();
-          // }
-          
-          this.dataStore.bind('rquestEnd', function(e){
+          if(banhji.company.get('logoChange')) {
+            var fileChooser = document.getElementById('companyLogo');
+            var file = fileChooser.files[0];
+            if (file) {
+              var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
+              bucket.upload(params, function (err, data) {
+                banhji.company.dataStore.data()[0].set('logo', data.Location);
+                banhji.company.dataStore.sync();
+              });
+            }
+          } else {
+            banhji.company.dataStore.sync();
+          } 
+          banhji.company.dataStore.bind('requestEnd', function(e){
             var res = e.response;
             if(res.results.length > 0) {
               $("#ntf1").data("kendoNotification").success("Data saved.");
-              institute.showIn('#companyInfoPlaceholder', instInfo);
-              console.log("kdsslfds");
+              // institute.showIn('#companyInfoPlaceholder', instInfo);
+              // console.log("kdsslfds");
+              banhji.router.navigate('company');
             } else {
               $("#ntf1").data("kendoNotification").error("Operation failed.");
             }
-          });
+          });         
         }
       });
 
