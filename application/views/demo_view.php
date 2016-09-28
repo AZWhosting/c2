@@ -86,8 +86,8 @@
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Products/Services</span>
 						</li>
 						<li style="text-align:center;">
-							<a href="#">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.png" alt="Attachment">
+							<a href="#/documents">
+								<img title="Add Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.png" alt="Attachment">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Documents</span>
 						</li>
@@ -12545,11 +12545,11 @@
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>Expenses/ Purchase Overview</h2>
-					<div align="center" class="text-large strong">$183,690,640</div>
+					<div align="center" class="text-large strong">0</div>
 					<table width="100%">
 						<tr align="center">
 							<td>										
-								<span>6</span>
+								<span>0</span>
 								<br>
 								<span>Suppliers</span>
 							</td>
@@ -12587,11 +12587,11 @@
 			<div class="report-chart">
 				<div class="widget-body receivable-overview" style="background-color: LightGray">
 					<h2>PAYABLES MANAGEMENT</h2>
-					<div align="center" class="text-large strong">$183,690,640</div>
+					<div align="center" class="text-large strong">0</div>
 					<table width="100%">
 						<tr align="center">
 							<td>										
-								<span>6</span>
+								<span>0</span>
 								<br>
 								<span>Open</span>
 							</td>
@@ -12606,7 +12606,7 @@
 								<span>Overdue</span>
 							</td>
 							<td>
-								<span>20 Days</span>
+								<span>0 Days</span>
 								<br>
 								<span>Payable Payment Days</span>
 							</td>
@@ -27084,10 +27084,7 @@
 </script>
 
 
-<!--Customer Report-->
 
-
-<!--End-Customer Report-->
 
 
 <!-- ***************************
@@ -27362,158 +27359,157 @@
 
 <script id="reconcile" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">						
-						
-						<span class="pull-right glyphicons no-js remove_2" 
-							onclick="javascript:window.history.back()"><i></i></span>							
+		<div class="customer-background">
+			<div class="container-960">	
+				<div id="example" class="k-content">						
+					
+					<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>							
 
-						<div align="center">
-							<h4>Reconcile & Transfer</h4>							
-							<span data-bind="text: str_date()"></span>
-							<br>
-							by
-							<span data-bind="text: cashier_name"></span>
-						</div>
-
-						<table class="table table-bordered table-white">
-		            		<thead>
-		            			<tr>
-		            				<th>Cash</th>	            				
-		            				<th>Dollar Qty</th>
-		            				<th>Riel Qty</th>
-		            				<th>Dollar Amt</th>
-		            				<th>Riel Amt</th>	            				
-		            				<th>Dollar Qty Transfer</th>
-		            				<th>Riel Qty Transfer</th>
-		            				<th>Dollar Amt Transfer</th>
-		            				<th>Riel Amt Transfer</th>		            				
-		            			</tr>
-		            		</thead>
-		            		<tbody id="lvReconcileItem" data-role="listview"
-		            				data-auto-bind="false"			            			
-					                data-template="denominationRowTemplate"
-					                data-bind="source: reconcileItemDS">
-					        </tbody>
-		            	</table>
-
+					<div align="center">
+						<h4>Reconcile & Transfer</h4>							
+						<span data-bind="text: str_date()"></span>
 						<br>
+						by
+						<span data-bind="text: cashier_name"></span>
+					</div>
+					<br>
+					<table class="table table-bordered table-white">
+	            		<thead>
+	            			<tr>
+	            				<th>Cash</th>	            				
+	            				<th>Dollar Qty</th>
+	            				<th>Riel Qty</th>
+	            				<th>Dollar Amt</th>
+	            				<th>Riel Amt</th>	            				
+	            				<th>Dollar Qty Transfer</th>
+	            				<th>Riel Qty Transfer</th>
+	            				<th>Dollar Amt Transfer</th>
+	            				<th>Riel Amt Transfer</th>		            				
+	            			</tr>
+	            		</thead>
+	            		<tbody id="lvReconcileItem" data-role="listview"
+	            				data-auto-bind="false"			            			
+				                data-template="denominationRowTemplate"
+				                data-bind="source: reconcileItemDS">
+				        </tbody>
+	            	</table>
 
-						<div class="row-fluid">
-							<!-- //Reconcile -->
-							<div class="span6">
-								<h4 class="heading">Reconcile</h4>
+					<br>
 
-								<table class="table table-condensed">
-									<tr>
-										<td>Total Paid Today</td>
-										<td></td>											
-										<td class="right"><span class="count" data-bind="text: obj.received_amount"></span> ៛</td>												
-									</tr>
-									<tr>
-										<td>Remain</td>
-										<td></td>											
-										<td class="right" style="border-bottom: 1px solid black;"><span class="count" data-bind="text: obj.previous_amount"></span> ៛</td>												
-									</tr>
-									<tr>
-										<td>Cash (A)</td>
-										<td></td>												
-										<td class="right"><span class="count" data-bind="text: obj.total_cash1"></span> ៛</td>
-									</tr>
+					<div class="row-fluid">
+						<!-- //Reconcile -->
+						<div class="span6" style="padding-left: 0;">
+							<h4 class="heading">Reconcile</h4>
 
-									<!-- Reconcile -->
-									<tr>
-										<td>Dollar</td>
-										<td>
-											$ <span class="count" data-bind="text: obj.usd_amount"></span> x
-											<input data-role="numerictextbox" data-format="c0" data-culture="km-KH" data-min="0" data-bind="value: obj.rate, events:{change:change}"  style="width:90px;">
-										</td>
-										<td class="right"><span class="count" data-bind="text: obj.usd2khr_amount"></span> ៛</td>												
-									</tr>
-									<tr>
-										<td>Riel</td>
-										<td></td>
-										<td class="right" style="border-bottom: 1px solid black;"><span class="count" data-bind="text: obj.total_cash2"></span> ៛</td>												
-									</tr>
-									<tr>
-										<td>Actual Cash (B)</td>
-										<td></td>												
-										<td class="right"><span class="count" data-bind="text: obj.reconciled_amount"></span> ៛</td>
-									</tr>
-									<tr id="reconcileAmount">
-										<td>Reconcile(A-B)</td>
-										<td></td>												
-										<td class="right"><span class="count" data-bind="text: obj.reconciled_amount"></span> ៛</td>
-									</tr>																				
-								</table>
-							</div>
+							<table class="table table-condensed">
+								<tr>
+									<td>Total Paid Today</td>
+									<td></td>											
+									<td class="right"><span class="count" data-bind="text: obj.received_amount"></span> ៛</td>												
+								</tr>
+								<tr>
+									<td>Remain</td>
+									<td></td>											
+									<td class="right" style="border-bottom: 1px solid black;"><span class="count" data-bind="text: obj.previous_amount"></span> ៛</td>												
+								</tr>
+								<tr>
+									<td>Cash (A)</td>
+									<td></td>												
+									<td class="right"><span class="count" data-bind="text: obj.total_cash1"></span> ៛</td>
+								</tr>
 
-							<!-- //Transfer -->
-							<div class="span6">								
-								<h4 class="heading">Cash Transfer</h4>								
-								
-								<table class="table table-condensed">
-									<tr>
-										<td>Dollar Transfer</td>
-										<td>
-											$ <span class="count" data-bind="text: obj.transfer_usd"></span> x
-											<input data-role="numerictextbox" data-format="c0" data-culture="km-KH" data-min="0" data-bind="value: obj.rate, events:{change:change}"  style="width:90px;">												
-										</td>
-										<td class="right"><span class="count" data-bind="text: obj.usd2khr_transfer_amount"></span> ៛</td>												
-									</tr>
-									<tr>
-										<td>Riel Transfer</td>
-										<td></td>
-										<td class="right" style="border-bottom: 1px solid black;"><span class="count" data-bind="text: obj.transfer_khr"></span> ៛</td>												
-									</tr>
-									<tr>
-										<td>Total Transfer</td>
-										<td></td>												
-										<td class="right"><span class="count" data-bind="text: obj.transfered_amount"></span> ៛</td>
-									</tr>
-									<tr>
-										<td>Balance</td>
-										<td></td>												
-										<td class="right"><span class="count" data-bind="text: obj.balance"></span> ៛</td>
-									</tr>
-									<tr>
-										<td>Transfer Account</td>
-										<td>
-											<input id="ddlCashAccount" name="ddlCashAccount" 
-													data-bind="value: obj.transfer_account_id" 
-													required data-required-msg="required" />
-										</td>
-										<td>
-											<!-- Class here -->
-						              	</td>
-									</tr>
-									<tr class="top">
-										<td>Memo:</td>
-										<td colspan="2">
-											<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo"></textarea>
-										</td>										
-									</tr>								
-								</table>																																			
-							</div>									
+								<!-- Reconcile -->
+								<tr>
+									<td>Dollar</td>
+									<td>
+										$ <span class="count" data-bind="text: obj.usd_amount"></span> x
+										<input data-role="numerictextbox" data-format="c0" data-culture="km-KH" data-min="0" data-bind="value: obj.rate, events:{change:change}"  style="width:90px;">
+									</td>
+									<td class="right"><span class="count" data-bind="text: obj.usd2khr_amount"></span> ៛</td>												
+								</tr>
+								<tr>
+									<td>Riel</td>
+									<td></td>
+									<td class="right" style="border-bottom: 1px solid black;"><span class="count" data-bind="text: obj.total_cash2"></span> ៛</td>												
+								</tr>
+								<tr>
+									<td>Actual Cash (B)</td>
+									<td></td>												
+									<td class="right"><span class="count" data-bind="text: obj.reconciled_amount"></span> ៛</td>
+								</tr>
+								<tr id="reconcileAmount">
+									<td>Reconcile(A-B)</td>
+									<td></td>												
+									<td class="right"><span class="count" data-bind="text: obj.reconciled_amount"></span> ៛</td>
+								</tr>																				
+							</table>
 						</div>
 
+						<!-- //Transfer -->
+						<div class="span6" style="padding-right: 0;">								
+							<h4 class="heading">Cash Transfer</h4>								
+							
+							<table class="table table-condensed">
+								<tr>
+									<td>Dollar Transfer</td>
+									<td>
+										$ <span class="count" data-bind="text: obj.transfer_usd"></span> x
+										<input data-role="numerictextbox" data-format="c0" data-culture="km-KH" data-min="0" data-bind="value: obj.rate, events:{change:change}"  style="width:90px;">												
+									</td>
+									<td class="right"><span class="count" data-bind="text: obj.usd2khr_transfer_amount"></span> ៛</td>												
+								</tr>
+								<tr>
+									<td>Riel Transfer</td>
+									<td></td>
+									<td class="right" style="border-bottom: 1px solid black;"><span class="count" data-bind="text: obj.transfer_khr"></span> ៛</td>												
+								</tr>
+								<tr>
+									<td>Total Transfer</td>
+									<td></td>												
+									<td class="right"><span class="count" data-bind="text: obj.transfered_amount"></span> ៛</td>
+								</tr>
+								<tr>
+									<td>Balance</td>
+									<td></td>												
+									<td class="right"><span class="count" data-bind="text: obj.balance"></span> ៛</td>
+								</tr>
+								<tr>
+									<td>Transfer Account</td>
+									<td>
+										<input id="ddlCashAccount" name="ddlCashAccount" 
+												data-bind="value: obj.transfer_account_id" 
+												required data-required-msg="required" />
+									</td>
+									<td>
+										<!-- Class here -->
+					              	</td>
+								</tr>
+								<tr class="top">
+									<td>Memo:</td>
+									<td colspan="2">
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%; resize: none;" data-bind="value: obj.memo"></textarea>
+									</td>										
+								</tr>								
+							</table>																																			
+						</div>									
+					</div>
+					<div class="box-generic bg-action-button">
 						<!-- Form actions -->
 						<div align="right" data-bind="invisible: isExisting">
 							<span id="notification"></span>
 
 							<span class="btn btn-icon btn-success glyphicons share" data-bind="click: transferAll"><i></i>Transfer All</span>
 							<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i>Save</span>							
-							<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i>Cancel</span>
+							<span style="color: #fff;" class="btn btn-warning btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i>Cancel</span>
 						</div>
 						<!-- // Form actions END -->
+					</div>
+				</div><!-- //End div example-->
+			</div><!-- //End div span12-->
+		</div><!-- //End div row-fluid-->
+	</div>
 
-					</div><!-- //End div example-->
-				</div><!-- //End div span12-->
-			</div><!-- //End div row-fluid-->
-		</div>
-	</div>	
 </script>
 <script id="denominationRowTemplate" type="text/x-kendo-tmpl">		
 	<tr>				
@@ -28678,6 +28674,91 @@
 </script>
 
 
+
+<!-- ***************************
+*	Document Section      	  *
+**************************** -->
+<script id="documents" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content saleSummaryCustomer">					
+				    
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+			        <h2>Documents</h2>
+
+				    <br>
+						
+					<div class="row-fluid">
+						<div class="span4">
+							<p style="text-align: center">Transaction</p>
+							<div class="total-customer" style="background: #d9edf7; color: #333;"> 
+								<span class="number">1.00</span>GB
+								<p>of 100.000 transaction</p>
+								
+								
+							</div>
+						</div>
+
+						<div class="span4">
+							<p style="text-align: center">Contacts/items</p>
+							<div class="total-customer" style="color: #333;">
+								<span class="number">0.50</span>GB
+								<p>of 50 contact/ items</p>
+							</div>
+						</div>
+
+						<div class="span4" style="padding-left: 15px;">
+							<p style="text-align: center">Total Attachment</p>
+							<div class="total-customer" style="background: #496cad; color: #fff;">
+								<span class="number">1.50</span>GB
+								<p>Used of 2.00 GB</p>
+							</div>
+						</div>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+						<thead>
+							<tr>
+								<th>File Name</th>
+								<th>Description</th>
+								<th>Size</th>
+								<th>Attach to</th>
+								<th>Upload by</th>
+								<th>Date</th>
+								<th>Action</th>								
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+							</tr>
+						</tbody>
+					</table>								
+
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
 
 
 
@@ -36698,7 +36779,7 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/vendor'>New Supplier</a></li>
+  				<li><a href='#/vendor'>Add New Supplier</a></li>
   				<li><a href='#/item'>Add New Inventory</a></li>
   				<li><a href='#/item_service'>Add New Service</a></li>
   				<li><a href="#/non_inventory_part">Add New Other Inventory</a></li>
@@ -36815,11 +36896,15 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>  				  				  				
-  				<li><a href='#/item'><span data-bind="text: lang.lang.new_item"></span></a></li>
-  				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.new_catalog"></span></a></li>
-  				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.new_assembly"></span></a></li>
-  				<li><a href='#/fixed_assets'>Add Fixed Assets</span></a></li>
-  				<li style="border-bottom: 1px solid #c5c5c5;"><a href='#/item_adjustment'>Item Adjustment</a></li>
+  				<li><a href='#/item'>Add <span data-bind="text: lang.lang.new_item"></span></a></li>
+  				<li><a href='#/item_catalog'>Add <span data-bind="text: lang.lang.new_catalog"></span></a></li>
+  				<li><a href='#/item_assembly'>Add <span data-bind="text: lang.lang.new_assembly"></span></a></li>
+  				<li style="border-bottom: 1px solid #c5c5c5;"><a href='#/fixed_assets'>Add Fixed Assets</span></a></li>
+  				<li><a href='#/grn'>Add Received Note</a></li>
+  				<li><a href='#/gdn'>Add Delivery Note</a></li>
+  				<li><a href='#/item_adjustment'>Item Adjustment</a></li>
+  				<li><a href='#/internal_usage'>Add Internal Usage</a></li>
+  				<li style="border-bottom: 1px solid #c5c5c5;"><a href='#/fixed_assets'>Add Fixed Assets</span></a></li>
   				<li><a href='#/customer_recurring'>Inventory Recurring List</a></li>    				 				  				 				
   			</ul>
 	  	</li>	  	  	
@@ -58989,40 +59074,7 @@
 			this.set("contact_type_id", null);
 		}
 	});
-	function activeInvoiceTmp(e){
-		var Active;
-		switch(e) {
-			case 1: Active = banhji.view.invoiceForm1; break;
-			case 2: Active = banhji.view.invoiceForm2; break;
-			//case 3: Active = banhji.view.invoiceForm3; break;
-			//case 4: Active = banhji.view.invoiceForm4; break;
-			//case 5: Active = banhji.view.invoiceForm5; break;
-			case 6: Active = banhji.view.invoiceForm6; break;
-			case 7: Active = banhji.view.invoiceForm7; break;
-			case 8: Active = banhji.view.invoiceForm8; break;
-			case 9: Active = banhji.view.invoiceForm9; break;
-			case 10: Active = banhji.view.invoiceForm10; break;
-			case 11: Active = banhji.view.invoiceForm11; break;
-			case 12: Active = banhji.view.invoiceForm12; break;
-			case 13: Active = banhji.view.invoiceForm13; break;
-			case 14: Active = banhji.view.invoiceForm14; break;
-			case 15: Active = banhji.view.invoiceForm15; break;
-			case 16: Active = banhji.view.invoiceForm16; break;
-			case 17: Active = banhji.view.invoiceForm17; break;
-			case 18: Active = banhji.view.invoiceForm18; break;
-			case 19: Active = banhji.view.invoiceForm19; break;
-			case 20: Active = banhji.view.invoiceForm20; break;
-			case 21: Active = banhji.view.invoiceForm21; break;
-			case 22: Active = banhji.view.invoiceForm22; break;
-			case 23: Active = banhji.view.invoiceForm1; break;
-			case 24: Active = banhji.view.invoiceForm2; break;
-			case 25: Active = banhji.view.invoiceForm23; break;
-			case 26: Active = banhji.view.invoiceForm24; break;
-			case 27: Active = banhji.view.invoiceForm19; break;
-			case 28: Active = banhji.view.invoiceForm25; break;
-		}
-		banhji.view.invoiceCustom.showIn('#invFormContent', Active);
-	};
+	
 	banhji.customerSetting =  kendo.observable({
 		lang 				: langVM,		
         contactTypeDS 		: banhji.source.customerTypeDS,
@@ -59252,6 +59304,40 @@
 		    	});	
 		    }
 		},
+		activeInvoiceTmp		: function(e){
+			var Active;
+			switch(e) {
+				case 1: Active = banhji.view.invoiceForm1; break;
+				case 2: Active = banhji.view.invoiceForm2; break;
+				//case 3: Active = banhji.view.invoiceForm3; break;
+				//case 4: Active = banhji.view.invoiceForm4; break;
+				//case 5: Active = banhji.view.invoiceForm5; break;
+				case 6: Active = banhji.view.invoiceForm6; break;
+				case 7: Active = banhji.view.invoiceForm7; break;
+				case 8: Active = banhji.view.invoiceForm8; break;
+				case 9: Active = banhji.view.invoiceForm9; break;
+				case 10: Active = banhji.view.invoiceForm10; break;
+				case 11: Active = banhji.view.invoiceForm11; break;
+				case 12: Active = banhji.view.invoiceForm12; break;
+				case 13: Active = banhji.view.invoiceForm13; break;
+				case 14: Active = banhji.view.invoiceForm14; break;
+				case 15: Active = banhji.view.invoiceForm15; break;
+				case 16: Active = banhji.view.invoiceForm16; break;
+				case 17: Active = banhji.view.invoiceForm17; break;
+				case 18: Active = banhji.view.invoiceForm18; break;
+				case 19: Active = banhji.view.invoiceForm19; break;
+				case 20: Active = banhji.view.invoiceForm20; break;
+				case 21: Active = banhji.view.invoiceForm21; break;
+				case 22: Active = banhji.view.invoiceForm22; break;
+				case 23: Active = banhji.view.invoiceForm1; break;
+				case 24: Active = banhji.view.invoiceForm2; break;
+				case 25: Active = banhji.view.invoiceForm23; break;
+				case 26: Active = banhji.view.invoiceForm24; break;
+				case 27: Active = banhji.view.invoiceForm19; break;
+				case 28: Active = banhji.view.invoiceForm25; break;
+			}
+			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
+		},
 		colorCC 			: function(e){
 			var Color = e.value;
 			var tS = '';
@@ -59265,7 +59351,7 @@
 		},
 		selectedForm 		: function(e){
 			var Index = e.data.id;
-			activeInvoiceTmp(Index);
+			this.activeInvoiceTmp(Index);
 			this.addRowLineDS();
 
 			var data = e.data, obj = this.get("obj");
@@ -59283,7 +59369,7 @@
 				
 				banhji.invoiceForm.set("obj", view[0]);	
 				var Index = parseInt(view[0].transaction_form_id);
-				activeInvoiceTmp(Index);
+				this.activeInvoiceTmp(Index);
 				self.addRowLineDS();
 
 				self.txnFormDS.filter({ field:"type", value: view[0].type });	
@@ -59399,14 +59485,48 @@
 		            '</body>' +
 		            '</html>';
 		    
-		    printableContent = $('#khPDF').html();
+		    printableContent = $('#invFormContent').html();
 		    doc.write(htmlStart + printableContent + htmlEnd);
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();
 		    	win.close();
 		    },2000);
-		},	   	
+		},
+		activeInvoiceTmp		: function(e){
+			var Active;
+			switch(e) {
+				case 1: Active = banhji.view.invoiceForm1; break;
+				case 2: Active = banhji.view.invoiceForm2; break;
+				//case 3: Active = banhji.view.invoiceForm3; break;
+				//case 4: Active = banhji.view.invoiceForm4; break;
+				//case 5: Active = banhji.view.invoiceForm5; break;
+				case 6: Active = banhji.view.invoiceForm6; break;
+				case 7: Active = banhji.view.invoiceForm7; break;
+				case 8: Active = banhji.view.invoiceForm8; break;
+				case 9: Active = banhji.view.invoiceForm9; break;
+				case 10: Active = banhji.view.invoiceForm10; break;
+				case 11: Active = banhji.view.invoiceForm11; break;
+				case 12: Active = banhji.view.invoiceForm12; break;
+				case 13: Active = banhji.view.invoiceForm13; break;
+				case 14: Active = banhji.view.invoiceForm14; break;
+				case 15: Active = banhji.view.invoiceForm15; break;
+				case 16: Active = banhji.view.invoiceForm16; break;
+				case 17: Active = banhji.view.invoiceForm17; break;
+				case 18: Active = banhji.view.invoiceForm18; break;
+				case 19: Active = banhji.view.invoiceForm19; break;
+				case 20: Active = banhji.view.invoiceForm20; break;
+				case 21: Active = banhji.view.invoiceForm21; break;
+				case 22: Active = banhji.view.invoiceForm22; break;
+				case 23: Active = banhji.view.invoiceForm1; break;
+				case 24: Active = banhji.view.invoiceForm2; break;
+				case 25: Active = banhji.view.invoiceForm23; break;
+				case 26: Active = banhji.view.invoiceForm24; break;
+				case 27: Active = banhji.view.invoiceForm19; break;
+				case 28: Active = banhji.view.invoiceForm25; break;
+			}
+			banhji.view.invoiceForm.showIn('#invFormContent', Active);
+		},
 		loadObj 			: function(id){
 			var self = this;				
 			this.dataSource.query({    			
@@ -59430,8 +59550,9 @@
 				take: 100
 			}).then(function(e){
 				var view = self.txnTemplateDS.view(), Index = parseInt(view[0].transaction_form_id), Active;
+				console.log(Index);
 				obj.set("color", view[0].color);
-				activeInvoiceTmp(Index);
+				self.activeInvoiceTmp(Index);
 				self.lineDS.filter({ field:"transaction_id", value: transaction_id });
 				setTimeout(function(){ 	
 					var CountItemsRow = parseInt(self.lineDS.data().length); 
@@ -67110,6 +67231,9 @@
 		cashReportCenter: new kendo.Layout("#cashReportCenter"),
 		cashSetting: new kendo.Layout("#cashSetting", {model: banhji.cashSetting}),
 		
+		//Document
+		documents: new kendo.Layout("#documents", {model: banhji.documents}),
+
 		//Report
 		reportDashboard: new kendo.Layout("#reportDashboard", {model: banhji.reportDashboard}),
 
@@ -71837,22 +71961,7 @@
 			});
 		}
 	});	
-	banhji.router.route("/deposit_detail_customer", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.depositDetailCustomer);
-			banhji.customerSale.depositDetail.dataSource.read();
-			banhji.customerSale.depositDetail.dataSource.bind('requestEnd', function(e){
-				if(e.response) {
-					banhji.customerSale.set('count', e.response.count);
-					kendo.culture(banhji.locale);
-					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
-					banhji.customerSale.set('cashSale', kendo.toString(e.response.cashSale, 'c2'));
-				}
-			});
-		}
-	});
+	
 	banhji.router.route("/sale_detail_product", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -72414,6 +72523,27 @@
 			}
 
 			vm.pageLoad(id);			
+		}		
+	});
+
+
+	/*************************
+	*   Document Section   *
+	**************************/
+	banhji.router.route("/documents", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.documents);
+			//banhji.view.layout.showIn('#menu', banhji.view.menu);
+			//banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+
+			var vm = banhji.customerList;			
+			banhji.userManagement.addMultiTask("Documents","documents",null);
+			if(banhji.pageLoaded["documents"]==undefined){
+				banhji.pageLoaded["documents"] = true;				
+				
+			}			
 		}		
 	});
 

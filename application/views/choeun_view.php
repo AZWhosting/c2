@@ -58506,40 +58506,6 @@
 			this.set("contact_type_id", null);
 		}
 	});
-	function activeInvoiceTmp(e){
-		var Active;
-		switch(e) {
-			case 1: Active = banhji.view.invoiceForm1; break;
-			case 2: Active = banhji.view.invoiceForm2; break;
-			//case 3: Active = banhji.view.invoiceForm3; break;
-			//case 4: Active = banhji.view.invoiceForm4; break;
-			//case 5: Active = banhji.view.invoiceForm5; break;
-			case 6: Active = banhji.view.invoiceForm6; break;
-			case 7: Active = banhji.view.invoiceForm7; break;
-			case 8: Active = banhji.view.invoiceForm8; break;
-			case 9: Active = banhji.view.invoiceForm9; break;
-			case 10: Active = banhji.view.invoiceForm10; break;
-			case 11: Active = banhji.view.invoiceForm11; break;
-			case 12: Active = banhji.view.invoiceForm12; break;
-			case 13: Active = banhji.view.invoiceForm13; break;
-			case 14: Active = banhji.view.invoiceForm14; break;
-			case 15: Active = banhji.view.invoiceForm15; break;
-			case 16: Active = banhji.view.invoiceForm16; break;
-			case 17: Active = banhji.view.invoiceForm17; break;
-			case 18: Active = banhji.view.invoiceForm18; break;
-			case 19: Active = banhji.view.invoiceForm19; break;
-			case 20: Active = banhji.view.invoiceForm20; break;
-			case 21: Active = banhji.view.invoiceForm21; break;
-			case 22: Active = banhji.view.invoiceForm22; break;
-			case 23: Active = banhji.view.invoiceForm1; break;
-			case 24: Active = banhji.view.invoiceForm2; break;
-			case 25: Active = banhji.view.invoiceForm23; break;
-			case 26: Active = banhji.view.invoiceForm24; break;
-			case 27: Active = banhji.view.invoiceForm19; break;
-			case 28: Active = banhji.view.invoiceForm25; break;
-		}
-		banhji.view.invoiceCustom.showIn('#invFormContent', Active);
-	};
 	banhji.customerSetting =  kendo.observable({
 		lang 				: langVM,		
         contactTypeDS 		: banhji.source.customerTypeDS,
@@ -58769,6 +58735,40 @@
 		    	});	
 		    }
 		},
+		activeInvoiceTmp		: function(e){
+			var Active;
+			switch(e) {
+				case 1: Active = banhji.view.invoiceForm1; break;
+				case 2: Active = banhji.view.invoiceForm2; break;
+				//case 3: Active = banhji.view.invoiceForm3; break;
+				//case 4: Active = banhji.view.invoiceForm4; break;
+				//case 5: Active = banhji.view.invoiceForm5; break;
+				case 6: Active = banhji.view.invoiceForm6; break;
+				case 7: Active = banhji.view.invoiceForm7; break;
+				case 8: Active = banhji.view.invoiceForm8; break;
+				case 9: Active = banhji.view.invoiceForm9; break;
+				case 10: Active = banhji.view.invoiceForm10; break;
+				case 11: Active = banhji.view.invoiceForm11; break;
+				case 12: Active = banhji.view.invoiceForm12; break;
+				case 13: Active = banhji.view.invoiceForm13; break;
+				case 14: Active = banhji.view.invoiceForm14; break;
+				case 15: Active = banhji.view.invoiceForm15; break;
+				case 16: Active = banhji.view.invoiceForm16; break;
+				case 17: Active = banhji.view.invoiceForm17; break;
+				case 18: Active = banhji.view.invoiceForm18; break;
+				case 19: Active = banhji.view.invoiceForm19; break;
+				case 20: Active = banhji.view.invoiceForm20; break;
+				case 21: Active = banhji.view.invoiceForm21; break;
+				case 22: Active = banhji.view.invoiceForm22; break;
+				case 23: Active = banhji.view.invoiceForm1; break;
+				case 24: Active = banhji.view.invoiceForm2; break;
+				case 25: Active = banhji.view.invoiceForm23; break;
+				case 26: Active = banhji.view.invoiceForm24; break;
+				case 27: Active = banhji.view.invoiceForm19; break;
+				case 28: Active = banhji.view.invoiceForm25; break;
+			}
+			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
+		},
 		colorCC 			: function(e){
 			var Color = e.value;
 			var tS = '';
@@ -58782,7 +58782,7 @@
 		},
 		selectedForm 		: function(e){
 			var Index = e.data.id;
-			activeInvoiceTmp(Index);
+			this.activeInvoiceTmp(Index);
 			this.addRowLineDS();
 
 			var data = e.data, obj = this.get("obj");
@@ -58800,7 +58800,7 @@
 				
 				banhji.invoiceForm.set("obj", view[0]);	
 				var Index = parseInt(view[0].transaction_form_id);
-				activeInvoiceTmp(Index);
+				this.activeInvoiceTmp(Index);
 				self.addRowLineDS();
 
 				self.txnFormDS.filter({ field:"type", value: view[0].type });	
@@ -58916,14 +58916,48 @@
 		            '</body>' +
 		            '</html>';
 		    
-		    printableContent = $('#khPDF').html();
+		    printableContent = $('#invFormContent').html();
 		    doc.write(htmlStart + printableContent + htmlEnd);
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();
 		    	win.close();
 		    },2000);
-		},	   	
+		},
+		activeInvoiceTmp		: function(e){
+			var Active;
+			switch(e) {
+				case 1: Active = banhji.view.invoiceForm1; break;
+				case 2: Active = banhji.view.invoiceForm2; break;
+				//case 3: Active = banhji.view.invoiceForm3; break;
+				//case 4: Active = banhji.view.invoiceForm4; break;
+				//case 5: Active = banhji.view.invoiceForm5; break;
+				case 6: Active = banhji.view.invoiceForm6; break;
+				case 7: Active = banhji.view.invoiceForm7; break;
+				case 8: Active = banhji.view.invoiceForm8; break;
+				case 9: Active = banhji.view.invoiceForm9; break;
+				case 10: Active = banhji.view.invoiceForm10; break;
+				case 11: Active = banhji.view.invoiceForm11; break;
+				case 12: Active = banhji.view.invoiceForm12; break;
+				case 13: Active = banhji.view.invoiceForm13; break;
+				case 14: Active = banhji.view.invoiceForm14; break;
+				case 15: Active = banhji.view.invoiceForm15; break;
+				case 16: Active = banhji.view.invoiceForm16; break;
+				case 17: Active = banhji.view.invoiceForm17; break;
+				case 18: Active = banhji.view.invoiceForm18; break;
+				case 19: Active = banhji.view.invoiceForm19; break;
+				case 20: Active = banhji.view.invoiceForm20; break;
+				case 21: Active = banhji.view.invoiceForm21; break;
+				case 22: Active = banhji.view.invoiceForm22; break;
+				case 23: Active = banhji.view.invoiceForm1; break;
+				case 24: Active = banhji.view.invoiceForm2; break;
+				case 25: Active = banhji.view.invoiceForm23; break;
+				case 26: Active = banhji.view.invoiceForm24; break;
+				case 27: Active = banhji.view.invoiceForm19; break;
+				case 28: Active = banhji.view.invoiceForm25; break;
+			}
+			banhji.view.invoiceForm.showIn('#invFormContent', Active);
+		},
 		loadObj 			: function(id){
 			var self = this;				
 			this.dataSource.query({    			
@@ -58947,8 +58981,9 @@
 				take: 100
 			}).then(function(e){
 				var view = self.txnTemplateDS.view(), Index = parseInt(view[0].transaction_form_id), Active;
+				console.log(Index);
 				obj.set("color", view[0].color);
-				activeInvoiceTmp(Index);
+				self.activeInvoiceTmp(Index);
 				self.lineDS.filter({ field:"transaction_id", value: transaction_id });
 				setTimeout(function(){ 	
 					var CountItemsRow = parseInt(self.lineDS.data().length); 

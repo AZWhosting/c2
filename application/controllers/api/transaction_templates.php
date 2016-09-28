@@ -92,7 +92,8 @@ class Transaction_templates extends REST_Controller {
 					"color" 				=> $value->color,
 					"title" 				=> $value->title,
 					"note" 					=> $value->note,
-					"moduls" 					=> $value->moduls,
+					"moduls" 				=> $value->moduls,
+					"logo" 					=> $value->logo,
 					"created_at" 			=> $value->created_at,
 					"updated_at" 			=> $value->updated_at	
 				);
@@ -116,6 +117,7 @@ class Transaction_templates extends REST_Controller {
 			isset($value->title)? 				$obj->title 				= $value->title : "";
 			isset($value->note)? 				$obj->note 					= $value->note : "";
 			isset($value->moduls)? 				$obj->moduls 				= $value->moduls : "";
+			isset($value->logo)? 				$obj->logo 					= $value->logo : "";
 			isset($value->color)? 				$obj->color 				= $value->color : "";	
 						
 			if($obj->save()){
@@ -129,6 +131,7 @@ class Transaction_templates extends REST_Controller {
 					"title" 				=> $obj->title,
 					"note" 					=> $obj->note,
 					"moduls" 				=> $obj->moduls,
+					"logo" 					=> $obj->logo,
 					"created_at" 			=> $obj->created_at,
 					"updated_at" 			=> $obj->updated_at
 				);
@@ -156,6 +159,7 @@ class Transaction_templates extends REST_Controller {
 			isset($value->title)? 				$obj->title 				= $value->title : "";
 			isset($value->note)? 				$obj->note 					= $value->note : "";
 			isset($value->moduls)? 				$obj->moduls 				= $value->moduls : "";
+			isset($value->logo)? 				$obj->logo 					= $value->logo : "";
 			isset($value->color)? 				$obj->color 				= $value->color : "";			
 
 			if($obj->save()){				
@@ -169,6 +173,7 @@ class Transaction_templates extends REST_Controller {
 					"title" 				=> $obj->title,
 					"note" 					=> $obj->note,
 					"moduls" 				=> $obj->moduls,
+					"logo" 				    => $obj->logo,
 					"created_at" 			=> $obj->created_at,
 					"updated_at" 			=> $obj->updated_at
 				);		
