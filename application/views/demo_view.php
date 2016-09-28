@@ -107,7 +107,7 @@
 						</li>
 						<li style="text-align:center;">
 							<a href="#/sale_tax">
-								<img title="Sale Tax" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.png" alt="Tax">
+								<img title="Sale Tax" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax"></span></span>
 						</li>
@@ -9543,7 +9543,6 @@
 		</td>				
     </tr>   
 </script>
-
 <script id="grn" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -10040,7 +10039,6 @@
 		</td>						
     </tr>   
 </script>
-
 <script id="vendorDeposit" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -10498,7 +10496,6 @@
 		</td>			
     </tr>   
 </script>
-
 <script id="purchase" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -29209,7 +29206,7 @@
 								<div class="span6">
 									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadPO">
 										<span class="glyphicons adjust_alt"><i></i></span>
-										<span class="txt"><span data-bind="text: categoryDS.total()"></span>Categories</span>
+										<span class="txt"><span data-bind="text: itemType" style="font-size: small;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -39074,6 +39071,7 @@
 			page:1,
 			pageSize: 100
 		}),
+		itemTypeDS					: dataStore(apiUrl + "item_types"),
 		itemInventoryDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -40521,6 +40519,15 @@
 		successMessage 				: "Saved Successful!",
 		errorMessage 				: "Warning, please review it again!",
 		confirmMessage 				: "Are you sure, you want to delete it?",
+		loadData 					: function(){
+			this.loadRate();
+			this.itemTypeDS.read();
+			this.measurementDS.query({
+				filter:[],
+				page:1,
+				pageSize:1000
+			});
+		},
 		getFiscalDate 				: function(){
 			today = new Date(),
 			year = new Date(),
@@ -62794,7 +62801,7 @@
 	});
 	banhji.itemCenter = kendo.observable({
 		lang 				: langVM,		
-		itemDS			: new kendo.data.DataSource({
+		itemDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "items",
@@ -62845,6 +62852,7 @@
 		searchText 			: "",	
 		category_id 		: null,
 		total_value 		: 0,
+		itemType 			: "",
 		uom 		 		: "",
 		currencyCode 		: "",
 		pageLoad 			: function(id){
@@ -62857,6 +62865,19 @@
 				this.itemDS.fetch();
 				this.transactionDS.fetch();
 			}													
+		},
+		setItemType 	 	: function(){
+			var itemType = "", obj = this.get("obj");
+
+			$.each(banhji.source.itemTypeDS.data(), function(index, value){				
+				if(value.id == obj.item_type_id){
+					itemType = value.name;					
+
+					return false;					
+				}
+			});
+
+			this.set("itemType", itemType);
 		},
 		setCurrencyCode 	: function(){
 			var code = "", obj = this.get("obj");
@@ -63009,6 +63030,7 @@
 			this.attachmentDS.filter({ field:"item_id", value:obj.id });
 			this.setCurrencyCode();
 			this.setUOM();
+			this.setItemType();
 		},		
 		selectedRow			: function(e){
 			var id = e.data.id,
@@ -73793,7 +73815,6 @@
 
 	$(function() {	
 		banhji.router.start();
-		banhji.source.loadRate();
-		banhji.source.measurementDS.read();
+		banhji.source.loadData();
 	});
 </script>
