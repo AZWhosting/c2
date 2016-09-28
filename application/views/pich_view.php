@@ -6157,7 +6157,7 @@
 								<tr>
 							        <td style="text-align:center !important" colspan="6">វិក័យប័ត្រ<br>Invoice    </td>
 							        <td style="text-align:center !important" colspan="6">ការផ្គត់ផ្គង់<br>Supplies    </td>
-							        <td style="text-align:center !important" colspan="6"></td>
+							       
 							    </tr>
 							    <tr>
 							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">ថ្ងៃទី<br>Date</td>
@@ -6169,7 +6169,7 @@
 							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">ការទិញមិនជាប់អាករ<br>Non-taxable Purchase    </td>
 							        <td style="text-align:center !important;vertical-align: middle !important;" colspan="4">ការទិញជាប់អាករ<br>Taxable Purchase    </td>
 							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">សរុបតម្លៃទិញរួមទាំងអាករ<br>Total Value Including VAT    </td>
-							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3"></td>
+							        
 							    </tr>
 							    <tr>
 							        <td style="text-align:center !important" colspan="2">ការនាំចូល<br>Imports    </td>
@@ -6181,21 +6181,7 @@
 							        <td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value    </td>
 							        <td style="text-align:center !important">អាករ<br>VAT    </td>
 							    </tr>
-							    <tr>
-							        <td></td>
-							        <td></td>
-							        <td></td>
-							        <td></td>
-							        <td></td>
-							        <td></td>
-							        <td style="text-align:center !important">រៀល<br>Riel</td>
-							        <td style="text-align:center !important">រៀល<br>Riel</td>
-							        <td style="text-align:center !important">រៀល<br>Riel</td>
-							        <td style="text-align:center !important">រៀល<br>Riel</td>
-							        <td style="text-align:center !important">រៀល<br>Riel</td>
-							        <td style="text-align:center !important">រៀល<br>Riel</td>
-							        <td style="text-align:center !important"></td>
-							    </tr>
+							   
 							    <tr>
 							        <td style="text-align:center !important">P1</td>
 							        <td style="text-align:center !important">P2</td>
@@ -6209,7 +6195,7 @@
 							        <td style="text-align:center !important">P10</td>
 							        <td style="text-align:center !important">P11</td>
 							        <td style="text-align:center !important">P13=sum(P7:P11)</td>
-							       	<td><span style="cursor:pointer;" name="btn-add" id="btn-add" class="btn-add"><i style="padding:2px; color:#2A79B9;" class="fa fa-2x fa-plus-circle"></i></span></td>				
+							       
 							    </tr>
 							</tbody>
 								<tbody class="sale_tax">
@@ -6226,7 +6212,7 @@
 										<td><input type="text" name="s11[]" id="s11" class="checknb form-control text-right s11" value=""></td>
 										<td><input type="text" name="s12[]" id="s12" class="checknb form-control text-right s12" value=""></td>
 										<td><input type="text" name="s13[]" id="s13" class="form-control text-right s13" style="font-weight:bold;" value="" readonly=""></td>
-										<td style="text-align:center;"><span style="cursor:pointer;" class="btn_delete"><i style="font-size: 15px; color:#2A79B9;" class="fa fa-trash-o"></i></span></td>
+										
 									</tr>
 								</tbody>				
 								
@@ -6238,7 +6224,7 @@
 									<td name="total_s11" id="total_s11" class="total_s11" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
 									<td name="total_s12" id="total_s12" class="total_s12" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
 									<td name="total_s13" id="total_s13" class="total_s13" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
-									<td></td>
+									
 							    </tr>
 							    <tr id="hide-border">
 							        <td></td>
@@ -6252,7 +6238,7 @@
 							        <td>Box10</td>
 							        <td>Box07</td>
 							        <td>Box08</td>
-							        <td></td>
+							       	<td>Box09</td>
 							    </tr>										
 							</tbody>
 						</table>					
