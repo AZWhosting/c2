@@ -32325,7 +32325,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2>GENERAL Inventory SETTING</h2>
+	<h2>GENERAL PRODUCTS/ SERVICES SETTING</h2>
 
 	<br>
 
@@ -32353,9 +32353,8 @@
 	            <!-- Tab Category content -->
 	            <div class="tab-pane active" id="tab1-1">	            	
 		            <div class="input-append">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: category_code">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New..." data-bind="value: category_name">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: category_abbr">					    
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Category Name..." data-bind="value: category_name">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Category Abbr..." data-bind="value: category_abbr">					    
 					    <input class="span2" id="appendedInputButtons"
 					    	   data-role="dropdownlist"					    	   
 			                   data-value-primitive="true"
@@ -32369,16 +32368,14 @@
 		            
 	            	<table class="table table-bordered table-white">
 	            		<thead>
-	            			<tr>	            				            				
-	            				<th>CODE</th>	
+	            			<tr>	
 	            				<th>NAME</th>	
 	            				<th>ABBR</th>
 	            				<th>TYPE</th>	            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"	            				
+	            		<tbody data-role="listview"	            				
 		            			data-edit-template="itemSetting-edit-category-template"
 				                data-template="itemSetting-category-template"
 				                data-bind="source: categoryDS"></tbody>
@@ -32389,7 +32386,7 @@
 	            <!-- Tab Item Group content -->
 	            <div class="tab-pane" id="tab2-1">
 		            <div class="input-append">
-		            	<input id="appendedInputButtons" class="span2"
+		            	<input id="appendedInputButtons" class="span4"
 		            	   data-role="dropdownlist"
             			   data-option-label="(--- Select Category ---)"            			   			                   
 		                   data-value-primitive="true"
@@ -32398,23 +32395,22 @@
 		                   data-value-field="id"
 		                   data-bind="value: item_group_category_id,
 		                              source: categoryDS"/>	
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: item_group_code">	
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New Name..." data-bind="value: item_group_name">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: item_group_abbr">					    
+					    	
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New Group Name..." data-bind="value: item_group_name">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Group Abbr..." data-bind="value: item_group_abbr">					    
 					    <button class="btn btn-default" type="button" data-bind="click: addItemGroup"><i class="icon-plus"></i> Add Group</button>					  
 					</div>
 		            
 	            	<table class="table table-bordered table-white">
 	            		<thead>
-	            			<tr>	            					            				
-	            				<th>Code</th>	
+	            			<tr>
 	            				<th>Name</th>	
-	            				<th>abbr</th>	            				
+	            				<th>Abbr</th>
+	            				<th>Category</th>	            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"	            				
+	            		<tbody data-role="listview"	            				
 		            			data-edit-template="itemSetting-edit-item-group-template"
 				                data-template="itemSetting-item-group-template"
 				                data-bind="source: itemGroupDS"></tbody>
@@ -32477,10 +32473,7 @@
 	</div>
 </script>
 <script id="itemSetting-category-template" type="text/x-kendo-tmpl">                    
-    <tr>    	   	
-   		<td>
-    		#:code#
-   		</td>
+    <tr>
    		<td>
     		#:name#
    		</td>
@@ -32503,11 +32496,7 @@
 </script>
 <script id="itemSetting-edit-category-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget">
-        <dl>        	             
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:code" name="code" required="required" validationMessage="required" />
-                <span data-for="code" class="k-invalid-msg"></span>
-            </dd>
+        <dl>
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
                 <span data-for="ProductName" class="k-invalid-msg"></span>
@@ -32532,15 +32521,15 @@
     </div>
 </script>
 <script id="itemSetting-item-group-template" type="text/x-kendo-tmpl">                    
-    <tr>    	   	
-   		<td>
-    		#:code#
-   		</td>
+    <tr>   		
    		<td>
     		#:name#
    		</td>
    		<td>
     		#:abbr#
+   		</td>
+   		<td>
+    		#:category[0].name#
    		</td>   		
    		<td>	        
         	<div class="edit-buttons">
@@ -32562,10 +32551,6 @@
 	                   data-value-field="id"
 	                   data-bind="value: category_id,
 	                              source: categoryDS"/>
-            </dd>                         
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:code" name="code" required="required" validationMessage="required" />
-                <span data-for="code" class="k-invalid-msg"></span>
             </dd>
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
@@ -63320,7 +63305,8 @@
     	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "transactions/line"),
-    	categoryDS 				: banhji.source.inventoryCategoryDS,    	
+    	categoryDS 				: banhji.source.inventoryCategoryDS,
+    	itemGroupDS 			: dataStore(apiUrl + "item_groups"),   	
     	brandDS 	 			: dataStore(apiUrl + "brands"),    	   	   	
     	measurementDS			: dataStore(apiUrl + "measurements"),
     	numberDS 				: dataStore(apiUrl + "items"),
@@ -66470,12 +66456,12 @@
 		}
 	});	
 	banhji.itemSetting =  kendo.observable({
-		lang 				: langVM,		        
+		lang 				: langVM,
+		itemTypeDS 			: banhji.source.itemTypeDS,		        
         categoryDS 			: dataStore(apiUrl + "categories"),        
         itemGroupDS 		: dataStore(apiUrl + "items/group"),        
         measurementDS		: dataStore(apiUrl + "measurements"),
         brandDS 			: dataStore(apiUrl + "brands"),
-        itemTypeDS 			: dataStore(apiUrl + "item_types"),        
         category_code 		: "",
         category_name 		: "",
         category_abbr 		: "",
@@ -66489,47 +66475,47 @@
         brand_name 			: "",
         brand_abbr 			: "",        
         pageLoad 			: function() {
-        	
         },        
         addCategory 		: function(){
         	var self = this, 
         	name = this.get("category_name"),
-        	code = this.get("category_code");
+        	abbr = this.get("category_abbr");
 
-        	if(name!=="" && code!==""){        		
+        	if(name!=="" && abbr!==""){        		
 	        	this.categoryDS.add({	        		
 	        		sub_of 		 	: 0,
 	        		item_type_id 	: this.get("category_item_type_id"),
 	        		item_id 		: 0,
-	        		code 			: code,	        		
+	        		code 			: "",	        		
 	        		name 			: name,
-	        		abbr 			: this.get("category_abbr"),	        		
+	        		abbr 			: abbr,	        		
 	        		is_system 		: 0,
 	        		item_type 		: []
 	        	});
 
 	        	this.categoryDS.sync();
-	        	this.set("category_code", "");
     			this.set("category_name", "");
     			this.set("category_abbr", "");
         	}else{
-        		alert("required number and name!");
+        		alert("required abbr and name!");
         	}
         },
         addItemGroup 		: function(){
         	var self = this, 
         	category_id = this.get("item_group_category_id"),
         	name = this.get("item_group_name"),
-        	code = this.get("item_group_code");
+        	abbr = this.get("item_group_abbr");
 
-        	if(category_id>0 && name!=="" && code!==""){        		
+        	if(category_id>0 && name!=="" && abbr!==""){        		
 	        	this.itemGroupDS.add({	        		
 	        		category_id	 	: category_id,
 	        		sub_of 		 	: 0,
-	        		code 			: code,	        		
+	        		code 			: "",	        		
 	        		name 			: name,
-	        		abbr 			: this.get("item_group_abbr"),	        		
-	        		is_system 		: 0
+	        		abbr 			: abbr,	        		
+	        		is_system 		: 0,
+
+	        		category 		: [{name:""}]
 	        	});
 
 	        	this.itemGroupDS.sync();
@@ -66539,7 +66525,7 @@
     			self.set("item_group_name", "");
     			self.set("item_group_abbr", "");	        		
         	}else{
-        		alert("required category, number, and name!");
+        		alert("required category, abbr, and name!");
         	}
         },
         addMeasurement 		: function(){
@@ -73107,14 +73093,11 @@
 
 			var vm = banhji.itemSetting;
 
-			banhji.userManagement.addMultiTask("General Inventory Setting","item_setting",null);
+			banhji.userManagement.addMultiTask("General Products/ Services Setting","item_setting",null);
 			
 			if(banhji.pageLoaded["item_setting"]==undefined){
 				banhji.pageLoaded["item_setting"] = true;
 				
-				vm.categoryDS.filter({ field:"item_type_id", operator:"where_in", value: [1,2] });
-				vm.itemTypeDS.filter({ field:"id", operator:"where_in", value: [1,2] });
-				vm.itemGroupDS.filter({ field:"id", operator:"where_in", value: [1,2] });
 			}
 
 			vm.pageLoad();			     		

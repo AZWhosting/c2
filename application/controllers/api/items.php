@@ -495,7 +495,9 @@ class Items extends REST_Controller {
 					"code" 			=> $value->code,
 					"name" 	 		=> $value->name,
 					"abbr" 			=> $value->abbr,
-					"is_system"		=> $value->is_system	
+					"is_system"		=> $value->is_system,
+
+					"category" 		=> $value->category->get_raw()->result()	
 				);
 			}
 		}
@@ -525,7 +527,9 @@ class Items extends REST_Controller {
 					"code" 			=> $obj->code,
 					"name" 	 		=> $obj->name,
 					"abbr" 			=> $obj->abbr,
-					"is_system"		=> $obj->is_system	
+					"is_system"		=> $obj->is_system,
+
+					"category" 		=> $obj->category->get_raw()->result()	
 				);
 			}
 		}
@@ -559,7 +563,9 @@ class Items extends REST_Controller {
 					"code" 			=> $obj->code,
 					"name" 	 		=> $obj->name,
 					"abbr" 			=> $obj->abbr,
-					"is_system"		=> $obj->is_system	
+					"is_system"		=> $obj->is_system,
+
+					"category" 		=> $obj->category->get_raw()->result()	
 				);		
 			}
 		}
