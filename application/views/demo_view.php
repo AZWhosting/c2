@@ -28661,8 +28661,16 @@
 			<a href="\#/#=invoice[0].type.toLowerCase()#/#=id#"><i></i> #=invoice[0].number#</a>
         </td>
     	<td>#=kendo.toString(quantity, "n0")#</td>
-    	<td>#=kendo.toString(cost, "c", locale)#</td>
-    	<td>#=kendo.toString(price, "c", locale)#</td>  	
+    	<td>
+    		#if(cost>0){#
+    			#=kendo.toString(cost, "c", locale)#
+    		#}#
+    	</td>
+    	<td>
+    		#if(price>0){#
+    			#=kendo.toString(price, "c", locale)#
+    		#}#
+    	</td>
     </tr>
 </script>
 
@@ -28741,7 +28749,7 @@
 					              							events:{change: checkExistingNumber}" 
 					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
-					              				style="width: 128px;" />
+					              				style="width: 127px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
@@ -35563,15 +35571,15 @@
     </strong>
 </script>
 <script id="item-list-tmpl" type="text/x-kendo-tmpl">
-	<span style="width:40%; float: left">
-		#if(name.length>15){#
-			#=abbr##=number# #=name.substring(0, 15)#...
+	<span style="width:45%; float: left">
+		#if(name.length>20){#
+			#=abbr##=number# #=name.substring(0, 20)#...
 		#}else{#
 			#=abbr##=number# #=name#
 		#}#
 	</span>
-	<span style="width:30%; text-align: center;">#=category#</span>
-	<span style="width:30%; text-align: right;" class="pull-right">#=on_hand#</span> 	
+	<span style="width:35%; text-align: center;">#=category#</span>
+	<span style="width:20%; text-align: right;" class="pull-right">#=on_hand#</span> 	
 </script>
 <script id="item-group-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
@@ -38386,7 +38394,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		fixedAssetCategoryDS	: new kendo.data.DataSource({
+		fixedAssetCategoryDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "categories",
@@ -44347,7 +44355,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -44355,10 +44365,10 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								cost 				: value.cost*rate,												
-								amount 				: value.cost*rate,
+								cost 				: value.cost*catalogRate,												
+								amount 				: value.cost*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: 1,								
 
@@ -44373,6 +44383,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();		     
 		        }else{	        	
@@ -44380,6 +44391,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();
 		    	}
@@ -45146,7 +45158,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -45157,7 +45171,7 @@
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: 1,								
 
@@ -45172,6 +45186,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();		     
 		        }else{	        	
@@ -45179,6 +45194,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();
 		    	}
@@ -46894,7 +46910,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -46902,10 +46920,10 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								cost 				: value.cost*rate,												
-								amount 				: value.cost*rate,
+								cost 				: value.cost*catalogRate,												
+								amount 				: value.cost*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: 1,								
 
@@ -46920,6 +46938,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();		     
 		        }else{	        	
@@ -46927,6 +46946,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();
 		    	}
@@ -48301,7 +48321,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -48309,10 +48331,10 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								cost 				: value.cost*rate,												
-								amount 				: value.cost*rate,
+								cost 				: value.cost*catalogRate,												
+								amount 				: value.cost*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: 1,								
 
@@ -48327,6 +48349,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();		     
 		        }else{	        	
@@ -48334,6 +48357,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();
 		    	}
@@ -50908,13 +50932,13 @@
 						measurement_id = item.item_prices[0].measurement_id;
 					}
 				}
-				
+
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
 		        	$.each(item.catalogs, function(index, value){
 		        		catalogList.push(value);
 		        	});
-
+		        	
 		        	this.catalogDS.query({
 		        		filter: { field:"id", operator:"where_in", value:catalogList },
 		        		page:1,
@@ -50922,7 +50946,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -50930,10 +50956,10 @@
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								price 				: value.item_prices[0].price*catalogRate,												
+								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -50946,7 +50972,8 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			       	data.set("item_prices", []);
 
@@ -50954,7 +50981,8 @@
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -51784,7 +51812,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -51792,10 +51822,10 @@
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								price 				: value.item_prices[0].price*catalogRate,												
+								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -51808,7 +51838,8 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			       	data.set("item_prices", []);
 
@@ -51816,7 +51847,8 @@
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -53592,7 +53624,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -53600,10 +53634,10 @@
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								price 				: value.item_prices[0].price*catalogRate,												
+								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -53616,7 +53650,8 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			       	data.set("item_prices", []);
 
@@ -53624,7 +53659,8 @@
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -54969,7 +55005,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -54977,10 +55015,10 @@
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								price 				: value.item_prices[0].price*catalogRate,												
+								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -54993,7 +55031,8 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			       	data.set("item_prices", []);
 
@@ -55001,7 +55040,8 @@
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -56133,7 +56173,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -56141,10 +56183,10 @@
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								price 				: value.item_prices[0].price*catalogRate,												
+								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -56157,7 +56199,8 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			       	data.set("item_prices", []);
 
@@ -56165,7 +56208,8 @@
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -56978,7 +57022,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -56986,10 +57032,10 @@
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								price 				: value.item_prices[0].price*catalogRate,												
+								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -57002,7 +57048,8 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			       	data.set("item_prices", []);
 
@@ -57010,7 +57057,8 @@
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -62437,7 +62485,7 @@
     	patternDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "transactions/line"),
     	categoryDS 				: banhji.source.inventoryCategoryDS,
-    	itemGroupDS 			: dataStore(apiUrl + "item_groups"),   	
+    	itemGroupDS 			: dataStore(apiUrl + "items/group"),   	
     	brandDS 	 			: dataStore(apiUrl + "brands"),    	   	   	
     	measurementDS			: dataStore(apiUrl + "measurements"),
     	numberDS 				: dataStore(apiUrl + "items"),

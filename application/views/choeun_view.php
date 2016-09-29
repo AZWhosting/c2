@@ -66306,7 +66306,7 @@
 
 	/* views and layout */
 	banhji.view = {
-		layout 		: new kendo.Layout('#layout', {model: banhji.Layout}),
+		layout 		: new kendo.Layout('#layout', {model: banhji.Layout});,
 		blank		: new kendo.View('<div></div>'),		
 		index  		: new kendo.Layout("#index", {model: banhji.index}),		
 		menu 		: new kendo.Layout('#menu-tmpl', {model: banhji.userManagement}),
@@ -66493,7 +66493,6 @@
 	/* views and layout */
 	banhji.router = new kendo.Router({
 		init: function() {
-			
 			var language = JSON.parse(localStorage.getItem('userData/lang'));	
 			switch(language) {
 				case "KH": 

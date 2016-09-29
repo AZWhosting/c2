@@ -22,7 +22,7 @@
 }
 
 #ccbItem-list{
-  width: 470px !important;
+  width: 550px !important;
 }
 #ddlMeasurement-list,
 #ddlMesurement-list,
@@ -1384,7 +1384,8 @@ width: 50% !important;
 
 .accounCetner-textedit{
   width: 100%;
-  min-height: 240px;
+  min-height: 202px;
+  overflow: hidden;
 }
 .span9.detailsWrapper > .row-fluid > .span6:nth-child(1){
   width: 50%;
@@ -1823,4 +1824,46 @@ and (orientation : portrait) {
   .business-box span {
     font-size: 50px;
   }
+}
+/* FeedBack */
+a.feedback {
+    position: fixed;
+    bottom: 15px;
+    border: 1px solid #00a8ff;
+    background: #00a8ff;
+    right: 15px;
+    padding: 7px 15px;
+    z-index: 99;
+    color: #fff;
+    border-radius: 22px;  
+    font-size: 12px;
+    padding-left: 28px;
+    cursor: pointer;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    text-decoration: none;
+}
+a.feedback:hover {
+  background: #46c35f;
+  border: 1px solid #46c35f;
+}
+a.feedback i::before {
+    font-size: 14px;
+    color: #fff;
+    top: 9px;
+    left: 7px;
+}
+#feedbackContent {
+       width: 350px;
+    height: 260px;
+    left: 35%;
+    top: 10%;
+}
+#feedbackContent textarea{
+        height: 150px;
+    min-height: 150px;
+    max-height: 150px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
 }

@@ -1566,6 +1566,7 @@ class Items extends REST_Controller {
 		$obj->where_related("transaction","is_recurring",0);
 		$obj->where_related("transaction","deleted",0);
 		$obj->order_by_related("transaction", "issued_date", "desc");
+		$obj->order_by_related("transaction", "number", "desc");
 
 		//Results
 		$obj->get_paged_iterated($page, $limit);
