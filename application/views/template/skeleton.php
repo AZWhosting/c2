@@ -146,6 +146,7 @@ var themerPrimaryColor = primaryColor;
 
 </head>
 <body class="document-body ">
+	<a class="feedback notes_2 btn-rounded"><i></i>Feed Back</a>
 	<?php echo $body ?>
 
 	<!-- extra js-->

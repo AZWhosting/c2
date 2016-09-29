@@ -451,6 +451,7 @@
 .navbar{
   border-radius: 0;
   background: #1C2633 !important;
+      box-shadow: 0 1px 3px #ddd;
 }
 /*#content .row{
   margin-left: 0 !important;
