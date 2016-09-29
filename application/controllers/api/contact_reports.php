@@ -35,13 +35,17 @@ class Contact_reports extends REST_Controller {
 		$is_recurring = 0;
 		$deleted = 0;
 		$today = date("Y-m-d");
+		$startDate = date("Y",strtotime("-1 year")) ."-". $this->fiscal_date;
+		$endDate = date("Y") ."-". $this->fiscal_date;
 		
 		$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$ap = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				
 		//A/R			
 		$ar->where("type", "Invoice");
-		$ar->where_in("status", array(0,2));		
+		$ar->where_in("status", array(0,2));
+		$ar->where("issued_date >=", $startDate);
+		$ar->where("issued_date <=", $endDate);		
 		$ar->where("is_recurring", $is_recurring);		
 		$ar->where("deleted", $deleted);		
 		$ar->get_iterated();
@@ -62,6 +66,8 @@ class Contact_reports extends REST_Controller {
 			}else{
 				$arAmount += floatval($value->amount) / floatval($value->rate);
 			}
+
+			$arAmount -= floatval($value->deposit);
 
 			//Open
 			if($value->status==0){
@@ -85,7 +91,9 @@ class Contact_reports extends REST_Controller {
 
 		//A/P			
 		$ap->where("type", "Credit_Purchase");
-		$ap->where_in("status", array(0,2));		
+		$ap->where_in("status", array(0,2));
+		$ap->where("issued_date >=", $startDate);
+		$ap->where("issued_date <=", $endDate);		
 		$ap->where("is_recurring", $is_recurring);		
 		$ap->where("deleted", $deleted);		
 		$ap->get_iterated();
@@ -106,6 +114,8 @@ class Contact_reports extends REST_Controller {
 			}else{
 				$apAmount += floatval($value->amount) / floatval($value->rate);
 			}
+
+			$apAmount -= floatval($value->deposit);
 
 			//Open
 			if($value->status==0){
