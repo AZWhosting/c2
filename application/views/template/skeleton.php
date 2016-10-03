@@ -146,22 +146,21 @@ var themerPrimaryColor = primaryColor;
 
 </head>
 <body class="document-body ">
-	<a class="feedback btn-rounded glyphicons no-js circle_exclamation_mark" href="#feedbackContent" data-toggle="modal"><i></i>Feedback</a>
+	<a class="rightfixed feedback btn-rounded glyphicons no-js circle_exclamation_mark" href="#feedbackContent" data-toggle="modal"><i></i>Feedback</a>
+	<a class="rightfixed referral btn-rounded glyphicons no-js user_add" href="#feedbackContent" data-toggle="modal"><i></i>Referral</a>
+	<a class="rightfixed sales-enquiries btn-rounded glyphicons no-js conversation" href="#feedbackContent" data-toggle="modal"><i></i>Sales Enquiries</a>
 	<div class="modal fade" id="feedbackContent">
-		<form method="post" action="">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3>User Feedback</h3>
-			</div>
-			<div class="modal-body">
-			  	<textarea id="feedbackMsg" placeholder="Your Feedback..."></textarea>
-			  	<input type="hidden" name="userEmail" />
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn btn-default cloze" data-dismiss="modal">Close</a>
-				<a href="#" class="btn btn-primary" id="feedBackSend">Send</a>
-			</div>
-		</form>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3>User Feedback</h3>
+		</div>
+		<div class="modal-body">
+		  	<textarea id="feedbackMsg" placeholder="Your Feedback..."></textarea>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn btn-default cloze" data-dismiss="modal">Close</a>
+			<a href="#" class="btn btn-primary" id="feedBackSend">Send</a>
+		</div>
 	</div>
 	<?php echo $body ?>
 

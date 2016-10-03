@@ -1830,12 +1830,11 @@ and (orientation : portrait) {
   }
 }
 /* FeedBack */
-a.feedback {
+a.rightfixed {
     position: fixed;
-    bottom: 15px;
-    border: 1px solid #1F4774;
+    top: 40%;
     background: #1F4774;
-    right: 15px;
+    right: -61px;
     padding: 7px 15px;
     z-index: 99;
     color: #fff;
@@ -1843,19 +1842,27 @@ a.feedback {
     font-size: 12px;
     padding-left: 28px;
     cursor: pointer;
-    -webkit-transition: all 1s;
-    transition: all 1s;
+    -webkit-transition: all .5s;
+    transition: all .5s;
     text-decoration: none;
 }
-a.feedback:hover {
+a.rightfixed:hover {
   background: #46c35f;
-  border: 1px solid #46c35f;
 }
-a.feedback i::before {
+a.rightfixed i::before {
     font-size: 14px;
     color: #fff;
     top: 9px;
     left: 7px;
+}
+a.feedback {
+    top: 44%;
+    right: -70px;
+    background: #e5412d;
+}
+a.sales-enquiries {
+    top: 48%;
+    right: -101px;
 }
 #feedbackContent {
     width: 350px;
@@ -1870,4 +1877,13 @@ a.feedback i::before {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
+}
+a.feedback:hover {
+  right: 0px;
+}
+a.sales-enquiries:hover {
+  right: 0;
+}
+a.referral:hover {
+  right: 0;
 }

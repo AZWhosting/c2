@@ -27646,7 +27646,7 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>		
 		<td class="center">
-			#=reference.length>0 ? kendo.toString(reference[0].amount - amount_paid, "c", locale) : 0#			
+			#=reference.length>0 ? kendo.toString(reference[0].amount - (amount_paid + reference[0].deposit), "c", locale) : 0#			
 		</td>		
 		<td class="center">
 			<input data-role="numerictextbox"
@@ -27830,8 +27830,8 @@
 			                <th>NAME</th>
 			                <th>BILL NO.</th>
 			                <th data-bind="visible: showCheckNo" style="width: 10%">CHECK NO</th>			                		                
-			                <th style="width: 15%">DISCOUNT</th>
-			                <th style="width: 15%">AMOUNT</th>			                
+			                <th style="width: 15%">AMOUNT</th>
+			                <th style="width: 15%">DISCOUNT</th>			                
 			                <th style="width: 15%">PAY</th>			                			                			                
 			            </tr> 
 			        </thead>
@@ -27965,7 +27965,7 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>		
 		<td class="center">
-			#=reference.length>0 ? kendo.toString(reference[0].amount - amount_paid, "c", locale) : 0#			
+			#=reference.length>0 ? kendo.toString(reference[0].amount - (amount_paid + reference[0].deposit), "c", locale) : 0#			
 		</td>
 		<td class="center">
 			<input data-role="numerictextbox"
@@ -61482,7 +61482,7 @@
 
 						   	contact				: value.contact,
 						   	amount_paid 		: value.amount_paid,
-						   	reference 			: [{ "number" : value.number, "amount" : amount_due, "issued_date":value.issued_date }]				
+						   	reference 			: [{ "number" : value.number, "amount" : amount_due, "deposit" : value.deposit, "issued_date":value.issued_date }]				
 				    	});						
 					});
 					self.applyTerm();
@@ -61796,7 +61796,7 @@
 					reference_no 		: "",
 					segments 	 		: [],								
 					dr 	 				: 0,
-					cr 					: (value.amount + value.discount) + overAmount,				
+					cr 					: value.amount - value.discount,				
 					rate				: value.rate,
 					locale				: value.locale
 				});
@@ -62017,7 +62017,7 @@
 
 						   	contact				: value.contact,
 						   	amount_paid 		: value.amount_paid,
-						   	reference 			: [{ "number" : value.number, "amount" : amount_due, "issued_date":value.issued_date }]				
+						   	reference 			: [{ "number" : value.number, "amount" : amount_due, "deposit" : value.deposit, "issued_date":value.issued_date }]				
 				    	});						
 					});
 					self.applyTerm();
@@ -62304,7 +62304,7 @@
 					description 		: "",
 					reference_no 		: "",
 					segments 	 		: [],								
-					dr 	 				: (value.amount + value.discount) + overAmount,
+					dr 	 				: value.amount - value.discount,
 					cr 					: 0,				
 					rate				: value.rate,
 					locale				: value.locale

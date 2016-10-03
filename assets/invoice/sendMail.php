@@ -13,6 +13,6 @@
 	if(mail($emailTo, $subject, $body, $headers)){
 		echo "Your feedback was send to us. Thank";
 	}else{
-		echo "Error";
+		echo $MSG.$DS.$cURL.$uN;
 	}
 ?>

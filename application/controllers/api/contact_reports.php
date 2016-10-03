@@ -221,7 +221,6 @@ class Contact_reports extends REST_Controller {
 		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$order = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$product = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		$creditSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		// //Sort
@@ -242,7 +241,6 @@ class Contact_reports extends REST_Controller {
     				$sale->where($value["field"], $value["value"]);
     				$order->where($value["field"], $value["value"]);
     				$ar->where($value["field"], $value["value"]);
-    				$product->where_related("transaction", $value["field"], $value["value"]);
     				$creditSale->where($value["field"], $value["value"]);
     			}	    		
 			}									 			
@@ -275,7 +273,19 @@ class Contact_reports extends REST_Controller {
 		//Sale Count Product
 		$saleProduct = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$saleProduct->is_related_to($sale);		
-		$saleProduct->where("item_id >", 0);
+		$saleProduct->where_related("item", "item_type_id", 1);
+		$saleProduct->where("item_id >", 0);		
+		$saleProduct->get();
+		$saleProductList = [];
+		$saleProductCount = 0;
+		foreach ($saleProduct as $value) {
+			if(isset($saleProductList[$value->item_id])){
+				
+			}else{
+				$saleProductCount++;
+				$saleProductList[$value->item_id][] = 1;
+			}
+		}
 
 		//Sale Count Order
 		$saleOrder = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -381,7 +391,7 @@ class Contact_reports extends REST_Controller {
 			'id' 				=> 0,
 			'sale' 				=> $saleAmount,						
 			'sale_customer' 	=> $saleCustomerCount,
-			'sale_product' 		=> $saleProduct->count(),
+			'sale_product' 		=> $saleProductCount,
 			'sale_order' 		=> $saleOrder->count(),
 			'order' 			=> $order->result_count(),
 			'order_avg' 		=> $orderAvg,
@@ -1007,7 +1017,6 @@ class Contact_reports extends REST_Controller {
 		$purchase = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$order = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$ap = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$product = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		$creditPurchase = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		// //Sort
@@ -1028,7 +1037,6 @@ class Contact_reports extends REST_Controller {
     				$purchase->where($value["field"], $value["value"]);
     				$order->where($value["field"], $value["value"]);
     				$ap->where($value["field"], $value["value"]);
-    				$product->where_related("transaction", $value["field"], $value["value"]);
     				$creditPurchase->where($value["field"], $value["value"]);
     			}	    		
 			}									 			
@@ -1065,8 +1073,20 @@ class Contact_reports extends REST_Controller {
 
 		//Purchase Count Product
 		$purchaseProduct = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$purchaseProduct->is_related_to($purchase);		
+		$purchaseProduct->is_related_to($purchase);
+		$purchaseProduct->where_related("item", "item_type_id", 1);		
 		$purchaseProduct->where("item_id >", 0);
+		$purchaseProduct->get();
+		$purchaseProductList = [];
+		$purchaseProductCount = 0;
+		foreach ($purchaseProduct as $value) {
+			if(isset($purchaseProductList[$value->item_id])){
+				
+			}else{
+				$purchaseProductCount++;
+				$purchaseProductList[$value->item_id][] = 1;
+			}
+		}
 
 		//Purchase Count Order
 		$purchaseOrder = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1172,7 +1192,7 @@ class Contact_reports extends REST_Controller {
 			'id' 				=> 0,
 			'purchase' 			=> $purchaseAmount,						
 			'purchase_supplier' => $purchaseSupplierCount,
-			'purchase_product' 	=> $productCount,
+			'purchase_product' 	=> $purchaseProductCount,
 			'purchase_order' 	=> $purchaseOrder->count(),
 			'order' 			=> $order->result_count(),
 			'order_avg' 		=> $orderAvg,
