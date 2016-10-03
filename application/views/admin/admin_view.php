@@ -342,13 +342,6 @@
                                   <td>memo</td>
                                   <td><input type="text" class="k-textbox" data-bind="value: current.memo"></td>
                                 </tr>
-                                <tr>
-                                  <td>ship to</td>
-                                  <td><input type="text" class="k-textbox" data-bind="value: current.ship_to"></td>
-                                  <td></td>
-                                  <td>bill to</td>
-                                  <td><input type="text" class="k-textbox" data-bind="value:current.bill_to"></td>
-                                </tr>
                               </table>
                             </div><!--.tab-pane-->
                             <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2" aria-expanded="false">
