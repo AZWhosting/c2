@@ -4,8 +4,16 @@ class User extends DataMapper {
 	
 	protected $created_field = 'created_at';
 	protected $updated_field = 'updated_at';
-	public $has_one = array("institute");
-	public $has_many = array('module');
+	public $has_one = array(
+		"institute",
+		'pimage' => array(
+			'class' => 'pimage',
+			'other_field' => 'user'
+		)
+	);
+	public $has_many = array(
+		'module'
+	);
 	// protected $db_params = 
 	// public $validation = array(
 	// 	'username' => array(

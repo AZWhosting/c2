@@ -28753,25 +28753,7 @@
 								<th>Action</th>								
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-							</tr>
+						<tbody data-role="listview" data-bind="source: dataSource" data-template="document-list-template">
 						</tbody>
 					</table>								
 
@@ -28780,8 +28762,17 @@
 		</div>
 	</div>
 </script>
-
-
+<script id="document-list-template" type="text/x-kendo-template">
+	<tr>
+		<td>#=name#</td>
+		<td>#=description#</td>
+		<td>#=size#</td>
+		<td>1</td>
+		<td>1</td>
+		<td>#=date#</td>
+		<td>1</td>
+	</tr>
+</script>
 
 <!-- ***************************
 *	Inventory Section      	  *
@@ -36971,13 +36962,6 @@
         }
     });
 	// end of custom widget
-	banhji.pageLoaded = {};	
-	// Initializing AWS Cognito service
-	var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
-	// Initializing AWS S3 Service
-	var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
-	
-	//file Management
 	banhji.fileManagement = kendo.observable({
         dataSource: new kendo.data.DataSource({
           transport: {
@@ -37038,19 +37022,19 @@
           var key = 'ATTACH_' + JSON.parse(localStorage.getItem('userData/user')).institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files[0].name;
           banhji.fileManagement.dataSource.add({
             transaction_id  : 0,
-            type            : "Contact",
+            type            : "Transaction",
             name            : files[0].name,
             contact_id      : null,
             description     : "",
             key             : key,
             url             : "https://s3-ap-southeast-1.amazonaws.com/banhji/"+key,
             created_at      : new Date(),
-            file: files[0].rawFile
+            file            : files[0].rawFile
           });
         },
         save                : function(contact_id){
           $.each(banhji.fileManagement.dataSource.data(), function(index, value){ 
-            banhji.fileManagement.dataSource.at(index).set("contact_id", contact_id);
+            banhji.fileManagement.dataSource.at(index).set("transaction_id", contact_id);
             if(!value.id){
               var params = { 
                 Body: value.file, 
@@ -37091,8 +37075,12 @@
           });
         }
     });
-	// end file management
-
+	banhji.pageLoaded = {};
+	// Initializing AWS Cognito service
+	var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
+	// Initializing AWS S3 Service
+	var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
+	
 	banhji.companyDS = new kendo.data.DataSource({
       transport: {
         read  : {
@@ -67479,7 +67467,7 @@
 		cashSetting: new kendo.Layout("#cashSetting", {model: banhji.cashSetting}),
 		
 		//Document
-		documents: new kendo.Layout("#documents", {model: banhji.documents}),
+		documents: new kendo.Layout("#documents", {model: banhji.fileManagement}),
 
 		//Report
 		reportDashboard: new kendo.Layout("#reportDashboard", {model: banhji.reportDashboard}),

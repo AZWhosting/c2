@@ -40,13 +40,20 @@ class Profiles extends REST_Controller {
 		}
 		$users->get_iterated();
 		foreach($users as $user) {
+			$profile_photo = $user->pimage->get();
+			$photo = array();
+			if($profile_photo->exists()) {
+				$photo = array('id' => $profile_photo->id, 'url' => $profile_photo->url);
+			} else {
+				$photo = array('id' => 2, 'url' => "https://s3-ap-southeast-1.amazonaws.com/banhji/52751311555449544_blank.png");
+			}
 			$data[] = array(
 				'id' => $user->id,
 				'username' 	=> $user->username,
 				'first_name'=> $user->first_name,
 				'last_name' => $user->last_name,
 				'role' 		=> $user->role,
-				'profile_photo'=>$user->profile_photo_url,
+				'profile_photo'=> $photo,
 				// 'modules'   => $modules,
 				'facebook'	=> $user->facebook,
 				'linkedin'	=> $user->linkedin,
@@ -111,6 +118,7 @@ class Profiles extends REST_Controller {
 	// return userdata
 	function index_put() {
 		$requested_data = json_decode($this->put('models'));
+		$data = array();
 		foreach($requested_data as $user) {
 			$User = new User(null);
 			$User->where('username', $user->username)->get();
@@ -122,7 +130,7 @@ class Profiles extends REST_Controller {
 			$User->twitter = $user->twitter;
 			$User->first_name= $user->first_name;
 			$User->last_name = $user->last_name;
-			$User->profile_photo_url = $user->profile_photo;
+			$User->pimage_id = $user->profile_photo->id;
 			$User->role = $user->role;
 			$User->usertype_id=$user->usertype;
 
@@ -172,7 +180,7 @@ class Profiles extends REST_Controller {
 			$User->twitter = $user->twitter;
 			$User->first_name= $user->first_name;
 			$User->last_name = $user->last_name;
-			$User->profile_photo_url = $user->profile_photo;
+			$User->pimage_id = $user->profile_photo->id;
 			$User->role = $user->role;
 			$User->usertype_id=$user->usertype->id;
 			if($User->save()) {
@@ -312,6 +320,7 @@ class Profiles extends REST_Controller {
 				$currency = $u->institute->monetary->get();
 				$report = $u->institute->report_monetary->get();
 				$country = $u->institute->country->get();
+				$profile_photo = $u->institute->pimage->get();
 				$lastLogin = new User();
 				$lastLogin->where_related('institute', 'id', $u->institute->id);
 				$lastLogin->where('created_at <= ', date('Y-m-d'));
@@ -322,7 +331,7 @@ class Profiles extends REST_Controller {
 					'name'=>$u->institute->name,
 					'email' => $u->institute->email,
 					'address'=>$u->institute->address,
-					'logo' => $u->institute->logo,
+					'logo' => array('id' => $profile_photo->id, 'url' => $profile_photo->url),
 					'description' => $u->institute->description,
 					'vat_number' => $u->institute->vat_number,
 					'fiscal_date'=> $u->institute->fiscal_date,

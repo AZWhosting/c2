@@ -36,9 +36,17 @@ class Institute extends DataMapper {
 		'report_monetary' => array(
 			'class' => 'monetary',
 			'other_field' => 'report'
+		),
+		'pimage' => array(
+			'class' => 'pimage',
+			'other_field' => 'institute'
 		)
 	);
-	public $has_many = array('user', 'module', 'login');
+	public $has_many = array(
+		'user', 
+		'module', 
+		'login'
+	);
 
 	public function __construct() {	
 		parent::__construct();
