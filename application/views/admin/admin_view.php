@@ -68,7 +68,7 @@
                       <section class="box-typical">
                           <div class="profile-card">
                               <div class="profile-card-photo">
-                                  <img data-bind="attr: {src: userProfile.currentID.profile_photo}">
+                                  <img data-bind="attr: {src: userProfile.currentID.profile_photo.url}">
                               </div>
                               <div class="profile-card-name">
                                   <span data-bind="text: userProfile.currentID.last_name"></span>&nbsp;
@@ -615,7 +615,7 @@
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-company">
       <article class="profile-info-item">
-        <img data-bind="attr: {src: current.logo}">   
+        <img data-bind="attr: {src: current.logo.url}">   
       </article>
         <header class="box-typical-header-sm">
             General Info
@@ -738,9 +738,9 @@
                         <h2>Profile Detail</h2>
                         <div class="divider"></div>
                         <div class="col-md-3 col-lg-3">
-                            <img width="240px" data-bind="attr: {src: currentID.profile_photo}" />
+                            <img width="240px" data-bind="attr: {src: currentID.profile_photo.url}" />
                             <h3>Profile Picture</h3>
-                            <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                            <input data-role="upload" id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {select: upload}" data-show-file-list="false">
                         </div>
                         <article class="col-md-9 col-lg-9 profile-info-item edit-table">
                             <table >
@@ -837,7 +837,7 @@
       <section class="box-typical col-md-3" style="margin: 17px;">
         <div class="profile-card">
           <div class="profile-card-photo">
-              <img data-bind="attr: {src: profile_photo}">
+              <img data-bind="attr: {src: profile_photo.url}">
           </div>
           <div class="profile-card-name">
               <span data-bind="text: last_name"></span>&nbsp;
@@ -949,9 +949,9 @@
                       <h2>User Detail</h2>
                       <div class="divider"></div>
                       <div class="col-md-3 col-lg-3">
-                          <img width="240px" data-bind="attr: {src: current.profile_photo}" />
+                          <img width="240px" data-bind="attr: {src: current.profile_photo.url}" />
                           <h3>Profile Picture</h3>
-                          <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                          <input data-role="upload" id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {select: upload}" data-show-file-list="false">
                       </div>
                       <article class="col-md-9 col-lg-9 profile-info-item edit-table">
                           <table >
@@ -1072,9 +1072,9 @@
                         <h2>User Detail</h2>
                         <div class="divider"></div>
                         <div class="col-md-3 col-lg-3">
-                            <img width="240px" data-bind="attr: {src: current.profile_photo}" />
+                            <img width="240px" data-bind="attr: {src: current.profile_photo.url}" />
                             <h3>Profile Picture</h3>
-                            <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                            <input data-role="upload" id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {select: upload}" data-show-file-list="false">
                         </div>
                         <article class="col-md-9 col-lg-9 profile-info-item edit-table">
                             <table >
@@ -1233,6 +1233,132 @@
       var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
       var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
 
+      var image = kendo.Class.extend({
+        dataSource: new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/images',
+              type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            create  : {
+              url: baseUrl + 'api/images',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            update  : {
+              url: baseUrl + 'api/images',
+              type: "PUT",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            destroy  : {
+              url: baseUrl + 'api/images',
+              type: "DELETE",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 50
+        }),
+        current   : null,
+        upload    : function(id, myFile) {
+          var that = this;
+          var dfd = $.Deferred();
+          this.query({filter:{field: 'id', value: 2}}).then(function(e){
+            that.dataSource.remove(that.dataSource.at(0));
+            var files = myFile;
+            var key = 'ATTACH_' + JSON.parse(localStorage.getItem('userData/user')).institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files[0].name;
+            that.dataSource.add({
+              type            : files[0].extension,
+              name            : files[0].name,
+              key             : key,
+              url             : "https://s3-ap-southeast-1.amazonaws.com/banhji/"+key,
+              created_at      : new Date(),
+              size            : files[0].size,
+              file            : files[0].rawFile
+            });
+            dfd.resolve(that.dataSource.at(0));
+          });
+          return dfd.promise();
+        },
+        query     : function(arg) {
+          return this.dataSource.query(arg);
+        },
+        insert    : function(id, data) {
+          if(id == null) {
+            this.dataSource.add(data);
+          } else {
+            this.dataSource.insert(id, data);
+          }
+        },
+        save      : function() {
+          var that = this;
+          var dfd  = $.Deferred();
+          this.dataSource.sync();
+          this.dataSource.bind("requestEnd", function(e){
+            var response = e.response.results;
+            //Delete File
+            if(e.type=="create"){
+              for(var i = 0; i < response.length; i++) {
+                var params = { 
+                  Body: that.dataSource.data()[0].file, 
+                  Key:  that.dataSource.data()[0].key
+                };
+                bucket.upload(params, function (err, data) {                    
+                    // console.log(err, data);
+                    // var url = data.Location;
+                    if(!err) {
+                      dfd.resolve({id: response[0].id, url:response[0].url});
+                      // console.log(response[0]);
+                      that.dataSource.data([]);
+                    }               
+                });
+              } 
+            } else if(e.type == "destroy") {
+              $.each(response, function(index, value){                  
+                var params = {
+                  Delete: { /* required */
+                    Objects: [ /* required */
+                      {
+                        Key: value.key
+                      }
+                    ]
+                  }
+                };
+                bucket.deleteObjects(params, function(err, data) {
+                  //console.log(err, data);
+                });
+              });
+            }
+          });
+          return dfd.promise();
+        } 
+      });
+      
       banhji.fileManagement = kendo.observable({
         dataSource: new kendo.data.DataSource({
           transport: {
@@ -1746,6 +1872,7 @@
             return false;
           }
         },
+        media: new image(),
         userTypes : [
           {id: 1, name: 'normal'},
           {id: 2, name: 'developer'}
@@ -1754,14 +1881,17 @@
           {id: 1, name: 'Admin'},
           {id: 2, name: 'User'}
         ],
-        upload: function() {
-          var fileChooser = document.getElementById('user-image');
-          var file = fileChooser.files[0];
+        upload: function(e) {
+          var id = this.currentID.profile_photo.id;
+          var that = this;
           var fileReader = new FileReader();
-          fileReader.onload = function(e){
-            banhji.profile.get('currentID').set('profile_photo', e.target.result);
+          fileReader.onload = function (event) {
+            var mapImage = event.target.result;
+            // $("#MyImage").attr('src', mapImage);
+            banhji.profile.get('currentID').set('profile_photo', {id: "", url: mapImage});
           }
-          fileReader.readAsDataURL(file);
+          fileReader.readAsDataURL(e.files[0].rawFile);
+          this.media.upload(id, e.files).done(function(data){});
         },
         oldPass: null,
         newPass: null,
@@ -1800,15 +1930,7 @@
               }
           });
         },
-        getRole   : function() {
-          var role = ""
-          if(banhji.profile.get('currentID').role == "1") {
-            role = "Admin";
-          } else {
-            role = "User";
-          }
-          return role;
-        },
+        getRole   : "User",
         goPassword: function() {
           banhji.router.navigate('passwordChange');
           // mainDash.showIn("#placeholder", password);
@@ -1824,31 +1946,32 @@
               window.location.replace("<?php echo base_url(); ?>login");
           }
         },
-        currentID : banhji.profileDS.data()[0] || [],
+        currentID : null,
         profileUrl : function() {
           return "#profile/" + this.get('currentID').id;
         },
         cancel    : function() {
           if(banhji.profile.dataSource.hasChanges()) {
-            banhji.profile.dataSource.cancelChanges();
+            banhji.profileDS.cancelChanges();
+            banhji.profile.media.dataSource.cancelChanges();
+            this.set('currentID', banhji.profileDS.data()[0]);         
           }
           banhji.router.navigate("");
         },
         save      : function() {
-          var fileChooser = document.getElementById('user-image');
-          var results = document.getElementById('results');
-          var file = fileChooser.files[0];
-          if (file) {
-            var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-            bucket.upload(params, function (err, data) {
-              // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
-              var loc = data.Location;
-              banhji.profile.get('currentID').set('profile_photo', loc);
-              banhji.profile.dataSource.sync();
-            });
+          var that = this;
+          if(that.media.dataSource.hasChanges()) {
+            that.media.save().then(
+              function(data) {
+                banhji.profile.get('currentID').set('profile_photo', {id: data.id, url: data.url});
+                banhji.profile.dataSource.sync();
+                // console.log(data);
+              }
+            );
           } else {
             banhji.profile.dataSource.sync();
           }
+          
           banhji.profile.dataSource.bind('requestEnd', function(e){
             var res = e.response;
             if(res.results.length > 0) {
@@ -2156,6 +2279,7 @@
       banhji.users = kendo.observable({
         users : banhji.userDS,
         cModules: banhji.moduleDS,
+        media    : new image(),
         showAdmin: function() {
           if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
             return true;
@@ -2254,14 +2378,17 @@
         removeFrom: function(e) {
           this.modules.remove(e.data);
         },
-        upload: function() {
-          var fileChooser = document.getElementById('user-image');
-          var file = fileChooser.files[0];
+        upload: function(e) {
+          var id = this.get('current').profile_photo.id;
+          var that = this;
           var fileReader = new FileReader();
-          fileReader.onload = function(e){
-            banhji.users.get('current').set('profile_photo', e.target.result);
+          fileReader.onload = function (event) {
+            var mapImage = event.target.result;
+            // $("#MyImage").attr('src', mapImage);
+            banhji.users.get('current').set('profile_photo', {id: "", url: mapImage});
           }
-          fileReader.readAsDataURL(file);
+          fileReader.readAsDataURL(e.files[0].rawFile);
+          this.media.upload(id, e.files).done(function(data){});
         },
         assign : function() {
           // index.showIn('#app-placeholder', userlist);
@@ -2409,6 +2536,8 @@
         cancel: function() {
           if(this.users.hasChanges()) {
             this.users.cancelChanges();
+            banhji.users.media.dataSource.cancelChanges();
+            // this.set('current', this.get('current'));
           }
           banhji.router.navigate('userlist');
         },
@@ -2462,7 +2591,7 @@
             last_name: '',
             email: '',
             mobile: '',
-            profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+            profile_photo: {id: 2, url:"https://s3-ap-southeast-1.amazonaws.com/banhji/52751311555449544_blank.png"},
             company: {id: banhji.companyDS.data()[0].id, name:''},
             role: 2,
             facebook: '',
@@ -2473,10 +2602,6 @@
           banhji.users.setCurrent(banhji.users.users.at(0));
           banhji.router.navigate('userlist/new');
         },
-        // editProfile: function(e) {
-        //   e.preventDefault();
-        //   banhji.router.navigate('userlist/' + this.get('current').id);
-        // },
         edit: function(e) {
           banhji.router.navigate('userlist/' + e.data.id);
         },
@@ -2499,8 +2624,6 @@
         },
         save: function() {
           if(banhji.users.get('current').isNew()) {
-            // signup with Cognito
-            // using cognito to sign up
             var attributeList = [];
 
             var dataEmail = {
@@ -2514,82 +2637,44 @@
 
             userPool.signUp(banhji.users.get('current').username, banhji.users.get('current').password, attributeList, null, function(err, result){
                 if (err) {
-                    alert(err);
-                    return;
+                  alert(err);
+                  return;
                 }
-                if(banhji.users.get('current').profile_photo !== "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png") {
-                  var fileChooser = document.getElementById('user-image');
-                  var results = document.getElementById('results');
-                  var file = fileChooser.files[0];
-                  if (file) {
-                    // results.innerHTML = '';
-                    var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-                    bucket.upload(params, function (err, data) {
-                      results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
-                      var loc = data.Location;
-                      banhji.users.get('current').set('profile_photo', loc);
-                      banhji.userDS.sync();
-                      banhji.userDS.bind('requestEnd', function(e){
-                        var res = e.response, type = e.type;
-                        if(res.results.length > 0) {
-                          $("#ntf1").data("kendoNotification").success("Data saved.");
-                          banhji.router.navigate('userlist');
-                        } else {
-                          $("#ntf1").data("kendoNotification").error("Operation failed.");
-                        }
-                      });
-                    });
-                  }
-                } else {
-                  banhji.userDS.sync();
-                  banhji.userDS.bind('requestEnd', function(e){
-                    var res = e.response, type = e.type;
-                    if(res.results.length > 0) {
-                      $("#ntf1").data("kendoNotification").success("Data saved.");
-                      banhji.router.navigate('userlist');
-                    } else {
-                      $("#ntf1").data("kendoNotification").error("Operation failed.");
-                    }
+                if(banhji.users.media.dataSource.hasChanges()) {
+                  banhji.users.media.save().then(function(data){
+                    banhji.users.get('current').set('profile_photo', {id: data.id, url: data.url});
+                    banhji.users.users.sync();
                   });
+                } else {
+                  banhji.users.users.sync();
                 }
             });
           } else {
-            var fileChooser = document.getElementById('user-image');
-            var results = document.getElementById('results');
-            var file = fileChooser.files[0];
-            if (file) {
-              // results.innerHTML = '';
-              var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-              bucket.upload(params, function (err, data) {
-                // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
-                var loc = data.Location;
-                banhji.users.get('current').set('profile_photo', loc);
-                banhji.userDS.sync();
-                banhji.userDS.bind('requestEnd', function(e){
-                  var res = e.response, type = e.type;
-                  if(res.results.length > 0) {
-                    console.log('user created.');
-                  }
-                });
+            if(banhji.users.media.dataSource.hasChanges()) {
+              banhji.users.media.save().then(function(data){
+                banhji.users.get('current').set('profile_photo', {id: data.id, url: data.url});
+                banhji.users.users.sync();
               });
             } else {
-              banhji.userDS.sync();
-              banhji.userDS.bind('requestEnd', function(e){
-                var res = e.response, type = e.type;
-                if(res.results.length > 0) {
-                  $("#ntf1").data("kendoNotification").success("Data saved.");
-                } else {
-                  $("#ntf1").data("kendoNotification").error("Operation failed.");
-                }
-              });
+              banhji.users.users.sync();
             }
           }
+          banhji.userDS.bind('requestEnd', function(e){
+            var res = e.response, type = e.type;
+            if(res.results.length > 0) {
+              $("#ntf1").data("kendoNotification").success("Data saved.");
+              banhji.router.route('userlist');
+            } else {
+              $("#ntf1").data("kendoNotification").error("Operation failed.");
+            }
+          });
         }
       });
 
       banhji.company = kendo.observable({
         dataStore: banhji.companyDS,
         data: '',
+        media: new image(),
         modules: banhji.moduleDS,
         countries: banhji.countries,
         industries: banhji.industry,
@@ -2697,11 +2782,6 @@
         }
       });
 
-      banhji.module = kendo.observable({
-        dataStore: banhji.moduleDS,
-        fkds: ''
-      });
-
       // index view
       var layout = new kendo.Layout('#placeholder');
       var menu = new kendo.View('#header-menu', {model: banhji.profile});
@@ -2730,26 +2810,7 @@
               layout.render("#main");
               
               institute = JSON.parse(localStorage.getItem('userData/user')).institute;
-              banhji.profileDS.fetch(function(e){
-                banhji.profile.set('currentID', banhji.profileDS.data()[0]);
-                layout.showIn('#menu', menu);
-                
-                var cognitoUser = userPool.getCurrentUser();
-                if(cognitoUser !== null) {
-                  banhji.aws.getImage(banhji.profileDS.data()[0].profile_photo);
-                  cognitoUser.getSession(function(err, result){
-                    if(result) {
-                      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                        IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
-                        Logins: {
-                          'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
-                        }
-                      });
-                    }
-                  });
-                }
-                console.log('init');
-              });
+              
             } else {
               window.location.replace("<?php echo base_url(); ?>login");
             }
@@ -2896,8 +2957,30 @@
 
 
       $(document).ready(function() {
+        banhji.profileDS.read().then(function(e){
+          banhji.profile.set('currentID', banhji.profileDS.data()[0]);
+          layout.showIn('#menu', menu);
+          if(banhji.profileDS.data()[0].role == 1) {
+            banhji.profile.set('getRole', "Admin");
+          }
+
+          var cognitoUser = userPool.getCurrentUser();
+          if(cognitoUser !== null) {
+            banhji.aws.getImage(banhji.profileDS.data()[0].profile_photo);
+            cognitoUser.getSession(function(err, result){
+              if(result) {
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                  IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
+                  Logins: {
+                    'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
+                  }
+                });
+              }
+            });
+          }
+          console.log('init');
+        });
         banhji.router.start();
-        console.log('1');
           // signout when browser closed
           // window.addEventListener("beforeunload", function (e) {
           //   // var confirmationMessage = "\o/";
