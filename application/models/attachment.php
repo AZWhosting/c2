@@ -8,6 +8,18 @@ class Attachment extends DataMapper {
 		'transaction' => array(
 			'class' => 'transaction',
 			'other_field' => 'attachment'
+		),
+		'contact' => array(
+			'class' => 'contact',
+			'other_field' => 'attachment'
+		),
+		'user' => array(
+			'class' => 'contact',
+			'other_field' => 'file'
+		),
+		'item' => array(
+			'class' => 'item',
+			'other' => 'attachment'
 		)
 	);
 

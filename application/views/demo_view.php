@@ -28058,10 +28058,16 @@
 		<td>#=name#</td>
 		<td>#=description#</td>
 		<td>#=size#</td>
-		<td>1</td>
-		<td>1</td>
-		<td>#=date#</td>
-		<td>1</td>
+		<td>
+			# if(attachedTo.type == "contact") {#
+				<a href="\#/customer_center/#=attachedTo.id#">#=attachedTo.name#</a>
+			#} else {#
+				<a href="\#/item_center/#=attachedTo.id#">#=attachedTo.name#</a>
+			#}#
+		</td>
+		<td>#=user.name#</td>
+		<td>#=created_at#</td>
+		<td><a href="\#" data-bind="click: remove">Delete</a></td>
 	</tr>
 </script>
 
