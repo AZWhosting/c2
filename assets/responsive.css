@@ -1843,8 +1843,11 @@ a.rightfixed {
     -webkit-transition: all .5s;
     transition: all .5s;
     text-decoration: none;
-    opacity: .7;
+    opacity: 1;
     margin-bottom: 1px;
+    clear: both;
+    float:none;
+    left: 0;
 }
 a.rightfixed:hover {
   opacity: 1;
@@ -1856,20 +1859,18 @@ a.rightfixed i::before {
     left: 7px;
 }
 a.feedback {
-    background: #e5412d;
-}
-a.sales-enquiries {
+    background: #a22314;
 }
 a.referral {
-  background: #46c35f;
+  background: #1b8330;
 }
-#feedbackContent {
+.popRightBlog {
     width: 350px;
     height: 260px;
     left: 35%;
     top: 10%;
 }
-#feedbackContent textarea{
+.popRightBlog textarea{
     height: 150px;
     min-height: 150px;
     max-height: 150px;
@@ -1877,14 +1878,20 @@ a.referral {
     min-width: 100%;
     max-width: 100%;
 }
+.popRightBlog input[type=email]{
+        width: 100%;
+    margin-bottom: 2px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
 a.feedback:hover {
     margin-left: -66px;
 }
-a.sales-enquiries:hover {
-    margin-left: -127px;
+a.enquiries:hover {
+    left: -95px;
 }
 a.referral:hover {
-    margin-left: -66px;
+    margin-left: -56px;
 }
 .cover-rightfixed {
     position: fixed;
@@ -1892,4 +1899,23 @@ a.referral:hover {
     right: -100px;
     z-index: 99999;
     text-align: left;
+}
+.enquiry-content {
+    background: #fff;
+    border: 1px solid #D7D7D7;
+    padding: 6px 10px 0;
+    position: absolute;
+    width: 120px;
+    right: -120px;
+    font-size: 12px;
+    text-align: center;
+    bottom: -115px;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+    padding-bottom: 10px;
+    color: #444;
+    z-index: -1;
+}
+a.enquiries:hover .enquiry-content, .enquiry-content:hover {
+   right: 0px;
 }
