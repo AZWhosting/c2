@@ -87,7 +87,7 @@
 						</li>
 						<li style="text-align:center;">
 							<a href="#/documents">
-								<img title="Attach Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.png" alt="Attachment">
+								<img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.png" alt="Attachment">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Documents</span>
 						</li>
@@ -153,33 +153,33 @@
 				<div class="span12">					
 
 					<!-- Add New Board -->
-					<div class="board-add">
-						<div class="span6">
-							<h2>Welcome on board!</h2>
+					<div class="board-add" >
+						<div class="span9" style="padding-right: 0; padding-left: 0;">
+							<h2 style="color: #113051;">Welcome on board!</h2>
 							<p>
 								To get you started with BanhJi, please have a look at this <a target="_blank" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/welcome_guide.pdf">[Welcome Guide]</a>.
 							</p>
 						</div>
-						<div class="span6">
-							<div class="span12">
-								<div class="span3">
+						<div class="span3" style="text-align: right; padding-right: 0; padding-left: 0;">
+							<div class="span12" style="padding-left: 0; padding-right: 0;">
+								<div class="span6">
 									<a href="#/customer" class="center">
-										<img title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+										<img style="width: 60px; height: 60px;" title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
 									</a>
 								</div>
-								<div class="span3">
+								<div class="span6">
 									<a href="#/vendor" class="center">
-										<img title="Add Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
+										<img style="width: 60px; height: 60px;" title="Add Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
 									</a>
 								</div>
-								<div class="span3">
+								<div class="span6">
 									<a href="#/item" class="center">
-										<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+										<img style="width: 60px; height: 60px;" title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
 									</a>
 								</div>
-								<div class="span3">
+								<div class="span6">
 									<a href="#/item_service" class="center">
-										<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+										<img style="width: 60px; height: 60px;" title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
 									</a>
 								</div>
 							</div>
@@ -200,49 +200,53 @@
 						<div class="span12">
 							<div class="span6">
 								<p>Performance</p>
-								<table class="performance">
-									<tr>
-										<td>Income</td>
-										<td></td>
-										<td>0</td>
-									</tr>
-									<tr>
-										<td>Expense</td>
-										<td></td>
-										<td>0</td>
-									</tr>
-									<tr>
-										<td><b>Net Income</b></td>
-										<td></td>
-										<td><b>0</b></td>
-									</tr>
-								</table>
+								<a href="#/statement_profit_loss">
+									<table class="performance">
+										<tr>
+											<td>Income</td>
+											<td></td>
+											<td>0</td>
+										</tr>
+										<tr>
+											<td>Expense</td>
+											<td></td>
+											<td>0</td>
+										</tr>
+										<tr>
+											<td><b>Net Income</b></td>
+											<td></td>
+											<td><b>0</b></td>
+										</tr>
+									</table>
+								</a>     
 							</div>
 							<div class="span6">
 								<p>Position</p>
-								<table class="position" style="width: 100%;">
-									<tr>
-										<td>Assets</td>
-										<td></td>
-										<td>0</td>
-									</tr>
-									<tr>
-										<td>Liabilities</td>
-										<td></td>
-										<td>0</td>
-									</tr>
-									<tr>
-										<td><b>Equity</b></td>
-										<td></td>
-										<td><b>0</b></td>
-									</tr>
-								</table>
+								<a href="#/statement_financial_position">
+									<table class="position" style="width: 100%;">
+										<tr>
+											<td>Assets</td>
+											<td></td>
+											<td>0</td>
+										</tr>
+										<tr>
+											<td>Liabilities</td>
+											<td></td>
+											<td>0</td>
+										</tr>
+										<tr>
+											<td><b>Equity</b></td>
+											<td></td>
+											<td><b>0</b></td>
+										</tr>
+									</table>
+								</a>
 							</div>
 						</div>
 						
 						<div class="span12">
 							<div class="span6">
-								<a href="#/customer_balance">
+								<a href="#/customer_balance_summary">
 									<div class="widget-body alert-info welcome-nopadding" >
 										<p>RECEIVABLES</p>
 								
@@ -272,33 +276,34 @@
 							</div>
 							<div class="span6">
 								
-
-								<div class="widget-body  alert-info welcome-nopadding" style="width: 100%;">
-									<p>PAYABLES</p>
-							
-									<div align="center" class="text-large strong" data-bind="text: ap"></div>
+								<a href="#/suppliers_balance_summary">
+									<div class="widget-body  alert-info welcome-nopadding" style="width: 100%;">
+										<p>PAYABLES</p>
 								
-									<table width="100%">
-										<tr align="center">
-											<td>										
-												<span data-bind="text: ap_open"></span>
-												<br>
-												<span>Open</span>
-											</td>
-											<td>
-												<span data-bind="text: ap_vendor"></span>
-												<br>
-												<span>Supplier</span>
-											</td>
-											<td>
-												<span data-bind="text: ap_overdue"></span>
-												<br>
-												<span>Overdue</span>
-											</td>
-										</tr>
-									</table>
+										<div align="center" class="text-large strong" data-bind="text: ap"></div>
+									
+										<table width="100%">
+											<tr align="center">
+												<td>										
+													<span data-bind="text: ap_open"></span>
+													<br>
+													<span>Open</span>
+												</td>
+												<td>
+													<span data-bind="text: ap_vendor"></span>
+													<br>
+													<span>Supplier</span>
+												</td>
+												<td>
+													<span data-bind="text: ap_overdue"></span>
+													<br>
+													<span>Overdue</span>
+												</td>
+											</tr>
+										</table>
+									</div>
 								</div>
-							</div>
+							</a>
 						</div>
 
 						
@@ -27641,7 +27646,7 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>		
 		<td class="center">
-			#=reference.length>0 ? kendo.toString(reference[0].amount - amount_paid, "c", locale) : 0#			
+			#=reference.length>0 ? kendo.toString(reference[0].amount - (amount_paid + reference[0].deposit), "c", locale) : 0#			
 		</td>		
 		<td class="center">
 			<input data-role="numerictextbox"
@@ -27825,8 +27830,8 @@
 			                <th>NAME</th>
 			                <th>BILL NO.</th>
 			                <th data-bind="visible: showCheckNo" style="width: 10%">CHECK NO</th>			                		                
-			                <th style="width: 15%">DISCOUNT</th>
-			                <th style="width: 15%">AMOUNT</th>			                
+			                <th style="width: 15%">AMOUNT</th>
+			                <th style="width: 15%">DISCOUNT</th>			                
 			                <th style="width: 15%">PAY</th>			                			                			                
 			            </tr> 
 			        </thead>
@@ -27960,7 +27965,7 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>		
 		<td class="center">
-			#=reference.length>0 ? kendo.toString(reference[0].amount - amount_paid, "c", locale) : 0#			
+			#=reference.length>0 ? kendo.toString(reference[0].amount - (amount_paid + reference[0].deposit), "c", locale) : 0#			
 		</td>
 		<td class="center">
 			<input data-role="numerictextbox"
@@ -28578,7 +28583,7 @@
 								<div class="span6">
 									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadPO">
 										<span class="glyphicons adjust_alt"><i></i></span>
-										<span class="txt"><span data-bind="text: itemType" style="font-size: small;"></span></span>
+										<span class="txt" style="width: 70%; margin-top: -16px;"><span data-bind="text: itemType" style="    font-size: 22px;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -29215,10 +29220,12 @@
 						              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 										</div>
 										<!-- // Group END -->
+
+
 									
 									</div>
 
-									<div class="span6">									
+									<div class="span6" >									
 										<div class="control-group">
 											<label for="txtName"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
 						              		<input id="txtName" name="txtName" class="k-textbox" data-bind="value: obj.name" 
@@ -29231,6 +29238,15 @@
 								<div class="row">
 									<div class="span6"  style="margin-top: 25px;">
 										<input type="checkbox" data-bind="checked: obj.favorite" /> <span data-bind="text: lang.lang.favorite"></span>
+
+										<!-- Group -->
+										<div class="control-group" style=" margin-top: 17px;">								
+											<label for="txtPurchaseDescription">Purchase Description</label>
+								            <textarea id="txtPurchaseDescription" class="k-textbox" 
+												data-bind="value: obj.purchase_description" style="resize:none; width: 100%;height:60px;"></textarea>
+										</div>																		
+										<!-- // Group END -->
+
 									</div>
 									<div class="span6">								
 										<div class="control-group">								
@@ -29243,37 +29259,24 @@
 							            		data-bind="source: statusList, value: obj.status"
 							            		data-option-label="(--- Select ---)"
 							            		required data-required-msg="required" style="width: 100%;" />
-										</div>																	
+										</div>
+										<!-- Group -->
+										<div class="control-group" style=" margin-top: 10px;">								
+											<label for="txtSaleDescription">Sale Description</label>
+								            <textarea id="txtSaleDescription" class="k-textbox" 
+												data-bind="value: obj.sale_description" style="resize:none; width: 100%;height:60px;"></textarea>
+										</div>																		
+										<!-- // Group END -->																	
 									</div>																								
 								</div>
 
 							</div>						
 						</div>					   
 
-						<div class="span6" style="padding-left:0;">							
-							<div class="row-fluid">
-								<div class="span6">
-									<!-- Group -->
-									<div class="control-group">								
-										<label for="txtPurchaseDescription">Purchase Description</label>
-							            <textarea id="txtPurchaseDescription" class="k-textbox" 
-											data-bind="value: obj.purchase_description" style="resize:none; width: 100%;height:60px;"></textarea>
-									</div>																		
-									<!-- // Group END -->
-								</div>
-								<div class="span6">
-									<!-- Group -->
-									<div class="control-group">								
-										<label for="txtSaleDescription">Sale Description</label>
-							            <textarea id="txtSaleDescription" class="k-textbox" 
-											data-bind="value: obj.sale_description" style="resize:none; width: 100%;height:60px;"></textarea>
-									</div>																		
-									<!-- // Group END -->
-								</div>
-							</div>
+						<div class="span6" style="padding-left: 0;">
 							<div class="row-fluid">
 								<div class="span12">
-									<br>
+									<label >Select Item to include into this catalog</label>
 									<select data-role="multiselect"
 						                   data-placeholder="Select..."
 						                   data-value-primitive="true"
@@ -35322,177 +35325,993 @@
 <script id="reportDashboard" type="text/x-kendo-template" >
 	<div class="row-fluid">
 		<div class="span12 report-module">
-			<h2>No. of Reports/lists by Module</h2>
-			<ul>
-				<li>
-					<a href="#/customer_report_center">
-						<img title="Report Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
-					</a>
-					<div class="span12">17</div>
-				</li>
-				<!-- <li>
-					<a href="#/employee_report_center">
-						<img title="Report Employee" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/employee.png" alt="Employee">
-					</a>
-					<div class="span12">6</div>
-				</li> -->
-				<li>
-					<a href="#/vendor_report_center">
-						<img title="Report Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
-					</a>
-					<div class="span12">16</div>
-				</li>
-				<li>
-					<a href="#/item_report_center">
-						<img title="Report Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
-					</a>
-					<div class="span12">12</div>
-				</li>
-				<!-- <li>
-					<a href="#/services_report_center">
-						<img title="Report Services" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/services.png" alt="Service">
-					</a>
-					<div class="span12"></div>
-				</li> -->
-				<li>
-					<a href="#/cash_report_center">
-						<img title="Report Cash" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
-					</a>
-					<div class="span12">6</div>
-				</li>
-				<li>
-					<a href="#/accounting_report_center">
-						<img title="Report Accounting" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
-					</a>
-					<div class="span12">16</div>
-				</li>
-			</ul>
+			<p>
+				<span style="font-size: 20px; float: left; font-weight: 700;">Reports</span>
+				<span style="float: left; width: 500px;margin-left: 20px; width: 50%;">This module consolidates different modules report into one place. In addition, ratio analysis is also included in this module </span>
+			</p>
 		</div>
 
-		<div class="span12 capital-management">
-			<h2>How efficient is your working capital management? </h2>
-			<div class="span6">
-				<div class="span6 capital-box">
-					<p class="first-text">Receivable Collection Days</p>
-					<span>30</span>
-					<p class="month">12 months Average</p>
+		<div class="span12 " style="margin-top: 20px;">
+			<div class="span6 capital-management" style="padding-left: 0;">
+				<h2 style="min-height: 60px;">How efficient is your working capital management? </h2>
+				<div class="span6 capital-box" title="This is the measure of the average length of time it takes for your company's customers to pay what they owe. It will show how efficient is your collections teams or methods. 
+">
+					<p class="span6 first-text" style="text-align: left;">Receivable Collection Days</p>
+					<span class="span6" style="text-align: right;">30</span>
 				</div>
-				<div class="span6 capital-box">
-					<p class="first-text">Payable Payment Days</p>
-					<span>20</span>
-					<p class="month">12 months Average</p>
+				<div class="span6 capital-box" title="This is the measure of the average number of days that you pay your supplier. An increase is often a sign of lack of long-term finance or poor management of current assets, resulting in the use of extended credit from suppliers, increased bank overdraft and so on. However, a decrease would suggest inefficient management of cash disbursement. 
+">
+					<p class="span6 first-text" style="text-align: left;">Payable Payment Days</p>
+					<span class="span6" style="text-align: right;">20</span>
 				</div>
-				<div class="span6 capital-box">
-					<p class="first-text">Inventory Turnover Days</p>
-					<span>40</span>
-					<p class="month">12 months Average</p>
+				<div class="span6 capital-box" title="This is the measure of the average number of days that items of inventory are held for. A lengthening inventory turnover period indicate one of two things, which are a slowdown in trading or a build-up in inventory levels, perhaps suggesting that investment in inventories is becoming excessive. 
+">
+					<p class="span6 first-text" style="text-align: left;">Inventory Turnover Days</p>
+					<span class="span6" style="text-align: right;">40</span>					
 				</div>
-				<div class="span6 capital-box">
-					<p class="first-text">Cash Conversion Cycle</p>
-					<span>50</span>
-					<p class="month">12 months Average</p>
+				<div class="span6 capital-box" title="It is a measure that express the duration that it takes to convert resources inputs into cash. In order word, it attempts to measure the amount of time each net input dollar is tied up in the production and sale process before it is converted into cash. 
+">
+					<p class="span6 first-text" style="text-align: left;">Cash Conversion Cycle</p>
+					<span class="span6" style="text-align: right;">50</span>
 				</div>
 			</div>
-			<div class="span6 ">
-				<div class="capital-chart">
-					Chart
-				</div>				
-			</div>
-		</div>
-
-		<div class="span12 ">
-			<div class="row-fluid cash-payments">
-				<h2>
+			<div class="span6 capital-management" style="padding-left: 0; padding-right: 0;">
+				<h2 style="min-height: 60px;">
 					What is your ability to meet your present obligations (settling debts or possibly meet other 
 					unforeseen demand for cash payments)?
 				</h2>
-				<div class="span6">
-					<div class="span6 capital-box">
-						<p class="first-text">Current Ratio</p>
-						<span>3</span>
-						<p class="month">12 months Average</p>
-					</div>
-					<div class="span6 capital-box">
-						<p class="first-text">Quick Ratio</p>
-						<span>1.5</span>
-						<p class="month">12 months Average</p>
-					</div>
-					<div class="span6 capital-box">
-						<p class="first-text">Cash Ratio</p>
-						<span>0.3</span>
-						<p class="month">12 months Average</p>
-					</div>
-					<div class="span6 capital-box">
-						<p class="first-text">Debt Service Coverage Ratio</p>
-						<span>5</span>
-						<p class="month">12 months Average</p>
-					</div>
+				<div class="span6 capital-box" style="background: #3B74B4">
+					<p class="span6 first-text" style="text-align: left;">Current Ratio</p>
+					<span class="span6" style="text-align: right;">3</span>
 				</div>
-
-				<div class="span6 ">
-					<div class="capital-chart">
-						Chart
-					</div>				
+				<div class="span6 capital-box" style="background: #3B74B4">
+					<p class="span6 first-text" style="text-align: left;">Quick Ratio</p>
+					<span class="span6" style="text-align: right;">1.5</span>
 				</div>
-			</div>
-
-			<div class="row-fluid">				
-				<div class="span6 financial-block">
-					<h2>How safe is your long term financial position?</h2>
-					<div class="span6 financial-box">
-						<p class="first-text">Debt/ Equity Ratio</p>
-						<span>3</span>
-						<p class="month">12 months Average</p>
-					</div>
-					<div class="span6 financial-box">
-						<p class="first-text">Debt/ Asset Ratio</p>
-						<span>1.5</span>
-						<p class="month">1.5 months Average</p>
-					</div>
+				<div class="span6 capital-box" style="background: #3B74B4">
+					<p class="span6 first-text" style="text-align: left;">Cash Ratio</p>
+					<span class="span6" style="text-align: right;">0.3</span>
 				</div>
-				<div class="span6 business-block">
-					<h2>How safe is your long term financial position?</h2>
-					<div class="span4 business-box">
-						<p class="first-text">Earning before interest & tax</p>
-						<span>10%</span>
-						<p class="month">12 months Average</p>
-					</div>
-					<div class="span4 business-box">
-						<p class="first-text">Return on Asset</p>
-						<span>2</span>
-						<p class="month">12 months Average</p>
-					</div>
-					<div class="span4 business-box">
-						<p class="first-text">Return on Capital Employed</p>
-						<span>20%</span>
-						<p class="month">12 months Average</p>
-					</div>
-				</div>
-			</div>			
-		</div>
-
-		<div class="span12 revenue">
-			<h2>Revenue Performance</h2>
-			<div class="span3">
-				<div class="revenue-box">
-					<p class="first-text">Gross Margin</p>
-					<span>13%</span>
-					<p class="month">12 months Average</p>
-				</div>
-				<div class="revenue-box">
-					<p class="first-text">Average Sale Growth Rate</p>
-					<span>10%</span>
-					<p class="month">12 months Average</p>
-				</div>
-			</div>
-			<div class="span9">
-				<div class="capital-chart">
-					Chart
+				<div class="span6 capital-box" style="background: #3B74B4">
+					<p class="span6 first-text" style="text-align: left;">Debt Service Coverage Ratio</p>
+					<span class="span6" style="text-align: right;">5</span>
 				</div>
 			</div>
 		</div>
 
-		
+		<div class="span12 " style="margin-top: 20px;">
+			<div class="span6 capital-management" style="padding-left: 0;">
+				<h2 style="min-height: 30px;">How profitable is your business?</h2>
+				<div class="span6 capital-box" style="background: #A1C3E5">
+					<p class="span6 first-text" style="text-align: left; color:#000; font-weight: 700;">Gross Margin</p>
+					<span class="span6" style="text-align: right; font-size: 60px; ">13%</span>
+				</div>
+				<div class="span6 capital-box" style="background: #A1C3E5">
+					<p class="span6 first-text" style="text-align: left; color:#000; font-weight: 700;">Average Sale Growth </p>
+					<span class="span6" style="text-align: right;">10</span>
+				</div>
+				<div class="span6 capital-box" style="background: #A1C3E5">
+					<p class="span6 first-text" style="text-align: left; color:#000; font-weight: 700;">Earning Before interest & Tax</p>
+					<span class="span6" style="text-align: right;font-size: 60px; font-weight: 700;">13%</span>					
+				</div>
+				<div class="span6 capital-box" style="background: #A1C3E5">
+					<p class="span6 first-text" style="text-align: left; color:#000; font-weight: 700;">Return on Asset</p>
+					<span class="span6" style="text-align: right;">2</span>
+				</div>
+				<p style="margin-top: 20px; float: left;">These above ratios are calculated based on the 12 month average.</p>
+			</div>
+			<div class="span6 capital-management" style="padding-left: 0; padding-right: 0;">
+				<h2 style="min-height: 30px;"></h2>
+				<div class="span12" style="background: #A1C3E5; padding: 17px;">
+					<p class="span6 first-text" style="text-align: left; color:#000; font-weight: 700;">Return on Capital Employed</p>
+					<span class="span6" style="color: #fff; text-align: right; font-weight: 900; font-size: 75px; line-height: 55px;">13%</span>
+				</div>
+				<div class="span12 capital-management" style="padding-left: 0; margin-top: 10px; padding-right: 0;">
+					<h2 style="margin-bottom: 3px;">How safe if your long term financial position?</h2>
+					<div class="span6 capital-box" style="background: #D9D9D9">
+						<p class="span6 first-text" style="text-align: left; color:#000; font-weight: 700;">Debt/ Equity Ratio</p>
+						<span class="span6" style="text-align: right; font-size: 60px; color: #000;">3.0</span>
+					</div>
+					<div class="span6 capital-box" style="background: #D9D9D9">
+						<p class="span6 first-text" style="text-align: left; color:#000; font-weight: 700;">Debt/ Asset Ratio</p>
+						<span class="span6" style="text-align: right; color: #000;">1.5</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="span12" style="margin-top: 20px;">
+		    <!-- Tabs -->
+			<div class="relativeWrap" data-toggle="source-code">
+				<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;">
+				
+					<!-- Tabs Heading -->
+					<div class="widget-head">
+						<ul>
+							<li class="active"><a class="glyphicons group" href="#tab-1" data-toggle="tab"><i></i>Customer</a></li>										
+							<li><a class="glyphicons notes_2" href="#tab-2" data-toggle="tab"><i></i>Suppliers</a></li>
+							<li><a class="glyphicons cargo" href="#tab-3" data-toggle="tab"><i></i>Products/Services</a></li>
+							<li><a class="glyphicons notes_2" href="#tab-4" data-toggle="tab"><i></i>Accounting</a></li>
+						</ul>
+					</div>
+					<!-- // Tabs Heading END -->								
+					<div class="widget-body">
+						<div class="tab-content">
+					        <div class="tab-pane active" id="tab-1">									        	
+								<div class="row-fluid">
+									<div class="row-fluid sale-report">				
+										<h2>SALE MANAGEMENT REPORTS</h2>
+										<p>
+											The following reports provide summary and detailed reports in 
+											different ways to help analyze your revenue performance.
+										</p>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td>
+														<h3><a href="#/sale_summary_customer">Sale Summary by Customer</a></h3>
+													</td>
+													<td>
+														<h3><a href="#/customer_transaction_list">Customer Transaction List</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td>
+														<p>
+															Summarizes total sales for each customer within a period 
+															of time so you can see which ones generate the most revenue for you.
+														</p>
+														
+													</td>
+													<td>
+														<p>
+															List of all transactions related to and grouped by each customer, including invoice, cash sale
+														</p>
+													</td>
+													
+												</tr>
+												<tr>
+													<td>
+														<h3><a href="#/sale_detail_customer">Sale Detail by Customer</a></h3>
+													</td>
+													<td>
+														<h3><a href="#/deposit_detail_customer">Deposit Detail by Customer</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<p>
+															Lists individual sale transactions by date for each customer with a period of time.
+														</p>
+													</td>
+													<td width="50%">
+														<p>
+															Provides detailed information about customer deposit for specific order, prepayment, or credit.
+														</p>
+													</td>
+												</tr>
+
+												<tr>
+													<td>
+														<h3><a href="#/sale_summary_product">Sale Summary by Product/ Services</a></h3>
+													</td>
+													<td>
+														<h3><a href="#/sale_detail_product">Sale Detail by Product/ Services</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<p>
+															Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices. 
+														</p>
+													</td>
+													<td>
+														<p>
+															Lists individual sale transactions by date for each product/ service with a period of time.
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<h3><a href="#/sale_job_engagement">Sale by Job/Engagement</a></h3>
+													</td>
+													<td>
+														<h3><a href="#/sale_order_list">Sale Order List</a></h3>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+
+									<div class="row-fluid recevable-report">
+										<h2>RECEIVABLE MANAGEMENT REPORTS</h2>
+										<p>
+											The following reports provide summary and detailed reports.
+										</p>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td >
+														<h3><a href="#/customer_balance_summary">Customer Balance Summary</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/customer_balance_detail">Customer Balance Detail</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td>
+														<p>
+															Show each customer’s total outstanding balances.
+														</p>
+														
+													</td>
+													<td >
+														<p>
+															Lists individual unpaid invoices for each customer
+														</p>
+													</td>
+													
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/receivable_aging_summary">Receivable Aging Summary</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/receivable_aging_detail">Receivable Aging Detail</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Lists all unpaid invoices for the current period, 30, 60, 90, 
+															and more than 90 days, grouped by individual customers.
+														</p>
+													</td>
+													<td >
+														<p>
+															Lists individual unpaid invoices, grouped by customer. This includes due date, 
+															outstanding days (aging days), and amount.
+														</p>
+													</td>
+												</tr>
+
+												<tr>
+													<td >
+														<h3><a href="#/list_invoices_collect">List of invoices to be collected</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/collect_report">Collection Report</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<p>
+															Lists all unpaid invoices, grouped by Due today and Overdue.
+														</p>
+													</td>
+													<td >
+														<p>
+															Lists of collected invoices for the select period of time, group by method of payment.
+														</p>
+													</td>
+												</tr>
+
+												<tr>
+													<td >
+														<h3><a href="#/invoice_list">Invoice List</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/customer_list">Customer List</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Shows a chronological list of all your invoices for a selected date range.
+														</p>
+													</td>
+													<td >
+														<p>
+															List of all active customers
+														</p>
+													</td>
+												</tr>
+
+											</table>
+										</div>
+									</div>
+									
+									<div class="row-fluid recevable-report">
+										<h2>OTHER REPORTS/ LISTS</h2>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 48%; padding-right: 8px !important;">
+														<h3><a href="#/customer_recurring">Recurring Customer Template List</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/customer_setting">Payment Method & Term List</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td style="width: 48%; padding-right: 8px !important;">
+														<p></p>								
+													</td>
+													<td>
+														<p>
+															List the types of payments and the term that determine due date for payment from customers.
+														</p>
+													</td>
+													
+												</tr>
+												<tr >
+													<td></td>														
+												</tr>
+
+											</table>
+										</div>
+									</div>
+								</div>
+				        	</div>								        
+					        <div class="tab-pane" id="tab-2">								        	
+					        	<div class="row-fluid">
+					        		<div class="row-fluid sale-report">
+										<h2>EXPENSE/PURCHASE MANAGEMENT REPORTS</h2>
+										<p>
+											The following reports provide summary and detailed reports in different ways to help analyze what 
+											you spent and their impact on your cash flow and performance. 
+										</p>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td>
+														<h3><a href="#/expenses_purchase_summary_supplier">Expenses/ Purchase Summary by Supplier</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/suppliers_transaction_list">Suppliers Transaction List</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Summarizes total expenses/ purchase for each suppliers within a period of time.
+														</p>
+														
+													</td>
+													<td >
+														<p>
+															Lists of all transactions related to and grouped by each suppliers
+														</p>
+													</td>
+													
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/expenses_purchase_detail_supplier">Expenses/Purchase Detail by Supplier</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/deposit_detail_supplier">Deposit Detail by Supplier</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Lists individual expenses/ purchase transactions by date for each supplier within a period of time.
+														</p>
+													</td>
+													<td >
+														<p>
+															Provides detailed information about supplier deposit for specific order, prepayment, or credit.
+														</p>
+													</td>
+												</tr>
+
+												<tr>
+													<td >
+														<h3><a href="#/purchase_summary_product_services">Purchase Summary by Product/ Services</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/open_purchase_order">Open Purchase Order</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Summarizes total expenses/ purchase for each product/ service within a period of time. 
+														</p>
+													</td>
+													<td >
+														<p>
+															Lists all the open purchase order grouped by suppliers including the original amount as well.
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/purchase_detail_product_services">Purchase Detail by Product/ Services</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Lists individual sale transactions by date for each product/ service with a period of time.
+														</p>
+													</td>
+												</tr>
+
+											</table>
+										</div>
+									</div>
+
+									<div class="row-fluid recevable-report">
+										<h2>PAYABLES MANAGEMENT REPORTS</h2>
+										<p>
+											The following reports provide summary and detailed reports.
+										</p>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td>
+														<h3><a href="#/suppliers_balance_summary">Suppliers Balance Summary</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/suppliers_balance_detail">Suppliers Balance Detail</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Show each supplier’s total outstanding balances.
+														</p>
+														
+													</td>
+													<td >
+														<p>
+															Lists individual unpaid bill for each supplier
+														</p>
+													</td>
+													
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/payables_aging_summary">Payables Aging Summary</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/payables_aging_detail">Payables Aging Detail</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Lists all unpaid bills for the current period, 30, 60, 90, and more than 90 days, grouped by individual suppliers. 
+														</p>
+													</td>
+													<td >
+														<p>
+															Lists individual unpaid bills, grouped by suppliers. This includes due date, outstanding days (aging days), and amount.
+														</p>
+													</td>
+												</tr>
+
+												<tr>
+													<td >
+														<h3><a href="#/list_bills_paid">List of bills to be paid</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/bill_payment_list">Bill Payment List</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Lists all unpaid invoices, grouped by Due today and Overdue.
+														</p>
+													</td>
+													<td >
+														<p>
+															Lists of paid bills for the select period of time, group by method of payments.
+														</p>
+													</td>
+												</tr>						
+
+											</table>
+										</div>
+									</div>
+									<div class="row-fluid recevable-report">
+										<h2>OTHER REPORTS/ LISTS</h2>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 48%; padding-right: 8px !important;">
+														<h3><a href="#/product_service_list">Product/ Service List</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/supplier_list">Supplier List</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td style="width: 48%; padding-right: 8px !important;" >
+														<p>
+															Lists the products and services you purchase. The following information is included: name, 
+															description, cost, sales price, and quantity on hand.
+
+														</p>
+														
+													</td>
+													<td >
+														<p>
+															Lists of all active suppliers
+														</p>
+													</td>							
+												</tr>
+												<tr>
+													<td>
+													</td>
+													<td >
+														<h3><a href="#/customer_recurring">Recurring Supplier Template List</a></h3>								
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+					        	</div>
+				        	</div>
+
+				        	<div class="tab-pane" id="tab-3">								        	
+					        	<div class="row-fluid">
+					        		<div class="row-fluid sale-report">
+										<h2>INVENTORY POSITION</h2>
+										<p>
+											The following reports provide summary and detailed reports on the position of inventory. 
+										</p>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td>
+														<h3><a href="#/inventory_position_summary">Inventory Position Summary</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/inventory_sale_item_analysis">Inventory Sale by Item Analysis</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price.  
+
+														</p>
+														
+													</td>
+													<td >
+														<p>
+															Lists of all transactions related to and grouped by each inventory with analysis of average gross profit margin.
+
+														</p>
+													</td>
+													
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/inventory_position_detail">Inventory Position Detail</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/inventory_turnover_list">Inventory Turnover List</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Lists individual inventory movement transactions by date for each inventory within a period of time.
+
+														</p>
+													</td>
+													<td >
+														<p>
+															Provides analysis of inventory turnover days by each inventory.
+
+														</p>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+
+									<div class="row-fluid recevable-report">
+										<h2>INVENTORY MOVEMENT REPORTS</h2>
+										<p>
+											The following reports provide summary and detailed reports on the movement of the inventories
+										</p>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td>
+														<h3><a href="#/inventory_movement_summary">Inventory Movement Summary</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/inventory_movement_detail">Inventory Movement Detail</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Shows the movement of each inventory by opening balance, sale, purchase and adjustment. 
+														</p>
+														
+													</td>
+													<td >
+														<p>
+															Lists of all detailed transactions related to and grouped by each inventory
+														</p>
+													</td>
+													
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/purchase_summary_product_services">Purchase by Supplier Summary</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/purchase_detail_product_services">Purchase by Supplier Detail</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Lists all inventory purchases from each suppliers
+														</p>
+													</td>
+													<td >
+														<p>
+															Lists of detailed inventory purchase transactions from each suppliers
+														</p>
+													</td>
+												</tr>
+
+												<tr>
+													<td >
+														<h3><a href="#/sale_summary_customer">Sale by Customer Summary</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/sale_detail_customer">Sale by Customer Detail</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Lists all inventory sold to each customer
+														</p>
+													</td>
+													<td >
+														<p>
+															Lists of detailed inventory sale transactions to each customer
+														</p>
+													</td>
+												</tr>
+												
+											</table>
+										</div>
+									</div>
+									<div class="row-fluid recevable-report">
+										<h2>OTHER REPORTS/ LISTS</h2>
+										<p>
+											The following reports provide summary and detailed reports on the movement of the inventories
+										</p>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 55%; padding-right: 8px !important;">
+														<h3><a href="#/inventory_list">Inventory List</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/">Recurring Inventory Template List</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td style="width: 55%; padding-right: 8px !important;">
+														<p>
+															Lists the products you purchase and sold. The following information is included: name, description, cost, sales price, and quantity on hand.
+														</p>								
+													</td>
+													<td >								
+													</td>
+													
+												</tr>
+												
+											</table>
+										</div>
+									</div>
+					        	</div>
+				        	</div>
+
+				        	<div class="tab-pane" id="tab-4">								        	
+					        	<div class="row-fluid">
+					        		<div class="row-fluid sale-report">
+										<h2>PERIOD-END CLOSING REPORTS</h2>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td width="50%">
+														<h3><a href="#/journal_report">Journal Entry Report</a></h3>
+													</td>
+													<td width="50%">
+														<h3><a href="#/general_ledger">General Ledger</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td width="50%">
+														<p>
+															Lists all accounting transactions within a period of time into debits and credits and displays them chronologically.
+
+														</p>
+														
+													</td>
+													<td width="50%">
+														<p>
+															Groups all accounting transactions by each account in your chart of accounts within a period of time into debits, credits, and balances. 
+
+														</p>
+													</td>
+													
+												</tr>
+												<tr>
+													<td width="50%">
+														<h3><a href="#/trial_balance">Trial Balance</a></h3>
+													</td>
+													<td width="50%">
+														<h3><a href="#/transaction_list_date">Transaction List by Date</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td width="50%">
+														<p>
+															Summarizes each account balance on your chart of accounts in the format of debit and credit within a period of time
+														</p>
+													</td>
+													<td width="50%">
+														<p>
+															This is similar with journal entry; however, it does not include debit and credit. In addition, it includes not financial transactions, such as sale order or purchase order.
+
+														</p>
+													</td>
+												</tr>
+
+												<tr>
+													<td width="50%">
+														<h3><a href="#/recent_transactions_list">Recent Transactions List</a></h3>
+													</td>
+													<td width="50%">
+														<h3><a href="#/">Period-End Closing Checklist</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td width="50%">
+														<p>
+															Lists all transaction recorded or edited within the last five days.
+														</p>
+													</td>
+													<td width="50%">
+														
+													</td>
+												</tr>
+
+												<tr>
+													<td width="50%">
+													</td>
+													<td width="50%">
+														
+													</td>
+												</tr>
+												<tr>
+													<td width="50%">
+													</td>
+													<td>
+														
+													</td>
+												</tr>
+
+											</table>
+										</div>
+									</div>
+
+									<div class="row-fluid recevable-report">
+										<h2>FINANCIAL STATEMENTS</h2>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td >
+														<h3><a href="#/statement_profit_loss">Statement of Profit or Loss</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Provides the progress of your company’s financial performance, summarized in a record of income generated and expenses incurred over a given period.
+
+														</p>
+														
+													</td>
+													<td >
+														<p>
+															Provides the snapshot of your company’s financial position on value and ownership. It is the relationship of the company’s assets, liabilities and equities as of a specific date.
+
+														</p>
+													</td>
+													
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/statement_profit_loss_comparison">Statement of Profit or Loss Comparison</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/statement_financial_position_comparison">Statement of Financial Position Comparison</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Shows a year-over-year comparison of your financial performance.
+														</p>
+													</td>
+													<td >
+														<p>
+															Shows a year-over-year comparison of your financial position.
+														</p>
+													</td>
+												</tr>
+
+												<tr>
+													<td >
+														<h3><a href="#/statement_cash_flow">Statement of Cash Flow</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/statement_changes_equity">Statement of Changes in Equity</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Shows cash generated by your company operating activities, cash spent on investing in your company assets long term asset, and cash in or out from your own share or financial institutions.
+
+														</p>
+													</td>
+													<td >
+														<p>
+															Shows the movement of your paid-up capital, dividends, the effects of changes in accounting policies and corrections of errors recognized in the period, and the profit or loss for a reporting period
+
+														</p>
+													</td>
+												</tr>
+
+											</table>
+										</div>
+									</div>
+
+									<div class="row-fluid sale-report">
+										<h2>CASH POSITION</h2>
+										<p>
+											The following reports provide summary and detailed reports on employee related transactions.  
+										</p>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td>
+														<h3><a href="#/">Cash Position Report</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/">Cash Payment Report</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price.  
+
+
+														</p>
+														
+													</td>
+													<td >
+														<p>
+															Lists of all transactions related to and grouped by each inventory with analysis of average gross profit margin.
+
+
+														</p>
+													</td>
+													
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/">Cash Receipt Report</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/">Reconciliation Report</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p>
+															Lists individual inventory movement transactions by date for each inventory within a period of time.
+
+
+														</p>
+													</td>
+													<td >
+														<p>
+															List of all cash related reconciliation reports.
+														</p>
+													</td>
+												</tr>
+											</table>					
+										</div>
+									</div>
+
+									<div class="row-fluid recevable-report">
+										<h2>OTHER REPORTS/ LISTS</h2>
+										<div class="row-fluid">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 49%; padding-right: 8px !important;">
+														<h3><a href="#/chart_of_account">Chart of Account </a></h3>
+													</td>
+													<td >
+														<h3><a href="#/audit_trial_report">Audit Trial Report</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td style="width: 49%; padding-right: 8px !important;">
+														<p>
+															Lists of all accounts with name, type, and balance.
+
+														</p>
+														
+													</td>
+													<td >
+														<h3><a href="#/recurring_journal_list">Recurring Journal List</a></h3>							
+													</td>
+													
+												</tr>
+												<tr>
+													<td>
+														<h3><a href="#/">Realized Exchange Gains & Losses</a></h3>
+													</td>
+													<td width="50%">
+														<h3><a href="#/">Unrealized Exchange Gains & Losses</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td >
+														<p>
+															This detailed report lists foreign transactions that are closed (referred to as realized gains and losses) and totals the gains and losses due to changes in exchange rates.
+
+
+														</p>
+														
+													</td>
+													<td >
+														<p>
+															This summary report lists your foreign accounts and calculates the potential gain or loss for each account.
+
+
+														</p>
+													</td>							
+												</tr>
+												
+											</table>
+										</div>
+									</div>
+
+					        	</div>
+				        	</div>
+
+
+					    </div>
+					</div>
+				</div>
+			</div>
+			<!-- // Tabs END -->						
+		</div>
 
 	</div>
 </script>
@@ -35926,7 +36745,7 @@
   				<li><a href='#/customer_recurring'>Inventory Recurring List</a></li>    				 				  				 				
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/item_report_center'><span data-bind="text: lang.lang.report"></span></a></li>	  	
+	  	<li><a href='#/item_report_center'>REPORTS</a></li>	  	
 	  	<li><a href='#/item_setting' class='glyphicons settings'><i></i></a></li>	  	
 	</ul>	
 </script>
@@ -47225,6 +48044,15 @@
 		        		alert("Over deposit to apply!");
 		        		obj.set("deposit", 0);
 		        	}
+
+		        	//Status
+			        if(remaining==0){
+			    		obj.set("status", 1);
+			    	}else if(remaining==total){
+			    		obj.set("status", 0);
+			    	}else{
+			    		obj.set("status", 2);
+			    	}
 		        }
 
 		        //Warning over credit allowed
@@ -53768,6 +54596,15 @@
 		        		alert("Over deposit to apply!");
 		        		obj.set("deposit", 0);
 		        	}
+
+		        	//Status
+			        if(remaining==0){
+			    		obj.set("status", 1);
+			    	}else if(remaining==total){
+			    		obj.set("status", 0);
+			    	}else{
+			    		obj.set("status", 2);
+			    	}
 		        }
 
 		        //Warning over credit allowed
@@ -60657,7 +61494,7 @@
 
 						   	contact				: value.contact,
 						   	amount_paid 		: value.amount_paid,
-						   	reference 			: [{ "number" : value.number, "amount" : amount_due, "issued_date":value.issued_date }]				
+						   	reference 			: [{ "number" : value.number, "amount" : amount_due, "deposit" : value.deposit, "issued_date":value.issued_date }]				
 				    	});						
 					});
 					self.applyTerm();
@@ -60971,7 +61808,7 @@
 					reference_no 		: "",
 					segments 	 		: [],								
 					dr 	 				: 0,
-					cr 					: (value.amount + value.discount) + overAmount,				
+					cr 					: value.amount - value.discount,				
 					rate				: value.rate,
 					locale				: value.locale
 				});
@@ -61192,7 +62029,7 @@
 
 						   	contact				: value.contact,
 						   	amount_paid 		: value.amount_paid,
-						   	reference 			: [{ "number" : value.number, "amount" : amount_due, "issued_date":value.issued_date }]				
+						   	reference 			: [{ "number" : value.number, "amount" : amount_due, "deposit" : value.deposit, "issued_date":value.issued_date }]				
 				    	});						
 					});
 					self.applyTerm();
@@ -61479,7 +62316,7 @@
 					description 		: "",
 					reference_no 		: "",
 					segments 	 		: [],								
-					dr 	 				: (value.amount + value.discount) + overAmount,
+					dr 	 				: value.amount - value.discount,
 					cr 					: 0,				
 					rate				: value.rate,
 					locale				: value.locale
