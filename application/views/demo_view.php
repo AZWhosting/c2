@@ -8,7 +8,7 @@
 </script>
 <script type="text/x-kendo-template" id="menu-tmpl">
 	<div class="menu-hidden sidebar-hidden-phone menu-left hidden-print">
-		<div class="navbar main" id="main-menu">
+		<div class="navbar main navbar-fixed-top" id="main-menu">
 			<ul class="topnav">
 				<li><a href="#" data-bind="click: checkRole"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" style="height: 40px;"></a></li>
 			</ul>
@@ -69,25 +69,25 @@
 					<ul id="module-image">
 						<li style="text-align:center;">
 							<a href="#/customers ">
-								<img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+								<img title="Customers Module, In here, you can manage your customer information, revenues, collections, and other related transactions." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Customers</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/vendors">
-								<img title="Supplier Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+								<img title="Supplier Module, In here, you can manage your supplier information, and other related transactions." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Suppliers</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/inventories">
-								<img title="Inventories Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+								<img title="Inventories Module, In here, you can manage your inventory information, stock, item price, and other related transactions." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Products/Services</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/documents">
-								<img title="Add Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.png" alt="Attachment">
+								<img title="Attach Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.png" alt="Attachment">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Documents</span>
 						</li>
@@ -95,7 +95,7 @@
 					<ul id="module-image">						
 						<li style="text-align:center;">
 							<a href="#/accounting">
-								<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
+								<img title="Accounting Module, In this module, you can prepare your journal entry record, set your tax, create segment, and determine your financial reporting standards." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.accounting"></span></span>
 							</a>
 						</li>
@@ -106,17 +106,17 @@
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Reports</span>
 						</li>
 						<li style="text-align:center;">
+							<a href="#/sale_tax">
+								<img title="Sale Tax" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
+							</a>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax"></span></span>
+						</li>
+						<li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
 								<img title="Setting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.png" alt="Admin">
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings"></span></span>
 							</a>
-						</li>
-						<li style="text-align:center;">
-							<a href="#/sale_tax">
-								<img title="Sale Tax" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.png" alt="Tax">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax"></span></span>
-						</li>
+						</li>											
 					</ul>
 				</div>
 			</div>
@@ -1149,118 +1149,6 @@
 		</div>
 	</div>
 </script>
-<script id="txnItem" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">					
-			    
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
-					</div>
-
-			        <h2>TRANSACTION ITEM</h2>			    		   
-
-				    <br>					
-					
-			    	<div class="row-fluid">
-			    		<div class="span8 well">							
-							<div class="row-fluid">
-								<div class="span6" style="padding-left: 15px;">						
-									<!-- Group -->
-									<div class="control-group">
-										<label for="txtName">Item Name <span style="color:red">*</span></label>
-					              		<input id="txtName" name="txtName" class="k-textbox" data-bind="value: obj.name" 
-							              		placeholder="item name..." required data-required-msg="required"
-							              		style="width: 100%;" />
-									</div>
-									<!-- // Group END -->	
-								</div>								
-							
-								<div class="span6">
-									<!-- Group -->
-									<div class="control-group">								
-										<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
-							            <input id="ddlStatus" name="ddlStatus" 
-				              				data-role="dropdownlist"
-						            		data-text-field="name"
-			           						data-value-field="id"
-			           						data-value-primitive="true" 
-						            		data-bind="source: statusList, value: obj.status"
-						            		data-option-label="(--- Select ---)"
-						            		required data-required-msg="required" style="width: 100%;" />
-									</div>																		
-									<!-- // Group END -->										
-								</div>								
-							</div>
-							<div class="row-fluid">
-								<div class="span6" style="padding-left: 15px;">						
-									<!-- Group -->
-									<div class="control-group">
-										<label for="ddlAccount">Account <span style="color:red">*</span></label>
-							            <input id="ddlAccount" name="ddlAccount"
-							            	data-header-template="account-header-tmpl"
-							            	data-template="account-list-tmpl" 
-				              				data-role="dropdownlist"
-						            		data-text-field="name"
-			           						data-value-field="id"
-			           						data-value-primitive="true"			           								           						
-						            		data-bind="source: accountDS, value: obj.account_id"
-						            		data-option-label="Select Account..."
-						            		required data-required-msg="required" style="width: 100%;" />
-									</div>
-									<!-- // Group END -->	
-								</div>								
-							
-								<div class="span6">
-									<!-- Group -->
-									<div class="control-group">								
-										<label for="ddlCurrency">Currency <span style="color:red">*</span></label>
-							            <input id="ddlCurrency" name="ddlCurrency" 
-				              				data-role="dropdownlist"
-				              				data-template="currency-list-tmpl"
-						            		data-text-field="code"
-			           						data-value-field="locale"
-			           						data-value-primitive="true" 
-						            		data-bind="source: currencyDS, value: obj.locale"
-						            		data-option-label="Select Currency..."
-						            		required data-required-msg="required" style="width: 100%;" />
-									</div>																		
-									<!-- // Group END -->										
-								</div>								
-							</div>							
-						</div>
-						<div class="span4">
-							<div class="row-fluid">
-								<!-- Group -->
-								<div class="control-group" style="padding-right: 0;">								
-									<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
-						            <textarea id="txtDescription" name="txtDescription" class="k-textbox" 
-										data-bind="value: obj.description" style="height: 110px; width: 100%;"></textarea>
-								</div>																		
-								<!-- // Group END -->
-							</div>
-						</div>
-					</div>									
-
-					<br>											
-			
-					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-						<span id="notification"></span>
-
-						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>															 
-						<span class="btn btn-icon btn-default glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
-					</div>
-					
-
-				</div>
-			</div>
-		</div>
-	</div>
-</script>
 <script id="journal" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -1956,8 +1844,8 @@
 		            				<th>NAME</th>
 		            				<th>SYSTEM</th>
 		            				<th>AGENCY</th>
-		            				<th>END DATE</th>
-		            				<th>SUBMISSION DATE</th>	            				
+		            				<th style="text-align: center;">END DATE</th>
+		            				<th style="text-align: center;">SUBMISSION DATE</th>	            				
 		            				<th></th>
 		            			</tr>
 		            		</thead>
@@ -2051,8 +1939,8 @@
     	<td>#=tax_system#</td>
     	<td>#=agency#</td>
     	<td>#=kendo.toString(new Date(end_date), "dd-MM-yyyy")#</td>
-    	<td>#=kendo.toString(new Date(submission_date), "dd-MM-yyyy")#</td>
-    	<td>
+    	<td align="center">#=kendo.toString(new Date(submission_date), "dd-MM-yyyy")#</td>
+    	<td align="center">
     		<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
     		|
     		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
@@ -2529,16 +2417,13 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->
-								
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"                   
@@ -2558,45 +2443,8 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
-							        	</div>
-								        
-										<!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							        	</div>
-
-								        <div class="tab-pane" id="tab-3">
-								        	
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -2606,15 +2454,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->
-								       
+							        	</div>								       
 								    </div>
 								</div>
 							</div>
 						</div>
-						<!-- // Tabs END -->
-						
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -2764,16 +2609,13 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->
-								
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"                   
@@ -2793,45 +2635,8 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
-							        	</div>
-								        
-										<!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							        	</div>
-
-								        <div class="tab-pane" id="tab-3">
-								        	
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -2841,15 +2646,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->
-								       
+							        	</div>								       
 								    </div>
 								</div>
 							</div>
 						</div>
-						<!-- // Tabs END -->
-						
+						<!-- // Tabs END -->						
 					</div>
 			    	
 					<div class="block-title">
@@ -2980,7 +2782,7 @@
 					<br>
 					<br>
 					
-					<div class="row-fluid">	
+					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
@@ -2988,16 +2790,13 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->
-								
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"                   
@@ -3017,45 +2816,8 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
-							        	</div>
-								        
-										<!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Grouped By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							        	</div>
-
-								        <div class="tab-pane" id="tab-3">
-								        	
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -3065,15 +2827,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->
-								       
+							        	</div>								       
 								    </div>
 								</div>
 							</div>
 						</div>
-						<!-- // Tabs END -->
-						
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -3179,7 +2938,7 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							<div class="widget widget-tabs widget-tabs-gray report-tab" style="overflow: hidden;">
 							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
@@ -3195,7 +2954,7 @@
 								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									        	
 											<div class="row-fluid">								        		
-								            	<div class="span3">
+								            	<div class="span3" style="padding-bottom: 20px;">
 													<label for="ddlAR"><span ></span>Filtered by</label>
 													<input id="ddlAR" name="ddlAR"
 														   data-role="dropdownlist"
@@ -3519,7 +3278,7 @@
 					<br>
 					<br>
 					
-					<div class="row-fluid">	
+					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
@@ -3527,16 +3286,13 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->
-								
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"                   
@@ -3556,45 +3312,8 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
-							        	</div>
-								        
-										<!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Grouped By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							        	</div>
-
-								        <div class="tab-pane" id="tab-3">
-								        	
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -3604,8 +3323,7 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->								       
+							        	</div>								       
 								    </div>
 								</div>
 							</div>
@@ -5063,24 +4781,22 @@
 							onclick="javascript: window.history.back()"><i></i></span>
 					<br>
 					<br>
-					<div class="row-fluid">	
-					  	 <!-- Tabs -->
+					
+					<div class="row-fluid">
+					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
 							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->
-								
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"                   
@@ -5100,45 +4816,8 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
-							        	</div>
-								        
-										<!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Grouped By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							        	</div>
-
-								        <div class="tab-pane" id="tab-3">
-								        	
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -5148,15 +4827,15 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->
-								       
+							        	</div>								       
 								    </div>
 								</div>
 							</div>
 						</div>
-						<!-- // Tabs END -->				
+						<!-- // Tabs END -->						
 					</div>
+
+
 					<div class="block-title">
 						<h3>ABC Co., Ltd</h3>
 						<h2>Recurring Journal List</h2>
@@ -5203,16 +4882,13 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->
-								
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"                   
@@ -5232,45 +4908,8 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
-							        	</div>
-								        
-										<!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							        	</div>
-
-								        <div class="tab-pane" id="tab-3">
-								        	
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -5280,8 +4919,7 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->								       
+							        	</div>								       
 								    </div>
 								</div>
 							</div>
@@ -5864,6 +5502,387 @@
     		<span data-bind="click: deleteItem"><i class="icon-remove"></i> Delete</span>
     	</td>
    	</tr>
+</script>
+
+
+<script id="saleTaxReportCenter" type="text/x-kendo-template">
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<div class="row-fluid sale-report">
+				<h2>SALE TAX REPORTS</h2>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td width="50%">
+								<h3><a href="#/sale_journal">Sale Journal</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/purchase_journal">Purchase Journal</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td width="50%">
+								<p>
+									
+								</p>
+								
+							</td>
+							<td width="50%">
+								<p>
+									
+								</p>
+							</td>
+							
+						</tr>
+						
+					</table>
+				</div>
+			</div>
+
+		</div>
+		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
+			
+		</div>
+	</div>
+</script>
+<script id="saleJournal" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+					<div class="block-title">
+						<h3 data-bind="text: company.name"></h3>
+						<h2>សៀវភៅទិន្នានុប្បវត្តិលក់</h2>
+						<p>Sale Journal</p>
+						<p>ខែ កក្ដដា ឆ្នំា​  ២០១៦ For  July  2016</p>
+					</div>
+
+					<div class="row-fluid company-name">
+						<div class="span7" style="padding-left: 0; padding-right: 15px;">
+							<table>
+								<tr style="border-bottom: 1px solid #000;">
+									<td>
+										នាមករណ៍សហគ្រាសៈ
+										<br>
+										Company's name:
+									</td>
+									<td>
+										បញ្ចី
+										<br>
+										Banh Ji
+									</td>
+								</tr>
+															
+								<tr>
+									<td>
+										អាស័យដ្ឋាន:
+										<br/>
+										Address:
+									</td>
+									<td>#245 ផ្លូវ 182 ភូមិ  ៧ សង្កាត់ ទឹកល្អក់ទី ២ ខណ្ឌ ទួលគោក រាជធានីភ្នំពេញ</td>
+								</tr>
+							</table>
+						</div>
+						<div class="span5">
+							<table>
+								<tr style="border-bottom: 1px solid #000;">
+									<td>
+										លេខអត្តសញ្ញាណកម្មអតប:
+										<br>
+										Tax Identification No:
+									</td>
+									<td>
+										100100260	
+									</td>
+								</tr>
+								<tr>
+									<td>
+										អត្រាប្តូរប្រាក់មធ្យមៈ
+										<br>
+										Average Exchange Rate:
+									</td>
+									<td>
+										 4,090
+									</td>
+								</tr>								
+							</table>
+						</div>
+					</div>
+
+					<br>
+					<div class="row-fluid table-company">						
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th style="text-align:center !important" colspan="5">វិក័យប័ត្រ<br>Invoice</th>
+									<th style="text-align:center !important" colspan="7">ការផ្គត់ផ្គង់<br>Supplies</th>	
+									<th></th>	
+								</tr>
+								<tr>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">ថ្ងៃទី<br>Date</td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">លេខវិក័យប័ត្រ<br>Invoicen<sup>o</sup> <br></td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">អ្នកទិញ<br>Client</td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">លេខអតប<br>VAT Tin</td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">បរិយាយ<br>Description<br></td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">បរិមាណ<br>Qty<br></td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">ផ្គត់ផ្គង់មិនជាប់អាករ<br>Non-taxable sale<br></td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">ការនាំចេញ<br>Value of Exports<br></td>
+									<td style="text-align:center !important;vertical-align: top !important;" colspan="4">ការលក់ជាប់អាករ<br>Taxable sale</td>
+									<td style="text-align:center !important;vertical-align: top !important;" rowspan="3">សរុបតម្លៃលក់រួមទាំងអាករ<br>Total Taxable Value</td>
+									
+								</tr>
+								<tr>
+									<td colspan="2" style="text-align:center;">លក់អោយបុគ្គលជាប់អាករ<br>Sales to Taxable Persons</td>
+									<td colspan="2" style="text-align:center;">លក់អោយអ្នកប្រើប្រាស់<br>Sales to Customers</td>
+								</tr>
+								<tr>
+									<td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value</td>
+									<td style="text-align:center !important">អាករ<br>VAT<br></td>
+									<td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value</td>
+									<td style="text-align:center !important">អាករ<br>VAT</td>
+								</tr>
+								<tr>
+									<td style="text-align:center !important">S1</td>
+									<td style="text-align:center !important">S2</td>
+									<td style="text-align:center !important">S3</td>
+									<td style="text-align:center !important">S4</td>
+									<td style="text-align:center !important">S5</td>
+									<td style="text-align:center !important">S6</td>
+									<td style="text-align:center !important">S7</td>
+									<td style="text-align:center !important">S8</td>
+									<td style="text-align:center !important">S9</td>
+									<td style="text-align:center !important">S10</td>
+									<td style="text-align:center !important">S11</td>
+									<td style="text-align:center !important">S12</td>
+									<td style="text-align:center !important">S13=sum(S7:S12)</td>
+									
+								</tr>
+								</tbody><tbody class="sale_tax">
+									<tr class="none-padding">
+										<td><p style="padding:5px !important; padding-left:10px !important;" class="no">1</p></td>
+										<td><input type="text" name="s2[]" id="s2" class="form-control s2" value=""></td>
+										<td><input type="text" name="s3[]" id="s3" class="form-control s3" value="" ></td>
+										<td><input type="text" name="s4[]" id="s4" class="form-control s4" value=""></td>
+										<td><input type="text" name="s5[]" id="s5" class="form-control s5" value=""></td>
+										<td><input type="text" name="s6[]" id="s6" class="checknb form-control text-center s6" value=""></td>
+										<td><input type="text" name="s7[]" id="s7" class="checknb form-control text-right s7" value=""></td>
+										<td><input type="text" name="s8[]" id="s8" class="checknb form-control text-right s8" value="" style="width:100px;"></td>
+										<td><input type="text" name="s9[]" id="s9" class="checknb form-control text-right s9" value=""></td>
+										<td><input type="text" name="s10[]" id="s10" class="checknb form-control text-right s10" value=""></td>
+										<td><input type="text" name="s11[]" id="s11" class="checknb form-control text-right s11" value=""></td>
+										<td><input type="text" name="s12[]" id="s12" class="checknb form-control text-right s12" value=""></td>
+										<td><input type="text" name="s13[]" id="s13" class="form-control text-right s13" style="font-weight:bold;" value="" readonly=""></td>
+										
+									</tr>
+								</tbody>						
+								<tbody><tr>
+									<td style="text-align:right !important" colspan="7">សរុបលក់ជារៀល<br>Total Sale in KHR</td>
+									<td name="total_s7" id="total_s7" class="total_s7" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s8" id="total_s8" class="total_s8" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s9" id="total_s9" class="total_s9" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s10" id="total_s10" class="total_s10" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s11" id="total_s11" class="total_s11" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s12" id="total_s12" class="total_s12" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									
+								</tr>
+								<tr id="hide-border">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td style="text-align:center !important">Box12</td>
+									<td style="text-align:center !important">Box13</td>
+									<td style="text-align:center !important">Box14</td>
+									<td style="text-align:center !important">Box15</td>
+									<td style="text-align:center !important">Box14</td>
+									<td style="text-align:center !important">Box15</td>
+									<td></td>	
+								</tr>
+							</tbody>
+						</table>
+					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</script>
+<script id="purchaseJournal" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+					
+					<div class="block-title">
+						<h3 data-bind="text: company.name"></h3>
+						<h2>សៀវភៅទិន្នានុប្បវត្តិទិញ</h2>
+						<p>PURCHASE JOURNAL</p>
+						<p>ខែ កក្ដដា ឆ្នំា​  ២០១៦ For  July  2016</p>
+					</div>
+
+					<div class="row-fluid company-name">
+						<div class="span7" style="padding-left: 0; padding-right: 15px;">
+							<table>
+								<tr style="border-bottom: 1px solid #000;">
+									<td>
+										នាមករណ៍សហគ្រាសៈ
+										<br>
+										Company's name:
+									</td>
+									<td>
+										បញ្ចី
+										<br>
+										Banh Ji
+									</td>
+								</tr>
+															
+								<tr>
+									<td>
+										អាស័យដ្ឋាន:
+										<br/>
+										Address:
+									</td>
+									<td>#245 ផ្លូវ 182 ភូមិ  ៧ សង្កាត់ ទឹកល្អក់ទី ២ ខណ្ឌ ទួលគោក រាជធានីភ្នំពេញ</td>
+								</tr>
+							</table>
+						</div>
+						<div class="span5">
+							<table>
+								<tr style="border-bottom: 1px solid #000;">
+									<td>
+										លេខអត្តសញ្ញាណកម្មអតប:
+										<br>
+										Tax Identification No:
+									</td>
+									<td>
+										100100260	
+									</td>
+								</tr>
+								<tr>
+									<td>
+										អត្រាប្តូរប្រាក់មធ្យមៈ
+										<br>
+										Average Exchange Rate:
+									</td>
+									<td>
+										 4,090
+									</td>
+								</tr>								
+							</table>
+						</div>
+					</div>
+
+					<br>
+					<div class="row-fluid table-company">						
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+							        <td style="text-align:center !important" colspan="6">វិក័យប័ត្រ<br>Invoice    </td>
+							        <td style="text-align:center !important" colspan="6">ការផ្គត់ផ្គង់<br>Supplies    </td>
+							       
+							    </tr>
+							    <tr>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">ថ្ងៃទី<br>Date</td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">លេខវិក័យប័ត្រ<br>Invoice n<sup>o</sup></td>
+							        <td style="text-align:center !important;vertical-align: middle !important;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    rowspan="3">អ្នកទិញ<br>Client</td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">លេខ អ ត ប<br>VAT Tin    </td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">បរិយាយ<br>Description    </td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">បរិមាណ<br>Qty    </td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">ការទិញមិនជាប់អាករ<br>Non-taxable Purchase    </td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" colspan="4">ការទិញជាប់អាករ<br>Taxable Purchase    </td>
+							        <td style="text-align:center !important;vertical-align: middle !important;" rowspan="3">សរុបតម្លៃទិញរួមទាំងអាករ<br>Total Value Including VAT    </td>
+							        
+							    </tr>
+							    <tr>
+							        <td style="text-align:center !important" colspan="2">ការនាំចូល<br>Imports    </td>
+							        <td style="text-align:center !important" colspan="2">ការទិញក្នុងស្រុក<br>Local Purchases    </td>
+							    </tr>
+							    <tr>
+							        <td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value</td>
+							        <td style="text-align:center !important">អាករ<br>VAT    </td>
+							        <td style="text-align:center !important">តម្លៃជាប់អាករ<br>Taxable Value    </td>
+							        <td style="text-align:center !important">អាករ<br>VAT    </td>
+							    </tr>
+							   
+							    <tr>
+							        <td style="text-align:center !important">P1</td>
+							        <td style="text-align:center !important">P2</td>
+							        <td style="text-align:center !important">P3</td>
+							        <td style="text-align:center !important">P4</td>
+							        <td style="text-align:center !important">P5</td>
+							        <td style="text-align:center !important">P6</td>
+							        <td style="text-align:center !important">P7</td>
+							        <td style="text-align:center !important">P8</td>
+							        <td style="text-align:center !important">P9</td>
+							        <td style="text-align:center !important">P10</td>
+							        <td style="text-align:center !important">P11</td>
+							        <td style="text-align:center !important">P13=sum(P7:P11)</td>
+							       
+							    </tr>
+							</tbody>
+								<tbody class="sale_tax">
+									<tr class="none-padding">
+										<td><input type="text" name="s1[]" id="s1" class="form-control datetime s1" value="" ></td>
+										<td><input type="text" name="s2[]" id="s2" class="form-control s2" value=""></td>
+										<td><div class="select2-container form-control s3" id="s2id_s3"><a href="javascript:void(0)" class="select2-choice select2-default" tabindex="-1">   <span class="select2-chosen" id="select2-chosen-8"></span><abbr class="select2-search-choice-close"></abbr>   <span class="select2-arrow" role="presentation"><b role="presentation"></b></span></a><label for="s2id_autogen8" class="select2-offscreen"></label><input class="select2-focusser select2-offscreen" type="text" aria-haspopup="true" role="button" aria-labelledby="select2-chosen-8" id="s2id_autogen8"><div class="select2-drop select2-display-none select2-with-searchbox">   <div class="select2-search">       <label for="s2id_autogen8_search" class="select2-offscreen"></label>       <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" role="combobox" aria-expanded="true" aria-autocomplete="list" aria-owns="select2-results-8" id="s2id_autogen8_search" placeholder="">   </div>   <ul class="select2-results" role="listbox" id="select2-results-8">   </ul></div></div><select name="s3[]" id="s3" class="form-control s3" tabindex="-1" title="" style="display: none;"><option value=""></option><option value="1">Owner</option><option value="2">Owner</option><option value="398">WG company</option><option value="401">Coffe shop</option></select></td>
+										<td><input type="text" name="s4[]" id="s4" class="checknb form-control s4" value=""></td>
+										<td><input type="text" name="s5[]" id="s5" class="form-control s5" value=""></td>
+										<td><input type="text" name="s6[]" id="s6" class="checknb form-control text-center s6" value=""></td>
+										<td><input type="text" name="s7[]" id="s7" class="checknb form-control text-right s7" value=""></td>
+										<td><input type="text" name="s9[]" id="s9" class="checknb form-control text-right s9" value=""></td>
+										<td><input type="text" name="s10[]" id="s10" class="checknb form-control text-right s10" value=""></td>
+										<td><input type="text" name="s11[]" id="s11" class="checknb form-control text-right s11" value=""></td>
+										<td><input type="text" name="s12[]" id="s12" class="checknb form-control text-right s12" value=""></td>
+										<td><input type="text" name="s13[]" id="s13" class="form-control text-right s13" style="font-weight:bold;" value="" readonly=""></td>
+										
+									</tr>
+								</tbody>				
+								
+							    <tbody><tr>
+							        <td style="text-align:right !important" colspan="6">សរុបទិញជារៀល<br>Total Purchase in KHR</td>
+							        <td name="total_s7" id="total_s7" class="total_s7" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s9" id="total_s9" class="total_s9" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s10" id="total_s10" class="total_s10" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s11" id="total_s11" class="total_s11" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s12" id="total_s12" class="total_s12" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									<td name="total_s13" id="total_s13" class="total_s13" style="padding-right:15px; text-align:right; font-weight:bold;"></td>
+									
+							    </tr>
+							    <tr id="hide-border">
+							        <td></td>
+							        <td></td>
+							        <td></td>
+							        <td></td>
+							        <td></td>
+							        <td></td>
+							        <td>Box06</td>
+							        <td>Box09</td>
+							        <td>Box10</td>
+							        <td>Box07</td>
+							        <td>Box08</td>
+							       	<td>Box09</td>
+							    </tr>										
+							</tbody>
+						</table>					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
 </script>
 
 
@@ -8140,7 +8159,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" colspan="2">Top 5 Products</th>			                		                
+				                <th class="center" colspan="2">Top 5 Purchased Products</th>			                		                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -8359,7 +8378,7 @@
 														<tr>
 															<td>Currency:</td>
 															<td>										
-																<span data-bind="text: obj.locale"></span>
+																<span data-bind="text: currencyCode"></span>
 															</td>
 														</tr>
 													</table>
@@ -8519,11 +8538,15 @@
     	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
     	<td>#=type#</td>
         <td>
-        	#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
+        	#if(amount>0){#			
+				#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
 					<a href="\#/purchase/#=id#"><i></i> #=number#</a>						
+				#}else{#
+					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+				#}#
 			#}else{#
-				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
-			#}#        	
+				#=number#
+			#}#    	
         </td>
     	<td class="right">
     		#if(type=="GRN"){#
@@ -9463,12 +9486,12 @@
 				    					<span class="caret"></span>
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
-						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-						  				<li><a href='#/item_service'>Add New Services</a></li>
-						  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add Services</a></li>
+						  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+						  				 				
 						  			</ul>
 							  	</li>				
 							</ul>
@@ -9651,7 +9674,6 @@
 		</td>				
     </tr>   
 </script>
-
 <script id="grn" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -10013,12 +10035,12 @@
 			    					<span class="caret"></span>
 						  		</a>
 					  			<ul class="dropdown-menu addNewItem">  				  				
-					  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-					  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-					  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-					  				<li><a href='#/item_service'>Add New Services</a></li>
-					  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-					  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+					  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+					  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+					  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+					  				<li><a href='#/item_service'>Add Services</a></li>
+					  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+					  				 				
 					  			</ul>
 						  	</li>				
 						</ul>
@@ -10148,7 +10170,6 @@
 		</td>						
     </tr>   
 </script>
-
 <script id="vendorDeposit" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -10484,12 +10505,12 @@
 			    					<span class="caret"></span>
 						  		</a>
 					  			<ul class="dropdown-menu addNewItem">  				  				
-					  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-					  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-					  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-					  				<li><a href='#/item_service'>Add New Services</a></li>
-					  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-					  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+					  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+					  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+					  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+					  				<li><a href='#/item_service'>Add Services</a></li>
+					  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+					  				 				
 					  			</ul>
 						  	</li>				
 						</ul>
@@ -10606,7 +10627,6 @@
 		</td>			
     </tr>   
 </script>
-
 <script id="purchase" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -11092,12 +11112,12 @@
 							    					<span class="caret"></span>
 										  		</a>
 									  			<ul class="dropdown-menu addNewItem">  				  				
-									  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-									  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-									  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-									  				<li><a href='#/item_service'>Add New Services</a></li>
-									  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-									  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+									  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+									  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+									  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+									  				<li><a href='#/item_service'>Add Services</a></li>
+									  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+									  				 				
 									  			</ul>
 										  	</li>				
 										</ul>
@@ -11156,12 +11176,12 @@
 						    					<span class="caret"></span>
 									  		</a>
 								  			<ul class="dropdown-menu addNewItem">  				  				
-								  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-								  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-								  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-								  				<li><a href='#/item_service'>Add New Services</a></li>
-								  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-								  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+								  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+								  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+								  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+								  				<li><a href='#/item_service'>Add Services</a></li>
+								  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+								  				 				
 								  			</ul>
 									  	</li>				
 									</ul>
@@ -11844,12 +11864,12 @@
 				    					<span class="caret"></span>
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
-						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-						  				<li><a href='#/item_service'>Add New Services</a></li>
-						  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add Services</a></li>
+						  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+						  				 				
 						  			</ul>
 							  	</li>				
 							</ul>
@@ -12647,67 +12667,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: purchaseSummary.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: purchaseSummary.filterDB, events: {change: purchaseSummary.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: purchaseSummary.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -12717,11 +12709,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -12796,67 +12789,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: supplierTransaction.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: supplierTransaction.filterDB, events: {change: supplierTransaction.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: supplierTransaction.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -12866,11 +12831,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -12974,67 +12940,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: purchaseDetail.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: purchaseDetail.filterDB, events: {change: purchaseDetail.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: purchaseDetail.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -13044,11 +12982,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -13141,67 +13080,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: depositDetail.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: depositDetail.filterDB, events: {change: depositDetail.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: depositDetail.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -13211,11 +13122,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -13310,67 +13222,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: summaryProduct.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: summaryProduct.filterDB, events: {change: summaryProduct.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: summaryProduct.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -13380,11 +13264,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -13473,67 +13358,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: purchaseOrder.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: purchaseOrder.filterDB, events: {change: purchaseOrder.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: purchaseOrder.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -13543,11 +13400,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -13639,67 +13497,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: detailProduct.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: detailProduct.filterDB, events: {change: detailProduct.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: detailProduct.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -13709,11 +13539,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -13826,67 +13657,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: supplierBalance.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: supplierBalance.filterDB, events: {change: supplierBalance.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: supplierBalance.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -13896,11 +13699,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -13973,67 +13777,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: balanceDetailSupplier.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: balanceDetailSupplier.filterDB, events: {change: balanceDetailSupplier.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: balanceDetailSupplier.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -14043,11 +13819,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -14147,67 +13924,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: balanceDetailSupplier.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: balanceDetailSupplier.filterDB, events: {change: balanceDetailSupplier.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: balanceDetailSupplier.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -14217,11 +13966,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -14312,67 +14062,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: payablesAgingDetail.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: payablesAgingDetail.filterDB, events: {change: payablesAgingDetail.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: payablesAgingDetail.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -14382,11 +14104,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -14489,67 +14212,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: listBillsPaid.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: listBillsPaid.filterDB, events: {change: listBillsPaid.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: listBillsPaid.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -14559,11 +14254,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -14664,67 +14360,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: billPaymentList.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: billPaymentList.filterDB, events: {change: billPaymentList.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: billPaymentList.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -14734,11 +14402,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -14843,16 +14512,13 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->
-								
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"                   
@@ -14872,45 +14538,8 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
-							        	</div>
-								        
-										<!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							        	</div>
-
-								        <div class="tab-pane" id="tab-3">
-								        	
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -14920,8 +14549,7 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->								       
+							        	</div>								       
 								    </div>
 								</div>
 							</div>
@@ -15397,7 +15025,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>				           
 				            <tr>
-				                <th class="center" colspan="2">Top 5 Products</th>				                			                
+				                <th class="center" colspan="2">Top 5 Best Selling Products</th>				                			                
 				            </tr>					        
 				        </thead>
 				        <tbody data-role="listview"
@@ -15631,7 +15259,7 @@
 														<tr>
 															<td>Currency:</td>
 															<td>										
-																<span data-bind="text: obj.locale"></span>
+																<span data-bind="text: currencyCode"></span>
 															</td>
 														</tr>
 													</table>
@@ -16728,12 +16356,12 @@
 				    					<span class="caret"></span>
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
-						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-						  				<li><a href='#/item_service'>Add New Services</a></li>
-						  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add Services</a></li>
+						  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+						  				 				
 						  			</ul>
 							  	</li>				
 							</ul>
@@ -17321,12 +16949,12 @@
 				    					<span class="caret"></span>
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
-						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-						  				<li><a href='#/item_service'>Add New Services</a></li>
-						  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add Services</a></li>
+						  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+						  				 				
 						  			</ul>
 							  	</li>				
 							</ul>
@@ -17883,12 +17511,12 @@
 				    					<span class="caret"></span>
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
-						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-						  				<li><a href='#/item_service'>Add New Services</a></li>
-						  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add Services</a></li>
+						  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+						  				 				
 						  			</ul>
 							  	</li>				
 							</ul>
@@ -18437,12 +18065,12 @@
 				    					<span class="caret"></span>
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
-						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-						  				<li><a href='#/item_service'>Add New Services</a></li>
-						  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add Services</a></li>
+						  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+						  				 				
 						  			</ul>
 							  	</li>				
 							</ul>
@@ -19064,12 +18692,12 @@
 				    					<span class="caret"></span>
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
-						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-						  				<li><a href='#/item_service'>Add New Services</a></li>
-						  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add Services</a></li>
+						  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+						  				 				
 						  			</ul>
 							  	</li>				
 							</ul>
@@ -19646,12 +19274,12 @@
 				    					<span class="caret"></span>
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
-						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-						  				<li><a href='#/item_service'>Add New Services</a></li>
-						  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add Services</a></li>
+						  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+						  				 				
 						  			</ul>
 							  	</li>				
 							</ul>
@@ -20027,12 +19655,12 @@
 				    					<span class="caret"></span>
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
-						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-						  				<li><a href='#/item_service'>Add New Services</a></li>
-						  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add Services</a></li>
+						  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+						  				 				
 						  			</ul>
 							  	</li>				
 							</ul>
@@ -20474,13 +20102,13 @@
 			            </select>
 					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i> Add Type</button>
 					</div>
-	            	<table class="table table-bordered table-white">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th>Type</th>
-	            				<th>Abbr</th>
-	            				<th>Is Company</th>
-	            				<th></th>
+	            				<th class="center">Type</th>
+	            				<th class="center">Abbr</th>
+	            				<th class="center">Is Company</th>
+	            				<th class="center"></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"
@@ -20498,11 +20126,11 @@
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i> Add Method</button>
 					</div>
-	            	<table class="table table-bordered table-white">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th>Name</th>
-	            				<th></th>
+	            				<th class="center">Name</th>
+	            				<th class="center"></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -20522,14 +20150,14 @@
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i> Add Term</button>
 					</div>
-	            	<table class="table table-bordered table-white">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th>Name</th>
-	            				<th>Net Due</th>
-	            				<th>Dis. Period</th>
-	            				<th>Dis. %</th>
-	            				<th></th>
+	            				<th class="center">Name</th>
+	            				<th class="center">Net Due</th>
+	            				<th class="center">Dis. Period</th>
+	            				<th class="center">Dis. %</th>
+	            				<th class="center"></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
@@ -21153,70 +20781,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: saleSummary.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: saleSummary.filterDB, events: {change: saleSummary.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: saleSummary.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -21226,12 +20827,14 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
+
 					<div class="block-title">
 						<h3 data-bind="text: company.name"></h3>
 						<h2>Sale Summary by Customer</h2>
@@ -21287,70 +20890,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: customerTransaction.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: customerTransaction.filterDB, events: {change: customerTransaction.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: detailSummary.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -21360,11 +20936,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -21462,70 +21039,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: detailSummary.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: detailSummary.filterDB, events: {change: detailSummary.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: detailSummary.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -21535,11 +21085,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -21643,70 +21194,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: summaryProductSale.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: summaryProductSale.filterDB, events: {change: summaryProductSale.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: summaryProductSale.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -21716,11 +21240,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -21803,70 +21328,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: depositDetail.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: depositDetail.filterDB, events: {change: depositDetail.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: depositDetail.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -21876,11 +21374,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -21972,70 +21471,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: detailCustomerSale.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: detailCustomerSale.filterDB, events: {change: detailCustomerSale.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: detailCustomerSale.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -22045,11 +21517,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -22159,70 +21632,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: summaryBalance.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: summaryBalance.filterDB, events: {change: summaryBalance.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: summaryBalance.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -22232,12 +21678,13 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
-					</div>	
+						<!-- // Tabs END -->						
+					</div>
 
 					<div class="block-title">
 						<h3 data-bind="text: company.name"></h3>
@@ -22305,70 +21752,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: saleDetail.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: saleDetail.filterDB, events: {change: saleDetail.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: saleDetail.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -22378,11 +21798,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -22478,70 +21899,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: receivableAging.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: receivableAging.filterDB, events: {change: receivableAging.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: receivableAging.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -22551,11 +21945,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -22636,70 +22031,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: receivableDetail.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: receivableDetail.filterDB, events: {change: receivableDetail.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: receivableDetail.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -22709,11 +22077,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -22814,70 +22183,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: listInvoice.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: listInvoice.filterDB, events: {change: listInvoice.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: listInvoice.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -22887,11 +22229,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -22989,70 +22332,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: collectReportDB.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: collectReportDB.filterDB, events: {change: collectReportDB.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: collectReportDB.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -23062,11 +22378,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -23167,70 +22484,43 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
+					
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: invoiceListDB.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: invoiceListDB.filterDB, events: {change: invoiceListDB.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: invoiceListDB.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -23240,11 +22530,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -23700,67 +22991,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: saleOrderDB.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: saleOrderDB.filterDB, events: {change: saleOrderDB.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: saleOrderDB.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -23770,11 +23033,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -25351,7 +24615,7 @@
         	<table class="span12">
         		<tr>
         			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="150"><b>SALE ORDER #</b></td>
-        			<td width="100"><b></b></td>
+        			<td width="100"><b data-bind="text: obj.reference_no"></b></td>
         			<td width="150" style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>INVOICE #</b></td>
         			<td><b></b></td>
         		</tr>
@@ -26912,78 +26176,106 @@
 <script id="invoiceForm26" type="text/x-kendo-template">
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
-        	<div class="span7">
-        		<div class="logo" style="width: 40%">
-	            	<img style="width: " data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
-	            </div>
-        	</div>
-        	<div class="span5">
-        		<div class="span12" style="margin-bottom: 10px;">
-        			<img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" />
-        		</div>
-        		<div class="span12">
-        			<table class="span12">
-        				<tr>
-        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Date</td>
-        					<td data-bind="text: obj.issued_date"></td>
-        				</tr>
-        				<tr>
-        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Receipt No.</td>
-        					<td data-bind="text: obj.number"></td>
-        				</tr>
-        			</table>
-        		</div>
-        	</div>
-        	<div class="span12" style="margin-top: 10px;">
-		    	<div class="span6" style="">
-		    		<table class="span12">
-						<tr>
-							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Recieve From</td>
-							<td data-bind="text: obj.issued_date"></td>
-						</tr>
-						<tr>
-							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Contact Address</td>
-							<td data-bind="text: obj.number"></td>
-						</tr>
-						<tr>
-							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Purpose</td>
-							<td data-bind="text: obj.number"></td>
-						</tr>
-					</table>
-		    	</div>
-		    	<div class="span5" style="float:right">
-		    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
-		    		<div class="span12 main-color order-price">
-		    			<p><span style="color:#fff;text-align: center;" >USD 2,700.00</span></p>
-		    		</div>
-		    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
-		    	</div>
-		    </div>
-        	<div class="span12" style="margin-top: 5px">
-        		<div class="span5">
-        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Reference Document</p>
-        			<table class="span12">
-						<tr>
-							<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
-							<td data-bind="text: obj.issued_date"></td>
-						</tr>
-						<tr>
-							<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
-							<td data-bind="text: obj.number"></td>
-						</tr>
-						<tr>
-							<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
-							<td data-bind="text: obj.number"></td>
-						</tr>
-					</table>
-        		</div>
-        		<div class="span6" style="float:right">
+        	<table class="span12 left-tbl">
+        		<tr>
+        			<td colspan="4" rowspan="2" data-bind="style: {backgroundColor: obj.color}" style="text-align:center;padding-left:0;" class="main-color">
+        			ប័ណ្ណកែតម្រូវបរិមាណសន្និធិ<br>Material Adjustment Note
+        			</td>
+        			<td colspan="2">កាលបរិច្ឆេត Date</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td colspan="2">លេខ MA No</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td colspan="2" width="100">
+        				គម្រោង Project
+        			</td>
+        			<td colspan="2" width="100">
 
-        		</div>
-        	</div>
+        			</td>
+        			<td colspan="2">
+        				ផល្ូវ Street #
+        			</td>
+        			<td width="120">
+
+        			</td>
+        		</tr>
+        		<tr>
+        			<td colspan="2">
+        				ល្វែង Bloc #
+        			</td>
+        			<td colspan="2">
+
+        			</td>
+        			<td colspan="2">
+        				អគារ House #
+        			</td>
+        			<td>
+
+        			</td>
+        		</tr>
+        		<tr>
+        			<td colspan="2">
+        				មេការ
+        			</td>
+        			<td colspan="2">
+
+        			</td>
+        			<td colspan="2">
+        				មេជាង
+        			</td>
+        			<td>
+
+        			</td>
+        		</tr>
+        		<tr class="center-tbl" style="background: #c6d9f1;">
+        			<td>
+        				ល.រ<br>No
+        			</td>
+        			<td colspan="2">
+        				ប្រភេទសន្និធិ ឬ​សម្ភារៈ<br>Item Description
+        			</td>
+        			<td>
+        				លេខកូដ<br>Sku
+        			</td>
+        			<td>
+        				ខ្នាត<br>UM
+        			</td>
+        			<td>
+        				ចំនួន Qty
+        			</td>
+        			<td>
+        				ផ្សេងៗ Remark
+        			</td>
+        		</tr>
+        		<tr><td>&nbsp;</td><td colspan="2"></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td colspan="2"></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td colspan="2"></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td colspan="2"></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td colspan="2"></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td colspan="2"></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td colspan="7"></td></tr>
+        		<tr>
+        			<td colspan="2" width="100">
+        				អ្នករៀបចំ<br>Prepared By
+        			</td>
+        			<td colspan="2" width="100">
+
+        			</td>
+        			<td colspan="2">
+        				អ្នកយល់ព្រម<br>Approved By
+        			</td>
+        			<td width="120">
+
+        			</td>
+        		</tr>
+        	</table>
         </div>
     </div>
 </script>
+
 
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
 	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
@@ -27082,7 +26374,6 @@
 		<td style="text-align: right; padding-right: 5px;"></td>
 	</tr>
 </script>
-
 
 
 
@@ -27984,7 +27275,7 @@
 					style="width: 100%; margin-bottom: 0;" />		
 		</td>					
 		<td data-bind="visible: showName">
-			<input data-role="combobox"                   
+			<input data-role="combobox" id="showName"                  
                    data-value-primitive="true"
                    data-template="contact-list-tmpl"
                    data-text-field="name"
@@ -27995,7 +27286,7 @@
                    style="width: 100%" />
 		</td>		
 		<td data-bind="visible: showSegment">
-			<select data-role="multiselect"
+			<select data-role="multiselect" id="showSegment"
 				   data-value-primitive="true"				   
 				   data-item-template="segment-list-tmpl"				    
 				   data-value-field="id" 
@@ -28709,7 +28000,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2>Documents</h2>
+			        <h2>Attach Documents</h2>
 
 				    <br>
 						
@@ -29043,9 +28334,9 @@
 	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 	                 }'                 
 	                 data-series="[
-	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
-	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
-	                             ]"	                             
+	                                { field: 'purchase', name: 'Monthly Purchase', categoryField:'month', color: '#236DA4' },
+	                                { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#A6C9E3' }
+	                            ]"	                             
 	                 data-bind="source: graphDS"
 	                 style="height: 250px;" ></div>            
             </div>
@@ -29191,15 +28482,15 @@
 															</td>
 														</tr>
 														<tr>
-															<td>VOM:</td>
+															<td>UOM:</td>
 															<td>
-																<span data-bind="text: obj.on_hand"></span>
+																<span data-bind="text: uom"></span>
 															</td>
 														</tr>
 														<tr>
 															<td>Currency:</td>
 															<td>										
-																<span data-bind="text: obj.locale"></span>
+																<span data-bind="text: currencyCode"></span>
 															</td>
 														</tr>
 													</table>
@@ -29214,13 +28505,15 @@
 							             <!-- Attach Tab content -->
 								        <div class="tab-pane" id="tab3-3">							            	
 								            
+								            <p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
+							            
 								            <input id="files" name="files"
-							                   type="file"
-							                   data-role="upload"
-							                   data-show-file-list="false"
-							                   data-bind="events: { 
-					                   				select: onSelect
-							                   }">
+								                   type="file"
+								                   data-role="upload"
+								                   data-show-file-list="false"
+								                   data-bind="events: { 
+						                   				select: onSelect
+								                   }">
 
 								            <table class="table table-bordered">
 										        <thead>
@@ -29236,6 +28529,8 @@
 										        		data-auto-bind="false"
 										        		data-bind="source: attachmentDS"></tbody>			        
 										    </table>
+
+										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile"><i></i> Save</span>
 
 								        </div>
 								        <!-- // Attach Tab content END -->						            
@@ -29277,7 +28572,7 @@
 								<div class="span6">
 									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadPO">
 										<span class="glyphicons adjust_alt"><i></i></span>
-										<span class="txt"><span data-bind="text: categoryDS.total()"></span>Categories</span>
+										<span class="txt"><span data-bind="text: itemType" style="font-size: small;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -29357,8 +28652,16 @@
 			<a href="\#/#=invoice[0].type.toLowerCase()#/#=id#"><i></i> #=invoice[0].number#</a>
         </td>
     	<td>#=kendo.toString(quantity, "n0")#</td>
-    	<td>#=kendo.toString(cost, "c", "locale")#</td>
-    	<td>#=kendo.toString(price, "c", "locale")#</td>  	
+    	<td>
+    		#if(cost>0){#
+    			#=kendo.toString(cost, "c", locale)#
+    		#}#
+    	</td>
+    	<td>
+    		#if(price>0){#
+    			#=kendo.toString(price, "c", locale)#
+    		#}#
+    	</td>
     </tr>
 </script>
 
@@ -29437,7 +28740,7 @@
 					              							events:{change: checkExistingNumber}" 
 					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
-					              				style="width: 128px;" />
+					              				style="width: 127px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
@@ -29881,7 +29184,7 @@
 			        <br>
 
 			        <!-- Upper Part -->
-					<div class="row-fluid">
+					<div class="row">
 						<div class="span6">
 							<div class="box-generic well" style="height: 190px;">				
 								<div class="row">
@@ -30179,12 +29482,12 @@
 				    					<span class="caret"></span>
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
-						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-						  				<li><a href='#/item_service'>Add New Services</a></li>
-						  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add Services</a></li>
+						  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+						  				 				
 						  			</ul>
 							  	</li>				
 							</ul>
@@ -30701,10 +30004,9 @@
 			<div class="container-960">					
 				<div id="example" class="k-content">					
 			    
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
-					</div>
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
 
 			        <h2>OTHER INVENTORY</h2>			    		   
 
@@ -31427,6 +30729,158 @@
 		</div>
 	</div>
 </script>
+<script id="txnItem" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">					
+			    
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+			        <h2>TRANSACTION ITEM</h2>			    		   
+
+				    <br>					
+					
+			    	<div class="row-fluid">
+			    		<div class="span6 well">							
+							<div class="row">
+								<div class="span6" >						
+									<!-- Group -->
+									<div class="control-group">
+										<label for="txtName">Name <span style="color:red">*</span></label>
+					              		<input id="txtName" name="txtName" 
+					              				class="k-textbox" 
+					              				data-bind="value: obj.name,
+					              							events:{change:checkExistingName}" 
+							              		placeholder="Item name..." 
+							              		required data-required-msg="required" style="width: 100%;" />
+									</div>
+									<!-- // Group END -->	
+								</div>								
+							
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
+							            <input id="ddlStatus" name="ddlStatus" 
+				              				data-role="dropdownlist"
+						            		data-text-field="name"
+			           						data-value-field="id"
+			           						data-value-primitive="true" 
+						            		data-bind="source: statusList, value: obj.status"
+						            		data-option-label="(--- Select ---)"
+						            		required data-required-msg="required" style="width: 100%;" />
+									</div>																		
+									<!-- // Group END -->										
+								</div>								
+							</div>
+							<div class="row">
+								<div class="span6" style="padding-left: 15px;">						
+									<!-- Group -->
+									<div class="control-group">
+										<label for="ddlAccount">Account <span style="color:red">*</span></label>
+							            <input id="ddlAccount" name="ddlAccount"
+							            	data-header-template="account-header-tmpl"
+							            	data-template="account-list-tmpl" 
+				              				data-role="dropdownlist"
+						            		data-text-field="name"
+			           						data-value-field="id"
+			           						data-value-primitive="true"			           								           						
+						            		data-bind="source: accountDS, value: obj.account_id"
+						            		data-option-label="Select Account..."
+						            		required data-required-msg="required" style="width: 100%;" />
+									</div>
+									<!-- // Group END -->	
+								</div>								
+							
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="ddlCurrency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>							            
+							            <input id="ddlCurrency" name="ddlCurrency"							            	 
+				              				data-role="dropdownlist"
+				              				data-option-label="(--- Select ---)"
+				              				data-template="currency-list-tmpl"
+				              				data-value-primitive="true"
+						            		data-text-field="code"
+			           						data-value-field="locale"			           						 
+						            		data-bind="source: currencyDS, value: obj.locale"						            		
+						            		required data-required-msg="required" style="width: 100%;" />						            		
+									</div>																		
+									<!-- // Group END -->										
+								</div>								
+							</div>							
+						</div>
+						<div class="span6">
+							<div class="row">
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtPurchaseDescription">Purchase Description</label>
+							            <textarea id="txtPurchaseDescription" class="k-textbox" 
+											data-bind="value: obj.purchase_description" style="resize:none; width: 100%;height:110px;"></textarea>
+									</div>																		
+									<!-- // Group END -->
+								</div>
+								<div class="span6" style="padding-left: 0; padding-right: 0;">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtSaleDescription">Sale Description</label>
+							            <textarea id="txtSaleDescription" class="k-textbox" 
+											data-bind="value: obj.sale_description" style="resize:none; width: 100%;height:110px;"></textarea>
+									</div>																		
+									<!-- // Group END -->
+								</div>
+							</div>
+						</div>
+					</div>									
+
+					<br>											
+			
+					<!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+
+						<!-- Delete Confirmation -->
+						<div data-role="window"
+			                 data-title="Delete Confirmation"
+			                 data-width="350"
+			                 data-height="200"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'40%',left:'35%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: showConfirm"
+			                 style="text-align:center;">
+			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+			            </div>
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 
 
 <script id="itemPrice" type="text/x-kendo-template">
@@ -31637,182 +31091,6 @@
     	<td>#=kendo.toString(cost, "c", "locale")#</td>
     	<td>#=kendo.toString(price, "c", "locale")#</td>  	
     </tr>
-</script>
-<script id="itemRecord" type="text/x-kendo-template">
-	<div class="container-960">
-		<div id="example" class="k-content">
-			
-			<!-- Collapsible Widget -->			
-			<div class="widget">
-			    <div class="widget-head">
-			    	<span class="btn btn-primary pull-right" 
-							onclick="javascript:window.history.back()">X</span>
-			        
-			        <h4 class="heading glyphicons retweet_2"><i></i> Item Record</h4>							        	
-			    </div>
-			    <div class="widget-body">
-
-			    	<div class="widget widget-heading-simple widget-body-white">
-					    <div class="widget-body">
-					        <div class="innerL">
-
-					            <div class="separator bottom"></div>
-					            <div class="glyphicons glyphicon-large cargo">
-				                	<i></i>
-				                	<h4 data-bind="text: item.name"></h4>
-
-					                Code៖ <span data-bind="text: item.number"></span> <br>
-					                Description៖​ <span data-bind="text: item.description"></span> <br>
-					                Quantity៖ <span data-bind="text: item.description"></span> <br>					                
-					                Weighted Average Cost៖ <span data-bind="text: item.cost"></span>
-					                 
-					            </div>
-
-					        </div>
-					    </div>
-					</div>			
-							
-					<table class="table table-borderless table-condensed cart_total">						
-						<tr>
-							<td>Date <span style="color:red">*</span></td>
-							<td>
-								<input id="issuedDate" name="issuedDate"
-									data-role="datepicker"
-									data-format="dd-MM-yyyy"									
-				                    data-bind="value: obj.issued_date"
-				                   style="width: 100%"
-				                   required data-required-msg="required">
-							</td>
-						</tr>
-						<tr>
-							<td>Reference</td>
-							<td>
-								<input data-role="combobox"
-									   placeholder="Select Reference..."			                   
-					                   data-value-primitive="true"
-					                   data-text-field="number"
-					                   data-value-field="id"
-					                   data-bind="value: obj.reference_id,
-					                              source: invoiceDS"					                   
-					                   style="width: 100%" />
-							</td>
-						</tr>											
-						<tr>
-							<td>Supplier</td>
-							<td>
-								<input data-role="combobox"
-									   placeholder="Select Supplier..."			                   
-					                   data-value-primitive="true"
-					                   data-text-field="company"
-					                   data-value-field="id"
-					                   data-bind="value: obj.contact_id,
-					                              source: contactDS"					                   
-					                   style="width: 100%" />
-							</td>
-						</tr>
-						<tr>
-							<td>Item <span style="color:red">*</span></td>
-							<td>
-								<input id="cbbItem" name="cbbItem" 
-									   data-role="combobox"
-									   placeholder="Select Item..."			                   
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: obj.item_id,
-					                              source: itemDS,
-					                              events:{change: itemChanges}"					                   
-					                   style="width: 100%" 
-					                   required data-required-msg="required" />
-							</td>
-						</tr>																	
-						<tr>
-							<td>Quantity <span style="color:red">*</span></td>
-							<td>
-								<input id="txtUnit" name="txtUnit"
-								   data-role="numerictextbox"				                                      
-				                   data-bind="value: obj.unit"
-				                   required data-required-msg="required"
-				                   style="width: 100%" />
-							</td>
-						</tr>											
-						<tr>
-							<td>Measurement <span style="color:red">*</span></td>
-							<td>
-								<input id="ddlUnit" name="ddlUnit" 
-									   data-role="dropdownlist"
-									   data-option-label="(--- Select ---)"			                   
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: obj.measurement_id,
-					                              source: measurementDS"					                   
-					                   required data-required-msg="required"
-					                   style="width: 100%" />
-							</td>
-						</tr>											
-						<tr>
-							<td>Price <span style="color:red">*</span></td>
-							<td>
-								<input id="txtPrice" name="txtPrice"
-								   data-role="numerictextbox"				                                      
-				                   data-bind="value: obj.price"
-				                   required data-required-msg="required"
-				                   style="width: 100%" />
-							</td>
-						</tr>
-						<tr>
-							<td>Cash <span style="color:red">*</span></td>
-							<td>
-								<input id="txtAmount" name="txtAmount"
-								   data-role="numerictextbox"				                                      
-				                   data-bind="value: obj.amount"
-				                   required data-required-msg="required"
-				                   style="width: 100%" />
-							</td>
-						</tr>
-						<tr>
-							<td>Currency <span style="color:red">*</span></td>
-							<td>
-								<input id="ddlCurrency" name="ddlCurrency" 
-									   data-role="dropdownlist"
-									   data-option-label="(--- Select ---)"			                   
-					                   data-value-primitive="true"
-					                   data-text-field="code"
-					                   data-value-field="id"
-					                   data-bind="value: obj.currency_id,
-					                              source: currencyDS"					                   
-					                   style="width: 100%" 
-					                   required data-required-msg="required" />
-							</td>							
-						</tr>
-						<tr>
-							<td>Memo</td>
-							<td>
-								<textarea id="txtDescription" cols="0" rows="2" class="k-textbox" 
-										data-bind="value: obj.memo" style="width: 100%;"></textarea>
-							</td>							
-						</tr>												
-					</table>
-
-					<br>											
-							
-					<!-- Form actions -->
-					<div align="center">
-						<span id="notification"></span>
-
-						<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i>Save</span>
-						<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i>Delete</span>
-						<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i>Cancel</span>
-					</div>
-					<!-- // Form actions END -->
-
-				</div> <!-- End Widget-Body List -->
-			</div>
-			<!-- // Collapsible Widget END -->				
-					
-		</div>
-	</div>
 </script>
 <script id="itemAdjustment" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -32044,13 +31322,7 @@
 
 						<div class="row">
 							<div class="span3">
-								<input data-role="dropdownlist"
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: obj.transaction_template_id,
-					                              source: txnTemplateDS"
-					                   data-option-label="Select Template..." />
+								
 							</div>
 							<div class="span9" align="right">
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
@@ -32242,7 +31514,7 @@
 					</div>
 					
 					<div class="row-fluid">
-						<h4>To:</h4>
+						<p>To:
 
 						<input id="cbbItem" name="cbbItem"
 							   data-role="combobox"                   
@@ -32256,8 +31528,8 @@
 			                   data-bind="value: obj.item_id,
 			                              source: itemDS"
 			                   placeholder="Select Item..."					                                      
-			                   required data-required-msg="required" style="width: 100%" />									
-
+			                   required data-required-msg="required" style="width: 95%; margin-left: 20px; display: inline-block;" />									
+			            </p>
 						<h4>From:</h4>
 					</div>
 
@@ -32293,12 +31565,12 @@
 				    					<span class="caret"></span>
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
-						  				<li><a href='#/item'>Add New Inventory for Sale</a></li>
-						  				<li><a href='#/non_inventory_part'>Add New Other Inventory</a></li>
-						  				<li><a href='#/fixed_asset'>Add New Fixed Assets</a></li>
-						  				<li><a href='#/item_service'>Add New Services</a></li>
-						  				<li><a href='#/txn_item'>Add New Transaction Item</a></li>  				
-						  				<li><a href='#/other_charge'>Add New Other Charge</a></li> 				
+						  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+						  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+						  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+						  				<li><a href='#/item_service'>Add Services</a></li>
+						  				<li><a href='#/txn_item'>Add Transaction Item</a></li>  				
+						  				 				
 						  			</ul>
 							  	</li>				
 							</ul>
@@ -32421,7 +31693,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2>GENERAL Inventory SETTING</h2>
+	<h2>GENERAL PRODUCTS/ SERVICES SETTING</h2>
 
 	<br>
 
@@ -32449,9 +31721,8 @@
 	            <!-- Tab Category content -->
 	            <div class="tab-pane active" id="tab1-1">	            	
 		            <div class="input-append">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: category_code">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New..." data-bind="value: category_name">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: category_abbr">					    
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Category Name..." data-bind="value: category_name">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Category Abbr..." data-bind="value: category_abbr">					    
 					    <input class="span2" id="appendedInputButtons"
 					    	   data-role="dropdownlist"					    	   
 			                   data-value-primitive="true"
@@ -32465,16 +31736,14 @@
 		            
 	            	<table class="table table-bordered table-white">
 	            		<thead>
-	            			<tr>	            				            				
-	            				<th>CODE</th>	
+	            			<tr>	
 	            				<th>NAME</th>	
 	            				<th>ABBR</th>
 	            				<th>TYPE</th>	            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"	            				
+	            		<tbody data-role="listview"	            				
 		            			data-edit-template="itemSetting-edit-category-template"
 				                data-template="itemSetting-category-template"
 				                data-bind="source: categoryDS"></tbody>
@@ -32485,7 +31754,7 @@
 	            <!-- Tab Item Group content -->
 	            <div class="tab-pane" id="tab2-1">
 		            <div class="input-append">
-		            	<input id="appendedInputButtons" class="span2"
+		            	<input id="appendedInputButtons" class="span4"
 		            	   data-role="dropdownlist"
             			   data-option-label="(--- Select Category ---)"            			   			                   
 		                   data-value-primitive="true"
@@ -32494,23 +31763,22 @@
 		                   data-value-field="id"
 		                   data-bind="value: item_group_category_id,
 		                              source: categoryDS"/>	
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: item_group_code">	
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New Name..." data-bind="value: item_group_name">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: item_group_abbr">					    
+					    	
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New Group Name..." data-bind="value: item_group_name">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Group Abbr..." data-bind="value: item_group_abbr">					    
 					    <button class="btn btn-default" type="button" data-bind="click: addItemGroup"><i class="icon-plus"></i> Add Group</button>					  
 					</div>
 		            
 	            	<table class="table table-bordered table-white">
 	            		<thead>
-	            			<tr>	            					            				
-	            				<th>Code</th>	
+	            			<tr>
 	            				<th>Name</th>	
-	            				<th>abbr</th>	            				
+	            				<th>Abbr</th>
+	            				<th>Category</th>	            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"	            				
+	            		<tbody data-role="listview"	            				
 		            			data-edit-template="itemSetting-edit-item-group-template"
 				                data-template="itemSetting-item-group-template"
 				                data-bind="source: itemGroupDS"></tbody>
@@ -32573,10 +31841,7 @@
 	</div>
 </script>
 <script id="itemSetting-category-template" type="text/x-kendo-tmpl">                    
-    <tr>    	   	
-   		<td>
-    		#:code#
-   		</td>
+    <tr>
    		<td>
     		#:name#
    		</td>
@@ -32599,11 +31864,7 @@
 </script>
 <script id="itemSetting-edit-category-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget">
-        <dl>        	             
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:code" name="code" required="required" validationMessage="required" />
-                <span data-for="code" class="k-invalid-msg"></span>
-            </dd>
+        <dl>
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
                 <span data-for="ProductName" class="k-invalid-msg"></span>
@@ -32628,15 +31889,15 @@
     </div>
 </script>
 <script id="itemSetting-item-group-template" type="text/x-kendo-tmpl">                    
-    <tr>    	   	
-   		<td>
-    		#:code#
-   		</td>
+    <tr>   		
    		<td>
     		#:name#
    		</td>
    		<td>
     		#:abbr#
+   		</td>
+   		<td>
+    		#:category[0].name#
    		</td>   		
    		<td>	        
         	<div class="edit-buttons">
@@ -32658,10 +31919,6 @@
 	                   data-value-field="id"
 	                   data-bind="value: category_id,
 	                              source: categoryDS"/>
-            </dd>                         
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:code" name="code" required="required" validationMessage="required" />
-                <span data-for="code" class="k-invalid-msg"></span>
             </dd>
             <dd>
                 <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
@@ -33100,16 +32357,13 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->
-								
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"                   
@@ -33129,45 +32383,8 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
-							        	</div>
-								        
-										<!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							        	</div>
-
-								        <div class="tab-pane" id="tab-3">
-								        	
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -33177,8 +32394,7 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->								       
+							        	</div>								       
 								    </div>
 								</div>
 							</div>
@@ -33270,16 +32486,13 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->
-								
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"                   
@@ -33299,45 +32512,8 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
-							        	</div>
-								        
-										<!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							        	</div>
-
-								        <div class="tab-pane" id="tab-3">
-								        	
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -33347,8 +32523,7 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->								       
+							        	</div>								       
 								    </div>
 								</div>
 							</div>
@@ -33439,16 +32614,13 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->
-								
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"                   
@@ -33468,45 +32640,8 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
-							        	</div>
-								        
-										<!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							        	</div>
-
-								        <div class="tab-pane" id="tab-3">
-								        	
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -33516,8 +32651,7 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->								       
+							        	</div>								       
 								    </div>
 								</div>
 							</div>
@@ -33621,67 +32755,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: inventorySummary.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: inventorySummary.filterDB, events: {change: inventorySummary.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: inventorySummary.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -33691,11 +32797,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -33764,67 +32871,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: inventorySummary.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: inventorySummary.filterDB, events: {change: inventorySummary.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: inventorySummary.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -33834,11 +32913,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -33917,67 +32997,39 @@
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
+									    	   data-role="dropdownlist"                   
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
+									                      source: sortList" />
+									                                   
+									        <input id="sdate" name="sdate"						           
+										           data-bind="value: sdate"
 										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
+									        
+									       	<input id="edate" name="edate"						           
+										           data-bind="value: edate"
 										           placeholder="To ..." />
 
-										  	 <button type="button" data-role="button" data-bind="click: inventorySummary.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: inventorySummary.filterDB, events: {change: inventorySummary.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: inventorySummary.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -33987,11 +33039,12 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-									</div>
+							        	</div>								       
+								    </div>
 								</div>
 							</div>
 						</div>
+						<!-- // Tabs END -->						
 					</div>
 
 					<div class="block-title">
@@ -34080,16 +33133,13 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->
-								
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">									        	
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"                   
@@ -34109,45 +33159,8 @@
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
-							        	</div>
-								        
-										<!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
-								        	
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.account_id,
-										                              source: arDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"
-														   data-template="account-list-tmpl"										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.ra_id,
-										                              source: raDS"
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />
-										         										
-												</div>
-																																		
-											</div>
-							        	</div>
-
-								        <div class="tab-pane" id="tab-3">
-								        	
+							        	</div>								        
+								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -34157,8 +33170,7 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
-								        <!-- //ACCOUNTING END -->								       
+							        	</div>								       
 								    </div>
 								</div>
 							</div>
@@ -36516,7 +35528,6 @@
 	</span>
 </script>
 
-<!--- Costomer -->
 <script id="customer-type-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
     	<a href="\#/customer_setting">+ Add New Customer Type</a>
@@ -36538,15 +35549,12 @@
     </strong>
 </script>
 
-
-<!--- Eemployee -->
 <script id="employee-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
     	<a href="\#/employee">+ Add New Employee</a>
     </strong>
 </script>
 
-<!--- Item - Inventory -->
 <script id="item-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
     	<a href="\#/item">+ Add New Item</a> &nbsp;&nbsp;
@@ -36554,15 +35562,15 @@
     </strong>
 </script>
 <script id="item-list-tmpl" type="text/x-kendo-tmpl">
-	<span style="width:40%; float: left">
-		#if(name.length>15){#
-			#=abbr##=number# #=name.substring(0, 15)#...
+	<span style="width:45%; float: left">
+		#if(name.length>20){#
+			#=abbr##=number# #=name.substring(0, 20)#...
 		#}else{#
 			#=abbr##=number# #=name#
 		#}#
 	</span>
-	<span style="width:30%; text-align: center;">#=category#</span>
-	<span style="width:30%; text-align: right;" class="pull-right">#=on_hand#</span> 	
+	<span style="width:35%; text-align: center;">#=category#</span>
+	<span style="width:20%; text-align: right;" class="pull-right">#=on_hand#</span> 	
 </script>
 <script id="item-group-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
@@ -36585,7 +35593,6 @@
     </strong>
 </script>
 
-<!--- Vendor - Supplier -->
 <script id="vendor-type-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
     	<a href="\#/vendor_setting">+ Add New Supplier Type</a>
@@ -36607,7 +35614,6 @@
     </strong>
 </script>
 
-<!--- Cash -->
 <script id="cash-payment-method-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
     	<a href="\#/cash_seting">+ Add New Payment Method</a>
@@ -36619,7 +35625,6 @@
     </strong>
 </script>
 
-<!--- Account -->
 <script id="account-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
     	<a href="\#/account">+ Add New Account</a>
@@ -36918,6 +35923,20 @@
 	  	<li><a href='#/item_report_center'><span data-bind="text: lang.lang.report"></span></a></li>	  	
 	  	<li><a href='#/item_setting' class='glyphicons settings'><i></i></a></li>	  	
 	</ul>	
+</script>
+<script id="saleTaxMenu" type="text/x-kendo-template">
+	<ul class="topnav">
+		<li><a href='#/sale_tax' class='glyphicons show_big_thumbnails'><i></i></a></li>
+	  	<li role='presentation' class='dropdown'>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+  			<ul class='dropdown-menu'>				 				  				
+  				<li><a href='#/journal'>Journal</a></li>  				
+  				<li><a href='#/sale_tax'>Tax</a></li>  				  				 				  				 				
+  			</ul>
+	  	</li>	  	  	
+	  	<li><a href='#/sale_tax_report_center'>REPORTS</a></li>	  	
+	  	<li><a href='#/' class='glyphicons settings'><i></i></a></li>	  				
+	</ul>
 </script>
 
 
@@ -39164,6 +38183,7 @@
 			page:1,
 			pageSize: 100
 		}),
+		itemTypeDS					: dataStore(apiUrl + "item_types"),
 		itemInventoryDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -39362,7 +38382,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		fixedAssetCategoryDS	: new kendo.data.DataSource({
+		fixedAssetCategoryDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "categories",
@@ -40611,6 +39631,15 @@
 		successMessage 				: "Saved Successful!",
 		errorMessage 				: "Warning, please review it again!",
 		confirmMessage 				: "Are you sure, you want to delete it?",
+		loadData 					: function(){
+			this.loadRate();
+			this.itemTypeDS.read();
+			this.measurementDS.query({
+				filter:[],
+				page:1,
+				pageSize:1000
+			});
+		},
 		getFiscalDate 				: function(){
 			today = new Date(),
 			year = new Date(),
@@ -41028,177 +40057,6 @@
 		        window.history.back();
 	    	}
 	    }
-    });
-    banhji.txnItem =  kendo.observable({
-    	lang 				: langVM,    	
-    	dataSource 			: dataStore(apiUrl + "items"),    	
-    	deleteDS 			: dataStore(apiUrl + "transactions/line"),    	
-    	currencyDS 	 		: banhji.source.currencyDS,  	
-    	accountDS 			: banhji.source.accountDS,   	
-    	statusList 			: banhji.source.statusList,        
-    	obj 	 			: null,
-    	isEdit 				: false,    	
-    	pageLoad 			: function(id){			
-			if(id){
-				this.set("isEdit", true);							
-				this.loadObj(id);				
-			}else{				
-				if(this.get("isEdit")){
-					this.set("isEdit", false);
-					
-					this.dataSource.data([]);					
-					
-					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
-				}								
-			}  																							
-		},
-    	loadObj 			: function(id){
-    		var self = this;			
-
-    		this.dataSource.query({    			
-				filter: { field:"id", value: id },
-			}).then(function(e){
-				var view = self.dataSource.view();
-						    	
-		    	self.set("obj", view[0]);
-			});
-    	},		
-      	addEmpty 			: function(){      		
-      		this.dataSource.data([]);      		
-      		this.set("obj", null);
-
-      		this.dataSource.add({      			
-      			currency_id 			: 0,
-      			item_type_id 			: 5, //Transaction type      			
-      			name 					: "",
-      			description				: "",      			
-      			rate 					: 1,
-      			locale 					: banhji.locale,      			
-      			account_id 				: 0,      			     					
-      			is_catalog 				: 0,
-      			is_assembly 			: 0,
-      			is_pattern 				: 0,
-      			status 					: 1,
-      			deleted 				: 0
-			});      		
-
-			var data = this.dataSource.data();
-			var obj = data[data.length - 1];
-      						
-			this.set("obj", obj);			
-      	},
-      	objSync 			: function(){
-	    	var dfd = $.Deferred();	        
-
-	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
-		    });
-
-		    return dfd;	    		    	
-	    },
-      	cancel 				: function(e){
-      		e.preventDefault();
-
-      		this.dataSource.cancelChanges();
-      		window.history.back();      		
-      	},      	
-      	save 				: function(){
-      		var self = this;
-
-      		if(this.get("isEdit")){
-      			this.dataSource.sync();
-      			this.itemVendorDS.sync();
-      			this.itemCustomerDS.sync();
-      		}else{
-	      		this.objSync().then(function(data){
-	      			$.each(self.itemVendorDS.data(), function(index, value){
-	      				value.set("item_id", data[0].id);
-	      			});
-
-	      			$.each(self.itemCustomerDS.data(), function(index, value){
-	      				value.set("item_id", data[0].id);
-	      			});
-
-	      			if(data[0].is_pattern){
-						self.savePattern(data[0].category_id, data[0].id);
-					}
-
-	      			self.itemVendorDS.sync();
-	      			self.itemCustomerDS.sync();
-	      		}).then(function(){	      			
-	      			self.addEmpty();
-	      		});
-      		}      		      		
-      	},      	
-      	delete 				: function(){			
-	    	var self = this,
-			obj = this.get("obj");
-
-			if (confirm("Are you sure, you want to delete it?")) {				
-				this.deleteDS.query({
-				  	filter: { field: "item_id", value: obj.id },
-				  	page: 1,
-				  	pageSize: 1
-				}).then(function() {
-					var view = self.deleteDS.view();
-
-					if(view.length>0){
-						alert("Sorry, you can not delete it because it is using now.");
-					}else{
-						var data = self.dataSource.get(obj.id);
-				        self.dataSource.remove(data);
-				        self.save();
-
-				        window.history.back();
-					}
-				});
-	    	}	    	
-	    },
-	    addEmptyItemVendor 	: function(){
-			var item_id = 0;
-			if(this.get("isEdit")){
-				item_id = this.get("obj").id;
-			}
-
-			this.itemVendorDS.add({
-				item_id 	: item_id,					 			
-				contact_id 	: "",
-				code 		: "",      				
-				type 		: "vendor"
-			});								
-		},
-		deleteItemVendor 	: function(e){
-			if (confirm("Are you sure, you want to delete it?")) {
-				var d = e.data,
-				obj = this.itemVendorDS.getByUid(d.uid);
-
-				this.itemVendorDS.remove(obj);
-			}
-		},
-		addEmptyItemCustomer 	: function(){
-			var item_id = 0;
-			if(this.get("isEdit")){
-				item_id = this.get("obj").id;
-			}
-
-			this.itemCustomerDS.add({
-				item_id 	: item_id,					 			
-				contact_id 	: "",
-				code 		: "",      				
-				type 		: "customer"
-			});								
-		},
-		deleteItemCustomer 	: function(e){
-			if (confirm("Are you sure, you want to delete it?")) {
-				var d = e.data,
-				obj = this.itemCustomerDS.getByUid(d.uid);
-
-				this.itemCustomerDS.remove(obj);
-			}
-		}
     });
 	banhji.journal =  kendo.observable({
 		lang 				: langVM,
@@ -44219,7 +43077,7 @@
 		summaryDS 			: dataStore(apiUrl + "contact_reports/supplier_dashboard_summary"),
 		topContactDS 		: dataStore(apiUrl + "contact_reports/top_supplier"),
 		topAPDS 			: dataStore(apiUrl + "contact_reports/top_ap"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_supplier_product"),		
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_purchase_product"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -44369,6 +43227,7 @@
 		po 					: 0,
 		openInvoice 		: 0,
 		overInvoice 		: 0,
+		currencyCode 		: "",
 		user_id 			: banhji.source.user_id,		
 		pageLoad 			: function(id){
 			if(id){
@@ -44381,6 +43240,19 @@
 				this.transactionDS.fetch();
 				this.loadSummary();
 			}							
+		},
+		setCurrencyCode 	: function(){
+			var code = "", obj = this.get("obj");
+
+			$.each(banhji.source.currencyRateDS.data(), function(index, value){				
+				if(value.locale == obj.locale){
+					code = value.currency[0].code;					
+
+					return false;					
+				}
+			});
+
+			this.set("currencyCode", code);
 		},
 		loadObj 			: function(id){
 			var self = this;
@@ -44403,6 +43275,7 @@
 
 			this.searchTransaction();
 			this.loadSummary(obj.id);
+			this.setCurrencyCode();
 			
 			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
 			this.noteDS.query({
@@ -45470,7 +44343,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -45478,10 +44353,10 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								cost 				: value.cost*rate,												
-								amount 				: value.cost*rate,
+								cost 				: value.cost*catalogRate,												
+								amount 				: value.cost*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: 1,								
 
@@ -45496,6 +44371,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();		     
 		        }else{	        	
@@ -45503,6 +44379,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();
 		    	}
@@ -46269,7 +45146,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -46280,7 +45159,7 @@
 								cost 				: value.cost*rate,												
 								amount 				: value.cost*rate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: 1,								
 
@@ -46295,6 +45174,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();		     
 		        }else{	        	
@@ -46302,6 +45182,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();
 		    	}
@@ -48017,7 +46898,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -48025,10 +46908,10 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								cost 				: value.cost*rate,												
-								amount 				: value.cost*rate,
+								cost 				: value.cost*catalogRate,												
+								amount 				: value.cost*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: 1,								
 
@@ -48043,6 +46926,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();		     
 		        }else{	        	
@@ -48050,6 +46934,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();
 		    	}
@@ -49424,7 +48309,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -49432,10 +48319,10 @@
 								measurement_id 		: value.measurement_id,								
 								description 		: value.purchase_description,				
 								quantity 	 		: 1,
-								cost 				: value.cost*rate,												
-								amount 				: value.cost*rate,
+								cost 				: value.cost*catalogRate,												
+								amount 				: value.cost*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: 1,								
 
@@ -49450,6 +48337,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();		     
 		        }else{	        	
@@ -49457,6 +48345,7 @@
 		    		data.set("description", item.purchase_description);
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
+			        data.set("rate", rate);
 
 			        this.changes();
 		    	}
@@ -50738,7 +49627,7 @@
 		summaryDS 			: dataStore(apiUrl + "contact_reports/customer_dashboard_summary"),
 		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
 		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_customer_product"),		
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_sale_product"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -50890,6 +49779,7 @@
 		deposit 			: 0,
 		outInvoice 			: 0,
 		overInvoice 		: 0,
+		currencyCode 		: "",
 		user_id 			: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -50902,6 +49792,19 @@
 				this.transactionDS.fetch();
 				this.loadSummary();
 			}
+		},
+		setCurrencyCode 	: function(){
+			var code = "", obj = this.get("obj");
+
+			$.each(banhji.source.currencyRateDS.data(), function(index, value){				
+				if(value.locale == obj.locale){
+					code = value.currency[0].code;					
+
+					return false;					
+				}
+			});
+
+			this.set("currencyCode", code);
 		},
 		loadObj 			: function(id){
 			var self = this;
@@ -50924,7 +49827,8 @@
 
 			this.searchTransaction();
 			this.loadSummary(obj.id);
-			
+			this.setCurrencyCode();
+
 			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
 			this.noteDS.query({
 				filter: { field:"contact_id", value: obj.id },
@@ -52016,13 +50920,13 @@
 						measurement_id = item.item_prices[0].measurement_id;
 					}
 				}
-				
+
 		        if(item.is_catalog=="1"){
 		        	var catalogList = [];
 		        	$.each(item.catalogs, function(index, value){
 		        		catalogList.push(value);
 		        	});
-
+		        	
 		        	this.catalogDS.query({
 		        		filter: { field:"id", operator:"where_in", value:catalogList },
 		        		page:1,
@@ -52030,7 +50934,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -52038,10 +50944,10 @@
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								price 				: value.item_prices[0].price*catalogRate,												
+								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -52054,7 +50960,8 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			       	data.set("item_prices", []);
 
@@ -52062,7 +50969,8 @@
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -52892,7 +51800,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -52900,10 +51810,10 @@
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								price 				: value.item_prices[0].price*catalogRate,												
+								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -52916,7 +51826,8 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			       	data.set("item_prices", []);
 
@@ -52924,7 +51835,8 @@
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -54700,7 +53612,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -54708,10 +53622,10 @@
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								price 				: value.item_prices[0].price*catalogRate,												
+								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -54724,7 +53638,8 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			       	data.set("item_prices", []);
 
@@ -54732,7 +53647,8 @@
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -56077,7 +54993,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -56085,10 +55003,10 @@
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								price 				: value.item_prices[0].price*catalogRate,												
+								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -56101,7 +55019,8 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			       	data.set("item_prices", []);
 
@@ -56109,7 +55028,8 @@
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -57241,7 +56161,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -57249,10 +56171,10 @@
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								price 				: value.item_prices[0].price*catalogRate,												
+								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -57265,7 +56187,8 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			       	data.set("item_prices", []);
 
@@ -57273,7 +56196,8 @@
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -58086,7 +57010,9 @@
 		        	}).then(function(){
 		        		self.lineDS.remove(data);
 
-		        		$.each(self.catalogDS.view(), function(index, value){										
+		        		$.each(self.catalogDS.view(), function(index, value){
+		        			var catalogRate = obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date));										
+							
 							self.lineDS.add({					
 								transaction_id 		: obj.id,
 								tax_item_id 		: 0,
@@ -58094,10 +57020,10 @@
 								measurement_id 		: value.item_prices[0].measurement_id,								
 								description 		: value.sale_description,				
 								quantity 	 		: 1,
-								price 				: value.item_prices[0].price*rate,												
-								amount 				: value.item_prices[0].price*rate,
+								price 				: value.item_prices[0].price*catalogRate,												
+								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
-								rate				: obj.rate / banhji.source.getRate(value.item_prices[0].locale, new Date(obj.issued_date)),
+								rate				: catalogRate,
 								locale				: obj.locale,
 								movement 			: -1,								
 
@@ -58110,7 +57036,8 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			       	data.set("item_prices", []);
 
@@ -58118,7 +57045,8 @@
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);	    		
+		    		data.set("quantity", 1);
+		    		data.set("rate", rate);	    		
 			        data.set("price", price);
 			        data.set("item_prices", item.item_prices);			        
 
@@ -59244,7 +58172,7 @@
 		onChange			: function(e) {
 								var obj = this.get("obj"), self = this;
 								this.txnFormDS.query({    			
-									filter: { field:"type", value: obj.type },
+									filter: [{ field:"type", value: obj.type }, {field:"moduls", value: obj.moduls }],
 									page: 1,
 									take: 100
 								}).then(function(e){
@@ -59322,7 +58250,7 @@
 				case 13: Active = banhji.view.invoiceForm13; break;
 				case 14: Active = banhji.view.invoiceForm14; break;
 				case 15: Active = banhji.view.invoiceForm15; break;
-				case 16: Active = banhji.view.invoiceForm16; break;
+				case 16: Active = banhji.view.invoiceForm25; break;
 				case 17: Active = banhji.view.invoiceForm17; break;
 				case 18: Active = banhji.view.invoiceForm18; break;
 				case 19: Active = banhji.view.invoiceForm19; break;
@@ -59335,6 +58263,8 @@
 				case 26: Active = banhji.view.invoiceForm24; break;
 				case 27: Active = banhji.view.invoiceForm19; break;
 				case 28: Active = banhji.view.invoiceForm25; break;
+				case 29: Active = banhji.view.invoiceForm26; break;
+				case 30: Active = banhji.view.invoiceForm25; break;
 			}
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 		},
@@ -59369,10 +58299,10 @@
 				
 				banhji.invoiceForm.set("obj", view[0]);	
 				var Index = parseInt(view[0].transaction_form_id);
-				this.activeInvoiceTmp(Index);
+				self.activeInvoiceTmp(Index);
 				self.addRowLineDS();
 
-				self.txnFormDS.filter({ field:"type", value: view[0].type });	
+				self.txnFormDS.filter([{ field:"type", value: view[0].type }, { field:"moduls", value: view[0].moduls }]);	
 				
 				if(view[0].moduls == "customer_mg"){
 					self.set("selectTypeList", banhji.source.customerFormList);
@@ -59511,7 +58441,7 @@
 				case 13: Active = banhji.view.invoiceForm13; break;
 				case 14: Active = banhji.view.invoiceForm14; break;
 				case 15: Active = banhji.view.invoiceForm15; break;
-				case 16: Active = banhji.view.invoiceForm16; break;
+				case 16: Active = banhji.view.invoiceForm25; break;
 				case 17: Active = banhji.view.invoiceForm17; break;
 				case 18: Active = banhji.view.invoiceForm18; break;
 				case 19: Active = banhji.view.invoiceForm19; break;
@@ -59524,6 +58454,8 @@
 				case 26: Active = banhji.view.invoiceForm24; break;
 				case 27: Active = banhji.view.invoiceForm19; break;
 				case 28: Active = banhji.view.invoiceForm25; break;
+				case 29: Active = banhji.view.invoiceForm26; break;
+				case 30: Active = banhji.view.invoiceForm25; break;
 			}
 			banhji.view.invoiceForm.showIn('#invFormContent', Active);
 		},
@@ -59579,7 +58511,7 @@
 			this.dataSource.cancelChanges();		
 			window.history.back();
 		}    
-	});	
+	});
 
 	//Report Customer
 	banhji.saleSummaryCustomer = kendo.observable({
@@ -62922,13 +61854,13 @@
 	banhji.itemDashBoard = kendo.observable({
 		lang 				: langVM,
 		summaryDS 			: dataStore(apiUrl + "contact_reports/supplier_dashboard_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
+		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_supplier"),
 		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_supplier_product"),
+		topProductDS 		: dataStore(apiUrl + "contact_reports/top_sale_product"),
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "contact_reports/monthly_sale",
+					url: apiUrl + "contact_reports/item_monthly_purchase_sale",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -63021,10 +61953,49 @@
 	});
 	banhji.itemCenter = kendo.observable({
 		lang 				: langVM,		
-		itemDS				: dataStore(apiUrl + "items"),
+		itemDS				: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "items",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort:[
+				{ field:"item_type_id", dir:"asc" },
+				{ field:"id", dir:"asc" }
+			],
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		categoryDS 			: dataStore(apiUrl + "categories"),
 		sumamryDS 			: dataStore(apiUrl + "transactions/line"),
-		transactionDS		: dataStore(apiUrl + "items/movement"),		
+		transactionDS		: dataStore(apiUrl + "items/movement"),
+		attachmentDS 		: dataStore(apiUrl + "attachments"),		
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -63033,6 +62004,9 @@
 		searchText 			: "",	
 		category_id 		: null,
 		total_value 		: 0,
+		itemType 			: "",
+		uom 		 		: "",
+		currencyCode 		: "",
 		pageLoad 			: function(id){
 			if(id){
 				this.loadObj(id);
@@ -63044,6 +62018,145 @@
 				this.transactionDS.fetch();
 			}													
 		},
+		setItemType 	 	: function(){
+			var itemType = "", obj = this.get("obj");
+
+			$.each(banhji.source.itemTypeDS.data(), function(index, value){				
+				if(value.id == obj.item_type_id){
+					itemType = value.name;					
+
+					return false;					
+				}
+			});
+
+			this.set("itemType", itemType);
+		},
+		setCurrencyCode 	: function(){
+			var code = "", obj = this.get("obj");
+
+			$.each(banhji.source.currencyRateDS.data(), function(index, value){				
+				if(value.locale == obj.locale){
+					code = value.currency[0].code;					
+
+					return false;					
+				}
+			});
+
+			this.set("currencyCode", code);
+		},
+		setUOM 	 			: function(){
+			var measurement = "", obj = this.get("obj");
+
+			$.each(banhji.source.measurementDS.data(), function(index, value){				
+				if(value.id == obj.measurement_id){
+					measurement = value.name;					
+
+					return false;					
+				}
+			});
+
+			this.set("uom", measurement);
+		},
+		//Upload
+		onSelect 			: function(e){			
+	        // Array with information about the uploaded files
+	        var self = this, 
+	        files = e.files,
+	        obj = this.get("obj");			
+			
+	        // Check the extension of each file and abort the upload if it is not .jpg
+	        $.each(files, function(index, value){
+	            if (value.extension.toLowerCase() === ".jpg"
+	            	|| value.extension.toLowerCase() === ".jpeg"
+	            	|| value.extension.toLowerCase() === ".tiff"
+	            	|| value.extension.toLowerCase() === ".png" 
+	            	|| value.extension.toLowerCase() === ".gif"
+	            	|| value.extension.toLowerCase() === ".pdf"){
+
+	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+
+	            	self.attachmentDS.add({
+	            		transaction_id 	: obj.id,
+	            		type 			: "Item",
+	            		name 			: value.name,
+	            		description 	: "",
+	            		key 			: key,
+	            		url 			: banhji.s3 + key,
+	            		created_at 		: new Date(),
+
+	            		file 			: value.rawFile
+	            	});	            			            		            
+	            }else{
+	            	alert("This type of file is not allowed to attach.");
+	            }
+	        });
+	    },	    
+	    onRemove 			: function(e){
+	        // Array with information about the uploaded files
+	        var self = this, files = e.files;
+	        $.each(this.attachmentDS.data(), function(index, value){
+	        	if(value.name==files[0].name){
+	        		self.attachmentDS.remove(value);
+
+	        		return false;
+	        	}
+	        });
+	    },
+	    removeFile 			: function(e){
+	    	var data = e.data;
+
+	    	if (confirm("Are you sure, you want to delete it?")) {
+	    		this.attachmentDS.remove(data);
+	    	}	    	
+	    },
+	    uploadFile 			: function(){
+	    	var self = this;
+
+	    	$.each(this.attachmentDS.data(), function(index, value){	    		
+		    	if(!value.id){
+			    	var params = { 
+		            	Body: value.file, 
+		            	Key: value.key 
+		            };
+		            bucket.upload(params, function (err, data) {		                
+	                	// console.log(err, data);
+	                	// var url = data.Location;                
+	            	});
+            	}	            
+            });            
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+            	if(e.type=="destroy"){
+	            	if(saved==false){
+	            		saved = true;
+	            	
+	            		var response = e.response.results;
+	            		$.each(response, function(index, value){            			
+		            		var paramz = {
+							  	//Bucket: 'STRING_VALUE', /* required */
+							 	Delete: { /* required */
+								    Objects: [ /* required */
+								      	{
+									        Key: value.data.key /* required */
+								      	}
+								      /* more items */
+								    ]
+							  	}
+							};
+							bucket.deleteObjects(paramz, function(err, data) {
+							  	//console.log(err, data);
+							});
+						});
+	            	}
+            	}
+            });
+
+            //Clear upload files
+            $(".k-upload-files").remove();
+	    },
+	    //Obj
 		loadObj 			: function(id){
 			var self = this;
 
@@ -63064,8 +62177,12 @@
 			var obj = this.get("obj"),
 			totalValue = kendo.parseFloat(obj.on_hand) * kendo.parseFloat(obj.cost);
 
-			this.searchTransaction();
+			this.searchTransaction();			
 			this.set("total_value", kendo.toString(totalValue, "c", obj.locale));
+			this.attachmentDS.filter({ field:"item_id", value:obj.id });
+			this.setCurrencyCode();
+			this.setUOM();
+			this.setItemType();
 		},		
 		selectedRow			: function(e){
 			var id = e.data.id,
@@ -63356,7 +62473,7 @@
     	patternDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "transactions/line"),
     	categoryDS 				: banhji.source.inventoryCategoryDS,
-    	itemGroupDS 			: dataStore(apiUrl + "items/group"),
+    	itemGroupDS 			: dataStore(apiUrl + "items/group"),   	
     	brandDS 	 			: dataStore(apiUrl + "brands"),    	   	   	
     	measurementDS			: dataStore(apiUrl + "measurements"),
     	numberDS 				: dataStore(apiUrl + "items"),
@@ -65311,121 +64428,170 @@
 			this.set("showConfirm", false);
 		}
     });
-	banhji.itemRecord =  kendo.observable({
-		lang 				: langVM,    	
-    	dataSource 			: dataStore(apiUrl + "items/record"),
-    	itemDS 				: dataStore(apiUrl + "items"),
-    	invoiceDS 			: dataStore(apiUrl + "invoices"),    	
-    	currencyDS 			: dataStore(apiUrl + "currencies"),
-    	contactDS  			: dataStore(apiUrl + "contacts"),
-    	measurementDS 	   	: dataStore(apiUrl + "measurements"),
-    	
-    	obj 				: null,
-    	item 				: null,    	
-    	isEdit 				: false,
-
-    	pageLoad 			: function(id){			
+	banhji.txnItem =  kendo.observable({
+    	lang 					: langVM,    	
+    	dataSource 				: dataStore(apiUrl + "items"),    	
+    	deleteDS 				: dataStore(apiUrl + "transactions/line"),
+    	numberDS 				: dataStore(apiUrl + "items"),
+    	existingDS 				: dataStore(apiUrl + "items"),    	
+    	currencyDS 	 			: banhji.source.currencyDS,  	
+    	accountDS 				: banhji.source.accountDS,   	
+    	statusList 				: banhji.source.statusList,
+    	confirmMessage 			: banhji.source.confirmMessage,
+    	obj 	 				: null,
+    	isEdit 					: false,
+    	saveClose 				: false,
+		showConfirm 			: false,
+		originalName 				: "",
+		isDuplicateNumber 		: false,
+		user_id					: banhji.source.user_id,
+    	pageLoad 				: function(id){			
 			if(id){
-				this.set("isEdit", true);							
+				this.set("isEdit", true);						
 				this.loadObj(id);
 			}else{				
-				if(this.get("isEdit")){
-					this.set("isEdit", false);
-					
-					this.dataSource.data([]);					
-					
+				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
 				}								
 			}  																							
 		},
-		loadObj 			: function(id){
-    		var self = this;
+		//Number      	
+		checkExistingName 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj"),
+			originalName = this.get("originalName");			
+			
+			if(obj.name!=="" && obj.name!==originalName){
+				this.existingDS.query({
+					filter: [
+						{ field:"name", value: obj.name },
+						{ field:"category_id", value: obj.category_id }
+					],
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.existingDS.view();
+					
+					if(view.length>0){
+				 		self.set("isDuplicateNumber", true);						
+					}else{
+						self.set("isDuplicateNumber", false);
+					}
+				});							
+			}else{
+				this.set("isDuplicateNumber", false);
+			}			
+		},
+		//Obj
+    	loadObj 				: function(id){
+    		var self = this;			
 
     		this.dataSource.query({    			
-				filter: { field:"id", value: id }
+				filter: { field:"id", value: id },
+				page:1,
+				pageSize:1
 			}).then(function(e){
 				var view = self.dataSource.view();
 						    	
 		    	self.set("obj", view[0]);
+		    	self.set("originalName", view[0].name);
 			});
-    	},
-    	loadItem     		: function(id){
-    		var self = this;
-
-    		this.itemDS.query({
-    			filter: { field:"id", value: id }
-    		}).then(function(){
-    			var view = self.itemDS.view();
-
-    			self.set("item", view[0]);
-    		});
-    	},
-    	itemChanges 		: function(){
-    		var obj = this.get("obj");
-
-    		if(obj.item_id>0){
-    			var item = this.itemDS.get(obj.item_id);
-
-    			this.set("item", item);
-    		}
-    	},	
-      	addEmpty 			: function(){
+    	},		
+      	addEmpty 				: function(){      		
       		this.dataSource.data([]);
+
+      		this.set("isEdit", false);      		
       		this.set("obj", null);
 
-      		this.dataSource.add({
-      			contact_id 		: "",
-      			reference_id 	: "",      			
-      			currency_id 	: 1,      				      			
-      			measurement_id 	: 0,
-      			item_id 		: "",
-      			unit 			: 0,
-      			price 			: 0,
-      			amount			: 0,
-      			rate 			: 1,
-      			movement 		: "IN",
-      			issued_date		: new Date(),
-      			memo 			: ""
-			});
+      		this.dataSource.insert(0, {
+      			account_id 				: 0,
+      			item_type_id 			: 5,//Transaction type
+      			category_id 			: 0,
+      			name 					: "",
+      			purchase_description	: "",
+      			sale_description		: "",
+      			locale 					: banhji.locale,
+      			status 					: 1
+			});      		
 
-			var data = this.dataSource.data();
-			var obj = data[data.length - 1];
+			var obj = this.dataSource.at(0);			
       						
-			this.set("obj", obj);      					
-      	},      	
-      	cancel 		 	: function(e){
-      		e.preventDefault();
+			this.set("obj", obj);			
+      	},
+      	objSync 				: function(){
+	    	var dfd = $.Deferred();	        
 
-      		this.dataSource.cancelChanges();
-      		window.history.back();      		
-      	}, 
-      	save 			: function(){
-      		var self = this, obj = this.get("obj");
+	    	this.dataSource.sync();
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
+		    });
 
-      		if(obj.unit<0){
-      			obj.set("movement", "OUT");
-      		}
+		    return dfd;	    		    	
+	    },			
+		save 					: function(){			
+			var self = this, obj = this.get("obj");
 
-      		this.dataSource.sync();
-      		var saved = false;
-      		this.dataSource.bind("requestEnd", function(e){
-      			if(e.type=="create" && saved==false){
-      				saved = true;
+			//Save Obj
+			this.objSync()
+			.then(function(data){ //Success				
+				
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
-      				self.addEmpty();
-      			}
-      		});
-      	},      	
-      	delete 			: function(e){
-			if (confirm("Are you sure, you want to delete it?")) {        
-		        var data = e.data;
-		        this.dataSource.remove(data);
-		        this.dataSource.sync();
-	    	}	    	
-	    }
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					window.history.back();
+				}else{
+					//Save New
+					self.addEmpty();
+				}
+			});
+		},
+		cancel 					: function(){
+			this.dataSource.cancelChanges();						
+			this.dataSource.data([]);
+			
+			banhji.userManagement.removeMultiTask("txn_item");
+		},
+		delete 					: function(){
+			var self = this, obj = this.get("obj");
+			this.set("showConfirm",false);
+
+			this.deleteDS.query({
+			  	filter: { field: "item_id", value: obj.id },
+			  	page: 1,
+			  	pageSize: 1
+			}).then(function() {
+				var view = self.deleteDS.view();
+
+				if(view.length>0){
+					alert("Sorry, you can not delete it because it is using now.");
+				}else{
+					obj.set("deleted", 1);
+			        self.dataSource.sync();
+
+			        window.history.back();				        
+				}
+			});	
+		},
+		openConfirm 			: function(){
+			this.set("showConfirm", true);
+		},
+		closeConfirm 			: function(){
+			this.set("showConfirm", false);
+		}
     });
+	
     banhji.itemAdjustment = kendo.observable({
     	lang 					: langVM,
     	dataSource  			: dataStore(apiUrl + "transactions"),	
@@ -66455,14 +65621,14 @@
 
 			this.journalLineDS.sync();
 		}
-	});
+	});	
 	banhji.itemSetting =  kendo.observable({
-		lang 				: langVM,		        
+		lang 				: langVM,
+		itemTypeDS 			: banhji.source.itemTypeDS,		        
         categoryDS 			: dataStore(apiUrl + "categories"),        
         itemGroupDS 		: dataStore(apiUrl + "items/group"),        
         measurementDS		: dataStore(apiUrl + "measurements"),
         brandDS 			: dataStore(apiUrl + "brands"),
-        itemTypeDS 			: dataStore(apiUrl + "item_types"),        
         category_code 		: "",
         category_name 		: "",
         category_abbr 		: "",
@@ -66476,47 +65642,47 @@
         brand_name 			: "",
         brand_abbr 			: "",        
         pageLoad 			: function() {
-        	
         },        
         addCategory 		: function(){
         	var self = this, 
         	name = this.get("category_name"),
-        	code = this.get("category_code");
+        	abbr = this.get("category_abbr");
 
-        	if(name!=="" && code!==""){        		
+        	if(name!=="" && abbr!==""){        		
 	        	this.categoryDS.add({	        		
 	        		sub_of 		 	: 0,
 	        		item_type_id 	: this.get("category_item_type_id"),
 	        		item_id 		: 0,
-	        		code 			: code,	        		
+	        		code 			: "",	        		
 	        		name 			: name,
-	        		abbr 			: this.get("category_abbr"),	        		
+	        		abbr 			: abbr,	        		
 	        		is_system 		: 0,
 	        		item_type 		: []
 	        	});
 
 	        	this.categoryDS.sync();
-	        	this.set("category_code", "");
     			this.set("category_name", "");
     			this.set("category_abbr", "");
         	}else{
-        		alert("required number and name!");
+        		alert("required abbr and name!");
         	}
         },
         addItemGroup 		: function(){
         	var self = this, 
         	category_id = this.get("item_group_category_id"),
         	name = this.get("item_group_name"),
-        	code = this.get("item_group_code");
+        	abbr = this.get("item_group_abbr");
 
-        	if(category_id>0 && name!=="" && code!==""){        		
+        	if(category_id>0 && name!=="" && abbr!==""){        		
 	        	this.itemGroupDS.add({	        		
 	        		category_id	 	: category_id,
 	        		sub_of 		 	: 0,
-	        		code 			: code,	        		
+	        		code 			: "",	        		
 	        		name 			: name,
-	        		abbr 			: this.get("item_group_abbr"),	        		
-	        		is_system 		: 0
+	        		abbr 			: abbr,	        		
+	        		is_system 		: 0,
+
+	        		category 		: [{name:""}]
 	        	});
 
 	        	this.itemGroupDS.sync();
@@ -66526,7 +65692,7 @@
     			self.set("item_group_name", "");
     			self.set("item_group_abbr", "");	        		
         	}else{
-        		alert("required category, number, and name!");
+        		alert("required category, abbr, and name!");
         	}
         },
         addMeasurement 		: function(){
@@ -67311,7 +66477,6 @@
 		journalReport: new kendo.Layout("#journalReport", {model: banhji.journalReport}),
 		trialBalance: new kendo.Layout("#trialBalance", {model: banhji.trialBalance}),
 		chartOfAccount: new kendo.Layout("#chartOfAccount", {model: banhji.chartOfAccount}),
-		saleTax: new kendo.Layout("#saleTax", {model: banhji.saleTax}),
 		accountingReportCenter: new kendo.Layout("#accountingReportCenter"),
 		accountingSetting: new kendo.Layout("#accountingSetting", {model: banhji.accountingSetting}),
 		segment: new kendo.Layout("#segment", {model: banhji.segment}),
@@ -67326,6 +66491,14 @@
 		statementChangesEquity: new kendo.Layout("#statementChangesEquity", {model: banhji.statementChangesEquity}),
 		statementCashFlow: new kendo.Layout("#statementCashFlow", {model: banhji.statementCashFlow}),
 		auditTrialReport: new kendo.Layout("#auditTrialReport", {model: banhji.auditTrialReport}),
+		
+		
+		//Sale Tax
+		saleTax: new kendo.Layout("#saleTax", {model: banhji.saleTax}),
+		saleTaxReportCenter: new kendo.Layout("#saleTaxReportCenter", {model: banhji.saleTaxReportCenter}),
+		saleJournal: new kendo.Layout("#saleJournal", {model: banhji.saleJournal}),
+		purchaseJournal: new kendo.Layout("#purchaseJournal", {model: banhji.purchaseJournal}),
+
 
 		//Employee
 		employeeDashboard: new kendo.Layout("#employeeDashboard", {model: banhji.employeeDashboard}),
@@ -67438,7 +66611,6 @@
 		itemPrice: new kendo.Layout("#itemPrice", {model: banhji.itemPrice}),
 		itemCatalog: new kendo.Layout("#itemCatalog", {model: banhji.itemCatalog}),
 		itemAssembly: new kendo.Layout("#itemAssembly", {model: banhji.itemAssembly}),
-		itemRecord: new kendo.Layout("#itemRecord", {model: banhji.itemRecord}),
 		itemAdjustment: new kendo.Layout("#itemAdjustment", {model: banhji.itemAdjustment}),
 		itemSetting: new kendo.Layout("#itemSetting", {model: banhji.itemSetting}),
 		internalUsage: new kendo.Layout("#internalUsage", {model: banhji.internalUsage}),
@@ -67479,7 +66651,8 @@
 		customerMenu: new kendo.View("#customerMenu", {model: langVM}),
 		cashMenu: new kendo.View("#cashMenu", {model: langVM}),
 		waterMenu: new kendo.View("#waterMenu", {model: langVM}),
-		inventoryMenu: new kendo.View("#inventoryMenu", {model: langVM})		
+		inventoryMenu: new kendo.View("#inventoryMenu", {model: langVM}),
+		saleTaxMenu: new kendo.View("#saleTaxMenu", {model: langVM})	
 	};
 	/* views and layout */
 	banhji.router = new kendo.Router({
@@ -67755,67 +66928,6 @@
 
 			vm.pageLoad(id);			
 		}				
-	});
-	banhji.router.route("/txn_item(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.txnItem;
-			banhji.userManagement.addMultiTask("Transaction Item","txn_item",vm);
-			
-			banhji.view.layout.showIn("#content", banhji.view.txnItem);						
-			
-			if(banhji.pageLoaded["txn_item"]==undefined){
-				banhji.pageLoaded["txn_item"] = true;
-
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-		            	window.print();
-
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});
-			}
-
-			vm.pageLoad(id);	
-		}
 	});
 	banhji.router.route("/journal(/:id)(/:is_recurring)", function(id,is_recurring){
 		if(!banhji.userManagement.getLogin()){
@@ -68347,53 +67459,6 @@
 				banhji.pageLoaded["chart_of_account"] = true;              
                 						
 			}
-		}		
-	});
-	banhji.router.route("/sale_tax", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.saleTax);
-
-			banhji.userManagement.addMultiTask("Tax","sale_tax",null);
-
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
-			
-			var vm = banhji.saleTax;
-
-			if(banhji.pageLoaded["sale_tax"]==undefined){
-				banhji.pageLoaded["sale_tax"] = true;
-														
-			}
-		$("#ddlIncome").kendoDropDownList({
-		            optionLabel: "(--- Select ---)",
-		            valuePrimitive: true,
-		            dataTextField: "name",
-		            dataValueField: "id",		            
-		            template: '#=code# #=name#',
-		            dataSource: {
-		                transport: {
-							read: {
-								url: apiUrl + "accounts",
-								headers: {
-									"Entity": getDB()
-								},
-								type: "GET",
-								dataType: "json"
-							}
-						},
-						schema 	: {
-							model: {
-								id: 'id'
-							},
-							data: 'results',
-							total: 'count'
-						},
-						serverFiltering: true,
-						filter: { field:"account_type_id", value: 20 }
-					}
-		        }).data("kendoDropDownList");
 		}		
 	});
 	banhji.router.route("/accounting_report_center", function(){
@@ -70088,6 +69153,199 @@
 		        });								
 						
 			}
+		}		
+	});
+
+	
+	/*************************
+	*   SaleTax Section   *
+	**************************/
+	banhji.router.route("/sale_tax", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleTax);
+
+			banhji.userManagement.addMultiTask("Tax","sale_tax",null);
+
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.saleTaxMenu);			
+			
+			var vm = banhji.saleTax;
+
+			if(banhji.pageLoaded["sale_tax"]==undefined){
+				banhji.pageLoaded["sale_tax"] = true;
+														
+			}
+		$("#ddlIncome").kendoDropDownList({
+		            optionLabel: "(--- Select ---)",
+		            valuePrimitive: true,
+		            dataTextField: "name",
+		            dataValueField: "id",		            
+		            template: '#=code# #=name#',
+		            dataSource: {
+		                transport: {
+							read: {
+								url: apiUrl + "accounts",
+								headers: {
+									"Entity": getDB()
+								},
+								type: "GET",
+								dataType: "json"
+							}
+						},
+						schema 	: {
+							model: {
+								id: 'id'
+							},
+							data: 'results',
+							total: 'count'
+						},
+						serverFiltering: true,
+						filter: { field:"account_type_id", value: 20 }
+					}
+		        }).data("kendoDropDownList");
+		}		
+	});
+	banhji.router.route("/sale_tax_report_center", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleTaxReportCenter);
+
+			banhji.userManagement.addMultiTask("Sale Tax Report Center","sale_tax_report_center",null);
+
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.saleTaxMenu);			
+			
+			var vm = banhji.sale_tax_report_center;
+
+			if(banhji.pageLoaded["sale_tax_report_center"]==undefined){
+				banhji.pageLoaded["sale_tax_report_center"] = true;
+														
+			}
+		$("#ddlIncome").kendoDropDownList({
+		            optionLabel: "(--- Select ---)",
+		            valuePrimitive: true,
+		            dataTextField: "name",
+		            dataValueField: "id",		            
+		            template: '#=code# #=name#',
+		            dataSource: {
+		                transport: {
+							read: {
+								url: apiUrl + "accounts",
+								headers: {
+									"Entity": getDB()
+								},
+								type: "GET",
+								dataType: "json"
+							}
+						},
+						schema 	: {
+							model: {
+								id: 'id'
+							},
+							data: 'results',
+							total: 'count'
+						},
+						serverFiltering: true,
+						filter: { field:"account_type_id", value: 20 }
+					}
+		        }).data("kendoDropDownList");
+		}		
+	});
+	banhji.router.route("/sale_journal", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleJournal);
+
+			banhji.userManagement.addMultiTask("Sale Journal","sale_journal",null);
+
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.saleTaxMenu);			
+			
+			var vm = banhji.sale_tax_report_center;
+
+			if(banhji.pageLoaded["sale_journal"]==undefined){
+				banhji.pageLoaded["sale_journal"] = true;
+														
+			}
+		$("#ddlIncome").kendoDropDownList({
+		            optionLabel: "(--- Select ---)",
+		            valuePrimitive: true,
+		            dataTextField: "name",
+		            dataValueField: "id",		            
+		            template: '#=code# #=name#',
+		            dataSource: {
+		                transport: {
+							read: {
+								url: apiUrl + "accounts",
+								headers: {
+									"Entity": getDB()
+								},
+								type: "GET",
+								dataType: "json"
+							}
+						},
+						schema 	: {
+							model: {
+								id: 'id'
+							},
+							data: 'results',
+							total: 'count'
+						},
+						serverFiltering: true,
+						filter: { field:"account_type_id", value: 20 }
+					}
+		        }).data("kendoDropDownList");
+		}		
+	});	
+	banhji.router.route("/purchase_journal", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.purchaseJournal);
+
+			banhji.userManagement.addMultiTask("Purchase Journal","purchase_journal",null);
+
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.saleTaxMenu);			
+			
+			var vm = banhji.sale_tax_report_center;
+
+			if(banhji.pageLoaded["purchase_journal"]==undefined){
+				banhji.pageLoaded["purchase_journal"] = true;
+														
+			}
+		$("#ddlIncome").kendoDropDownList({
+		            optionLabel: "(--- Select ---)",
+		            valuePrimitive: true,
+		            dataTextField: "name",
+		            dataValueField: "id",		            
+		            template: '#=code# #=name#',
+		            dataSource: {
+		                transport: {
+							read: {
+								url: apiUrl + "accounts",
+								headers: {
+									"Entity": getDB()
+								},
+								type: "GET",
+								dataType: "json"
+							}
+						},
+						schema 	: {
+							model: {
+								id: 'id'
+							},
+							data: 'results',
+							total: 'count'
+						},
+						serverFiltering: true,
+						filter: { field:"account_type_id", value: 20 }
+					}
+		        }).data("kendoDropDownList");
 		}		
 	});
 	
@@ -72157,6 +71415,21 @@
 			});
 		}
 	});
+	banhji.router.route("/deposit_detail_customer", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.depositDetailCustomer);
+			banhji.customerSale.detailSummary.dataSource.read();
+			banhji.customerSale.detailSummary.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.customerSale.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
+				}
+			});
+		}
+	});
 	banhji.router.route("/customer_transaction_list", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -72176,7 +71449,6 @@
 				}
 			});
 		}
-
 	});
 	banhji.router.route("/sale_summary_product", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -72196,7 +71468,6 @@
 			});
 		}
 	});	
-	
 	banhji.router.route("/sale_detail_product", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -72230,7 +71501,6 @@
 				}
 			});
 		}
-
 	});
 	banhji.router.route("/customer_balance_detail", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -72265,7 +71535,6 @@
 				}
 			});
 		}
-
 	});
 	banhji.router.route("/receivable_aging_detail", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -72282,7 +71551,6 @@
 				}
 			});
 		}
-
 	});
 	banhji.router.route("/list_invoices_collect", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -72299,7 +71567,6 @@
 				}
 			});
 		}
-
 	});
 	banhji.router.route("/collect_report", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -72365,7 +71632,6 @@
 				}
 			});
 		}
-
 	});
 	banhji.router.route("/sale_order_list", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -72384,7 +71650,6 @@
 			});
 		}
 	});
-
 	banhji.router.route("/cash_setting", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -73052,41 +72317,43 @@
 			vm.pageLoad(id);
 		}		
 	});
-	banhji.router.route("/item_record(/:id)", function(id){
+	banhji.router.route("/txn_item(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
-		}else{		
-			var vm = banhji.itemRecord;
-			banhji.userManagement.addMultiTask("Inventory Record","item_record",vm);
-
-			banhji.view.layout.showIn("#content", banhji.view.itemRecord);
+		}else{
+			var vm = banhji.txnItem;
+			banhji.userManagement.addMultiTask("Transaction Item","txn_item",vm);
 			
-			if(banhji.pageLoaded["item_record"]==undefined){
-				banhji.pageLoaded["item_record"] = true;
-
-				vm.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });
+			banhji.view.layout.showIn("#content", banhji.view.txnItem);						
+			
+			if(banhji.pageLoaded["txn_item"]==undefined){
+				banhji.pageLoaded["txn_item"] = true;
 
 				var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-
-		        $("#save").click(function(e){				
+												
+		        $("#saveNew").click(function(e){				
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();
-
-		            	notification.success("Save Successful");			  
+		            	vm.save();		            				  
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
-				});	            
+				});
+
+				$("#saveClose").click(function(e){				
+					e.preventDefault();
+
+					if(validator.validate()){
+						vm.set("saveClose", true);
+		            	vm.save();		            	
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
 			}
 
-			vm.pageLoad(id);				
+			vm.pageLoad(id);	
 		}
 	});
 	banhji.router.route("/item_adjustment(/:id)", function(id){
@@ -73143,7 +72410,6 @@
 		}		
 	});
 	
-
 	
 	banhji.router.route("/item_setting", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -73155,14 +72421,11 @@
 
 			var vm = banhji.itemSetting;
 
-			banhji.userManagement.addMultiTask("General Inventory Setting","item_setting",null);
+			banhji.userManagement.addMultiTask("General Products/ Services Setting","item_setting",null);
 			
 			if(banhji.pageLoaded["item_setting"]==undefined){
 				banhji.pageLoaded["item_setting"] = true;
 				
-				vm.categoryDS.filter({ field:"item_type_id", operator:"where_in", value: [1,2] });
-				vm.itemTypeDS.filter({ field:"id", operator:"where_in", value: [1,2] });
-				vm.itemGroupDS.filter({ field:"id", operator:"where_in", value: [1,2] });
 			}
 
 			vm.pageLoad();			     		
@@ -73863,6 +73126,6 @@
 
 	$(function() {	
 		banhji.router.start();
-		banhji.source.loadRate();
+		banhji.source.loadData();
 	});
 </script>

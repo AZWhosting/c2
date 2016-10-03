@@ -198,8 +198,8 @@
             #=status == 1 ? "Active" : "Inactive"#
           </td>
           <td align="center">
-            <button data-bind="click: edit" style="padding: 0px 15px;">Edit</button>
-            <button data-bind="click: remove" style="padding: 0px 15px;">Remove</button>
+            <button class="btn" data-bind="click: edit" style="padding: 0px 15px;     border-radius: 0;">Edit</button>
+            <button class="btn" data-bind="click: remove" style="padding: 0px 15px;     border-radius: 0;">Remove</button>
           </td>
       </tr>
     </script>
@@ -710,7 +710,7 @@
       </article>
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-employee">
-      <button class="btn" data-bind="click: addNew" style="margin-bottom: 10px;">Create</button>
+      <button class="btn" data-bind="click: addNew" style="margin-bottom: 10px;     border-radius: 0;">Create</button>
       <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: refresh"></i>
       <table class="tbl-typical">
           <thead>

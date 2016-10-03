@@ -22,14 +22,16 @@
 }
 
 #ccbItem-list{
-  width: 470px !important;
+  width: 550px !important;
 }
 #ddlMeasurement-list,
 #ddlMesurement-list,
 #txtPrice-list,
 #ddlAccount-list,
 #ddlOption-list,
-#ddlOption-list{
+#ddlOption-list,
+#showName-list,
+#showSegment-list{
   width: 250px !important;
 }
 #ccbTaxItem-list{
@@ -72,8 +74,24 @@
 .widget-stats.widget-stats-5 .txt{
       padding: 17px 0 0 5px !important;
 }
-
-
+.company-name table{
+  border: 1px solid #000;
+  margin-bottom: 20px;
+  width: 100%;
+      border-spacing: 0;
+    border-collapse: collapse;
+}
+.company-name table tr td{
+  padding: 5px;
+}
+.table-company table{
+  width: 100%;
+  font-size: 10px;
+  color: #000;
+}
+.table-company table tr td input[type=text]{
+  color: #000;
+}
 .box-generic-noborder{
   border: #ccc 1px solid;
   padding-bottom: 15px;
@@ -324,12 +342,13 @@
   .board-chart p{ font-size: 600; }
   .performance,
   .position {
-    background: #E7F2E0;
+    background: #1F4774;
       width: 95%;
       padding: 15px;
       float: left;
       border-collapse: inherit;
       margin-bottom: 10px;
+      color: #fff;
   }
   /*.home-chart{
     margin-left: 15px;
@@ -346,11 +365,11 @@
   .performance tr td,
   .position tr td{
     padding: 5px 0 5px 0;
-      border-bottom: 1px  #D7DCD4 solid;
+      border-bottom: 1px #649AD3 solid;
   }
   .performance tr:last-child td,
   .position tr:last-child td{
-      border-bottom: 3px  #D7DCD4 double;
+      border-bottom: 3px  #649AD3 double;
   }
 
   .welcome-nopadding{
@@ -432,6 +451,7 @@
 .navbar{
   border-radius: 0;
   background: #1C2633 !important;
+      box-shadow: 0 1px 3px #ddd;
 }
 /*#content .row{
   margin-left: 0 !important;
@@ -1364,7 +1384,8 @@ width: 50% !important;
 
 .accounCetner-textedit{
   width: 100%;
-  min-height: 240px;
+  min-height: 202px;
+  overflow: hidden;
 }
 .span9.detailsWrapper > .row-fluid > .span6:nth-child(1){
   width: 50%;
@@ -1803,4 +1824,46 @@ and (orientation : portrait) {
   .business-box span {
     font-size: 50px;
   }
+}
+/* FeedBack */
+a.feedback {
+    position: fixed;
+    bottom: 15px;
+    border: 1px solid #00a8ff;
+    background: #00a8ff;
+    right: 15px;
+    padding: 7px 15px;
+    z-index: 99;
+    color: #fff;
+    border-radius: 22px;  
+    font-size: 12px;
+    padding-left: 28px;
+    cursor: pointer;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    text-decoration: none;
+}
+a.feedback:hover {
+  background: #46c35f;
+  border: 1px solid #46c35f;
+}
+a.feedback i::before {
+    font-size: 14px;
+    color: #fff;
+    top: 9px;
+    left: 7px;
+}
+#feedbackContent {
+       width: 350px;
+    height: 260px;
+    left: 35%;
+    top: 10%;
+}
+#feedbackContent textarea{
+        height: 150px;
+    min-height: 150px;
+    max-height: 150px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
 }

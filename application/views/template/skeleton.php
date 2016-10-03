@@ -146,6 +146,44 @@ var themerPrimaryColor = primaryColor;
 
 </head>
 <body class="document-body ">
+	<a class="feedback btn-rounded glyphicons no-js circle_exclamation_mark" href="#feedbackContent" data-toggle="modal"><i></i>Feedback</a>
+	<div class="modal fade" id="feedbackContent">
+		<form method="post" action="">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3>User Feedback</h3>
+			</div>
+			<div class="modal-body">
+			  	<textarea name="feedbackMsg" placeholder="Your Feedback..."></textarea>
+			  	<input type="hidden" name="userEmail" />
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+				<input type="submit" class="btn btn-primary" value="Send" name="feedbackSedn" />
+			</div>
+		</form>
+		<?php
+			if(isset($_REQUEST['feedbackSedn'])){
+				$msg = $_REQUEST['feedbackMsg'];
+				/*----------------PHP CODE MAIL BY CHOEUN----------------------*/
+				//$emailTo = 'chhunhour.strinfo@gmail.com'; //Put your own email address here
+				$emailTo = 'loat.choeun@gmail.com';
+				$subject = 'Feedback From BanhJi App';
+				$body = "Contact Name : $name \n\nMessage: $msg \n\n--------------\n";
+				$headers = 'From:  BanhJI App <'.$emailTo.'>' . "\r\n" . 'Reply-To: ';
+				if(mail($emailTo, $subject, $body, $headers)){
+					echo '<script>
+						alert("Your Email was send");
+					</script>';
+				}else{
+					echo '<script>
+						alert("Sorry Data Invalid.");
+					</script>';
+				}
+				/*----------------------END CODE MAIL-----------------------------*/
+			}
+		?>
+	</div>
 	<?php echo $body ?>
 
 	<!-- extra js-->
