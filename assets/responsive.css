@@ -311,7 +311,7 @@
     background: #fff;
     float: left;
     position: relative;
-    margin-top: 27px;
+    margin-top: 15px;
     color: #333;
   }
   .board-financial P{ margin-bottom: 0; }
@@ -332,7 +332,7 @@
     background: #fff;
     float: left;
     position: relative;
-    margin-top: 27px;
+    margin-top: -20px;
     color: #333;
     overflow: hidden;
   }
@@ -1040,7 +1040,7 @@ width: 50% !important;
 .capital-management h2,
 .cash-payments h2{
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 15px;
   color: #333;
   font-weight: 700;
 }
@@ -1093,12 +1093,13 @@ width: 50% !important;
 .capital-management .capital-box{
   text-align: center;
   padding: 0;
-  height: 120px;
+  height: 90px;
   background: #26628C;
   margin-left: 3px;
   margin-bottom: 3px;
   width: 49.7%;
   color: #fff;
+  padding: 15px;
 }
 .financial-block .financial-box {
   text-align: center;
@@ -1110,21 +1111,24 @@ width: 50% !important;
   width: 49.7%;
   color: #fff;
 }
-.capital-management .capital-box:nth-child(1),
+/*.capital-management .capital-box:nth-child(1),
 .capital-management .capital-box:nth-child(3),
 .cash-payments .capital-box:nth-child(1),
 .cash-payments .capital-box:nth-child(3){
+  margin-left: 0;
+}*/
+.capital-management .capital-box:nth-child(even){
   margin-left: 0;
 }
 .financial-block .financial-box:last-child{
   margin-right: 0;
 }
-.capital-management .capital-box:nth-child(3),
+/*.capital-management .capital-box:nth-child(3),
 .capital-management .capital-box:nth-child(4),
 .cash-payments .capital-box:nth-child(3),
 .cash-payments .capital-box:nth-child(4){
   margin-bottom: 0;
-}
+}*/
 .capital-management .capital-box .first-text,
 .cash-payments .capital-box .first-text,
 .financial-block .financial-box .first-text,
@@ -1829,13 +1833,13 @@ and (orientation : portrait) {
 a.feedback {
     position: fixed;
     bottom: 15px;
-    border: 1px solid #00a8ff;
-    background: #00a8ff;
+    border: 1px solid #1F4774;
+    background: #1F4774;
     right: 15px;
     padding: 7px 15px;
     z-index: 99;
     color: #fff;
-    border-radius: 22px;  
+    border-radius: 3px;  
     font-size: 12px;
     padding-left: 28px;
     cursor: pointer;
@@ -1854,13 +1858,13 @@ a.feedback i::before {
     left: 7px;
 }
 #feedbackContent {
-       width: 350px;
+    width: 350px;
     height: 260px;
     left: 35%;
     top: 10%;
 }
 #feedbackContent textarea{
-        height: 150px;
+    height: 150px;
     min-height: 150px;
     max-height: 150px;
     width: 100%;
