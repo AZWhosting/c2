@@ -48050,6 +48050,15 @@
 		        		alert("Over deposit to apply!");
 		        		obj.set("deposit", 0);
 		        	}
+
+		        	//Status
+			        if(remaining==0){
+			    		obj.set("status", 1);
+			    	}else if(remaining==total){
+			    		obj.set("status", 0);
+			    	}else{
+			    		obj.set("status", 2);
+			    	}
 		        }
 
 		        //Warning over credit allowed
@@ -54593,6 +54602,15 @@
 		        		alert("Over deposit to apply!");
 		        		obj.set("deposit", 0);
 		        	}
+
+		        	//Status
+			        if(remaining==0){
+			    		obj.set("status", 1);
+			    	}else if(remaining==total){
+			    		obj.set("status", 0);
+			    	}else{
+			    		obj.set("status", 2);
+			    	}
 		        }
 
 		        //Warning over credit allowed

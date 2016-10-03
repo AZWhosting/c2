@@ -1831,10 +1831,8 @@ and (orientation : portrait) {
 }
 /* FeedBack */
 a.rightfixed {
-    position: fixed;
-    top: 40%;
+    position: relative;
     background: #1F4774;
-    right: -61px;
     padding: 7px 15px;
     z-index: 99;
     color: #fff;
@@ -1845,9 +1843,11 @@ a.rightfixed {
     -webkit-transition: all .5s;
     transition: all .5s;
     text-decoration: none;
+    opacity: .7;
+    margin-bottom: 1px;
 }
 a.rightfixed:hover {
-  background: #46c35f;
+  opacity: 1;
 }
 a.rightfixed i::before {
     font-size: 14px;
@@ -1856,13 +1856,12 @@ a.rightfixed i::before {
     left: 7px;
 }
 a.feedback {
-    top: 44%;
-    right: -70px;
     background: #e5412d;
 }
 a.sales-enquiries {
-    top: 48%;
-    right: -101px;
+}
+a.referral {
+  background: #46c35f;
 }
 #feedbackContent {
     width: 350px;
@@ -1879,11 +1878,18 @@ a.sales-enquiries {
     max-width: 100%;
 }
 a.feedback:hover {
-  right: 0px;
+    margin-left: -66px;
 }
 a.sales-enquiries:hover {
-  right: 0;
+    margin-left: -127px;
 }
 a.referral:hover {
-  right: 0;
+    margin-left: -66px;
+}
+.cover-rightfixed {
+    position: fixed;
+    top: 40%;
+    right: -100px;
+    z-index: 99999;
+    text-align: left;
 }

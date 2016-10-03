@@ -146,9 +146,11 @@ var themerPrimaryColor = primaryColor;
 
 </head>
 <body class="document-body ">
-	<a class="rightfixed feedback btn-rounded glyphicons no-js circle_exclamation_mark" href="#feedbackContent" data-toggle="modal"><i></i>Feedback</a>
-	<a class="rightfixed referral btn-rounded glyphicons no-js user_add" href="#feedbackContent" data-toggle="modal"><i></i>Referral</a>
-	<a class="rightfixed sales-enquiries btn-rounded glyphicons no-js conversation" href="#feedbackContent" data-toggle="modal"><i></i>Sales Enquiries</a>
+	<div class="cover-rightfixed">
+		<a class="rightfixed feedback btn-rounded glyphicons no-js circle_exclamation_mark" href="#feedbackContent" data-toggle="modal"><i></i>Feedback</a><br>
+		<a class="rightfixed referral btn-rounded glyphicons no-js user_add" href="#feedbackContent" data-toggle="modal"><i></i>Referral</a><br>
+		<a class="rightfixed sales-enquiries btn-rounded glyphicons no-js conversation" href="#feedbackContent" data-toggle="modal"><i></i>Sales Enquiries</a>
+	</div>
 	<div class="modal fade" id="feedbackContent">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
