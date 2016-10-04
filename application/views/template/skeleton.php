@@ -253,11 +253,11 @@ var themerPrimaryColor = primaryColor;
 			var d = new Date();
 			var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
 			$.ajax({  
-			    type: 'GET',
-			    url: '<?php echo base_url(); ?>assets/invoice/sendMail.php', 
+			    type: 'POST',
+			    url: '<?php echo base_url(); ?>api/send_mail', 
 			    data: { msg: MSG, cURL: CurrentURL, uName: UserName, datesend: strDate },
 			    success: function(response) {
-			        //alert(response);
+			        alert(response);
 			        $("#feedbackMsg").val("");
 			        $(".cloze").click();
 			    }
