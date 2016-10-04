@@ -27,9 +27,9 @@ class send_mail extends REST_Controller {
 		$body = "User Name : $uName \n\nMessage: $MSG \n\nURL: $cURL \n\nDate Send: $DS \n\n--------------\nThis Email sended from BanhJi app";
 		$headers = 'From: BanhJi app <'.$emailTo.'>' . "\r\n" . 'Reply-To: ';
 		if(mail($emailTo, $subject, $body, $headers)){
-			echo "Your feedback was send to us. Thank";
+			$message = "Your feedback was send to us. Thank";
 		}else{
-			echo $MSG.$DS.$cURL.$uN;
+			$message = "error";
 		}
 		// foreach ($models as $value) {
 		// 	$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
@@ -60,8 +60,8 @@ class send_mail extends REST_Controller {
 		// }
 		//$data["count"] = count($data["results"]);
 		
-		$this->response(array('msg' => 'test'), 201);
-						
+		$this->response(array('msg' => $message), 201);
+
 	}
 
 	
