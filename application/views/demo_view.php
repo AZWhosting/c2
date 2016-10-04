@@ -61,7 +61,7 @@
 
     </li>	
 </script>
-<script type="text/x-kendo-template" id="index">
+<!-- <script type="text/x-kendo-template" id="index">
 	<div class="row-fluid">
 		<div class="span6">
 			<div class="row">
@@ -69,25 +69,25 @@
 					<ul id="module-image">
 						<li style="text-align:center;">
 							<a href="#/customers ">
-								<img title="Customers Module, In here, you can manage your customer information, revenues, collections, and other related transactions." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.png" alt="Customer">
+								<img title="Customers Module, In here, you can manage your customer information, revenues, collections, and other related transactions." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Customers</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/vendors">
-								<img title="Supplier Module, In here, you can manage your supplier information, and other related transactions." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.png" alt="Vendor">
+								<img title="Supplier Module, In here, you can manage your supplier information, and other related transactions." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg" alt="Vendor">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Suppliers</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/inventories">
-								<img title="Inventories Module, In here, you can manage your inventory information, stock, item price, and other related transactions." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.png" alt="Inventory">
+								<img title="Inventories Module, In here, you can manage your inventory information, stock, item price, and other related transactions." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg" alt="Inventory">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Products/Services</span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/documents">
-								<img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.png" alt="Attachment">
+								<img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.jpg" alt="Attachment">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Documents</span>
 						</li>
@@ -95,13 +95,13 @@
 					<ul id="module-image">						
 						<li style="text-align:center;">
 							<a href="#/accounting">
-								<img title="Accounting Module, In this module, you can prepare your journal entry record, set your tax, create segment, and determine your financial reporting standards." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.png" alt="Customer">							
+								<img title="Accounting Module, In this module, you can prepare your journal entry record, set your tax, create segment, and determine your financial reporting standards." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">							
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.accounting"></span></span>
 							</a>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/reports">
-								<img title="Reports Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.png" alt="Reports">
+								<img title="Reports Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.jpg" alt="Reports">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Reports</span>
 						</li>
@@ -113,7 +113,7 @@
 						</li>
 						<li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
-								<img title="Setting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.png" alt="Admin">
+								<img title="Setting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings"></span></span>
 							</a>
 						</li>											
@@ -123,7 +123,7 @@
 			<div class="row" style="margin-top: 5px;">
 				<div class="span12" style="width: 100%; padding: 0 5px;">
 					<div class="home-chart" style="width: 95%; padding: 0 15px;">
-						<!-- Graph -->
+						
 						<div data-role="chart"
 							 data-auto-bind="false"
 			                 data-legend="{ position: 'top' }"
@@ -139,7 +139,7 @@
 			                             ]"	                             
 			                 data-bind="source: graphDS"
 			                 style="height: 240px;" ></div>
-			            <!-- End Graph -->      
+			           
 					</div>
 				</div>
 			</div>
@@ -147,12 +147,12 @@
 			<br>
 		</div>
 		
-		<!-- Welcome -->
+		
 		<div class="span6">
 			<div class="row">
 				<div class="span12">					
 
-					<!-- Add New Board -->
+					
 					<div class="board-add" >
 						<div class="span9" style="padding-right: 0; padding-left: 0;">
 							<h2 style="color: #113051;">Welcome on board!</h2>
@@ -184,18 +184,17 @@
 								</div>
 							</div>
 						</div>
-					</div><!--End Add New Board -->
+					</div>
 
-					<!-- Financial Board -->
-					<div class="board-financial">
+					
 						<div class="span12">
 							<h4 data-bind="text: companyName"></h4>
 							<h2 style="color: #113051;">Financial Snapshot</h2>
 							<span style="color: #000000;">As of:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
 						</div>
-					</div><!--End Financial Board -->
+					</div>
 
-					<!-- Chart Board -->
+					
 					<div class="board-chart">
 						<div class="span12">
 							<div class="span6">
@@ -307,6 +306,274 @@
 						</div>
 
 						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+		<div style="margin-top: 10px; margin-left: 0;" align="center">
+			<p>© 2016 BanhJi PTE. Ltd. All rights reserved.</p>
+		</div>	
+	</div>		
+</script> -->
+
+<script type="text/x-kendo-template" id="index">
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="row">
+				<div class="span12" style="padding-left: 0; margin-left: 0; margin-top: 0;">
+					<ul id="module-image">
+						<li style="text-align:center;">
+							<a href="#/customers ">
+								<img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
+							</a>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Customers</span>
+						</li>
+						<li style="text-align:center;">
+							<a href="#/vendors">
+								<img title="Supplier Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg" alt="Vendor">
+							</a>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Suppliers</span>
+						</li>
+						<li style="text-align:center;">
+							<a href="#/inventories">
+								<img title="Inventories Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg" alt="Inventory">
+							</a>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Products/Services</span>
+						</li>
+						<li style="text-align:center;">
+							<a href="#">
+								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.jpg" alt="Attachment">
+							</a>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Documents</span>
+						</li>
+					</ul>
+					<ul id="module-image">
+						<li style="text-align:center;">
+							<a href="#/cashs">
+								<img title="Cash Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
+							</a>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000">Cash MGT.</span>
+						</li>
+						<li style="text-align:center;">
+							<a href="#/accounting">
+								<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">							
+								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.accounting"></span></span>
+							</a>
+						</li>
+						<li style="text-align:center;">
+							<a href="#/reports">
+								<img title="Reports Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.jpg" alt="Reports">
+							</a>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Reports</span>
+						</li>
+						<li style="text-align:center;">
+							<a href="<?php echo base_url(); ?>admin">
+								<img title="Setting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
+								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings"></span></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				
+				<div class="span12" style="padding-left: 0; margin-left: 0; margin-top: 30px;">
+					<h4 style="margin-left: 35px; width: 450px;"><span data-bind="text: lang.lang.subcribed_industry_modules"></span></h4>
+					<ul id="module-image">
+						<li style="text-align:center;">
+							<a href="#">
+								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/web_store.jpg" alt="Customer">
+							</a>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.web_store"></span></span>
+						</li>
+						<li style="text-align:center;">
+							<a href="#/sale_tax">
+								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
+							</a>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax"></span></span>
+						</li>
+					</ul>	
+				</div>
+			</div>	
+		</div>
+		
+		<!-- Welcome -->
+		<div class="span6">
+			<div class="row">
+				<div class="span12">					
+
+					<!-- Add New Board -->
+					<div class="board-add">
+						<div class="span6">
+							<h2>Welcome on board!</h2>
+							<p>
+								To get you started with BanhJi, please have a look at this <a target="_blank" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/welcome_guide.pdf">[Welcome Guide]</a>.
+							</p>
+						</div>
+						<div class="span6">
+							<div class="span12">
+								<div class="span3">
+									<a href="#/customer" class="center">
+										<img title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+									</a>
+								</div>
+								<div class="span3">
+									<a href="#/vendor" class="center">
+										<img title="Add Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
+									</a>
+								</div>
+								<div class="span3">
+									<a href="#/item" class="center">
+										<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+									</a>
+								</div>
+								<div class="span3">
+									<a href="#/item_service" class="center">
+										<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+									</a>
+								</div>
+							</div>
+						</div>
+					</div><!--End Add New Board -->
+
+					<!-- Financial Board -->
+					<div class="board-financial">
+						<div class="span12">
+							<h4 data-bind="text: companyName"></h4>
+							<h2 style="color: #113051;">Financial Snapshot</h2>
+							<span style="color: #000000;">As of:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
+						</div>
+					</div><!--End Financial Board -->
+
+					<!-- Chart Board -->
+					<div class="board-chart">
+						<div class="span12">
+							<div class="span6">
+								<p>Performance</p>
+								<table class="performance">
+									<tr>
+										<td>Income</td>
+										<td></td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>Expense</td>
+										<td></td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td><b>Net Income</b></td>
+										<td></td>
+										<td><b>0</b></td>
+									</tr>
+								</table>
+							</div>
+							<div class="span6">
+								<p>Position</p>
+								<table class="position" style="width: 100%;">
+									<tr>
+										<td>Assets</td>
+										<td></td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>Liabilities</td>
+										<td></td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td><b>Equity</b></td>
+										<td></td>
+										<td><b>0</b></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						
+						<div class="span12">
+							<div class="span6">
+								<a href="#/customer_balance">
+									<div class="widget-body alert-info welcome-nopadding" >
+										<p>RECEIVABLES</p>
+								
+										<div align="center" class="text-large strong" data-bind="text: ar"></div>
+									
+										<table width="100%" >
+											<tr align="center">
+												<td>										
+													<span data-bind="text: ar_open"></span>
+													<br>
+													<span>Open</span>
+												</td>
+												<td>
+													<span data-bind="text: ar_customer"></span>
+													<br>
+													<span>Customer</span>
+												</td>
+												<td>
+													<span data-bind="text: ar_overdue"></span>
+													<br>
+													<span>Overdue</span>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</a>
+							</div>
+							<div class="span6">
+								
+
+								<div class="widget-body  alert-info welcome-nopadding" style="width: 100%;">
+									<p>PAYABLES</p>
+							
+									<div align="center" class="text-large strong" data-bind="text: ap"></div>
+								
+									<table width="100%">
+										<tr align="center">
+											<td>										
+												<span data-bind="text: ap_open"></span>
+												<br>
+												<span>Open</span>
+											</td>
+											<td>
+												<span data-bind="text: ap_vendor"></span>
+												<br>
+												<span>Supplier</span>
+											</td>
+											<td>
+												<span data-bind="text: ap_overdue"></span>
+												<br>
+												<span>Overdue</span>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+
+						<div class="span12">
+							<div class="home-chart">
+								<!-- Graph -->
+								<div data-role="chart"
+									 data-auto-bind="false"
+					                 data-legend="{ position: 'top' }"
+					                 data-series-defaults="{ type: 'column' }"
+					                 data-tooltip='{
+					                    visible: true,
+					                    format: "{0}%",
+					                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+					                 }'                 
+					                 data-series="[
+					                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
+					                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
+					                             ]"	                             
+					                 data-bind="source: graphDS"
+					                 style="height: 250px;" ></div>
+					            <!-- End Graph -->      
+							</div>
+						</div>
 					</div><!--End Chart Board -->
 					
 				</div>
@@ -320,6 +587,7 @@
 		</div>	
 	</div>		
 </script>
+
 <script id="searchAdvanced" type="text/x-kendo-template">
     <div id="slide-form">
 		<div class="customer-background">

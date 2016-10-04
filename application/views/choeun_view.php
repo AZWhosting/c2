@@ -23967,7 +23967,7 @@
 	<div class="inv1">
     	<div class="head">
         	<div class="logo">
-            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
             </div>
             <div class="cover-name-company">
             	<h2 ></h2>
@@ -25351,7 +25351,7 @@
         			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="150"><b>SALE ORDER #</b></td>
         			<td width="100"><b data-bind="text: obj.reference_no"></b></td>
         			<td width="150" style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>INVOICE #</b></td>
-        			<td><b></b></td>
+        			<td><b data-bind="text: obj.number"></b></td>
         		</tr>
         		<tr>
         			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>JOB/ CONTRACT #</b></td>
@@ -58732,7 +58732,7 @@
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
-			}else{	
+			}else{
 				var obj = this.get("obj"), self = this;
 				if(this.formShow === null){ this.formShow = banhji.view.invoiceForm10; }
 				banhji.view.invoiceCustom.showIn('#invFormContent', this.formShow);		
@@ -58913,7 +58913,7 @@
 	banhji.invoiceForm =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
-		obj 				: {issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
+		obj 				: {title : "Quotation", issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
 		company 			: banhji.institute,		
 		lineDS 				: dataStore(apiUrl + "transactions/line"),
 		user_id				: banhji.source.user_id,
@@ -59021,7 +59021,6 @@
 				take: 100
 			}).then(function(e){
 				var view = self.txnTemplateDS.view(), Index = parseInt(view[0].transaction_form_id), Active;
-				console.log(Index);
 				obj.set("color", view[0].color);
 				self.activeInvoiceTmp(Index);
 				self.lineDS.filter({ field:"transaction_id", value: transaction_id });
