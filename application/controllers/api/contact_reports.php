@@ -1181,8 +1181,7 @@ class Contact_reports extends REST_Controller {
 		
 	    $startDate = new DateTime(date("Y",strtotime("-1 year")) ."-". $this->fiscal_date);
 		$endDate = new DateTime();
-		$totalDay = $endDate->diff($startDate)->format("%a");
-		
+		$totalDay = $endDate->diff($startDate)->format("%a");		
 		$collectionDay = 0;
 		if($creditPurchaseAmount>0){
 			$collectionDay = ($apAmount / $creditPurchaseAmount) * $totalDay;
