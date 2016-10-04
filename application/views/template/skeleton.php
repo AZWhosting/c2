@@ -139,13 +139,83 @@ var themerPrimaryColor = primaryColor;
 	});
 </script>
 <!--start kendo localization in Khmer-->
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '387834344756149',
+      xfbml      : true,
+      version    : 'v2.7'
+    });
+    FB.AppEvents.logPageView();
+  };
 
-
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
 
 </head>
 <body class="document-body ">
+<?php
+	//mail('loat.choeun@gmail.com', 'test', 'test', 'test');
+?>
+	<div class="cover-rightfixed">
+		<a class="rightfixed feedback btn-rounded glyphicons no-js circle_exclamation_mark" href="#feedbackContent" data-toggle="modal"><i></i>
+			Feedback
+		</a><br>
+		<a class="rightfixed referral btn-rounded glyphicons no-js user_add" href="#referralContent" data-toggle="modal"><i></i>
+			Referral
+		</a><br>
+		<a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" href="" data-toggle="modal"><i></i>
+			Sales Enquiries
+		
+		<div class="enquiry-content">
+			<p>Call us at<br>+855 10 413 777<br>Mon-Fri<br>09:00 - 18:00</p>
+			<div class="fb-messengermessageus" 
+			  messenger_app_id="1301847836514973" 
+			  page_id="862386433857166"
+			  color="blue"
+			  width="180"
+			  size="standard" ></div>
+		</div>
+		</a>
+	</div>
+	<div class="modal fade popRightBlog" id="feedbackContent">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3>User Feedback</h3>
+		</div>
+		<div class="modal-body">
+		  	<textarea id="feedbackMsg" placeholder="Your Feedback..."></textarea>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn btn-default cloze" data-dismiss="modal">Close</a>
+			<a href="#" class="btn btn-primary" id="feedBackSend">Send</a>
+		</div>
+	</div>
+	<div class="modal fade popRightBlog" id="referralContent">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3>Referral</h3>
+		</div>
+		<div class="modal-body">
+		  	<input type="email" name="mail1" placeholder="Your friend email" />
+		  	<input type="email" name="mail2" placeholder="Your friend email" />
+		  	<input type="email" name="mail3" placeholder="Your friend email" />
+		  	<input type="email" name="mail4" placeholder="Your friend email" />
+		  	<input type="email" name="mail5" placeholder="Your friend email" />
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn btn-default cloze" data-dismiss="modal">Close</a>
+			<a href="#" class="btn btn-primary" id="feedBackSend">Send</a>
+		</div>
+	</div>
 	<?php echo $body ?>
 
 	<!-- extra js-->
@@ -174,6 +244,26 @@ var themerPrimaryColor = primaryColor;
 	})();
 
   </script>
-
+  <script type="text/javascript">
+	$(document).ready(function(e) {
+		$("#feedBackSend").click(function(){
+			var MSG = $("#feedbackMsg").val();
+			var CurrentURL = $(location).attr('href');
+			var UserName = banhji.userData.username;
+			var d = new Date();
+			var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
+			$.ajax({  
+			    type: 'GET',
+			    url: '<?php echo base_url(); ?>assets/invoice/sendMail.php', 
+			    data: { msg: MSG, cURL: CurrentURL, uName: UserName, datesend: strDate },
+			    success: function(response) {
+			        //alert(response);
+			        $("#feedbackMsg").val("");
+			        $(".cloze").click();
+			    }
+			});
+		});
+	});
+   </script>
 </body>
 </html>

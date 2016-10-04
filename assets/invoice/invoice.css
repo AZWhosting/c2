@@ -392,3 +392,6 @@ pre {
 .copywatermark {
 	background: url(img/copywatermark.png) no-repeat center center;
 }
+.inv1 .center-tbl td {
+	text-align: center;
+}

@@ -83,6 +83,14 @@ class Contact extends DataMapper {
 		'meter' => array(
 			'class' => 'meter',
 			'other_field' => 'contact'
+		),
+		'file' => array(
+			'class' => 'attachment',
+			'other_field' => 'user'
+		),
+		'attachment' => array(
+			'class' => 'attachment',
+			'other_field' => 'contact'
 		)
 	);
 

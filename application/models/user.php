@@ -4,8 +4,16 @@ class User extends DataMapper {
 	
 	protected $created_field = 'created_at';
 	protected $updated_field = 'updated_at';
-	public $has_one = array("institute");
-	public $has_many = array('module');
+	public $has_one = array(
+		"institute",
+		'pimage' => array(
+			'class' => 'pimage',
+			'other_field' => 'user'
+		)
+	);
+	public $has_many = array(
+		'module'
+	);
 	// protected $db_params = 
 	// public $validation = array(
 	// 	'username' => array(
@@ -18,21 +26,24 @@ class User extends DataMapper {
 	// 	)
 	// );
 
-	public function __construct() {	
-		// $this->db_params = array(
-		// 		'dbdriver' => 'mysql',
-		// 		'pconnect' => true,
-		// 		'db_debug' => true,
-		// 		'cache_on' => false,
-		// 		'char_set' => 'utf8',
-		// 		'cachedir' => '',
-		// 		'dbcollat' => 'utf8_general_ci',
-		// 		'hostname' => 'localhost',
-		// 		'username' => 'root',
-		// 		'password' => '',
-		// 		'database' => $db,
-		// 		'prefix'   => ''
-		// 	);
+	public function __construct($db = null) {	
+		if($db != null) {
+			$this->db_params = array(
+				'dbdriver' => 'mysql',
+				'pconnect' => true,
+				'db_debug' => true,
+				'cache_on' => false,
+				'char_set' => 'utf8',
+				'cachedir' => '',
+				'dbcollat' => 'utf8_general_ci',
+				'hostname' => 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com',
+				'username' => 'mightyadmin',
+				'password' => 'banhji2016',
+				'database' => $db,
+				'prefix'   => ''
+			);
+		}
+		
 		parent::__construct();
 	}
 }

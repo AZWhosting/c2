@@ -25349,7 +25349,7 @@
         	<table class="span12">
         		<tr>
         			<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="150"><b>SALE ORDER #</b></td>
-        			<td width="100"><b></b></td>
+        			<td width="100"><b data-bind="text: obj.reference_no"></b></td>
         			<td width="150" style="background: #c6d9f1;text-align: left;padding-left: 5px;"><b>INVOICE #</b></td>
         			<td><b></b></td>
         		</tr>
@@ -26910,78 +26910,106 @@
 <script id="invoiceForm26" type="text/x-kendo-template">
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
-        	<div class="span7">
-        		<div class="logo" style="width: 40%">
-	            	<img style="width: " data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
-	            </div>
-        	</div>
-        	<div class="span5">
-        		<div class="span12" style="margin-bottom: 10px;">
-        			<img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" />
-        		</div>
-        		<div class="span12">
-        			<table class="span12">
-        				<tr>
-        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Date</td>
-        					<td data-bind="text: obj.issued_date"></td>
-        				</tr>
-        				<tr>
-        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Receipt No.</td>
-        					<td data-bind="text: obj.number"></td>
-        				</tr>
-        			</table>
-        		</div>
-        	</div>
-        	<div class="span12" style="margin-top: 10px;">
-		    	<div class="span6" style="">
-		    		<table class="span12">
-						<tr>
-							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Recieve From</td>
-							<td data-bind="text: obj.issued_date"></td>
-						</tr>
-						<tr>
-							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Contact Address</td>
-							<td data-bind="text: obj.number"></td>
-						</tr>
-						<tr>
-							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Purpose</td>
-							<td data-bind="text: obj.number"></td>
-						</tr>
-					</table>
-		    	</div>
-		    	<div class="span5" style="float:right">
-		    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
-		    		<div class="span12 main-color order-price">
-		    			<p><span style="color:#fff;text-align: center;" >USD 2,700.00</span></p>
-		    		</div>
-		    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
-		    	</div>
-		    </div>
-        	<div class="span12" style="margin-top: 5px">
-        		<div class="span5">
-        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Reference Document</p>
-        			<table class="span12">
-						<tr>
-							<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
-							<td data-bind="text: obj.issued_date"></td>
-						</tr>
-						<tr>
-							<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
-							<td data-bind="text: obj.number"></td>
-						</tr>
-						<tr>
-							<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
-							<td data-bind="text: obj.number"></td>
-						</tr>
-					</table>
-        		</div>
-        		<div class="span6" style="float:right">
+        	<table class="span12 left-tbl">
+        		<tr>
+        			<td colspan="4" rowspan="2" data-bind="style: {backgroundColor: obj.color}" style="text-align:center;padding-left:0;" class="main-color">
+        			ប័ណ្ណកែតម្រូវបរិមាណសន្និធិ<br>Material Adjustment Note
+        			</td>
+        			<td colspan="2">កាលបរិច្ឆេត Date</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td colspan="2">លេខ MA No</td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td colspan="2" width="100">
+        				គម្រោង Project
+        			</td>
+        			<td colspan="2" width="100">
 
-        		</div>
-        	</div>
+        			</td>
+        			<td colspan="2">
+        				ផល្ូវ Street #
+        			</td>
+        			<td width="120">
+
+        			</td>
+        		</tr>
+        		<tr>
+        			<td colspan="2">
+        				ល្វែង Bloc #
+        			</td>
+        			<td colspan="2">
+
+        			</td>
+        			<td colspan="2">
+        				អគារ House #
+        			</td>
+        			<td>
+
+        			</td>
+        		</tr>
+        		<tr>
+        			<td colspan="2">
+        				មេការ
+        			</td>
+        			<td colspan="2">
+
+        			</td>
+        			<td colspan="2">
+        				មេជាង
+        			</td>
+        			<td>
+
+        			</td>
+        		</tr>
+        		<tr class="center-tbl" style="background: #c6d9f1;">
+        			<td>
+        				ល.រ<br>No
+        			</td>
+        			<td colspan="2">
+        				ប្រភេទសន្និធិ ឬ​សម្ភារៈ<br>Item Description
+        			</td>
+        			<td>
+        				លេខកូដ<br>Sku
+        			</td>
+        			<td>
+        				ខ្នាត<br>UM
+        			</td>
+        			<td>
+        				ចំនួន Qty
+        			</td>
+        			<td>
+        				ផ្សេងៗ Remark
+        			</td>
+        		</tr>
+        		<tr><td>&nbsp;</td><td colspan="2"></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td colspan="2"></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td colspan="2"></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td colspan="2"></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td colspan="2"></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td colspan="2"></td><td></td><td></td><td></td><td></td></tr>
+        		<tr><td colspan="7"></td></tr>
+        		<tr>
+        			<td colspan="2" width="100">
+        				អ្នករៀបចំ<br>Prepared By
+        			</td>
+        			<td colspan="2" width="100">
+
+        			</td>
+        			<td colspan="2">
+        				អ្នកយល់ព្រម<br>Approved By
+        			</td>
+        			<td width="120">
+
+        			</td>
+        		</tr>
+        	</table>
         </div>
     </div>
 </script>
+
 
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
 	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
@@ -40029,6 +40057,14 @@
 			{ id: "Cash_Payment", name: "Payment" },
 			{ id: "Reimbursement", name: "Reimbursement" },
 			{ id: "Journal", name: "Journal" }
+	    ],
+	    itemFormList 				: [
+	    	{ id: "Adjustment", name: "Adjustment" },
+	    	{ id: "GRN", name: "GRN" },
+			{ id: "Deposit", name: "Deposit" },
+			{ id: "Purchase", name: "Purchase" },
+			{ id: "Pur_Return", name: "Pur.Return" },
+			{ id: "PayBill", name: "PayBill" }
 	    ],
 		genderList					: ["M", "F"],
 		user_id						: banhji.userData.id,
@@ -58506,40 +58542,6 @@
 			this.set("contact_type_id", null);
 		}
 	});
-	function activeInvoiceTmp(e){
-		var Active;
-		switch(e) {
-			case 1: Active = banhji.view.invoiceForm1; break;
-			case 2: Active = banhji.view.invoiceForm2; break;
-			//case 3: Active = banhji.view.invoiceForm3; break;
-			//case 4: Active = banhji.view.invoiceForm4; break;
-			//case 5: Active = banhji.view.invoiceForm5; break;
-			case 6: Active = banhji.view.invoiceForm6; break;
-			case 7: Active = banhji.view.invoiceForm7; break;
-			case 8: Active = banhji.view.invoiceForm8; break;
-			case 9: Active = banhji.view.invoiceForm9; break;
-			case 10: Active = banhji.view.invoiceForm10; break;
-			case 11: Active = banhji.view.invoiceForm11; break;
-			case 12: Active = banhji.view.invoiceForm12; break;
-			case 13: Active = banhji.view.invoiceForm13; break;
-			case 14: Active = banhji.view.invoiceForm14; break;
-			case 15: Active = banhji.view.invoiceForm15; break;
-			case 16: Active = banhji.view.invoiceForm16; break;
-			case 17: Active = banhji.view.invoiceForm17; break;
-			case 18: Active = banhji.view.invoiceForm18; break;
-			case 19: Active = banhji.view.invoiceForm19; break;
-			case 20: Active = banhji.view.invoiceForm20; break;
-			case 21: Active = banhji.view.invoiceForm21; break;
-			case 22: Active = banhji.view.invoiceForm22; break;
-			case 23: Active = banhji.view.invoiceForm1; break;
-			case 24: Active = banhji.view.invoiceForm2; break;
-			case 25: Active = banhji.view.invoiceForm23; break;
-			case 26: Active = banhji.view.invoiceForm24; break;
-			case 27: Active = banhji.view.invoiceForm19; break;
-			case 28: Active = banhji.view.invoiceForm25; break;
-		}
-		banhji.view.invoiceCustom.showIn('#invFormContent', Active);
-	};
 	banhji.customerSetting =  kendo.observable({
 		lang 				: langVM,		
         contactTypeDS 		: banhji.source.customerTypeDS,
@@ -58709,7 +58711,7 @@
 		onChange			: function(e) {
 								var obj = this.get("obj"), self = this;
 								this.txnFormDS.query({    			
-									filter: { field:"type", value: obj.type },
+									filter: [{ field:"type", value: obj.type }, {field:"moduls", value: obj.moduls }],
 									page: 1,
 									take: 100
 								}).then(function(e){
@@ -58769,6 +58771,42 @@
 		    	});	
 		    }
 		},
+		activeInvoiceTmp		: function(e){
+			var Active;
+			switch(e) {
+				case 1: Active = banhji.view.invoiceForm1; break;
+				case 2: Active = banhji.view.invoiceForm2; break;
+				//case 3: Active = banhji.view.invoiceForm3; break;
+				//case 4: Active = banhji.view.invoiceForm4; break;
+				//case 5: Active = banhji.view.invoiceForm5; break;
+				case 6: Active = banhji.view.invoiceForm6; break;
+				case 7: Active = banhji.view.invoiceForm7; break;
+				case 8: Active = banhji.view.invoiceForm8; break;
+				case 9: Active = banhji.view.invoiceForm9; break;
+				case 10: Active = banhji.view.invoiceForm10; break;
+				case 11: Active = banhji.view.invoiceForm11; break;
+				case 12: Active = banhji.view.invoiceForm12; break;
+				case 13: Active = banhji.view.invoiceForm13; break;
+				case 14: Active = banhji.view.invoiceForm14; break;
+				case 15: Active = banhji.view.invoiceForm15; break;
+				case 16: Active = banhji.view.invoiceForm25; break;
+				case 17: Active = banhji.view.invoiceForm17; break;
+				case 18: Active = banhji.view.invoiceForm18; break;
+				case 19: Active = banhji.view.invoiceForm19; break;
+				case 20: Active = banhji.view.invoiceForm20; break;
+				case 21: Active = banhji.view.invoiceForm21; break;
+				case 22: Active = banhji.view.invoiceForm22; break;
+				case 23: Active = banhji.view.invoiceForm1; break;
+				case 24: Active = banhji.view.invoiceForm2; break;
+				case 25: Active = banhji.view.invoiceForm23; break;
+				case 26: Active = banhji.view.invoiceForm24; break;
+				case 27: Active = banhji.view.invoiceForm19; break;
+				case 28: Active = banhji.view.invoiceForm25; break;
+				case 29: Active = banhji.view.invoiceForm26; break;
+				case 30: Active = banhji.view.invoiceForm25; break;
+			}
+			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
+		},
 		colorCC 			: function(e){
 			var Color = e.value;
 			var tS = '';
@@ -58782,7 +58820,7 @@
 		},
 		selectedForm 		: function(e){
 			var Index = e.data.id;
-			activeInvoiceTmp(Index);
+			this.activeInvoiceTmp(Index);
 			this.addRowLineDS();
 
 			var data = e.data, obj = this.get("obj");
@@ -58800,10 +58838,10 @@
 				
 				banhji.invoiceForm.set("obj", view[0]);	
 				var Index = parseInt(view[0].transaction_form_id);
-				activeInvoiceTmp(Index);
+				self.activeInvoiceTmp(Index);
 				self.addRowLineDS();
 
-				self.txnFormDS.filter({ field:"type", value: view[0].type });	
+				self.txnFormDS.filter([{ field:"type", value: view[0].type }, { field:"moduls", value: view[0].moduls }]);	
 				
 				if(view[0].moduls == "customer_mg"){
 					self.set("selectTypeList", banhji.source.customerFormList);
@@ -58916,14 +58954,50 @@
 		            '</body>' +
 		            '</html>';
 		    
-		    printableContent = $('#khPDF').html();
+		    printableContent = $('#invFormContent').html();
 		    doc.write(htmlStart + printableContent + htmlEnd);
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();
 		    	win.close();
 		    },2000);
-		},	   	
+		},
+		activeInvoiceTmp		: function(e){
+			var Active;
+			switch(e) {
+				case 1: Active = banhji.view.invoiceForm1; break;
+				case 2: Active = banhji.view.invoiceForm2; break;
+				//case 3: Active = banhji.view.invoiceForm3; break;
+				//case 4: Active = banhji.view.invoiceForm4; break;
+				//case 5: Active = banhji.view.invoiceForm5; break;
+				case 6: Active = banhji.view.invoiceForm6; break;
+				case 7: Active = banhji.view.invoiceForm7; break;
+				case 8: Active = banhji.view.invoiceForm8; break;
+				case 9: Active = banhji.view.invoiceForm9; break;
+				case 10: Active = banhji.view.invoiceForm10; break;
+				case 11: Active = banhji.view.invoiceForm11; break;
+				case 12: Active = banhji.view.invoiceForm12; break;
+				case 13: Active = banhji.view.invoiceForm13; break;
+				case 14: Active = banhji.view.invoiceForm14; break;
+				case 15: Active = banhji.view.invoiceForm15; break;
+				case 16: Active = banhji.view.invoiceForm25; break;
+				case 17: Active = banhji.view.invoiceForm17; break;
+				case 18: Active = banhji.view.invoiceForm18; break;
+				case 19: Active = banhji.view.invoiceForm19; break;
+				case 20: Active = banhji.view.invoiceForm20; break;
+				case 21: Active = banhji.view.invoiceForm21; break;
+				case 22: Active = banhji.view.invoiceForm22; break;
+				case 23: Active = banhji.view.invoiceForm1; break;
+				case 24: Active = banhji.view.invoiceForm2; break;
+				case 25: Active = banhji.view.invoiceForm23; break;
+				case 26: Active = banhji.view.invoiceForm24; break;
+				case 27: Active = banhji.view.invoiceForm19; break;
+				case 28: Active = banhji.view.invoiceForm25; break;
+				case 29: Active = banhji.view.invoiceForm26; break;
+				case 30: Active = banhji.view.invoiceForm25; break;
+			}
+			banhji.view.invoiceForm.showIn('#invFormContent', Active);
+		},
 		loadObj 			: function(id){
 			var self = this;				
 			this.dataSource.query({    			
@@ -58947,8 +59021,9 @@
 				take: 100
 			}).then(function(e){
 				var view = self.txnTemplateDS.view(), Index = parseInt(view[0].transaction_form_id), Active;
+				console.log(Index);
 				obj.set("color", view[0].color);
-				activeInvoiceTmp(Index);
+				self.activeInvoiceTmp(Index);
 				self.lineDS.filter({ field:"transaction_id", value: transaction_id });
 				setTimeout(function(){ 	
 					var CountItemsRow = parseInt(self.lineDS.data().length); 
@@ -65521,9 +65596,9 @@
 		    banhji.invoiceCustom.set("selectCustom", "item_mg");
 		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm26);
 		    banhji.invoiceCustom.set("formTitle", "PO");
-		    banhji.invoiceCustom.set("formType", "Purchase_Order");
+		    banhji.invoiceCustom.set("formType", "Adjustment");
 		    var obj= banhji.invoiceCustom.get("obj");
-		    obj.set("type", "Purchase_Order");
+		    obj.set("type", "Adjustment");
 		    banhji.router.navigate('/invoice_custom');
         } 
     });
@@ -66342,6 +66417,8 @@
 		invoiceForm22: new kendo.Layout("#invoiceForm22", {model: banhji.invoiceForm}),
 		invoiceForm23: new kendo.Layout("#invoiceForm23", {model: banhji.invoiceForm}),
 		invoiceForm24: new kendo.Layout("#invoiceForm24", {model: banhji.invoiceForm}),
+		invoiceForm25: new kendo.Layout("#invoiceForm25", {model: banhji.invoiceForm}),
+		invoiceForm26: new kendo.Layout("#invoiceForm26", {model: banhji.invoiceForm}),
 		
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.customerSale}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.customerSale}),
@@ -66416,7 +66493,6 @@
 	/* views and layout */
 	banhji.router = new kendo.Router({
 		init: function() {
-			
 			var language = JSON.parse(localStorage.getItem('userData/lang'));	
 			switch(language) {
 				case "KH": 
@@ -66454,6 +66530,7 @@
 			
 		},
 		routeMissing: function(e) {
+
 			// banhji.view.layout.showIn("#layout-view", banhji.view.missing);
 			console.log("no resource found.")
 		}

@@ -14,7 +14,7 @@
 body {
   font-family: 'Open Sans', Battambang;
   background: #f4f4f4;
-  font-size: 13px;
+  font-size: 14px;
   color: #333;
   position: relative;
 }
@@ -4144,12 +4144,15 @@ div.glyphicons.glyphicon-primary i:before {
   height: 36px;
   background: #fff;
   color: #505050;
+
 }
 .widget.widget-tabs > .widget-head ul li.active a {
   color: #505050;
+  background: #fff;
 }
 .widget.widget-tabs > .widget-head ul li.active a i:before {
   color: #505050;
+  background: #fff;
 }
 .widget.widget-tabs > .widget-body.large {
   padding: 25px;

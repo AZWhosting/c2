@@ -41,12 +41,13 @@ class Users extends REST_Controller {
 		$user->include_related('institute', array('id', 'name'));
 		$user->get_paged($offset, $limit);
 		foreach($user as $u) {
+			$profile_photo = $u->pimage->get();
 			$data[] = array(
 				'id' 		=> intval($u->id),
 				'username' 	=> $u->username,
 				'first_name'=> $u->first_name,
 				'last_name' => $u->last_name,
-				'profile_photo' => $u->profile_photo_url,
+				'profile_photo' => array('id' => $profile_photo->id, 'url' => $profile_photo->url),
 				'is_confirmed'	=> $u->is_confirmed == 0 ? FALSE : TRUE,
 				'is_disabled'=> $u->is_diabled == 0 ? FALSE : TRUE,
 				'email' => $u->email,
@@ -85,7 +86,7 @@ class Users extends REST_Controller {
 			$User->last_name = $user->last_name;
 			$User->email = $user->email;
 			$User->mobile = $user->mobile;
-			$User->profile_photo_url = $user->profile_photo;
+			$User->pimage_id = $user->profile_photo->id;
 			$User->facebook = $user->facebook;
 			$User->linkedin = $user->linkedin;
 			$User->twitter  = $user->twitter;
@@ -94,12 +95,13 @@ class Users extends REST_Controller {
 			$User->is_confirmed = $user->is_confirmed == true ? 1:0;
 			$User->is_disabled = 0;
 			if($User->save()) {
+				$profile_photo = $User->pimage->get();
 				$data[] = array(
 					'id' 		=> intval($User->id),
 					'username' 	=> $User->username,
 					'first_name'=> $User->first_name,
 					'last_name' => $User->last_name,
-					'profile_photo' => $User->profile_photo_url,
+					'profile_photo' => array("id" =>$profile_photo->id, "url" => $profile_photo->url),
 					'is_confirmed'	=> $User->is_confirmed == 0 ? FALSE : TRUE,
 					'is_disabled'=> $User->is_diabled == 0 ? FALSE : TRUE,
 					'email' => $User->email,
