@@ -915,7 +915,7 @@
             <img src="#=image_url#" width="100"> #=name#
           </td>
           <td>
-            <i class="fa fa-hand-o-right" data-bind="click: assignTo"></i>
+            assign<i class="fa fa-hand-o-right" data-bind="click: assignTo"></i>
           </td>
       </tr>
     </script>
@@ -1175,6 +1175,18 @@
         </div>
         <div id="ntf1" data-role="notification"></div>
       </div>
+    </script>
+
+    <script type="text/x-kendo-template" id="employee-role-form">
+      <div>
+        form
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="employee-role-list">
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
     </script>
     <!-- cognito -->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
@@ -2159,6 +2171,18 @@
             read  : {
               url: baseUrl + 'api/employees/roles',
               type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            create  : {
+              url: baseUrl + 'api/employees/roles',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            update  : {
+              url: baseUrl + 'api/employees/roles',
+              type: "PUT",
               dataType: 'json',
               headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
             },

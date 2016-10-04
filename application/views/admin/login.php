@@ -3,68 +3,68 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Login</title>
-    <!-- Boostrap-->
-    <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
-    <style>
-        html, body {
-            background-color: #203864;
-            font-size: 16px;
-            font-family: 'Open Sans', sans-serif !important;
-        }
-        *{
-            margin: 0;
-            padding: 0;
-        }
-        .login{
-            width: 100%;
-            margin: 0 auto;
-            background: #203864;
-            height: auto;
-        }
-        .login-content{
-            margin: 238px 0 50px;
-            display: inline-block;
-            width: 100%;
-        }
-        .login-image{
-            text-align: center;
-            margin-top: -50px; 
-        }
-        .login-image p{
-          color: #8DB3DA;
-          margin-top: 20px;
-          font-size: 13px;
-        }
-        .login-form{
-            background: #2F5597;
-            margin-right: 5%;
-            padding: 30px 50px;
-            color: #000000;            
-        }
-        .login-form input{
-          font-size: 20px;
+  <!-- Boostrap-->
+  <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
+  <style>
+      html, body {
+          background-color: #203864;
+          font-size: 16px;
           font-family: 'Open Sans', sans-serif !important;
-        }
-       
-        .login-form .login-email{
+      }
+      *{
+          margin: 0;
+          padding: 0;
+      }
+      .login{
           width: 100%;
-          margin-top: 10px;
-          padding: 8px;
-        }
-        
-        .btn-login{
+          margin: 0 auto;
+          background: #203864;
+          height: auto;
+      }
+      .login-content{
+          margin: 238px 0 50px;
+          display: inline-block;
           width: 100%;
-          background: #222A35;
-          color: #68788E;
-          border: none;
-          margin: 15px 0 0 0;
-          height: 55px;
-          cursor: pointer;
-          font-size: 30px !important;
-        }
-        
-    </style>
+      }
+      .login-image{
+          text-align: center;
+          margin-top: -50px; 
+      }
+      .login-image p{
+        color: #8DB3DA;
+        margin-top: 20px;
+        font-size: 13px;
+      }
+      .login-form{
+          background: #2F5597;
+          margin-right: 5%;
+          padding: 30px 50px;
+          color: #000000;            
+      }
+      .login-form input{
+        font-size: 20px;
+        font-family: 'Open Sans', sans-serif !important;
+      }
+     
+      .login-form .login-email{
+        width: 100%;
+        margin-top: 10px;
+        padding: 8px;
+      }
+      
+      .btn-login{
+        width: 100%;
+        background: #222A35;
+        color: #68788E;
+        border: none;
+        margin: 15px 0 0 0;
+        height: 55px;
+        cursor: pointer;
+        font-size: 30px !important;
+      }
+      
+  </style>
 </head>
 
 <body>
@@ -190,48 +190,6 @@
           serverPaging: true,
           pageSize: 100
         });
-
-        // banhji.userDS = new kendo.data.DataSource({
-        //   transport: {
-        //     read  : {
-        //       url: baseUrl + 'api/users',
-        //       type: "GET",
-        //       dataType: 'json'
-        //     },
-        //     create  : {
-        //       url: baseUrl + 'api/users/create',
-        //       type: "POST",
-        //       dataType: 'json'
-        //     },
-        //     update  : {
-        //       url: baseUrl + 'api/users',
-        //       type: "PUT",
-        //       dataType: 'json'
-        //     },
-        //     parameterMap: function(options, operation) {
-        //       if(operation === 'read') {
-        //         return {
-        //           limit: options.take,
-        //           page: options.page,
-        //           filter: options.filter
-        //         };
-        //       } else {
-        //         return {models: kendo.stringify(options.models)};
-        //       }
-        //     }
-        //   },
-        //   schema  : {
-        //     model: {
-        //       id: 'id'
-        //     },
-        //     data: 'results',
-        //     total: 'count'
-        //   },
-        //   batch: true,
-        //   serverFiltering: true,
-        //   serverPaging: true,
-        //   pageSize: 50
-        // });
 
         banhji.aws = kendo.observable({
           email: null,
