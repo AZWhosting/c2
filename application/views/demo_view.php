@@ -35594,10 +35594,11 @@
 		<div class="span12 report-module">
 			<p>
 				<span style="font-size: 20px; float: left; font-weight: 700;">Reports</span>
-				<span style="float: left; width: 500px;margin-left: 20px; width: 50%;">This module consolidates different modules report into one place. In addition, ratio analysis is also included in this module </span>
+				<span style="float: left; width: 500px;margin-left: 20px; width: 50%;">
+					This module consolidates different modules report into one place. In addition, ratio analysis is also included in this module
+				</span>
 			</p>
 		</div>
-
 		<div class="span12 " style="margin-top: 20px;">
 			<div class="span6 capital-management" style="padding-left: 0;">
 				<h2 style="min-height: 60px;">How efficient is your working capital management? </h2>
@@ -40733,12 +40734,14 @@
 			});
 		},
 		getFiscalDate 				: function(){
-			today = new Date(),
-			year = new Date(),
-			year.setFullYear(year.getFullYear()-1),			
-			fiscalDate = new Date(year.getFullYear() +"-"+ banhji.institute.fiscal_date);
+			var today = new Date(),	
+			fDate = new Date(today.getFullYear() +"-"+ banhji.institute.fiscal_date);
 
-			return fiscalDate;
+			if(today < fDate){
+				fDate.setFullYear(today.getFullYear()-1);				
+			}			
+
+			return fDate;
 		},
 		//Rate
 		loadRate 					: function(){
@@ -40987,9 +40990,10 @@
 			var self = this,
 				para = [],
 				obj = this.get("obj"),
+				today = new Date(),
 				start = kendo.toString(banhji.source.getFiscalDate(), "yyyy-MM-dd"),
 				end = kendo.toString(today, "yyyy-MM-dd");
-
+				console.log(start);
         	if(obj.id){
         		para.push({ field:"account_id", value: obj.id });
         	}

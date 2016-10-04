@@ -7,7 +7,8 @@ class Contact_reports extends REST_Controller {
 	public $server_host;
 	public $server_user;
 	public $server_pwd;
-	public $fiscal_date;
+	public $startFiscalDate;
+	public $endFiscalDate;
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
@@ -19,10 +20,19 @@ class Contact_reports extends REST_Controller {
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
 			$this->_database = $conn->inst_database;
-			$this->fiscal_date = $institute->fiscal_date;
+			
+			//Fiscal Date
+			$today = date("Y-m-d");
+			$fdate = date("Y") ."-". $institute->fiscal_date;
+			if($today > $fdate){
+				$this->startFiscalDate 	= date("Y") ."-". $institute->fiscal_date;
+				$this->endFiscalDate 	= date("Y",strtotime("+1 year")) ."-". $institute->fiscal_date;
+			}else{
+				$this->startFiscalDate 	= date("Y",strtotime("-1 year")) ."-". $institute->fiscal_date;
+				$this->endFiscalDate 	= date("Y") ."-". $institute->fiscal_date;
+			}
 		}
-	}
-
+	}	
 	
 	//GET HOME
 	function home_get() {		
@@ -35,9 +45,7 @@ class Contact_reports extends REST_Controller {
 		$is_recurring = 0;
 		$deleted = 0;
 		$today = date("Y-m-d");
-		$startDate = date("Y",strtotime("-1 year")) ."-". $this->fiscal_date;
-		$endDate = date("Y") ."-". $this->fiscal_date;
-		
+				
 		$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$ap = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				
@@ -92,8 +100,8 @@ class Contact_reports extends REST_Controller {
 		//A/P			
 		$ap->where("type", "Credit_Purchase");
 		$ap->where_in("status", array(0,2));
-		$ap->where("issued_date >=", $startDate);
-		$ap->where("issued_date <=", $endDate);		
+		$ap->where("issued_date >=", $this->startFiscalDate);
+		$ap->where("issued_date <=", $this->endFiscalDate);		
 		$ap->where("is_recurring", $is_recurring);		
 		$ap->where("deleted", $deleted);		
 		$ap->get_iterated();
@@ -378,7 +386,7 @@ class Contact_reports extends REST_Controller {
 			$creditSaleAmount += floatval($value->amount) / floatval($value->rate);									
 		}		
 		
-	    $startDate = new DateTime(date("Y",strtotime("-1 year")) ."-". $this->fiscal_date);
+	    $startDate = new DateTime($this->startFiscalDate);
 		$endDate = new DateTime();
 		$totalDay = $endDate->diff($startDate)->format("%a");
 		
@@ -1179,7 +1187,7 @@ class Contact_reports extends REST_Controller {
 			$creditPurchaseAmount += floatval($value->amount) / floatval($value->rate);									
 		}		
 		
-	    $startDate = new DateTime(date("Y",strtotime("-1 year")) ."-". $this->fiscal_date);
+	    $startDate = new DateTime($this->startFiscalDate);
 		$endDate = new DateTime();
 		$totalDay = $endDate->diff($startDate)->format("%a");		
 		$collectionDay = 0;
@@ -1735,17 +1743,11 @@ class Contact_reports extends REST_Controller {
 			}									 			
 		}
 		
-		$startDate = date("Y",strtotime("-1 year")) ."-". $this->fiscal_date;
-		$endDate = date("Y") ."-". $this->fiscal_date;
-
-		$data["$startDate"] = $startDate;
-		$data["endDate"] = $endDate;
-
 		$obj->where_in("type", array("Cash_Purchase","Credit_Purchase","Invoice","Cash_Sale"));
-		$obj->where("issued_date >=", $startDate);
-		$obj->where("issued_date <=", $endDate);
-		$obj->where("is_recurring", $is_recurring);		
-		$obj->where("deleted", $deleted);						
+		$obj->where("issued_date >=", $this->startFiscalDate);
+		$obj->where("issued_date <=", $this->endFiscalDate);
+		$obj->where("is_recurring", 0);		
+		$obj->where("deleted", 0);						
 		$obj->order_by("issued_date");								
 		$obj->get_iterated();
 		

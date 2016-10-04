@@ -21090,11 +21090,11 @@
 							
 							        	</div>								        
 								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 120px!important;"><i></i> Print/PDF</span>
+								        	<!--span id="" class="btn btn-icon btn-default pdf" data-bind="click: pdfGrid" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		Print as PDF
-								        	</span>
+								        	</span-->
 								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
@@ -59495,7 +59495,7 @@
 	banhji.invoiceForm =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
-		obj 				: {issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
+		obj 				: {title: "Quotation", issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
 		company 			: banhji.institute,		
 		lineDS 				: dataStore(apiUrl + "transactions/line"),
 		user_id				: banhji.source.user_id,
@@ -59603,8 +59603,8 @@
 				take: 100
 			}).then(function(e){
 				var view = self.txnTemplateDS.view(), Index = parseInt(view[0].transaction_form_id), Active;
-				console.log(Index);
 				obj.set("color", view[0].color);
+				obj.set("title", view[0].title);
 				self.activeInvoiceTmp(Index);
 				self.lineDS.filter({ field:"transaction_id", value: transaction_id });
 				setTimeout(function(){ 	
@@ -60120,6 +60120,25 @@
 		    	win.print();
 		    	win.close();
 		    },2000);
+		},
+		pdfGrid				: function(){
+			var draw = kendo.drawing;
+
+	        draw.drawDOM($("#invFormContent"), {
+	            avoidLinks: true,
+	            paperSize: "A4",
+	            landscape: true,
+	            margin: { top: "1cm", right: "1cm", bottom: "1cm", left: "1cm" }
+	        })
+	        .then(function(root) {
+	            return draw.exportPDF(root);
+	        })
+	        .done(function(data) {
+	            kendo.saveAs({
+	                dataURI: data,
+	                fileName: "Sale_Summary.pdf"
+	            });
+	        });
 		},
 		dateChange 			: function(){
 			// var strDate = "";
