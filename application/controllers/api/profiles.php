@@ -345,6 +345,8 @@ class Profiles extends REST_Controller {
 					'financial_report_date' => $u->institute->financial_report_date,
 					'industry' => array('id'=>$industry->id,'type' => $industry->name),
 					'currency' => $currency->id ? array('id'=> $currency->id, 'code' => $currency->code, 'country' => $currency->country, 'locale'=>$currency->locale):array('id'=>null),
+					'accounting_standard' => $u->institute->accounting_standard,
+					'city' 			=> $u->institute->city,
 					'country' => array('id' => $country->id, 'name' => $country->name),
 					'users' => $u->institute->user->count(),
 					'lastLogin' => $loginCount
@@ -431,16 +433,18 @@ class Profiles extends REST_Controller {
 			$company->logo = $req->logo;
 			$company->description=$req->description;
 			$company->vat_number = $req->vat_number;
-			$company->fiscal_date= $req->fiscal_date;
+			$company->fiscal_date= date('m-d', strtotime($req->fiscal_date));
 			$company->tax_regime= $req->tax_regime;
 			$company->year_founded = $req->year_founded;
+			$company->accounting_standard = $req->accounting_standard;
+			$company->city = $req->city;
 			$company->report_monetary_id=$req->reportCurrency->id;
 			$company->monetary_id = $req->currency->id;
 			$company->industry_id = $req->industry->id;
 			$company->is_local = $req->is_local;
 			$company->zip_code = $req->zip;
 			$company->financial_year = $req->financial_year;
-			$company->financial_report_date = $req->financial_report_date;
+			$company->financial_report_date = date('m-d', strtotime($req->financial_report_date));
 			if($company->save()) {
 				$industry = $company->industry->get();
 				$currency = $company->monetary->get();
@@ -463,6 +467,8 @@ class Profiles extends REST_Controller {
 					'financial_report_date' => $company->financial_report_date,
 					'industry' => array('id'=>$industry->id,'type' => $industry->name),
 					'currency' => $currency->exists() ? array('id'=> $currency->id, 'code' => $currency->code, 'country' => $currency->country, 'locale'=>$currency->locale) : array('id'=>null),
+					'accounting_standard' => $company->accounting_standard,
+					'city' => $company->city,
 					'country' => array('id' => $country->id, 'name' => $country->name),
 					'zip' => $company->zip_code,
 					'users' => $company->user->count()

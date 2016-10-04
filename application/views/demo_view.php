@@ -8542,16 +8542,14 @@
     <tr>    	  	
     	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
     	<td>#=type#</td>
-        <td>
-        	#if(amount>0){#			
-				#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
-					<a href="\#/purchase/#=id#"><i></i> #=number#</a>						
-				#}else{#
-					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
-				#}#
+        <td>		
+			#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
+				<a href="\#/purchase/#=id#">#=number#</a>
+			#}else if(type=="Vendor_Deposit" && amount<0){#
+				<a href="\#/Vendor_Deposit/#=reference.length>0?reference[0].id:0#">#=number#</a>						
 			#}else{#
-				#=number#
-			#}#    	
+				<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
+			#}#
         </td>
     	<td class="right">
     		#if(type=="GRN"){#
@@ -15425,10 +15423,10 @@
     	<td>#=type#</td>
         <!-- Reference -->
         <td>
-        	#if(amount>0){#			
-				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+        	#if(type=="Customer_Deposit" && amount<0){#			
+				<a href="\#/#=type.toLowerCase()#/#=reference[0].id#"><i></i> #=number#</a>			
 			#}else{#
-				#=number#
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
 			#}#        	
         </td>
         <!-- Amount -->
@@ -45244,9 +45242,9 @@
 					self.set("showDiscount", true);
 				}
 
-				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
+				self.lineDS.filter({ field: "transaction_id", value: id });
 				self.jobDS.filter({ field: "contact_id", value: view[0].contact_id });
-				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
+				self.attachmentDS.filter({ field: "transaction_id", value: id });
 				self.loadRecurring();				
 			});				
 		},
@@ -46036,8 +46034,9 @@
 				
 				self.set("statusSrc", banhji.source.acceptedSrc);
 
-				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
-				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
+				self.lineDS.filter({ field: "transaction_id", value: id });
+				self.attachmentDS.filter({ field: "transaction_id", value: id });
+				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
 				self.loadRecurring();				
 			});				
 		},
@@ -46858,11 +46857,9 @@
 					self.set("obj", view[0]);					
 		        }				
 
-				self.lineDS.query({
-					filter: { field: "transaction_id", value: id },
-					page: 1,
-					pageSize: 100
-				});								
+				self.lineDS.filter({ field: "transaction_id", value: id });
+				self.journalLineDS.filter({ field: "transaction_id", value: id });
+				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });								
 			});				
 		},			  
 		objSync 			: function(){
@@ -47901,7 +47898,10 @@
 				page: 1,
 				pageSize: 100
 			}).then(function(e){
-				var view = self.dataSource.view();				
+				var view = self.dataSource.view();
+
+				self.set("obj", view[0]);
+				self.set("original_total", view[0].amount);				
 
 				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
 				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
@@ -47912,10 +47912,8 @@
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.accountLineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.additionalCostDS.filter({ field: "reference_id", value: view[0].id });
-				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });				
-				
-				self.set("obj", view[0]);
-				self.set("original_total", view[0].amount);
+				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
+				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });				
 
 				if(view[0].status=="1" || view[0].type=="Cash_Purchase"){
 					self.set("statusSrc", banhji.source.paidSrc);
@@ -49276,6 +49274,9 @@
 			}).then(function(e){
 				var view = self.dataSource.view();				
 
+				self.set("obj", view[0]);
+				self.set("original_total", view[0].amount);
+
 				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));				
 		        self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
 		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));				
@@ -49283,10 +49284,8 @@
 		        self.set("remaining", kendo.toString(view[0].remaining, "c", view[0].locale));						
 						
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
-				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });				
-
-				self.set("obj", view[0]);
-				self.set("original_total", view[0].amount);
+				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
+				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
 			});				
 		},
 		changes				: function(){
@@ -51843,15 +51842,15 @@
 				page: 1,
 				pageSize: 100
 			}).then(function(e){
-				var view = self.dataSource.view();				
+				var view = self.dataSource.view();
+
+				self.set("obj", view[0]);				
 
 				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
 				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
 		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
 		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));				
 				
-				self.set("obj", view[0]);
-
 				if(view[0].status=="1"){
 					self.set("statusSrc", banhji.source.usedSrc);
 				}else{
@@ -52709,14 +52708,14 @@
 				page: 1,
 				pageSize: 100
 			}).then(function(e){
-				var view = self.dataSource.view();				
+				var view = self.dataSource.view();
+
+				self.set("obj", view[0]);				
 
 				self.set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
 				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
 		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
-		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));										
-				
-				self.set("obj", view[0]);
+		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 
 				if(view[0].status=="1"){
 					self.set("statusSrc", banhji.source.usedSrc);
@@ -52730,6 +52729,7 @@
 
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
+				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
 				self.loadRecurring();	
 			});				
 		},
@@ -53517,7 +53517,9 @@
 				self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 				self.lineDS.filter({ field: "transaction_id", value: id });				
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
-				self.loadReference();
+				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
+
+				self.loadRecurring();
 			});
 		},
 		changes				: function(){
@@ -54538,7 +54540,9 @@
 								
 				//self.contactDS.filter({ field: "id", value: view[0].contact_id });				
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
-				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });				
+				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
+				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
+
 				self.depositDS.filter([
 					{ field: "reference_id", value: view[0].id },
 					{ field: "type", value: "Credit" }
@@ -55936,7 +55940,8 @@
 											
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
-				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });				
+				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
+				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });				
 				
 				self.loadDeposit();				
 			});				
@@ -57084,9 +57089,11 @@
 				self.set("obj", view[0]);
 				
 				self.set("statusSrc", banhji.source.acceptedSrc);
-				
-				//self.contactDS.filter({ field: "id", value: view[0].contact_id });				
+							
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
+				self.attachmentDS.filter({ field: "transaction_id", value: id });
+				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
+				self.loadRecurring();
 			});				
 		},
 		changes				: function(){
@@ -58016,6 +58023,8 @@
 				
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
+				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
+				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
 
 				self.returnDS.query({
 					filter:{ field: "return_id", value: view[0].id },

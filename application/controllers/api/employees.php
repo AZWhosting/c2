@@ -278,4 +278,67 @@ class Employees extends REST_Controller {
 			);
 		}
 	}
+
+	public function roles_post() {
+		$requested_data = json_decode($this->post('models'));
+		$data = array();
+		$this->benchmark->mark('benchmark_start');
+		foreach($requested_data as $req) {
+			$types = new Contact_type(null, null, null, null, $this->_database);
+			$types->parent_id = 3;
+			$types->abbr = $req->abbr;
+			$types->name = $req->name;
+			
+			if($types->save()) {
+				$data[] = array(
+					'id' => $types->id,
+					'abbr' => $types->abbr,
+					'name' => $types->name
+				);
+			}
+		}
+		
+
+		$this->benchmark->mark('benchmark_end');
+		$this->response(
+			array(
+				'results'=>$data, 
+				'msg' => 'result found',
+				'count'=> count($types), 
+				'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')
+				),
+			200
+		);
+	}
+
+	public function roles_put() {
+		$requested_data = json_decode($this->put('models'));
+		$data = array();
+
+		$this->benchmark->mark('benchmark_start');
+		foreach($requested_data as $req) {
+			$types = new Contact_type(null, null, null, null, $this->_database);
+			$types->where('id', $req->id)->get();
+			$types->abbr = $req->abbr;
+			$types->name = $req->name;
+			
+			if($types->save()) {
+				$data[] = array(
+					'id' => $types->id,
+					'abbr' => $types->abbr,
+					'name' => $types->name
+				);
+			}
+		}
+		$this->benchmark->mark('benchmark_end');
+		$this->response(
+			array(
+				'results'=>$data, 
+				'msg' => 'result found',
+				'count'=> count($types), 
+				'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')
+				),
+			200
+		);
+	}
 }
