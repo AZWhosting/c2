@@ -32,7 +32,8 @@ class Contact_reports extends REST_Controller {
 				$this->endFiscalDate 	= date("Y") ."-". $institute->fiscal_date;
 			}
 		}
-	}	
+	}
+
 	
 	//GET HOME
 	function home_get() {		
@@ -52,8 +53,8 @@ class Contact_reports extends REST_Controller {
 		//A/R			
 		$ar->where("type", "Invoice");
 		$ar->where_in("status", array(0,2));
-		$ar->where("issued_date >=", $startDate);
-		$ar->where("issued_date <=", $endDate);		
+		$ar->where("issued_date >=", $this->startFiscalDate);
+		$ar->where("issued_date <", $this->endFiscalDate);		
 		$ar->where("is_recurring", $is_recurring);		
 		$ar->where("deleted", $deleted);		
 		$ar->get_iterated();
@@ -101,7 +102,7 @@ class Contact_reports extends REST_Controller {
 		$ap->where("type", "Credit_Purchase");
 		$ap->where_in("status", array(0,2));
 		$ap->where("issued_date >=", $this->startFiscalDate);
-		$ap->where("issued_date <=", $this->endFiscalDate);		
+		$ap->where("issued_date <", $this->endFiscalDate);		
 		$ap->where("is_recurring", $is_recurring);		
 		$ap->where("deleted", $deleted);		
 		$ap->get_iterated();
@@ -519,8 +520,8 @@ class Contact_reports extends REST_Controller {
 		}
 		
 		$obj->where_in("type", array("Invoice","Cash_Sale","Sale_Order"));
-		$obj->where("issued_date >=", date("Y")."-01-01");
-		$obj->where("issued_date <=", date("Y")."-12-31");
+		$obj->where("issued_date >=", $this->startFiscalDate);
+		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring", $is_recurring);		
 		$obj->where("deleted", $deleted);						
 		$obj->order_by("issued_date");								
@@ -1244,8 +1245,8 @@ class Contact_reports extends REST_Controller {
 		}
 		
 		$obj->where_in("type", array("Cash_Purchase","Credit_Purchase","Purchase_Order"));
-		$obj->where("issued_date >=", date("Y")."-01-01");
-		$obj->where("issued_date <=", date("Y")."-12-31");
+		$obj->where("issued_date >=", $this->startFiscalDate);
+		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring", $is_recurring);		
 		$obj->where("deleted", $deleted);						
 		$obj->order_by("issued_date");								
@@ -1745,7 +1746,7 @@ class Contact_reports extends REST_Controller {
 		
 		$obj->where_in("type", array("Cash_Purchase","Credit_Purchase","Invoice","Cash_Sale"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
-		$obj->where("issued_date <=", $this->endFiscalDate);
+		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring", 0);		
 		$obj->where("deleted", 0);						
 		$obj->order_by("issued_date");								

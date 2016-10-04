@@ -26272,8 +26272,8 @@
 		    	</div>
 		    	<div class="span5" style="float:right">
 		    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
-		    		<div class="span12 main-color order-price">
-		    			<p><span style="color:#fff;text-align: center;" >USD 2,700.00</span></p>
+		    		<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}">
+		    			<p><span style="color:#fff;text-align: center;" data-bind="text: obj.amount"></span></p>
 		    		</div>
 		    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
 		    	</div>
@@ -26380,7 +26380,7 @@
 			    	<div class="span5" style="float:right">
 			    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
 			    		<div class="span12 main-color order-price">
-			    			<p><span style="color:#fff;text-align: center;" >USD 2,700.00</span></p>
+			    			<p><span style="color:#fff;text-align: center;" data-bind="text: obj.amount" >/span></p>
 			    		</div>
 			    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
 			    	</div>
@@ -59386,6 +59386,8 @@
 				case 28: Active = banhji.view.invoiceForm25; break;
 				case 29: Active = banhji.view.invoiceForm26; break;
 				case 30: Active = banhji.view.invoiceForm25; break;
+				case 31: Active = banhji.view.invoiceForm25; break;
+
 			}
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 		},
@@ -59506,6 +59508,7 @@
 			}
 		},	 
 		printGrid			: function() {
+			var obj = this.get('obj');
 			var gridElement = $('#grid'),
 		        printableContent = '',
 		        win = window.open('', '', 'width=800, height=900'),
@@ -59529,7 +59532,7 @@
 		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
 		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style>' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm; } .inv1 .main-color { background-color: '+obj.color+'!important; -webkit-print-color-adjust:exact; }</style>' +
 		            '</head>' +
 		            '<body>';
 		    var htmlEnd =
@@ -59541,7 +59544,7 @@
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();
-		    	win.close();
+		    	//win.close();
 		    },2000);
 		},
 		activeInvoiceTmp		: function(e){
@@ -59577,6 +59580,7 @@
 				case 28: Active = banhji.view.invoiceForm25; break;
 				case 29: Active = banhji.view.invoiceForm26; break;
 				case 30: Active = banhji.view.invoiceForm25; break;
+				case 31: Active = banhji.view.invoiceForm25; break;
 			}
 			banhji.view.invoiceForm.showIn('#invFormContent', Active);
 		},
@@ -60106,7 +60110,7 @@
 		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
 		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
 		            '</head>' +
 		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
 		    var htmlEnd =
@@ -67757,7 +67761,9 @@
 		invoiceForm22: new kendo.Layout("#invoiceForm22", {model: banhji.invoiceForm}),
 		invoiceForm23: new kendo.Layout("#invoiceForm23", {model: banhji.invoiceForm}),
 		invoiceForm24: new kendo.Layout("#invoiceForm24", {model: banhji.invoiceForm}),
-		
+		invoiceForm25: new kendo.Layout("#invoiceForm25", {model: banhji.invoiceForm}),
+		invoiceForm26: new kendo.Layout("#invoiceForm26", {model: banhji.invoiceForm}),
+
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.customerSale}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.customerSale}),
 		saleSummaryProduct: new kendo.Layout("#saleSummaryProduct", {model: banhji.customerSale}),
