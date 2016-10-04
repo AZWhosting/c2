@@ -10,8 +10,6 @@ class send_mail extends REST_Controller {
 		parent::__construct();
 		
 	}
-	
-	
 	//POST
 	function index_post() {
 		// $models = json_decode($this->post('models'));
@@ -60,7 +58,7 @@ class send_mail extends REST_Controller {
 		// }
 		//$data["count"] = count($data["results"]);
 		
-		$this->response(array('msg' => $message), 201);
+		echo $message;
 
 	}
 

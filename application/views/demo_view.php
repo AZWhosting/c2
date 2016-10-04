@@ -61,7 +61,7 @@
 
     </li>	
 </script>
-<!-- <script type="text/x-kendo-template" id="index">
+<script type="text/x-kendo-template" id="index">
 	<div class="row-fluid">
 		<div class="span6">
 			<div class="row">
@@ -150,49 +150,50 @@
 		
 		<div class="span6">
 			<div class="row">
-				<div class="span12">					
-
-					
-					<div class="board-add" >
-						<div class="span9" style="padding-right: 0; padding-left: 0;">
-							<h2 style="color: #113051;">Welcome on board!</h2>
-							<p>
+				<div class="span12" style="background: #fff;">
+					<!-- Add New Board -->
+					<div class="board-add" style="padding: 15px 0;">
+						<div class="span4" style="padding-right: 0;">
+							<h2 style="color: #6399D5; font-size: 20px; ">Welcome on board!</h2>
+							<p style="font-size: 12px;">
 								To get you started with BanhJi, please have a look at this <a target="_blank" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/welcome_guide.pdf">[Welcome Guide]</a>.
 							</p>
 						</div>
-						<div class="span3" style="text-align: right; padding-right: 0; padding-left: 0;">
-							<div class="span12" style="padding-left: 0; padding-right: 0;">
-								<div class="span6">
+						<div class="span8" style="padding-right: 0; padding-left: 0;">
+							<div class="span12" style="padding-right: 0; padding-left: 0;">
+								<div class="span3">
 									<a href="#/customer" class="center">
-										<img style="width: 60px; height: 60px;" title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+										<img width="90" height="90" title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
 									</a>
 								</div>
-								<div class="span6">
+								<div class="span3">
 									<a href="#/vendor" class="center">
-										<img style="width: 60px; height: 60px;" title="Add Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
+										<img width="90" height="90" title="Add Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
 									</a>
 								</div>
-								<div class="span6">
+								<div class="span3">
 									<a href="#/item" class="center">
-										<img style="width: 60px; height: 60px;" title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+										<img width="90" height="90" title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
 									</a>
 								</div>
-								<div class="span6">
+								<div class="span3">
 									<a href="#/item_service" class="center">
-										<img style="width: 60px; height: 60px;" title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+										<img width="90" height="90" title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
 									</a>
 								</div>
 							</div>
 						</div>
-					</div>
+					</div><!--End Add New Board -->
 
-					
-						<div class="span12">
-							<h4 data-bind="text: companyName"></h4>
-							<h2 style="color: #113051;">Financial Snapshot</h2>
-							<span style="color: #000000;">As of:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
-						</div>
+				</div>	
+
+				<div class="board-chart">
+					<div class="span12">
+						<h4 data-bind="text: companyName"></h4>
+						<h2 style="color: #113051;">Financial Snapshot</h2>
+						<span style="color: #000000;">As of:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
 					</div>
+				</div>
 
 					
 					<div class="board-chart">
@@ -204,17 +205,17 @@
 										<tr>
 											<td>Income</td>
 											<td></td>
-											<td>0</td>
+											<td align="right">12,600,000</td>
 										</tr>
 										<tr>
 											<td>Expense</td>
 											<td></td>
-											<td>0</td>
+											<td align="right">8,500,000</td>
 										</tr>
 										<tr>
 											<td><b>Net Income</b></td>
 											<td></td>
-											<td><b>0</b></td>
+											<td align="right"><b>4,100,000</b></td>
 										</tr>
 									</table>
 								</a>     
@@ -226,17 +227,17 @@
 										<tr>
 											<td>Assets</td>
 											<td></td>
-											<td>0</td>
+											<td align="right">17,537,000</td>
 										</tr>
 										<tr>
 											<td>Liabilities</td>
 											<td></td>
-											<td>0</td>
+											<td align="right">3,437,000</td>
 										</tr>
 										<tr>
 											<td><b>Equity</b></td>
 											<td></td>
-											<td><b>0</b></td>
+											<td align="right"><b>14,100,000</b></td>
 										</tr>
 									</table>
 								</a>
@@ -318,9 +319,9 @@
 			<p>© 2016 BanhJi PTE. Ltd. All rights reserved.</p>
 		</div>	
 	</div>		
-</script> -->
+</script>
 
-<script type="text/x-kendo-template" id="index">
+<!-- <script type="text/x-kendo-template" id="index">
 	<div class="row-fluid">
 		<div class="span6">
 			<div class="row">
@@ -345,8 +346,8 @@
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Products/Services</span>
 						</li>
 						<li style="text-align:center;">
-							<a href="#">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.jpg" alt="Attachment">
+							<a href="#/documents">
+								<img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.png" alt="Attachment">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Documents</span>
 						</li>
@@ -399,12 +400,12 @@
 			</div>	
 		</div>
 		
-		<!-- Welcome -->
+		
 		<div class="span6">
 			<div class="row">
 				<div class="span12">					
 
-					<!-- Add New Board -->
+					
 					<div class="board-add">
 						<div class="span6">
 							<h2>Welcome on board!</h2>
@@ -436,18 +437,18 @@
 								</div>
 							</div>
 						</div>
-					</div><!--End Add New Board -->
+					</div>
 
-					<!-- Financial Board -->
+				
 					<div class="board-financial">
 						<div class="span12">
 							<h4 data-bind="text: companyName"></h4>
 							<h2 style="color: #113051;">Financial Snapshot</h2>
 							<span style="color: #000000;">As of:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
 						</div>
-					</div><!--End Financial Board -->
+					</div>
 
-					<!-- Chart Board -->
+					
 					<div class="board-chart">
 						<div class="span12">
 							<div class="span6">
@@ -555,7 +556,7 @@
 
 						<div class="span12">
 							<div class="home-chart">
-								<!-- Graph -->
+								
 								<div data-role="chart"
 									 data-auto-bind="false"
 					                 data-legend="{ position: 'top' }"
@@ -571,14 +572,14 @@
 					                             ]"	                             
 					                 data-bind="source: graphDS"
 					                 style="height: 250px;" ></div>
-					            <!-- End Graph -->      
+					            
 							</div>
 						</div>
-					</div><!--End Chart Board -->
+					</div>
 					
 				</div>
 			</div>
-		</div><!-- End Welcome -->
+		</div>
 	</div>
 
 	<div class="row-fluid">
@@ -586,7 +587,7 @@
 			<p>© 2016 BanhJi PTE. Ltd. All rights reserved.</p>
 		</div>	
 	</div>		
-</script>
+</script> -->
 
 <script id="searchAdvanced" type="text/x-kendo-template">
     <div id="slide-form">
