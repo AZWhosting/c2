@@ -259,7 +259,7 @@
                                   </td>
                                 </tr>
                                 <tr>
-                                    <td>Number</td>
+                                    <td>Employment Number</td>
                                     <td>:</td>
                                     <td>
                                       <input id="type"
@@ -275,7 +275,18 @@
                                         style="width: 150px;"
                                       >
                                     </td>
-                                    <td></td><td></td>
+                                    <td>Status</td>
+                                    <td>
+                                      <input id="type"
+                                        data-role="dropdownlist"
+                                        data-bind="source: statusDS, value: current.status"
+                                        data-text-field="value"
+                                        data-value-field="id"
+                                        data-value-primitive="true"
+                                        class="form-control col-md-7 col-xs-12"
+                                        type="text"
+                                      >
+                                    </td>
                                 </tr>                                
                             </table>
                           </div>
@@ -285,7 +296,7 @@
                             <ul class="nav" role="tablist">
                               <li class="nav-item">
                                 <a class="nav-link active" href="#tabs-4-tab-1" role="tab" data-toggle="tab" aria-expanded="false">
-                                  Contact
+                                  Information
                                 </a>
                               </li>
                               <li class="nav-item">
@@ -295,6 +306,11 @@
                               </li>
                               <li class="nav-item">
                                 <a class="nav-link" href="#tabs-4-tab-3" role="tab" data-toggle="tab" aria-expanded="false">
+                                  Emmergency Contact
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="#tabs-4-tab-4" role="tab" data-toggle="tab" aria-expanded="false">
                                   Document
                                 </a>
                               </li>
@@ -305,26 +321,58 @@
                             <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1" aria-expanded="false">
                               <table class="table">
                                 <tr>
-                                  <td>status</td>
+                                  <td>Nationality</td>
                                   <td>
-                                    <input id="type"
-                                     data-role="dropdownlist"
-                                     data-bind="source: statusDS, value: current.status"
-                                     data-text-field="value"
-                                     data-value-field="id"
-                                     data-value-primitive="true"
-                                     class="form-control col-md-7 col-xs-12"
+                                    <input id="type"                                     
+                                     data-bind="value: current.status"
+                                     class="k-textbox"
                                      type="text"
                                      >
                                     </td>
                                   <td></td>
-                                  <td>registered date</td>
+                                  <td>Employment Date</td>
                                   <td>
                                     <input type="text" 
                                       data-role="datepicker" 
                                       data-bind="value: current.registered_date"
                                       data-format="dd-MM-yyyy"
                                       data-parse-formats="yyyy-MM-dd"
+                                      >
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Married Status</td>
+                                  <td>
+                                    <input id="type"                                     
+                                     data-bind="value: current.status"
+                                     class="k-textbox"
+                                     type="text"
+                                     >
+                                    </td>
+                                  <td></td>
+                                  <td>Children</td>
+                                  <td>
+                                    <input type="text" 
+                                      data-role="numerictextbox" 
+                                      data-bind="value: current.registered_date"
+                                      >
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>City/Province</td>
+                                  <td>
+                                    <input id="type"                                     
+                                     data-bind="value: current.status"
+                                     class="k-textbox"
+                                     type="text"
+                                     >
+                                    </td>
+                                  <td></td>
+                                  <td>Country</td>
+                                  <td>
+                                    <input type="text" 
+                                      data-bind="value: current.registered_date"
+                                      class="k-textbox"
                                       >
                                   </td>
                                 </tr>
@@ -392,6 +440,9 @@
                               </table>
                             </div><!--.tab-pane-->
                             <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3" aria-expanded="false">
+                              fsdfds
+                            </div><!--.tab-pane-->
+                            <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-4" aria-expanded="false">
                               <input data-role="upload" type="file" data-bind="events: {select: fileMan.onSelected}" data-show-file-list="false">
                               <table class="table">
                                 <tbody 
@@ -442,7 +493,7 @@
                             <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: close"><i></i></span>
                         </div>
                         <h2>Edit Company Info</h2>
-                        <img data-bind="attr: {src: current.logo}"><br>
+                        <img data-bind="attr: {src: current.logo.url}"><br>
                         <input type="file" id="companyLogo" data-bind="events: {change: onLogoChange}">
                         <div class="divider"></div>
                         <header class="box-typical-header-sm">
@@ -479,10 +530,17 @@
                               </td>
                             </tr>
                             <tr>
-                              <td>Year Founded</td>
+                              <td>Company Registraion Number</td>
                               <td>:</td>
                               <td>
                                 <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.year_founded">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>City/Province</td>
+                              <td>:</td>
+                              <td>
+                                <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.zip">
                               </td>
                             </tr>
                             <tr>
@@ -514,6 +572,17 @@
                         <header class="box-typical-header-sm">Financial Info</header>
                         <article class="profile-info-item edit-table">
                             <table >
+                              <tr>
+                                  <td>Accounting Standard</td>
+                                  <td>:</td>
+                                  <td>
+                                    <input type="text" 
+                                      data-role="datepicker" 
+                                      class="form-control"
+                                      data-format="dd-M" 
+                                      data-bind="value: current.fiscal_date">
+                                  </td>
+                                </tr>
                                 <tr>
                                   <td>Fiscal Date</td>
                                   <td>:</td>
@@ -636,9 +705,14 @@
                     <td><span data-bind="text:current.zip"></span></td>
                 </tr>
                 <tr>
-                    <td>Year Founded</td>
+                    <td>Company Registration Number</td>
                     <td>:</td>
                     <td><span data-bind="text:current.year_founded"></span></td>
+                </tr>
+                <tr>
+                    <td>City/Province</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.name"></span></td>
                 </tr>
                 <tr>
                     <td>Country</td>
@@ -655,6 +729,11 @@
         <header class="box-typical-header-sm">Financial Info</header>
         <article class="profile-info-item">
             <table >
+              <tr>
+                    <td>Accounting Standard</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.fiscal_date"></span></td>
+                </tr>
                 <tr>
                     <td>Fiscal Date</td>
                     <td>:</td>
@@ -915,7 +994,7 @@
             <img src="#=image_url#" width="100"> #=name#
           </td>
           <td>
-            <i class="fa fa-hand-o-right" data-bind="click: assignTo"></i>
+            <i data-bind="click: assignTo" style="cursor: pointer">Assign</i>
           </td>
       </tr>
     </script>
