@@ -7176,10 +7176,9 @@
 			<div class="container-960">					
 			<div id="example" class="k-content">					
 			    
-		    	<div class="hidden-print pull-right">
-		    		<span class="glyphicons no-js remove_2" 
-						data-bind="click: cancel"><i></i></span>						
-				</div>
+		    	<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
 
 		        <h2>CASH ADVANCE</h2>			    		   
 
@@ -7231,7 +7230,7 @@
 											   data-auto-bind="false"
 											   data-header-template="employee-header-tmpl"                  
 							                   data-value-primitive="true"
-							                   data-template="cashAdvance-contact-list-tmpl"
+							                   data-template="contact-list-tmpl"
 							                   data-text-field="name"
 							                   data-value-field="id"
 							                   data-bind="value: obj.contact_id,
@@ -7251,11 +7250,13 @@
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
 						        <ul class="row-fluid row-merge">
-						            <li class="span1 glyphicons pencil active"><a href="#tab1-3" data-toggle="tab"><i></i></a>
+						        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i></a>
 						            </li>
-						            <li class="span1 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i></a>
+						            <li class="span1 glyphicons pencil"><a href="#tab2-4" data-toggle="tab"><i></i></a>
 						            </li>
-						            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
+						            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
+						            </li>
+						            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i></a>
 						            </li>								            
 						        </ul>
 						    </div>
@@ -7263,8 +7264,88 @@
 
 						    <div class="tab-content">
 
+						        <!-- Option Tab content -->
+						        <div class="tab-pane active" id="tab1-4">
+						        	
+						        	<div class="row-fluid">
+										<div class="span3">
+											<!-- Group -->
+											<div class="control-group">										
+												<label for="txtExpectedDate">Expected Date</label>
+												<input id="txtExpectedDate" name="txtExpectedDate" 
+														data-role="datepicker"
+														data-format="dd-MM-yyyy"
+														data-parse-formats="yyyy-MM-dd" 
+														data-bind="value: obj.due_date" 
+														required data-required-msg="required"
+														style="width:100%;" />									            
+											</div>
+											<!-- // Group END -->
+										</div>
+
+										<div class="span3">
+											<!-- Group -->
+											<div class="control-group">										
+												<label for="ddlPaymentMethod">Method</label>
+												<input id="ddlPaymentMethod" name="ddlPaymentMethod"
+													   data-role="dropdownlist"								                   
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-header-template="cash-payment-method-header-tmpl"
+									                   data-value-field="id"
+									                   data-bind="value: obj.payment_method_id,
+									                              source: paymentMethodDS"							                   
+									                   data-option-label="(--- Select ---)"
+									                   required data-required-msg="required" 
+									                   style="width: 100%;" />									            
+											</div>
+											<!-- // Group END -->
+										</div>
+
+										<div class="span3">
+											<!-- Group -->
+											<div class="control-group">										
+												<label for="cbbAccount">Cash Account</label>
+												<input id="cbbAccount" name="cbbAccount"
+													   data-role="combobox"                   
+									                   data-value-primitive="true"
+									                   data-header-template="account-header-tmpl"                  
+									                   data-template="account-list-tmpl"
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.account_id,
+									                              source: cashAccountDS"
+									                   data-placeholder="Select Account.."					                                      
+									                   required data-required-msg="required" style="width: 100%" />									            
+											</div>
+											<!-- // Group END -->
+										</div>
+
+										<div class="span3">
+											<!-- Group -->
+											<div class="control-group">										
+												<label for="cbbAccount">Segment</label>
+												<select data-role="multiselect"
+													   data-value-primitive="true"
+													   data-header-template="segment-header-tmpl"							   
+													   data-item-template="segment-list-tmpl"				    
+													   data-value-field="id" 
+													   data-text-field="code"
+													   data-bind="value: obj.segments, 
+													   			source: segmentItemDS,
+													   			events:{ change: transactionSegmentChanges }"
+													   data-placeholder="Add Segment.."				   
+													   style="width: 100%" /></select>									            
+											</div>
+											<!-- // Group END -->
+										</div>
+									</div>
+
+						        </div>
+						        <!-- // Option Tab content END -->
+
 						        <!-- Memo Tab content -->
-						        <div class="tab-pane active" id="tab1-3">
+						        <div class="tab-pane" id="tab2-4">
 						        	<textarea id="memo2" cols="0" rows="4" class="k-textbox" 
 						        		data-bind="value: obj.memo2" style="width:100%;" 
 						        		placeholder="Please enter transaction purpose here ..."></textarea>
@@ -7272,7 +7353,7 @@
 						        <!-- // Memo Tab content END -->
 
 						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab2-3">	
+						        <div class="tab-pane" id="tab3-4">	
 
 						        	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>						            	
 						            
@@ -7294,16 +7375,16 @@
 								            </tr> 
 								        </thead>
 								        <tbody data-role="listview" 
-								        		data-template="attachment-rith-list-tmpl" 
+								        		data-template="attachment-list-tmpl" 
 								        		data-auto-bind="false"
-								        		data-bind="source: fileMan.dataSource"></tbody>			        
+								        		data-bind="source: attachmentDS"></tbody>			        
 								    </table>
 
 						        </div>
 						        <!-- // Attach Tab content END -->
 
 						        <!-- Recuring Tab content -->
-						        <div class="tab-pane" id="tab3-3">							            	
+						        <div class="tab-pane" id="tab4-4">							            	
 						            
 						            <div class="span5">
 
@@ -7423,82 +7504,6 @@
 
 				    </div>
 				</div>
-
-				<div class="box-generic">
-					<div class="row-fluid">
-						<div class="span3">
-							<!-- Group -->
-							<div class="control-group">										
-								<label for="txtExpectedDate">Expected Date</label>
-								<input id="txtExpectedDate" name="txtExpectedDate" 
-										data-role="datepicker"
-										data-format="dd-MM-yyyy"
-										data-parse-formats="yyyy-MM-dd" 
-										data-bind="value: obj.due_date" 
-										required data-required-msg="required"
-										style="width:100%;" />									            
-							</div>
-							<!-- // Group END -->
-						</div>
-
-						<div class="span3">
-							<!-- Group -->
-							<div class="control-group">										
-								<label for="ddlPaymentMethod">Method</label>
-								<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-									   data-role="dropdownlist"								                   
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-header-template="cash-payment-method-header-tmpl"
-					                   data-value-field="id"
-					                   data-bind="value: obj.payment_method_id,
-					                              source: paymentMethodDS"							                   
-					                   data-option-label="(--- Select ---)"
-					                   required data-required-msg="required" 
-					                   style="width: 100%;" />									            
-							</div>
-							<!-- // Group END -->
-						</div>
-
-						<div class="span3">
-							<!-- Group -->
-							<div class="control-group">										
-								<label for="cbbAccount">Cash Account</label>
-								<input id="cbbAccount" name="cbbAccount"
-									   data-role="combobox"                   
-					                   data-value-primitive="true"
-					                   data-header-template="account-header-tmpl"                  
-					                   data-template="account-list-tmpl"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: obj.account_id,
-					                              source: cashAccountDS"
-					                   data-placeholder="Select Account.."					                                      
-					                   required data-required-msg="required" style="width: 100%" />									            
-							</div>
-							<!-- // Group END -->
-						</div>
-
-						<div class="span3">
-							<!-- Group -->
-							<div class="control-group">										
-								<label for="cbbAccount">Segment</label>
-								<select data-role="multiselect"
-									   data-value-primitive="true"
-									   data-header-template="segment-header-tmpl"							   
-									   data-item-template="cashAdvance-segment-tmpl"				    
-									   data-value-field="id" 
-									   data-text-field="code"
-									   data-bind="value: obj.segments, 
-									   			source: segmentItemDS,
-									   			events:{ change: transactionSegmentChanges }"
-									   data-placeholder="Add Segment.."				   
-									   style="width: 100%" /></select>									            
-							</div>
-							<!-- // Group END -->
-						</div>
-					</div>
-				</div>				
 				
 				<!-- Item List -->
 				<table class="table table-bordered table-primary table-striped table-vertical-center">
@@ -7623,7 +7628,7 @@
 				   data-role="combobox"                   
                    data-value-primitive="true"
                    data-header-template="account-header-tmpl"                  
-                   data-template="cashAdvance-account-list-tmpl"
+                   data-template="account-list-tmpl"
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: account_id,
@@ -7646,7 +7651,7 @@
 		<td data-bind="visible: showSegment">
 			<select data-role="multiselect"
 				   data-value-primitive="true"				   
-				   data-item-template="cashAdvance-segment-tmpl"				    
+				   data-item-template="segment-list-tmpl"				    
 				   data-value-field="id" 
 				   data-text-field="code"
 				   data-bind="value: segments, 
@@ -7665,21 +7670,6 @@
 		</td>			
     </tr>   
 </script>
-<script id="cashAdvance-account-list-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=number# #=name#
-	</span>
-</script>
-<script id="cashAdvance-contact-list-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=number# #=surname# #=name#
-	</span>
-</script>
-<script id="cashAdvance-segment-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=name# (#=segment[0].name#)
-	</span>
-</script>
 
 <script id="expense" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -7687,10 +7677,9 @@
 			<div class="container-960">					
 			<div id="example" class="k-content">					
 			    
-		    	<div class="hidden-print pull-right">
-		    		<span class="glyphicons no-js remove_2" 
-						data-bind="click: cancel"><i></i></span>						
-				</div>
+		    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
 
 		        <h2>EXPENSE</h2>			    		   
 
