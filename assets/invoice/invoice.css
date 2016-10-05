@@ -395,3 +395,9 @@ pre {
 .inv1 .center-tbl td {
 	text-align: center;
 }
+.inv1 .light-blue-td {
+	background: #c6d9f1;text-align: left;padding-left: 5px;
+}
+.inv1 span.total-amount {
+	color:#fff;text-align: center;
+}

@@ -1,5 +1,5 @@
 #cbbContact-list,
-
+#cbbAccount-list,
 #cbbCurrency-list,
 #ddlRA-list,
 #ddlDepositAccount-list,
@@ -16,9 +16,27 @@
 #ddlAccount-list,
 #cbbVendor-list,
 #cbbCustomer-list,
-#cbbInvoice-list
+#cbbInvoice-list,
+#ddlSegment-list
 {
   width: 350px !important;
+}
+
+.widget-head.head-custom{
+    background: #113051 !important;
+}
+.widget-head.head-custom ul{
+  height: 50px !important;
+}
+.widget-head.head-custom ul li{
+  height: 50px!important;
+  line-height: 50px!important;
+}
+.widget-head.head-custom ul li a{
+  height: 50px!important;
+  line-height: 50px!important;
+  color: #fff;
+  font-weight: 600;
 }
 
 #ccbItem-list{
@@ -369,7 +387,7 @@
   }
   .performance tr:last-child td,
   .position tr:last-child td{
-      border-bottom: 3px  #649AD3 double;
+      border-bottom: 1px  #649AD3 double;
   }
 
   .welcome-nopadding{
@@ -1878,11 +1896,15 @@ a.referral {
     min-width: 100%;
     max-width: 100%;
 }
-.popRightBlog input[type=email]{
-        width: 100%;
+.popRightBlog input[type=email], .popRightBlog input[type=text]{
+    width: 65%;
     margin-bottom: 2px;
     padding: 5px;
     border: 1px solid #ccc;
+}
+.popRightBlog input[type=text] {
+  width: 34%;
+  margin-right: 2px;
 }
 a.feedback:hover {
     margin-left: -66px;

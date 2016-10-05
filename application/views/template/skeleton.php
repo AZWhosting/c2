@@ -172,9 +172,8 @@ var themerPrimaryColor = primaryColor;
 		<a class="rightfixed referral btn-rounded glyphicons no-js user_add" href="#referralContent" data-toggle="modal"><i></i>
 			Referral
 		</a><br>
-		<a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" href="" data-toggle="modal"><i></i>
-			Sales Enquiries
-		
+		<a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 144px;" href="" data-toggle="modal"><i></i>
+			Support
 		<div class="enquiry-content">
 			<p>Call us at<br>+855 10 413 777<br>Mon-Fri<br>09:00 - 18:00</p>
 			<div class="fb-messengermessageus" 
@@ -205,11 +204,11 @@ var themerPrimaryColor = primaryColor;
 			<h3>Referral</h3>
 		</div>
 		<div class="modal-body">
-		  	<input type="email" name="mail1" placeholder="Your friend email" />
-		  	<input type="email" name="mail2" placeholder="Your friend email" />
-		  	<input type="email" name="mail3" placeholder="Your friend email" />
-		  	<input type="email" name="mail4" placeholder="Your friend email" />
-		  	<input type="email" name="mail5" placeholder="Your friend email" />
+		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
+		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
+		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
+		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
+		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="btn btn-default cloze" data-dismiss="modal">Close</a>
