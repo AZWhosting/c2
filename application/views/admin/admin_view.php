@@ -625,7 +625,8 @@
                                       class="form-control" 
                                       data-bind="source: currencies, value: current.currency.id"
                                       data-value-field="id"
-                                      data-text-field="code">
+                                      data-text-field="code"
+                                      disabled>
                                   </td>
                                 </tr>
                                 <tr>
@@ -639,19 +640,7 @@
                                       data-value-field="id"
                                       data-text-field="code">
                                   </td>
-                                </tr>
-                                <tr>
-                                  <td>Fiscal Report Date</td>
-                                  <td>:</td>
-                                  <td>
-                                    <input type="text" 
-                                      data-role="datepicker"
-                                      data-format="dd-MM"
-                                      data-parse-formats="yyyy-MM-dd"
-                                      class="form-control" 
-                                      data-bind="value: current.financial_report_date">
-                                  </td>
-                                </tr>
+                                </tr> 
                                 <tr>
                                   <td>Tax Regime</td>
                                   <td>:</td>
@@ -686,7 +675,7 @@
     </script>
     <!-- user placeholder -->
     <script type="text/x-kendo-template" id="template-placeholder-module">
-      <div style="border:none;" data-role="listview" data-bind="source: modules" data-template="company-modules"></div>
+      <div style="border:none;" data-role="listview" data-bind="source: users.modules" data-template="company-modules"></div>
     </script>
     <script type="text/x-kendo-template" id="company-modules">
       <div class="col-xs-3 col-md-2 col-lg-2">
@@ -773,11 +762,6 @@
                     <td><span data-bind="text:current.reportCurrency.code"></span></td>
                 </tr>
                 <tr>
-                    <td>Fiscal Report Date</td>
-                    <td>:</td>
-                    <td><span data-bind="text:current.financial_report_date"></span></td>
-                </tr>
-                <tr>
                     <td>Tax Regime</td>
                     <td>:</td>
                     <td><span data-bind="text:current.tax_regime"></span></td>
@@ -820,6 +804,7 @@
           </thead>
           <tbody data-role="listview" data-bind="source: employees.dataSource" data-template="employee-list">
       </tbody></table>
+      <div id="ntf1" data-role="notification"></div>
     </script>
     <!-- user placeholder -->
     <script type="text/x-kendo-template" id="user-profile">
@@ -873,27 +858,6 @@
                                     <td>:</td>
                                     <td>
                                         <input type="Email" data-bind="value: currentID.email" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Facebook</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: currentID.facebook" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>LinkedIn</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: currentID.linkedin" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Twitter</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: currentID.twitter" class="form-control" id="" placeholder="">
                                     </td>
                                 </tr>
                             </table>
@@ -1093,27 +1057,6 @@
                                       <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
                                   </td>
                               </tr>
-                              <tr>
-                                  <td>Facebook</td>
-                                  <td>:</td>
-                                  <td>
-                                      <input type="Email" data-bind="value: current.facebook" class="form-control" id="" placeholder="">
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>LinkedIn</td>
-                                  <td>:</td>
-                                  <td>
-                                      <input type="Email" data-bind="value: current.linkedin" class="form-control" id="" placeholder="">
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>Twitter</td>
-                                  <td>:</td>
-                                  <td>
-                                      <input type="Email" data-bind="value: current.twitter" class="form-control" id="" placeholder="">
-                                  </td>
-                              </tr>
                               <tr data-bind="visible:showAdmin">
                                   <td>Role</td>
                                   <td>:</td>
@@ -1210,27 +1153,6 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Facebook</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.facebook" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>LinkedIn</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.linkedin" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Twitter</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.twitter" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td>Role</td>
                                     <td>:</td>
                                     <td>
@@ -1243,20 +1165,6 @@
                                                class="form-control col-md-7 col-xs-12"
                                                type="text"
                                                >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Type</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: userTypes, value: current.usertype"
-                                               data-text-field="name"
-                                               data-value-field="id"
-                                               data-value-primitive="true"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text">
                                     </td>
                                 </tr>
                             </table>
@@ -2448,7 +2356,7 @@
             bill_to: "",
             ship_to: "",
             abbr: "",
-            currency: "",
+            currency: {id: 2},
             userid: 0,
             account: {id: 0, name: null},
             salary: {id: 0, name: null},
@@ -2498,26 +2406,25 @@
           if( banhji.employees.dataSource.hasChanges()) {
             banhji.employees.dataSource.sync();
             banhji.employees.dataSource.bind('requestEnd', function(e){
-              if(e.response) {
-                if(e.type == 'create') {
-                  banhji.employees.fileMan.save(e.response.results[0].id);
-                  banhji.employees.get('payroll').set('contact_id', e.response.results[0].id);
-                  if(banhji.employees.payrollDS.data(0).dirty) {
-                    banhji.employees.payrollDS.sync();
-                  }
-                  banhji.employees.addNew();
-                } else if(e.type == 'update') {
-                  if(banhji.employees.payrollDS.data(0).dirty) {
-                    banhji.employees.payrollDS.sync();
-                  }
+              if(e.type != "read") {
+                if(e.response) {
+                  if(e.type == 'create') {
+                    banhji.employees.fileMan.save(e.response.results[0].id);
+                    banhji.employees.get('payroll').set('contact_id', e.response.results[0].id);
+                    if(banhji.employees.payrollDS.data()[0].dirty) {
+                      banhji.employees.payrollDS.sync();
+                    }
+                    // banhji.employees.addNew();
+                  } else if(e.type == 'update') {
+                    if(banhji.employees.payrollDS.data()[0].dirty) {
+                      banhji.employees.payrollDS.sync();
+                    }
+                  }                
+                  $("#ntf1").data("kendoNotification").success("Data saved.");
+                  banhji.router.navigate('employeelist');
                 } else {
-
+                  $("#ntf1").data("kendoNotification").error("Operation failed");
                 }
-                
-                $("#ntf1").data("kendoNotification").success("Data saved.");
-                banhji.router.navigate('employeelist');
-              } else {
-                $("#ntf1").data("kendoNotification").error("Operation failed");
               }
             });
           } else {
@@ -2531,7 +2438,6 @@
               }
             });
           }
-            
         },
         saveClose: function() {
           banhji.employees.dataSource.sync();
@@ -2642,6 +2548,7 @@
               user: this.get('current').id,
               module: e.data.id,
               name: e.data.name,
+              href: e.data.href,
               img_url: e.data.image_url
             });
           }
@@ -3126,9 +3033,11 @@
                 ]);
               }            
             });
+            banhji.users.modules.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).id});
           });
           layout.showIn("#container", mainDash);
-          mainDash.showIn("#placeholder", instituteModule);
+          // mainDash.showIn("#placeholder", instituteModule);
+          mainDash.showIn("#placeholder", profileMod);
         }
       });
 
@@ -3202,6 +3111,7 @@
         // layout.showIn("#container", profile);
         // profile.showIn("#profile-placeholder", profileMod);
         banhji.users.setCurrent(banhji.users.users.get(id));
+        banhji.users.modules.filter({field: 'id', value: id});
         // banhji.users.modules.filter({field: 'username', value: banhji.users.users.get(id).username});
         // layout.showIn("#container", mainDash);
         mainDash.showIn("#placeholder", assign);

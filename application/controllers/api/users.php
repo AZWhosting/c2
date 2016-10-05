@@ -140,11 +140,11 @@ class Users extends REST_Controller {
 			$User->email = $user->email;
 			$User->mobile = $user->mobile;
 			$User->role = $user->role;
-			$user->usertype_id = $user->usertype;
-			$User->profile_photo_url = $user->profile_photo;
-			$User->facebook = $user->facebook;
-			$User->linkedin = $user->linkedin;
-			$User->twitter  = $user->twitter;
+			// $user->usertype_id = $user->usertype;
+			$User->pimage_id = $user->profile_photo->id;
+			// $User->facebook = $user->facebook;
+			// $User->linkedin = $user->linkedin;
+			// $User->twitter  = $user->twitter;
 			$User->is_confirmed = 0;
 			$User->is_disabled = 0;
 			if($company->exists()) {
@@ -154,7 +154,7 @@ class Users extends REST_Controller {
 						'username' 	=> $User->username,
 						'first_name'=> $User->first_name,
 						'last_name' => $User->last_name,
-						'profile_photo' => $User->profile_photo_url,
+						'profile_photo' => array('id' => $user->profile_photo->id, 'url' => $user->profile_photo->url),
 						'is_confirmed'	=> $User->is_confirmed == 0 ? FALSE : TRUE,
 						'is_disabled'=> $User->is_diabled == 0 ? FALSE : TRUE,
 						'email' => $User->email,

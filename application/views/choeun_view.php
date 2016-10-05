@@ -23505,7 +23505,7 @@
 	<div class="inv1">
     	<div class="head">
         	<div class="logo">
-            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
             </div>
             <div class="cover-name-company">
             	<h2 ></h2>
@@ -23523,7 +23523,7 @@
         </div>
         <div class="content">
         	<h1>វិក្កយបត្រ</h1>
-            <h2>invoice</h2>
+            <h2 data-bind="text: obj.title"></h2>
             <div class="clear">
             	<div class="cover-customer">
                 	<h5>អតិថិជន​ / Customer :</h5>
@@ -23609,7 +23609,7 @@
 	<div class="inv1">
     	<div class="head">
         	<div class="logo">
-            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
             </div>
             <div class="cover-name-company">
             	<h2 ></h2>
@@ -23627,7 +23627,7 @@
         </div>
         <div class="content">
         	<h1>វិក្កយបត្រអាករ</h1>
-            <h2>invoice</h2>
+            <h2 data-bind="text: obj.title"></h2>
             <div class="clear">
             	<div class="cover-customer" style="width: 80%;">
                 	<h5>អតិថិជន​ / Customer :</h5>
@@ -24075,7 +24075,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24178,7 +24178,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24281,7 +24281,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24384,7 +24384,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24487,7 +24487,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24581,7 +24581,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24675,7 +24675,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24766,7 +24766,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24857,7 +24857,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24949,7 +24949,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25076,7 +25076,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25203,7 +25203,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25326,7 +25326,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25479,7 +25479,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25634,7 +25634,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25789,7 +25789,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25903,7 +25903,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -26036,7 +26036,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -26139,7 +26139,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -26232,114 +26232,121 @@
         	<div class="span12">
 	        	<div class="span7">
 	        		<div class="logo" style="width: 40%">
-		            	<img style="width: " data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+		            	<img style="width: " data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 		            </div>
 	        	</div>
 	        	<div class="span5">
 	        		<div class="span12" style="margin-bottom: 10px;">
-	        			<img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" />
+	        			<h2 style="font-size: 24px;text-align: left;color:#10253f " data-bind="text: obj.title"></h2>
+	        			<!--img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" /-->
 	        		</div>
 	        		<div class="span12">
 	        			<table class="span12">
 	        				<tr>
-	        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Date</td>
-	        					<td data-bind="text: obj.issued_date"></td>
+	        					<td class="light-blue-td" width="100">Date</td>
+	        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
 	        				</tr>
 	        				<tr>
-	        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Receipt No.</td>
-	        					<td data-bind="text: obj.number"></td>
+	        					<td class="light-blue-td">Receipt No.</td>
+	        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 	        				</tr>
 	        			</table>
 	        		</div>
 	        	</div>
 	        </div>
         	<div class="span12" style="margin-top: 10px;">
-		    	<div class="span6" style="">
-		    		<table class="span12">
+		    	<div class="span7" style="margin-top: -30px;">
+		    		<table class="span11">
 						<tr>
-							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Recieve From</td>
-							<td data-bind="text: obj.issued_date"></td>
+							<td class="light-blue-td" width="120">ទទួលពីឈ្មោះ​ <br>Recieve From</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
 						</tr>
 						<tr>
-							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Contact Address</td>
-							<td data-bind="text: obj.number"></td>
+							<td class="light-blue-td">អស័យដ្ឋាន <br>Contact Address</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 						<tr>
-							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Purpose</td>
-							<td data-bind="text: obj.number"></td>
+							<td class="light-blue-td">គោលបំណង​​ <br>Purpose</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+						</tr>
+						<tr>
+							<td class="light-blue-td">លេខយោង <br> Reference Document</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 					</table>
 		    	</div>
 		    	<div class="span5" style="float:right">
-		    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
+		    		<p style="padding: 5px 0; text-align: left;font-weight: bold;color: #000;">ចំនួនទទួលសរុប​ <br> TOTAL RECEIVED AMOUNT</p>
 		    		<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}">
-		    			<p><span style="color:#fff;text-align: center;" data-bind="text: obj.amount"></span></p>
+		    			<p><span class="total-amount" data-bind="text: obj.amount"></span></p>		    			
 		    		</div>
-		    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
+		    		<p style="padding: 5px 0;font-weight: bold;color: #000;clear:both;">វិធីសាស្រ្តទូទាត់​ Mode of payment</p>
 		    	</div>
 		    </div>
-        	<div class="span12" style="margin-top: 5px">
+        	<!--div class="span12">
         		<div class="span5">
-        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Reference Document</p>
         			<table class="span12">
 						<tr>
-							<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
-							<td data-bind="text: obj.issued_date"></td>
+							<td  width="120"></td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 						<tr>
 							<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
-							<td data-bind="text: obj.number"></td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 						<tr>
 							<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
-							<td data-bind="text: obj.number"></td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 					</table>
         		</div>
         		<div class="span6" style="float:right">
-        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Mode of payment</p>
+        			<p style="padding: 5px 0;font-weight: bold;color: #000;">វិធីសាស្រ្តទូទាត់​ <br> Mode of payment</p>
         			<div class="span12">
         				<div class="span4">
         					<input type="radio" /> Cash<br>
         					<input type="radio" /> Direct debit<br>
-        					<input type="radio" /> In-kind
+        					<input type="radio" /> In-kind >
         				</div>
         				<div class="span4">
         					<input type="radio" /> Bank transfer<br>
         					<input type="radio" /> Check<br>
-        					<input type="radio" /> Others:
+        					<input type="radio" /> Others: >
         				</div>
         				<div class="span4">
+        					
         					Bank Acc:<br>
         					Check No.<br>
         					
         				</div>
         			</div>
         		</div>
-        	</div>
+        	</div-->
         	<div class="span12">
         		<div class="span8">
-        			<p style="color:black;margin: 10px 0;">The official receipt is considered official only it bears the offical stamp of PCG & Partners and the genuin signature of PCG & Partners officers.</p>
+        			<p style="color:black;margin: 10px 0;" data-bind="text: obj.note"></p>
         		</div>
         	</div>
         	<div class="span12">
         		<div class="span5">
-        			<p>On behalf of PCG & Partners Co., Ltd</p>
+        			<p>On behalf of <span data-bind="text: company.name"></span></p>
         			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
-        			<p style="font-weight: bold;">Sothy Lalinda</p>
+        			<p style="font-weight: bold;">Name</p>
         		</div>
         		<div class="span4" style="float:right;">
         			<p>Paid By:</p>
         			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
-        			<p style="font-weight: bold;"></p>
+        			<p style="font-weight: bold;">Name</p>
         		</div>
         	</div>
-
-        	<div class="span12 copywatermark">
+        	<div style="margin-top: 15px" class="span12">
+        		<p>Address: <span data-bind="text: company.address"></span> <sapn data-bind="text: company.city"></sapn> <span data-bind="text: company.country.name"></span>.</p>
+        	</div>
+        	<!--div class="span12 copywatermark">
 	        	<div class="span12" style="margin-top: 20px;border-top: 1px solid #000;padding-top: 15px;">
 		        	<div class="span7">
 		        		<div class="logo" style="width: 40%">
-			            	<img style="width: " data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+			            	<img style="width: " data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 			            </div>
 		        	</div>
 		        	<div class="span5">
@@ -26349,12 +26356,12 @@
 		        		<div class="span12">
 		        			<table class="span12">
 		        				<tr>
-		        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Date</td>
-		        					<td data-bind="text: obj.issued_date"></td>
+		        					<td class="light-blue-td" width="100">Date</td>
+		        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
 		        				</tr>
 		        				<tr>
-		        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Receipt No.</td>
-		        					<td data-bind="text: obj.number"></td>
+		        					<td class="light-blue-td">Receipt No.</td>
+		        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 		        				</tr>
 		        			</table>
 		        		</div>
@@ -26364,25 +26371,25 @@
 			    	<div class="span6" style="">
 			    		<table class="span12">
 							<tr>
-								<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Recieve From</td>
-								<td data-bind="text: obj.issued_date"></td>
+								<td class="light-blue-td"width="100">Recieve From</td>
+								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
 							</tr>
 							<tr>
-								<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Contact Address</td>
-								<td data-bind="text: obj.number"></td>
+								<td class="light-blue-td">Contact Address</td>
+								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 							</tr>
 							<tr>
-								<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Purpose</td>
-								<td data-bind="text: obj.number"></td>
+								<td class="light-blue-td">Purpose</td>
+								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 							</tr>
 						</table>
 			    	</div>
 			    	<div class="span5" style="float:right">
 			    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
-			    		<div class="span12 main-color order-price">
-			    			<p><span style="color:#fff;text-align: center;" data-bind="text: obj.amount" >/span></p>
+			    		<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}">
+			    			<p><span class="total-amount" data-bind="text: obj.amount"></span></p>
 			    		</div>
-			    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
+			    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;"></p>
 			    	</div>
 			    </div>
 	        	<div class="span12" style="margin-top: 5px">
@@ -26391,15 +26398,15 @@
 	        			<table class="span12">
 							<tr>
 								<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
-								<td data-bind="text: obj.issued_date"></td>
+								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 							</tr>
 							<tr>
 								<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
-								<td data-bind="text: obj.number"></td>
+								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 							</tr>
 							<tr>
 								<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
-								<td data-bind="text: obj.number"></td>
+								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 							</tr>
 						</table>
 	        		</div>
@@ -26441,7 +26448,7 @@
 	        			<p style="font-weight: bold;"></p>
 	        		</div>
 	        	</div>
-	        </div>
+	        </div-->
         </div>
     </div>
 </script>
@@ -26544,6 +26551,492 @@
         			</td>
         		</tr>
         	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm27" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content" style="padding-top:30px;">
+        	<h1>វិក្កយបត្រ</h1>
+            <h2>invoice</h2>
+            <div class="clear">
+            	<div class="cover-customer">
+                	<h5>អតិថិជន​ / Customer :</h5>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+                            <span>Company name / Customer</span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].name"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ</p>
+                            <span>Telephone N<sup>o</sup></span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 78%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+                            <span>​​Invoice N<sup>o</sup></span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ៖</p>
+                            <span>​​Date</span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
+                	<thead>
+                        <tr class="main-color" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​</td>
+                            <td data-bind="text: obj.amount"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm28" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+    	<div class="head">
+        	<div class="logo">
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+            </div>
+            <div class="cover-name-company">
+            	<h2 ></h2>
+                <h3 data-bind="text: company.name"></h3>
+                <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
+                </div>
+                <div class="clear">
+                	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
+                    <pre>Address      </pre>
+                    <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: company.phone"></span></pre>
+                    <pre>Telephone N<sup>o</sup></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+        	<h1>វិក្កយបត្រ</h1>
+            <h2>invoice</h2>
+            <div class="clear">
+            	<div class="cover-customer">
+                	<h5>អតិថិជន​ / Customer :</h5>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+                            <span>Company name / Customer</span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].name"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ</p>
+                            <span>Telephone N<sup>o</sup></span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 78%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+                            <span>​​Invoice N<sup>o</sup></span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ៖</p>
+                            <span>​​Date</span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
+                	<thead>
+                        <tr class="main-color" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
+                            <td data-bind="text: obj.amount"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        
+
+        <div class="span12" style="margin-top: 20px;">
+        	<div class="span7">
+        	</div>
+        	<div class="span5">
+        		<div class="span12" style="margin-bottom: 10px;">
+        			<img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" />
+        		</div>
+        		<div class="span12">
+        			<table class="span12">
+        				<tr>
+        					<td class="light-blue-td" width="100">Date</td>
+        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
+        				</tr>
+        				<tr>
+        					<td class="light-blue-td">Receipt No.</td>
+        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+        				</tr>
+        			</table>
+        		</div>
+        	</div>
+        </div>
+    	<div class="span12">
+	    	<div class="span6" style="margin-top: -43px;">
+	    		<table class="span12">
+					<tr>
+						<td class="light-blue-td" width="100" style="padding-top: 5px; padding-bottom: 5px;">Recieve From</td>
+						<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
+					</tr>
+					<tr>
+						<td class="light-blue-td" style="padding-top: 5px; padding-bottom: 4px;">Contact Address</td>
+						<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+					</tr>
+					<tr>
+						<td class="light-blue-td" style="padding-top: 5px; padding-bottom: 5px;">Purpose</td>
+						<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+					</tr>
+				</table>
+	    	</div>
+	    	<div class="span5" style="float:right">
+	    		<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}">
+	    			<p style="text-align: left;padding-left: 5px;">TOTAL RECEIVED AMOUNT <span class="total-amount" data-bind="text: obj.amount">50000</span></p>
+	    		</div>
+	    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;"></p>
+	    	</div>
+	    </div>
+    	<div class="span12" style="margin-top: 5px">
+    		<div class="span5">
+    			<p style="padding: 5px 0;font-weight: bold;color: #000;">Reference Document</p>
+    			<table class="span12">
+					<tr>
+						<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
+						<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+					</tr>
+					<tr>
+						<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
+						<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+					</tr>
+					<tr>
+						<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
+						<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+					</tr>
+				</table>
+    		</div>
+    		<div class="span6" style="float:right">
+    			<p style="padding: 5px 0;font-weight: bold;color: #000;">Mode of payment</p>
+    			<div class="span12">
+    				<div class="span4">
+    					<input type="radio" /> Cash<br>
+    					<input type="radio" /> Direct debit<br>
+    					<input type="radio" /> In-kind
+    				</div>
+    				<div class="span4">
+    					<input type="radio" /> Bank transfer<br>
+    					<input type="radio" /> Check<br>
+    					<input type="radio" /> Others:
+    				</div>
+    				<div class="span4">
+    					Bank Acc:<br>
+    					Check No.<br>
+    					
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="span12">
+    		<div class="span8">
+    			<p style="color:black;margin: 10px 0;">The official receipt is considered official only it bears the offical stamp of PCG & Partners and the genuin signature of PCG & Partners officers.</p>
+    		</div>
+    	</div>
+    	<div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:left;margin-left: 25px;">
+                	<p>On behalf of PCG & Partners Co., Ltd</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm29" type="text/x-kendo-template">
+	<div class="inv1">
+    	<div class="head">
+        	<div class="logo">
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+            </div>
+            <div class="cover-name-company">
+            	<h2 ></h2>
+                <h3 data-bind="text: company.name"></h3>
+                <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
+                </div>
+                <div class="clear">
+                	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
+                    <pre>Address      </pre>
+                    <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: company.phone"></span></pre>
+                    <pre>Telephone N<sup>o</sup></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+        	<h1>វិក្កយបត្រអាករ</h1>
+            <h2>invoice</h2>
+            <div class="clear">
+            	<div class="cover-customer" style="width: 80%;">
+                	<h5>អតិថិជន​ / Customer :</h5>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+                            <span>Company name / Customer</span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].name"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ</p>
+                            <span>Telephone N<sup>o</sup></span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 52%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                    <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+                	</div>
+                </div>
+                <div class="cover-inv-number" style="width: 20%;">
+                	<div style="position: absolute;left:-70%;width:165%; ">
+                        <div class="clear">
+                            <div class="left">
+                                <p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+                                <span>​​Invoice N<sup>o</sup></span>
+                            </div>
+                            <div class="left dotted-ruler" style="width: 46%;">
+                                <p style="font-weight:bold" data-bind="text: obj.number"></p>
+                            </div>
+                        </div>
+                        <div class="clear">
+                            <div class="left">
+                                <p>កាល​បរិច្ឆេទ៖</p>
+                                <span>​​Date</span>
+                            </div>
+                            <div class="left dotted-ruler" style="width: 59%;">
+                                <p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear inv2">
+            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
+                	<thead>
+                        <tr class="main-color" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​<br />Sub Total</td>
+                            <td data-bind="text: obj.sub_total"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០%<br />VAT (10%)</td>
+                            <td data-bind="text: obj.tax"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​<br />Grand Total</td>
+                            <td data-bind="text: obj.amount"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm30" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content" style="padding-top:30px;">
+        	<h1>វិក្កយបត្រ</h1>
+            <h2>invoice</h2>
+            <div class="clear">
+            	<div class="cover-customer">
+                	<h5>អតិថិជន​ / Customer :</h5>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
+                            <span>Company name / Customer</span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].name"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ</p>
+                            <span>Telephone N<sup>o</sup></span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 78%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
+                            <span>​​Invoice N<sup>o</sup></span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ៖</p>
+                            <span>​​Date</span>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
+                	<thead>
+                        <tr class="main-color" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​</td>
+                            <td data-bind="text: obj.amount"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
         </div>
     </div>
 </script>
@@ -59305,7 +59798,6 @@
 										obj.set("title", view[0].title);
 										obj.set("note", view[0].note);
 									}
-									
 								});	
 								setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
 					        },
@@ -59378,8 +59870,8 @@
 				case 20: Active = banhji.view.invoiceForm20; break;
 				case 21: Active = banhji.view.invoiceForm21; break;
 				case 22: Active = banhji.view.invoiceForm22; break;
-				case 23: Active = banhji.view.invoiceForm1; break;
-				case 24: Active = banhji.view.invoiceForm2; break;
+				case 23: Active = banhji.view.invoiceForm28; break;
+				case 24: Active = banhji.view.invoiceForm29; break;
 				case 25: Active = banhji.view.invoiceForm23; break;
 				case 26: Active = banhji.view.invoiceForm24; break;
 				case 27: Active = banhji.view.invoiceForm19; break;
@@ -59387,7 +59879,8 @@
 				case 29: Active = banhji.view.invoiceForm26; break;
 				case 30: Active = banhji.view.invoiceForm25; break;
 				case 31: Active = banhji.view.invoiceForm25; break;
-
+				case 32: Active = banhji.view.invoiceForm27; break;
+				case 33: Active = banhji.view.invoiceForm30; break;
 			}
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 		},
@@ -59508,7 +60001,12 @@
 			}
 		},	 
 		printGrid			: function() {
-			var obj = this.get('obj');
+			var obj = this.get('obj'), colorM;
+			if(obj.color == null){
+				colorM = "#10253f";
+			}else{
+				colorM = obj.color;
+			}
 			var gridElement = $('#grid'),
 		        printableContent = '',
 		        win = window.open('', '', 'width=800, height=900'),
@@ -59532,7 +60030,7 @@
 		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
 		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm; } .inv1 .main-color { background-color: '+obj.color+'!important; -webkit-print-color-adjust:exact; }</style>' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm; } .inv1 .main-color { background-color: '+colorM+'!important; -webkit-print-color-adjust:exact; } .inv1 .light-blue-td { background-color: #c6d9f1!important;text-align: left;padding-left: 5px;-webkit-print-color-adjust:exact; }.inv1 span.total-amount { color:#fff!important;}</style>' +
 		            '</head>' +
 		            '<body>';
 		    var htmlEnd =
@@ -59572,8 +60070,8 @@
 				case 20: Active = banhji.view.invoiceForm20; break;
 				case 21: Active = banhji.view.invoiceForm21; break;
 				case 22: Active = banhji.view.invoiceForm22; break;
-				case 23: Active = banhji.view.invoiceForm1; break;
-				case 24: Active = banhji.view.invoiceForm2; break;
+				case 23: Active = banhji.view.invoiceForm28; break;
+				case 24: Active = banhji.view.invoiceForm29; break;
 				case 25: Active = banhji.view.invoiceForm23; break;
 				case 26: Active = banhji.view.invoiceForm24; break;
 				case 27: Active = banhji.view.invoiceForm19; break;
@@ -59581,6 +60079,8 @@
 				case 29: Active = banhji.view.invoiceForm26; break;
 				case 30: Active = banhji.view.invoiceForm25; break;
 				case 31: Active = banhji.view.invoiceForm25; break;
+				case 32: Active = banhji.view.invoiceForm27; break;
+				case 33: Active = banhji.view.invoiceForm30; break;
 			}
 			banhji.view.invoiceForm.showIn('#invFormContent', Active);
 		},
@@ -67763,6 +68263,10 @@
 		invoiceForm24: new kendo.Layout("#invoiceForm24", {model: banhji.invoiceForm}),
 		invoiceForm25: new kendo.Layout("#invoiceForm25", {model: banhji.invoiceForm}),
 		invoiceForm26: new kendo.Layout("#invoiceForm26", {model: banhji.invoiceForm}),
+		invoiceForm27: new kendo.Layout("#invoiceForm27", {model: banhji.invoiceForm}),
+		invoiceForm28: new kendo.Layout("#invoiceForm28", {model: banhji.invoiceForm}),
+		invoiceForm29: new kendo.Layout("#invoiceForm29", {model: banhji.invoiceForm}),
+		invoiceForm30: new kendo.Layout("#invoiceForm30", {model: banhji.invoiceForm}),
 
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.customerSale}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.customerSale}),
@@ -74313,4 +74817,4 @@
 		banhji.router.start();
 		banhji.source.loadData();
 	});
-</script>
+</script>                         
