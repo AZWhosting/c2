@@ -52,8 +52,6 @@ class Dashboards extends REST_Controller {
 		//A/R			
 		$ar->where("type", "Invoice");
 		$ar->where_in("status", array(0,2));
-		$ar->where("issued_date >=", $this->startFiscalDate);
-		$ar->where("issued_date <", $this->endFiscalDate);		
 		$ar->where("is_recurring", 0);		
 		$ar->where("deleted", 0);		
 		$ar->get_iterated();
@@ -99,9 +97,7 @@ class Dashboards extends REST_Controller {
 
 		//A/P			
 		$ap->where("type", "Credit_Purchase");
-		$ap->where_in("status", array(0,2));
-		$ap->where("issued_date >=", $this->startFiscalDate);
-		$ap->where("issued_date <", $this->endFiscalDate);		
+		$ap->where_in("status", array(0,2));	
 		$ap->where("is_recurring", 0);		
 		$ap->where("deleted", 0);		
 		$ap->get_iterated();
@@ -280,8 +276,6 @@ class Dashboards extends REST_Controller {
 		//Sale Count Order
 		$saleOrder = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$saleOrder->where_in("type", array("Invoice", "Cash_Sale"));
-		$saleOrder->where("issued_date >=", $this->startFiscalDate);
-		$saleOrder->where("issued_date <", $this->endFiscalDate);
 		$saleOrder->where("status", 1);		
 		$saleOrder->where("type", "Sale_Order");		
 
@@ -315,8 +309,6 @@ class Dashboards extends REST_Controller {
 		// AR
 		$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 		$ar->where("type", "Invoice");
-		$ar->where("issued_date >=", $this->startFiscalDate);
-		$ar->where("issued_date <", $this->endFiscalDate);
 		$ar->where_in("status", array(0,2));
 		$ar->where("is_recurring", 0);		
 		$ar->where("deleted", 0);		
@@ -842,8 +834,6 @@ class Dashboards extends REST_Controller {
 		//Purchase Count Order
 		$purchaseOrder = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$purchaseOrder->where_in("type", array("Cash_Purchase","Credit_Purchase"));
-		$purchaseOrder->where("issued_date >=", $this->startFiscalDate);
-		$purchaseOrder->where("issued_date <", $this->endFiscalDate);
 		$purchaseOrder->where("status", 1);		
 		$purchaseOrder->where("type", "Purchase_Order");		
 
@@ -877,8 +867,6 @@ class Dashboards extends REST_Controller {
 		//AP
 		$ap = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 		$ap->where("type", "Credit_Purchase");
-		$ap->where("issued_date >=", $this->startFiscalDate);
-		$ap->where("issued_date <", $this->endFiscalDate);
 		$ap->where_in("status", array(0,2));
 		$ap->where("is_recurring", 0);		
 		$ap->where("deleted", 0);		
