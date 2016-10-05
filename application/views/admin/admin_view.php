@@ -306,7 +306,7 @@
                               </li>
                               <li class="nav-item">
                                 <a class="nav-link" href="#tabs-4-tab-3" role="tab" data-toggle="tab" aria-expanded="false">
-                                  Emmergency Contact
+                                  Payroll Information
                                 </a>
                               </li>
                               <li class="nav-item">
@@ -320,62 +320,6 @@
                           <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1" aria-expanded="false">
                               <table class="table">
-                                <tr>
-                                  <td>Nationality</td>
-                                  <td>
-                                    <input id="type"                                     
-                                     data-bind="value: current.status"
-                                     class="k-textbox"
-                                     type="text"
-                                     >
-                                    </td>
-                                  <td></td>
-                                  <td>Employment Date</td>
-                                  <td>
-                                    <input type="text" 
-                                      data-role="datepicker" 
-                                      data-bind="value: current.registered_date"
-                                      data-format="dd-MM-yyyy"
-                                      data-parse-formats="yyyy-MM-dd"
-                                      >
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>Married Status</td>
-                                  <td>
-                                    <input id="type"                                     
-                                     data-bind="value: current.status"
-                                     class="k-textbox"
-                                     type="text"
-                                     >
-                                    </td>
-                                  <td></td>
-                                  <td>Children</td>
-                                  <td>
-                                    <input type="text" 
-                                      data-role="numerictextbox" 
-                                      data-bind="value: current.registered_date"
-                                      >
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>City/Province</td>
-                                  <td>
-                                    <input id="type"                                     
-                                     data-bind="value: current.status"
-                                     class="k-textbox"
-                                     type="text"
-                                     >
-                                    </td>
-                                  <td></td>
-                                  <td>Country</td>
-                                  <td>
-                                    <input type="text" 
-                                      data-bind="value: current.registered_date"
-                                      class="k-textbox"
-                                      >
-                                  </td>
-                                </tr>
                                 <tr>
                                   <td>email</td>
                                   <td><input type="email" class="k-textbox" data-bind="value: current.email"></td>
@@ -440,7 +384,86 @@
                               </table>
                             </div><!--.tab-pane-->
                             <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3" aria-expanded="false">
-                              fsdfds
+                              <table class="table">
+                                <tr>
+                                  <td>Nationality</td>
+                                  <td>
+                                    <input id="type"                                     
+                                     data-bind="value: payroll.nationality"
+                                     class="k-textbox"
+                                     type="text"
+                                     >
+                                    </td>
+                                  <td></td>
+                                  <td>Employment Date</td>
+                                  <td>
+                                    <input type="text" 
+                                      data-role="datepicker" 
+                                      data-bind="value: payroll.employeement_date"
+                                      data-format="dd-MM-yyyy"
+                                      data-parse-formats="yyyy-MM-dd"
+                                      >
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Married Status</td>
+                                  <td>
+                                    <input id="type"                                     
+                                     data-bind="source: marriedStatus ,value: payroll.married_status"
+                                     data-role="dropdownlist"
+                                     data-text-field="name"
+                                     data-value-field="id"
+                                     data-value-primitive="true"
+                                     class="k-textbox"
+                                     type="text"
+                                     >
+                                    </td>
+                                  <td></td>
+                                  <td>Children</td>
+                                  <td>
+                                    <input type="text" 
+                                      data-role="numerictextbox" 
+                                      data-bind="value: payroll.children"
+                                      >
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>City/Province</td>
+                                  <td>
+                                    <input id="type"                                     
+                                     data-bind="value: payroll.city"
+                                     class="k-textbox"
+                                     type="text"
+                                     >
+                                    </td>
+                                  <td></td>
+                                  <td>Country</td>
+                                  <td>
+                                    <input type="text" 
+                                      data-bind="value: payroll.country"
+                                      class="k-textbox"
+                                      >
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Emmergency Number</td>
+                                  <td>
+                                    <input id="type"                                     
+                                     data-bind="value: payroll.emergency_number"
+                                     class="k-textbox"
+                                     type="text"
+                                     >
+                                    </td>
+                                  <td></td>
+                                  <td>Emmergency Name</td>
+                                  <td>
+                                    <input type="text" 
+                                      data-bind="value: payroll.emergency_name"
+                                      class="k-textbox"
+                                      >
+                                  </td>
+                                </tr>
+                              </table>
                             </div><!--.tab-pane-->
                             <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-4" aria-expanded="false">
                               <input data-role="upload" type="file" data-bind="events: {select: fileMan.onSelected}" data-show-file-list="false">
@@ -540,7 +563,7 @@
                               <td>City/Province</td>
                               <td>:</td>
                               <td>
-                                <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.zip">
+                                <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.city">
                               </td>
                             </tr>
                             <tr>
@@ -577,20 +600,19 @@
                                   <td>:</td>
                                   <td>
                                     <input type="text" 
-                                      data-role="datepicker" 
-                                      class="form-control"
-                                      data-format="dd-M" 
-                                      data-bind="value: current.fiscal_date">
+                                      class="form-control" 
+                                      data-bind="value: current.accounting_standard">
                                   </td>
                                 </tr>
                                 <tr>
                                   <td>Fiscal Date</td>
                                   <td>:</td>
                                   <td>
-                                    <input type="text" 
+                                    <input 
                                       data-role="datepicker" 
                                       class="form-control"
-                                      data-format="dd-M" 
+                                      data-format="dd-MM"
+                                      data-parse-formats="yyyy-MM-dd" 
                                       data-bind="value: current.fiscal_date">
                                   </td>
                                 </tr>
@@ -624,7 +646,8 @@
                                   <td>
                                     <input type="text" 
                                       data-role="datepicker"
-                                      data-format="dd-mm"
+                                      data-format="dd-MM"
+                                      data-parse-formats="yyyy-MM-dd"
                                       class="form-control" 
                                       data-bind="value: current.financial_report_date">
                                   </td>
@@ -712,7 +735,7 @@
                 <tr>
                     <td>City/Province</td>
                     <td>:</td>
-                    <td><span data-bind="text:current.name"></span></td>
+                    <td><span data-bind="text:current.city"></span></td>
                 </tr>
                 <tr>
                     <td>Country</td>
@@ -732,7 +755,7 @@
               <tr>
                     <td>Accounting Standard</td>
                     <td>:</td>
-                    <td><span data-bind="text:current.fiscal_date"></span></td>
+                    <td><span data-bind="text:current.accounting_standard"></span></td>
                 </tr>
                 <tr>
                     <td>Fiscal Date</td>
@@ -783,6 +806,7 @@
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-employee">
       <button class="btn" data-bind="click: addNew" style="margin-bottom: 10px;     border-radius: 0;">Create</button>
+      <button class="btn" data-bind="click: goRole" style="margin-bottom: 10px;     border-radius: 0;">Role</button>
       <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: refresh"></i>
       <table class="tbl-typical">
           <thead>
@@ -1255,6 +1279,53 @@
         <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
+
+    <script type="text/x-kendo-template" id="employee-role-form">
+      <div>
+        <span class="btn" data-bind="click: backToList">X</span>
+        <span class="k-button k-button-icontext k-add-button" data-bind="click: addRole"><span class="k-icon k-add"></span>Add new record</span>
+        <table class="table">
+          <thead>
+            <tr>
+              <td>ABBR</td>
+              <td>Name</td>
+              <td>
+                <div>
+                  <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+                  <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+                </div>
+              </td>
+            </tr>
+          </thead>
+          <tbody data-role="listview" data-bind="source: roles" data-template="employee-role-list" data-edit-template="employee-role-list-edit">
+          </tbody>
+        </table>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="employee-role-list">
+      <tr>
+        <td>#=abbr#</td>
+        <td>#=name#</td>
+        <td>
+          <div>
+            <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+            <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+          </div>
+        </td>
+      </tr>
+    </script>
+    <script type="text/x-kendo-template" id="employee-role-list-edit">
+      <tr>
+        <td><input data-bind="value:abbr"></td>
+        <td><input data-bind="value:name"></td>
+        <td>
+          <div>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+          </div>
+        </td>
+      </tr>
+    </script>
     <!-- cognito -->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
@@ -1502,9 +1573,9 @@
           });
         },
         save                : function(contact_id){
-          $.each(banhji.fileManagement.dataSource.data(), function(index, value){ 
-            banhji.fileManagement.dataSource.at(index).set("transaction_id", contact_id);
+          $.each(banhji.fileManagement.dataSource.data(), function(index, value){  
             if(!value.id){
+              banhji.fileManagement.dataSource.at(index).set("contact_id", contact_id);
               var params = { 
                 Body: value.file, 
                 Key: value.key
@@ -1515,7 +1586,6 @@
               });
             }                
           });
-
           banhji.fileManagement.dataSource.sync();
           var saved = false;
           banhji.fileManagement.dataSource.bind("requestEnd", function(e){
@@ -2224,9 +2294,38 @@
           pageSize: 100
         }),
         fileMan   : banhji.fileManagement,
-        setCurrent: function(current) {
-          this.set('current', current);
+        goRole   : function() {
+          layout.showIn("#container", mainDash);
+          mainDash.showIn("#placeholder", role);
         },
+        setCurrent: function(current) {
+          var that = this;
+          this.set('current', current);
+          this.payrollDS.query({filter: {'field' : 'contact_id', 'value': current.id}}).
+          then(function(e){
+            if(that.payrollDS.data().length > 0) {
+              that.set('payroll', that.payrollDS.data()[0]);
+            } else {
+              banhji.employees.payrollDS.insert(0,{
+                children: 0,
+                city: null,
+                contact_id: that.get('current').id,
+                country: null,
+                emergency_name: null,
+                emergency_name: null,
+                employeement_date: null,
+                married_status: 0,
+                nationality: null
+              });
+              banhji.employees.set('payroll', banhji.employees.payrollDS.at(0));
+            }
+            
+          });
+        },
+        marriedStatus: [
+          { id: 0, name: 'Single'},
+          { id: 1, name: 'Married'}
+        ],
         refresh: function() {
           $('#user-spinwhile').addClass('fa-spin');
           banhji.employees.dataSource.read().then(function() {
@@ -2238,6 +2337,62 @@
             read  : {
               url: baseUrl + 'api/employees/roles',
               type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            create  : {
+              url: baseUrl + 'api/employees/roles',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            update  : {
+              url: baseUrl + 'api/employees/roles',
+              type: "PUT",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 50
+        }),
+        payrollDS : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/payrolls',
+              type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            create  : {
+              url: baseUrl + 'api/payrolls',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            update  : {
+              url: baseUrl + 'api/payrolls',
+              type: "PUT",
               dataType: 'json',
               headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
             },
@@ -2299,7 +2454,18 @@
             salary: {id: 0, name: null},
             registered_date: new Date()
           });
+          banhji.employees.payrollDS.insert(0,{
+            children: 0,
+            city: null,
+            country: null,
+            emergency_name: null,
+            emergency_name: null,
+            employeement_date: null,
+            married_status: 0,
+            nationality: null
+          });
           banhji.employees.setCurrent(banhji.employees.dataSource.at(0));
+          banhji.employees.set('payroll', banhji.employees.payrollDS.at(0));
           banhji.router.navigate('employee/new');
         },
         edit      : function(e) {
@@ -2318,21 +2484,54 @@
         cancel    : function() {
           if(banhji.employees.dataSource.hasChanges()) {
             banhji.employees.dataSource.cancelChanges();
+            banhji.employees.payrollDS.cancelChanges();
           }
           banhji.router.navigate("employeelist");
         },
+        addRole   : function() {
+          this.roles.insert(0, {abbr: null, name: null});
+        },
+        backToList: function() {
+          mainDash.showIn("#placeholder", employee);
+        },
         save      : function() {
-          banhji.employees.dataSource.sync();
-          banhji.employees.dataSource.bind('requestEnd', function(e){
-            if(e.response) {
-              banhji.employees.fileMan.save(e.response.results[0].id);
-              banhji.employees.addNew();
-              $("#ntf1").data("kendoNotification").success("Data saved.");
-              banhji.router.navigate('employeelist');
-            } else {
-               $("#ntf1").data("kendoNotification").error("Operation failed");
-            }
-          });
+          if( banhji.employees.dataSource.hasChanges()) {
+            banhji.employees.dataSource.sync();
+            banhji.employees.dataSource.bind('requestEnd', function(e){
+              if(e.response) {
+                if(e.type == 'create') {
+                  banhji.employees.fileMan.save(e.response.results[0].id);
+                  banhji.employees.get('payroll').set('contact_id', e.response.results[0].id);
+                  if(banhji.employees.payrollDS.data(0).dirty) {
+                    banhji.employees.payrollDS.sync();
+                  }
+                  banhji.employees.addNew();
+                } else if(e.type == 'update') {
+                  if(banhji.employees.payrollDS.data(0).dirty) {
+                    banhji.employees.payrollDS.sync();
+                  }
+                } else {
+
+                }
+                
+                $("#ntf1").data("kendoNotification").success("Data saved.");
+                banhji.router.navigate('employeelist');
+              } else {
+                $("#ntf1").data("kendoNotification").error("Operation failed");
+              }
+            });
+          } else {
+            banhji.employees.fileMan.save(this.get('current').id);
+            banhji.employees.payrollDS.sync();
+            banhji.employees.payrollDS.bind('requestEnd', function(e) {
+              if(e.response && e.type != 'read') {
+                $("#ntf1").data("kendoNotification").success("Data saved.");
+              } else {
+                $("#ntf1").data("kendoNotification").error("Operation failed");
+              }
+            });
+          }
+            
         },
         saveClose: function() {
           banhji.employees.dataSource.sync();
@@ -2846,6 +3045,7 @@
               $("#ntf1").data("kendoNotification").success("Data saved.");
               // institute.showIn('#companyInfoPlaceholder', instInfo);
               // console.log("kdsslfds");
+              banhji.company.setCurrent(res.results[0]);
               banhji.router.navigate('company');
             } else {
               $("#ntf1").data("kendoNotification").error("Operation failed.");
@@ -2875,6 +3075,7 @@
       var profileMod = new kendo.View('#user-profile-modules', {model: banhji.users});
       var assign = new kendo.View('#template-assign-module-to-page', {model: banhji.users});
       var password = new kendo.View('#template-user-password', {model: banhji.profile});
+      var role = new kendo.View('#employee-role-form', {model: banhji.employees});
       // router initization
       banhji.router = new kendo.Router({
         init: function() {
