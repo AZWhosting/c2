@@ -30,6 +30,11 @@ class Attachments extends REST_Controller {
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = array();
 		$data["count"] = 0;
+		$traNumber = 0;
+		$conNumber = 0;
+		$traSize = 0;
+		$conSize = 0;
+		$total 	   = 0;
 
 		$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -86,9 +91,18 @@ class Attachments extends REST_Controller {
 				$attachedTo = array('id' => null, 'name' => null, 'type' => null);
 				if($value->contact_id) {
 					$c = $value->contact->get();
+					$conNumber++;
+					$conSize += $value->size;
 					$attachedTo = array('id' => $c->id, 'name' => $c->name, 'type' => 'contact');
+				} elseif($value->transaction_id) {
+					$t = $value->transaction->get();
+					$traNumber++;
+					$traSize += $value->size;
+					$attachedTo = array('id' => $t->id, 'name' => $t->number, 'type' => 'transaction', 'go' => $t->type);
 				} else {
 					$item = $value->item->get();
+					$conNumber++;
+					$conSize += $value->size;
 					$attachedTo = array('id' => $item->id, 'name' => $item->name, 'type' => 'item');
 				}
 				$user = $value->user->get();
@@ -111,6 +125,11 @@ class Attachments extends REST_Controller {
 				);
 			}
 		}
+		$data['transactionNumber'] = $traNumber;
+		$data['contactNumber'] = $conNumber;
+		$data['transactionSize'] = $traSize;
+		$data['contactSize'] = $conSize;
+		$data['total'] = $traSize + $conSize;
 
 		//Response Data		
 		$this->response($data, 200);		

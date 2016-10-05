@@ -122,7 +122,6 @@ class Employees extends REST_Controller {
 			$employees->bill_to = $res->bill_to;
 			$employees->registered_date = $res->registered_date;
 			$employees->phone = $res->phone;
-			$employees->locale= $res->locale;
 			$employees->memo = $res->memo;
 			$employees->is_fulltime = $res->is_fulltime == true ? 1:0;
 			$employees->account_id = $res->account->id;
@@ -135,7 +134,7 @@ class Employees extends REST_Controller {
 				$data[] = array(
 					'id' => $employees->id,
 					'name' => $employees->name,
-					'abbr' => $emplohyees->abbr,
+					'abbr' => $employees->abbr,
 					'status' => $employees->status,
 					'role' => $res->role,
 					'number' => $employees->number,

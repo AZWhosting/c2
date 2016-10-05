@@ -28280,8 +28280,8 @@
 						<div class="span4">
 							<p style="text-align: center">Transaction</p>
 							<div class="total-customer" style="background: #d9edf7; color: #333;"> 
-								<span class="number">1.00</span>GB
-								<p>of 100.000 transaction</p>
+								<span class="number" data-bind="text:transactionSize"></span>GB
+								<p>of <span data-bind="text: transactionNu"></span> transaction</p>
 								
 								
 							</div>
@@ -28290,15 +28290,15 @@
 						<div class="span4">
 							<p style="text-align: center">Contacts/items</p>
 							<div class="total-customer" style="color: #333;">
-								<span class="number">0.50</span>GB
-								<p>of 50 contact/ items</p>
+								<span class="number" data-bind="text: contactSize"></span>GB
+								<p>of <span data-bind="text: contactNu"></span> contact/ items</p>
 							</div>
 						</div>
 
 						<div class="span4" style="padding-left: 15px;">
 							<p style="text-align: center">Total Attachment</p>
 							<div class="total-customer" style="background: #496cad; color: #fff;">
-								<span class="number">1.50</span>GB
+								<span class="number" data-bind="text: totalSize"></span>GB
 								<p>Used of 2.00 GB</p>
 							</div>
 						</div>
@@ -28327,12 +28327,16 @@
 </script>
 <script id="document-list-template" type="text/x-kendo-template">
 	<tr>
-		<td>#=name#</td>
+		<td><a href="#=url#">#=name#</a></td>
 		<td>#=description#</td>
 		<td>#=size#</td>
 		<td>
 			# if(attachedTo.type == "contact") {#
 				<a href="\#/customer_center/#=attachedTo.id#">#=attachedTo.name#</a>
+			#} else if(attachedTo.type == "transaction") {#
+				# var link = attachedTo.go; #
+				# var lowcase = link.toLowerCase(); #
+				<a href="\#/#=lowcase#/#=attachedTo.id#">#=attachedTo.name#</a>
 			#} else {#
 				<a href="\#/item_center/#=attachedTo.id#">#=attachedTo.name#</a>
 			#}#
@@ -37143,6 +37147,11 @@
             file            : files[0].rawFile
           });
         },
+        transactionSize: 0,
+        contactSize   : 0,
+        totalSize 	  : 0,
+        transactionNu : 0,
+        contactNu 	  : 0,
         save                : function(contact_id){
           $.each(banhji.fileManagement.dataSource.data(), function(index, value){ 
             banhji.fileManagement.dataSource.at(index).set("transaction_id", contact_id);
@@ -73675,12 +73684,21 @@
 			//banhji.view.layout.showIn('#menu', banhji.view.menu);
 			//banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
-			var vm = banhji.customerList;			
+			var vm = banhji.fileManagement;			
 			banhji.userManagement.addMultiTask("Documents","documents",null);
 			if(banhji.pageLoaded["documents"]==undefined){
-				banhji.pageLoaded["documents"] = true;				
-				
-			}			
+				banhji.pageLoaded["documents"] = true;					
+			}
+			vm.dataSource.read();
+			vm.dataSource.bind('requestEnd', function(e){
+				if(e.type == 'read') {
+					vm.set('contactNu', e.response.contactNumber);
+					vm.set('contactSize', e.response.contactSize);
+					vm.set('transactionNu', e.response.transactionNumber);
+					vm.set('transactionSize', e.response.transactionSize);
+					vm.set('totalSize', e.response.total);
+				}
+			});			
 		}		
 	});
 

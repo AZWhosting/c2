@@ -82,7 +82,7 @@
 
                       <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
 
-                      <input type="password" data-bind="value: password, events:{change:btnSignIn}" placeholder="Password " class="login-email"><br>                    
+                      <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
 
                       <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
                       <div id="loginInformation"></div>
