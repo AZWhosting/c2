@@ -1,5 +1,5 @@
 #cbbContact-list,
-
+#cbbAccount-list,
 #cbbCurrency-list,
 #ddlRA-list,
 #ddlDepositAccount-list,
@@ -16,11 +16,36 @@
 #ddlAccount-list,
 #cbbVendor-list,
 #cbbCustomer-list,
-#cbbInvoice-list
+#cbbInvoice-list,
+#ddlSegment-list,
+#ddlJob-list
 {
   width: 350px !important;
 }
-
+.li-line{
+  border-bottom: 1px solid #c5c5c5;
+    width: 83%;
+    margin: -12px auto 0;
+}
+.widget-head.head-custom{
+    background: #113051 !important;
+}
+.widget-head.head-custom ul{
+  height: 50px !important;
+}
+.widget-head.head-custom ul li{
+  height: 50px!important;
+  line-height: 50px!important;
+}
+.widget-head.head-custom ul li a{
+  height: 50px!important;
+  line-height: 50px!important;
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+.widget-head.head-custom ul li.active a{
+  color: #333 !important;
+}
 #ccbItem-list{
   width: 550px !important;
 }
@@ -369,7 +394,7 @@
   }
   .performance tr:last-child td,
   .position tr:last-child td{
-      border-bottom: 3px  #649AD3 double;
+      border-bottom: 1px  #649AD3 double;
   }
 
   .welcome-nopadding{
@@ -1831,14 +1856,14 @@ and (orientation : portrait) {
 }
 /* FeedBack */
 a.rightfixed {
-    position: relative;
+        position: relative;
     background: #1F4774;
-    padding: 7px 15px;
+    padding: 11px 25px;
     z-index: 99;
     color: #fff;
-    border-radius: 3px;  
+    border-radius: 3px;
     font-size: 12px;
-    padding-left: 28px;
+    padding-left: 35px;
     cursor: pointer;
     -webkit-transition: all .5s;
     transition: all .5s;
@@ -1846,17 +1871,17 @@ a.rightfixed {
     opacity: 1;
     margin-bottom: 1px;
     clear: both;
-    float:none;
+    float: none;
     left: 0;
 }
 a.rightfixed:hover {
   opacity: 1;
 }
 a.rightfixed i::before {
-    font-size: 14px;
-    color: #fff;
-    top: 9px;
+        color: #fff;
+    top: 10px;
     left: 7px;
+    font-size: 20px;
 }
 a.feedback {
     background: #a22314;
@@ -1878,11 +1903,15 @@ a.referral {
     min-width: 100%;
     max-width: 100%;
 }
-.popRightBlog input[type=email]{
-        width: 100%;
+.popRightBlog input[type=email], .popRightBlog input[type=text]{
+    width: 65%;
     margin-bottom: 2px;
     padding: 5px;
     border: 1px solid #ccc;
+}
+.popRightBlog input[type=text] {
+  width: 34%;
+  margin-right: 2px;
 }
 a.feedback:hover {
     margin-left: -66px;
@@ -1896,7 +1925,7 @@ a.referral:hover {
 .cover-rightfixed {
     position: fixed;
     top: 40%;
-    right: -100px;
+    right: -108px;
     z-index: 99999;
     text-align: left;
 }
@@ -1905,7 +1934,7 @@ a.referral:hover {
     border: 1px solid #D7D7D7;
     padding: 6px 10px 0;
     position: absolute;
-    width: 120px;
+    width: 144px;
     right: -120px;
     font-size: 12px;
     text-align: center;

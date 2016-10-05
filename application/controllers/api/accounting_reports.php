@@ -86,9 +86,9 @@ class Accounting_reports extends REST_Controller {
 			}									 			
 		}
 		
-		$obj->where("is_recurring", $is_recurring);
 		$obj->where("is_journal", 1);
-		$obj->where("deleted", $deleted);		
+		$obj->where("is_recurring", 0);		
+		$obj->where("deleted", 0);		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);

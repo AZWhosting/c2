@@ -3,7 +3,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class send_mail extends REST_Controller {
+class Send_feedback extends REST_Controller {
 	
 	//CONSTRUCTOR
 	function __construct() {
@@ -29,6 +29,7 @@ class send_mail extends REST_Controller {
 		}else{
 			$message = "error";
 		}
+		
 		// foreach ($models as $value) {
 		// 	$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 		// 	isset($value->transaction_form_id)? $obj->transaction_form_id 	= $value->transaction_form_id : "";
