@@ -7,7 +7,8 @@ class Accounting_reports extends REST_Controller {
 	public $server_host;
 	public $server_user;
 	public $server_pwd;
-	public $fiscalDate;
+	public $startFiscalDate;
+	public $endFiscalDate;
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
@@ -19,7 +20,17 @@ class Accounting_reports extends REST_Controller {
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
 			$this->_database = $conn->inst_database;
-			$this->fiscalDate = date(date("Y",strtotime("-1 year")) ."-". $institute->fiscal_date);
+			
+			//Fiscal Date
+			$today = date("Y-m-d");
+			$fdate = date("Y") ."-". $institute->fiscal_date;
+			if($today > $fdate){
+				$this->startFiscalDate 	= date("Y") ."-". $institute->fiscal_date;
+				$this->endFiscalDate 	= date("Y",strtotime("+1 year")) ."-". $institute->fiscal_date;
+			}else{
+				$this->startFiscalDate 	= date("Y",strtotime("-1 year")) ."-". $institute->fiscal_date;
+				$this->endFiscalDate 	= date("Y") ."-". $institute->fiscal_date;
+			}
 		}
 	}
 	
@@ -88,7 +99,8 @@ class Accounting_reports extends REST_Controller {
 		
 		$obj->where("is_journal", 1);
 		$obj->where("is_recurring", 0);		
-		$obj->where("deleted", 0);		
+		$obj->where("deleted", 0);
+		$obj->order_by("issued_date", "desc");		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -228,7 +240,7 @@ class Accounting_reports extends REST_Controller {
 		$currPL->include_related("account/account_type", array("name","nature"));		
 		$currPL->where_related("account", "account_type_id >=", 35);
 		$currPL->where_related("account", "account_type_id <=", 43);
-		$currPL->where_related("transaction", "issued_date >", $this->fiscalDate);
+		$currPL->where_related("transaction", "issued_date >", $this->startFiscalDate);
 		$currPL->where_related("transaction", "is_recurring", $is_recurring);
 		$currPL->where_related("transaction", "deleted", $deleted);		
 		$currPL->where("deleted", $deleted);
@@ -286,7 +298,7 @@ class Accounting_reports extends REST_Controller {
 		//PREVIOUSE PROFIT AND LOSS (from begining to fiscal date) Cr - Dr				
 		$prevPL->where_related("account", "account_type_id >=", 35);
 		$prevPL->where_related("account", "account_type_id <=", 43);
-		$prevPL->where_related("transaction", "issued_date <=", $this->fiscalDate);
+		$prevPL->where_related("transaction", "issued_date <", $this->startFiscalDate);
 		$prevPL->where_related("transaction", "is_recurring", $is_recurring);
 		$prevPL->where_related("transaction", "deleted", $deleted);		
 		$prevPL->where("deleted", $deleted);
@@ -308,8 +320,8 @@ class Accounting_reports extends REST_Controller {
 		
 
 		//RETAINED EARNING (from begining to as of)
-		$retainEarning->include_related("account", array("number","name"));
-		$retainEarning->include_related("account/account_type", array("name","nature"));		
+		// $retainEarning->include_related("account", array("number","name"));
+		// $retainEarning->include_related("account/account_type", array("name","nature"));		
 		$retainEarning->where("account_id", 70);		
 		$retainEarning->where_related("transaction", "is_recurring", $is_recurring);
 		$retainEarning->where_related("transaction", "deleted", $deleted);		
@@ -322,13 +334,19 @@ class Accounting_reports extends REST_Controller {
 		$retainEarningName = "";
 		$retainEarningType = "";
 		$sumDr = 0;
-		$sumCr = 0;		
-		foreach ($retainEarning as $value) {
-			$retainEarningId = $value->account_id;
-			$retainEarningNumber = $value->account_number;
-			$retainEarningName = $value->account_name;
-			$retainEarningType = $value->account_account_type_name;
+		$sumCr = 0;
 
+		//Get Retain Earning Account
+		$retainEarningAccount = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$retainEarningAccount->include_related("account_type", array("name","nature"));
+		$retainEarningAccount->get_by_id(70);
+
+		$retainEarningId = 70;
+		$retainEarningNumber = $retainEarningAccount->number;
+		$retainEarningName = $retainEarningAccount->name;
+		$retainEarningType = $retainEarningAccount->account_type_name;
+
+		foreach ($retainEarning as $value) {
 			if($value->dr>0){
 				$sumDr += floatval($value->dr) / floatval($value->rate);
 			}

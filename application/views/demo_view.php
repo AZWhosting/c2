@@ -42471,7 +42471,6 @@
 		showSegment 		: false,
 		currentSort 		: "asc",							
 		pageLoad 			: function(){
-			
 		},
 		sort 				: function(e){
 			var col = "",
