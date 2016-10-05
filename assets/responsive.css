@@ -434,8 +434,13 @@
     resize: none;
   }
   .table-condensed th, .table-condensed td {
-      padding: 5px 0 5px 0 !important;
+      padding: 5px 0 5px 10px !important;
   }
+
+
+.widget-head.header-custome{
+  height: 60px !important;
+}
 
 /*-- Home Dashbaord --*/
 #module-image {

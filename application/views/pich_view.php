@@ -36686,11 +36686,15 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'> 				 				  				
-  				<li><a href='#/segment'>Add segment</a></li>  				
+  				<li><a href='#/segment'>Add Segment</a></li>  				
   				<li><a href='#/sale_tax'>Add Tax Item</a></li>  				
   				<li><a href='#/account'>Add Account</a></li>  
-
-  				<li><a href='#/journal'>Add Journal Entry</a></li>  				  				 				  				 				
+  				<li> <span class="li-line"></span></li>
+  				<li><a href='#/journal'>Add Journal Entry</a></li> 
+  				<li><a href='#/cash_transaction'>Add Cash Transacetion</a></li>
+  				<li><a href='#/cash_advance'>Add Cash Advance</a></li>
+  				<li><a href='#/expense'>Add Expense</a></li> 
+  				<li><a href='#/currency_rate'>Set Exchange Rate</a></li>				  				 				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/accounting_report_center'>REPORTS</a></li>	  	

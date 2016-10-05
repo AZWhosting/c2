@@ -689,7 +689,7 @@
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-company">
       <article class="profile-info-item">
-        <img data-bind="attr: {src: current.logo.url}">   
+        <img width="120px" data-bind="attr: {src: current.logo.url}">   
       </article>
         <header class="box-typical-header-sm">
             General Info
@@ -1009,7 +1009,7 @@
                       <h2>User Detail</h2>
                       <div class="divider"></div>
                       <div class="col-md-3 col-lg-3">
-                          <img width="240px" data-bind="attr: {src: current.profile_photo.url}" />
+                          <img width="120px" data-bind="attr: {src: current.profile_photo.url}" />
                           <h3>Profile Picture</h3>
                           <input data-role="upload" id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {select: upload}" data-show-file-list="false">
                       </div>
