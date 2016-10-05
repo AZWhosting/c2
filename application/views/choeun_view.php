@@ -26286,14 +26286,14 @@
 							<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
 							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
-						<tr>
+						<!--tr>
 							<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
 							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 						<tr>
 							<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
 							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
-						</tr>
+						</tr-->
 					</table>
         		</div>
         		<div class="span6" style="float:right">
@@ -26335,7 +26335,7 @@
         		</div>
         	</div>
 
-        	<div class="span12 copywatermark">
+        	<!--div class="span12 copywatermark">
 	        	<div class="span12" style="margin-top: 20px;border-top: 1px solid #000;padding-top: 15px;">
 		        	<div class="span7">
 		        		<div class="logo" style="width: 40%">
@@ -26441,7 +26441,7 @@
 	        			<p style="font-weight: bold;"></p>
 	        		</div>
 	        	</div>
-	        </div>
+	        </div-->
         </div>
     </div>
 </script>

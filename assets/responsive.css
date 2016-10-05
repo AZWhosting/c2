@@ -35,10 +35,12 @@
 .widget-head.head-custom ul li a{
   height: 50px!important;
   line-height: 50px!important;
-  color: #fff;
-  font-weight: 600;
+  color: #fff !important;
+  font-weight: 600 !important;
 }
-
+.widget-head.head-custom ul li.active a{
+  color: #333 !important;
+}
 #ccbItem-list{
   width: 550px !important;
 }
