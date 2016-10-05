@@ -34,6 +34,8 @@ class Sales extends REST_Controller {
 		$deleted = 0;			
 		$customers = array();
 		$total =0;
+		$totalSale =0;
+		$deposit =0;
 		// checked if the logic is customer or segment
 
 
@@ -53,6 +55,7 @@ class Sales extends REST_Controller {
 				$txn->get_iterated();
 
 				foreach ($txn as $t) {
+					$ref = $t->referece->get();
 					$amt = floatval($t->amount)/ floatval($t->rate);
 
 					if(isset($customers["$seg->name"])) {
@@ -71,23 +74,29 @@ class Sales extends REST_Controller {
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where('is_recurring', 0);
 			$obj->where_in("type", array("Invoice", "Cash_Sale"));
-
+			$obj->where_in("status", array(0,2));
 			// $obj->include_related("contact_type", "name");
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;
 			
-			if($obj->result_count()>0){
+			if($obj->result_count()>0){	
 				foreach ($obj as $value) {
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
+					$temp = 0;
+
 					if(isset($customers["$fullname"])) {
-						$customers["$fullname"]['amount']+= floatval($value->amount)/ floatval($value->rate);
+						$customers["$fullname"]['amount']+= (floatval($value->amount)/ floatval($value->rate));
 					} else {
-						$customers[$fullname]['amount']= floatval($value->amount)/ floatval($value->rate);
+						$customers["$fullname"]['amount'] = (floatval($value->amount)/ floatval($value->rate));
 					}
-					$total += floatval($value->amount)/ floatval($value->rate);
+					$totalSale += floatval($value->amount)/ floatval($value->rate);
+					// if($ref->type == "Deposit" ) {
+					// 	$deposit +=  floatval($value->amount)/ floatval($value->rate);
+					// }
+					$total = $totalSale;
 				}
 			}
 		}				
@@ -96,7 +105,6 @@ class Sales extends REST_Controller {
 			$data["results"][] = array(
 				'customer' => $key,
 				'amount'	=> $value['amount']
-
 			);
 		}
 
@@ -140,6 +148,7 @@ class Sales extends REST_Controller {
 				$txn->get_iterated();
 
 				foreach ($txn as $t) {
+					$ref = $t->referece->get();
 					$amt = floatval($t->amount)/ floatval($t->rate);
 					$items = $t->item_line->include_related('item', array('name'))->get();
 					$lines = array();
@@ -198,10 +207,16 @@ class Sales extends REST_Controller {
 			
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
+					$ref = $value->transaction->get();
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
 					$items = $value->item_line->include_related('item', array('name'))->get();
 					$lines = array();
+					$temp = 0;
+					foreach ($ref as $r) {
+						$a = abs($r->amount);					
+						$temp += floatval($a);
+					}
 					foreach($items as $item) {
 						$lines[] = array(
 							'name' 			=> $item->item_name,
@@ -552,6 +567,12 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$type->where('parent_id', 1)->get();
+
+		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$customerCount = $customer->where_in('contact_type_id', $type)->count();
+
 		if($filters['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
@@ -559,8 +580,7 @@ class Sales extends REST_Controller {
 
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$type->where('parent_id', 1)->get();
+				
 
 				$txn->where_in("type", array("Invoice", "Cash_Receipt"));
 				$txn->where_related("contact", 'contact_type_id', $type);
@@ -572,6 +592,7 @@ class Sales extends REST_Controller {
 				$txn->get_iterated();
 
 				foreach ($txn as $t) {
+					$ref = $t->referece->get();
 					$amt = floatval($t->amount)/ floatval($t->rate);
 					$items = $t->item_line->include_related('item', array('name'))->get();
 					$lines = array();
@@ -625,8 +646,14 @@ class Sales extends REST_Controller {
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
 					$openInvoice += 1;
+					$ref = $value->transaction->get();
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
+					$temp = 0;
+					foreach ($ref as $r) {
+						$a = abs($r->amount);					
+						$temp += floatval($a);
+					}
 					if(isset($customers["$fullname"])) {
 						if($value->type == 'Invoice') {
 							$customers["$fullname"]['amount']+= floatval($value->amount);
@@ -635,16 +662,12 @@ class Sales extends REST_Controller {
 						}
 					} else {
 						if($value->type == 'Invoice') {
-							$customers[$fullname]['amount']= floatval($value->amount)/ floatval($value->rate);
+							$customers[$fullname]['amount']= floatval($value->amount)/ floatval($value->rate)  - $temp;
 						} else {
-							$customers[$fullname]['amount']= (floatval($value->amount)/ floatval($value->rate)) * -1;
+							$customers[$fullname]['amount']= (floatval($value->amount)/ floatval($value->rate))  - $temp;
 						}
 					}
-					if($value->type == "Invoice") {
-						$total += floatval($value->amount)/ floatval($value->rate);
-					} else {
-						$paid += floatval($value->amount)/ floatval($value->rate);
-					}
+					$total += (floatval($value->amount)/ floatval($value->rate)) - $temp;
 
 				}
 			}
@@ -659,7 +682,8 @@ class Sales extends REST_Controller {
 		}
 
 		//Response Data
-		$data['total'] = $total - $paid;
+		$data['total'] = $total;
+		$data['customerCount'] = $customerCount;
 		$data['openInvoice'] = $openInvoice;
 		$data['count'] = count($customers);
 		$this->response($data, 200);
@@ -674,6 +698,12 @@ class Sales extends REST_Controller {
 		$data["count"] = 0;
 		$is_pattern = 0;
 		$deleted = 0;
+
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$type->where('parent_id', 1)->get();
+
+		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$customerCount = $customer->where_in('contact_type_id', $type)->count();
 
 		if($filters['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -691,6 +721,7 @@ class Sales extends REST_Controller {
 				$txn->get_iterated();
 
 				foreach ($txn as $t) {
+					$ref = $t->referece->get();
 					$amt = floatval($t->amount)/ floatval($t->rate);
 					$items = $t->item_line->include_related('item', array('name'))->get();
 					if(isset($customers["$seg->name"])) {
@@ -729,7 +760,7 @@ class Sales extends REST_Controller {
 
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where("status <>", 1);
-			$obj->where_in("type", array("Invoice", "Cash_Receipt"));
+			$obj->where("type", "Invoice");
 			$obj->where('is_recurring', 0);
 
 			// $obj->include_related("contact_type", "name");
@@ -743,15 +774,21 @@ class Sales extends REST_Controller {
 			$invoiceOpen = 0;
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
+					$ref = $value->transaction->get();
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
+					$temp = 0;
+					foreach ($ref as $r) {
+						$a = abs($r->amount);					
+						$temp += floatval($a);
+					}
 					if(isset($customers["$fullname"])) {
 						$customers["$fullname"]['transactions'][] = array(
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
-							'memo' 		=> $value->memo2,						
-							'amount' 	=> floatval($value->amount)/floatval($value->rate)
+							'memo' 		=> $value->memo2,					
+							'amount' 	=> floatval($value->amount)/floatval($value->rate)- $temp 
 						);
 					} else {
 						$customers["$fullname"]['transactions'][] = array(
@@ -759,17 +796,15 @@ class Sales extends REST_Controller {
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
 							'memo' 		=> $value->memo2,					
-							'amount' 	=> floatval($value->amount)/floatval($value->rate)
+							'amount' 	=> floatval($value->amount)/floatval($value->rate)- $temp
 						);
 					}
 					if($value->type == "Invoice") {
 						if($value->status != 1) {
 							$invoiceOpen += 1;
-						}
-						$total += floatval($value->amount)/ floatval($value->rate);
-					} else {
-						$paid += floatval($value->amount)/ floatval($value->rate);
+						}						
 					}
+					$total += (floatval($value->amount)/ floatval($value->rate)) - $temp; 
 
 				}
 			}
@@ -783,7 +818,8 @@ class Sales extends REST_Controller {
 		}
 
 		//Response Data
-		$data['total'] = $total - $paid;
+		$data['total'] = $total;
+		$data['customerCount'] = $customerCount;
 		$data['openInvoice'] = $invoiceOpen;
 		$data['count'] = count($customers);
 		$this->response($data, 200);
@@ -1169,6 +1205,7 @@ class Sales extends REST_Controller {
 				$txn->get_iterated();
 
 				foreach ($txn as $t) {
+					$ref = $t->referece->get();
 					$customer = $t->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
 					$items = $t->item_line->include_related('item', array('name'))->get();
@@ -1237,46 +1274,51 @@ class Sales extends REST_Controller {
 			$totalDay = 0;
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
+					$ref = $value->transaction->get();
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
 					$items = $value->item_line->include_related('item', array('name'))->get();
-
+					$temp = 0;
+					foreach ($ref as $r) {
+						$a = abs($r->amount);					
+						$temp += floatval($a);
+					}
 					$today = new DateTime();
 					$dueDate = new DateTime($value->due_date);
 					$diff = $today->diff($dueDate)->format("%a");
 
 					if(isset($customers["$fullname"])) {
-						$customers["$fullname"]['amount']	+= floatval($value->amount) / floatval($value->rate);
+						$customers["$fullname"]['amount']	+= floatval($value->amount) / floatval($value->rate)- $temp;
 						if($dueDate<$today){
 							$outstanding = $today->diff($dueDate)->format("%a");
 							if(intval($diff)>90){
-								$customers["$fullname"]['>90']+= floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['>90']+= floatval($value->amount) / floatval($value->rate)- $temp;
 							}else if(intval($diff)>60){
-								$customers["$fullname"]['90'] += floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['90'] += floatval($value->amount) / floatval($value->rate)- $temp;
 							}else if(intval($diff)>30){
-								$customers["$fullname"]['60'] += floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['60'] += floatval($value->amount) / floatval($value->rate)- $temp;
 							}else{
-								$customers["$fullname"]['30'] += floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['30'] += floatval($value->amount) / floatval($value->rate)- $temp;
 							}
 						}else{
 							// $customers["$fullname"]['<30'] += floatval($value->amount) / floatval($value->rate);
 							$outstanding = 0;
 						}
 					} else {
-						$customers["$fullname"]['amount']	= floatval($value->amount) / floatval($value->rate);
+						$customers["$fullname"]['amount']	= floatval($value->amount) / floatval($value->rate)- $temp;
 						if($dueDate<$today){
 							$outstanding = $today->diff($dueDate)->format("%a");
 							if(intval($diff)>90){
-								$customers["$fullname"]['>90']= floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['>90']= floatval($value->amount) / floatval($value->rate)- $temp;
 							}else if(intval($diff)>60){
-								$customers["$fullname"]['90'] = floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['90'] = floatval($value->amount) / floatval($value->rate)- $temp;
 							}else if(intval($diff)>30){
-								$customers["$fullname"]['60'] = floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['60'] = floatval($value->amount) / floatval($value->rate)- $temp;
 							}else{
-								$customers["$fullname"]['30'] = floatval($value->amount) / floatval($value->rate);
+								$customers["$fullname"]['30'] = floatval($value->amount) / floatval($value->rate)- $temp;
 							}
 						}else{
-							$customers["$fullname"]['<30'] = floatval($value->amount) / floatval($value->rate);
+							$customers["$fullname"]['<30'] = floatval($value->amount) / floatval($value->rate)- $temp;
 							$outstanding = 0;
 						}
 				//Results
@@ -1285,7 +1327,7 @@ class Sales extends REST_Controller {
 						$totalInvoice +=1;
 					}
 					$totalDay += $outstanding;
-					$total += floatval($value->amount)/ floatval($value->rate);
+					$total += floatval($value->amount)/ floatval($value->rate)- $temp;
 					$aging = $totalDay/ $totalInvoice;
 				}
 			}
@@ -1336,6 +1378,7 @@ class Sales extends REST_Controller {
 				$txn->get_iterated();
 
 				foreach ($txn as $t) {
+					$ref = $t->referece->get();
 					$amt = floatval($t->amount)/ floatval($t->rate);
 					$items = $t->item_line->include_related('item', array('name'))->get();
 					$today = new DateTime();
@@ -1421,16 +1464,21 @@ class Sales extends REST_Controller {
 			$aging = 0;
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
+					$ref = $value->transaction->get();
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
 					$items = $value->item_line->include_related('item', array('name'))->get();
-
+					$temp = 0;
+					foreach ($ref as $r) {
+						$a = abs($r->amount);					
+						$temp += floatval($a);
+					}
 					$today = new DateTime();
 					$dueDate = new DateTime($value->due_date);
 					$diff = $today->diff($dueDate)->format("%a");
 
 					if(isset($customers["$fullname"])) {
-						$customers["$fullname"]['amount']	+= floatval($value->amount) / floatval($value->rate);
+						$customers["$fullname"]['amount']	+= floatval($value->amount) / floatval($value->rate)- $temp;
 						$outstanding = 0; // days
 						if($dueDate<$today){
 							$outstanding = $today->diff($dueDate)->format("%a");
@@ -1448,7 +1496,7 @@ class Sales extends REST_Controller {
 							'amount' => floatval($value->amount) / floatval($value->rate)
 						);
 					} else {
-						$customers["$fullname"]['amount']	= floatval($value->amount) / floatval($value->rate);
+						$customers["$fullname"]['amount']	= floatval($value->amount) / floatval($value->rate)- $temp;
 						$outstanding = 0; // days
 						if($dueDate<$today){
 							$outstanding = $today->diff($dueDate)->format("%a");
@@ -1462,7 +1510,7 @@ class Sales extends REST_Controller {
 							'memo' => $value->memo2,
 							'dueDate' => $value->due_date,
 							'outstanding' => $outstanding,
-							'amount' => floatval($value->amount) / floatval($value->rate)
+							'amount' => floatval($value->amount) / floatval($value->rate)- $temp
 						);
 				//Results
 					}
@@ -1470,7 +1518,7 @@ class Sales extends REST_Controller {
 						$totalInvoice +=1;
 					}
 					$totalDay += $outstanding;
-					$total += floatval($value->amount)/ floatval($value->rate);
+					$total += floatval($value->amount)/ floatval($value->rate)- $temp;
 					$aging = $totalDay/ $totalInvoice;
 				}
 			}
@@ -1519,6 +1567,7 @@ class Sales extends REST_Controller {
 				$txn->get_iterated();
 
 				foreach ($txn as $t) {
+					$ref = $t->referece->get();
 					$amt = floatval($t->amount)/ floatval($t->rate);
 					$items = $t->item_line->include_related('item', array('name'))->get();
 
@@ -1592,10 +1641,16 @@ class Sales extends REST_Controller {
 			$totalInvoice = 0;
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
+					$ref = $value->transaction->get();
 					$customer = $value->contact->get();
 					$fullname = $customer->surname.' '.$customer->name;
 					$items = $value->item_line->include_related('item', array('name'))->get();
 					$totalInvoice +=1;
+					$temp = 0;
+					foreach ($ref as $r) {
+						$a = abs($r->amount);					
+						$temp += floatval($a);
+					}
 					$today = new DateTime();
 					$dueDate = new DateTime($value->due_date);
 					$diff = $today->diff($dueDate)->format("%a");
@@ -1618,7 +1673,7 @@ class Sales extends REST_Controller {
 					}
 
 					if(isset($customers["$outstanding"])) {
-						$customers["$outstanding"]['amount']	+= floatval($value->amount) / floatval($value->rate);
+						$customers["$outstanding"]['amount']	+= floatval($value->amount) / floatval($value->rate)- $temp;
 						 // days
 
 						$customers["$outstanding"]['transactions'][] = array(
@@ -1626,20 +1681,20 @@ class Sales extends REST_Controller {
 							'date' => $value->issued_date,
 							'number' => $value->number,
 							'memo' => $value->memo2,
-							'amount' => floatval($value->amount) / floatval($value->rate)
+							'amount' => floatval($value->amount) / floatval($value->rate)- $temp
 						);
 					} else {
-						$customers["$outstanding"]['amount']	= floatval($value->amount) / floatval($value->rate);
+						$customers["$outstanding"]['amount']	= floatval($value->amount) / floatval($value->rate)- $temp;
 						$customers["$outstanding"]['transactions'][] = array(
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
 							'memo' => $value->memo2,
-							'amount' => floatval($value->amount) / floatval($value->rate)
+							'amount' => floatval($value->amount) / floatval($value->rate)- $temp
 						);
 					}
 					$totalDay += $dayOutsatanding;
-					$total += floatval($value->amount)/ floatval($value->rate);
+					$total += floatval($value->amount)/ floatval($value->rate)- $temp;
 					$aging = $totalDay/ $totalInvoice;
 
 				}

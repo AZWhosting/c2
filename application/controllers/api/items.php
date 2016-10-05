@@ -495,7 +495,9 @@ class Items extends REST_Controller {
 					"code" 			=> $value->code,
 					"name" 	 		=> $value->name,
 					"abbr" 			=> $value->abbr,
-					"is_system"		=> $value->is_system	
+					"is_system"		=> $value->is_system,
+
+					"category" 		=> $value->category->get_raw()->result()	
 				);
 			}
 		}
@@ -525,7 +527,9 @@ class Items extends REST_Controller {
 					"code" 			=> $obj->code,
 					"name" 	 		=> $obj->name,
 					"abbr" 			=> $obj->abbr,
-					"is_system"		=> $obj->is_system	
+					"is_system"		=> $obj->is_system,
+
+					"category" 		=> $obj->category->get_raw()->result()	
 				);
 			}
 		}
@@ -559,7 +563,9 @@ class Items extends REST_Controller {
 					"code" 			=> $obj->code,
 					"name" 	 		=> $obj->name,
 					"abbr" 			=> $obj->abbr,
-					"is_system"		=> $obj->is_system	
+					"is_system"		=> $obj->is_system,
+
+					"category" 		=> $obj->category->get_raw()->result()	
 				);		
 			}
 		}
@@ -1556,11 +1562,11 @@ class Items extends REST_Controller {
 	    		}
 			}									 			
 		}
-
-		$obj->where_in_related("transaction","type",["Invoice","Cash_Sale","Cash_Purchase","Credit_Purchase"]);
+		
 		$obj->where_related("transaction","is_recurring",0);
 		$obj->where_related("transaction","deleted",0);
 		$obj->order_by_related("transaction", "issued_date", "desc");
+		$obj->order_by_related("transaction", "number", "desc");
 
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -1581,8 +1587,7 @@ class Items extends REST_Controller {
 						"locale" 		=> $value->locale,
 						"movement" 		=> $value->movement,
 						
-						"invoice" 		=> $value->transaction->get_raw()->result(),						
-						"item" 			=> $value->item->get_raw()->result()								
+						"invoice" 		=> $value->transaction->get_raw()->result()						
 					);
 				}
 			}

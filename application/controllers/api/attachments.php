@@ -30,6 +30,11 @@ class Attachments extends REST_Controller {
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = array();
 		$data["count"] = 0;
+		$traNumber = 0;
+		$conNumber = 0;
+		$traSize = 0;
+		$conSize = 0;
+		$total 	   = 0;
 
 		$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -82,7 +87,25 @@ class Attachments extends REST_Controller {
 
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {				
-				//Results				
+				//Results
+				$attachedTo = array('id' => null, 'name' => null, 'type' => null);
+				if($value->contact_id) {
+					$c = $value->contact->get();
+					$conNumber++;
+					$conSize += $value->size;
+					$attachedTo = array('id' => $c->id, 'name' => $c->name, 'type' => 'contact');
+				} elseif($value->transaction_id) {
+					$t = $value->transaction->get();
+					$traNumber++;
+					$traSize += $value->size;
+					$attachedTo = array('id' => $t->id, 'name' => $t->number, 'type' => 'transaction', 'go' => $t->type);
+				} else {
+					$item = $value->item->get();
+					$conNumber++;
+					$conSize += $value->size;
+					$attachedTo = array('id' => $item->id, 'name' => $item->name, 'type' => 'item');
+				}
+				$user = $value->user->get();
 				$data["results"][] = array(
 					"id" 				=> $value->id,					
 					"transaction_id" 	=> $value->transaction_id,
@@ -93,12 +116,20 @@ class Attachments extends REST_Controller {
 					"description" 		=> $value->description,
 					"key" 				=> $value->key,					
 					"url" 				=> $value->url,
+					"size"				=> $value->size,
+					"user" 				=> $user->exists() ? array('id' => $user->id, 'name' => $user->name):array(),
+					'attachedTo'		=> $attachedTo,
 					"deleted"			=> $value->deleted,
 					"created_at" 		=> $value->created_at,
 					"updated_at" 		=> $value->updated_at
 				);
 			}
 		}
+		$data['transactionNumber'] = $traNumber;
+		$data['contactNumber'] = $conNumber;
+		$data['transactionSize'] = $traSize;
+		$data['contactSize'] = $conSize;
+		$data['total'] = $traSize + $conSize;
 
 		//Response Data		
 		$this->response($data, 200);		
@@ -120,6 +151,8 @@ class Attachments extends REST_Controller {
 			isset($value->key) 				? $obj->key 			= $value->key : "";
 			isset($value->url) 				? $obj->url 			= $value->url : "";
 			isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
+			isset($value->user_id) 			? $obj->user->id 		= $value->user->id : "";
+			isset($value->size) 			? $obj->size 			= $value->size : "";
 			isset($value->created_at) 		? $obj->created_at 		= $value->created_at : "";
 						
 			if($obj->save()){
@@ -160,6 +193,8 @@ class Attachments extends REST_Controller {
 			isset($value->type) 			? $obj->type 			= $value->type : "";
 			isset($value->name) 			? $obj->name 			= $value->name : "";
 			isset($value->description) 		? $obj->description 	= $value->description : "";
+			isset($value->user_id) 			? $obj->user->id 		= $value->user->id : "";
+			isset($value->size) 			? $obj->size 			= $value->size : "";
 			isset($value->key) 				? $obj->key 			= $value->key : "";			
 			isset($value->url) 				? $obj->url 			= $value->url : "";
 			isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";

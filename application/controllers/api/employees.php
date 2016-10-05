@@ -122,7 +122,6 @@ class Employees extends REST_Controller {
 			$employees->bill_to = $res->bill_to;
 			$employees->registered_date = $res->registered_date;
 			$employees->phone = $res->phone;
-			$employees->locale= $res->locale;
 			$employees->memo = $res->memo;
 			$employees->is_fulltime = $res->is_fulltime == true ? 1:0;
 			$employees->account_id = $res->account->id;
@@ -135,7 +134,7 @@ class Employees extends REST_Controller {
 				$data[] = array(
 					'id' => $employees->id,
 					'name' => $employees->name,
-					'abbr' => $emplohyees->abbr,
+					'abbr' => $employees->abbr,
 					'status' => $employees->status,
 					'role' => $res->role,
 					'number' => $employees->number,
@@ -277,5 +276,68 @@ class Employees extends REST_Controller {
 				200
 			);
 		}
+	}
+
+	public function roles_post() {
+		$requested_data = json_decode($this->post('models'));
+		$data = array();
+		$this->benchmark->mark('benchmark_start');
+		foreach($requested_data as $req) {
+			$types = new Contact_type(null, null, null, null, $this->_database);
+			$types->parent_id = 3;
+			$types->abbr = $req->abbr;
+			$types->name = $req->name;
+			
+			if($types->save()) {
+				$data[] = array(
+					'id' => $types->id,
+					'abbr' => $types->abbr,
+					'name' => $types->name
+				);
+			}
+		}
+		
+
+		$this->benchmark->mark('benchmark_end');
+		$this->response(
+			array(
+				'results'=>$data, 
+				'msg' => 'result found',
+				'count'=> count($types), 
+				'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')
+				),
+			200
+		);
+	}
+
+	public function roles_put() {
+		$requested_data = json_decode($this->put('models'));
+		$data = array();
+
+		$this->benchmark->mark('benchmark_start');
+		foreach($requested_data as $req) {
+			$types = new Contact_type(null, null, null, null, $this->_database);
+			$types->where('id', $req->id)->get();
+			$types->abbr = $req->abbr;
+			$types->name = $req->name;
+			
+			if($types->save()) {
+				$data[] = array(
+					'id' => $types->id,
+					'abbr' => $types->abbr,
+					'name' => $types->name
+				);
+			}
+		}
+		$this->benchmark->mark('benchmark_end');
+		$this->response(
+			array(
+				'results'=>$data, 
+				'msg' => 'result found',
+				'count'=> count($types), 
+				'generatedIn'=>$this->benchmark->elapsed_time('benchmark_start', 'benchmark_end')
+				),
+			200
+		);
 	}
 }

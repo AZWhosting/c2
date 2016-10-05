@@ -68,7 +68,7 @@
                       <section class="box-typical">
                           <div class="profile-card">
                               <div class="profile-card-photo">
-                                  <img data-bind="attr: {src: userProfile.currentID.profile_photo}">
+                                  <img data-bind="attr: {src: userProfile.currentID.profile_photo.url}">
                               </div>
                               <div class="profile-card-name">
                                   <span data-bind="text: userProfile.currentID.last_name"></span>&nbsp;
@@ -198,8 +198,8 @@
             #=status == 1 ? "Active" : "Inactive"#
           </td>
           <td align="center">
-            <button data-bind="click: edit" style="padding: 0px 15px;">Edit</button>
-            <button data-bind="click: remove" style="padding: 0px 15px;">Remove</button>
+            <button class="btn" data-bind="click: edit" style="padding: 0px 15px;     border-radius: 0;">Edit</button>
+            <button class="btn" data-bind="click: remove" style="padding: 0px 15px;     border-radius: 0;">Remove</button>
           </td>
       </tr>
     </script>
@@ -259,7 +259,7 @@
                                   </td>
                                 </tr>
                                 <tr>
-                                    <td>Number</td>
+                                    <td>Employment Number</td>
                                     <td>:</td>
                                     <td>
                                       <input id="type"
@@ -275,7 +275,18 @@
                                         style="width: 150px;"
                                       >
                                     </td>
-                                    <td></td><td></td>
+                                    <td>Status</td>
+                                    <td>
+                                      <input id="type"
+                                        data-role="dropdownlist"
+                                        data-bind="source: statusDS, value: current.status"
+                                        data-text-field="value"
+                                        data-value-field="id"
+                                        data-value-primitive="true"
+                                        class="form-control col-md-7 col-xs-12"
+                                        type="text"
+                                      >
+                                    </td>
                                 </tr>                                
                             </table>
                           </div>
@@ -285,7 +296,7 @@
                             <ul class="nav" role="tablist">
                               <li class="nav-item">
                                 <a class="nav-link active" href="#tabs-4-tab-1" role="tab" data-toggle="tab" aria-expanded="false">
-                                  Contact
+                                  Information
                                 </a>
                               </li>
                               <li class="nav-item">
@@ -295,6 +306,11 @@
                               </li>
                               <li class="nav-item">
                                 <a class="nav-link" href="#tabs-4-tab-3" role="tab" data-toggle="tab" aria-expanded="false">
+                                  Payroll Information
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="#tabs-4-tab-4" role="tab" data-toggle="tab" aria-expanded="false">
                                   Document
                                 </a>
                               </li>
@@ -304,30 +320,6 @@
                           <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1" aria-expanded="false">
                               <table class="table">
-                                <tr>
-                                  <td>status</td>
-                                  <td>
-                                    <input id="type"
-                                     data-role="dropdownlist"
-                                     data-bind="source: statusDS, value: current.status"
-                                     data-text-field="value"
-                                     data-value-field="id"
-                                     data-value-primitive="true"
-                                     class="form-control col-md-7 col-xs-12"
-                                     type="text"
-                                     >
-                                    </td>
-                                  <td></td>
-                                  <td>registered date</td>
-                                  <td>
-                                    <input type="text" 
-                                      data-role="datepicker" 
-                                      data-bind="value: current.registered_date"
-                                      data-format="dd-MM-yyyy"
-                                      data-parse-formats="yyyy-MM-dd"
-                                      >
-                                  </td>
-                                </tr>
                                 <tr>
                                   <td>email</td>
                                   <td><input type="email" class="k-textbox" data-bind="value: current.email"></td>
@@ -341,13 +333,6 @@
                                   <td></td>
                                   <td>memo</td>
                                   <td><input type="text" class="k-textbox" data-bind="value: current.memo"></td>
-                                </tr>
-                                <tr>
-                                  <td>ship to</td>
-                                  <td><input type="text" class="k-textbox" data-bind="value: current.ship_to"></td>
-                                  <td></td>
-                                  <td>bill to</td>
-                                  <td><input type="text" class="k-textbox" data-bind="value:current.bill_to"></td>
                                 </tr>
                               </table>
                             </div><!--.tab-pane-->
@@ -399,6 +384,88 @@
                               </table>
                             </div><!--.tab-pane-->
                             <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3" aria-expanded="false">
+                              <table class="table">
+                                <tr>
+                                  <td>Nationality</td>
+                                  <td>
+                                    <input id="type"                                     
+                                     data-bind="value: payroll.nationality"
+                                     class="k-textbox"
+                                     type="text"
+                                     >
+                                    </td>
+                                  <td></td>
+                                  <td>Employment Date</td>
+                                  <td>
+                                    <input type="text" 
+                                      data-role="datepicker" 
+                                      data-bind="value: payroll.employeement_date"
+                                      data-format="dd-MM-yyyy"
+                                      data-parse-formats="yyyy-MM-dd"
+                                      >
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Married Status</td>
+                                  <td>
+                                    <input id="type"                                     
+                                     data-bind="source: marriedStatus ,value: payroll.married_status"
+                                     data-role="dropdownlist"
+                                     data-text-field="name"
+                                     data-value-field="id"
+                                     data-value-primitive="true"
+                                     class="k-textbox"
+                                     type="text"
+                                     >
+                                    </td>
+                                  <td></td>
+                                  <td>Children</td>
+                                  <td>
+                                    <input type="text" 
+                                      data-role="numerictextbox" 
+                                      data-bind="value: payroll.children"
+                                      >
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>City/Province</td>
+                                  <td>
+                                    <input id="type"                                     
+                                     data-bind="value: payroll.city"
+                                     class="k-textbox"
+                                     type="text"
+                                     >
+                                    </td>
+                                  <td></td>
+                                  <td>Country</td>
+                                  <td>
+                                    <input type="text" 
+                                      data-bind="value: payroll.country"
+                                      class="k-textbox"
+                                      >
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Emmergency Number</td>
+                                  <td>
+                                    <input id="type"                                     
+                                     data-bind="value: payroll.emergency_number"
+                                     class="k-textbox"
+                                     type="text"
+                                     >
+                                    </td>
+                                  <td></td>
+                                  <td>Emmergency Name</td>
+                                  <td>
+                                    <input type="text" 
+                                      data-bind="value: payroll.emergency_name"
+                                      class="k-textbox"
+                                      >
+                                  </td>
+                                </tr>
+                              </table>
+                            </div><!--.tab-pane-->
+                            <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-4" aria-expanded="false">
                               <input data-role="upload" type="file" data-bind="events: {select: fileMan.onSelected}" data-show-file-list="false">
                               <table class="table">
                                 <tbody 
@@ -449,6 +516,8 @@
                             <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: close"><i></i></span>
                         </div>
                         <h2>Edit Company Info</h2>
+                        <img data-bind="attr: {src: current.logo.url}"><br>
+                        <input type="file" id="companyLogo" data-bind="events: {change: onLogoChange}">
                         <div class="divider"></div>
                         <header class="box-typical-header-sm">
                           General Info
@@ -484,10 +553,17 @@
                               </td>
                             </tr>
                             <tr>
-                              <td>Year Founded</td>
+                              <td>Company Registraion Number</td>
                               <td>:</td>
                               <td>
                                 <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.year_founded">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>City/Province</td>
+                              <td>:</td>
+                              <td>
+                                <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.city">
                               </td>
                             </tr>
                             <tr>
@@ -519,14 +595,24 @@
                         <header class="box-typical-header-sm">Financial Info</header>
                         <article class="profile-info-item edit-table">
                             <table >
+                              <tr>
+                                  <td>Accounting Standard</td>
+                                  <td>:</td>
+                                  <td>
+                                    <input type="text" 
+                                      class="form-control" 
+                                      data-bind="value: current.accounting_standard">
+                                  </td>
+                                </tr>
                                 <tr>
                                   <td>Fiscal Date</td>
                                   <td>:</td>
                                   <td>
-                                    <input type="text" 
+                                    <input 
                                       data-role="datepicker" 
                                       class="form-control"
-                                      data-format="dd-M" 
+                                      data-format="dd-MM"
+                                      data-parse-formats="yyyy-MM-dd" 
                                       data-bind="value: current.fiscal_date">
                                   </td>
                                 </tr>
@@ -539,7 +625,8 @@
                                       class="form-control" 
                                       data-bind="source: currencies, value: current.currency.id"
                                       data-value-field="id"
-                                      data-text-field="code">
+                                      data-text-field="code"
+                                      disabled>
                                   </td>
                                 </tr>
                                 <tr>
@@ -553,18 +640,7 @@
                                       data-value-field="id"
                                       data-text-field="code">
                                   </td>
-                                </tr>
-                                <tr>
-                                  <td>Fiscal Report Date</td>
-                                  <td>:</td>
-                                  <td>
-                                    <input type="text" 
-                                      data-role="datepicker"
-                                      data-format="dd-mm"
-                                      class="form-control" 
-                                      data-bind="value: current.financial_report_date">
-                                  </td>
-                                </tr>
+                                </tr> 
                                 <tr>
                                   <td>Tax Regime</td>
                                   <td>:</td>
@@ -599,7 +675,7 @@
     </script>
     <!-- user placeholder -->
     <script type="text/x-kendo-template" id="template-placeholder-module">
-      <div style="border:none;" data-role="listview" data-bind="source: modules" data-template="company-modules"></div>
+      <div style="border:none;" data-role="listview" data-bind="source: users.modules" data-template="company-modules"></div>
     </script>
     <script type="text/x-kendo-template" id="company-modules">
       <div class="col-xs-3 col-md-2 col-lg-2">
@@ -613,11 +689,7 @@
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-company">
       <article class="profile-info-item">
-        <img data-bind="attr: {src: current.logo}"><br><br>
-        <a href="\#" data-bind="visible: showLogoEdit, events: {click: showLogo}">Edit Logo</a>
-        <input type="file" id="companyLogo" data-bind="invisible: showLogoEdit, events: {change: onLogoChange}"><br>
-        <button class="btn" data-bind="invisible: showLogoEdit, events: {click: upload}">Save</button>
-        <button class="btn" data-bind="invisible: showLogoEdit, events: {click: showLogo}">Cancel</button>   
+        <img width="120px" data-bind="attr: {src: current.logo.url}">   
       </article>
         <header class="box-typical-header-sm">
             General Info
@@ -645,9 +717,14 @@
                     <td><span data-bind="text:current.zip"></span></td>
                 </tr>
                 <tr>
-                    <td>Year Founded</td>
+                    <td>Company Registration Number</td>
                     <td>:</td>
                     <td><span data-bind="text:current.year_founded"></span></td>
+                </tr>
+                <tr>
+                    <td>City/Province</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.city"></span></td>
                 </tr>
                 <tr>
                     <td>Country</td>
@@ -664,6 +741,11 @@
         <header class="box-typical-header-sm">Financial Info</header>
         <article class="profile-info-item">
             <table >
+              <tr>
+                    <td>Accounting Standard</td>
+                    <td>:</td>
+                    <td><span data-bind="text:current.accounting_standard"></span></td>
+                </tr>
                 <tr>
                     <td>Fiscal Date</td>
                     <td>:</td>
@@ -680,11 +762,6 @@
                     <td><span data-bind="text:current.reportCurrency.code"></span></td>
                 </tr>
                 <tr>
-                    <td>Fiscal Report Date</td>
-                    <td>:</td>
-                    <td><span data-bind="text:current.financial_report_date"></span></td>
-                </tr>
-                <tr>
                     <td>Tax Regime</td>
                     <td>:</td>
                     <td><span data-bind="text:current.tax_regime"></span></td>
@@ -694,6 +771,7 @@
         <button data-bind="click: edit" data-role="button" class="btn" role="button" aria-disabled="false" tabindex="0">
             Edit
         </button>
+        <div id="ntf1" data-role="notification"></div>
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-user">
       <article class="profile-info-item user">
@@ -711,7 +789,8 @@
       </article>
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-employee">
-      <button class="btn" data-bind="click: addNew" style="margin-bottom: 10px;">Create</button>
+      <button class="btn" data-bind="click: addNew" style="margin-bottom: 10px;     border-radius: 0;">Create</button>
+      <button class="btn" data-bind="click: goRole" style="margin-bottom: 10px;     border-radius: 0;">Role</button>
       <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: refresh"></i>
       <table class="tbl-typical">
           <thead>
@@ -725,6 +804,7 @@
           </thead>
           <tbody data-role="listview" data-bind="source: employees.dataSource" data-template="employee-list">
       </tbody></table>
+      <div id="ntf1" data-role="notification"></div>
     </script>
     <!-- user placeholder -->
     <script type="text/x-kendo-template" id="user-profile">
@@ -739,9 +819,9 @@
                         <h2>Profile Detail</h2>
                         <div class="divider"></div>
                         <div class="col-md-3 col-lg-3">
-                            <img width="240px" data-bind="attr: {src: currentID.profile_photo}" />
+                            <img width="240px" data-bind="attr: {src: currentID.profile_photo.url}" />
                             <h3>Profile Picture</h3>
-                            <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                            <input data-role="upload" id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {select: upload}" data-show-file-list="false">
                         </div>
                         <article class="col-md-9 col-lg-9 profile-info-item edit-table">
                             <table >
@@ -778,27 +858,6 @@
                                     <td>:</td>
                                     <td>
                                         <input type="Email" data-bind="value: currentID.email" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Facebook</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: currentID.facebook" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>LinkedIn</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: currentID.linkedin" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Twitter</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: currentID.twitter" class="form-control" id="" placeholder="">
                                     </td>
                                 </tr>
                             </table>
@@ -838,7 +897,7 @@
       <section class="box-typical col-md-3" style="margin: 17px;">
         <div class="profile-card">
           <div class="profile-card-photo">
-              <img data-bind="attr: {src: profile_photo}">
+              <img data-bind="attr: {src: profile_photo.url}">
           </div>
           <div class="profile-card-name">
               <span data-bind="text: last_name"></span>&nbsp;
@@ -895,15 +954,20 @@
                     <thead>
                         <tr>
                           <td style="width: 80%">User Access Modules</td>
-                          <td><i class="fa fa-save" data-bind="click: saveAssign" style="cursor: pointer;"></i>&nbsp;
-                          <i class="fa fa-eraser" data-bind="click: cancelAssign" style="cursor: pointer;"></i></td>
+                          <td>
+                          </td>
                         </tr>
                     </thead>
                     <tbody data-role="listview" data-bind="source: modules" data-template="template-modules-users-module-list-page">
                     </tbody>
-                </table>
+                </table><br>
+                <div style="float: right;">
+                  <button class="btn" data-bind="click: saveAssign" style="cursor: pointer; border-radius: 0;">Save</button>
+                  <button class="btn" data-bind="click: cancelAssign" style="cursor: pointer;border-radius: 0;">Cancel</button>
+                </div>
             </div>
         </div>
+        <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="template-user-password">
@@ -911,25 +975,26 @@
         Old Password: <input class="form-control" type="password" data-bind="value: oldPass"><br>
         New Password: <input class="form-control" type="password" data-bind="value: newPass"><br>
         <button class="btn btn-primary btn-block" data-bind="click: changePassword">Confirm</button>
+        <div id="ntf1" data-role="notification"></div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="template-modules-users-company-list-page">
       <tr>
           <td>
-              #=name#
+            <img src="#=image_url#" width="100"> #=name#
           </td>
           <td>
-              <i class="fa fa-hand-o-right" data-bind="click: assignTo"></i>
+            <button data-bind="click: assignTo" style="cursor: pointer;padding: 5px 20px;background: \#00a8ff;border:none;color:\#fff;">Assign</button>
           </td>
       </tr>
     </script>
     <script type="text/x-kendo-template" id="template-modules-users-module-list-page">
       <tr>
           <td>
-              #=name#
+            <img src="#=img_url#" width="100"> #=name#
           </td>
           <td>
-              <i class="fa fa-trash" data-bind="click: removeFrom"></i>
+              <button style="cursor: pointer;padding: 5px 20px;background: \#00a8ff;border:none;color:\#fff;" data-bind="click: removeFrom">Remove</button>
           </td>
       </tr>
     </script>
@@ -937,121 +1002,100 @@
       <!--Add User-->
       <div class="page-content">
         <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <section class="box-typical edit-company">
-                        <div class="hidden-print pull-right">
-                            <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
-                        </div>
-                        <h2>User Detail</h2>
-                        <div class="divider"></div>
-                        <div class="col-md-3 col-lg-3">
-                            <img width="240px" data-bind="attr: {src: current.profile_photo}" />
-                            <h3>Profile Picture</h3>
-                            <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
-                        </div>
-                        <article class="col-md-9 col-lg-9 profile-info-item edit-table">
-                            <table >
-                                <tr>
-                                    <td>Username *</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="text" data-bind="value: current.username" class="form-control"  id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>First Name *</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="text" data-bind="value: current.first_name" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Last Name *</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="text" data-bind="value: current.last_name" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Password *</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="password" data-bind="value: current.password" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Phone</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="text" data-bind="value: current.mobile" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Facebook</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.facebook" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>LinkedIn</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.linkedin" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Twitter</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.twitter" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr data-bind="visible:showAdmin">
-                                    <td>Role</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: userRoles, value: current.role"
-                                               data-text-field="name"
-                                               data-value-field="id"
-                                               data-value-primitive="true"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text"
-                                               >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                    </td>
-                                </tr>
-                            </table>
-                        </article>
-                        <div class="box-generic">
-                          <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
-                              <span class="glyphicon glyphicon-ok"><i></i></span>
-                              &nbsp; Save
+          <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                  <section class="box-typical edit-company">
+                      <div class="hidden-print pull-right">
+                          <span class="glyphicon glyphicon-remove glyphicon-size" data-bind="click: cancel"><i></i></span>
+                      </div>
+                      <h2>User Detail</h2>
+                      <div class="divider"></div>
+                      <div class="col-md-3 col-lg-3">
+                          <img width="120px" data-bind="attr: {src: current.profile_photo.url}" />
+                          <h3>Profile Picture</h3>
+                          <input data-role="upload" id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {select: upload}" data-show-file-list="false">
+                      </div>
+                      <article class="col-md-9 col-lg-9 profile-info-item edit-table">
+                          <table >
+                              <tr>
+                                  <td>Username *</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="text" data-bind="disabled: editable, value: current.username" class="form-control"  id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>First Name *</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="text" data-bind="value: current.first_name" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Last Name *</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="text" data-bind="value: current.last_name" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Password *</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="password" data-bind="value: current.password" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Phone</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="text" data-bind="value: current.mobile" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Email</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr data-bind="visible:showAdmin">
+                                  <td>Role</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input id="type"
+                                             data-role="dropdownlist"
+                                             data-bind="source: userRoles, value: current.role"
+                                             data-text-field="name"
+                                             data-value-field="id"
+                                             data-value-primitive="true"
+                                             class="form-control col-md-7 col-xs-12"
+                                             type="text"
+                                             >
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td>
+                                  </td>
+                              </tr>
+                          </table>
+                      </article>
+                      <div class="box-generic">
+                        <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
+                            <span class="glyphicon glyphicon-ok"><i></i></span>
+                            &nbsp; Save
+                        </button>
+                        &nbsp;
+                        <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0" data-bind="click: cancel">
+                            <span class="glyphicon glyphicon-remove"><i></i></span>
+                            &nbsp; Cancel
                           </button>
-                          &nbsp;
-                          <button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0" data-bind="click: cancel">
-                              <span class="glyphicon glyphicon-remove"><i></i></span>
-                              &nbsp; Cancel
-                            </button>
-                        </div>
-                    </section>
-                </div>
-            </div>
+                      </div>
+                  </section>
+              </div>
+          </div>
         </div>
         <div id="ntf1" data-role="notification"></div>
       </div>
@@ -1069,9 +1113,9 @@
                         <h2>User Detail</h2>
                         <div class="divider"></div>
                         <div class="col-md-3 col-lg-3">
-                            <img width="240px" data-bind="attr: {src: current.profile_photo}" />
+                            <img width="240px" data-bind="attr: {src: current.profile_photo.url}" />
                             <h3>Profile Picture</h3>
-                            <input id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {change: upload}">
+                            <input data-role="upload" id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {select: upload}" data-show-file-list="false">
                         </div>
                         <article class="col-md-9 col-lg-9 profile-info-item edit-table">
                             <table >
@@ -1079,7 +1123,7 @@
                                     <td>Username *</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" data-bind="value: current.username" class="form-control" id="" placeholder="">
+                                        <input type="text" data-bind="disabled: editable, value: current.username" class="form-control" id="" placeholder="">
                                     </td>
                                 </tr>
                                 <tr>
@@ -1111,27 +1155,6 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Facebook</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.facebook" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>LinkedIn</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.linkedin" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Twitter</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.twitter" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td>Role</td>
                                     <td>:</td>
                                     <td>
@@ -1144,20 +1167,6 @@
                                                class="form-control col-md-7 col-xs-12"
                                                type="text"
                                                >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Type</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input id="type"
-                                               data-role="dropdownlist"
-                                               data-bind="source: userTypes, value: current.usertype"
-                                               data-text-field="name"
-                                               data-value-field="id"
-                                               data-value-primitive="true"
-                                               class="form-control col-md-7 col-xs-12"
-                                               type="text">
                                     </td>
                                 </tr>
                             </table>
@@ -1179,6 +1188,53 @@
         </div>
         <div id="ntf1" data-role="notification"></div>
       </div>
+    </script>
+
+    <script type="text/x-kendo-template" id="employee-role-form">
+      <div>
+        <span class="btn" data-bind="click: backToList">X</span>
+        <span class="k-button k-button-icontext k-add-button" data-bind="click: addRole"><span class="k-icon k-add"></span>Add new record</span>
+        <table class="table">
+          <thead>
+            <tr>
+              <td>ABBR</td>
+              <td>Name</td>
+              <td>
+                <div>
+                  <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+                  <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+                </div>
+              </td>
+            </tr>
+          </thead>
+          <tbody data-role="listview" data-bind="source: roles" data-template="employee-role-list" data-edit-template="employee-role-list-edit">
+          </tbody>
+        </table>
+      </div>
+    </script>
+    <script type="text/x-kendo-template" id="employee-role-list">
+      <tr>
+        <td>#=abbr#</td>
+        <td>#=name#</td>
+        <td>
+          <div>
+            <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+            <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+          </div>
+        </td>
+      </tr>
+    </script>
+    <script type="text/x-kendo-template" id="employee-role-list-edit">
+      <tr>
+        <td><input data-bind="value:abbr"></td>
+        <td><input data-bind="value:name"></td>
+        <td>
+          <div>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+          </div>
+        </td>
+      </tr>
     </script>
     <!-- cognito -->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
@@ -1230,6 +1286,132 @@
       var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
       var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
 
+      var image = kendo.Class.extend({
+        dataSource: new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/images',
+              type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            create  : {
+              url: baseUrl + 'api/images',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            update  : {
+              url: baseUrl + 'api/images',
+              type: "PUT",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            destroy  : {
+              url: baseUrl + 'api/images',
+              type: "DELETE",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 50
+        }),
+        current   : null,
+        upload    : function(id, myFile) {
+          var that = this;
+          var dfd = $.Deferred();
+          this.query({filter:{field: 'id', value: 2}}).then(function(e){
+            that.dataSource.remove(that.dataSource.at(0));
+            var files = myFile;
+            var key = 'ATTACH_' + JSON.parse(localStorage.getItem('userData/user')).institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files[0].name;
+            that.dataSource.add({
+              type            : files[0].extension,
+              name            : files[0].name,
+              key             : key,
+              url             : "https://s3-ap-southeast-1.amazonaws.com/banhji/"+key,
+              created_at      : new Date(),
+              size            : files[0].size,
+              file            : files[0].rawFile
+            });
+            dfd.resolve(that.dataSource.at(0));
+          });
+          return dfd.promise();
+        },
+        query     : function(arg) {
+          return this.dataSource.query(arg);
+        },
+        insert    : function(id, data) {
+          if(id == null) {
+            this.dataSource.add(data);
+          } else {
+            this.dataSource.insert(id, data);
+          }
+        },
+        save      : function() {
+          var that = this;
+          var dfd  = $.Deferred();
+          this.dataSource.sync();
+          this.dataSource.bind("requestEnd", function(e){
+            var response = e.response.results;
+            //Delete File
+            if(e.type=="create"){
+              for(var i = 0; i < response.length; i++) {
+                var params = { 
+                  Body: that.dataSource.data()[0].file, 
+                  Key:  that.dataSource.data()[0].key
+                };
+                bucket.upload(params, function (err, data) {                    
+                    // console.log(err, data);
+                    // var url = data.Location;
+                    if(!err) {
+                      dfd.resolve({id: response[0].id, url:response[0].url});
+                      // console.log(response[0]);
+                      that.dataSource.data([]);
+                    }               
+                });
+              } 
+            } else if(e.type == "destroy") {
+              $.each(response, function(index, value){                  
+                var params = {
+                  Delete: { /* required */
+                    Objects: [ /* required */
+                      {
+                        Key: value.key
+                      }
+                    ]
+                  }
+                };
+                bucket.deleteObjects(params, function(err, data) {
+                  //console.log(err, data);
+                });
+              });
+            }
+          });
+          return dfd.promise();
+        } 
+      });
+      
       banhji.fileManagement = kendo.observable({
         dataSource: new kendo.data.DataSource({
           transport: {
@@ -1290,20 +1472,20 @@
           var key = 'ATTACH_' + JSON.parse(localStorage.getItem('userData/user')).institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files[0].name;
           banhji.fileManagement.dataSource.add({
             transaction_id  : 0,
-            type            : "Contact",
+            type            : "Transaction",
             name            : files[0].name,
             contact_id      : null,
             description     : "",
             key             : key,
             url             : "https://s3-ap-southeast-1.amazonaws.com/banhji/"+key,
             created_at      : new Date(),
-            file: files[0].rawFile
+            file            : files[0].rawFile
           });
         },
         save                : function(contact_id){
-          $.each(banhji.fileManagement.dataSource.data(), function(index, value){ 
-            banhji.fileManagement.dataSource.at(index).set("contact_id", contact_id);
+          $.each(banhji.fileManagement.dataSource.data(), function(index, value){  
             if(!value.id){
+              banhji.fileManagement.dataSource.at(index).set("contact_id", contact_id);
               var params = { 
                 Body: value.file, 
                 Key: value.key
@@ -1314,7 +1496,6 @@
               });
             }                
           });
-
           banhji.fileManagement.dataSource.sync();
           var saved = false;
           banhji.fileManagement.dataSource.bind("requestEnd", function(e){
@@ -1743,6 +1924,7 @@
             return false;
           }
         },
+        media: new image(),
         userTypes : [
           {id: 1, name: 'normal'},
           {id: 2, name: 'developer'}
@@ -1751,14 +1933,17 @@
           {id: 1, name: 'Admin'},
           {id: 2, name: 'User'}
         ],
-        upload: function() {
-          var fileChooser = document.getElementById('user-image');
-          var file = fileChooser.files[0];
+        upload: function(e) {
+          var id = this.currentID.profile_photo.id;
+          var that = this;
           var fileReader = new FileReader();
-          fileReader.onload = function(e){
-            banhji.profile.get('currentID').set('profile_photo', e.target.result);
+          fileReader.onload = function (event) {
+            var mapImage = event.target.result;
+            // $("#MyImage").attr('src', mapImage);
+            banhji.profile.get('currentID').set('profile_photo', {id: "", url: mapImage});
           }
-          fileReader.readAsDataURL(file);
+          fileReader.readAsDataURL(e.files[0].rawFile);
+          this.media.upload(id, e.files).done(function(data){});
         },
         oldPass: null,
         newPass: null,
@@ -1787,24 +1972,17 @@
           }
           cognitoUser.changePassword(this.get('oldPass'), this.get('newPass'), function(err, result) {
               if (err) {
-                  alert(err);
+                  $("#ntf1").data("kendoNotification").error("Operation failed.");
                   return;
               } else {
+                $("#ntf1").data("kendoNotification").success("Data saved.");
                 banhji.users.set('oldPass', null);
                 banhji.users.set('newPass', null);
+                banhji.router.navigate("");
               }
-              console.log('call result: ' + result);
           });
         },
-        getRole   : function() {
-          var role = ""
-          if(banhji.profile.get('currentID').role == "1") {
-            role = "Admin";
-          } else {
-            role = "User";
-          }
-          return role;
-        },
+        getRole   : "User",
         goPassword: function() {
           banhji.router.navigate('passwordChange');
           // mainDash.showIn("#placeholder", password);
@@ -1820,34 +1998,39 @@
               window.location.replace("<?php echo base_url(); ?>login");
           }
         },
-        currentID : banhji.profileDS.data()[0] || [],
+        currentID : null,
         profileUrl : function() {
           return "#profile/" + this.get('currentID').id;
         },
         cancel    : function() {
           if(banhji.profile.dataSource.hasChanges()) {
-            banhji.profile.dataSource.cancelChanges();
+            banhji.profileDS.cancelChanges();
+            banhji.profile.media.dataSource.cancelChanges();
+            this.set('currentID', banhji.profileDS.data()[0]);         
           }
           banhji.router.navigate("");
         },
         save      : function() {
-          var fileChooser = document.getElementById('user-image');
-          var results = document.getElementById('results');
-          var file = fileChooser.files[0];
-          if (file) {
-            var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-            bucket.upload(params, function (err, data) {
-              // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
-              var loc = data.Location;
-              banhji.profile.get('currentID').set('profile_photo', loc);
-              banhji.profile.dataSource.sync();
-            });
+          var that = this;
+          if(that.media.dataSource.hasChanges()) {
+            that.media.save().then(
+              function(data) {
+                banhji.profile.get('currentID').set('profile_photo', {id: data.id, url: data.url});
+                banhji.profile.dataSource.sync();
+                // console.log(data);
+              }
+            );
           } else {
             banhji.profile.dataSource.sync();
           }
+          
           banhji.profile.dataSource.bind('requestEnd', function(e){
-            if(e.response) {
-              alert("Operation saved");
+            var res = e.response;
+            if(res.results.length > 0) {
+              $("#ntf1").data("kendoNotification").success("Data saved.");
+              banhji.router.navigate("");
+            } else {
+              $("#ntf1").data("kendoNotification").error("Operation failed.");
             }
           });
         }
@@ -2021,9 +2204,38 @@
           pageSize: 100
         }),
         fileMan   : banhji.fileManagement,
-        setCurrent: function(current) {
-          this.set('current', current);
+        goRole   : function() {
+          layout.showIn("#container", mainDash);
+          mainDash.showIn("#placeholder", role);
         },
+        setCurrent: function(current) {
+          var that = this;
+          this.set('current', current);
+          this.payrollDS.query({filter: {'field' : 'contact_id', 'value': current.id}}).
+          then(function(e){
+            if(that.payrollDS.data().length > 0) {
+              that.set('payroll', that.payrollDS.data()[0]);
+            } else {
+              banhji.employees.payrollDS.insert(0,{
+                children: 0,
+                city: null,
+                contact_id: that.get('current').id,
+                country: null,
+                emergency_name: null,
+                emergency_name: null,
+                employeement_date: null,
+                married_status: 0,
+                nationality: null
+              });
+              banhji.employees.set('payroll', banhji.employees.payrollDS.at(0));
+            }
+            
+          });
+        },
+        marriedStatus: [
+          { id: 0, name: 'Single'},
+          { id: 1, name: 'Married'}
+        ],
         refresh: function() {
           $('#user-spinwhile').addClass('fa-spin');
           banhji.employees.dataSource.read().then(function() {
@@ -2035,6 +2247,62 @@
             read  : {
               url: baseUrl + 'api/employees/roles',
               type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            create  : {
+              url: baseUrl + 'api/employees/roles',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            update  : {
+              url: baseUrl + 'api/employees/roles',
+              type: "PUT",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 50
+        }),
+        payrollDS : new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/payrolls',
+              type: "GET",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            create  : {
+              url: baseUrl + 'api/payrolls',
+              type: "POST",
+              dataType: 'json',
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
+            },
+            update  : {
+              url: baseUrl + 'api/payrolls',
+              type: "PUT",
               dataType: 'json',
               headers: { Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id }
             },
@@ -2090,13 +2358,24 @@
             bill_to: "",
             ship_to: "",
             abbr: "",
-            currency: "",
+            currency: {id: 2},
             userid: 0,
             account: {id: 0, name: null},
             salary: {id: 0, name: null},
             registered_date: new Date()
           });
+          banhji.employees.payrollDS.insert(0,{
+            children: 0,
+            city: null,
+            country: null,
+            emergency_name: null,
+            emergency_name: null,
+            employeement_date: null,
+            married_status: 0,
+            nationality: null
+          });
           banhji.employees.setCurrent(banhji.employees.dataSource.at(0));
+          banhji.employees.set('payroll', banhji.employees.payrollDS.at(0));
           banhji.router.navigate('employee/new');
         },
         edit      : function(e) {
@@ -2115,20 +2394,52 @@
         cancel    : function() {
           if(banhji.employees.dataSource.hasChanges()) {
             banhji.employees.dataSource.cancelChanges();
+            banhji.employees.payrollDS.cancelChanges();
           }
           banhji.router.navigate("employeelist");
         },
+        addRole   : function() {
+          this.roles.insert(0, {abbr: null, name: null});
+        },
+        backToList: function() {
+          mainDash.showIn("#placeholder", employee);
+        },
         save      : function() {
-          banhji.employees.dataSource.sync();
-          banhji.employees.dataSource.bind('requestEnd', function(e){
-            if(e.response) {
-              banhji.employees.fileMan.save(e.response.results[0].id);
-              banhji.employees.addNew();
-              $("#ntf1").data("kendoNotification").success("Data saved.");
-            } else {
-               $("#ntf1").data("kendoNotification").error("Operation failed");
-            }
-          });
+          if( banhji.employees.dataSource.hasChanges()) {
+            banhji.employees.dataSource.sync();
+            banhji.employees.dataSource.bind('requestEnd', function(e){
+              if(e.type != "read") {
+                if(e.response) {
+                  if(e.type == 'create') {
+                    banhji.employees.fileMan.save(e.response.results[0].id);
+                    banhji.employees.get('payroll').set('contact_id', e.response.results[0].id);
+                    if(banhji.employees.payrollDS.data()[0].dirty) {
+                      banhji.employees.payrollDS.sync();
+                    }
+                    // banhji.employees.addNew();
+                  } else if(e.type == 'update') {
+                    if(banhji.employees.payrollDS.data()[0].dirty) {
+                      banhji.employees.payrollDS.sync();
+                    }
+                  }                
+                  $("#ntf1").data("kendoNotification").success("Data saved.");
+                  banhji.router.navigate('employeelist');
+                } else {
+                  $("#ntf1").data("kendoNotification").error("Operation failed");
+                }
+              }
+            });
+          } else {
+            banhji.employees.fileMan.save(this.get('current').id);
+            banhji.employees.payrollDS.sync();
+            banhji.employees.payrollDS.bind('requestEnd', function(e) {
+              if(e.response && e.type != 'read') {
+                $("#ntf1").data("kendoNotification").success("Data saved.");
+              } else {
+                $("#ntf1").data("kendoNotification").error("Operation failed");
+              }
+            });
+          }
         },
         saveClose: function() {
           banhji.employees.dataSource.sync();
@@ -2147,12 +2458,21 @@
       banhji.users = kendo.observable({
         users : banhji.userDS,
         cModules: banhji.moduleDS,
+        media    : new image(),
         showAdmin: function() {
           if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
             return true;
           } else {
             return false;
           }
+        },
+        editable: function() {
+          if(banhji.users.get('current').isNew()) {
+            return false;
+          } else {
+            return true;
+          }
+          // return true;
         },
         modules: new kendo.data.DataSource({
           transport: {
@@ -2207,10 +2527,12 @@
         saveAssign: function() {
           this.modules.sync();
           this.modules.bind('requestEnd', function(e){
-            if(e.response.results) {
+            var res = e.response;
+            if(res.results.length > 0) {
+              $("#ntf1").data("kendoNotification").success("Data saved.");
               banhji.router.navigate('userlist');
-              // layout.showIn("#main-display-container", index);
-              // layout.showIn("#main-display-container", profile);
+            } else {
+              $("#ntf1").data("kendoNotification").error("Operation failed.");
             }
           });
         },
@@ -2228,6 +2550,7 @@
               user: this.get('current').id,
               module: e.data.id,
               name: e.data.name,
+              href: e.data.href,
               img_url: e.data.image_url
             });
           }
@@ -2235,14 +2558,17 @@
         removeFrom: function(e) {
           this.modules.remove(e.data);
         },
-        upload: function() {
-          var fileChooser = document.getElementById('user-image');
-          var file = fileChooser.files[0];
+        upload: function(e) {
+          var id = this.get('current').profile_photo.id;
+          var that = this;
           var fileReader = new FileReader();
-          fileReader.onload = function(e){
-            banhji.users.get('current').set('profile_photo', e.target.result);
+          fileReader.onload = function (event) {
+            var mapImage = event.target.result;
+            // $("#MyImage").attr('src', mapImage);
+            banhji.users.get('current').set('profile_photo', {id: "", url: mapImage});
           }
-          fileReader.readAsDataURL(file);
+          fileReader.readAsDataURL(e.files[0].rawFile);
+          this.media.upload(id, e.files).done(function(data){});
         },
         assign : function() {
           // index.showIn('#app-placeholder', userlist);
@@ -2390,6 +2716,8 @@
         cancel: function() {
           if(this.users.hasChanges()) {
             this.users.cancelChanges();
+            banhji.users.media.dataSource.cancelChanges();
+            // this.set('current', this.get('current'));
           }
           banhji.router.navigate('userlist');
         },
@@ -2443,7 +2771,7 @@
             last_name: '',
             email: '',
             mobile: '',
-            profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+            profile_photo: {id: 2, url:"https://s3-ap-southeast-1.amazonaws.com/banhji/52751311555449544_blank.png"},
             company: {id: banhji.companyDS.data()[0].id, name:''},
             role: 2,
             facebook: '',
@@ -2454,10 +2782,6 @@
           banhji.users.setCurrent(banhji.users.users.at(0));
           banhji.router.navigate('userlist/new');
         },
-        // editProfile: function(e) {
-        //   e.preventDefault();
-        //   banhji.router.navigate('userlist/' + this.get('current').id);
-        // },
         edit: function(e) {
           banhji.router.navigate('userlist/' + e.data.id);
         },
@@ -2480,8 +2804,6 @@
         },
         save: function() {
           if(banhji.users.get('current').isNew()) {
-            // signup with Cognito
-            // using cognito to sign up
             var attributeList = [];
 
             var dataEmail = {
@@ -2495,79 +2817,44 @@
 
             userPool.signUp(banhji.users.get('current').username, banhji.users.get('current').password, attributeList, null, function(err, result){
                 if (err) {
-                    alert(err);
-                    return;
+                  alert(err);
+                  return;
                 }
-                if(banhji.users.get('current').profile_photo !== "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png") {
-                  var fileChooser = document.getElementById('user-image');
-                  var results = document.getElementById('results');
-                  var file = fileChooser.files[0];
-                  if (file) {
-                    // results.innerHTML = '';
-                    var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-                    bucket.upload(params, function (err, data) {
-                      results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
-                      var loc = data.Location;
-                      banhji.users.get('current').set('profile_photo', loc);
-                      banhji.userDS.sync();
-                      banhji.userDS.bind('requestEnd', function(e){
-                        var res = e.response, type = e.type;
-                        if(res.results.length > 0) {
-                          console.log('user created.');
-                        }
-                      });
-                    });
-                  }
-                } else {
-                  banhji.userDS.sync();
-                  banhji.userDS.bind('requestEnd', function(e){
-                    var res = e.response, type = e.type;
-                    if(res.results.length > 0) {
-                      $("#ntf1").data("kendoNotification").success("Data saved.");
-                    } else {
-                      $("#ntf1").data("kendoNotification").error("Operation failed.");
-                    }
+                if(banhji.users.media.dataSource.hasChanges()) {
+                  banhji.users.media.save().then(function(data){
+                    banhji.users.get('current').set('profile_photo', {id: data.id, url: data.url});
+                    banhji.users.users.sync();
                   });
+                } else {
+                  banhji.users.users.sync();
                 }
-                alert('Your action was successful.');
             });
           } else {
-            var fileChooser = document.getElementById('user-image');
-            var results = document.getElementById('results');
-            var file = fileChooser.files[0];
-            if (file) {
-              // results.innerHTML = '';
-              var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-              bucket.upload(params, function (err, data) {
-                // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
-                var loc = data.Location;
-                banhji.users.get('current').set('profile_photo', loc);
-                banhji.userDS.sync();
-                banhji.userDS.bind('requestEnd', function(e){
-                  var res = e.response, type = e.type;
-                  if(res.results.length > 0) {
-                    console.log('user created.');
-                  }
-                });
+            if(banhji.users.media.dataSource.hasChanges()) {
+              banhji.users.media.save().then(function(data){
+                banhji.users.get('current').set('profile_photo', {id: data.id, url: data.url});
+                banhji.users.users.sync();
               });
             } else {
-              banhji.userDS.sync();
-              banhji.userDS.bind('requestEnd', function(e){
-                var res = e.response, type = e.type;
-                if(res.results.length > 0) {
-                  $("#ntf1").data("kendoNotification").success("Data saved.");
-                } else {
-                  $("#ntf1").data("kendoNotification").error("Operation failed.");
-                }
-              });
+              banhji.users.users.sync();
             }
           }
+          banhji.userDS.bind('requestEnd', function(e){
+            var res = e.response, type = e.type;
+            if(res.results.length > 0) {
+              $("#ntf1").data("kendoNotification").success("Data saved.");
+              banhji.router.route('userlist');
+            } else {
+              $("#ntf1").data("kendoNotification").error("Operation failed.");
+            }
+          });
         }
       });
 
       banhji.company = kendo.observable({
         dataStore: banhji.companyDS,
         data: '',
+        media: new image(),
         modules: banhji.moduleDS,
         countries: banhji.countries,
         industries: banhji.industry,
@@ -2610,6 +2897,7 @@
            banhji.company.get('current').set('logo', e.target.result);
           }
           fileReader.readAsDataURL(file);
+          banhji.company.set('logoChange', true);
         },
         setCurrent: function(current) {
           this.set('current', current);
@@ -2618,6 +2906,7 @@
           index.showIn('#app-placeholder', modeleView);
         },
         close: function() {
+          banhji.company.dataStore.cancelChanges();
           banhji.router.navigate('');
         },
         taxRegimes: [
@@ -2638,6 +2927,7 @@
         edit: function() {
           banhji.router.navigate('company/edit');
         },
+        logoChange: false,
         cancel: function() {
           if(this.dataStore.hasChanges()) {
             this.dataStore.cancelChanges();
@@ -2645,33 +2935,32 @@
           banhji.router.navigate('');
         },
         save: function() {
-          // var file = fileChooser.files[0];
-          // if (file) {
-          //   var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
-          //   bucket.upload(params, function (err, data) {
-          //     banhji.company.dataStore.data()[0].set('logo', data.Location);
-          //     banhji.company.dataStore.sync();
-          //   });
-          // } else {
-          //   this.dataStore.sync();
-          // }
-          
-          this.dataStore.bind('rquestEnd', function(e){
+          if(banhji.company.get('logoChange')) {
+            var fileChooser = document.getElementById('companyLogo');
+            var file = fileChooser.files[0];
+            if (file) {
+              var params = {Key: Math.floor(Math.random() * 100000000000000001)+ '_' +file.name , ContentType: file.type, Body: file};
+              bucket.upload(params, function (err, data) {
+                banhji.company.dataStore.data()[0].set('logo', data.Location);
+                banhji.company.dataStore.sync();
+              });
+            }
+          } else {
+            banhji.company.dataStore.sync();
+          } 
+          banhji.company.dataStore.bind('requestEnd', function(e){
             var res = e.response;
             if(res.results.length > 0) {
               $("#ntf1").data("kendoNotification").success("Data saved.");
-              institute.showIn('#companyInfoPlaceholder', instInfo);
-              console.log("kdsslfds");
+              // institute.showIn('#companyInfoPlaceholder', instInfo);
+              // console.log("kdsslfds");
+              banhji.company.setCurrent(res.results[0]);
+              banhji.router.navigate('company');
             } else {
               $("#ntf1").data("kendoNotification").error("Operation failed.");
             }
-          });
+          });         
         }
-      });
-
-      banhji.module = kendo.observable({
-        dataStore: banhji.moduleDS,
-        fkds: ''
       });
 
       // index view
@@ -2695,6 +2984,7 @@
       var profileMod = new kendo.View('#user-profile-modules', {model: banhji.users});
       var assign = new kendo.View('#template-assign-module-to-page', {model: banhji.users});
       var password = new kendo.View('#template-user-password', {model: banhji.profile});
+      var role = new kendo.View('#employee-role-form', {model: banhji.employees});
       // router initization
       banhji.router = new kendo.Router({
         init: function() {
@@ -2702,26 +2992,7 @@
               layout.render("#main");
               
               institute = JSON.parse(localStorage.getItem('userData/user')).institute;
-              banhji.profileDS.fetch(function(e){
-                banhji.profile.set('currentID', banhji.profileDS.data()[0]);
-                layout.showIn('#menu', menu);
-                
-                var cognitoUser = userPool.getCurrentUser();
-                if(cognitoUser !== null) {
-                  banhji.aws.getImage(banhji.profileDS.data()[0].profile_photo);
-                  cognitoUser.getSession(function(err, result){
-                    if(result) {
-                      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                        IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
-                        Logins: {
-                          'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
-                        }
-                      });
-                    }
-                  });
-                }
-                console.log('init');
-              });
+              
             } else {
               window.location.replace("<?php echo base_url(); ?>login");
             }
@@ -2764,9 +3035,11 @@
                 ]);
               }            
             });
+            banhji.users.modules.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).id});
           });
           layout.showIn("#container", mainDash);
-          mainDash.showIn("#placeholder", instituteModule);
+          // mainDash.showIn("#placeholder", instituteModule);
+          mainDash.showIn("#placeholder", profileMod);
         }
       });
 
@@ -2840,6 +3113,7 @@
         // layout.showIn("#container", profile);
         // profile.showIn("#profile-placeholder", profileMod);
         banhji.users.setCurrent(banhji.users.users.get(id));
+        banhji.users.modules.filter({field: 'id', value: id});
         // banhji.users.modules.filter({field: 'username', value: banhji.users.users.get(id).username});
         // layout.showIn("#container", mainDash);
         mainDash.showIn("#placeholder", assign);
@@ -2868,8 +3142,30 @@
 
 
       $(document).ready(function() {
+        banhji.profileDS.read().then(function(e){
+          banhji.profile.set('currentID', banhji.profileDS.data()[0]);
+          layout.showIn('#menu', menu);
+          if(banhji.profileDS.data()[0].role == 1) {
+            banhji.profile.set('getRole', "Admin");
+          }
+
+          var cognitoUser = userPool.getCurrentUser();
+          if(cognitoUser !== null) {
+            banhji.aws.getImage(banhji.profileDS.data()[0].profile_photo);
+            cognitoUser.getSession(function(err, result){
+              if(result) {
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                  IdentityPoolId: 'us-east-1:35445541-da4c-4dbb-b83f-d1d0301a26a9',
+                  Logins: {
+                    'cognito-idp.us-east-1.amazonaws.com/us-east-1_56S0nUDS4' : result.getIdToken().getJwtToken()
+                  }
+                });
+              }
+            });
+          }
+          console.log('init');
+        });
         banhji.router.start();
-        console.log('1');
           // signout when browser closed
           // window.addEventListener("beforeunload", function (e) {
           //   // var confirmationMessage = "\o/";

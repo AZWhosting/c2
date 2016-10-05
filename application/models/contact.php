@@ -44,6 +44,10 @@ class Contact extends DataMapper {
 		'wlocation' => array(
 			'class' => 'location',
 			'other_field' => 'wlocation'
+		),
+		'payroll' => array(
+			'class' => 'payroll',
+			'other_field' => 'contact'
 		)
 	);
 
@@ -82,6 +86,14 @@ class Contact extends DataMapper {
 		),
 		'meter' => array(
 			'class' => 'meter',
+			'other_field' => 'contact'
+		),
+		'file' => array(
+			'class' => 'attachment',
+			'other_field' => 'user'
+		),
+		'attachment' => array(
+			'class' => 'attachment',
 			'other_field' => 'contact'
 		)
 	);

@@ -1,27 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Attachment extends DataMapper {	
+class Send_feedback extends DataMapper {	
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";	
-
-	public $has_one = array(
-		'transaction' => array(
-			'class' => 'transaction',
-			'other_field' => 'attachment'
-		),
-		'contact' => array(
-			'class' => 'contact',
-			'other_field' => 'attachment'
-		),
-		'user' => array(
-			'class' => 'contact',
-			'other_field' => 'file'
-		),
-		'item' => array(
-			'class' => 'item',
-			'other' => 'attachment'
-		)
-	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
 		$this->db_params = array(
@@ -42,5 +23,5 @@ class Attachment extends DataMapper {
 	}
 }
 
-/* End of file attachment.php */
-/* Location: ./application/models/attachment.php */
+/* End of file transaction_template.php */
+/* Location: ./application/models/transaction_template.php */

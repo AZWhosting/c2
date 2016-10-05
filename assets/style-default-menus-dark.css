@@ -14,7 +14,7 @@
 body {
   font-family: 'Open Sans', Battambang;
   background: #f4f4f4;
-  font-size: 13px;
+  font-size: 14px;
   color: #333;
   position: relative;
 }
@@ -45,7 +45,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', Battambang;
   margin: 0 0 5px;
   font-weight: 400;
   color: #4d4d4d;
@@ -144,7 +144,7 @@ input,
 button,
 select,
 textarea {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', Battambang;
 }
 pre.prettyprint {
   word-break: normal;
@@ -1605,7 +1605,7 @@ html.top-full .navbar.main .topnav > li.dropdown .dropdown-menu li > a:hover,
 html.top-full .navbar.main .topnav > li.dropdown .dropdown-menu li > span {
   height: 23px;
   line-height: 23px;
-  padding: 0 10px;
+  padding: 0 20px;
   display: block;
 }
 html.top-full .navbar.main .topnav > li.dropdown .dropdown-menu li > a.glyphicons i:before,
@@ -2393,14 +2393,15 @@ html.top-full .navbar.main .topnav .dropdown-menu {
   display: none;
 }
 .widget.widget-3 .widget-head {
-  height: 36px;
-  line-height: 36px;
+      height:40px;
+    line-height: 23px;
+    padding: 5px 0;
 }
 .widget.widget-3 .widget-head .heading {
   display: block;
   text-align: center;
   float: none;
-  line-height: 36px;
+  line-height: 26px;
   height: 36px;
   text-transform: uppercase;
   font-size: 12pt;
@@ -4130,6 +4131,7 @@ div.glyphicons.glyphicon-primary i:before {
   overflow: hidden;
   color: #7c7c7c;
   text-decoration: none;
+  text-transform: uppercase;
 }
 .widget.widget-tabs > .widget-head ul li a i:before {
   left: 5px;
@@ -4144,12 +4146,15 @@ div.glyphicons.glyphicon-primary i:before {
   height: 36px;
   background: #fff;
   color: #505050;
+
 }
 .widget.widget-tabs > .widget-head ul li.active a {
   color: #505050;
+  background: #fff;
 }
 .widget.widget-tabs > .widget-head ul li.active a i:before {
   color: #505050;
+  background: #fff;
 }
 .widget.widget-tabs > .widget-body.large {
   padding: 25px;
@@ -5546,7 +5551,7 @@ img.flag {
   font-size: 14px;
 }
 .table-primary tbody td {
-  color: #7c7c7c;
+  color: #000;
   background: #fafafa;
   border-width: 0px;
 }

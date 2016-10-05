@@ -127,6 +127,7 @@ class Transactions extends REST_Controller {
 					"return_id" 				=> $value->return_id,
 					"job_id" 					=> $value->job_id,					
 					"account_id" 				=> $value->account_id,
+					"item_id" 					=> $value->item_id,
 					"tax_item_id" 				=> $value->tax_item_id,					
 					"user_id" 					=> $value->user_id,
 					"employee_id" 				=> $value->employee_id,
@@ -229,6 +230,7 @@ class Transactions extends REST_Controller {
 			isset($value->return_id) 				? $obj->return_id 					= $value->return_id : "";
 			isset($value->job_id) 					? $obj->job_id 						= $value->job_id : "";			
 			isset($value->account_id) 				? $obj->account_id 					= $value->account_id : "";
+			isset($value->item_id) 					? $obj->item_id 					= $value->item_id : "";
 			isset($value->tax_item_id) 				? $obj->tax_item_id 				= $value->tax_item_id : "";			
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
@@ -316,6 +318,7 @@ class Transactions extends REST_Controller {
 					"return_id" 				=> $obj->return_id,
 					"job_id" 					=> $obj->job_id,					
 					"account_id" 				=> $obj->account_id,
+					"item_id" 					=> $obj->item_id,
 					"tax_item_id" 				=> $obj->tax_item_id,					
 					"user_id" 					=> $obj->user_id,
 					"employee_id" 				=> $obj->employee_id,				   			   						   
@@ -393,6 +396,7 @@ class Transactions extends REST_Controller {
 			isset($value->return_id) 				? $obj->return_id 					= $value->return_id : "";
 			isset($value->job_id) 					? $obj->job_id 						= $value->job_id : "";		
 			isset($value->account_id) 				? $obj->account_id 					= $value->account_id : "";
+			isset($value->item_id) 					? $obj->item_id 					= $value->item_id : "";
 			isset($value->tax_item_id) 				? $obj->tax_item_id 				= $value->tax_item_id : "";			
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
@@ -481,6 +485,7 @@ class Transactions extends REST_Controller {
 					"return_id" 				=> $obj->return_id,
 					"job_id" 					=> $obj->job_id,					
 					"account_id" 				=> $obj->account_id,
+					"item_id" 					=> $obj->item_id,
 					"tax_item_id" 				=> $obj->tax_item_id,					
 					"user_id" 					=> $obj->user_id,
 					"employee_id" 				=> $obj->employee_id,				   			   						   
@@ -744,7 +749,7 @@ class Transactions extends REST_Controller {
 						$currentPrice = floatval($value->quantity) * (floatval($value->price) / floatval($value->rate));
 
 						$item->price = ($lastPrice + $currentPrice) / $totalQty;
-						$obj->cost = $item->cost;
+						$obj->cost = floatval($item->cost) * floatval($value->rate);
 					}
 
 					if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase"){
@@ -1004,6 +1009,12 @@ class Transactions extends REST_Controller {
 		//Deposit
 		case "Deposit":
 		  	$header = "DE";
+		  	break;
+		case "Customer_Deposit":
+		  	$header = "CD";
+		  	break;
+		case "Vendor_Deposit":
+		  	$header = "VD";
 		  	break;		
 		case "eDeposit":
 		  	$header = "ED";
@@ -1042,6 +1053,9 @@ class Transactions extends REST_Controller {
 		  	break;
 		case "Adjustment":
 		  	$header = "AD";
+		  	break;
+		case "Internal_Usage":
+		  	$header = "IU";
 		  	break;
 		//Accounting
 		case "Journal":

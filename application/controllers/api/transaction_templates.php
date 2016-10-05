@@ -92,7 +92,7 @@ class Transaction_templates extends REST_Controller {
 					"color" 				=> $value->color,
 					"title" 				=> $value->title,
 					"note" 					=> $value->note,
-					"moduls" 					=> $value->moduls,
+					"moduls" 				=> $value->moduls,
 					"created_at" 			=> $value->created_at,
 					"updated_at" 			=> $value->updated_at	
 				);

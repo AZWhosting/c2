@@ -40,13 +40,20 @@ class Profiles extends REST_Controller {
 		}
 		$users->get_iterated();
 		foreach($users as $user) {
+			$profile_photo = $user->pimage->get();
+			$photo = array();
+			if($profile_photo->exists()) {
+				$photo = array('id' => $profile_photo->id, 'url' => $profile_photo->url);
+			} else {
+				$photo = array('id' => 2, 'url' => "https://s3-ap-southeast-1.amazonaws.com/banhji/52751311555449544_blank.png");
+			}
 			$data[] = array(
 				'id' => $user->id,
 				'username' 	=> $user->username,
 				'first_name'=> $user->first_name,
 				'last_name' => $user->last_name,
 				'role' 		=> $user->role,
-				'profile_photo'=>$user->profile_photo_url,
+				'profile_photo'=> $photo,
 				// 'modules'   => $modules,
 				'facebook'	=> $user->facebook,
 				'linkedin'	=> $user->linkedin,
@@ -111,6 +118,7 @@ class Profiles extends REST_Controller {
 	// return userdata
 	function index_put() {
 		$requested_data = json_decode($this->put('models'));
+		$data = array();
 		foreach($requested_data as $user) {
 			$User = new User(null);
 			$User->where('username', $user->username)->get();
@@ -122,7 +130,7 @@ class Profiles extends REST_Controller {
 			$User->twitter = $user->twitter;
 			$User->first_name= $user->first_name;
 			$User->last_name = $user->last_name;
-			$User->profile_photo_url = $user->profile_photo;
+			$User->pimage_id = $user->profile_photo->id;
 			$User->role = $user->role;
 			$User->usertype_id=$user->usertype;
 
@@ -172,7 +180,7 @@ class Profiles extends REST_Controller {
 			$User->twitter = $user->twitter;
 			$User->first_name= $user->first_name;
 			$User->last_name = $user->last_name;
-			$User->profile_photo_url = $user->profile_photo;
+			$User->pimage_id = $user->profile_photo->id;
 			$User->role = $user->role;
 			$User->usertype_id=$user->usertype->id;
 			if($User->save()) {
@@ -312,6 +320,7 @@ class Profiles extends REST_Controller {
 				$currency = $u->institute->monetary->get();
 				$report = $u->institute->report_monetary->get();
 				$country = $u->institute->country->get();
+				$profile_photo = $u->institute->pimage->get();
 				$lastLogin = new User();
 				$lastLogin->where_related('institute', 'id', $u->institute->id);
 				$lastLogin->where('created_at <= ', date('Y-m-d'));
@@ -322,7 +331,7 @@ class Profiles extends REST_Controller {
 					'name'=>$u->institute->name,
 					'email' => $u->institute->email,
 					'address'=>$u->institute->address,
-					'logo' => $u->institute->logo,
+					'logo' => array('id' => $profile_photo->id, 'url' => $profile_photo->url),
 					'description' => $u->institute->description,
 					'vat_number' => $u->institute->vat_number,
 					'fiscal_date'=> $u->institute->fiscal_date,
@@ -336,6 +345,8 @@ class Profiles extends REST_Controller {
 					'financial_report_date' => $u->institute->financial_report_date,
 					'industry' => array('id'=>$industry->id,'type' => $industry->name),
 					'currency' => $currency->id ? array('id'=> $currency->id, 'code' => $currency->code, 'country' => $currency->country, 'locale'=>$currency->locale):array('id'=>null),
+					'accounting_standard' => $u->institute->accounting_standard,
+					'city' 			=> $u->institute->city,
 					'country' => array('id' => $country->id, 'name' => $country->name),
 					'users' => $u->institute->user->count(),
 					'lastLogin' => $loginCount
@@ -422,16 +433,18 @@ class Profiles extends REST_Controller {
 			$company->logo = $req->logo;
 			$company->description=$req->description;
 			$company->vat_number = $req->vat_number;
-			$company->fiscal_date= $req->fiscal_date;
+			$company->fiscal_date= date('m-d', strtotime($req->fiscal_date));
 			$company->tax_regime= $req->tax_regime;
 			$company->year_founded = $req->year_founded;
+			$company->accounting_standard = $req->accounting_standard;
+			$company->city = $req->city;
 			$company->report_monetary_id=$req->reportCurrency->id;
 			$company->monetary_id = $req->currency->id;
 			$company->industry_id = $req->industry->id;
 			$company->is_local = $req->is_local;
 			$company->zip_code = $req->zip;
 			$company->financial_year = $req->financial_year;
-			$company->financial_report_date = $req->financial_report_date;
+			$company->financial_report_date = date('m-d', strtotime($req->financial_report_date));
 			if($company->save()) {
 				$industry = $company->industry->get();
 				$currency = $company->monetary->get();
@@ -454,6 +467,8 @@ class Profiles extends REST_Controller {
 					'financial_report_date' => $company->financial_report_date,
 					'industry' => array('id'=>$industry->id,'type' => $industry->name),
 					'currency' => $currency->exists() ? array('id'=> $currency->id, 'code' => $currency->code, 'country' => $currency->country, 'locale'=>$currency->locale) : array('id'=>null),
+					'accounting_standard' => $company->accounting_standard,
+					'city' => $company->city,
 					'country' => array('id' => $country->id, 'name' => $country->name),
 					'zip' => $company->zip_code,
 					'users' => $company->user->count()
