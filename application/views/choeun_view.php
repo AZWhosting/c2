@@ -26237,7 +26237,8 @@
 	        	</div>
 	        	<div class="span5">
 	        		<div class="span12" style="margin-bottom: 10px;">
-	        			<img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" />
+	        			<h2 style="font-size: 24px;text-align: left;color:#10253f " data-bind="text: obj.title"></h2>
+	        			<!--img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" /-->
 	        		</div>
 	        		<div class="span12">
 	        			<table class="span12">
@@ -26254,87 +26255,93 @@
 	        	</div>
 	        </div>
         	<div class="span12" style="margin-top: 10px;">
-		    	<div class="span6" style="">
-		    		<table class="span12">
+		    	<div class="span7" style="margin-top: -30px;">
+		    		<table class="span11">
 						<tr>
-							<td class="light-blue-td" width="100">Recieve From</td>
+							<td class="light-blue-td" width="120">ទទួលពីឈ្មោះ​ <br>Recieve From</td>
 							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
 						</tr>
 						<tr>
-							<td class="light-blue-td">Contact Address</td>
+							<td class="light-blue-td">អស័យដ្ឋាន <br>Contact Address</td>
 							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 						<tr>
-							<td class="light-blue-td">Purpose</td>
+							<td class="light-blue-td">គោលបំណង​​ <br>Purpose</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+						</tr>
+						<tr>
+							<td class="light-blue-td">លេខយោង <br> Reference Document</td>
 							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 					</table>
 		    	</div>
 		    	<div class="span5" style="float:right">
-		    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
+		    		<p style="padding: 5px 0; text-align: left;font-weight: bold;color: #000;">ចំនួនទទួលសរុប​ <br> TOTAL RECEIVED AMOUNT</p>
 		    		<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}">
-		    			<p><span class="total-amount" data-bind="text: obj.amount"></span></p>
+		    			<p><span class="total-amount" data-bind="text: obj.amount"></span></p>		    			
 		    		</div>
-		    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;"></p>
+		    		<p style="padding: 5px 0;font-weight: bold;color: #000;clear:both;">វិធីសាស្រ្តទូទាត់​ Mode of payment</p>
 		    	</div>
 		    </div>
-        	<div class="span12" style="margin-top: 5px">
+        	<!--div class="span12">
         		<div class="span5">
-        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Reference Document</p>
         			<table class="span12">
 						<tr>
-							<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
+							<td  width="120"></td>
 							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
-						<!--tr>
+						<tr>
 							<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
 							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 						<tr>
 							<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
 							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
-						</tr-->
+						</tr>
 					</table>
         		</div>
         		<div class="span6" style="float:right">
-        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Mode of payment</p>
+        			<p style="padding: 5px 0;font-weight: bold;color: #000;">វិធីសាស្រ្តទូទាត់​ <br> Mode of payment</p>
         			<div class="span12">
         				<div class="span4">
         					<input type="radio" /> Cash<br>
         					<input type="radio" /> Direct debit<br>
-        					<input type="radio" /> In-kind
+        					<input type="radio" /> In-kind >
         				</div>
         				<div class="span4">
         					<input type="radio" /> Bank transfer<br>
         					<input type="radio" /> Check<br>
-        					<input type="radio" /> Others:
+        					<input type="radio" /> Others: >
         				</div>
         				<div class="span4">
+        					
         					Bank Acc:<br>
         					Check No.<br>
         					
         				</div>
         			</div>
         		</div>
-        	</div>
+        	</div-->
         	<div class="span12">
         		<div class="span8">
-        			<p style="color:black;margin: 10px 0;">The official receipt is considered official only it bears the offical stamp of PCG & Partners and the genuin signature of PCG & Partners officers.</p>
+        			<p style="color:black;margin: 10px 0;" data-bind="text: obj.note"></p>
         		</div>
         	</div>
         	<div class="span12">
         		<div class="span5">
-        			<p>On behalf of PCG & Partners Co., Ltd</p>
+        			<p>On behalf of <span data-bind="text: company.name"></span></p>
         			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
-        			<p style="font-weight: bold;">Sothy Lalinda</p>
+        			<p style="font-weight: bold;">Name</p>
         		</div>
         		<div class="span4" style="float:right;">
         			<p>Paid By:</p>
         			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
-        			<p style="font-weight: bold;"></p>
+        			<p style="font-weight: bold;">Name</p>
         		</div>
         	</div>
-
+        	<div style="margin-top: 15px" class="span12">
+        		<p>Address: <span data-bind="text: company.address"></span> <sapn data-bind="text: company.city"></sapn> <span data-bind="text: company.country.name"></span>.</p>
+        	</div>
         	<!--div class="span12 copywatermark">
 	        	<div class="span12" style="margin-top: 20px;border-top: 1px solid #000;padding-top: 15px;">
 		        	<div class="span7">
@@ -74810,4 +74817,4 @@
 		banhji.router.start();
 		banhji.source.loadData();
 	});
-</script>
+</script>                         

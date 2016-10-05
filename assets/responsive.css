@@ -17,11 +17,16 @@
 #cbbVendor-list,
 #cbbCustomer-list,
 #cbbInvoice-list,
-#ddlSegment-list
+#ddlSegment-list,
+#ddlJob-list
 {
   width: 350px !important;
 }
-
+.li-line{
+  border-bottom: 1px solid #c5c5c5;
+    width: 83%;
+    margin: -12px auto 0;
+}
 .widget-head.head-custom{
     background: #113051 !important;
 }

@@ -7218,6 +7218,13 @@
 									</td>
 								</tr>																							
 							</table>
+
+							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
+								data-bind="style: { backgroundColor: amtDueColor}">
+								<div align="left">TOTAL AMOUNT</div>
+								<h2 data-bind="text: total" align="right"></h2>
+							</div>
+
 						</div>
 					</div>					   
 
@@ -7245,26 +7252,22 @@
 						        <!-- Option Tab content -->
 						        <div class="tab-pane active" id="tab1-4">
 						        	
-						        	<div class="row-fluid">
-										<div class="span3">
-											<!-- Group -->
-											<div class="control-group">										
-												<label for="txtExpectedDate">Expected Date</label>
+						        	<table class="table table-borderless table-condensed cart_total">
+										<tr>										
+											<td>Expected Date</td>
+											<td>
 												<input id="txtExpectedDate" name="txtExpectedDate" 
 														data-role="datepicker"
 														data-format="dd-MM-yyyy"
 														data-parse-formats="yyyy-MM-dd" 
 														data-bind="value: obj.due_date" 
 														required data-required-msg="required"
-														style="width:100%;" />									            
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span3">
-											<!-- Group -->
-											<div class="control-group">										
-												<label for="ddlPaymentMethod">Method</label>
+														style="width:100%;" />
+											</td>
+										</tr>
+										<tr>										
+											<td>Method</td>
+											<td>
 												<input id="ddlPaymentMethod" name="ddlPaymentMethod"
 													   data-role="dropdownlist"								                   
 									                   data-value-primitive="true"
@@ -7275,15 +7278,12 @@
 									                              source: paymentMethodDS"							                   
 									                   data-option-label="(--- Select ---)"
 									                   required data-required-msg="required" 
-									                   style="width: 100%;" />									            
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span3">
-											<!-- Group -->
-											<div class="control-group">										
-												<label for="cbbAccount">Cash Account</label>
+									                   style="width: 100%;" />
+									        </td>
+										</tr>
+										<tr>									
+											<td>Cash Account</td>
+											<td>
 												<input id="cbbAccount" name="cbbAccount"
 													   data-role="combobox"                   
 									                   data-value-primitive="true"
@@ -7295,14 +7295,11 @@
 									                              source: cashAccountDS"
 									                   data-placeholder="Select Account.."					                                      
 									                   required data-required-msg="required" style="width: 100%" />									            
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span3">
-											<!-- Group -->
-											<div class="control-group">										
-												<label for="cbbAccount">Segment</label>
+											</td>
+										</tr>
+										<tr>										
+											<td>Segment</td>
+											<td>
 												<select data-role="multiselect"
 													   data-value-primitive="true"
 													   data-header-template="segment-header-tmpl"							   
@@ -7314,10 +7311,9 @@
 													   			events:{ change: transactionSegmentChanges }"
 													   data-placeholder="Add Segment.."				   
 													   style="width: 100%" /></select>									            
-											</div>
-											<!-- // Group END -->
-										</div>
-									</div>
+											</td>
+										</tr>
+									</table>
 
 						        </div>
 						        <!-- // Option Tab content END -->
@@ -7705,11 +7701,10 @@
 							</table>
 
 							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
-								data-bind="style: {
-								        backgroundColor: bgColor}">
-								<div align="left">AMOUNT PAID</div>
-								<h2 data-bind="text: total" align="right"></h2>
-							</div>
+									data-bind="style: { backgroundColor: amtDueColor}">
+									<div align="left">AMOUNT PAID</div>
+									<h2 data-bind="text: total" align="right"></h2>
+								</div>
 						</div>
 					</div>					   
 
@@ -8003,6 +7998,7 @@
 			                <th style="width: 15%;">SUPPLIER</th>
 			                <th style="width: 8%;">INVOICE#</th>
 			                <th style="width: 13%;">DATE</th>			                			                
+			                <th data-bind="visible: showJob" style="width: 10%;">JOB</th>
 			                <th data-bind="visible: showSegment" style="width: 10%;">SEGMENT</th>			                
 			                <th style="width: 15%;">AMOUNT</th>
 			                <th style="width: 11%;">TAX</th>			                			                
@@ -8028,6 +8024,10 @@
 							</div>
 							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
 							<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+								<li>
+									<input type="checkbox" id="chbJob" class="k-checkbox" data-bind="checked: showJob" />												
+									<label class="k-checkbox-label" for="chbJob">JOB</label>
+								</li>
 								<li>
 									<input type="checkbox" id="chbSegment" class="k-checkbox" data-bind="checked: showSegment" />												
 									<label class="k-checkbox-label" for="chbSegment">SEGMENT</label>
@@ -8181,6 +8181,18 @@
 					data-bind="value: reference_date" 
 					required data-required-msg="required"
 					style="width:100%;" />
+		</td>
+		<td data-bind="visible: showJob">
+			<input id="ddlJob" name="ddlJob"
+				   data-option-label="Add Job..." 
+				   data-role="dropdownlist"                   
+                   data-value-primitive="true"                   
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: job_id,
+                              source: jobDS"
+                   data-placeholder="Add Job.."
+                   style="width: 80px;" />	
 		</td>							
 		<td data-bind="visible: showSegment">
 			<select data-role="multiselect"
@@ -42989,7 +43001,8 @@
 
 			this.dataSource.insert(0, {
 				recurring_id 		: "",
-				account_id 			: "",				
+				account_id 			: 1,
+				payment_method_id 	: 1,				
 				user_id 			: this.get("uer_id"), 	    			    		
 			   	type				: "Cash_Advance", //required			   		   				   		   					   				   	
 			   	amount				: 0,
@@ -43247,6 +43260,8 @@
 					locale				: value.locale
 				});						
 			});
+
+			this.journalLineDS.sync();
 		},
 		//Recurring	
 		loadRecurring 		: function(){
@@ -43518,6 +43533,7 @@
 		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),		
 		accountDS  			: banhji.source.accountDS,
+		jobDS				: dataStore(apiUrl + "jobs"),
 		cashAccountDS  		: banhji.source.cashAccountDS,
 		expenseAccountDS    : banhji.source.expenseAccountDS,
 		taxItemDS  			: dataStore(apiUrl + "tax_items"),
@@ -43580,6 +43596,7 @@
 		enableRef 	 		: false,
 		showRef 			: true,
 		showName 			: false,
+		showJob 			: false,
 		showSegment 		: false,
 		showCashAdvance 	: false,		
 		sub_total 			: 0,
@@ -43716,31 +43733,11 @@
 			var obj = this.get("obj");
 
 	    	if(obj.contact_id>0){		    			    	
-		    	contact = this.contactDS.get(obj.contact_id);
+		    	var contact = this.contactDS.get(obj.contact_id);
 		    			    	
-		    	obj.set("locale", contact.locale);
-
-		    	this.referenceDS.filter([
-		    		{ field:"contact_id", value: obj.contact_id },
-		    		{ field:"type", value: "Cash_Advance" },
-		    		{ field:"status", value: 0 }
-		    	]);
-		    	
+		    	obj.set("locale", contact.locale);		    	
 		    	this.setRate();		    			    			    	
 	    	}
-	    },
-	    referenceChanges 	: function(){
-	    	var obj = this.get("obj");
-	    	if(obj.reference_id>0){
-	    		var reference = this.referenceDS.get(obj.reference_id);
-	    		obj.set("credit", reference.amount);
-
-	    		this.referenceLineDS.filter({ field:"transaction_id", value:obj.reference_id });
-	    	}else{
-	    		obj.set("credit", 0);
-	    	}
-
-	    	this.changes();
 	    },
 	    typeChanges 		: function(){
 	    	var obj = this.get("obj");
@@ -43826,7 +43823,7 @@
 			this.dataSource.insert(0, {
 				recurring_id 		: "",
 				reference_id 		: "",
-				account_id 			: "",				
+				account_id 			: 1,				
 				user_id 			: this.get("uer_id"), 	    			    		
 			   	type				: "Direct_Expense", //required
 			   	sub_total 			: 0,
@@ -43863,6 +43860,7 @@
 			this.lineDS.add({					
 				transaction_id 		: obj.id,
 				tax_item_id 		: "",
+				job_id 				: "",
 				contact_id 			: "",				
 				account_id 			: "",								
 				description 		: "",
