@@ -213,17 +213,17 @@
 										<tr>
 											<td>Income</td>
 											<td></td>
-											<td align="right">12,600,000</td>
+											<td align="right"><span data-bind="text: income"></span></td>
 										</tr>
 										<tr>
 											<td>Expense</td>
 											<td></td>
-											<td align="right">8,500,000</td>
+											<td align="right"><span data-bind="text: expense"></span></td>
 										</tr>
 										<tr>
 											<td><b>Net Income</b></td>
 											<td></td>
-											<td align="right"><b>4,100,000</b></td>
+											<td align="right"><b data-bind="text: net_income"></b></td>
 										</tr>
 									</table>
 								</a>     
@@ -235,17 +235,17 @@
 										<tr>
 											<td>Assets</td>
 											<td></td>
-											<td align="right">17,537,000</td>
+											<td align="right"><span data-bind="text: asset"></span></td>
 										</tr>
 										<tr>
 											<td>Liabilities</td>
 											<td></td>
-											<td align="right">3,437,000</td>
+											<td align="right"><span data-bind="text: liability"></span></td>
 										</tr>
 										<tr>
 											<td><b>Equity</b></td>
 											<td></td>
-											<td align="right"><b>14,100,000</b></td>
+											<td align="right"><b data-bind="text: equity"></b></td>
 										</tr>
 									</table>
 								</a>
@@ -39281,6 +39281,7 @@
 	banhji.index = kendo.observable({
 		lang 				: langVM,
 		dataSource			: dataStore(apiUrl+"dashboards/home"),
+		summaryDS			: dataStore(apiUrl+"accounting_reports/home_summary"),
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -39374,7 +39375,13 @@
 		ap 					: 0,
 		ap_open 			: 0,
 		ap_vendor 			: 0,
-		ap_overdue 			: 0,		
+		ap_overdue 			: 0,
+		income 				: 0,
+		expense 			: 0,
+		net_income 			: 0,
+		asset 				: 0,
+		liability 	 		: 0,
+		equity 	 			: 0,		
 		pageLoad 			: function(){
 			var self = this;
 
@@ -39396,6 +39403,22 @@
 				self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
 				self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
 				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
+			});
+
+			this.summaryDS.query({
+				filter: [],								
+				page: 1,
+				pageSize: 5
+			}).then(function(){
+				var view = self.summaryDS.view();				
+				
+				self.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				
+				self.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 			});										
 		}
 	});
@@ -42471,6 +42494,9 @@
 		showSegment 		: false,
 		currentSort 		: "asc",							
 		pageLoad 			: function(){
+			if(this.dataSource.total()>0){
+				this.dataSource.fetch();
+			}
 		},
 		sort 				: function(e){
 			var col = "",
@@ -42540,6 +42566,9 @@
 		currentSort 		: "asc",
 		company 			: banhji.institute,							
 		pageLoad 			: function(){
+			if(this.dataSource.total()>0){
+				this.search();
+			}
 		},
 		displayDate 		: function(){
 			var d = "",
