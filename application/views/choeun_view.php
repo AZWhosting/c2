@@ -21090,11 +21090,11 @@
 							
 							        	</div>								        
 								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 120px!important;"><i></i> Print/PDF</span>
+								        	<!--span id="" class="btn btn-icon btn-default pdf" data-bind="click: pdfGrid" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		Print as PDF
-								        	</span>
+								        	</span-->
 								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
@@ -26272,8 +26272,8 @@
 		    	</div>
 		    	<div class="span5" style="float:right">
 		    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
-		    		<div class="span12 main-color order-price">
-		    			<p><span style="color:#fff;text-align: center;" >USD 2,700.00</span></p>
+		    		<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}">
+		    			<p><span style="color:#fff;text-align: center;" data-bind="text: obj.amount"></span></p>
 		    		</div>
 		    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
 		    	</div>
@@ -26380,7 +26380,7 @@
 			    	<div class="span5" style="float:right">
 			    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
 			    		<div class="span12 main-color order-price">
-			    			<p><span style="color:#fff;text-align: center;" >USD 2,700.00</span></p>
+			    			<p><span style="color:#fff;text-align: center;" data-bind="text: obj.amount" >/span></p>
 			    		</div>
 			    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
 			    	</div>
@@ -59386,6 +59386,8 @@
 				case 28: Active = banhji.view.invoiceForm25; break;
 				case 29: Active = banhji.view.invoiceForm26; break;
 				case 30: Active = banhji.view.invoiceForm25; break;
+				case 31: Active = banhji.view.invoiceForm25; break;
+
 			}
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 		},
@@ -59495,7 +59497,7 @@
 	banhji.invoiceForm =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
-		obj 				: {issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
+		obj 				: {title: "Quotation", issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
 		company 			: banhji.institute,		
 		lineDS 				: dataStore(apiUrl + "transactions/line"),
 		user_id				: banhji.source.user_id,
@@ -59506,6 +59508,7 @@
 			}
 		},	 
 		printGrid			: function() {
+			var obj = this.get('obj');
 			var gridElement = $('#grid'),
 		        printableContent = '',
 		        win = window.open('', '', 'width=800, height=900'),
@@ -59529,7 +59532,7 @@
 		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
 		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style>' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm; } .inv1 .main-color { background-color: '+obj.color+'!important; -webkit-print-color-adjust:exact; }</style>' +
 		            '</head>' +
 		            '<body>';
 		    var htmlEnd =
@@ -59541,7 +59544,7 @@
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();
-		    	win.close();
+		    	//win.close();
 		    },2000);
 		},
 		activeInvoiceTmp		: function(e){
@@ -59577,6 +59580,7 @@
 				case 28: Active = banhji.view.invoiceForm25; break;
 				case 29: Active = banhji.view.invoiceForm26; break;
 				case 30: Active = banhji.view.invoiceForm25; break;
+				case 31: Active = banhji.view.invoiceForm25; break;
 			}
 			banhji.view.invoiceForm.showIn('#invFormContent', Active);
 		},
@@ -59603,8 +59607,8 @@
 				take: 100
 			}).then(function(e){
 				var view = self.txnTemplateDS.view(), Index = parseInt(view[0].transaction_form_id), Active;
-				console.log(Index);
 				obj.set("color", view[0].color);
+				obj.set("title", view[0].title);
 				self.activeInvoiceTmp(Index);
 				self.lineDS.filter({ field:"transaction_id", value: transaction_id });
 				setTimeout(function(){ 	
@@ -60106,7 +60110,7 @@
 		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
 		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
 		            '</head>' +
 		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
 		    var htmlEnd =
@@ -60120,6 +60124,25 @@
 		    	win.print();
 		    	win.close();
 		    },2000);
+		},
+		pdfGrid				: function(){
+			var draw = kendo.drawing;
+
+	        draw.drawDOM($("#invFormContent"), {
+	            avoidLinks: true,
+	            paperSize: "A4",
+	            landscape: true,
+	            margin: { top: "1cm", right: "1cm", bottom: "1cm", left: "1cm" }
+	        })
+	        .then(function(root) {
+	            return draw.exportPDF(root);
+	        })
+	        .done(function(data) {
+	            kendo.saveAs({
+	                dataURI: data,
+	                fileName: "Sale_Summary.pdf"
+	            });
+	        });
 		},
 		dateChange 			: function(){
 			// var strDate = "";
@@ -67738,7 +67761,9 @@
 		invoiceForm22: new kendo.Layout("#invoiceForm22", {model: banhji.invoiceForm}),
 		invoiceForm23: new kendo.Layout("#invoiceForm23", {model: banhji.invoiceForm}),
 		invoiceForm24: new kendo.Layout("#invoiceForm24", {model: banhji.invoiceForm}),
-		
+		invoiceForm25: new kendo.Layout("#invoiceForm25", {model: banhji.invoiceForm}),
+		invoiceForm26: new kendo.Layout("#invoiceForm26", {model: banhji.invoiceForm}),
+
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.customerSale}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.customerSale}),
 		saleSummaryProduct: new kendo.Layout("#saleSummaryProduct", {model: banhji.customerSale}),

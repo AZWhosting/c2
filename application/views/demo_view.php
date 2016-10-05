@@ -7564,13 +7564,46 @@
 	            <br>
 				
 				<!-- Form actions -->
-				<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-					<span id="notification"></span>
+				<div class="box-generic bg-action-button">
+					<div id="ntf1" data-role="notification"></div>
 
-					<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-					<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>										
-					<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
-					<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+					<!-- Delete Confirmation -->
+					<div data-role="window"
+		                 data-title="Delete Confirmation"
+		                 data-width="350"
+		                 data-height="200"
+		                 data-iframe="true"
+		                 data-modal="true"
+		                 data-visible="false"
+		                 data-position="{top:'40%',left:'35%'}"
+		                 data-actions="{}"
+		                 data-resizable="false"
+		                 data-bind="visible: showConfirm"
+		                 style="text-align:center;">
+		                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+					    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+					    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+		            </div>
+		            <!-- // Delete Confirmation -->
+
+					<div class="row">
+						<div class="span3">
+							<input data-role="dropdownlist"
+				                   data-value-primitive="true"
+				                   data-text-field="name"
+				                   data-value-field="id"
+				                   data-bind="value: obj.transaction_template_id,
+				                              source: txnTemplateDS"
+				                   data-option-label="Select Template..." />
+						</div>
+						<div class="span9" align="right">
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>																	
+							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> Save Print</span>
+							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+						</div>
+					</div>
 				</div>
 				<!-- // Form actions END -->								
 
@@ -7747,7 +7780,7 @@
 									            					name="payOption" id="payOption1"
 									            					data-bind="checked: obj.type, 
 									            								events:{ change: typeChanges }"> 
-									            			<label class="k-radio-label" for="payOption1">DIRECT PAYMENT</label>
+									            			<label class="k-radio-label" for="payOption1">DIRECT EXPENSE</label>
 									            		</td>
 									            		<td>
 												            <input type="radio" value="Reimbursement" class="k-radio"
@@ -8086,15 +8119,48 @@
 	            <br>
 				
 				<!-- Form actions -->
-				<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-					<span id="notification"></span>
+				<div class="box-generic bg-action-button">
+					<div id="ntf1" data-role="notification"></div>
 
-					<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-					<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>										
-					<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
-					<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+					<!-- Delete Confirmation -->
+					<div data-role="window"
+		                 data-title="Delete Confirmation"
+		                 data-width="350"
+		                 data-height="200"
+		                 data-iframe="true"
+		                 data-modal="true"
+		                 data-visible="false"
+		                 data-position="{top:'40%',left:'35%'}"
+		                 data-actions="{}"
+		                 data-resizable="false"
+		                 data-bind="visible: showConfirm"
+		                 style="text-align:center;">
+		                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+					    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+					    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+		            </div>
+		            <!-- // Delete Confirmation -->
+
+					<div class="row">
+						<div class="span3">
+							<input data-role="dropdownlist"
+				                   data-value-primitive="true"
+				                   data-text-field="name"
+				                   data-value-field="id"
+				                   data-bind="value: obj.transaction_template_id,
+				                              source: txnTemplateDS"
+				                   data-option-label="Select Template..." />
+						</div>
+						<div class="span9" align="right">
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>																	
+							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> Save Print</span>
+							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+						</div>
+					</div>
 				</div>
-				<!-- // Form actions END -->								
+				<!-- // Form actions END -->
 
 			</div>							
 			</div>
@@ -35594,10 +35660,11 @@
 		<div class="span12 report-module">
 			<p>
 				<span style="font-size: 20px; float: left; font-weight: 700;">Reports</span>
-				<span style="float: left; width: 500px;margin-left: 20px; width: 50%;">This module consolidates different modules report into one place. In addition, ratio analysis is also included in this module </span>
+				<span style="float: left; width: 500px;margin-left: 20px; width: 50%;">
+					This module consolidates different modules report into one place. In addition, ratio analysis is also included in this module
+				</span>
 			</p>
 		</div>
-
 		<div class="span12 " style="margin-top: 20px;">
 			<div class="span6 capital-management" style="padding-left: 0;">
 				<h2 style="min-height: 60px;">How efficient is your working capital management? </h2>
@@ -40733,12 +40800,14 @@
 			});
 		},
 		getFiscalDate 				: function(){
-			today = new Date(),
-			year = new Date(),
-			year.setFullYear(year.getFullYear()-1),			
-			fiscalDate = new Date(year.getFullYear() +"-"+ banhji.institute.fiscal_date);
+			var today = new Date(),	
+			fDate = new Date(today.getFullYear() +"-"+ banhji.institute.fiscal_date);
 
-			return fiscalDate;
+			if(today < fDate){
+				fDate.setFullYear(today.getFullYear()-1);				
+			}		
+
+			return fDate;
 		},
 		//Rate
 		loadRate 					: function(){
@@ -40987,9 +41056,10 @@
 			var self = this,
 				para = [],
 				obj = this.get("obj"),
+				today = new Date(),
 				start = kendo.toString(banhji.source.getFiscalDate(), "yyyy-MM-dd"),
 				end = kendo.toString(today, "yyyy-MM-dd");
-
+				
         	if(obj.id){
         		para.push({ field:"account_id", value: obj.id });
         	}
@@ -42905,6 +42975,7 @@
 		dataSource 			: dataStore(apiUrl + "transactions"),						
 		lineDS  			: dataStore(apiUrl + "account_lines"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),		
 		contactDS 			: banhji.source.employeeDS,				
@@ -42915,12 +42986,43 @@
 		cashAccountDS  		: banhji.source.cashAccountDS,
 		advAccountDS  		: banhji.source.advAccountDS,
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		segmentItemDS 		: banhji.source.segmentItemDS,					
-		types 				: [
-			{id: 'Deposit', name: 'Deposit'},
-			{id: 'Witdraw', name: 'Witdraw'},
-			{id: 'Transfer', name: 'Transfer'}
-		],
+		segmentItemDS 		: banhji.source.segmentItemDS,
+		txnTemplateDS		: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "transaction_templates",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field: "type", value:"Cash_Advance" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -42943,6 +43045,7 @@
 		showName 			: false,
 		showSegment 		: false,
 		total				: 0,
+		original_total 		: 0,
 		user_id				: banhji.source.user_id,													
 		pageLoad 			: function(id, is_recurring){
 			if(id){
@@ -42953,6 +43056,11 @@
 					this.addEmpty();
 				}								
 			}
+
+			this.recurringDS.filter([
+				{ field:"type", value:"Cash_Advance" },
+				{ field:"is_recurring", value:1 }
+			]);
 		},
 		//Upload
 		onSelect 			: function(e){			
@@ -43045,6 +43153,35 @@
 			
 			obj.set("rate", rate);						
 		},
+		//Segment
+		segmentChanges  	: function(e) {					
+			var dataArr = e.data.segments;			
+			var lastIndex = dataArr.length - 1;
+			if(dataArr.length > 1) {
+				for(var i = 0; i < dataArr.length - 1; i++) {
+					var current = this.segmentItemDS.get(dataArr[i]);
+					var last = this.segmentItemDS.get(dataArr[lastIndex]);
+					if(current.segment_id === last.segment_id) {
+						dataArr.splice(lastIndex, 1);
+						break;
+					}
+				}
+			}				
+		},
+		transactionSegmentChanges  	: function() {									
+			dataArr = this.get("obj").segments,			
+			lastIndex = dataArr.length - 1;
+			if(dataArr.length > 1) {
+				for(var i = 0; i < dataArr.length - 1; i++) {
+					var current = this.segmentItemDS.get(dataArr[i]);
+					var last = this.segmentItemDS.get(dataArr[lastIndex]);
+					if(current.segment_id === last.segment_id) {
+						dataArr.splice(lastIndex, 1);
+						break;
+					}
+				}
+			}				
+		},
 	    //Obj
 		loadObj 			: function(id,is_recurring){
 			var self = this, para = [];
@@ -43061,22 +43198,20 @@
 				pageSize: 1
 			}).then(function(e){
 				var view = self.dataSource.view();
+				
+				self.set("obj", view[0]);
+				self.set("original_total", view[0].amount);		       		
 
-				if(view.length>0){	       
-					self.set("obj", view[0]);					
-		        }				
-
-				self.lineDS.query({
-					filter: { field: "transaction_id", value: id },
-					page: 1,
-					pageSize: 100
-				});								
+				self.lineDS.filter({ field: "transaction_id", value: id });
+				self.journalLineDS.filter({ field: "transaction_id", value: id });
+				self.attachmentDS.filter({ field: "transaction_id", value: id });								
 			});				
 		},
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.journalLineDS.data([]);
+			this.attachmentDS.data([]);
 
 			this.set("isEdit", false);
 			this.set("obj", null);
@@ -43152,101 +43287,196 @@
 	    		this.set("total", 0);		        
 		        obj.set("amount", 0);				
 	    	}   	
-		},		
-		transactionSegmentChanges  	: function() {									
-			dataArr = this.get("obj").segments,			
-			lastIndex = dataArr.length - 1;
-			if(dataArr.length > 1) {
-				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current = this.segmentItemDS.get(dataArr[i]);
-					var last = this.segmentItemDS.get(dataArr[lastIndex]);
-					if(current.segment_id === last.segment_id) {
-						dataArr.splice(lastIndex, 1);
-						break;
-					}
-				}
-			}				
 		},
-		segmentChanges  	: function(e) {					
-			var dataArr = e.data.segments;			
-			var lastIndex = dataArr.length - 1;
-			if(dataArr.length > 1) {
-				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current = this.segmentItemDS.get(dataArr[i]);
-					var last = this.segmentItemDS.get(dataArr[lastIndex]);
-					if(current.segment_id === last.segment_id) {
-						dataArr.splice(lastIndex, 1);
-						break;
-					}
-				}
-			}				
-		},				  
-		transactionSync 	: function(){
+		objSync 			: function(){
 	    	var dfd = $.Deferred();	        
 
 	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
 		    });
 
 		    return dfd;	    		    	
 	    },	    	    
 		save 				: function(){				
-	    	var self = this; 			
-	    	
+	    	var self = this, obj = this.get("obj");
+
+	    	//Recurring
+	    	if(this.get("saveRecurring")){
+	    		this.set("saveRecurring", false);
+	    		
+	    		if(this.get("isEdit")){
+		    		if(obj.is_recurring=="0"){ //Add brand new recurring from existing transaction	    			
+		    			this.addNewRecurring();
+
+		    			this.recurringSync()
+						.then(function(data){ //Success
+							$.each(self.recurringLineDS.data(), function(index, value){										
+								value.set("transaction_id", data[0].id);						
+							});
+							self.recurringLineDS.sync();
+
+							return data;			
+						}, function(reason) { //Error
+							$("#ntf1").data("kendoNotification").error(reason);
+						}).then(function(result){
+							$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+							self.addEmpty();
+						});
+		    		}
+		    	}else{
+	    			obj.set("is_recurring", 1);
+
+	    			$.each(this.additionalCostDS.data(), function(index, value){
+	    				value.set("is_recurring", 1);
+	    			});
+		    	}
+	    	}	    	
+
+	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		this.dataSource.sync();
-	    		this.lineDS.sync();
-	    	}else{
-	    		//Add brand new transaction
-				this.transactionSync()
-				.then(function(data){				
+	    		//Upload has changed
+		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
+		    		obj.set("dirty", true);
+		    	}
 
-					//Add Cash Account on Dr
-					self.journalLineDS.add({					
-						transaction_id 		: data[0].id,
-						account_id 			: data[0].account_id,										
-						description 		: "",
-						reference_no 		: "",
-						segments 	 		: data[0].segments,								
-						dr 	 				: data[0].amount,
-						cr 					: 0,				
-						rate				: data[0].rate,
-						locale				: data[0].locale
+		    	//Line has changed
+		    	if(obj.amount!==this.get("original_total")){
+		    		this.set("original_total",0);
+
+			    	$.each(this.journalLineDS.data(), function(index, value){										
+						value.set("deleted", 1);										
 					});
 
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("transaction_id", data[0].id);						
-
-						//Add Cash Advance Account on Cr
-						self.journalLineDS.add({					
-							transaction_id 		: data[0].id,
-							account_id 			: value.account_id,											
-							description 		: value.description,
-							reference_no 		: value.reference_no,
-							segments 	 		: value.segments,								
-							dr 	 				: 0,
-							cr 					: value.amount,				
-							rate				: value.rate,
-							locale				: value.locale
-						});						
+					this.addJournal(obj.id);
+		    	}
+	    	}	    	
+	    	
+			//Save Obj
+			this.objSync()
+			.then(function(data){ //Success												
+				if(self.get("isEdit")==false){
+					//Item line
+					$.each(self.lineDS.data(), function(index, value){
+						value.set("transaction_id", data[0].id);
 					});
+					
+					//Attachment
+					$.each(self.attachmentDS.data(), function(index, value){
+			    		value.set("transaction_id", data[0].id);
+		            });
 
-					self.lineDS.sync();
-					self.journalLineDS.sync();			
-				}).then(function(){					
+		            //Journal
+		            self.addJournal(data[0].id);
+				}
+
+				self.lineDS.sync();
+				self.uploadFile();
+				
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					window.history.back();
+				}else if(self.get("savePrint")){
+					//Save Print					
+					self.set("savePrint", false);
+					self.cancel();
+					banhji.router.navigate("/invoice_form/"+result[0].id);
+				}else{
+					//Save New
 					self.addEmpty();
-				});
-			}
-			this.dataSource.bind('requestEnd', function(e){
-				banhji.employees.fileMan.save(e.response.results[0].id);
+				}
+
+				//Refresh Supplier
+				self.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:3 });
 			});
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
-			this.lineDS.cancelChanges();			
+			this.lineDS.cancelChanges();
+			this.attachmentDS.cancelChanges();
 
-			window.history.back();
+			this.dataSource.data([]);
+			this.lineDS.data([]);
+			this.attachmentDS.data([]);
+
+			this.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:3 });
+
+			banhji.userManagement.removeMultiTask("expense");
+		},
+		delete 				: function(){
+			var self = this, obj = this.get("obj");
+			this.set("showConfirm",false);			
+			
+	        this.deleteDS.query({
+	        	filter:[
+	        		{ field:"reference_id", value:obj.id },
+	        	],
+	        	page:1,
+	        	pageSize:1
+	        }).then(function(){
+	        	var view = self.deleteDS.view();
+
+	        	if(view.length>0){
+	        		alert("Sorry, you can not delete it.");
+	        	}else{
+	        		obj.set("deleted", 1);
+			        self.dataSource.sync();
+
+			        window.history.back();
+	        	}
+	        });		    	    	
+		},
+		openConfirm 		: function(){
+			this.set("showConfirm", true);
+		},
+		closeConfirm 		: function(){
+			this.set("showConfirm", false);
+		},
+		//Journal
+		addJournal 			: function(transaction_id){
+			var self = this, obj = this.get("obj");
+
+			//Add Cash Account on Dr
+			this.journalLineDS.add({					
+				transaction_id 		: transaction_id,
+				account_id 			: obj.account_id,										
+				description 		: "",
+				reference_no 		: "",
+				segments 	 		: obj.segments,								
+				dr 	 				: obj.amount,
+				cr 					: 0,				
+				rate				: obj.rate,
+				locale				: obj.locale
+			});
+
+			$.each(self.lineDS.data(), function(index, value){
+				//Add Cash Advance Account on Cr
+				self.journalLineDS.add({					
+					transaction_id 		: transaction_id,
+					account_id 			: value.account_id,											
+					description 		: value.description,
+					reference_no 		: value.reference_no,
+					segments 	 		: value.segments,								
+					dr 	 				: 0,
+					cr 					: value.amount,				
+					rate				: value.rate,
+					locale				: value.locale
+				});						
+			});
 		},
 		//Recurring	
 		loadRecurring 		: function(){
@@ -43511,8 +43741,6 @@
 		lineDS  			: dataStore(apiUrl + "account_lines"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
-		referenceDS 		: dataStore(apiUrl + "transactions"),
-		referenceLineDS 	: dataStore(apiUrl + "account_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),		
 		contactDS  			: banhji.source.employeeDS,
@@ -43523,6 +43751,42 @@
 		cashAccountDS  		: banhji.source.cashAccountDS,
 		expenseAccountDS    : banhji.source.expenseAccountDS,
 		taxItemDS  			: dataStore(apiUrl + "tax_items"),
+		txnTemplateDS		: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "transaction_templates",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field: "type", value:"Direct_Expense" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		segmentItemDS 		: banhji.source.segmentItemDS,		
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -43563,6 +43827,11 @@
 					this.addEmpty();
 				}								
 			}
+
+			this.recurringDS.filter([
+				{ field:"type", value:"Direct_Expense" },
+				{ field:"is_recurring", value:1 }
+			]);
 		},
 		//Upload
 		onSelect 			: function(e){			
@@ -43717,6 +43986,35 @@
 			        this.set("showCashAdvance", false);
 			}
 	    },
+	    //Segment
+		segmentChanges  	: function(e) {					
+			var dataArr = e.data.segments;			
+			var lastIndex = dataArr.length - 1;
+			if(dataArr.length > 1) {
+				for(var i = 0; i < dataArr.length - 1; i++) {
+					var current = this.segmentItemDS.get(dataArr[i]);
+					var last = this.segmentItemDS.get(dataArr[lastIndex]);
+					if(current.segment_id === last.segment_id) {
+						dataArr.splice(lastIndex, 1);
+						break;
+					}
+				}
+			}				
+		},
+		transactionSegmentChanges  	: function() {									
+			dataArr = this.get("obj").segments,			
+			lastIndex = dataArr.length - 1;
+			if(dataArr.length > 1) {
+				for(var i = 0; i < dataArr.length - 1; i++) {
+					var current = this.segmentItemDS.get(dataArr[i]);
+					var last = this.segmentItemDS.get(dataArr[lastIndex]);
+					if(current.segment_id === last.segment_id) {
+						dataArr.splice(lastIndex, 1);
+						break;
+					}
+				}
+			}				
+		},
 	    //Obj
 	    loadObj 			: function(id,is_recurring){
 			var self = this, para = [];
@@ -43738,13 +44036,16 @@
 					self.set("obj", view[0]);					
 		        }				
 
-				self.lineDS.filter({ field: "transaction_id", value: id });								
+				self.lineDS.filter({ field: "transaction_id", value: id });
+				self.journalLineDS.filter({ field: "transaction_id", value: id });
+				self.attachmentDS.filter({ field: "transaction_id", value: id });								
 			});				
 		},															
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
 			this.lineDS.data([]);
 			this.journalLineDS.data([]);
+			this.attachmentDS.data([]);
 
 			this.set("isEdit", false);
 			this.set("obj", null);
@@ -43787,13 +44088,10 @@
 			this.setRate();				
 		},
 		addRow 				: function(){				
-			var transaction_id = 0, obj = this.get("obj");
-			if(this.get("isEdit")){
-				transaction_id = obj.id;
-			}
-						
+			var obj = this.get("obj");
+									
 			this.lineDS.add({					
-				transaction_id 		: transaction_id,
+				transaction_id 		: obj.id,
 				tax_item_id 		: "",
 				contact_id 			: "",				
 				account_id 			: "",								
@@ -43843,73 +44141,6 @@
 		        obj.set("tax", tax);
 		        obj.set("amount", total);		       								    	
 	    	//}	
-		},		
-		transactionSegmentChanges  	: function() {									
-			dataArr = this.get("obj").segments,			
-			lastIndex = dataArr.length - 1;
-			if(dataArr.length > 1) {
-				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current = this.segmentItemDS.get(dataArr[i]);
-					var last = this.segmentItemDS.get(dataArr[lastIndex]);
-					if(current.segment_id === last.segment_id) {
-						dataArr.splice(lastIndex, 1);
-						break;
-					}
-				}
-			}				
-		},
-		segmentChanges  	: function(e) {					
-			var dataArr = e.data.segments;			
-			var lastIndex = dataArr.length - 1;
-			if(dataArr.length > 1) {
-				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current = this.segmentItemDS.get(dataArr[i]);
-					var last = this.segmentItemDS.get(dataArr[lastIndex]);
-					if(current.segment_id === last.segment_id) {
-						dataArr.splice(lastIndex, 1);
-						break;
-					}
-				}
-			}				
-		},				  
-		transactionSync 	: function(){
-	    	var dfd = $.Deferred();	        
-
-	    	this.dataSource.sync();
-		    this.dataSource.bind("requestEnd", function(e){			    	
-				dfd.resolve(e.response.results);    				
-		    });
-
-		    return dfd;	    		    	
-	    },	    	    
-		save 				: function(){				
-	    	var self = this, obj = this.get("obj");
-
-	    	//Update references
-			// if(obj.reference_id>0){
-			// 	var ref = this.referenceDS.get(obj.reference_id);
-			// 	ref.set("status", 1);
-			// 	this.referenceDS.sync();
-			// } 			
-	    	
-	    	if(this.get("isEdit")){
-	    		this.dataSource.sync();
-	    		this.lineDS.sync();
-	    	}else{
-	    		//Add brand new transaction
-				this.transactionSync()
-				.then(function(data){					
-					self.addJournal(data[0].id);
-
-					$.each(self.lineDS.data(), function(index, value){										
-						value.set("transaction_id", data[0].id);									
-					});
-
-					self.lineDS.sync();							
-				}).then(function(){					
-					self.addEmpty();
-				});
-			}
 		},
 		objSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -43928,20 +44159,6 @@
 	    },	    	    
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");
-
-	    	//Warning over credit allowed
-	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
-	        	alert("Over credit allowed!");		        	
-	        }
-
-	        //Reference
-	    	if(obj.reference_id>0){
-	    		var ref = this.referenceDS.get(obj.reference_id);				
-				ref.set("status", 1);
-				this.referenceDS.sync();
-			}else{
-				obj.set("reference_id", 0);
-			}
 
 	    	//Recurring
 	    	if(this.get("saveRecurring")){
@@ -43979,7 +44196,7 @@
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
 	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.accountLineDS.hasChanges() || this.attachmentDS.hasChanges()){
+		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
 		    		obj.set("dirty", true);
 		    	}
 
@@ -44003,17 +44220,7 @@
 					$.each(self.lineDS.data(), function(index, value){
 						value.set("transaction_id", data[0].id);
 					});
-
-					//Account line
-					$.each(self.accountLineDS.data(), function(index, value){										
-						value.set("transaction_id", data[0].id);										
-					});
-
-					//Additional Cost line
-					$.each(self.additionalCostDS.data(), function(index, value){										
-						value.set("reference_id", data[0].id);										
-					});
-
+					
 					//Attachment
 					$.each(self.attachmentDS.data(), function(index, value){
 			    		value.set("transaction_id", data[0].id);
@@ -44024,9 +44231,6 @@
 				}
 
 				self.lineDS.sync();
-				self.accountLineDS.sync();
-				self.additionalCostDS.sync();
-				self.saveDeposit();
 				self.uploadFile();
 				
 				return data;
@@ -44051,7 +44255,7 @@
 				}
 
 				//Refresh Supplier
-				self.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:2 });
+				self.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:3 });
 			});
 		},
 		cancel 				: function(){
@@ -44311,7 +44515,6 @@
 			    default:
 			    //Direct Expense & Reimbursement
 			    //Expense on Dr
-			    console.log("Derect Expense & Reimbursement");
 			    $.each(this.lineDS.data(), function(index, value){				
 					self.journalLineDS.add({					
 						transaction_id 		: transaction_id,
@@ -44343,78 +44546,6 @@
 			}
 			
 			this.journalLineDS.sync();
-		},		
-		//Reference					
-		loadReference 		: function(){			
-			var obj = this.get("obj");
-
-			if(obj.contact_id>0){
-				this.set("enableRef", true);
-
-				this.referenceDS.filter([
-					{ field: "contact_id", value: obj.contact_id },
-					{ field: "status", value: 0 },
-					{ field: "type", operator:"where_in", value: ["Purchase_Order","GRN"] },
-					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-				]);		
-			}else{
-				this.set("enableRef", false);
-				obj.set("reference_id", "");
-			}							
-		},
-		referenceChanges 	: function(){
-			var self = this, obj = this.get("obj");
-			
-			if(obj.reference_id>0){
-				var ref = this.referenceDS.get(obj.reference_id);
-
-				//Deposit
-				if(obj.discount>0){
-					this.set("showDiscount", true);
-				}else{
-					this.set("showDiscount", false);
-				}
-				
-				obj.set("sub_total", ref.sub_total);
-				obj.set("discount", ref.discount);
-				obj.set("tax", ref.tax);
-				obj.set("deposit", ref.deposit);				
-								
-			 	this.referenceLineDS.query({
-			 		filter: { field:"transaction_id", value: obj.reference_id },
-			 		page: 1,
-			 		pageSize: 100
-			 	}).then(function(){
-			 		var view = self.referenceLineDS.view();					
-
-			 		self.lineDS.data([]);
-			 		$.each(view, function(index, value){
-			 			self.lineDS.add({					
-							transaction_id 		: obj.id,
-							tax_item_id 		: value.tax_item_id,
-							item_id 			: value.item_id,
-							measurement_id 		: value.measurement_id,							
-							description 		: value.description,				
-							quantity 	 		: value.quantity,
-							cost 				: value.cost,												
-							amount 				: value.amount,
-							discount 			: value.discount,
-							rate				: value.rate,
-							locale				: value.locale,
-							movement 			: value.movement,
-							additional_cost 	: value.additional_cost,
-							additional_applied 	: value.additional_applied,							
-
-							item_prices			: value.item_prices
-						});
-			 		});
-
-			 		self.changes();
-			 	});			 				 				 				 				
-			}else{
-				obj.set("deposit", 0);
-				this.set("showDeposit", false);
-			}								
 		},
 		//Recurring	
 		loadRecurring 		: function(){
@@ -71235,29 +71366,17 @@
 			banhji.userManagement.addMultiTask("Cash Advance","cash_advance",vm);
 			
 			if(banhji.pageLoaded["cash_advance"]==undefined){
-				banhji.pageLoaded["cash_advance"] = true;				
-
-				vm.recurringDS.filter([
-					{ field:"type", value:"Cash_Advance" },
-					{ field:"is_recurring", value:1 }
-				]);								
+				banhji.pageLoaded["cash_advance"] = true;												
    
 				var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-				
+												
 		        $("#saveNew").click(function(e){				
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
+		            	vm.save();		            				  
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
@@ -71265,12 +71384,21 @@
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
+						vm.set("saveClose", true);
+		            	vm.save();		            	
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#savePrint").click(function(e){				
+					e.preventDefault();
+					
+					if(validator.validate()){
+						vm.set("savePrint", true);
+		            	vm.save();       				  
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
@@ -71278,12 +71406,11 @@
 					e.preventDefault();
 
 					if(validator.validate() && vm.validateRecurring()){
-		            	vm.saveRecurring();
-		            	
-		            	notification.success("Save Successful");			  
+		            	vm.set("saveRecurring", true);
+		            	vm.save();
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
 				});				
 			}
 
@@ -71305,21 +71432,14 @@
 				banhji.pageLoaded["expense"] = true;						
    
 				var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-				
+												
 		        $("#saveNew").click(function(e){				
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
+		            	vm.save();		            				  
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
@@ -71327,12 +71447,21 @@
 					e.preventDefault();
 
 					if(validator.validate()){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
+						vm.set("saveClose", true);
+		            	vm.save();		            	
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#savePrint").click(function(e){				
+					e.preventDefault();
+					
+					if(validator.validate()){
+						vm.set("savePrint", true);
+		            	vm.save();       				  
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
@@ -71340,12 +71469,11 @@
 					e.preventDefault();
 
 					if(validator.validate() && vm.validateRecurring()){
-		            	vm.saveRecurring();
-		            	
-		            	notification.success("Save Successful");			  
+		            	vm.set("saveRecurring", true);
+		            	vm.save();
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
 				});				
 			}
 
