@@ -7,6 +7,8 @@ class Centers extends REST_Controller {
 	public $server_host;
 	public $server_user;
 	public $server_pwd;
+	public $startFiscalDate;
+	public $endFiscalDate;
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
@@ -18,6 +20,17 @@ class Centers extends REST_Controller {
 			$this->server_user = $conn->username;
 			$this->server_pwd = $conn->password;	
 			$this->_database = $conn->inst_database;
+
+			//Fiscal Date
+			$today = date("Y-m-d");
+			$fdate = date("Y") ."-". $institute->fiscal_date;
+			if($today > $fdate){
+				$this->startFiscalDate 	= date("Y") ."-". $institute->fiscal_date;
+				$this->endFiscalDate 	= date("Y",strtotime("+1 year")) ."-". $institute->fiscal_date;
+			}else{
+				$this->startFiscalDate 	= date("Y",strtotime("-1 year")) ."-". $institute->fiscal_date;
+				$this->endFiscalDate 	= date("Y") ."-". $institute->fiscal_date;
+			}
 		}
 	}	
 
@@ -224,7 +237,6 @@ class Centers extends REST_Controller {
 		}		
 		$this->response($data, 200);		
 	}	
-	
 		
 }
 /* End of file centers.php */

@@ -961,8 +961,10 @@
                     <tbody data-role="listview" data-bind="source: modules" data-template="template-modules-users-module-list-page">
                     </tbody>
                 </table><br>
-                <button class="btn" data-bind="click: saveAssign" style="cursor: pointer;">Save</button>
-                <button class="btn" data-bind="click: cancelAssign" style="cursor: pointer;">Cancel</button>
+                <div style="float: right;">
+                  <button class="btn" data-bind="click: saveAssign" style="cursor: pointer; border-radius: 0;">Save</button>
+                  <button class="btn" data-bind="click: cancelAssign" style="cursor: pointer;border-radius: 0;">Cancel</button>
+                </div>
             </div>
         </div>
         <div id="ntf1" data-role="notification"></div>
@@ -982,7 +984,7 @@
             <img src="#=image_url#" width="100"> #=name#
           </td>
           <td>
-            <i data-bind="click: assignTo" style="cursor: pointer">Assign</i>
+            <button data-bind="click: assignTo" style="cursor: pointer;padding: 5px 20px;background: \#00a8ff;border:none;color:\#fff;">Assign</button>
           </td>
       </tr>
     </script>
@@ -992,7 +994,7 @@
             <img src="#=img_url#" width="100"> #=name#
           </td>
           <td>
-              <i class="fa fa-trash" data-bind="click: removeFrom"></i>
+              <button style="cursor: pointer;padding: 5px 20px;background: \#00a8ff;border:none;color:\#fff;" data-bind="click: removeFrom">Remove</button>
           </td>
       </tr>
     </script>
