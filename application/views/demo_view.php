@@ -8991,7 +8991,7 @@
 			#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
 				<a href="\#/purchase/#=id#">#=number#</a>
 			#}else if(type=="Vendor_Deposit" && amount<0){#
-				<a href="\#/Vendor_Deposit/#=reference.length>0?reference[0].id:0#">#=number#</a>						
+				<a href="\#/purchase/#=reference.length>0?reference[0].id:0#">#=number#</a>						
 			#}else{#
 				<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
 			#}#
@@ -9000,7 +9000,7 @@
     		#if(type=="GRN"){#
     			#=kendo.toString(amount, "n0")#
     		#}else{#
-    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
+    			#=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
     		#}#
     	</td>
     	<td align="center">        	
@@ -15867,7 +15867,7 @@
         <!-- Reference -->
         <td>
         	#if(type=="Customer_Deposit" && amount<0){#			
-				<a href="\#/#=type.toLowerCase()#/#=reference[0].id#"><i></i> #=number#</a>			
+				<a href="\#/#=reference[0].type.toLowerCase()#/#=reference[0].id#"><i></i> #=number#</a>			
 			#}else{#
 				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
 			#}#        	
@@ -15877,7 +15877,7 @@
     		#if(type=="GDN"){#
     			#=kendo.toString(amount, "n0")#
     		#}else{#
-    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
+    			#=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
     		#}#
     	</td>
     	<!-- Status -->
@@ -18125,7 +18125,7 @@
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
 									<div align="left">AMOUNT RECEIVED</div>
-									<h2 data-bind="text: total" align="right"></h2>
+									<h2 data-bind="text: amount_due" align="right"></h2>
 								</div>
 
 							</div>						
@@ -18760,7 +18760,7 @@
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
 									<div align="left">AMOUNT DUE</div>
-									<h2 data-bind="text: total" align="right"></h2>
+									<h2 data-bind="text: amount_due" align="right"></h2>
 								</div>
 
 							</div>						
@@ -20618,7 +20618,7 @@
 				                 data-bind="source: txnTemplateDS">				            
 	            		</tbody>
 	            	</table>
-	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" href="#/invoice_custom" style="width: 110px;"><i></i>Add New</a>
+	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
 	            </div>
 	            <!-- // Tab Invoice Custom content END -->
 
@@ -20773,8 +20773,10 @@
 			 #}#
 		</td>
 		<td class="center">
+			#if( status == 0){ #
 			<a class="btn-action glyphicons pencil btn-success" href="\\#/invoice_custom/#= id # "><i></i></a>
 			<a data-bind="click: deleteForm" class="btn-action glyphicons remove_2 btn-danger"><i></i></a>
+			# } #
 		</td>
 	</tr>
 </script>
@@ -23666,19 +23668,19 @@
                     <tfoot>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
-                            <td data-bind="text: obj.discount"></td>
+                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.discount"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​ Total (VAT included)</td>
-                            <td data-bind="text: obj.amount"></td>
+                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.amount"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
-                            <td data-bind="text: obj.deposit"></td>
+                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.deposit"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
-                            <td data-bind="text: obj.amount_due"></td>
+                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.amount_due"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -24169,414 +24171,7 @@
         </div>
     </div>
 </script-->
-<!-- <script id="invoiceForm6" type="text/x-kendo-template">
-	<div class="inv1 pcg">
-        <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
-	            </div>
-        	</div>
-        	<div class="span7">
-        		<div class="span5">
-        			<p data-bind="text: company.name"></p>
-        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
-        		</div>
-        		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
-        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
-        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
-        		</div>
-        	</div>
-        	<div class="span12 clear mid-header">
-        		<div class="span3" style="margin-right: 15px;">
-        			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
-        			</p>
-        		</div>
-        		<div class="span3">
-        			<b>Delivered to</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
-        			</p>
-        		</div>
-        		<div class="span4" style="float:right;">
-        			<p class="form-title" data-bind="text: obj.title"></p>
-        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
-        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
-        		</div>
-        	</div>
-        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span3">TERM OF PAYMENT</div>
-        		<div class="span3">MODE OF PAYMENT</div>
-        		<div class="span3">DELIVERY DATE</div>
-        		<div class="span3">SALE REP</div>
-        	</div>
-        	<table class="span12" rules="rows">
-        		<thead>
-        			<tr>
-        				<th width="90">CODE</th>
-        				<th>ITEM DESCRIPTION</th>
-        				<th>UM</th>
-        				<th>QTY</th>
-        				<th>UNIT PRICE</th>
-        				<th width="80">Total</th>
-        			</tr>
-        		</thead>
-        		<tbody style="margin-top: 2px" id="formListView" 
-        				data-role="listview"
-						data-auto-bind="false"
-						data-template="invoiceForm-lineDS-template6"
-						data-bind="source: lineDS">
-        		<tfoot>
-        			<tr>
-        				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
-        			</tr>
-        			<tr>
-        				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
-        			</tr>
-        			<tr>
-        				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
-        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
-        			</tr>
-        		</tfoot>
-        	</table>
-        	<table class="span12" rules="rows" style="margin-top: 20px;">
-        		<tr>
-        			<td width="120">PREPARED BY</td><td width="100"></td>
-        			<td>POSITION</td><td width="100"></td>
-        			<td>DATE</td><td width="80"></td>
-        		</tr>
-        		
-        		<tr>
-        			<td>APROVED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        		<tr>
-        			<td>យល់ព្មរដោយ ACCEPTED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        	</table>
-        </div>
-    </div>
-</script>
-<script id="invoiceForm7" type="text/x-kendo-template">
-	<div class="inv1 pcg pcg-border">
-        <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
-	            </div>
-        	</div>
-        	<div class="span7">
-        		<div class="span5">
-        			<p data-bind="text: company.name"></p>
-        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
-        		</div>
-        		<div class="span5" style="float:right">
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
-        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
-        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
-        		</div>
-        	</div>
-        	<div class="span12 clear mid-header">
-        		<div class="span3" style="margin-right: 15px;">
-        			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
-        			</p>
-        		</div>
-        		<div class="span3">
-        			<b>Delivered to</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
-        			</p>
-        		</div>
-        		<div class="span4" style="float:right;">
-        			<p class="form-title" data-bind="text: obj.title"></p>
-        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
-        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
-        		</div>
-        	</div>
-        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span3">TERM OF PAYMENT</div>
-        		<div class="span3">MODE OF PAYMENT</div>
-        		<div class="span3">DELIVERY DATE</div>
-        		<div class="span3">SALE REP</div>
-        	</div>
-        	<table class="span12" style="border-left: none;border-bottom: none;">
-        		<thead>
-        			<tr>
-        				<th width="90">CODE</th>
-        				<th>ITEM DESCRIPTION</th>
-        				<th>UM</th>
-        				<th>QTY</th>
-        				<th>UNIT PRICE</th>
-        				<th width="80">Total</th>
-        			</tr>
-        		</thead>
-        		<tbody id="formListView" 
-        				data-role="listview"
-						data-auto-bind="false"
-						data-template="invoiceForm-lineDS-template6"
-						data-bind="source: lineDS">
-        		<tfoot>
-        			<tr style="border-left:none">
-        				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
-        			</tr>
-        			<tr>
-        				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
-        			</tr>
-        			<tr>
-        				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="background: #10253f;text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
-        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
-        			</tr>
-        		</tfoot>
-        	</table>
-        	<table class="span12" rules="rows" style="margin-top: 20px;">
-        		<tr>
-        			<td width="120">PREPARED BY</td><td width="100"></td>
-        			<td>POSITION</td><td width="100"></td>
-        			<td>DATE</td><td width="80"></td>
-        		</tr>
-        		<tr>
-        			<td>REVIEWED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        		<tr>
-        			<td>APROVED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        		<tr>
-        			<td>ACCEPTED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        	</table>
-        </div>
-    </div>
-</script>
-<script id="invoiceForm8" type="text/x-kendo-template">
-	<div class="inv1 pcg">
-        <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
-	            </div>
-        	</div>
-        	<div class="span7">
-        		<div class="span5" style="margin-right: 30px;">
-        			<p data-bind="text: company.name"></p>
-        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
-        		</div>
-        		<div class="span5" >
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
-        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
-        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
-        		</div>
-        	</div>
-        	<div class="span12 clear" style="margin: 20px 0;">
-        		<div class="span4" style="margin-right:45px;">
-        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
-        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
-        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
-        			<div class="span12 main-color order-price"><p>TOTAL ORDER <span data-bind="text: obj.amount"></span></p></div>
-        		</div>
-        		<div class="span3" style="margin-right: 26px;">
-        			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
-        			</p>
-        		</div>
-        		<div class="span3">
-        			<b>Delivered to</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
-        			</p>
-        		</div>
-        	</div>
-        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span3">TERM OF PAYMENT</div>
-        		<div class="span3">MODE OF PAYMENT</div>
-        		<div class="span3">DELIVERY DATE</div>
-        		<div class="span3">SALE REP</div>
-        	</div>
-        	<table class="span12" rules="rows">
-        		<thead>
-        			<tr>
-        				<th width="200">ITEM DESCRIPTION</th>
-        				<th>UM</th>
-        				<th width="80">QTY</th>
-        				<th width="80">UNIT PRICE</th>
-        				<th width="100">Total</th>
-        			</tr>
-        		</thead>
-        		<tbody id="formListView" 
-        				data-role="listview"
-						data-auto-bind="false"
-						data-template="invoiceForm-lineDS-template8"
-						data-bind="source: lineDS">
-        		<tfoot>
-        			<tr>
-        				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
-        			</tr>
-        			<tr>
-        				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
-        			</tr>
-        			<tr>
-        				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
-        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
-        			</tr>
-        		</tfoot>
-        	</table>
-        	<table class="span12" rules="rows" style="margin-top: 20px;">
-        		<tr>
-        			<td width="120">PREPARED BY</td><td width="100"></td>
-        			<td>POSITION</td><td width="100"></td>
-        			<td>DATE</td><td width="80"></td>
-        		</tr>
-        		<tr>
-        			<td>REVIEWED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        		<tr>
-        			<td>APROVED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        		<tr>
-        			<td>ACCEPTED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        	</table>
-        </div>
-    </div>
-</script>
-<script id="invoiceForm9" type="text/x-kendo-template">
-	<div class="inv1 pcg-border pcg">
-        <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
-	            </div>
-        	</div>
-        	<div class="span7">
-        		<div class="span5" style="margin-right: 30px;">
-        			<p data-bind="text: company.name"></p>
-        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
-        		</div>
-        		<div class="span5" >
-        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
-        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
-        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
-        		</div>
-        	</div>
-        	<div class="span12 clear" style="margin: 20px 0;">
-        		<div class="span4" style="margin-right:45px;">
-        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
-        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
-        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
-        			<div class="span12 main-color order-price"><p>TOTAL ORDER <span data-bind="text: obj.amount"></span></p></div>
-        		</div>
-        		<div class="span3" style="margin-right: 26px;">
-        			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
-        			</p>
-        		</div>
-        		<div class="span3">
-        			<b>Delivered to</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
-        			</p>
-        		</div>
-        	</div>
-        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span3">TERM OF PAYMENT</div>
-        		<div class="span3">MODE OF PAYMENT</div>
-        		<div class="span3">DELIVERY DATE</div>
-        		<div class="span3">SALE REP</div>
-        	</div>
-        	<table class="span12" style="border-left: none;border-bottom: none;">
-        		<thead>
-        			<tr>
-        				<th width="200">ITEM DESCRIPTION</th>
-        				<th>UM</th>
-        				<th width="80">QTY</th>
-        				<th width="80">UNIT PRICE</th>
-        				<th width="100">Total</th>
-        			</tr>
-        		</thead>
-        		<tbody id="formListView" 
-        				data-role="listview"
-						data-auto-bind="false"
-						data-template="invoiceForm-lineDS-template8"
-						data-bind="source: lineDS">
-        		<tfoot>
-        			<tr style="border-left:none">
-        				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
-        			</tr>
-        			<tr>
-        				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
-        			</tr>
-        			<tr>
-        				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
-        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
-        			</tr>
-        		</tfoot>
-        	</table>
-        	<table class="span12" rules="rows" style="margin-top: 20px;">
-        		<tr>
-        			<td width="120">PREPARED BY</td><td width="100"></td>
-        			<td>POSITION</td><td width="100"></td>
-        			<td>DATE</td><td width="80"></td>
-        		</tr>
-        		<tr>
-        			<td>REVIEWED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        		<tr>
-        			<td>APPROVED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        		<tr>
-        			<td>ACCEPTED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        	</table>
-        </div>
-    </div>
-</script> -->
+
 <script id="invoiceForm6" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
@@ -24616,13 +24211,13 @@
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
-        			<tr>
+        			<tr class="ten">
         				<th width="90">លេខកូដ<br>CODE</th>
-        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>UM</th>
         				<th>ចំនួន<br>QTY</th>
-        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
-        				<th width="80">សរុប<br>Total</th>
+        				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th width="80" class="rside">សរុប<br>Total</th>
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -24634,20 +24229,20 @@
         			<tr>
         				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
+        				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
         			</tr>
         			<tr>
-        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
-        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td class="rside" style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
         	</table>
-        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
         		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
@@ -24706,13 +24301,13 @@
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
-        			<tr>
+        			<tr class="ten">
         				<th width="90">លេខកូដ<br>CODE</th>
-        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>UM</th>
         				<th>ចំនួន<br>QTY</th>
-        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
-        				<th width="80">សរុប<br>Total</th>
+        				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th width="80" class="rside">សរុប<br>Total</th>
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -24724,20 +24319,20 @@
         			<tr>
         				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
+        				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
         			</tr>
         			<tr>
-        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
-        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td class="rside" style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
         	</table>
-        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
         		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
@@ -24798,11 +24393,11 @@
         	<table class="span12" rules="rows">
         		<thead>
         			<tr>
-        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>UM</th>
         				<th>ចំនួន<br>QTY</th>
-        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
-        				<th width="80">សរុប<br>Total</th>
+        				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th class="rside" width="80">សរុប<br>Total</th>
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -24826,7 +24421,7 @@
         			</tr>
         		</tfoot>
         	</table>
-        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
         		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
@@ -24887,11 +24482,11 @@
         	<table class="span12" rules="rows">
         		<thead>
         			<tr>
-        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>UM</th>
         				<th>ចំនួន<br>QTY</th>
-        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
-        				<th width="80">សរុប<br>Total</th>
+        				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th class="rside" width="80">សរុប<br>Total</th>
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -24915,7 +24510,7 @@
         			</tr>
         		</tfoot>
         	</table>
-        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
         		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
@@ -24974,13 +24569,13 @@
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
-        			<tr>
+        			<tr class="ten">
         				<th width="90">លេខកូដ<br>CODE</th>
-        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>UM</th>
         				<th>ចំនួន<br>QTY</th>
-        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
-        				<th width="80">សរុប<br>Total</th>
+        				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th width="80" class="rside">សរុប<br>Total</th>
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -24992,20 +24587,20 @@
         			<tr>
         				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
+        				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
         			</tr>
         			<tr>
-        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
-        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td class="rside" style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
         	</table>
-        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
         		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
@@ -25064,13 +24659,13 @@
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
-        			<tr>
+        			<tr class="ten">
         				<th width="90">លេខកូដ<br>CODE</th>
-        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>UM</th>
         				<th>ចំនួន<br>QTY</th>
-        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
-        				<th width="80">សរុប<br>Total</th>
+        				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th width="80" class="rside">សរុប<br>Total</th>
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -25082,20 +24677,20 @@
         			<tr>
         				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
+        				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
-        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
         			</tr>
         			<tr>
-        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
-        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td class="rside" style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
         	</table>
-        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
         		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
@@ -25156,11 +24751,11 @@
         	<table class="span12" rules="rows">
         		<thead>
         			<tr>
-        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>UM</th>
         				<th>ចំនួន<br>QTY</th>
-        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
-        				<th width="80">សរុប<br>Total</th>
+        				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th class="rside" width="80">សរុប<br>Total</th>
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -25184,7 +24779,7 @@
         			</tr>
         		</tfoot>
         	</table>
-        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
         		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
@@ -25245,11 +24840,11 @@
         	<table class="span12" rules="rows">
         		<thead>
         			<tr>
-        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>UM</th>
         				<th>ចំនួន<br>QTY</th>
-        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
-        				<th width="80">សរុប<br>Total</th>
+        				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th class="rside" width="80">សរុប<br>Total</th>
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -25273,7 +24868,7 @@
         			</tr>
         		</tfoot>
         	</table>
-        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
         		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
@@ -25924,13 +25519,13 @@
 	            </div>
         	</div>
         	<div class="span7">
-        		<h2>សក្ខីប័ត្រចំណាយ PAYMENT VOUCHER</h2>
+        		<h2 data-bind="text: obj.title"></h2>
         	</div>
         	<div class="span12" style="background:none;margin-top: 15px;">
         		<table class="span12 left-tbl" border="1">
         			<tr>
         				<td width="200">ឈ្មោះ NAME</td>
-        				<td width="200"></td>
+        				<td width="200" data-bind="text: obj.contact.name"></td>
         				<td width="200">លេខសក្ខីប័ត្រ PV No.</td>
         				<td width="200"></td>
         			</tr>
@@ -25948,7 +25543,7 @@
         			</tr>
         			<tr>
         				<td width="200">ទូទាត់ដោយ Mode of<br>Payment</td>
-        				<td colspan="3">ទូទាត់ដោយ mode of payment </td>
+        				<td colspan="3"> </td>
         			</tr>
         			<tr>
         				<td width="200">គោលបំណងការចំណាយ<br>Purpose of Advance</td>
@@ -25958,37 +25553,41 @@
         		</table>
         	</div>
         	<table class="span12" style="border-top: none;">
-        		<tr style="background: #c6d9f1;">
-        			<th style="border-top: 0;">
-        				No.
-        			</th>
-        			<th style="border-top: 0;" width="100">
-        				Invoice No.
-        			</th>
-        			<th style="border-top: 0;">
-        				Description
-        			</th>
-        			<th style="border-top: 0;" width="120">
-        				Amount
-        			</th>
-        		</tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
-        		<tr>
-        			<td colspan="3" style="text-align: right;padding-right: 5px;">Total</td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td colspan="3" style="text-align: right;padding-right: 5px;">Settlement Discounts</td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td colspan="3" style="text-align: right;padding-right: 5px;background: #c6d9f1;">NET AMOUNT PAID</td>
-        			<td></td>
-        		</tr>
+        		<thead>
+	        		<tr style="background: #c6d9f1;">
+	        			<th style="border-top: 0;">
+	        				No.
+	        			</th>
+	        			<th style="border-top: 0;" width="100">
+	        				Invoice No.
+	        			</th>
+	        			<th style="border-top: 0;">
+	        				Description
+	        			</th>
+	        			<th style="border-top: 0;" width="120">
+	        				Amount
+	        			</th>
+	        		</tr>
+        		</thead>
+        		<tbody id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template19"
+						data-bind="source: lineDS">
+				<tfoot>
+	        		<tr>
+	        			<td colspan="3" style="text-align: right;padding-right: 5px;">Total</td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td colspan="3" style="text-align: right;padding-right: 5px;">Settlement Discounts</td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td colspan="3" style="text-align: right;padding-right: 5px;background: #c6d9f1;">NET AMOUNT PAID</td>
+	        			<td></td>
+	        		</tr>
+	        	</tfoot>
         	</table>
         	<table class="span12 left-tbl" >
         		<tr>
@@ -26058,7 +25657,7 @@
         	</table>
         	<table class="span12" border="1">
         		<tr>
-        			<td rowspan="2" width="400" style="border-top:0;text-align: left;padding-left: 5px;">This is an automated voucher generated based on the payment made to outstanding invoice, reimbursements, claims, and other disbursement. The purpose of this voucher is used to approve payment transactions.</td>
+        			<td rowspan="2" width="400" style="border-top:0;text-align: left;padding-left: 5px;" data-bind="text: obj.note"></td>
         			<td style="border-top:0;text-align: left;padding-left: 5px;">Version</td>
         			<td style="border-top:0;text-align: left;padding-left: 5px;"><b>V.01</b></td>
         		</tr>
@@ -27450,7 +27049,916 @@
         </div>
     </div>
 </script>
-
+<script id="invoiceForm31" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span7" style="margin-right: 15px;">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr class="main-color ten">
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template31"
+						data-bind="source: lineDS">
+        		
+        	</table>
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm32" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span7" style="margin-right: 15px;">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr class="main-color ten">
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template31"
+						data-bind="source: lineDS">
+        		
+        	</table>
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm33" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5" style="margin-right: 30px;">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" >
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear" style="margin: 20px 0;">
+        		<div class="span4" style="margin-right:45px;">
+        			<p class="form-title" style="margin-bottom: 15px;font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        			
+        		</div>
+        		<div class="span7">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr class="main-color ten">
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template33"
+						data-bind="source: lineDS">
+        	</table>
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm34" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5" style="margin-right: 30px;">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" >
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear" style="margin: 20px 0;">
+        		<div class="span4" style="margin-right:45px;">
+        			<p class="form-title" style="margin-bottom: 15px;font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        			
+        		</div>
+        		<div class="span7">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr class="main-color ten">
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template33"
+						data-bind="source: lineDS">
+        	</table>
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm35" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span7" style="margin-right: 15px;">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង់ SUPPLIER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr class="ten">
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th class="rside">តម្លៃ​ឯកតា<br>UNIT COST</th>
+        				<th width="80" class="rside">សរុប<br>Total</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template6"
+						data-bind="source: lineDS">
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
+        				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td class="rside" style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm36" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span7" style="margin-right: 15px;">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង់ SUPPLIER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr class="ten">
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th class="rside">តម្លៃ​ឯកតា<br>UNIT COST</th>
+        				<th width="80" class="rside">សរុប<br>Total</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template6"
+						data-bind="source: lineDS">
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
+        				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td class="rside" style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm37" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5" style="margin-right: 30px;">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" >
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear" style="margin: 20px 0;">
+        		<div class="span4" style="margin-right:45px;">
+        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>សរុប TOTAL <span data-bind="text: obj.amount"></span></p></div>
+        		</div>
+        		<div class="span7">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង់ SUPPLIER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th class="rside">តម្លៃ​ឯកតា<br>UNIT COST</th>
+        				<th class="rside" width="80">សរុប<br>Total</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template8"
+						data-bind="source: lineDS">
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm38" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5" style="margin-right: 30px;">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" >
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear" style="margin: 20px 0;">
+        		<div class="span4" style="margin-right:45px;">
+        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>សរុប TOTAL <span data-bind="text: obj.amount"></span></p></div>
+        		</div>
+        		<div class="span7">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង់ SUPPLIER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th class="rside">តម្លៃ​ឯកតា<br>UNIT COST</th>
+        				<th class="rside" width="80">សរុប<br>Total</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template8"
+						data-bind="source: lineDS">
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm39" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span7" style="margin-right: 15px;">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង SUPPLIER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr class="main-color ten">
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template31"
+						data-bind="source: lineDS">
+        		
+        	</table>
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm40" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span7" style="margin-right: 15px;">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង SUPPLIER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr class="main-color ten">
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template31"
+						data-bind="source: lineDS">
+        		
+        	</table>
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm41" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5" style="margin-right: 30px;">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" >
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear" style="margin: 20px 0;">
+        		<div class="span4" style="margin-right:45px;">
+        			<p class="form-title" style="margin-bottom: 15px;font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        			
+        		</div>
+        		<div class="span7">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង SUPPLIER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr class="main-color ten">
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template33"
+						data-bind="source: lineDS">
+        	</table>
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm42" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5" style="margin-right: 30px;">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" >
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear" style="margin: 20px 0;">
+        		<div class="span4" style="margin-right:45px;">
+        			<p class="form-title" style="margin-bottom: 15px;font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        			
+        		</div>
+        		<div class="span7">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង SUPPLIER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr class="main-color ten">
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template33"
+						data-bind="source: lineDS">
+        	</table>
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
 
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
 	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
@@ -27503,7 +28011,7 @@
 </script>
 <script id="invoiceForm-lineDS-template6" type="text/x-kendo-template">
 	<tr>
-		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
+		<td >&nbsp;#= item_id #</td>
 		<td style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
@@ -27522,12 +28030,12 @@
 </script>
 <script id="invoiceForm-lineDS-template10" type="text/x-kendo-template">
 	<tr>
-		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td >&nbsp;#= item_id #</td>
+		<td class="lside" style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside" style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template12" type="text/x-kendo-template">
@@ -27547,6 +28055,32 @@
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
 		<td style="text-align: right; padding-right: 5px;"></td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template19" type="text/x-kendo-template">
+	<tr>
+		<td>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</td>
+		<td style="text-align: left; padding-left: 5px;"></td>
+		<td style="text-align: left; padding-left: 5px;"></td>
+		<td></td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template31" type="text/x-kendo-template">
+	<tr>
+		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
+		<td style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td>#= quantity#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template33" type="text/x-kendo-template">
+	<tr>
+		<td style="text-align: left; padding-left: 5px;">&nbsp;#= description#</td>
+		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td>#= quantity#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 
@@ -41549,16 +42083,16 @@
 			{ id: "Cash_Sale", name: "Cash Sale" },
 			{ id: "Invoice", name: "Invoice" },
 			{ id: "Cash_Receipt", name: "Cash Receipt" },
-			{ id: "Sale_Return", name: "Sale Return" },
+			//{ id: "Sale_Return", name: "Sale Return" },
 			{ id: "GDN", name: "Delivered Note" }
 	    ],
 	    vendorFormList 				: [
 	    	{ id: "Purchase_Order", name: "Purchase Order" },
 	    	{ id: "GRN", name: "GRN" },
-			{ id: "Deposit", name: "Deposit" },
-			{ id: "Purchase", name: "Purchase" },
-			{ id: "Pur_Return", name: "Pur.Return" },
-			{ id: "PayBill", name: "PayBill" }
+			// { id: "Deposit", name: "Deposit" },
+			// { id: "Purchase", name: "Purchase" },
+			// { id: "Pur_Return", name: "Pur.Return" },
+			{ id: "Cash_Payment", name: "Cash Payment" }
 	    ],
 	    cashFormList 				: [
 	    	{ id: "Cash_Transfer", name: "Cash Transaction" },
@@ -49543,7 +50077,7 @@
 				self.set("total_deposit", total_deposit);
 			});
 		},
-		addDeposit 			: function(){
+		addDeposit 			: function(id){
 			var obj = this.get("obj");
 
 			this.depositDS.data([]);
@@ -49551,7 +50085,7 @@
 			if(obj.deposit>0){				
 				this.depositDS.add({				
 					contact_id 			: obj.contact_id,								
-					reference_id 		: obj.id,				
+					reference_id 		: id,				
 					user_id 			: this.get("user_id"),				    		
 				   	type				: "Vendor_Deposit",
 				   	amount				: obj.deposit*-1,			   	
@@ -50266,7 +50800,7 @@
 				self.lineDS.sync();
 				self.accountLineDS.sync();
 				self.additionalCostDS.sync();
-				self.saveDeposit();
+				self.saveDeposit(data[0].id);
 				self.uploadFile();
 				
 				return data;
@@ -51918,6 +52452,13 @@
         	}else{
         		banhji.router.navigate('/vendor');
         		banhji.vendor.set("contact_type_id",data.id);
+        	}
+        },
+        deleteForm 		: function(e){
+        	var data = e.data;
+        	if(confirm("Do you want to delete it?") == true) {
+        		this.txnTemplateDS.remove(data);
+        		this.txnTemplateDS.sync();
         	}
         },
         goInvoiceCustom : function(){
@@ -54089,7 +54630,7 @@
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
 	    		//Upload has changes
-		    	if(this.attachmentDS.hasChanges()){
+		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
 		    		obj.set("dirty", true);
 		    	}
 	    	}	    	
@@ -56196,6 +56737,7 @@
 		total_deposit		: 0,
 		total 				: 0,
 		remaining 			: 0,
+		amount_due 			: 0,
 		original_total 		: 0,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
@@ -56575,6 +57117,7 @@
 		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
 		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 		        self.set("remaining", kendo.toString(view[0].remaining, "c", view[0].locale));
+		        self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c", view[0].locale));
 		        
 				self.set("statusSrc", banhji.source.paidSrc);
 
@@ -56602,7 +57145,7 @@
 			var self = this, obj = this.get("obj");
 
 			if(this.lineDS.total()>0){			
-				var total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0;
+				var total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0;
 								
 				if(kendo.parseInt(obj.tax_item_id)>0){
 					var selectedVat 					
@@ -56631,6 +57174,7 @@
 
 		    	//Total
 		        total = subTotal + tax;
+		        amount_due = total - obj.deposit;
 
 		        //Apply Deposit
 		        if(obj.deposit>0){
@@ -56667,6 +57211,7 @@
 		        this.set("tax", kendo.toString(tax, "c", obj.locale));
 		        this.set("total", kendo.toString(total, "c", obj.locale));
 		        this.set("remaining", kendo.toString(remaining, "c", obj.locale));
+		        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
 
 		        obj.set("sub_total", subTotal);
 		        obj.set("discount", discount);
@@ -57710,7 +58255,7 @@
 					contact_id 			: obj.contact_id,								
 					reference_id 		: id,				
 					user_id 			: this.get("user_id"),				    		
-				   	type				: "Deposit",
+				   	type				: "Customer_Deposit",
 				   	amount				: obj.deposit*-1,			   	
 				   	rate				: obj.rate,			   	
 				   	locale 				: obj.locale,			   	
@@ -57981,7 +58526,8 @@
 				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
 		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
 		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
-		        self.set("remaining", kendo.toString(view[0].remaining, "c", view[0].locale));	  			
+		        self.set("remaining", kendo.toString(view[0].remaining, "c", view[0].locale));
+		        self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c", view[0].locale));
 											
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
@@ -57995,7 +58541,7 @@
 			var self = this, obj = this.get("obj");
 
 			if(this.lineDS.total()>0){			
-				var total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due;											
+				var total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0;											
 
 				$.each(this.lineDS.data(), function(index, value) {				
 					var amt = value.quantity * value.price;					
@@ -58019,12 +58565,10 @@
 
 		    	//Total
 		        total = subTotal + tax;
-		        amount_due = total;
+		        amount_due = total - obj.deposit;
 
 		        //Apply Deposit
 		        if(obj.deposit>0){
-		        	amount_due -= obj.deposit;
-
 		        	if(obj.deposit <= this.get("total_deposit")){
 			        	if(obj.deposit <= total){
 			        		remaining = total - obj.deposit;
@@ -61128,7 +61672,8 @@
 					amount 		: '',
 					description : '',
 					locale : '',
-					item_prices : []
+					item_prices : [],
+					item_id 	: ''
 		    	});	
 		    }
 		},
@@ -61148,7 +61693,7 @@
 				case 11: Active = banhji.view.invoiceForm11; break;
 				case 12: Active = banhji.view.invoiceForm12; break;
 				case 13: Active = banhji.view.invoiceForm13; break;
-				case 14: Active = banhji.view.invoiceForm14; break;
+				case 14: Active = banhji.view.invoiceForm31; break;
 				case 15: Active = banhji.view.invoiceForm15; break;
 				case 16: Active = banhji.view.invoiceForm25; break;
 				case 17: Active = banhji.view.invoiceForm17; break;
@@ -61159,8 +61704,8 @@
 				case 22: Active = banhji.view.invoiceForm22; break;
 				case 23: Active = banhji.view.invoiceForm28; break;
 				case 24: Active = banhji.view.invoiceForm29; break;
-				case 25: Active = banhji.view.invoiceForm23; break;
-				case 26: Active = banhji.view.invoiceForm24; break;
+				case 25: Active = banhji.view.invoiceForm35; break;
+				case 26: Active = banhji.view.invoiceForm39; break;
 				case 27: Active = banhji.view.invoiceForm19; break;
 				case 28: Active = banhji.view.invoiceForm25; break;
 				case 29: Active = banhji.view.invoiceForm26; break;
@@ -61168,6 +61713,15 @@
 				case 31: Active = banhji.view.invoiceForm25; break;
 				case 32: Active = banhji.view.invoiceForm27; break;
 				case 33: Active = banhji.view.invoiceForm30; break;
+				case 34: Active = banhji.view.invoiceForm32; break;
+				case 35: Active = banhji.view.invoiceForm33; break;
+				case 36: Active = banhji.view.invoiceForm34; break;
+				case 37: Active = banhji.view.invoiceForm36; break;
+				case 38: Active = banhji.view.invoiceForm37; break;
+				case 39: Active = banhji.view.invoiceForm38; break;
+				case 40: Active = banhji.view.invoiceForm40; break;
+				case 41: Active = banhji.view.invoiceForm41; break;
+				case 42: Active = banhji.view.invoiceForm42; break;
 			}
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 		},
@@ -61227,6 +61781,8 @@
 				note 			: "",
 				color  			: null,
 				moduls 			: this.selectCustom,
+				item_id 		: '',
+				status 			: 0
 	    	});		
 			var obj = this.dataSource.at(0);			
 			this.set("obj", obj);		
@@ -61288,12 +61844,15 @@
 			}
 		},	 
 		printGrid			: function() {
-			var obj = this.get('obj'), colorM;
+			var obj = this.get('obj'), colorM, ts;
 			if(obj.color == null){
 				colorM = "#10253f";
 			}else{
 				colorM = obj.color;
 			}
+			if(obj.color == '#000000' || obj.color =='#1f497d' || obj.color == null){ 
+				ts = 'color: #fff!important;';
+			} else { ts = 'color: #333;'; }
 			var gridElement = $('#grid'),
 		        printableContent = '',
 		        win = window.open('', '', 'width=800, height=900'),
@@ -61317,7 +61876,29 @@
 		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
 		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm; } .inv1 .main-color { background-color: '+colorM+'!important; -webkit-print-color-adjust:exact; } .inv1 .light-blue-td { background-color: #c6d9f1!important;text-align: left;padding-left: 5px;-webkit-print-color-adjust:exact; }.inv1 span.total-amount { color:#fff!important;}</style>' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm;margin-top: 1mm; }'+
+		            	'.inv1 .main-color {' +
+		            		'background-color: '+colorM+'!important; ' + ts +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'} ' +
+		            	'.inv1 .light-blue-td { ' +
+		            		'background-color: #c6d9f1!important;' +
+		            		'text-align: left;' +
+		            		'padding-left: 5px;' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}' +
+		            	'.inv1 thead tr {'+
+		            		'background-color: rgb(242, 242, 242)!important;'+
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}'+
+		            	'.pcg .mid-title div {' + ts + '}' +
+		            	'.pcg .mid-header {' +
+		            		'background-color: #dce6f2!important; ' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}'+
+		            	'.inv1 span.total-amount { ' +
+		            		'color:#fff!important;' +
+		            	'}</style>' +
 		            '</head>' +
 		            '<body>';
 		    var htmlEnd =
@@ -61348,7 +61929,7 @@
 				case 11: Active = banhji.view.invoiceForm11; break;
 				case 12: Active = banhji.view.invoiceForm12; break;
 				case 13: Active = banhji.view.invoiceForm13; break;
-				case 14: Active = banhji.view.invoiceForm14; break;
+				case 14: Active = banhji.view.invoiceForm31; break;
 				case 15: Active = banhji.view.invoiceForm15; break;
 				case 16: Active = banhji.view.invoiceForm25; break;
 				case 17: Active = banhji.view.invoiceForm17; break;
@@ -61359,8 +61940,8 @@
 				case 22: Active = banhji.view.invoiceForm22; break;
 				case 23: Active = banhji.view.invoiceForm28; break;
 				case 24: Active = banhji.view.invoiceForm29; break;
-				case 25: Active = banhji.view.invoiceForm23; break;
-				case 26: Active = banhji.view.invoiceForm24; break;
+				case 25: Active = banhji.view.invoiceForm35; break;
+				case 26: Active = banhji.view.invoiceForm39; break;
 				case 27: Active = banhji.view.invoiceForm19; break;
 				case 28: Active = banhji.view.invoiceForm25; break;
 				case 29: Active = banhji.view.invoiceForm26; break;
@@ -61368,6 +61949,15 @@
 				case 31: Active = banhji.view.invoiceForm25; break;
 				case 32: Active = banhji.view.invoiceForm27; break;
 				case 33: Active = banhji.view.invoiceForm30; break;
+				case 34: Active = banhji.view.invoiceForm32; break;
+				case 35: Active = banhji.view.invoiceForm33; break;
+				case 36: Active = banhji.view.invoiceForm34; break;
+				case 37: Active = banhji.view.invoiceForm36; break;
+				case 38: Active = banhji.view.invoiceForm37; break;
+				case 39: Active = banhji.view.invoiceForm38; break;
+				case 40: Active = banhji.view.invoiceForm40; break;
+				case 41: Active = banhji.view.invoiceForm41; break;
+				case 42: Active = banhji.view.invoiceForm42; break;
 			}
 			banhji.view.invoiceForm.showIn('#invFormContent', Active);
 		},
@@ -61381,7 +61971,10 @@
 				var view = self.dataSource.view();	
 				view[0].set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));	
 				view[0].set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
-				view[0].set("amount", kendo.toString(view[0].amount, "c", view[0].locale));			
+				view[0].set("amount", kendo.toString(view[0].amount, "c", view[0].locale));
+				view[0].set("discount", kendo.toString(view[0].discount, "c", view[0].locale));	
+				view[0].set("deposit", kendo.toString(view[0].deposit, "c", view[0].locale));	
+				view[0].set("amount_due", kendo.toString(view[0].amount_due, "c", view[0].locale));				
 				self.set("obj", view[0]);
 				self.loadObjTemplate(view[0].transaction_template_id, id);		
 			});	
@@ -61411,7 +62004,8 @@
 								amount 		: '',
 								description : '',
 								locale 		: '',
-								item_prices : []
+								item_prices : [],
+								item_id 	: ''
 					    	});	
 					    }
 					    $("#loading-inv").remove();
@@ -69556,6 +70150,18 @@
 		invoiceForm28: new kendo.Layout("#invoiceForm28", {model: banhji.invoiceForm}),
 		invoiceForm29: new kendo.Layout("#invoiceForm29", {model: banhji.invoiceForm}),
 		invoiceForm30: new kendo.Layout("#invoiceForm30", {model: banhji.invoiceForm}),
+		invoiceForm31: new kendo.Layout("#invoiceForm31", {model: banhji.invoiceForm}),
+		invoiceForm32: new kendo.Layout("#invoiceForm32", {model: banhji.invoiceForm}),
+		invoiceForm33: new kendo.Layout("#invoiceForm33", {model: banhji.invoiceForm}),
+		invoiceForm34: new kendo.Layout("#invoiceForm34", {model: banhji.invoiceForm}),
+		invoiceForm35: new kendo.Layout("#invoiceForm35", {model: banhji.invoiceForm}),
+		invoiceForm36: new kendo.Layout("#invoiceForm36", {model: banhji.invoiceForm}),
+		invoiceForm37: new kendo.Layout("#invoiceForm37", {model: banhji.invoiceForm}),
+		invoiceForm38: new kendo.Layout("#invoiceForm38", {model: banhji.invoiceForm}),
+		invoiceForm39: new kendo.Layout("#invoiceForm39", {model: banhji.invoiceForm}),
+		invoiceForm40: new kendo.Layout("#invoiceForm40", {model: banhji.invoiceForm}),
+		invoiceForm41: new kendo.Layout("#invoiceForm41", {model: banhji.invoiceForm}),
+		invoiceForm42: new kendo.Layout("#invoiceForm42", {model: banhji.invoiceForm}),
 		
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.customerSale}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.customerSale}),

@@ -213,16 +213,16 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             </div>
             <div class="col-sm-6">
               <div class="login-form">
+                <h2 align="center">Forget Password</h2>
                   <form action="" method="">
 
                       <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
 
-                      <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
-
-                      <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
+                     
+                      <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Get New Password"><br><br>
                       <div id="loginInformation"></div>
                   </form> 
-                  <a href="<?php echo base_url(); ?>forgetpassword">Forget Password</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
+                  <a href="<?php echo base_url(); ?>login"">Login</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
               </div>
             </div>
         </div>

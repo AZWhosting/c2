@@ -20655,8 +20655,10 @@
 			 #}#
 		</td>
 		<td class="center">
+			#if( status == 0){ #
 			<a class="btn-action glyphicons pencil btn-success" href="\\#/invoice_custom/#= id # "><i></i></a>
 			<a data-bind="click: deleteForm" class="btn-action glyphicons remove_2 btn-danger"><i></i></a>
+			# } #
 		</td>
 	</tr>
 </script>
@@ -25475,13 +25477,13 @@
 	            </div>
         	</div>
         	<div class="span7">
-        		<h2>សក្ខីប័ត្រចំណាយ PAYMENT VOUCHER</h2>
+        		<h2 data-bind="text: obj.title"></h2>
         	</div>
         	<div class="span12" style="background:none;margin-top: 15px;">
         		<table class="span12 left-tbl" border="1">
         			<tr>
         				<td width="200">ឈ្មោះ NAME</td>
-        				<td width="200"></td>
+        				<td width="200" data-bind="text: obj.contact.name"></td>
         				<td width="200">លេខសក្ខីប័ត្រ PV No.</td>
         				<td width="200"></td>
         			</tr>
@@ -25499,7 +25501,7 @@
         			</tr>
         			<tr>
         				<td width="200">ទូទាត់ដោយ Mode of<br>Payment</td>
-        				<td colspan="3">ទូទាត់ដោយ mode of payment </td>
+        				<td colspan="3"> </td>
         			</tr>
         			<tr>
         				<td width="200">គោលបំណងការចំណាយ<br>Purpose of Advance</td>
@@ -25509,37 +25511,41 @@
         		</table>
         	</div>
         	<table class="span12" style="border-top: none;">
-        		<tr style="background: #c6d9f1;">
-        			<th style="border-top: 0;">
-        				No.
-        			</th>
-        			<th style="border-top: 0;" width="100">
-        				Invoice No.
-        			</th>
-        			<th style="border-top: 0;">
-        				Description
-        			</th>
-        			<th style="border-top: 0;" width="120">
-        				Amount
-        			</th>
-        		</tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
-        		<tr>
-        			<td colspan="3" style="text-align: right;padding-right: 5px;">Total</td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td colspan="3" style="text-align: right;padding-right: 5px;">Settlement Discounts</td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td colspan="3" style="text-align: right;padding-right: 5px;background: #c6d9f1;">NET AMOUNT PAID</td>
-        			<td></td>
-        		</tr>
+        		<thead>
+	        		<tr style="background: #c6d9f1;">
+	        			<th style="border-top: 0;">
+	        				No.
+	        			</th>
+	        			<th style="border-top: 0;" width="100">
+	        				Invoice No.
+	        			</th>
+	        			<th style="border-top: 0;">
+	        				Description
+	        			</th>
+	        			<th style="border-top: 0;" width="120">
+	        				Amount
+	        			</th>
+	        		</tr>
+        		</thead>
+        		<tbody id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template19"
+						data-bind="source: lineDS">
+				<tfoot>
+	        		<tr>
+	        			<td colspan="3" style="text-align: right;padding-right: 5px;">Total</td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td colspan="3" style="text-align: right;padding-right: 5px;">Settlement Discounts</td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td colspan="3" style="text-align: right;padding-right: 5px;background: #c6d9f1;">NET AMOUNT PAID</td>
+	        			<td></td>
+	        		</tr>
+	        	</tfoot>
         	</table>
         	<table class="span12 left-tbl" >
         		<tr>
@@ -25609,7 +25615,7 @@
         	</table>
         	<table class="span12" border="1">
         		<tr>
-        			<td rowspan="2" width="400" style="border-top:0;text-align: left;padding-left: 5px;">This is an automated voucher generated based on the payment made to outstanding invoice, reimbursements, claims, and other disbursement. The purpose of this voucher is used to approve payment transactions.</td>
+        			<td rowspan="2" width="400" style="border-top:0;text-align: left;padding-left: 5px;" data-bind="text: obj.note"></td>
         			<td style="border-top:0;text-align: left;padding-left: 5px;">Version</td>
         			<td style="border-top:0;text-align: left;padding-left: 5px;"><b>V.01</b></td>
         		</tr>
@@ -28007,6 +28013,14 @@
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
 		<td style="text-align: right; padding-right: 5px;"></td>
+	</tr>
+</script>
+<script id="invoiceForm-lineDS-template19" type="text/x-kendo-template">
+	<tr>
+		<td>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</td>
+		<td style="text-align: left; padding-left: 5px;"></td>
+		<td style="text-align: left; padding-left: 5px;"></td>
+		<td></td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template31" type="text/x-kendo-template">
@@ -41919,7 +41933,7 @@
 			// { id: "Deposit", name: "Deposit" },
 			// { id: "Purchase", name: "Purchase" },
 			// { id: "Pur_Return", name: "Pur.Return" },
-			{ id: "PayBill", name: "PayBill" }
+			{ id: "Cash_Payment", name: "Cash Payment" }
 	    ],
 	    cashFormList 				: [
 	    	{ id: "Cash_Transfer", name: "Cash Transaction" },
@@ -61252,7 +61266,8 @@
 				note 			: "",
 				color  			: null,
 				moduls 			: this.selectCustom,
-				item_id 		: ''
+				item_id 		: '',
+				status 			: 0
 	    	});		
 			var obj = this.dataSource.at(0);			
 			this.set("obj", obj);		

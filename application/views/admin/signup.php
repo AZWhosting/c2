@@ -9,9 +9,11 @@
     <!-- Boostrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Battambang" rel="stylesheet">
     <style>
         html, body {
             background-color: #203864;
+            font-family: 'Roboto Slab', Battambang !important;
         }
         label {
             color: #000;
@@ -28,13 +30,12 @@
             height: auto;
         }
         .signup-content{
-            margin: 50px 0;
+            margin: 45px 0;
             display: inline-block;
             width: 100%;
         }
         .singup-image{
-            text-align: center;
-            margin-top: 100px; 
+            text-align: center; 
         }
         .singup-image p{
             color: #8DB3DA;
@@ -46,10 +47,12 @@
             padding: 30px 50px;
             color: #000000;
             text-align:  center;
-            font-family: 'Roboto Slab', serif !important;
+            font-family: 'Roboto Slab', Battambang !important;
         }
         .signup-form input{
-          font-size: 18px;          
+          font-size: 15px;
+            color: #FFF;
+                 
         }
         .signup-form label{
             font-size:  18px;
@@ -58,20 +61,22 @@
         }
         .signup-form .signup-email{
             width: 100%;
-            margin-top: 10px;
-            padding: 8px;
+            margin-top: 2px;
+            padding: 3px;
+            color: #000;
+            font-family: 'Roboto Slab', Battambang !important;
         }
         .signup-noted{
-            color: #ddd;
+                color: #000;
             margin: 5px auto 0;
             font-size: 11px;
             text-align: center;
-            width: 80%;
+            width: 100%;
         }
         .signup-country{
             height: 37px;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 5px;
         }
         .btn-signup{
             width: 100%;
@@ -84,14 +89,36 @@
             font-size: 30px !important;
         }
         .signup-text-bottom{
-            color: #fff;
-            text-align:  center;
-            margin: 13px auto 0;
-            width: 60%;
+               color: #000;
+    text-align: left;
+    width: 100%;
         }
         .signup-text-bottom a{
             color: #8DB3DA;
             text-decoration: underline;
+        }
+        .signup-list ul li{
+            width: 100%;
+            float: left;
+            list-style: none;
+
+        }
+        .signup-list ul li .image{
+            float: left;
+        }
+         .signup-list ul li .image img{
+            width: 100%;
+        }
+         .signup-list ul li .description{
+            color: #fff;  
+            float: left; 
+            width: 75%;
+        }
+        .k-dropdown .k-input, .k-dropdown .k-state-focused .k-input, .k-menu .k-popup{
+            color: #B5B5B5;
+        }
+        .k-dropdown .k-input, .k-dropdown .k-state-focused .k-input, .k-menu .k-popup{
+            color: #000;
         }
     </style>
     <style>
@@ -183,7 +210,7 @@ a.referral:hover {
     right: -120px;
     font-size: 12px;
     text-align: center;
-    bottom: -156px;
+    bottom: -134px;
     -webkit-transition: all .5s;
     transition: all .5s;
     padding-bottom: 10px;
@@ -232,59 +259,116 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
     <div class="sign-up">
         <dis class="signup-content">
             
-             <div class="col-sm-5">
-                <div class="signup-form">
-                    <form action="" method="">
-                        <label>Personal Information</label><br>
+             <div class="col-sm-6">
+                <div class="col-md-10 col-md-offset-2">
+                    <div class="signup-form">
+                        <form action="" method="">
+                            <label>Personal Information</label><br>
 
-                        <input type="email" data-bind="value: email" placeholder="Your email" class="signup-email"><br>
+                            <input type="email" data-bind="value: email" placeholder="Your email" class="signup-email"><br>
+                            <input type="numbers" data-bind="value: telephone" placeholder="Your Telephone" class="signup-email"><br>
+                            <p class="signup-noted">We will use this information to communicate with you. We never share your number with third parties without your consent.</p>
+                            <input type="password" data-bind="value: password" placeholder="Password " class="signup-email"><br>
 
-                        <input type="password" data-bind="value: password" placeholder="Password " class="signup-email"><br>
+                            <p class="signup-noted">The minimum requirements for password are:  at least 8 characters, letter, and numbers.</p>
+                            
+                            <input type="password" data-bind="value: cPassword" placeholder="Confirm password " class="signup-email"><br>
+                            <br>
 
-                        <p class="signup-noted">The minimum requirements for password are:  at least 8 characters, letter, and numbers.</p>
-                        
-                        <input type="password" data-bind="value: cPassword" placeholder="Confirm password " class="signup-email"><br>
-                        <br>
+                            <label>Company Information</label><br>
+                            <input type="text" data-bind="value: name" placeholder="Company Name " class="signup-email"><br>
 
-                        <label>Company Information</label><br>
-                        <input type="text" data-bind="value: name" placeholder="Company Name " class="signup-email"><br>
+                            <select class="signup-country" 
+                                    data-role="dropdownlist" 
+                                    data-bind="source: countries, value: country"
+                                    data-text-field="name"
+                                    data-value-field="id"
+                                    data-option-label="Select the main Currentcy" style="text-align: left;">
+                            </select><br>
 
-                        <select class="signup-country" 
-                                data-role="dropdownlist" 
-                                data-bind="source: countries, value: country"
-                                data-text-field="name"
-                                data-value-field="id"
-                                data-option-label="select country">
-                        </select><br>
+                            <select class="signup-country" 
+                                    data-role="dropdownlist" 
+                                    data-bind="source: countries, value: country"
+                                    data-text-field="name"
+                                    data-value-field="id"
+                                    data-option-label="Select Country" style="text-align: left;">
+                            </select><br>
 
-                        <select class="signup-country"
-                                data-role="dropdownlist" 
-                                data-bind="source: types, value: type"
-                                data-text-field="name"
-                                data-value-field="id"
-                                data-option-label="select type">
-                        </select><br>
+                            <select class="signup-country"
+                                    data-role="dropdownlist" 
+                                    data-bind="source: types, value: type"
+                                    data-text-field="name"
+                                    data-value-field="id"
+                                    data-option-label="Select Business Type" style="text-align: left;">
+                            </select><br>
 
-                         <select class="signup-country"
-                                data-role="dropdownlist" 
-                                data-bind="source: industries, value: industry"
-                                data-text-field="name"
-                                data-value-field="id"
-                                data-option-label="select industry"
-                                data-place-holder="select one">
-                        </select><br>
+                             <select class="signup-country"
+                                    data-role="dropdownlist" 
+                                    data-bind="source: industries, value: industry"
+                                    data-text-field="name"
+                                    data-value-field="id"
+                                    data-option-label="Select Industry Type"
+                                    data-place-holder="select one" style="text-align: left;">
+                            </select><br>
 
-                        <input id="signupBtn" type="button" data-bind="click: create" class="btn-signup" value="Signup"><br>
-                        <p class="signup-text-bottom">
-                            By clicking on “signup”, you agree to the <a href="">Terms of Service</a> and <a href="">Privacy Policy</a>.
-                        </p>
+                            <input style="background: #1F4E78;font-size: 20px !important; " id="signupBtn" type="button" data-bind="click: create" class="btn-signup" value="SINGUP FOR FREE"><br>
+                            <p class="signup-text-bottom">
+                                By clicking on “signup”, you agree to the <a href="">Terms of Service</a> and <a href="">Privacy Policy</a>.
+                            </p>
 
-                    </form> 
+                        </form> 
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6">
+           <div class="col-sm-6">
                 <div class="singup-image">
-                    <img src="<?php echo base_url(); ?>assets/signup-new.png" height="350" />
+                    <img style="float: left;width: 67%; margin-top: -14px; margin-left: -32px;" src="<?php echo base_url(); ?>assets/signup-new.png" />
+                </div>
+                <div class="col-sm-12 signup-list">
+                    <ul>
+                        <li>
+                            <div class="image" style="margin-bottom: -27px; width: 12%;">
+                                <img src="<?php echo base_url(); ?>assets/free.png" style="width: 100%;"/>
+                            </div>
+                            <div class="description" style="font-size: 12px; margin-top: 7px; width: 50%;">
+                                មិនគិតថ្លៃ ១០០% លើប្រព័ន្ធគណនេយ្យ BanhJi ព្រមទាំងសេវាគាំទ្រ 1GB storage និងចំនួនអ្នកប្រើប្រាស់មិនកំណត់
+                             </div>
+                         </li>
+                        <li>
+                            <div  class="image" style="width: 9%; margin-left: 7px; margin-top: 20px;">
+                                <img src="<?php echo base_url(); ?>assets/language.png" style="width: 100%;"/>
+                            </div>
+                            <div class="description" style="color: #839ABA; font-size: 12px; margin-top: 28px; margin-left: 10px; width: 50%;">
+                                ប្រព័ន្ធគណនេយ្យយ៉ាងពេញលេញជាខេមរៈភាសា ដែលស្របតាមទម្រង់បទដ្ឋានពន្ធ និងគំរូរបាយការណ៍ហិរញ្ញវត្ថុ
+                            </div>
+
+                        </li>
+                        <li>
+                           <div  class="image" style="width: 9%; margin-left: 7px; margin-top: 20px;">
+                                <img src="<?php echo base_url(); ?>assets/audit.png" style="width: 100%;"/>
+                            </div>
+                            <div class="description" style=" font-size: 12px; margin-top: 28px; margin-left: 10px; width: 65%;">
+                                ឆ្លងកាត់ការអភិវឌ្ឍន៍ វិភាគ ត្រួតពិនិត្យ រយៈពេល ១៣៦៥ ថ្ងៃ ដោយក្រុមគណនេយ្យករ និងសវនករជំនាញ របស់ក្រុមហ៊ុន PCG & Partners Co., Ltd
+                             </div>
+                        </li>
+                        <li>
+                            <div  class="image" style="width: 9%; margin-left: 7px; margin-top: 20px;">
+                                <img src="<?php echo base_url(); ?>assets/secure.png" style="width: 100%;"/>
+                            </div>
+                            <div class="description" style="color: #839ABA; font-size: 12px; margin-top: 28px; margin-left: 10px; width: 50%;">
+                                មានសុវត្ថិភាព ងាយស្រួលប្រើ ព្រមទាំងផ្តល់លទ្ធភាពវិភាគលទ្ធផល និងស្ថានភាពហិរញ្ញវត្ថុស៊ីជម្រៅ
+                             </div>
+                        </li>
+                        <li>
+                            <div  class="image" style="width: 9%; margin-left: 7px; margin-top: 20px;">
+                                <img src="<?php echo base_url(); ?>assets/asean.png" style="width: 100%;"/>
+                            </div>
+                            <div class="description" style=" font-size: 12px; margin-top: 28px; margin-left: 10px; width: 50%;">
+                                មោទនភាពផលិតផលខ្មែរ ប្រើ BanhJi គឺជួយគាំទ្រផលិតផលខ្មែរ ចូលក្នុងទីផ្សារតំបន់ ASEAN
+                            </div>
+                        </li>
+                    </ul>
+
                 </div>
             </div>
         </div>

@@ -950,8 +950,14 @@ class Transactions extends REST_Controller {
 	
 
     //Generate invoice number
-	private function _generate_number($type){		
+	private function _generate_number($type, $date){
+		$txnDate = date("Y-m-d");		
 		$header = "";
+
+		if(isset($date)){
+			$txnDate = $date;
+		}
+
     	switch($type){
     	//SME
 		case "Invoice":
@@ -1069,15 +1075,16 @@ class Transactions extends REST_Controller {
 		$MM = date("m");
 		$headerWithDate = $header . $YY . $MM;
 
-		$inv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$inv->where('type', $type);
-		$inv->where('is_recurring', 0);
-		$inv->order_by('id', 'desc');
-		$inv->get();
+		$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$txn->where('type', $type);
+		// $txn->where("issued_date");
+		$txn->where('is_recurring', 0);
+		$txn->order_by('id', 'desc');
+		$txn->get();
 
 		$last_no = "";		
-		if(count($inv)>0){
-			$last_no = $inv->number;
+		if(count($txn)>0){
+			$last_no = $txn->number;
 		}
 		$no = 0;
 		$curr_YY = 0;
