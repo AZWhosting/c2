@@ -76,7 +76,7 @@ class Transaction_templates extends REST_Controller {
 	    		}
 			}									 			
 		}
-		
+		$obj->order_by("type","desc");
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
 

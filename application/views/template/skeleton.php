@@ -204,15 +204,15 @@ var themerPrimaryColor = primaryColor;
 			<h3>Referral</h3>
 		</div>
 		<div class="modal-body">
-		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
-		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
-		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
-		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
-		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
+		  	<input type="text" name="refferalName1" id="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail1" placeholder="Email" />
+		  	<input type="text" name="refferalName2" id="refferalName2" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail2" placeholder="Email" />
+		  	<input type="text" name="refferalName3" id="refferalName3" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail3" placeholder="Email" />
+		  	<input type="text" name="refferalName4" id="refferalName4" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail4" placeholder="Email" />
+		  	<input type="text" name="refferalName5" id="refferalName5" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail5" placeholder="Email" />
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="btn btn-default cloze" data-dismiss="modal">Close</a>
-			<a href="#" class="btn btn-primary" id="feedBackSend">Send</a>
+			<a href="#" class="btn btn-primary" id="referralSend">Send</a>
 		</div>
 	</div>
 	<?php echo $body ?>
@@ -253,11 +253,36 @@ var themerPrimaryColor = primaryColor;
 			var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
 			$.ajax({  
 			    type: 'POST',
-			    url: '<?php echo base_url(); ?>api/send_mail', 
+			    url: '<?php echo base_url(); ?>api/feedbacks', 
 			    data: { msg: MSG, cURL: CurrentURL, uName: UserName, datesend: strDate },
 			    success: function(response) {
-			        alert(response);
+			        alert(response.message);
 			        $("#feedbackMsg").val("");
+			        $(".cloze").click();
+			    }
+			});
+		});
+		$("#referralSend").click(function(){
+			var name1 = $("#refferalName1").val();
+			var email1 = $("#refferalEmail1").val();
+			var name2 = $("#refferalName2").val();
+			var email2 = $("#refferalEmail2").val();
+			var name3 = $("#refferalName3").val();
+			var email3 = $("#refferalEmail3").val();
+			var name4 = $("#refferalName4").val();
+			var email4 = $("#refferalEmail4").val();
+			var name5 = $("#refferalName5").val();
+			var email5 = $("#refferalEmail5").val();
+			var UserName = banhji.userData.username;
+			var d = new Date();
+			var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
+			$.ajax({  
+			    type: 'POST',
+			    url: '<?php echo base_url(); ?>api/referrals',
+			    data: { uName: UserName, datesend: strDate, rName1: name1, rName2: name2, rName3: name3, rName4: name4, rName5: name5, rMail1: email1, rMail2: email2, rMail3: email3, rMail4: email4, rMail5: email5 },
+			    success: function(response) {
+			        alert(response.message);
+			        //$("#feedbackMsg").val("");
 			        $(".cloze").click();
 			    }
 			});
