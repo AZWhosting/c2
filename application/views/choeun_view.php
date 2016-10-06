@@ -5539,6 +5539,7 @@
 	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
 	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
 	            				<th class="center" data-bind="text: lang.lang.name"></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"
@@ -5547,8 +5548,6 @@
 				                 data-bind="source: prefixDS">				            
 	            		</tbody>
 	            	</table>
-
-	            	<a href="#add_accountingprefix" class="btn-icon btn-primary glyphicons ok_2" style="width: 110px;"><i></i>Add New </a>
 
 	            </div>
 	            <!-- // Tab Block content END -->
@@ -5568,9 +5567,42 @@
 			#= startup_number#
 		</td>
 		<td class="center">
-			<a style="text-align: left;" href="\\#/invoice_custom/#= id # ">#= name# </a>
+			<a style="text-align: left;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
+		</td>
+		<td class="center">
+			<a class="btn-action glyphicons pencil btn-success" href="\\#/add_accountingprefix/#= id # "><i></i></a>
 		</td>
 	</tr>
+</script>
+
+<script id="addAccountingprefix" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2 style="padding:0 15px;"">Edit Accounting Prefix</h2>
+				    <br>	
+				    <div class="row span12" style="margin-left:0;margin-bottom: 20px;">			   				
+						<input type="text" placeholder="Name" class="k-textbox k-invalid span4" data-bind="value: obj.name" >
+						<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" >
+						<input type="text" placeholder="Startup Number" class="k-textbox k-invalid span2" data-bind="value: obj.startup_number" >
+					</div>
+					<!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row">
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;float:right; margin-right: 15px;"><i></i> Save Close</span>	
+						</div>
+					</div>
+					<!-- // Form actions END -->	
+				</div>							
+			</div>
+		</div>
+	</div>
 </script>
 
 
@@ -42480,6 +42512,7 @@
 			//{ id: "Sale_Return", name: "Sale Return" },
 			{ id: "GDN", name: "Delivered Note" }
 	    ],
+	    typeList 					: ['Invoice','eInvoice','wInvoice','Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','eDeposit','wDeposit','Customer_Deposit','Vendor_Deposit','Witdraw','Transfer','Journal','Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
 	    vendorFormList 				: [
 	    	{ id: "Purchase_Order", name: "Purchase Order" },
 	    	{ id: "GRN", name: "GRN" },
@@ -44327,33 +44360,16 @@
     });
     banhji.addAccountingprefix =  kendo.observable({
 		lang 				: langVM,		
-        contactTypeDS 		: banhji.source.customerTypeDS,
-        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
+		selectTypeList 		: banhji.source.typeList,
+		Type 				: "Invoice",
         dataSource			: dataStore(apiUrl + "prefixes"),
         pageLoad 			: function(id){
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
 			}else{	
-				var obj = this.get("obj"), self = this;
-				
-				if(this.get("isEdit") || this.dataSource.total()==0){
-					this.addEmpty();
-				}	
+				this.cancel;
 			}
-		},
-        addEmpty 		 	: function(){			
-			this.dataSource.data([]);		
-			this.set("obj", null);		
-			this.set("isEdit", false);		
-			this.dataSource.insert(0,{		
-				type 			: "Invoice",
-				name 			: "",
-				startup_number 	: 1,
-				abbr 			: ""
-	    	});		
-			var obj = this.dataSource.at(0);			
-			this.set("obj", obj);		
 		},
 		loadObj 			: function(id){
 			var self = this;	
@@ -71668,6 +71684,54 @@
 			vm.pageLoad();			     		
 		}
 	});
+	banhji.router.route("/add_accountingprefix(/:id)", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.addAccountingprefix);			
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.addAccountingprefix;
+			banhji.userManagement.addMultiTask("Add Accounting Prefix","add_accountingprefix",null);
+			if(banhji.pageLoaded["add_accountingprefix"]==undefined){
+				banhji.pageLoaded["add_accountingprefix"] = true;				        
+				setTimeout(function(){
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+					var notification = $("#notification").kendoNotification({				    
+					    autoHideAfter: 5000,
+					    width: 300,				    
+					    height: 50
+					}).data('kendoNotification');
+					$("#saveNew").click(function(e){	
+		        			
+						e.preventDefault();
+						if(validator.validate()){
+			            	vm.save();		            	
+
+			            	notification.success("Save Successful");			  
+				        }else{
+				        	notification.error("Warning, please review it again!");			           
+				        }		            
+					});
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();
+			            	window.history.back();
+
+			            	notification.success("Save Successful");			  
+				        }else{
+				        	notification.error("Warning, please review it again!");			           
+				        }	            
+					});
+				},2000);
+						
+			};
+			
+			vm.pageLoad(id);		
+		};
+	});
 	banhji.router.route("/segment", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -75864,24 +75928,7 @@
 		};	
 	});
 
-	banhji.router.route("/add_accountingprefix(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.addAccountingprefix);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.addAccountingprefix;
-			banhji.userManagement.addMultiTask("Add Accounting Prefix","add_accountingprefix",null);
-			if(banhji.pageLoaded["add_accountingprefix"]==undefined){
-				banhji.pageLoaded["add_accountingprefix"] = true;				        
-
-						
-			};
-			
-			vm.pageLoad(id);		
-		};	
-	});
+	
 	
 	banhji.router.route("/sale_summary_customer", function(){
 		if(!banhji.userManagement.getLogin()){

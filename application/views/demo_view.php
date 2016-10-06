@@ -5434,6 +5434,7 @@
 	</div>
 </script>
 
+
 <script id="accountingSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
@@ -5456,6 +5457,8 @@
 	            <li><a href="#tab4-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Transaction Item </span></a>
 	            </li>
 	            <li><a href="#tab5-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Tax Setting </span></a>
+	            </li>	
+	            <li><a href="#tab6-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Prefix Setting </span></a>
 	            </li>	                        
 	        </ul>
 	    </div>
@@ -5528,11 +5531,81 @@
 	            </div>
 	            <!-- // Tab Block content END -->
 
+	            <!-- Tab Block content -->
+	            <div class="tab-pane" id="tab6-1">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center" data-bind="text: lang.lang.type"></th>
+	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
+	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
+	            				<th class="center" data-bind="text: lang.lang.name"></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="accountSetting-prefix-template"
+				                 data-bind="source: prefixDS">				            
+	            		</tbody>
+	            	</table>
+
+	            </div>
+	            <!-- // Tab Block content END -->
+
 	        </div>
 	    </div>
 
 	</div>
 </script>
+<script id="accountSetting-prefix-template" type="text/x-kendo-template">
+	<tr>
+		<td > #=type#  </a></td>
+		<td style="text-align: center; padding-left: 10px!important;"> 
+			#= abbr# 
+		</td>
+		<td class="center"> 
+			#= startup_number#
+		</td>
+		<td class="center">
+			<a style="text-align: left;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
+		</td>
+		<td class="center">
+			<a class="btn-action glyphicons pencil btn-success" href="\\#/add_accountingprefix/#= id # "><i></i></a>
+		</td>
+	</tr>
+</script>
+
+<script id="addAccountingprefix" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2 style="padding:0 15px;"">Edit Accounting Prefix</h2>
+				    <br>	
+				    <div class="row span12" style="margin-left:0;margin-bottom: 20px;">			   				
+						<input type="text" placeholder="Name" class="k-textbox k-invalid span4" data-bind="value: obj.name" >
+						<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" >
+						<input type="text" placeholder="Startup Number" class="k-textbox k-invalid span2" data-bind="value: obj.startup_number" >
+					</div>
+					<!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row">
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;float:right; margin-right: 15px;"><i></i> Save Close</span>	
+						</div>
+					</div>
+					<!-- // Form actions END -->	
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+
 <script id="accountingSetting-contact-type-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>
@@ -16255,7 +16328,9 @@
 		<!-- Actions -->
     	<td align="center">
 			#if(type==="Invoice"){#
-        		<a data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></a>
+				#if(status==="0" || status==="2") {#
+        			<a data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></a>
+        		#}#
         	#}#
 		</td>     	
     </tr>
@@ -42465,6 +42540,7 @@
 			{ id: "Journal", name: "Journal" }
 	    ],
 		genderList					: ["M", "F"],
+		typeList 					: ['Invoice','eInvoice','wInvoice','Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','eDeposit','wDeposit','Customer_Deposit','Vendor_Deposit','Witdraw','Transfer','Journal','Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
 		user_id						: banhji.userData.id,
 		cash_account_id 			: 10,
 		amtDueColor 				: "#D5DBDB",
@@ -42526,10 +42602,6 @@
 			}
 
 			return rate;
-		},
-		testDS						: dataStore(apiUrl + "transactions/generate_number"),
-		test 						: function(){
-			this.testDS.read();
 		}
 	});
 	
@@ -44193,7 +44265,169 @@
 	    }
     });
 
+	banhji.accountingSetting =  kendo.observable({
+		lang 				: langVM,		
+        contactTypeDS 		: banhji.source.customerTypeDS,
+        txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
+        prefixDS			: dataStore(apiUrl + "prefixes"),
+        contactTypeName 	: "",
+        contactTypeAbbr 	: "",
+        contactTypeCompany 	: 0,
+        paymentMethodName 	: "",
+        paymentTermName 	: "",
+        paymentTermNetDue	: "",
+        paymentTermPeriod 	: "",
+        paymentTermPercentage 	: "",
+        pageLoad 			: function() {
+        	this.txnTemplateDS.filter({ field: "moduls", value : "customer_mg" });
+        },	    
+        addContactType 		: function(){
+        	var name = this.get("contactTypeName");
 
+        	if(name!==""){
+	        	this.contactTypeDS.add({
+	        		parent_id 	: 1,
+	        		name 		: name,
+	        		abbr 		: this.get("contactTypeAbbr"),
+	        		description : "",
+	        		is_company 	: this.get("contactTypeCompany"),
+	        		is_system 	: 0
+	        	});
+
+	        	this.contactTypeDS.sync();
+
+	        	this.set("contactTypeName", "");
+	        	this.set("contactTypeAbbr", "");
+	        	this.set("contactTypeCompany", 0);
+        	}
+        },
+        addPaymentMethod 		: function(){
+        	var name = this.get("paymentMethodName");
+
+        	if(name!==""){
+	        	this.paymentMethodDS.add({	        		
+	        		name 		: name,
+	        		description : "",
+	        		is_system 	: 0
+	        	});
+
+	        	this.paymentMethodDS.sync();
+
+	        	this.set("paymentMethodName", "");
+        	}
+        },
+        addPaymentTerm 		: function(){
+        	var name = this.get("paymentTermName");
+
+        	if(name!==""){
+	        	this.paymentTermDS.add({	        		
+	        		name 				: name,
+	        		net_due 			: this.get("paymentTermNetDue"),
+	        		discount_period 	: this.get("paymentTermPeriod"),
+	        		discount_percentage : this.get("paymentTermPercentage"),
+	        		is_system 			: 0
+	        	});
+
+	        	this.paymentTermDS.sync();
+
+	        	this.set("paymentTermName", "");
+	        	this.set("paymentTermNetDue", "");
+	        	this.set("paymentTermPeriod", "");
+	        	this.set("paymentTermPercentage", "");
+        	}
+        },
+        goPattern 	: function(e){
+        	var data = e.data;        	        	
+
+        	if(kendo.parseInt(data.contact_id)>0){        		        	
+	        	banhji.router.navigate('/customer/'+data.contact_id+'/1');   	
+        	}else{
+        		banhji.router.navigate('/customer');
+        		banhji.customer.set("contact_type_id",data.id);
+        	}
+        },
+        deleteForm 		: function(e){
+        	var data = e.data;
+        	if(confirm("Do you want to delete it?") == true) {
+        		this.txnTemplateDS.remove(data);
+        		this.txnTemplateDS.sync();
+        	}
+        },
+        goInvoiceCustom : function(){
+
+		    banhji.invoiceCustom.set("selectTypeList", banhji.source.customerFormList);
+		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm10);
+		    banhji.router.navigate('/invoice_custom');
+        }      
+    });
+    banhji.addAccountingprefix =  kendo.observable({
+		lang 				: langVM,		
+		selectTypeList 		: banhji.source.typeList,
+		Type 				: "Invoice",
+        dataSource			: dataStore(apiUrl + "prefixes"),
+        pageLoad 			: function(id){
+			if(id){
+				this.set("isEdit", true);
+				this.loadObj(id);
+			}else{	
+				this.cancel;
+			}
+		},
+		loadObj 			: function(id){
+			var self = this;	
+			this.dataSource.query({    			
+				filter: { field:"id", value: id },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.dataSource.view();
+				self.set("obj", view[0]);
+				
+			});	
+		},	
+		objSync 			: function(){
+	    	var dfd = $.Deferred();	        
+
+	    	this.dataSource.sync();
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
+		    });
+		    return dfd;	    		    	
+	    }, 	    
+		save 				: function(){				
+	    	var self = this, obj = this.get("obj");
+			//Save Obj
+			this.objSync()
+			.then(function(data){ //Success	
+				banhji.accountingSetting.prefixDS.fetch();	
+				
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					//window.history.back();
+				}else{
+					//Save New
+					self.addEmpty();
+				}
+			});
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();		
+			window.history.back();
+		} 
+    });
 	/*********************
 	*   Employee Section   *
 	**********************/
@@ -48901,7 +49135,7 @@
 
 				self.lineDS.filter({ field: "transaction_id", value: id });
 				self.attachmentDS.filter({ field: "transaction_id", value: id });
-				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
+				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
 				self.loadRecurring();				
 			});				
 		},
@@ -49724,7 +49958,7 @@
 
 				self.lineDS.filter({ field: "transaction_id", value: id });
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
-				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });								
+				self.referenceDS.filter({ field: "id", value: view[0].reference_id });								
 			});				
 		},			  
 		objSync 			: function(){
@@ -50779,7 +51013,7 @@
 				self.accountLineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.additionalCostDS.filter({ field: "reference_id", value: view[0].id });
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
-				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });				
+				self.referenceDS.filter({ field: "id", value: view[0].reference_id });				
 
 				if(view[0].status=="1" || view[0].type=="Cash_Purchase"){
 					self.set("statusSrc", banhji.source.paidSrc);
@@ -52153,7 +52387,7 @@
 						
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
-				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
+				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
 			});				
 		},
 		changes				: function(){
@@ -55679,7 +55913,7 @@
 
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
-				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
+				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
 				self.loadRecurring();	
 			});				
 		},
@@ -56467,7 +56701,7 @@
 				self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
 				self.lineDS.filter({ field: "transaction_id", value: id });				
 				self.journalLineDS.filter({ field: "transaction_id", value: id });
-				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
+				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
 
 				self.loadRecurring();
 			});
@@ -57494,7 +57728,7 @@
 				//self.contactDS.filter({ field: "id", value: view[0].contact_id });				
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
-				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
+				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
 
 				self.depositDS.filter([
 					{ field: "reference_id", value: view[0].id },
@@ -57601,6 +57835,7 @@
 			this.set("total", 0);
 			this.set("total_deposit", 0);			
 			this.set("remaining", 0);
+			this.set("amount_due", 0);
 			this.set("amtDueColor", banhji.source.amtDueColor);				
 
 			this.dataSource.insert(0, {				
@@ -58308,58 +58543,7 @@
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
 		jobDS				: dataStore(apiUrl + "jobs"),		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
-		depositDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "transactions/amount_sum",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				create 	: {
-					url: apiUrl + "transactions",
-					type: "POST",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				update 	: {
-					url: apiUrl + "transactions",
-					type: "PUT",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				destroy 	: {
-					url: apiUrl + "transactions",
-					type: "DELETE",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,								
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
+		depositDS  			: dataStore(apiUrl + "transactions"),
 		depositSumDS  		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -58899,7 +59083,7 @@
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
-				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });				
+				self.referenceDS.filter({ field: "id", value: view[0].reference_id });				
 				
 				self.loadDeposit();				
 			});				
@@ -58993,6 +59177,7 @@
 			this.set("total_deposit", 0);
 			this.set("total", 0);
 			this.set("remaining", 0);
+			this.set("amount_due", 0);
 			this.set("amtDueColor", banhji.source.amtDueColor);
 
 			//Set Date
@@ -60053,7 +60238,7 @@
 							
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.attachmentDS.filter({ field: "transaction_id", value: id });
-				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
+				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
 				self.loadRecurring();
 			});				
 		},
@@ -60986,7 +61171,7 @@
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.journalLineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.attachmentDS.filter({ field: "transaction_id", value: view[0].id });
-				self.referenceDS.filter({ field: "transaction_id", value: view[0].reference_id });
+				self.referenceDS.filter({ field: "id", value: view[0].reference_id });
 
 				self.returnDS.query({
 					filter:{ field: "return_id", value: view[0].id },
@@ -64649,12 +64834,13 @@
 		},
 		changes				: function(){
 			var self = this, obj = this.get("obj"),
-			total = 0, subTotal = 0, discount =0, pay = 0, remain = 0;											
+			total = 0, subTotal = 0, discount = 0, pay = 0, remain = 0;											
 
-			$.each(this.dataSource.data(), function(index, value) {								
-				subTotal += ((value.reference[0].amount - value.amount_paid) / value.rate);					
-				discount += (value.discount / value.rate);
-				pay += (value.amount / value.rate);					
+			$.each(this.dataSource.data(), function(index, value) {
+				var amount = value.reference[0].amount - (value.amount_paid + value.reference[0].deposit);								
+				subTotal += amount / value.rate;					
+				discount += value.discount / value.rate;
+				pay += value.amount / value.rate;					
 	        });
 
 			total = subTotal - discount;
@@ -65190,10 +65376,11 @@
 			var self = this, obj = this.get("obj"),
 			total = 0, subTotal = 0, discount =0, pay = 0, remain = 0;											
 
-			$.each(this.dataSource.data(), function(index, value) {								
-				subTotal += ((value.reference[0].amount - value.amount_paid) / value.rate);					
-				discount += (value.discount / value.rate);
-				pay += (value.amount / value.rate);					
+			$.each(this.dataSource.data(), function(index, value) {
+				var amount = value.reference[0].amount - (value.amount_paid + value.reference[0].deposit);								
+				subTotal += amount / value.rate;					
+				discount += value.discount / value.rate;
+				pay += value.amount / value.rate;				
 	        });
 
 			total = subTotal - discount;
@@ -70417,6 +70604,9 @@
 		chartOfAccount: new kendo.Layout("#chartOfAccount", {model: banhji.chartOfAccount}),
 		accountingReportCenter: new kendo.Layout("#accountingReportCenter"),
 		accountingSetting: new kendo.Layout("#accountingSetting", {model: banhji.accountingSetting}),
+
+		addAccountingprefix: new kendo.Layout("#addAccountingprefix", {model: banhji.addAccountingprefix}),
+
 		segment: new kendo.Layout("#segment", {model: banhji.segment}),
 		generalLedger: new kendo.Layout("#generalLedger", {model: banhji.generalLedger}),
 		transactionListDate: new kendo.Layout("#transactionListDate", {model: banhji.transactionListDate}),
@@ -71454,6 +71644,56 @@
 			vm.pageLoad();			     		
 		}
 	});
+
+	banhji.router.route("/add_accountingprefix(/:id)", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.addAccountingprefix);			
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.addAccountingprefix;
+			banhji.userManagement.addMultiTask("Add Accounting Prefix","add_accountingprefix",null);
+			if(banhji.pageLoaded["add_accountingprefix"]==undefined){
+				banhji.pageLoaded["add_accountingprefix"] = true;				        
+				setTimeout(function(){
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+					var notification = $("#notification").kendoNotification({				    
+					    autoHideAfter: 5000,
+					    width: 300,				    
+					    height: 50
+					}).data('kendoNotification');
+					$("#saveNew").click(function(e){	
+		        			
+						e.preventDefault();
+						if(validator.validate()){
+			            	vm.save();		            	
+
+			            	notification.success("Save Successful");			  
+				        }else{
+				        	notification.error("Warning, please review it again!");			           
+				        }		            
+					});
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();
+			            	window.history.back();
+
+			            	notification.success("Save Successful");			  
+				        }else{
+				        	notification.error("Warning, please review it again!");			           
+				        }	            
+					});
+				},2000);
+						
+			};
+			
+			vm.pageLoad(id);		
+		};
+	});
+	
 	banhji.router.route("/segment", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
