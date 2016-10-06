@@ -71,28 +71,28 @@
 							<a href="#/customers ">
 								<img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 8px;
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 5px;
     display: inline-block;">Customers</span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/vendors">
 								<img title="Supplier Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg" alt="Vendor">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 8px;
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 5px;
     display: inline-block;">Suppliers</span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/inventories">
 								<img title="Products/Sercies Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg" alt="Inventory">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 8px;
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 5px;
     display: inline-block;">Products/Services</span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/documents">
 								<img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.jpg" alt="Attachment">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 8px;
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 5px;
     display: inline-block;">Documents</span></span>
 						</li>
 					</ul>
@@ -108,20 +108,20 @@
 							<a href="#/reports">
 								<img title="Reports Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.jpg" alt="Reports">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 8px;
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 5px;
     display: inline-block;">Reports</span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/sale_tax">
 								<img title="Tax Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax" style="margin-top: 8px;
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax" style="margin-top: 5px;
     display: inline-block;"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
 								<img title="Admin Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings" style="margin-top: 8px;
+								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings" style="margin-top: 5px;
     display: inline-block;"></span></span>
 							</a>
 						</li>											
@@ -1812,7 +1812,7 @@
                    style="width: 80px;" />	
 		</td>		
 		<td data-bind="visible: showSegment">
-			<select data-role="multiselect"
+			<select data-role="multiselect" id="ddlSegment"
 				   data-value-primitive="true"				   
 				   data-item-template="segment-list-tmpl"				    
 				   data-value-field="id" 
@@ -6754,249 +6754,270 @@
 </script>
 
 <script id="employee" type="text/x-kendo-template">
-	<div class="container-960">	
-		<div class="row-fluid">		    
-			<div class="span12">			
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">				
 				<div id="example" class="k-content">
 
-					<!-- Collapsible Widget -->			
-					<div class="widget">
-					    <div class="widget-head">
-					    	<span class="btn btn-primary pull-right" 
-									onclick="javascript:window.history.back()">X</span>
-					        
-					        <h4 class="heading glyphicons circle_info"><i></i> Employee</h4>							        	
-					    </div>
-					    <div class="widget-body">
+					<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
 
-					    	<div class="row-fluid">
-					    		<div class="span6 well">
+			        <h2>Employee</h2>
 
-									<div class="row-fluid">
+			        <br>				
 
-										<div class="span6">														
+			    	<div class="row-fluid">
+			    		<div class="span6 well">
+
+							<div class="row-fluid">
+
+								<div class="span6">														
+									<!-- Group -->
+									<div class="control-group">										
+										<label for="ddlContactType">Employee Type<span style="color:red">*</span></label>
+										<input id="ddlContactType" name="ddlContactType"
+											   data-role="dropdownlist"
+											   data-option-label="(--- Select ---)"									                   
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.contact_type_id,
+							                   			  disabled: obj.is_pattern, 
+							                              source: contactTypeDS,
+							                              events:{change: contactTypeChanges}"
+							                   required data-required-msg="required"
+							                   style="width: 100%;" />									            
+									</div>
+									<!-- // Group END -->
+								</div>
+
+								<div class="span6">	
+									<!-- Group -->
+									<div class="control-group">							
+										<label for="number"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>
+				              			<input id="number" name="number" class="k-textbox"
+					              				data-bind="value: obj.number, disabled: obj.is_pattern" 
+					              				placeholder="e.g. ID0001" required data-required-msg="required"
+					              				style="width: 100%;" />
+					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
+									</div>
+									<!-- // Group END -->											
+								</div>
+							</div>
+							
+							<div class="row-fluid">
+								<div class="span6">						
+									<!-- Group -->
+									<div class="control-group">
+										<label for="surname"><span data-bind="text: lang.lang.surname"></span> <span style="color:red">*</span></label>
+					              		<input id="surname" name="surname" class="k-textbox" data-bind="value: obj.surname, disabled: obj.is_pattern" 
+							              		placeholder="surname ..." required data-required-msg="required"
+							              		style="width: 100%;" />
+									</div>
+									<!-- // Group END -->
+								</div>
+
+								<div class="span6">	
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="name"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
+							            <input id="name" name="name" class="k-textbox" data-bind="value: obj.name, disabled: obj.is_pattern" 
+							              		placeholder="name ..." required data-required-msg="required"
+							              		style="width: 100%;" />
+									</div>																		
+									<!-- // Group END -->
+								</div>
+							</div>
+						</div>
+
+						<div class="span6">
+							<div class="row-fluid">	
+								<!-- Map -->
+								<div id="map" class="span12" style="height: 130px;"></div>
+							</div>
+
+							<div class="separator line bottom"></div>
+
+						
+						</div>
+					</div>								
+							
+					<!-- // Inner Tabs -->
+					<div class="row-fluid">								
+						<div class="box-generic">
+						    <!-- //Tabs Heading -->
+						    <div class="tabsbar tabsbar-1">
+						        <ul class="row-fluid row-merge">						            
+						            <li class="span2 glyphicons usd active">
+						            	<a href="#tab1" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.account"></span></a>
+						            </li>								           							            
+						            <li class="span2 glyphicons nameplate_alt">
+						            	<a href="#tab2" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.info"></span></a>
+						            </li>
+						            <li class="span2 glyphicons paperclip">
+						            	<a href="#tab3" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.info"></span></a>
+						            </li>
+						            									           						            					            
+						        </ul>
+						    </div>
+						    <!-- // Tabs Heading END -->
+
+						    <div class="tab-content">
+						        <!-- //ACCOUNTING INFO -->
+						        <div class="tab-pane active" id="tab1">
+						        	
+						        	<div class="row-fluid">
+
+						            	<div class="span3">													
 											<!-- Group -->
 											<div class="control-group">										
-												<label for="ddlContactType">Employee Type<span style="color:red">*</span></label>
-												<input id="ddlContactType" name="ddlContactType"
+												<label for="ddlAD">Advance Account<span style="color:red">*</span></label>
+												<input id="ddlAD" name="ddlAD"
 													   data-role="dropdownlist"
-													   data-option-label="(--- Select ---)"									                   
+													   data-header-template="account-header-tmpl"
+													   data-option-label="(--- Select ---)"											                   
 									                   data-value-primitive="true"
 									                   data-text-field="name"
 									                   data-value-field="id"
-									                   data-bind="value: obj.contact_type_id,
-									                   			  disabled: obj.is_pattern, 
-									                              source: contactTypeDS,
-									                              events:{change: contactTypeChanges}"
-									                   required data-required-msg="required"
+									                   data-bind="value: obj.account_id,
+									                              source: adDS"
+									                   required data-required-msg="required"											                              
 									                   style="width: 100%;" />									            
 											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span6">	
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="number"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>
-						              			<input id="number" name="number" class="k-textbox"
-							              				data-bind="value: obj.number, disabled: obj.is_pattern" 
-							              				placeholder="e.g. ID0001" required data-required-msg="required"
-							              				style="width: 100%;" />
-							              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
-											</div>
-											<!-- // Group END -->											
-										</div>
-									</div>
-									
-									<div class="row-fluid">
-										<div class="span6">						
+											<!-- // Group END -->													
+										</div>												
+										<div class="span3">
 											<!-- Group -->
 											<div class="control-group">
-												<label for="surname"><span data-bind="text: lang.lang.surname"></span> <span style="color:red">*</span></label>
-							              		<input id="surname" name="surname" class="k-textbox" data-bind="value: obj.surname, disabled: obj.is_pattern" 
-									              		placeholder="surname ..." required data-required-msg="required"
-									              		style="width: 100%;" />
-											</div>
-											<!-- // Group END -->
+												<label for="ddlSA">Salary Account<span style="color:red">*</span></label>
+												<input id="ddlSA" name="ddlSA"
+													   data-role="dropdownlist"
+													   data-option-label="(--- Select ---)"											                   
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-header-template="account-header-tmpl"
+									                   data-value-field="id"
+									                   data-bind="value: obj.salary_account_id,
+									                              source: saDS"
+									                   required data-required-msg="required"											                              
+									                   style="width: 100%;" />
+										    </div>
+											<!-- // Group END -->	
 										</div>
-
-										<div class="span6">	
+										<div class="span3">
 											<!-- Group -->
-											<div class="control-group">								
-												<label for="name"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
-									            <input id="name" name="name" class="k-textbox" data-bind="value: obj.name, disabled: obj.is_pattern" 
-									              		placeholder="name ..." required data-required-msg="required"
-									              		style="width: 100%;" />
-											</div>																		
-											<!-- // Group END -->
-										</div>
-									</div>
-								</div>
+											<div class="control-group">
+												<label for="currency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>
+									            <input id="currency" name="currency" 
+									            	data-role="dropdownlist"
+									            	data-value-primitive="true"
+									                data-text-field="code"
+									                data-value-field="id"
+													data-bind="value: obj.currency_id, source: currencyDS"
+													data-option-label="(--- Select ---)" 
+													required data-required-msg="required" style="width: 100%;" />
+											</div>													
+										</div>																																				
+							        </div>	
+							        <div class="separator line bottom"></div>
+					        	</div>
+						        <!-- //ACCOUNTING INFO END -->								        
 
-								<div class="span6">
-									<div class="row-fluid">	
-										<!-- Map -->
-										<div id="map" class="span12" style="height: 130px;"></div>
-									</div>
+						        <!-- //GENERAL INFO -->
+						        <div class="tab-pane" id="tab2">
+					            	<table class="table table-borderless table-condensed cart_total">						            	
+					            		<tr>
+							                <td><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></td>
+							              	<td>
+							              		<input id="customerStatus" name="customerStatus" 
+							              				data-role="dropdownlist"
+									            		data-text-field="name"
+						           						data-value-field="id"
+						           						data-value-primitive="true" 
+									            		data-bind="source: statusList, value: obj.status"
+									            		data-option-label="(--- Select ---)"
+									            		required data-required-msg="ត្រូវការ ស្ថានភាព" />
+							              	</td>							              	
+							            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
+							              	<td>
+							              		<input id="registered_date" name="registered_date" 
+								            		data-role="datepicker"			            		
+					            					data-bind="value: obj.registered_date" 
+					            					data-format="dd-MM-yyyy"
+					            					data-parse-formats="yyyy-MM-dd" 
+					            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
+							              	</td>
+							            </tr>									            
+							            <tr>
+							                <td><span data-bind="text: lang.lang.email"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" /></td>							              	
+							            	<td><span data-bind="text: lang.lang.phone"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
+							            </tr>									           							            
+							            <tr>
+							            	<td><span data-bind="text: lang.lang.address"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />							              	
+							            	<td><span data-bind="text: lang.lang.memo"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>
+							            </tr>
+							            <tr>
+							            	<td><label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.bill_to" placeholder="bill to ..." />							              	
+							            	<td><span data-bind="text: lang.lang.ship_to"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." /></td>									              	
+							            </tr>							            							            								            								            			            
+							        </table>
+					        	</div>
+						        <!-- //GENERAL INFO END -->	
+						        <div class="tab-pane" id="tab3">	
+						        	<input name="files"
+					                   type="file"
+					                   data-role="upload"
+					                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
+						        </div>						        
+						    </div>
+						</div>
+					</div>
 
-									<div class="separator line bottom"></div>
-
-								
-								</div>
-							</div>								
-									
-							<!-- // Inner Tabs -->
-							<div class="row-fluid">								
-								<div class="box-generic">
-								    <!-- //Tabs Heading -->
-								    <div class="tabsbar tabsbar-1">
-								        <ul class="row-fluid row-merge">						            
-								            <li class="span2 glyphicons usd active">
-								            	<a href="#tab1" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.account"></span></a>
-								            </li>								           							            
-								            <li class="span2 glyphicons nameplate_alt">
-								            	<a href="#tab2" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.info"></span></a>
-								            </li>
-								            <li class="span2 glyphicons paperclip">
-								            	<a href="#tab3" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.info"></span></a>
-								            </li>
-								            									           						            					            
-								        </ul>
-								    </div>
-								    <!-- // Tabs Heading END -->
-
-								    <div class="tab-content">
-								        <!-- //ACCOUNTING INFO -->
-								        <div class="tab-pane active" id="tab1">
-								        	
-								        	<div class="row-fluid">
-
-								            	<div class="span3">													
-													<!-- Group -->
-													<div class="control-group">										
-														<label for="ddlAD">Advance Account<span style="color:red">*</span></label>
-														<input id="ddlAD" name="ddlAD"
-															   data-role="dropdownlist"
-															   data-header-template="account-header-tmpl"
-															   data-option-label="(--- Select ---)"											                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.account_id,
-											                              source: adDS"
-											                   required data-required-msg="required"											                              
-											                   style="width: 100%;" />									            
-													</div>
-													<!-- // Group END -->													
-												</div>												
-												<div class="span3">
-													<!-- Group -->
-													<div class="control-group">
-														<label for="ddlSA">Salary Account<span style="color:red">*</span></label>
-														<input id="ddlSA" name="ddlSA"
-															   data-role="dropdownlist"
-															   data-option-label="(--- Select ---)"											                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-header-template="account-header-tmpl"
-											                   data-value-field="id"
-											                   data-bind="value: obj.salary_account_id,
-											                              source: saDS"
-											                   required data-required-msg="required"											                              
-											                   style="width: 100%;" />
-												    </div>
-													<!-- // Group END -->	
-												</div>
-												<div class="span3">
-													<!-- Group -->
-													<div class="control-group">
-														<label for="currency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>
-											            <input id="currency" name="currency" 
-											            	data-role="dropdownlist"
-											            	data-value-primitive="true"
-											                data-text-field="code"
-											                data-value-field="id"
-															data-bind="value: obj.currency_id, source: currencyDS"
-															data-option-label="(--- Select ---)" 
-															required data-required-msg="required" style="width: 100%;" />
-													</div>													
-												</div>																																				
-									        </div>	
-									        <div class="separator line bottom"></div>
-							        	</div>
-								        <!-- //ACCOUNTING INFO END -->								        
-
-								        <!-- //GENERAL INFO -->
-								        <div class="tab-pane" id="tab2">
-							            	<table class="table table-borderless table-condensed cart_total">						            	
-							            		<tr>
-									                <td><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></td>
-									              	<td>
-									              		<input id="customerStatus" name="customerStatus" 
-									              				data-role="dropdownlist"
-											            		data-text-field="name"
-								           						data-value-field="id"
-								           						data-value-primitive="true" 
-											            		data-bind="source: statusList, value: obj.status"
-											            		data-option-label="(--- Select ---)"
-											            		required data-required-msg="ត្រូវការ ស្ថានភាព" />
-									              	</td>							              	
-									            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
-									              	<td>
-									              		<input id="registered_date" name="registered_date" 
-										            		data-role="datepicker"			            		
-							            					data-bind="value: obj.registered_date" 
-							            					data-format="dd-MM-yyyy"
-							            					data-parse-formats="yyyy-MM-dd" 
-							            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
-									              	</td>
-									            </tr>									            
-									            <tr>
-									                <td><span data-bind="text: lang.lang.email"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" /></td>							              	
-									            	<td><span data-bind="text: lang.lang.phone"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
-									            </tr>									           							            
-									            <tr>
-									            	<td><span data-bind="text: lang.lang.address"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />							              	
-									            	<td><span data-bind="text: lang.lang.memo"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>
-									            </tr>
-									            <tr>
-									            	<td><label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.bill_to" placeholder="bill to ..." />							              	
-									            	<td><span data-bind="text: lang.lang.ship_to"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." /></td>									              	
-									            </tr>							            							            								            								            			            
-									        </table>
-							        	</div>
-								        <!-- //GENERAL INFO END -->	
-								        <div class="tab-pane" id="tab3">	
-								        	<input name="files"
-							                   type="file"
-							                   data-role="upload"
-							                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-								        </div>						        
-								    </div>
-								</div>
-							</div>
-
-							<br>											
+					<br>											
 							
 							<!-- Form actions -->
-							<div align="center">
-								<span id="notification"></span>
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
 
-								<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-								<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-								<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
+						<!-- Delete Confirmation -->
+						<div data-role="window"
+			                 data-title="Delete Confirmation"
+			                 data-width="350"
+			                 data-height="200"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'40%',left:'35%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: showConfirm"
+			                 style="text-align:center;">
+			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+			            </div>
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span3">
+								
 							</div>
-							<!-- // Form actions END -->
-
-						</div> <!-- End Widget-Body List -->
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+							</div>
+						</div>
 					</div>
-					<!-- // Collapsible Widget END -->				          					                
+					<!-- // Form actions END -->	          					                
 			    											
 				</div> <!-- // End div example-->  
 			</div> <!-- // End div span12-->
@@ -7628,7 +7649,7 @@
 					style="width: 100%; margin-bottom: 0;" />		
 		</td>			
 		<td data-bind="visible: showSegment">
-			<select data-role="multiselect"
+			<select data-role="multiselect" id="ddlSegment"
 				   data-value-primitive="true"				   
 				   data-item-template="segment-list-tmpl"				    
 				   data-value-field="id" 
@@ -8201,7 +8222,7 @@
                    style="width: 80px;" />	
 		</td>							
 		<td data-bind="visible: showSegment">
-			<select data-role="multiselect"
+			<select data-role="multiselect" id="ddlSegment"
 				   data-value-primitive="true"				   
 				   data-item-template="segment-list-tmpl"				    
 				   data-value-field="id" 
@@ -12887,21 +12908,21 @@
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>Expenses/ Purchase Overview</h2>
-					<div align="center" class="text-large strong">0</div>
+					<div align="center" class="text-large strong" data-bind="text: total"></div>
 					<table width="100%">
 						<tr align="center">
 							<td>										
-								<span>0</span>
+								<span data-bind="text: supplierCount"></span>
 								<br>
 								<span>Suppliers</span>
 							</td>
 							<td>
-								<span>0</span>
+								<span data-bind="text: items"></span>
 								<br>
 								<span>Products</span>
 							</td>
 							<td>
-								<span>0</span>
+								<span data-bind="text: order"></span>
 								<br>
 								<span>Order</span>
 							</td>
@@ -12929,21 +12950,21 @@
 			<div class="report-chart">
 				<div class="widget-body receivable-overview" style="background-color: LightGray">
 					<h2>PAYABLES MANAGEMENT</h2>
-					<div align="center" class="text-large strong">0</div>
+					<div align="center" class="text-large strong" data-bind="text: totalBalance"></div>
 					<table width="100%">
 						<tr align="center">
 							<td>										
-								<span>0</span>
+								<span data-bind="text: openBalance"></span>
 								<br>
 								<span>Open</span>
 							</td>
 							<td>
-								<span>0</span>
+								<span data-bind="text: count"></span>
 								<br>
 								<span>Supplier</span>
 							</td>
 							<td>
-								<span>0</span>
+								<span data-bind="text: overDate"></span>
 								<br>
 								<span>Overdue</span>
 							</td>
@@ -12995,98 +13016,88 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: purchaseSummary.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Expenses/ Purchase Summary by Supplier</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Expenses/ Purchase Summary by Supplier</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Segment</p>
-									<span data-bind="text: segments"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Segment</p>
+										<span data-bind="text: segments"></span>
+									</div>
+									<div class="span6">
+										<p>Total Supplier</p>
+										<span data-bind="text: count"></span>
+									</div>	
+										
 								</div>
-								<div class="span6">
-									<p>Total Customer</p>
-									<span data-bind="text: count"></span>
-								</div>	
-									
+							</div>
+							<div class="span7">
+								<div class="total-sale">
+									<p>Total Expenses/ Purchase</p>
+									<span data-bind="text: total"></span>
+								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-sale">
-								<p>Total Sale</p>
-								<span data-bind="text: total"></span>
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Supplier</th>
+									<th>Total Expenses/ Purchase</th>								
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: purchaseSummary.dataSource"
+										 data-template="expensesPurchaseSummarySupplier-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th>Total</th>
+									<th><span data-bind="text: total"></span></th>
+								</tr>
+							</tfoot>
+						</table>					
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Supplier</th>
-								<th>Total Sale</th>								
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: purchaseSummary.dataSource"
-									 data-template="expensesPurchaseSummarySupplier-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th>Total</th>
-								<th><span data-bind="text: total"></span></th>
-							</tr>
-						</tfoot>
-					</table>
-					
-
 				</div>		
 			</div>
 		</div>
@@ -13095,7 +13106,7 @@
 <script id="expensesPurchaseSummarySupplier-temp" type="text/x-kendo-template" >
 	<tr>
 		<td>#=customer#</td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="suppliersTransactionList" type="text/x-kendo-template">
@@ -13117,108 +13128,97 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: supplierTransaction.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Suppliers Transaction List</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span4">
-									<p>Total Suppliers</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span4">
-									<p>Cash Purchase</p>
-									<span data-bind="text: totalCashPurchase"></span>
-								</div>	
-								<div class="span4">
-									<p>Cash Payment</p>
-									<span data-bind="text: totalCashPayment"></span>
-								</div>	
-							</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Suppliers Transaction List</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Purchase</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Suppliers Balance</p>
-									<span data-bind="text: total"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span4">
+										<p>Total Suppliers</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span4">
+										<p>Cash Purchase</p>
+										<span data-bind="text: totalCashPurchase"></span>
+									</div>	
+									
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Cash Payment</p>
+										<span data-bind="text: totalCashPayment"></span>
+									</div>	
+									<div class="span6">
+										<p>Total Purchase</p>
+										<span data-bind="text: total"></span>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: supplierTransaction.dataSource"
-									 data-template="suppliersTransactionList-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: supplierTransaction.dataSource"
+										 data-template="suppliersTransactionList-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
 				</div>		
 			</div>
 		</div>
@@ -13234,14 +13234,21 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>		
+					#if(items[i].type=="Cash_Purchase" || items[i].type=="Credit_Purchase"){#
+						<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
+					#}else if(items[i].type=="Vendor_Deposit" && items[i].amount<0){#	
+						<a href="\#/Vendor_Deposit/#=items[i].id#">#=items[i].number#</a>					
+					#}else{#
+						<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+					#}#
+		        </td>
 				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -13268,93 +13275,86 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: purchaseDetail.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Expenses/ Purchase Detail by Supplier</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<p>Total Customers</p>
-								<span data-bind="text: count"></span>
-							</div>
-
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Expenses/ Purchase Detail by Supplier</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-sale">
-								<p>Total Sale</p>
-								<span data-bind="text: total"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<p>Total Supplier</p>
+									<span data-bind="text: count"></span>
+								</div>
+
+							</div>
+							<div class="span7">
+								<div class="total-sale">
+									<p>Total Expenses/ Purchase</p>
+									<span data-bind="text: total"></span>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>								
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview" data-bind="source: purchaseDetail.dataSource" 
-						       data-auto-bind="false" 
-						       data-template="expensesPurchaseDetailSupplier-temp">
-						</tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4"><span data-bind="text: total"></span></th>
-							</tr>
-						</tfoot>
-					</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>								
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview" data-bind="source: purchaseDetail.dataSource" 
+							       data-auto-bind="false" 
+							       data-template="expensesPurchaseDetailSupplier-temp">
+							</tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4"><span data-bind="text: total"></span></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
 				</div>		
 			</div>
 		</div>
@@ -13375,7 +13375,13 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>		
+					#if(items[i].type=="Cash_Purchase" || items[i].type=="Credit_Purchase"){#
+						<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
+					#}else{#
+						<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+					#}#
+		        </td>
 				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -13408,92 +13414,84 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: depositDetail.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Deposit Detail by Supplier</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Deposit Detail by Supplier</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">								
-								<p>Number of Customer Deposit</p>
-								<span data-bind="text: count"></span>								
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">								
+									<p>Number of Supplier Deposit</p>
+									<span data-bind="text: count"></span>								
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">								
+									<p>Supplier Deposit Balance</p>
+									<span data-bind="text: total"></span>							
+								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">								
-								<p>Customer Deposit Balance</p>
-								<span data-bind="text: total"></span>							
-							</div>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: depositDetail.dataSource"
-									 data-template="depositDetailSupplier-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: depositDetail.dataSource"
+										 data-template="depositDetailSupplier-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
 				</div>		
 			</div>
 		</div>
@@ -13516,14 +13514,16 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>		
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+		        </td>
 				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
+	<tr style="font-weight: bold; color: black">
 		<td></td>
 		<td></td>
 		<td></td>
@@ -13550,107 +13550,98 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: summaryProduct.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Purchase Summary by Product/ Services</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Product/services</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p>AVG Sale</p>
-									<span data-bind="text: total_avg"></span>
-								</div>	
-							</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Purchase Summary by Product/ Services</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: total_sale"></span>
-								</div>
-								<div class="span6">
-									<p>Gross Profit Margin</p>
-									<span data-bind="text: gpm"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Product/services</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>AVG Purchase</p>
+										<span data-bind="text: total_avg"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Purchase</p>
+										<span data-bind="text: total_sale"></span>
+									</div>
+									<div class="span6">
+										<p>Gross Profit Margin</p>
+										<span data-bind="text: gpm"></span>
+									</div>
+								</div>
+							</div>
 						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>ITEM</th>
+									<th>QTY</th>
+									<th>AMOUNT</th>
+									<th>AVG PRICE</th>
+									<th>COST</th>
+									<th>GROSS PROFIT MARGIN</th>								
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: summaryProduct.dataSource"
+										 data-template="purchaseSummaryProductServices-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4"><span data-bind="text: total_sale"></span></th>
+								</tr>
+							</tfoot>
+						</table						
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>ITEM</th>
-								<th>QTY</th>
-								<th>AMOUNT</th>
-								<th>AVG PRICE</th>
-								<th>COST</th>
-								<th>GROSS PROFIT MARGIN</th>								
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: summaryProduct.dataSource"
-									 data-template="purchaseSummaryProductServices-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4"><span data-bind="text: total_sale"></span></th>
-							</tr>
-						</tfoot>
-					</table>
-					
-
 				</div>		
 			</div>
 		</div>
@@ -13661,10 +13652,10 @@
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
 		<td>#=qty#</td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
-		<td>#=kendo.toString(avg_price, 'c')#</td>
-		<td>#=kendo.toString(cost, 'c2')#</td>			
-		<td>#=kendo.toString(gross_profit_margin, 'p')#</td>	
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(avg_price, 'c')#</td>
+		<td style="text-align: right;">#=kendo.toString(cost, 'c2')#</td>			
+		<td style="text-align: right;">#=kendo.toString(gross_profit_margin, 'p')#</td>	
 	</tr>
 </script>
 <script id="openPurchaseOrder" type="text/x-kendo-template">
@@ -13686,108 +13677,100 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: purchaseOrder.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Open Purchase Order</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Product Items</p>
-									<span data-bind="text: customer"></span>
-								</div>
-								<div class="span6">
-									<p>Product Items on Hand</p>
-									<span data-bind="text: count"></span>
-								</div>	
-							</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Open Purchase Order</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Purchase Order</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Order</p>
-									<span data-bind="text: order"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Product Items</p>
+										<span data-bind="text: customer"></span>
+									</div>
+									<div class="span6">
+										<p>Product Items on Hand</p>
+										<span data-bind="text: count"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Purchase Order</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>Order</p>
+										<span data-bind="text: order"></span>
+									</div>
+								</div>
+							</div>
 						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Customer</th>
+									<th>PO</th>
+									<th>Item</th>
+									<th>Memo</th>
+									<th>COST</th>								
+									<th>QTY</th>
+									<th>Price</th>	
+									<th>Amount</th>							
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: purchaseOrder.dataSource"
+										 data-template="openPurchaseOrder-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4"><span data-bind="text: total"></span></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Customer</th>
-								<th>PO</th>
-								<th>Item</th>
-								<th>Memo</th>
-								<th>COST</th>								
-								<th>QTY</th>
-								<th>Price</th>	
-								<th>Amount</th>							
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: purchaseOrder.dataSource"
-									 data-template="openPurchaseOrder-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4"><span data-bind="text: total"></span></th>
-							</tr>
-						</tfoot>
-					</table>
-
 				</div>		
 			</div>
 		</div>
@@ -13800,10 +13783,10 @@
 		<td>#=PO#</td>
 		<td>#=item#</td>
 		<td>#=memo#</td>		
-		<td>#=cost#</td>
-		<td>#=qty#</td>
+		<td style="text-align: right;">#=cost#</td>
+		<td style="text-align: right;">#=qty#</td>
 		<td>#=price#</td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="purchaseDetailProductServices" type="text/x-kendo-template">
@@ -13825,108 +13808,99 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: detailProduct.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Purchase Detail by Product/Service</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Purchase Detail by Product/Service</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Product</p>
-									<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Product</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Total Purchase</p>
+										<span data-bind="text: total"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>Total Purchase</p>
-									<span data-bind="text: total"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number Products</p>
+										<span data-bind="text: totaProdcuts"></span>									
+									</div>
+									<div class="span6">
+										<p>Qty on Hand</p>
+										<span data-bind="text: totalQuantity"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Number Products</p>
-									<span data-bind="text: totaProdcuts"></span>									
-								</div>
-								<div class="span6">
-									<p>Qty on Hand</p>
-									<span data-bind="text: totalQuantity"></span>
-								</div>
-							</div>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>QTY</th>
-								<th>PRICE</th>
-								<th>AMOUNT</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: detailProduct.dataSource"
-									 data-template="purchaseDetailProductServices-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-					
-
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>QTY</th>
+									<th>PRICE</th>
+									<th>AMOUNT</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: detailProduct.dataSource"
+										 data-template="purchaseDetailProductServices-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>	
 				</div>		
 			</div>
 		</div>
@@ -13949,11 +13923,17 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>		
+					#if(items[i].type=="Cash_Purchase" || items[i].type=="Credit_Purchase"){#
+						<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
+					#}else{#
+						<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+					#}#
+		        </td>
 				<td>#=items[i].memo#</td>
-				<td>#=kendo.toString(items[i].qty, 'n0')#</td>
-				<td>#=items[i].price#</td>				
-				<td>#=kendo.toString(items[i].amount, 'c2')#</td>
+				<td style="text-align: right;">#=kendo.toString(items[i].qty, 'n0')#</td>
+				<td style="text-align: right;">#=items[i].price#</td>				
+				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
 		#}#
@@ -13985,105 +13965,98 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: supplierBalance.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Suppliers Balance Summary</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Suppliers</p>
-									<span data-bind="text: supplierCount"></span>
-								</div>	
-								<div class="span6">
-									<p>Number Suppliers</p>
-									<span data-bind="text: count"></span>
-								</div>	
-							</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Suppliers Balance Summary</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Suppliers Balance</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Open Credit Purchase</p>
-									<span data-bind="text: openPurchase"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Suppliers</p>
+										<span data-bind="text: supplierCount"></span>
+									</div>	
+									<div class="span6">
+										<p>Number Suppliers</p>
+										<span data-bind="text: count"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Suppliers Balance</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>Open Credit Purchase</p>
+										<span data-bind="text: openPurchase"></span>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span>SUPPLIER NAME</span></th>
-								<th><span>BALANCE</span></th>
-							</tr>
-						</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-				                data-template="suppliersBalanceSummary-tmpl"
-				                data-bind="source: supplierBalance.dataSource" >
-				        </tbody>
-	            	</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>SUPPLIER NAME</span></th>
+									<th><span>BALANCE</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="suppliersBalanceSummary-tmpl"
+					                data-bind="source: supplierBalance.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>	
 				</div>		
 			</div>
 		</div>
 	</div>
 </script>
 <script id="suppliersBalanceSummary-tmpl" type="text/x-kendo-template">
-	<tr>
+	<tr> 
 		<td>#=customer#</td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="suppliersBalanceDetail" type="text/x-kendo-template">
@@ -14105,106 +14078,98 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: balanceDetailSupplier.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Supplier Balance Detail</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Supplier</p>
-									<span data-bind="text: supplierCount"></span>
-								</div>
-								<div class="span6">
-									<p>Number Supplier</p>
-									<span data-bind="text: count"></span>
-								</div>	
-							</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Supplier Balance Detail</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Supplier Balance</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Opean Credit Purchase</p>
-									<span data-bind="text: openBill"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Supplier</p>
+										<span data-bind="text: supplierCount"></span>
+									</div>
+									<div class="span6">
+										<p>Number Supplier</p>
+										<span data-bind="text: count"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Supplier Balance</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>Opean Credit Purchase</p>
+										<span data-bind="text: openBill"></span>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>								
-								<th>AMOUNT</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: balanceDetailSupplier.dataSource"
-									 data-template="suppliersBalanceDetail-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3"><span data-bind="text: total"></span></th>
-							</tr>
-						</tfoot>
-					</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>								
+									<th>AMOUNT</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: balanceDetailSupplier.dataSource"
+										 data-template="suppliersBalanceDetail-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3"><span data-bind="text: total"></span></th>
+								</tr>
+							</tfoot>
+						</table>
 					
-
+					</div>	
 				</div>		
 			</div>
 		</div>
@@ -14225,7 +14190,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>				
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -14252,108 +14219,99 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: payablesAging.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Payables Aging Summary</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Supplier</p>
-									<span data-bind="text: supplierCount"></span>
-								</div>	
-								<div class="span6">
-									<p>Supplier Balance</p>
-									<span data-bind="text: total"></span>
-								</div>	
-							</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Payables Aging Summary</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>NUmber of Supplier</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p>Average Aging</p>
-									<span data-bind="text: aging"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Supplier</p>
+										<span data-bind="text: supplierCount"></span>
+									</div>	
+									<div class="span6">
+										<p>Supplier Balance</p>
+										<span data-bind="text: total"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>NUmber of Supplier</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Average Aging</p>
+										<span data-bind="text: aging"></span>
+									</div>
+								</div>
+							</div>
 						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Supplier</th>
+									<th>CURRENT</th>
+									<th>1-30</th>
+									<th>31-60</th>
+									<th>61-90</th>
+									<th>OVER 90</th>
+									<th>TOTAL</th>							
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: payablesAging.dataSource"
+										 data-template="payablesAgingSummary-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>CURRENT</th>
-								<th>1-30</th>
-								<th>30</th>
-								<th>31-60</th>
-								<th>61-90</th>
-								<th>OVER 90</th>
-								<th>TOTAL</th>							
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: payablesAging.dataSource"
-									 data-template="payablesAgingSummary-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-					
-
 				</div>		
 			</div>
 		</div>
@@ -14363,12 +14321,12 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
-		<td>#=kendo.toString(underThirty, 'c2')#</td>
-		<td>#=kendo.toString(thirty, 'c2')#</td>
-		<td>#=kendo.toString(sixty, 'c2')#</td>
-		<td>#=kendo.toString(ninety, 'c2')#</td>
-		<td>#=kendo.toString(overNinety, 'c2')#</td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(underThirty, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(thirty, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(sixty, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(ninety, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(overNinety, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="payablesAgingDetail" type="text/x-kendo-template">
@@ -14390,107 +14348,98 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: payablesAgingDetail.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Payables Aging Detail</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Supplier</p>
-									<span data-bind="text: supplierCount"></span>
-								</div>
-								<div class="span6">
-									<p>Supplier Balance</p>
-									<span data-bind="text: total"></span>
-								</div>	
-							</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Payables Aging Detail</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Number of Supplier</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p>Average Aging</p>
-									<span data-bind="text: aging"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Supplier</p>
+										<span data-bind="text: supplierCount"></span>
+									</div>
+									<div class="span6">
+										<p>Supplier Balance</p>
+										<span data-bind="text: total"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number of Supplier</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Average Aging</p>
+										<span data-bind="text: aging"></span>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Aging</th>
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: payablesAgingDetail.dataSource"
-									 data-template="payablesAgingDetail-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3"  data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-					
-
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Aging</th>
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: payablesAgingDetail.dataSource"
+										 data-template="payablesAgingDetail-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3"  data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>	
 				</div>		
 			</div>
 		</div>
@@ -14512,7 +14461,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td>#=items[i].outstanding#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
@@ -14540,106 +14491,97 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: listBillsPaid.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>List of bills to be paid</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Supplier</p>
-									<span data-bind="text: supplierCount"></span>
-								</div>
-								<div class="span6">
-									<p>Supplier Balance</p>
-									<span data-bind="text: total"></span>
-								</div>	
-							</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>List of bills to be paid</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Number of Supplier Balance</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p>Average Aging</p>
-									<span data-bind="text: aging"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Supplier</p>
+										<span data-bind="text: supplierCount"></span>
+									</div>
+									<div class="span6">
+										<p>Supplier Balance</p>
+										<span data-bind="text: total"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number of Supplier Balance</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Average Aging</p>
+										<span data-bind="text: aging"></span>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>								
-								<th>Memo</th>								
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: listBillsPaid.dataSource"
-									 data-template="listBillsPaid-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-					
-
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>								
+									<th>Memo</th>								
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: listBillsPaid.dataSource"
+										 data-template="listBillsPaid-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>	
 				</div>		
 			</div>
 		</div>
@@ -14661,7 +14603,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>				
+				<td>
+					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
+				</td>				
 				<td>#=items[i].memo#</td>				
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -14688,105 +14632,94 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: billPaymentList.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Bill Payment List</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Purchase</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Number Supplier</p>
-									<span data-bind="text: count"></span>
-								</div>	
-							</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Bill Payment List</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Supplier Balance</p>
-									<span data-bind="text: total"></span>
-								</div>								
-								<div class="span6">
-									<p>Number</p>
-									<span data-bind="text: numberPayment"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Purchase</p>
+										<span data-bind="text: total"></span>
+									</div>
+										
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number Supplier</p>
+										<span data-bind="text: count"></span>
+									</div>							
+									<div class="span6">
+										<p>Number</p>
+										<span data-bind="text: numberPayment"></span>
+									</div>
+								</div>
+							</div>
 						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>							
+									<th>Memo</th>								
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: billPaymentList.dataSource"
+										 data-template="billPaymentList-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>					
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>							
-								<th>Memo</th>								
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: billPaymentList.dataSource"
-									 data-template="billPaymentList-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>					
-
 				</div>		
 			</div>
 		</div>
@@ -14808,7 +14741,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>				
+				<td>
+					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
+				</td>				
 				<td>#=items[i].memo#</td>				
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -15527,7 +15462,7 @@
 								            			<span class="btn btn-block btn-inverse" data-bind="click: goGDN">GDN</span>
 								            		</td>
 								            		<td class="center">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt">Receive Payment</span>								            			
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt">Cash Receipt</span>								            			
 								            		</td>
 								            	</tr>
 								            	<tr>
@@ -21113,43 +21048,34 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: saleSummary.search"><i class="icon-search"></i></button>							
+									    </div>							        							       
 								    </div>
 								</div>
 							</div>
@@ -21160,7 +21086,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Sale Summary by Customer</h2>
-							<p>From 1 June 2016 to 30 June 2016</p>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -21222,108 +21148,96 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: customerTransaction.search"><i class="icon-search"></i></button>							
+									    </div>							        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Customer Transaction List</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Customer Transaction List</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span4">
-									<p>Total Customer</p>
-									<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Cash Receipt</p>
+										<span data-bind="text: totalCashReceipt"></span>
+									</div>
 								</div>
-								<div class="span4">
-									<p>Cash Sale</p>
-									<span data-bind="text: totalCashSale"></span>
-								</div>
-								<div class="span4">
-									<p>Cash Receipt</p>
-									<span data-bind="text: totalCashReceipt"></span>
+							</div>
+							<div class="span7">
+								<div class="total-sale">
+									<div class="span6">
+										<p>Total Sale</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>Customer Balance</p>
+										<span data-bind="text: customerBalance"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-sale">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Customer Balance</p>
-									<span data-bind="text: customerBalance"></span>
-								</div>
-							</div>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Sale Rep</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: customerTransaction.dataSource"
-									 data-template="customertransactionlist-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="3">Total</th>
-								<th colspan="2" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Sale Rep</th>
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: customerTransaction.dataSource"
+										 data-template="customertransactionlist-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="3">Total</th>
+									<th colspan="2" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -21344,7 +21258,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -21371,95 +21287,86 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: detailSummary.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Sale Detail by Customer</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<p>Total Customers</p>
-								<span data-bind="text: count"></span>
-							</div>
-
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Sale Detail by Customer</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-sale">
-								<p>Total Sale</p>
-								<span data-bind="text: total"></sapn>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<p>Total Customers</p>
+									<span data-bind="text: count"></span>
+								</div>
+
+							</div>
+							<div class="span7">
+								<div class="total-sale">
+									<p>Total Sale</p>
+									<span data-bind="text: total"></sapn>
+								</div>
 							</div>
 						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Item/service</th>
+									<th>Qty</th>
+									<th>Price</th>
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview" data-bind="source: detailSummary.dataSource" data-auto-bind="false" data-template="saleDetailCustomerReportItem">
+							</tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4"><span data-bind="text: total"></span></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Item/service</th>
-								<th>Qty</th>
-								<th>Price</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview" data-bind="source: detailSummary.dataSource" data-auto-bind="false" data-template="saleDetailCustomerReportItem">
-						</tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4"><span data-bind="text: total"></span></th>
-							</tr>
-						</tfoot>
-					</table>
-
 				</div>
 			</div>
 		</div>
@@ -21486,11 +21393,13 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td>#=items[i].lines[x].name#</td>
 				<td>#=items[i].lines[x].quantity#</td>
-				<td>#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
+				<td align="right">#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
 				<td align="right">#=kendo.toString(items[i].lines[x].amount, 'c2')#</td>
 			</tr>
 			#}#
@@ -21506,7 +21415,7 @@
 		<td></td>
 		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
-</script>
+</script>	
 <script id="saleSummaryProduct" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -21526,105 +21435,97 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: summaryProductSale.search"><i class="icon-search"></i></button>							
+									    </div>
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Sale Summary by Product/Services</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Sale Summary by Product/Services</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Product/services</p>
-									<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Product/services</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>AVG Sale</p>
+										<span data-bind="text: total_avg"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>AVG Sale</p>
-									<span data-bind="text: total_avg"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Sale</p>
+										<span data-bind="text: total_sale"></span>
+									</div>
+									<div class="span6">
+										<p>Gross Profit Margin</p>
+										<span data-bind="text: gpm"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: total_sale"></span>
-								</div>
-								<div class="span6">
-									<p>Gross Profit Margin</p>
-									<span data-bind="text: gpm"></span>
-								</div>
-							</div>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>ITEM</th>
-								<th>QTY</th>
-								<th>AMOUNT</th>
-								<th>AVG PRICE</th>
-								<th>COST</th>
-								<th>GROSS PROFIT MARGIN</th>								
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: summaryProductSale.dataSource"
-									 data-template="saleSummary-product-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4"><span data-bind="text: total"></span></th>
-							</tr>
-						</tfoot>
-					</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>ITEM</th>
+									<th>QTY</th>
+									<th>AMOUNT</th>
+									<th>AVG PRICE</th>
+									<th>COST</th>
+									<th>GROSS PROFIT MARGIN</th>								
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: summaryProductSale.dataSource"
+										 data-template="saleSummary-product-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4"><span data-bind="text: total_sale"></span></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -21635,10 +21536,10 @@
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
 		<td>#=qty#</td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
-		<td>#=kendo.toString(avg_price, 'c2')#</td>	
-		<td>#=kendo.toString(cost, 'c2')#</td>	
-		<td>#=kendo.toString(gross_profit_margin, 'p')#</td>			
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(avg_price, 'c2')#</td>	
+		<td style="text-align: right;">#=kendo.toString(cost, 'c2')#</td>	
+		<td style="text-align: right;">#=kendo.toString(gross_profit_margin, 'p')#</td>			
 	</tr>
 </script>
 <script id="depositDetailCustomer" type="text/x-kendo-template">
@@ -21660,93 +21561,84 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: depositDetail.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Deposit Detail By Customer</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Deposit Detail By Customer</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<p>Number of Customer Deposit</p>
-								<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<p>Number of Customer Deposit</p>
+									<span data-bind="text: count"></span>
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<p>Customer Deposit Balance</p>
+									<span data-bind="text: total"></span>
+								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<p>Customer Deposit Balance</p>
-								<span data-bind="text: total"></span>
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: depositDetail.dataSource"
+										 data-template="cusotmerDeposit-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" span data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: depositDetail.dataSource"
-									 data-template="cusotmerDeposit-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" span data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-
 				</div>
 			</div>
 		</div>
@@ -21769,7 +21661,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -21803,108 +21697,98 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: detailCustomerSale.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Sale Detail by Product/Service</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Sale Detail by Product/Service</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Product/services</p>
-									<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Product/services</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Total Sale</p>
+										<span data-bind="text: total"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: total"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number of Product Sale</p>
+										<span data-bind="text: productSale"></span>
+									</div>
+									<div class="span6">
+										<p>Qty on Hand</p>
+										<span data-bind="text: totalQty"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Number of Product Sale</p>
-									<span data-bind="text: productSale"></span>
-								</div>
-								<div class="span6">
-									<p>Qty on Hand</p>
-									<span data-bind="text: totalQty"></span>
-								</div>
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>QTY</th>
+									<th>PRICE</th>
+									<th>AMOUNT</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: detailCustomerSale.dataSource"
+										 data-template="productSale-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>QTY</th>
-								<th>PRICE</th>
-								<th>AMOUNT</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: detailCustomerSale.dataSource"
-									 data-template="productSale-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-
-
 				</div>
 			</div>
 		</div>
@@ -21926,7 +21810,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td>#=kendo.toString(items[i].qty, 'n0')#</td>
 				<td>#=kendo.toString(items[i].price, 'c2')#</td>
@@ -21964,96 +21850,88 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: summaryBalance.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Customer Balance Summary</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Customer Balance Summary</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Customer</p>
-									<span data-bind="text: customerCount"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Customer</p>
+										<span data-bind="text: customerCount"></span>
+									</div>
+									<div class="span6">
+										<p>Number Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>Number Customer</p>
-									<span data-bind="text: count"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Customer Balance</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>Open Invoice</p>
+										<span data-bind="text: openInvoice"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Customer Balance</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Open Invoice</p>
-									<span data-bind="text: openInvoice"></span>
-								</div>
-							</div>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span>CUSTOMER NAME</span></th>
-								<th><span>ACCOUNT RECEIVABLE BALANCE</span></th>
-							</tr>
-						</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-				                data-template="balance-summary-tmpl"
-				                data-bind="source: summaryBalance.dataSource" >
-				        </tbody>
-	            	</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>CUSTOMER NAME</span></th>
+									<th><span>ACCOUNT RECEIVABLE BALANCE</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="balance-summary-tmpl"
+					                data-bind="source: summaryBalance.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>
 				</div>
 			</div>
 		</div>
@@ -22064,7 +21942,7 @@
 		<td>#=customer#</td>
 		<td align="right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
-</script>
+</script>	
 <script id="customerBalanceDetail" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -22084,106 +21962,96 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: saleDetail.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Customer Balance Detail</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Customer Balance Detail</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Customer</p>
-									<span data-bind="text: customerCount"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Customer</p>
+										<span data-bind="text: customerCount"></span>
+									</div>
+									<div class="span6">
+										<p>Number Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>Number Customer</p>
-									<span data-bind="text: count"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Customer Balance</p>
+										<span data-bind="text: total"></span>
+									</div>	
+									<div class="span6">
+										<p>Open Invoice</p>
+										<span data-bind="text: openInvoice"></span>
+									</div>							
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Customer Balance</p>
-									<span data-bind="text: total"></span>
-								</div>	
-								<div class="span6">
-									<p>Open Invoice</p>
-									<span data-bind="text: openInvoice"></span>
-								</div>							
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>								
+									<th>AMOUNT</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: saleDetail.dataSource"
+										 data-template="customerBalanceDetail-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3"><span data-bind="text: total"></span></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>								
-								<th>AMOUNT</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: saleDetail.dataSource"
-									 data-template="customerBalanceDetail-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3"><span data-bind="text: total"></span></th>
-							</tr>
-						</tfoot>
-					</table>
-
-
 				</div>
 			</div>
 		</div>
@@ -22204,7 +22072,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>				
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -22231,102 +22101,92 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: receivableAging.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Receivable Aging Summary</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Receivable Aging Summary</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Customer</p>
-									<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Average Aging</p>
+										<span data-bind="text: aging"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>Average Aging</p>
-									<span data-bind="text: aging"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<p>Customer Balance</p>
+									<span data-bind="text: total"></span>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<p>Customer Balance</p>
-								<span data-bind="text: total"></span>
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>CURRENT</th>
+									<th>1-30</th>
+									<th>31-60</th>
+									<th>61-90</th>
+									<th>OVER 90</th>
+									<th>TOTAL</th>							
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: receivableAging.dataSource"
+										 data-template="receivableAginglist-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>CURRENT</th>
-								<th>1-30</th>
-								<th>31-60</th>
-								<th>61-90</th>
-								<th>OVER 90</th>
-								<th>TOTAL</th>							
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: receivableAging.dataSource"
-									 data-template="receivableAginglist-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-
-
 				</div>
 			</div>
 		</div>
@@ -22341,7 +22201,7 @@
 		<td>#=kendo.toString(sixty, 'c2')#</td>
 		<td>#=kendo.toString(ninety, 'c2')#</td>
 		<td>#=kendo.toString(overNinety, 'c2')#</td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="receivableAgingDetail" type="text/x-kendo-template">
@@ -22363,101 +22223,91 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: receivableDetail.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Receivable Aging Detail</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<p>Total Sale</p>
-								<span data-bind="text: total"></span>
-							</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Receivable Aging Detail</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Number of Customer</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p>Average Aging</p>
-									<span data-bind="text: aging"></span>	
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<p>Total Sale</p>
+									<span data-bind="text: total"></span>
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number of Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Average Aging</p>
+										<span data-bind="text: aging"></span>	
+									</div>
+								</div>
+							</div>
 						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Aging</th>
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: receivableDetail.dataSource"
+										 data-template="receivableAgingDetaillist-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Aging</th>
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: receivableDetail.dataSource"
-									 data-template="receivableAgingDetaillist-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-					
-
 				</div>		
 			</div>
 		</div>
@@ -22479,7 +22329,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td>#=items[i].outstanding#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
@@ -22515,100 +22367,90 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: listInvoicesCollect.search"><i class="icon-search"></i></button>							
+									    </div>									        								       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>List Invoices Collect</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">								
-								<p>Total Sale</p>
-								<span data-bind="text: total"></span>								
-							</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>List Invoices Collect</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Number of Customer Balance</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p>Average Aging</p>
-									<span data-bind="text: aging"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">								
+									<p>Total Sale</p>
+									<span data-bind="text: total"></span>								
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number of Customer Balance</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Average Aging</p>
+										<span data-bind="text: aging"></span>
+									</div>
+								</div>
+							</div>
 						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: listInvoicesCollect.dataSource"
+										 data-template="listInvoicesCollectlist-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: listInvoicesCollect.dataSource"
-									 data-template="listInvoicesCollectlist-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-
-
 				</div>
 			</div>
 		</div>
@@ -22630,7 +22472,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -22664,105 +22508,90 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: collectReportDB.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Collect Report</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: institute.name"></h3>
-						<h2>Collect Report</h2>
-						<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: total"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+										<p>Total Sale</p>
+										<span data-bind="text: total"></span>
 								</div>
-								<div class="span6">
-									<p>Customer Balance</p>
-									<span data-bind="text: total"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>NUmber of Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Number</p>
+										<span data-bind="text: totalInvoice"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>NUmber of Customer</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p>Number</p>
-									<span data-bind="text: totalInvoice"></span>
-								</div>
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: collectReportDB.dataSource"
+										 data-template="collectReportlist-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="3">Total</th>
+									<th colspan="5" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: collectReportDB.dataSource"
-									 data-template="collectReportlist-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="3">Total</th>
-								<th colspan="5" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-
 				</div>
 			</div>
 		</div>
@@ -22782,7 +22611,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -22816,108 +22647,99 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: invoiceListDB.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Invoice List</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Invoice List</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: totalCreditSale"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Sale</p>
+										<span data-bind="text: totalCreditSale"></span>
+									</div>
+									<div class="span6">
+										<p>Number</p>
+										<span data-bind="text: totalInvoice"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>Customer Balance</p>
-									<span data-bind="text: totalBalance"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number of Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Customer Balance</p>
+										<span data-bind="text: totalBalance"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Number of Customer</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p>Number</p>
-									<span data-bind="text: totalInvoice"></span>
-								</div>
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Due Date</th>
+									<th>Memo</th>
+									<th>Status</th>
+									<th>Segment</th>
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: invoiceListDB.dataSource"
+										 data-template="invoice-list-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4" data-bind="text: totalBalance"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Due Date</th>
-								<th>Memo</th>
-								<th>Status</th>
-								<th>Segment</th>
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: invoiceListDB.dataSource"
-									 data-template="invoice-list-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4" data-bind="text: totalBalance"></th>
-							</tr>
-						</tfoot>
-					</table>
-
 				</div>
 			</div>
 		</div>
@@ -22940,7 +22762,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].due_date#</td>
 				<td>#=items[i].memo#</td>
 				<td>#=items[i].status#</td>
@@ -23131,13 +22955,12 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
@@ -23158,105 +22981,63 @@
 										           placeholder="To ..." />
 
 										  	 <button type="button" data-role="button" data-bind="click: saleJob.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: saleJob.filterDB, events: {change: saleJob.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: saleJob.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>
-									</div>
+									    </div>									        						       
+								    </div>
 								</div>
 							</div>
 						</div>
 					</div>	
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Sale by Job/Engagement</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Sale by Job/Engagement</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: saleNumber"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Sale</p>
+										<span data-bind="text: saleNumber"></span>
+									</div>
+									<div class="span6">
+										<p>Number of Customer</p>
+										<span data-bind="text: count"></span>
+									</div>	
 								</div>
-								<div class="span6">
-									<p>Number of Customer</p>
-									<span data-bind="text: count"></span>
-								</div>	
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+										<p>Customer Balance</p>
+										<span data-bind="text: total"></span>							
+								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Customer Balance</p>
-									<span data-bind="text: total"></span>
-								</div>								
-							</div>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Segment</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: saleJob.dataSource"
-									 data-template="saleJobEngagement-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-					
-
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Segment</th>
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: saleJob.dataSource"
+										 data-template="saleJobEngagement-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>					
+					</div>	
 				</div>		
 			</div>
 		</div>
@@ -23278,7 +23059,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 
 				<td>#if (items[i].segments.length){#
@@ -23319,108 +23102,99 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: saleOrderDB.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Sale Order List</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Product Items</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Product Items on Hand</p>
-									<span data-bind="text: count"></span>
-								</div>	
-							</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Sale Order List</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Customer Order</p>
-									<span data-bind="text: customer"></span>
-								</div>
-								<div class="span6">
-									<p>Order</p>
-									<span data-bind="text: order"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Product Items</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>Product Items on Hand</p>
+										<span data-bind="text: count"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Customer Order</p>
+										<span data-bind="text: customer"></span>
+									</div>
+									<div class="span6">
+										<p>Order</p>
+										<span data-bind="text: order"></span>
+									</div>
+								</div>
+							</div>
 						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Customer Name</th>
+									<th>Sale Order</th>
+									<th>Item</th>
+									<th>Memo Date</th>
+									<th>Cost</th>
+									<th>QTY</th>
+									<th>Price</th>
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: saleOrderDB.dataSource"
+										 data-template="saleOrder-list-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Customer Name</th>
-								<th>Sale Order</th>
-								<th>Item</th>
-								<th>Memo Date</th>
-								<th>Cost</th>
-								<th>QTY</th>
-								<th>Price</th>
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: saleOrderDB.dataSource"
-									 data-template="saleOrder-list-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-
 				</div>		
 			</div>
 		</div>
@@ -29842,8 +29616,8 @@
 					
 			    	<div class="row-fluid">
 			    		<div class="span6 well">									
-							<div class="row-fluid">
-								<div class="span6">														
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">														
 									<!-- Group -->
 									<div class="control-group">										
 										<label for="ddlCategory"><span data-bind="text: lang.lang.category"></span> <span style="color:red">*</span></label>										
@@ -29884,8 +29658,8 @@
 								</div>
 							</div>
 							
-							<div class="row-fluid">
-								<div class="span6">										
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">										
 									<!-- Group -->
 									<div class="control-group">							
 										<label for="txtNumber">Number<span style="color:red">*</span></label>
@@ -29901,7 +29675,7 @@
 					              							events:{change: checkExistingNumber}" 
 					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
-					              				style="width: 127px;" />
+					              				style="width: 157px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
@@ -29919,8 +29693,8 @@
 								</div>								
 							</div>
 
-							<div class="row-fluid">
-								<div class="span6">
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="ddlCurrency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>							            
@@ -29956,7 +29730,7 @@
 						</div>
 						<div class="span6">
 
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -29976,7 +29750,7 @@
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6">
+								<div class="span6" style="padding: 0; ">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtCost"><span data-bind="text: lang.lang.cost"></span></label>
@@ -29992,7 +29766,7 @@
 								</div>
 							</div>
 
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -30007,7 +29781,7 @@
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6">	
+								<div class="span6" style="padding: 0; ">	
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtPrice"><span data-bind="text: lang.lang.price"></span></label>
@@ -30023,7 +29797,7 @@
 								</div>
 							</div>
 
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -30033,7 +29807,7 @@
 									</div>																		
 									<!-- // Group END -->
 								</div>
-								<div class="span6">
+								<div class="span6" style="padding: 0; ">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtSaleDescription">Sale Description</label>
@@ -30762,8 +30536,8 @@
 					
 			    	<div class="row-fluid">
 			    		<div class="span6 well">									
-							<div class="row-fluid">
-								<div class="span6">														
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">														
 									<!-- Group -->
 									<div class="control-group">										
 										<label for="ddlCategory"><span data-bind="text: lang.lang.category"></span> <span style="color:red">*</span></label>										
@@ -30804,8 +30578,8 @@
 								</div>
 							</div>
 							
-							<div class="row-fluid">
-								<div class="span6">	
+							<div class="row">
+								<div class="span6" style="padding-right: 0">	
 									<!-- Group -->
 									<div class="control-group">							
 										<label for="txtNumber">Number<span style="color:red">*</span></label>
@@ -30821,7 +30595,7 @@
 					              							events:{change: checkExistingNumber}" 
 					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
-					              				style="width: 128px;" />
+					              				style="width: 157px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
@@ -30839,7 +30613,7 @@
 								</div>								
 							</div>
 
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">																					
 									<!-- Group -->
 									<div class="control-group">										
@@ -30868,7 +30642,7 @@
 						</div>
 						<div class="span6">
 						
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -30888,7 +30662,7 @@
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6">
+								<div class="span6"  style="padding: 0;">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtCost"><span data-bind="text: lang.lang.cost"></span></label>
@@ -30904,7 +30678,7 @@
 								</div>
 							</div>
 
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -30922,7 +30696,7 @@
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6">	
+								<div class="span6"  style="padding: 0;">	
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtPrice"><span data-bind="text: lang.lang.price"></span></label>
@@ -30938,7 +30712,7 @@
 								</div>
 							</div>
 
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -30948,7 +30722,7 @@
 									</div>																		
 									<!-- // Group END -->
 								</div>
-								<div class="span6">
+								<div class="span6" style="padding: 0;">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtSaleDescription">Sale Description</label>
@@ -31173,8 +30947,8 @@
 					
 			    	<div class="row-fluid">
 			    		<div class="span6 well">									
-							<div class="row-fluid">
-								<div class="span6">														
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">														
 									<!-- Group -->
 									<div class="control-group">										
 										<label for="ddlCategory"><span data-bind="text: lang.lang.category"></span> <span style="color:red">*</span></label>										
@@ -31215,8 +30989,8 @@
 								</div>
 							</div>
 							
-							<div class="row-fluid">
-								<div class="span6">	
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">	
 									<!-- Group -->
 									<div class="control-group">							
 										<label for="txtNumber">Number<span style="color:red">*</span></label>
@@ -31232,7 +31006,7 @@
 					              							events:{change: checkExistingNumber}" 
 					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
-					              				style="width: 128px;" />
+					              				style="width: 157px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
@@ -31250,8 +31024,8 @@
 								</div>								
 							</div>
 
-							<div class="row-fluid">
-								<div class="span6">																					
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">																					
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="ddlMeasurement"><span data-bind="text: lang.lang.unit_measure"></span> <span style="color:red">*</span></label>
@@ -31287,22 +31061,22 @@
 								</div>								
 							</div>							
 						</div>
-						<div class="span6">	
+						<div class="span6" style="padding-right: 0;">	
 
 							<div class="row-fluid">
 
 								<!-- Group -->
-								<div class="control-group">								
+								<div class="control-group" style="padding: 0; margin-bottom: 9px;">								
 									<label for="txtPurchaseDescription">Purchase Description</label>
 						            <textarea id="txtPurchaseDescription" cols="0" rows="3" class="k-textbox" 
 										data-bind="value: obj.purchase_description" style="width: 100%; resize: none;"></textarea>
 								</div>																		
 								<!-- // Group END -->
 
-								<br>
+								
 
 								<!-- Group -->
-								<div class="control-group">								
+								<div class="control-group" style="padding: 0;">								
 									<label for="txtSaleDescription">Sale Description</label>
 						            <textarea id="txtSaleDescription" cols="0" rows="3" class="k-textbox" 
 										data-bind="value: obj.sale_description" style="width: 100%;resize: none;"></textarea>
@@ -36608,9 +36382,11 @@
 							<li class="active"><a href="#tab-1" data-toggle="tab"><i></i>Customer</a></li>
 							<li><a href="#tab-2" data-toggle="tab"><i></i>Suppliers</a></li>
 							<li><a href="#tab-3" data-toggle="tab"><i></i>Products/Services</a></li>
-							<li><a href="#tab-4" data-toggle="tab"><i></i>Cash Management</a></li>
-							<li><a href="#tab-5" data-toggle="tab"><i></i>Periods-end Closing</a></li>
+							<li><a href="#tab-4" data-toggle="tab"><i></i>Cash</a></li>
+							<li><a href="#tab-5" data-toggle="tab"><i></i>Periods-end</a></li>
 							<li><a href="#tab-6" data-toggle="tab"><i></i>Financial Statements</a></li>
+							<li><a href="#tab-7" data-toggle="tab"><i></i>Segments Reporting</a></li>
+							<li><a href="#tab-8" data-toggle="tab"><i></i>Job Tracking</a></li>
 						</ul>
 					</div>
 
@@ -37279,7 +37055,16 @@
 					        	</div>
 				        	</div>
 
-
+				        	<div class="tab-pane" id="tab-7">
+				        		<div align="center" style="min-height: 150px;">
+				        			<h1 style="font-style: 30px; margin-top: 20px;">Coming Soon</h1>
+				        		</div>
+				        	</div>
+				        	<div class="tab-pane" id="tab-8">
+				        		<div align="center" style="min-height: 150px;">
+				        			<h1 style="font-style: 30px;margin-top: 20px;">Coming Soon</h1>
+				        		</div>
+				        	</div>
 
 					    </div>
 					</div>
@@ -37598,7 +37383,7 @@
   			<ul class='dropdown-menu'>
   				<li><a href='#/vendor'>Add Supplier</a></li>
   				<li><a href='#/item'>Add Inventory</a></li>
-  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+  				<li><a href='#/non_inventory_part'>Add Non-Inventory for Sale</a></li>
   				<li><a href='#/item_service'>Add Service</a></li>
   				<li><a href='#/fixed_assets'>Add Fixed Assets</a></li>
   				<li><a href="#/txn_item">Add Transaction Item</a></li>
@@ -37627,7 +37412,7 @@
   				<li><a href='#/customer'>Add Customer</a></li> 
   				<li ><a href='#/job'>Add Job</a></li>
   				<li><a href='#/item'>Add Inventory</a></li>
-  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+  				<li><a href='#/non_inventory_part'>Add Non-Inventory for Sale</a></li>
   				<li><a href='#/item_service'>Add Service</a></li>
   				<li ><a href="#/txn_item">Add Transaction Item</a></li>
   				<li> <span class="li-line"></span></li>
@@ -51958,6 +51743,45 @@
 			var sdate = $('#sdate').kendoDatePicker().data("kendoDatePicker");
 			sdate.max(e.sender.value());
 		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
 		dateChange 			: function(){
 			// var strDate = "";
 
@@ -61263,8 +61087,8 @@
 		],
 		search 	: function() {
 
-			banhji.listInvoice.dataSource.filter({
-				logic: banhji.listInvoice.get('filteredBy'),
+			banhji.listInvoicesCollect.dataSource.filter({
+				logic: banhji.listInvoicesCollect.get('filteredBy'),
 				filters: [			
 					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
@@ -61272,7 +61096,7 @@
 			});
 		}, 
 		filterChange  : function(e){
-			banhji.listInvoice.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
+			banhji.listInvoicesCollect.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
 		}
 	});
 	banhji.collectReport = kendo.observable({
@@ -61421,7 +61245,27 @@
 		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
 		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</style><style type="text/css" media="print"> '+
+		            '@page { size: landscape; margin:0mm; }'+
+		            '.saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { '+
+		            	'background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }'+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { '+
+		            	'background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}'+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ '+
+		            	'color: #fff!important; }'+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {'+
+		              	'background-color: #fff!important; -webkit-print-color-adjust:exact;} '+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { '+
+		            	'background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; }'+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ '+
+		            	'color: #fff!important; }'+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {'+
+		              	'background-color: #fff!important; -webkit-print-color-adjust:exact;} '+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { '+
+		            	'background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; }'+
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ '+
+		            	'color: #fff!important; }'+		            
+		            '</style>' +
 		            '</head>' +
 		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
 		    var htmlEnd =
@@ -61433,7 +61277,7 @@
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();
-		    	win.close();
+		    	// win.close();
 		    },2000);
 		},
 		dateChange 			: function(){
@@ -69220,7 +69064,7 @@
 			// var vm = banhji.accountingDashboard;
 						
 			banhji.view.layout.showIn("#content", banhji.view.accountingDashboard);
-			banhji.userManagement.addMultiTask("Account Dashboard","accounting",null);
+			banhji.userManagement.addMultiTask("Accounting Dashboard","accounting",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
@@ -71647,7 +71491,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.saleTax);
 
-			banhji.userManagement.addMultiTask("Tax","sale_tax",null);
+			banhji.userManagement.addMultiTask("Tax Item","sale_tax",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.saleTaxMenu);			
@@ -72698,19 +72542,39 @@
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
 
+			var vm = banhji.vendorReportCenter;
+			banhji.userManagement.addMultiTask("Supplier Report Center","vendor_report_center");
+
 			//var vm = banhji.customerReportCenter;			
 			banhji.userManagement.addMultiTask("Expense/Purchase Managment Reports","vendor_report_center",null);
 
 			if(banhji.pageLoaded["vendor_report_center"]==undefined){
 				banhji.pageLoaded["vendor_report_center"] = true;				
 								
-			}			
+			}
+			banhji.vendorReportCenter.dataSource.read();			
+			banhji.vendorReportCenter.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.vendorReportCenter.set('count', e.response.count);
+					kendo.culture(banhji.locale);					
+					banhji.vendorReportCenter.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.vendorReportCenter.set('supplierCount', kendo.toString(e.response.supplierCount, 'n0'));
+					banhji.vendorReportCenter.set('order', kendo.toString(e.response.order, 'n0'));
+					banhji.vendorReportCenter.set('items', kendo.toString(e.response.items, 'n0'));
+					banhji.vendorReportCenter.set('overDate', kendo.toString(e.response.overDate, 'n0'));
+					banhji.vendorReportCenter.set('totalBalance', kendo.toString(e.response.totalBalance, 'c2'));
+					banhji.vendorReportCenter.set('openBalance', kendo.toString(e.response.openBalance, 'n0'));
+				}
+			});			
 		}		
 	});
 	banhji.router.route("/expenses_purchase_summary_supplier", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');			
 		}else{
+			var vm = banhji.expensesPurchaseSummarySupplier;
+			banhji.userManagement.addMultiTask("Expense Purchase Summary Supplier","expenses_purchase_summary_supplier"); 
+
 			banhji.view.layout.showIn("#content", banhji.view.expensesPurchaseSummarySupplier);
 			banhji.vendorSale.purchaseSummary.dataSource.read();			
 			banhji.vendorSale.purchaseSummary.dataSource.bind('requestEnd', function(e){
@@ -72727,6 +72591,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.suppliersTransactionList;
+			banhji.userManagement.addMultiTask("Supplier Transaction List","suppliers_transaction_list"); 
+
 			banhji.view.layout.showIn("#content", banhji.view.suppliersTransactionList);
 			banhji.vendorSale.supplierTransaction.dataSource.read();
 			banhji.vendorSale.supplierTransaction.dataSource.bind('requestEnd', function(e){
@@ -72744,6 +72611,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.expensesPurchaseDetailSupplier;
+			banhji.userManagement.addMultiTask("Expense Purchase Detail Supplier","expenses_purchase_detail_supplier"); 
+
 			banhji.view.layout.showIn("#content", banhji.view.expensesPurchaseDetailSupplier);
 			banhji.vendorSale.purchaseDetail.dataSource.read();
 			banhji.vendorSale.purchaseDetail.dataSource.bind('requestEnd', function(e){
@@ -72759,6 +72629,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.depositDetailSupplier;
+			banhji.userManagement.addMultiTask("Deposit Detail Supplier","deposit_detail_supplier"); 
+
 			banhji.view.layout.showIn("#content", banhji.view.depositDetailSupplier);
 			banhji.vendorSale.depositDetail.dataSource.read();
 			banhji.vendorSale.depositDetail.dataSource.bind('requestEnd', function(e){
@@ -72774,6 +72647,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.purchaseSummaryProductServices;
+			banhji.userManagement.addMultiTask("Purchase Summary Product/Service","purchase_summary_product_services"); 
+
 			banhji.view.layout.showIn("#content", banhji.view.purchaseSummaryProductServices);
 			banhji.vendorSale.summaryProduct.dataSource.read();
 			banhji.vendorSale.summaryProduct.dataSource.bind('requestEnd', function(e){
@@ -72791,6 +72667,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.openPurchaseOrder;
+			banhji.userManagement.addMultiTask("Open Purchase Order","open_purchase_order");
+
 			banhji.view.layout.showIn("#content", banhji.view.openPurchaseOrder);
 			banhji.vendorSale.purchaseOrder.dataSource.read();
 			banhji.vendorSale.purchaseOrder.dataSource.bind('requestEnd', function(e){
@@ -72808,6 +72687,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.purchaseDetailProductServices;
+			banhji.userManagement.addMultiTask("Purchase Detail Product/Service","purchase_detail_product_services");
+
 			banhji.view.layout.showIn("#content", banhji.view.purchaseDetailProductServices);
 			banhji.vendorSale.detailProduct.dataSource.read();
 			banhji.vendorSale.detailProduct.dataSource.bind('requestEnd', function(e){
@@ -72825,6 +72707,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.suppliersBalanceSummary;
+			banhji.userManagement.addMultiTask("Supplier Balance Summary","suppliers_balance_summary");
+
 			banhji.view.layout.showIn("#content", banhji.view.suppliersBalanceSummary);
 			banhji.vendorSale.supplierBalance.dataSource.read();
 			banhji.vendorSale.supplierBalance.dataSource.bind('requestEnd', function(e){
@@ -72842,6 +72727,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.suppliersBalanceDetail;
+			banhji.userManagement.addMultiTask("Supplier Balance Detail","suppliers_balance_detail");
+
 			banhji.view.layout.showIn("#content", banhji.view.suppliersBalanceDetail);
 			banhji.vendorSale.balanceDetailSupplier.dataSource.read();
 			banhji.vendorSale.balanceDetailSupplier.dataSource.bind('requestEnd', function(e){
@@ -72859,6 +72747,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.payablesAgingSummary;
+			banhji.userManagement.addMultiTask("Payables Aging Summary ","payables_aging_summary");
+
 			banhji.view.layout.showIn("#content", banhji.view.payablesAgingSummary);
 			banhji.vendorSale.payablesAging.dataSource.read();
 			banhji.vendorSale.payablesAging.dataSource.bind('requestEnd', function(e){
@@ -72876,6 +72767,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.payablesAgingDetail;
+			banhji.userManagement.addMultiTask("Payables Aging Detail ","payables_aging_detail");
+
 			banhji.view.layout.showIn("#content", banhji.view.payablesAgingDetail);
 			banhji.vendorSale.payablesAgingDetail.dataSource.read();
 			banhji.vendorSale.payablesAgingDetail.dataSource.bind('requestEnd', function(e){
@@ -72893,6 +72787,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.listBillsPaid;
+			banhji.userManagement.addMultiTask("List Bills Paid ","list_bills_paid");
+
 			banhji.view.layout.showIn("#content", banhji.view.listBillsPaid);
 			banhji.vendorSale.listBillsPaid.dataSource.read();
 			banhji.vendorSale.listBillsPaid.dataSource.bind('requestEnd', function(e){
@@ -72910,6 +72807,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.billPaymentList;
+			banhji.userManagement.addMultiTask("List of Payment","bill_payment_list");
+
 			banhji.view.layout.showIn("#content", banhji.view.billPaymentList);
 			banhji.vendorSale.billPaymentList.dataSource.read();
 			banhji.vendorSale.billPaymentList.dataSource.bind('requestEnd', function(e){
@@ -73867,6 +73767,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');			
 		}else{
+			var vm = banhji.saleSummaryCustomer;			
+			banhji.userManagement.addMultiTask("Sale Summary Customer Report","sale_summary_customer",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.saleSummaryCustomer);
 			banhji.customerSale.saleSummary.dataSource.read();			
 			banhji.customerSale.saleSummary.dataSource.bind('requestEnd', function(e){
@@ -73882,6 +73785,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.saleDetailCustomer;			
+			banhji.userManagement.addMultiTask("Sale Detail Customer Report","sale_detail_customer",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.saleDetailCustomer);
 			banhji.customerSale.detailSummary.dataSource.read();
 			banhji.customerSale.detailSummary.dataSource.bind('requestEnd', function(e){
@@ -73897,6 +73803,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.depositDetailCustomer;			
+			banhji.userManagement.addMultiTask("Deposit Detail by Customer","deposit_detail_customer",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.depositDetailCustomer);
 			banhji.customerSale.detailSummary.dataSource.read();
 			banhji.customerSale.detailSummary.dataSource.bind('requestEnd', function(e){
@@ -73912,6 +73821,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.customerTransactionList;			
+			banhji.userManagement.addMultiTask("Customer Transaction List","customer_transaction_list",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.customerTransactionList);
 			banhji.customerSale.customerTransaction.dataSource.read();
 			banhji.customerSale.customerTransaction.dataSource.bind('requestEnd', function(e){
@@ -73932,6 +73844,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.saleSummaryProduct;			
+			banhji.userManagement.addMultiTask("Sale Summary by Product","sale_summary_product",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.saleSummaryProduct);
 			banhji.customerSale.summaryProductSale.dataSource.read();
 			banhji.customerSale.summaryProductSale.dataSource.bind('requestEnd', function(e){
@@ -73950,6 +73865,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.saleDetailProduct;			
+			banhji.userManagement.addMultiTask("Sale Detail by Product","sale_detail_product",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.saleDetailProduct);
 			banhji.customerSale.detailCustomerSale.dataSource.read();
 			banhji.customerSale.detailCustomerSale.dataSource.bind('requestEnd', function(e){
@@ -73967,6 +73885,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');			
 		}else{
+			var vm = banhji.customerBalanceSummary;			
+			banhji.userManagement.addMultiTask("Customer Balance Summary","customer_balance_summary",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.customerBalanceSummary);
 			banhji.customerSale.summaryBalance.dataSource.read();			
 			banhji.customerSale.summaryBalance.dataSource.bind('requestEnd', function(e){
@@ -73984,6 +73905,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.customerBalanceDetail;			
+			banhji.userManagement.addMultiTask("Customer Balance Detail","customer_balance_detail",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.customerBalanceDetail);
 			banhji.customerSale.saleDetail.dataSource.read();
 			banhji.customerSale.saleDetail.dataSource.bind('requestEnd', function(e){
@@ -74001,6 +73925,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.receivableAgingSummary;			
+			banhji.userManagement.addMultiTask("Receivable Aging Summary","receivable_aging_summary",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.receivableAgingSummary);
 			banhji.customerSale.receivableAging.dataSource.read();
 			banhji.customerSale.receivableAging.dataSource.bind('requestEnd', function(e){
@@ -74018,6 +73945,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.receivableAgingDetail;			
+			banhji.userManagement.addMultiTask("Receivable Aging Detail","receivable_aging_detail",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.receivableAgingDetail);
 			banhji.customerSale.receivableDetail.dataSource.read();
 			banhji.customerSale.receivableDetail.dataSource.bind('requestEnd', function(e){
@@ -74034,6 +73964,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.listInvoicesCollect;			
+			banhji.userManagement.addMultiTask("List Invoice Collect","list_invoices_collect",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.listInvoicesCollect);
 			banhji.customerSale.listInvoicesCollect.dataSource.read();
 			banhji.customerSale.listInvoicesCollect.dataSource.bind('requestEnd', function(e){
@@ -74050,6 +73983,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.collectReport;			
+			banhji.userManagement.addMultiTask("Report to be Collect","collect_report",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.collectReport);
 			banhji.customerSale.collectReportDB.dataSource.read();
 			banhji.customerSale.collectReportDB.dataSource.bind('requestEnd', function(e){
@@ -74066,6 +74002,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.invoiceList;			
+			banhji.userManagement.addMultiTask("Invoice List","invoice_list",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.invoiceList);
 			banhji.customerSale.invoiceListDB.dataSource.read();
 			banhji.customerSale.invoiceListDB.dataSource.bind('requestEnd', function(e){
@@ -74083,6 +74022,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.customerList;			
+			banhji.userManagement.addMultiTask("Customer List","customer_list",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.customerList);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
@@ -74099,6 +74041,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.saleJobEngagement;			
+			banhji.userManagement.addMultiTask("Sale Job Engagement","sale_job_engagement",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.saleJobEngagement);
 			banhji.customerSale.saleJob.dataSource.read();
 			banhji.customerSale.saleJob.dataSource.bind('requestEnd', function(e){
@@ -74115,6 +74060,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.saleOrderList;			
+			banhji.userManagement.addMultiTask("List of Sale Order","sale_order_list",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.saleOrderList);
 			banhji.customerSale.saleOrderDB.dataSource.read();
 			banhji.customerSale.saleOrderDB.dataSource.bind('requestEnd', function(e){
@@ -74485,7 +74433,7 @@
 			//banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
 			var vm = banhji.fileManagement;			
-			banhji.userManagement.addMultiTask("Documents","documents",null);
+			banhji.userManagement.addMultiTask("Attach Documents","documents",null);
 			if(banhji.pageLoaded["documents"]==undefined){
 				banhji.pageLoaded["documents"] = true;					
 			}
@@ -74515,7 +74463,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
 			
 			var vm = banhji.itemDashBoard;
-			banhji.userManagement.addMultiTask("Inventory Dashboard","inventories",null);
+			banhji.userManagement.addMultiTask("Products/Services Dashboard","inventories",null);
 
 			if(banhji.pageLoaded["inventories"]==undefined){							
 				banhji.pageLoaded["inventories"] = true;
@@ -75599,7 +75547,7 @@
 			banhji.view.layout.showIn("#content", banhji.view.reportDashboard);
 			
 			var vm = banhji.reportDashboard;
-			banhji.userManagement.addMultiTask("No. of Reports/lists by Module","reports",null);
+			banhji.userManagement.addMultiTask("Reports Module","reports",null);
 
 			if(banhji.pageLoaded["reports"]==undefined){
 				banhji.pageLoaded["reports"] = true;				

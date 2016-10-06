@@ -69,52 +69,60 @@
 					<ul id="module-image">
 						<li style="text-align:center;">
 							<a href="#/customers ">
-								<img title="Customers Module, In here, you can manage your customer information, revenues, collections, and other related transactions." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
+								<img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Customers</span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 5px;
+    display: inline-block;">Customers</span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/vendors">
-								<img title="Supplier Module, In here, you can manage your supplier information, and other related transactions." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg" alt="Vendor">
+								<img title="Supplier Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg" alt="Vendor">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Suppliers</span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 5px;
+    display: inline-block;">Suppliers</span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/inventories">
-								<img title="Inventories Module, In here, you can manage your inventory information, stock, item price, and other related transactions." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg" alt="Inventory">
+								<img title="Products/Sercies Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg" alt="Inventory">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Products/Services</span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 5px;
+    display: inline-block;">Products/Services</span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/documents">
 								<img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.jpg" alt="Attachment">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Documents</span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 5px;
+    display: inline-block;">Documents</span></span>
 						</li>
 					</ul>
 					<ul id="module-image">						
 						<li style="text-align:center;">
 							<a href="#/accounting">
-								<img title="Accounting Module, In this module, you can prepare your journal entry record, set your tax, create segment, and determine your financial reporting standards." src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">							
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.accounting"></span></span>
+								<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">							
+								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.accounting" style="margin-top: 8px;
+    display: inline-block;"></span></span>
 							</a>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/reports">
 								<img title="Reports Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.jpg" alt="Reports">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Reports</span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span style="margin-top: 5px;
+    display: inline-block;">Reports</span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/sale_tax">
-								<img title="Sale Tax" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
+								<img title="Tax Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax"></span></span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax" style="margin-top: 5px;
+    display: inline-block;"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
-								<img title="Setting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings"></span></span>
+								<img title="Admin Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
+								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings" style="margin-top: 5px;
+    display: inline-block;"></span></span>
 							</a>
 						</li>											
 					</ul>
@@ -205,17 +213,17 @@
 										<tr>
 											<td>Income</td>
 											<td></td>
-											<td align="right">12,600,000</td>
+											<td align="right"><span data-bind="text: income"></span></td>
 										</tr>
 										<tr>
 											<td>Expense</td>
 											<td></td>
-											<td align="right">8,500,000</td>
+											<td align="right"><span data-bind="text: expense"></span></td>
 										</tr>
 										<tr>
 											<td><b>Net Income</b></td>
 											<td></td>
-											<td align="right"><b>4,100,000</b></td>
+											<td align="right"><b data-bind="text: net_income"></b></td>
 										</tr>
 									</table>
 								</a>     
@@ -227,17 +235,17 @@
 										<tr>
 											<td>Assets</td>
 											<td></td>
-											<td align="right">17,537,000</td>
+											<td align="right"><span data-bind="text: asset"></span></td>
 										</tr>
 										<tr>
 											<td>Liabilities</td>
 											<td></td>
-											<td align="right">3,437,000</td>
+											<td align="right"><span data-bind="text: liability"></span></td>
 										</tr>
 										<tr>
 											<td><b>Equity</b></td>
 											<td></td>
-											<td align="right"><b>14,100,000</b></td>
+											<td align="right"><b data-bind="text: equity"></b></td>
 										</tr>
 									</table>
 								</a>
@@ -1804,7 +1812,7 @@
                    style="width: 80px;" />	
 		</td>		
 		<td data-bind="visible: showSegment">
-			<select data-role="multiselect"
+			<select data-role="multiselect" id="ddlSegment"
 				   data-value-primitive="true"				   
 				   data-item-template="segment-list-tmpl"				    
 				   data-value-field="id" 
@@ -5380,7 +5388,7 @@
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i></button>
 					</div>
-	            	<table class="table table-bordered table-white">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
 	            				<th>Name</th>
@@ -5403,7 +5411,7 @@
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i></button>
 					</div>
-	            	<table class="table table-bordered table-white">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
 	            				<th>Name</th>
@@ -6746,249 +6754,270 @@
 </script>
 
 <script id="employee" type="text/x-kendo-template">
-	<div class="container-960">	
-		<div class="row-fluid">		    
-			<div class="span12">			
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">				
 				<div id="example" class="k-content">
 
-					<!-- Collapsible Widget -->			
-					<div class="widget">
-					    <div class="widget-head">
-					    	<span class="btn btn-primary pull-right" 
-									onclick="javascript:window.history.back()">X</span>
-					        
-					        <h4 class="heading glyphicons circle_info"><i></i> Employee</h4>							        	
-					    </div>
-					    <div class="widget-body">
+					<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
 
-					    	<div class="row-fluid">
-					    		<div class="span6 well">
+			        <h2>Employee</h2>
 
-									<div class="row-fluid">
+			        <br>				
 
-										<div class="span6">														
+			    	<div class="row-fluid">
+			    		<div class="span6 well">
+
+							<div class="row-fluid">
+
+								<div class="span6">														
+									<!-- Group -->
+									<div class="control-group">										
+										<label for="ddlContactType">Employee Type<span style="color:red">*</span></label>
+										<input id="ddlContactType" name="ddlContactType"
+											   data-role="dropdownlist"
+											   data-option-label="(--- Select ---)"									                   
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.contact_type_id,
+							                   			  disabled: obj.is_pattern, 
+							                              source: contactTypeDS,
+							                              events:{change: contactTypeChanges}"
+							                   required data-required-msg="required"
+							                   style="width: 100%;" />									            
+									</div>
+									<!-- // Group END -->
+								</div>
+
+								<div class="span6">	
+									<!-- Group -->
+									<div class="control-group">							
+										<label for="number"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>
+				              			<input id="number" name="number" class="k-textbox"
+					              				data-bind="value: obj.number, disabled: obj.is_pattern" 
+					              				placeholder="e.g. ID0001" required data-required-msg="required"
+					              				style="width: 100%;" />
+					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
+									</div>
+									<!-- // Group END -->											
+								</div>
+							</div>
+							
+							<div class="row-fluid">
+								<div class="span6">						
+									<!-- Group -->
+									<div class="control-group">
+										<label for="surname"><span data-bind="text: lang.lang.surname"></span> <span style="color:red">*</span></label>
+					              		<input id="surname" name="surname" class="k-textbox" data-bind="value: obj.surname, disabled: obj.is_pattern" 
+							              		placeholder="surname ..." required data-required-msg="required"
+							              		style="width: 100%;" />
+									</div>
+									<!-- // Group END -->
+								</div>
+
+								<div class="span6">	
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="name"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
+							            <input id="name" name="name" class="k-textbox" data-bind="value: obj.name, disabled: obj.is_pattern" 
+							              		placeholder="name ..." required data-required-msg="required"
+							              		style="width: 100%;" />
+									</div>																		
+									<!-- // Group END -->
+								</div>
+							</div>
+						</div>
+
+						<div class="span6">
+							<div class="row-fluid">	
+								<!-- Map -->
+								<div id="map" class="span12" style="height: 130px;"></div>
+							</div>
+
+							<div class="separator line bottom"></div>
+
+						
+						</div>
+					</div>								
+							
+					<!-- // Inner Tabs -->
+					<div class="row-fluid">								
+						<div class="box-generic">
+						    <!-- //Tabs Heading -->
+						    <div class="tabsbar tabsbar-1">
+						        <ul class="row-fluid row-merge">						            
+						            <li class="span2 glyphicons usd active">
+						            	<a href="#tab1" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.account"></span></a>
+						            </li>								           							            
+						            <li class="span2 glyphicons nameplate_alt">
+						            	<a href="#tab2" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.info"></span></a>
+						            </li>
+						            <li class="span2 glyphicons paperclip">
+						            	<a href="#tab3" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.info"></span></a>
+						            </li>
+						            									           						            					            
+						        </ul>
+						    </div>
+						    <!-- // Tabs Heading END -->
+
+						    <div class="tab-content">
+						        <!-- //ACCOUNTING INFO -->
+						        <div class="tab-pane active" id="tab1">
+						        	
+						        	<div class="row-fluid">
+
+						            	<div class="span3">													
 											<!-- Group -->
 											<div class="control-group">										
-												<label for="ddlContactType">Employee Type<span style="color:red">*</span></label>
-												<input id="ddlContactType" name="ddlContactType"
+												<label for="ddlAD">Advance Account<span style="color:red">*</span></label>
+												<input id="ddlAD" name="ddlAD"
 													   data-role="dropdownlist"
-													   data-option-label="(--- Select ---)"									                   
+													   data-header-template="account-header-tmpl"
+													   data-option-label="(--- Select ---)"											                   
 									                   data-value-primitive="true"
 									                   data-text-field="name"
 									                   data-value-field="id"
-									                   data-bind="value: obj.contact_type_id,
-									                   			  disabled: obj.is_pattern, 
-									                              source: contactTypeDS,
-									                              events:{change: contactTypeChanges}"
-									                   required data-required-msg="required"
+									                   data-bind="value: obj.account_id,
+									                              source: adDS"
+									                   required data-required-msg="required"											                              
 									                   style="width: 100%;" />									            
 											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span6">	
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="number"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>
-						              			<input id="number" name="number" class="k-textbox"
-							              				data-bind="value: obj.number, disabled: obj.is_pattern" 
-							              				placeholder="e.g. ID0001" required data-required-msg="required"
-							              				style="width: 100%;" />
-							              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
-											</div>
-											<!-- // Group END -->											
-										</div>
-									</div>
-									
-									<div class="row-fluid">
-										<div class="span6">						
+											<!-- // Group END -->													
+										</div>												
+										<div class="span3">
 											<!-- Group -->
 											<div class="control-group">
-												<label for="surname"><span data-bind="text: lang.lang.surname"></span> <span style="color:red">*</span></label>
-							              		<input id="surname" name="surname" class="k-textbox" data-bind="value: obj.surname, disabled: obj.is_pattern" 
-									              		placeholder="surname ..." required data-required-msg="required"
-									              		style="width: 100%;" />
-											</div>
-											<!-- // Group END -->
+												<label for="ddlSA">Salary Account<span style="color:red">*</span></label>
+												<input id="ddlSA" name="ddlSA"
+													   data-role="dropdownlist"
+													   data-option-label="(--- Select ---)"											                   
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-header-template="account-header-tmpl"
+									                   data-value-field="id"
+									                   data-bind="value: obj.salary_account_id,
+									                              source: saDS"
+									                   required data-required-msg="required"											                              
+									                   style="width: 100%;" />
+										    </div>
+											<!-- // Group END -->	
 										</div>
-
-										<div class="span6">	
+										<div class="span3">
 											<!-- Group -->
-											<div class="control-group">								
-												<label for="name"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
-									            <input id="name" name="name" class="k-textbox" data-bind="value: obj.name, disabled: obj.is_pattern" 
-									              		placeholder="name ..." required data-required-msg="required"
-									              		style="width: 100%;" />
-											</div>																		
-											<!-- // Group END -->
-										</div>
-									</div>
-								</div>
+											<div class="control-group">
+												<label for="currency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>
+									            <input id="currency" name="currency" 
+									            	data-role="dropdownlist"
+									            	data-value-primitive="true"
+									                data-text-field="code"
+									                data-value-field="id"
+													data-bind="value: obj.currency_id, source: currencyDS"
+													data-option-label="(--- Select ---)" 
+													required data-required-msg="required" style="width: 100%;" />
+											</div>													
+										</div>																																				
+							        </div>	
+							        <div class="separator line bottom"></div>
+					        	</div>
+						        <!-- //ACCOUNTING INFO END -->								        
 
-								<div class="span6">
-									<div class="row-fluid">	
-										<!-- Map -->
-										<div id="map" class="span12" style="height: 130px;"></div>
-									</div>
+						        <!-- //GENERAL INFO -->
+						        <div class="tab-pane" id="tab2">
+					            	<table class="table table-borderless table-condensed cart_total">						            	
+					            		<tr>
+							                <td><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></td>
+							              	<td>
+							              		<input id="customerStatus" name="customerStatus" 
+							              				data-role="dropdownlist"
+									            		data-text-field="name"
+						           						data-value-field="id"
+						           						data-value-primitive="true" 
+									            		data-bind="source: statusList, value: obj.status"
+									            		data-option-label="(--- Select ---)"
+									            		required data-required-msg="ត្រូវការ ស្ថានភាព" />
+							              	</td>							              	
+							            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
+							              	<td>
+							              		<input id="registered_date" name="registered_date" 
+								            		data-role="datepicker"			            		
+					            					data-bind="value: obj.registered_date" 
+					            					data-format="dd-MM-yyyy"
+					            					data-parse-formats="yyyy-MM-dd" 
+					            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
+							              	</td>
+							            </tr>									            
+							            <tr>
+							                <td><span data-bind="text: lang.lang.email"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" /></td>							              	
+							            	<td><span data-bind="text: lang.lang.phone"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
+							            </tr>									           							            
+							            <tr>
+							            	<td><span data-bind="text: lang.lang.address"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />							              	
+							            	<td><span data-bind="text: lang.lang.memo"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>
+							            </tr>
+							            <tr>
+							            	<td><label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.bill_to" placeholder="bill to ..." />							              	
+							            	<td><span data-bind="text: lang.lang.ship_to"></span></td>
+							              	<td><input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." /></td>									              	
+							            </tr>							            							            								            								            			            
+							        </table>
+					        	</div>
+						        <!-- //GENERAL INFO END -->	
+						        <div class="tab-pane" id="tab3">	
+						        	<input name="files"
+					                   type="file"
+					                   data-role="upload"
+					                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
+						        </div>						        
+						    </div>
+						</div>
+					</div>
 
-									<div class="separator line bottom"></div>
-
-								
-								</div>
-							</div>								
-									
-							<!-- // Inner Tabs -->
-							<div class="row-fluid">								
-								<div class="box-generic">
-								    <!-- //Tabs Heading -->
-								    <div class="tabsbar tabsbar-1">
-								        <ul class="row-fluid row-merge">						            
-								            <li class="span2 glyphicons usd active">
-								            	<a href="#tab1" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.account"></span></a>
-								            </li>								           							            
-								            <li class="span2 glyphicons nameplate_alt">
-								            	<a href="#tab2" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.info"></span></a>
-								            </li>
-								            <li class="span2 glyphicons paperclip">
-								            	<a href="#tab3" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.info"></span></a>
-								            </li>
-								            									           						            					            
-								        </ul>
-								    </div>
-								    <!-- // Tabs Heading END -->
-
-								    <div class="tab-content">
-								        <!-- //ACCOUNTING INFO -->
-								        <div class="tab-pane active" id="tab1">
-								        	
-								        	<div class="row-fluid">
-
-								            	<div class="span3">													
-													<!-- Group -->
-													<div class="control-group">										
-														<label for="ddlAD">Advance Account<span style="color:red">*</span></label>
-														<input id="ddlAD" name="ddlAD"
-															   data-role="dropdownlist"
-															   data-header-template="account-header-tmpl"
-															   data-option-label="(--- Select ---)"											                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.account_id,
-											                              source: adDS"
-											                   required data-required-msg="required"											                              
-											                   style="width: 100%;" />									            
-													</div>
-													<!-- // Group END -->													
-												</div>												
-												<div class="span3">
-													<!-- Group -->
-													<div class="control-group">
-														<label for="ddlSA">Salary Account<span style="color:red">*</span></label>
-														<input id="ddlSA" name="ddlSA"
-															   data-role="dropdownlist"
-															   data-option-label="(--- Select ---)"											                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-header-template="account-header-tmpl"
-											                   data-value-field="id"
-											                   data-bind="value: obj.salary_account_id,
-											                              source: saDS"
-											                   required data-required-msg="required"											                              
-											                   style="width: 100%;" />
-												    </div>
-													<!-- // Group END -->	
-												</div>
-												<div class="span3">
-													<!-- Group -->
-													<div class="control-group">
-														<label for="currency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>
-											            <input id="currency" name="currency" 
-											            	data-role="dropdownlist"
-											            	data-value-primitive="true"
-											                data-text-field="code"
-											                data-value-field="id"
-															data-bind="value: obj.currency_id, source: currencyDS"
-															data-option-label="(--- Select ---)" 
-															required data-required-msg="required" style="width: 100%;" />
-													</div>													
-												</div>																																				
-									        </div>	
-									        <div class="separator line bottom"></div>
-							        	</div>
-								        <!-- //ACCOUNTING INFO END -->								        
-
-								        <!-- //GENERAL INFO -->
-								        <div class="tab-pane" id="tab2">
-							            	<table class="table table-borderless table-condensed cart_total">						            	
-							            		<tr>
-									                <td><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></td>
-									              	<td>
-									              		<input id="customerStatus" name="customerStatus" 
-									              				data-role="dropdownlist"
-											            		data-text-field="name"
-								           						data-value-field="id"
-								           						data-value-primitive="true" 
-											            		data-bind="source: statusList, value: obj.status"
-											            		data-option-label="(--- Select ---)"
-											            		required data-required-msg="ត្រូវការ ស្ថានភាព" />
-									              	</td>							              	
-									            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
-									              	<td>
-									              		<input id="registered_date" name="registered_date" 
-										            		data-role="datepicker"			            		
-							            					data-bind="value: obj.registered_date" 
-							            					data-format="dd-MM-yyyy"
-							            					data-parse-formats="yyyy-MM-dd" 
-							            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
-									              	</td>
-									            </tr>									            
-									            <tr>
-									                <td><span data-bind="text: lang.lang.email"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" /></td>							              	
-									            	<td><span data-bind="text: lang.lang.phone"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
-									            </tr>									           							            
-									            <tr>
-									            	<td><span data-bind="text: lang.lang.address"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />							              	
-									            	<td><span data-bind="text: lang.lang.memo"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>
-									            </tr>
-									            <tr>
-									            	<td><label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.bill_to" placeholder="bill to ..." />							              	
-									            	<td><span data-bind="text: lang.lang.ship_to"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." /></td>									              	
-									            </tr>							            							            								            								            			            
-									        </table>
-							        	</div>
-								        <!-- //GENERAL INFO END -->	
-								        <div class="tab-pane" id="tab3">	
-								        	<input name="files"
-							                   type="file"
-							                   data-role="upload"
-							                   data-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }">								     
-								        </div>						        
-								    </div>
-								</div>
-							</div>
-
-							<br>											
+					<br>											
 							
 							<!-- Form actions -->
-							<div align="center">
-								<span id="notification"></span>
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
 
-								<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-								<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-								<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
+						<!-- Delete Confirmation -->
+						<div data-role="window"
+			                 data-title="Delete Confirmation"
+			                 data-width="350"
+			                 data-height="200"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'40%',left:'35%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: showConfirm"
+			                 style="text-align:center;">
+			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+			            </div>
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span3">
+								
 							</div>
-							<!-- // Form actions END -->
-
-						</div> <!-- End Widget-Body List -->
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+							</div>
+						</div>
 					</div>
-					<!-- // Collapsible Widget END -->				          					                
+					<!-- // Form actions END -->	          					                
 			    											
 				</div> <!-- // End div example-->  
 			</div> <!-- // End div span12-->
@@ -7216,6 +7245,13 @@
 									</td>
 								</tr>																							
 							</table>
+
+							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
+								data-bind="style: { backgroundColor: amtDueColor}">
+								<div align="left">TOTAL AMOUNT</div>
+								<h2 data-bind="text: total" align="right"></h2>
+							</div>
+
 						</div>
 					</div>					   
 
@@ -7243,26 +7279,22 @@
 						        <!-- Option Tab content -->
 						        <div class="tab-pane active" id="tab1-4">
 						        	
-						        	<div class="row-fluid">
-										<div class="span3">
-											<!-- Group -->
-											<div class="control-group">										
-												<label for="txtExpectedDate">Expected Date</label>
+						        	<table class="table table-borderless table-condensed cart_total">
+										<tr>										
+											<td>Expected Date</td>
+											<td>
 												<input id="txtExpectedDate" name="txtExpectedDate" 
 														data-role="datepicker"
 														data-format="dd-MM-yyyy"
 														data-parse-formats="yyyy-MM-dd" 
 														data-bind="value: obj.due_date" 
 														required data-required-msg="required"
-														style="width:100%;" />									            
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span3">
-											<!-- Group -->
-											<div class="control-group">										
-												<label for="ddlPaymentMethod">Method</label>
+														style="width:100%;" />
+											</td>
+										</tr>
+										<tr>										
+											<td>Method</td>
+											<td>
 												<input id="ddlPaymentMethod" name="ddlPaymentMethod"
 													   data-role="dropdownlist"								                   
 									                   data-value-primitive="true"
@@ -7273,15 +7305,12 @@
 									                              source: paymentMethodDS"							                   
 									                   data-option-label="(--- Select ---)"
 									                   required data-required-msg="required" 
-									                   style="width: 100%;" />									            
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span3">
-											<!-- Group -->
-											<div class="control-group">										
-												<label for="cbbAccount">Cash Account</label>
+									                   style="width: 100%;" />
+									        </td>
+										</tr>
+										<tr>									
+											<td>Cash Account</td>
+											<td>
 												<input id="cbbAccount" name="cbbAccount"
 													   data-role="combobox"                   
 									                   data-value-primitive="true"
@@ -7293,14 +7322,11 @@
 									                              source: cashAccountDS"
 									                   data-placeholder="Select Account.."					                                      
 									                   required data-required-msg="required" style="width: 100%" />									            
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span3">
-											<!-- Group -->
-											<div class="control-group">										
-												<label for="cbbAccount">Segment</label>
+											</td>
+										</tr>
+										<tr>										
+											<td>Segment</td>
+											<td>
 												<select data-role="multiselect"
 													   data-value-primitive="true"
 													   data-header-template="segment-header-tmpl"							   
@@ -7312,10 +7338,9 @@
 													   			events:{ change: transactionSegmentChanges }"
 													   data-placeholder="Add Segment.."				   
 													   style="width: 100%" /></select>									            
-											</div>
-											<!-- // Group END -->
-										</div>
-									</div>
+											</td>
+										</tr>
+									</table>
 
 						        </div>
 						        <!-- // Option Tab content END -->
@@ -7624,7 +7649,7 @@
 					style="width: 100%; margin-bottom: 0;" />		
 		</td>			
 		<td data-bind="visible: showSegment">
-			<select data-role="multiselect"
+			<select data-role="multiselect" id="ddlSegment"
 				   data-value-primitive="true"				   
 				   data-item-template="segment-list-tmpl"				    
 				   data-value-field="id" 
@@ -7703,11 +7728,10 @@
 							</table>
 
 							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
-								data-bind="style: {
-								        backgroundColor: bgColor}">
-								<div align="left">AMOUNT PAID</div>
-								<h2 data-bind="text: total" align="right"></h2>
-							</div>
+									data-bind="style: { backgroundColor: amtDueColor}">
+									<div align="left">AMOUNT PAID</div>
+									<h2 data-bind="text: total" align="right"></h2>
+								</div>
 						</div>
 					</div>					   
 
@@ -8001,6 +8025,7 @@
 			                <th style="width: 15%;">SUPPLIER</th>
 			                <th style="width: 8%;">INVOICE#</th>
 			                <th style="width: 13%;">DATE</th>			                			                
+			                <th data-bind="visible: showJob" style="width: 10%;">JOB</th>
 			                <th data-bind="visible: showSegment" style="width: 10%;">SEGMENT</th>			                
 			                <th style="width: 15%;">AMOUNT</th>
 			                <th style="width: 11%;">TAX</th>			                			                
@@ -8026,6 +8051,10 @@
 							</div>
 							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
 							<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+								<li>
+									<input type="checkbox" id="chbJob" class="k-checkbox" data-bind="checked: showJob" />												
+									<label class="k-checkbox-label" for="chbJob">JOB</label>
+								</li>
 								<li>
 									<input type="checkbox" id="chbSegment" class="k-checkbox" data-bind="checked: showSegment" />												
 									<label class="k-checkbox-label" for="chbSegment">SEGMENT</label>
@@ -8179,9 +8208,21 @@
 					data-bind="value: reference_date" 
 					required data-required-msg="required"
 					style="width:100%;" />
+		</td>
+		<td data-bind="visible: showJob">
+			<input id="ddlJob" name="ddlJob"
+				   data-option-label="Add Job..." 
+				   data-role="dropdownlist"                   
+                   data-value-primitive="true"                   
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: job_id,
+                              source: jobDS"
+                   data-placeholder="Add Job.."
+                   style="width: 80px;" />	
 		</td>							
 		<td data-bind="visible: showSegment">
-			<select data-role="multiselect"
+			<select data-role="multiselect" id="ddlSegment"
 				   data-value-primitive="true"				   
 				   data-item-template="segment-list-tmpl"				    
 				   data-value-field="id" 
@@ -12456,7 +12497,7 @@
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Enter New Vendor Type here ..." data-bind="value: contactTypeName">
 					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i> Add Type</button>
 					</div>
-	            	<table class="table table-bordered table-white">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
 	            				<th>Type</th>
@@ -12478,7 +12519,7 @@
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i> Add Method</button>
 					</div>
-	            	<table class="table table-bordered table-white">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
 	            				<th>Name</th>
@@ -12502,7 +12543,7 @@
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i> Add Term</button>
 					</div>
-	            	<table class="table table-bordered table-white">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
 	            				<th>Name</th>
@@ -12551,7 +12592,7 @@
     	<td>
     		#:name#
    		</td>
-   		<td>   			
+   		<td align="center">   			
    			<div class="edit-buttons">       
 		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
 		        #if(is_system=="0"){#
@@ -12581,7 +12622,7 @@
     	<td>
     		#:name#
    		</td>
-   		<td>   			
+   		<td align="center">   			
    			<div class="edit-buttons">       
 		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
 		        #if(is_system=="0"){#
@@ -12610,13 +12651,13 @@
     	<td>
     		#:name#
    		</td>
-   		<td>
+   		<td align="center">
     		#:net_due#
    		</td>
-   		<td>
+   		<td align="center">
     		#:discount_period#
    		</td>
-   		<td>
+   		<td align="center">
     		#:discount_percentage#
    		</td>
    		<td>   			
@@ -12867,21 +12908,21 @@
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>Expenses/ Purchase Overview</h2>
-					<div align="center" class="text-large strong">0</div>
+					<div align="center" class="text-large strong" data-bind="text: total"></div>
 					<table width="100%">
 						<tr align="center">
 							<td>										
-								<span>0</span>
+								<span data-bind="text: supplierCount"></span>
 								<br>
 								<span>Suppliers</span>
 							</td>
 							<td>
-								<span>0</span>
+								<span data-bind="text: items"></span>
 								<br>
 								<span>Products</span>
 							</td>
 							<td>
-								<span>0</span>
+								<span data-bind="text: order"></span>
 								<br>
 								<span>Order</span>
 							</td>
@@ -12909,21 +12950,21 @@
 			<div class="report-chart">
 				<div class="widget-body receivable-overview" style="background-color: LightGray">
 					<h2>PAYABLES MANAGEMENT</h2>
-					<div align="center" class="text-large strong">0</div>
+					<div align="center" class="text-large strong" data-bind="text: totalBalance"></div>
 					<table width="100%">
 						<tr align="center">
 							<td>										
-								<span>0</span>
+								<span data-bind="text: openBalance"></span>
 								<br>
 								<span>Open</span>
 							</td>
 							<td>
-								<span>0</span>
+								<span data-bind="text: count"></span>
 								<br>
 								<span>Supplier</span>
 							</td>
 							<td>
-								<span>0</span>
+								<span data-bind="text: overDate"></span>
 								<br>
 								<span>Overdue</span>
 							</td>
@@ -15507,7 +15548,7 @@
 								            			<span class="btn btn-block btn-inverse" data-bind="click: goGDN">GDN</span>
 								            		</td>
 								            		<td class="center">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt">Receive Payment</span>								            			
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt">Cash Receipt</span>								            			
 								            		</td>
 								            	</tr>
 								            	<tr>
@@ -20502,17 +20543,17 @@
     	<td>
     		#:name#
    		</td>
-   		<td>
+   		<td align="center">
     		#:abbr#
    		</td>
-   		<td>
+   		<td align="center">
     		#if(is_company=="1"){#
     			Yes
     		#}else{#
     			No
     		#}#
    		</td>
-   		<td>   			
+   		<td align="center">   			
    			<div class="edit-buttons">       
 		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
 		        #if(is_system=="0"){#
@@ -20556,7 +20597,7 @@
     	<td>
     		#:name#
    		</td>
-   		<td>   			
+   		<td align="center">   			
    			<div class="edit-buttons">       
 		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
 		        #if(is_system=="0"){#
@@ -20585,16 +20626,16 @@
     	<td>
     		#:name#
    		</td>
-   		<td>
+   		<td align="center">
     		#:net_due#
    		</td>
-   		<td>
+   		<td align="center">
     		#:discount_period#
    		</td>
-   		<td>
+   		<td align="center">
     		#:discount_percentage#
    		</td>
-   		<td>   			
+   		<td align="center">   			
    			<div class="edit-buttons">       
 		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
 		        #if(is_system=="0"){#
@@ -20632,8 +20673,8 @@
 </script>
 <script id="customerSetting-form-template" type="text/x-kendo-template">
 	<tr>
-		<td ><a style="text-align: left; padding-left: 10px;" href="\\#/invoice_custom/#= id # "> #=name#  </a></td>
-		<td style="text-align: left; padding-left: 10px!important;"> 
+		<td ><a style="text-align: left;" href="\\#/invoice_custom/#= id # "> #=name#  </a></td>
+		<td style="text-align: center; padding-left: 10px!important;"> 
 			#= type.replace("_"," ")# 
 		</td>
 		<td class="center"> #if( updated_at ){ # 
@@ -21093,43 +21134,34 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: saleSummary.search"><i class="icon-search"></i></button>							
+									    </div>							        							       
 								    </div>
 								</div>
 							</div>
@@ -21140,7 +21172,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Sale Summary by Customer</h2>
-							<p>From 1 June 2016 to 30 June 2016</p>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -21202,108 +21234,96 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: customerTransaction.search"><i class="icon-search"></i></button>							
+									    </div>							        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Customer Transaction List</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Customer Transaction List</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span4">
-									<p>Total Customer</p>
-									<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Cash Receipt</p>
+										<span data-bind="text: totalCashReceipt"></span>
+									</div>
 								</div>
-								<div class="span4">
-									<p>Cash Sale</p>
-									<span data-bind="text: totalCashSale"></span>
-								</div>
-								<div class="span4">
-									<p>Cash Receipt</p>
-									<span data-bind="text: totalCashReceipt"></span>
+							</div>
+							<div class="span7">
+								<div class="total-sale">
+									<div class="span6">
+										<p>Total Sale</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>Customer Balance</p>
+										<span data-bind="text: customerBalance"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-sale">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Customer Balance</p>
-									<span data-bind="text: customerBalance"></span>
-								</div>
-							</div>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Sale Rep</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: customerTransaction.dataSource"
-									 data-template="customertransactionlist-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="3">Total</th>
-								<th colspan="2" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Sale Rep</th>
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: customerTransaction.dataSource"
+										 data-template="customertransactionlist-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="3">Total</th>
+									<th colspan="2" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -21324,7 +21344,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -21351,95 +21373,86 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: detailSummary.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Sale Detail by Customer</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<p>Total Customers</p>
-								<span data-bind="text: count"></span>
-							</div>
-
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Sale Detail by Customer</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-sale">
-								<p>Total Sale</p>
-								<span data-bind="text: total"></sapn>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<p>Total Customers</p>
+									<span data-bind="text: count"></span>
+								</div>
+
+							</div>
+							<div class="span7">
+								<div class="total-sale">
+									<p>Total Sale</p>
+									<span data-bind="text: total"></sapn>
+								</div>
 							</div>
 						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Item/service</th>
+									<th>Qty</th>
+									<th>Price</th>
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview" data-bind="source: detailSummary.dataSource" data-auto-bind="false" data-template="saleDetailCustomerReportItem">
+							</tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4"><span data-bind="text: total"></span></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Item/service</th>
-								<th>Qty</th>
-								<th>Price</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview" data-bind="source: detailSummary.dataSource" data-auto-bind="false" data-template="saleDetailCustomerReportItem">
-						</tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4"><span data-bind="text: total"></span></th>
-							</tr>
-						</tfoot>
-					</table>
-
 				</div>
 			</div>
 		</div>
@@ -21466,11 +21479,13 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td>#=items[i].lines[x].name#</td>
 				<td>#=items[i].lines[x].quantity#</td>
-				<td>#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
+				<td align="right">#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
 				<td align="right">#=kendo.toString(items[i].lines[x].amount, 'c2')#</td>
 			</tr>
 			#}#
@@ -21486,7 +21501,7 @@
 		<td></td>
 		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
-</script>
+</script>	
 <script id="saleSummaryProduct" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -21506,105 +21521,97 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: summaryProductSale.search"><i class="icon-search"></i></button>							
+									    </div>
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Sale Summary by Product/Services</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Sale Summary by Product/Services</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Product/services</p>
-									<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Product/services</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>AVG Sale</p>
+										<span data-bind="text: total_avg"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>AVG Sale</p>
-									<span data-bind="text: total_avg"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Sale</p>
+										<span data-bind="text: total_sale"></span>
+									</div>
+									<div class="span6">
+										<p>Gross Profit Margin</p>
+										<span data-bind="text: gpm"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: total_sale"></span>
-								</div>
-								<div class="span6">
-									<p>Gross Profit Margin</p>
-									<span data-bind="text: gpm"></span>
-								</div>
-							</div>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>ITEM</th>
-								<th>QTY</th>
-								<th>AMOUNT</th>
-								<th>AVG PRICE</th>
-								<th>COST</th>
-								<th>GROSS PROFIT MARGIN</th>								
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: summaryProductSale.dataSource"
-									 data-template="saleSummary-product-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4"><span data-bind="text: total"></span></th>
-							</tr>
-						</tfoot>
-					</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>ITEM</th>
+									<th>QTY</th>
+									<th>AMOUNT</th>
+									<th>AVG PRICE</th>
+									<th>COST</th>
+									<th>GROSS PROFIT MARGIN</th>								
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: summaryProductSale.dataSource"
+										 data-template="saleSummary-product-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4"><span data-bind="text: total_sale"></span></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -21615,10 +21622,10 @@
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
 		<td>#=qty#</td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
-		<td>#=kendo.toString(avg_price, 'c2')#</td>	
-		<td>#=kendo.toString(cost, 'c2')#</td>	
-		<td>#=kendo.toString(gross_profit_margin, 'p')#</td>			
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(avg_price, 'c2')#</td>	
+		<td style="text-align: right;">#=kendo.toString(cost, 'c2')#</td>	
+		<td style="text-align: right;">#=kendo.toString(gross_profit_margin, 'p')#</td>			
 	</tr>
 </script>
 <script id="depositDetailCustomer" type="text/x-kendo-template">
@@ -21640,93 +21647,84 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: depositDetail.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Deposit Detail By Customer</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Deposit Detail By Customer</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<p>Number of Customer Deposit</p>
-								<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<p>Number of Customer Deposit</p>
+									<span data-bind="text: count"></span>
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<p>Customer Deposit Balance</p>
+									<span data-bind="text: total"></span>
+								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<p>Customer Deposit Balance</p>
-								<span data-bind="text: total"></span>
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: depositDetail.dataSource"
+										 data-template="cusotmerDeposit-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" span data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: depositDetail.dataSource"
-									 data-template="cusotmerDeposit-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" span data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-
 				</div>
 			</div>
 		</div>
@@ -21749,7 +21747,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -21783,108 +21783,98 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: detailCustomerSale.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Sale Detail by Product/Service</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Sale Detail by Product/Service</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Product/services</p>
-									<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Product/services</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Total Sale</p>
+										<span data-bind="text: total"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: total"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number of Product Sale</p>
+										<span data-bind="text: productSale"></span>
+									</div>
+									<div class="span6">
+										<p>Qty on Hand</p>
+										<span data-bind="text: totalQty"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Number of Product Sale</p>
-									<span data-bind="text: productSale"></span>
-								</div>
-								<div class="span6">
-									<p>Qty on Hand</p>
-									<span data-bind="text: totalQty"></span>
-								</div>
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>QTY</th>
+									<th>PRICE</th>
+									<th>AMOUNT</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: detailCustomerSale.dataSource"
+										 data-template="productSale-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>QTY</th>
-								<th>PRICE</th>
-								<th>AMOUNT</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: detailCustomerSale.dataSource"
-									 data-template="productSale-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-
-
 				</div>
 			</div>
 		</div>
@@ -21906,7 +21896,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td>#=kendo.toString(items[i].qty, 'n0')#</td>
 				<td>#=kendo.toString(items[i].price, 'c2')#</td>
@@ -21944,96 +21936,88 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: summaryBalance.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Customer Balance Summary</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Customer Balance Summary</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Customer</p>
-									<span data-bind="text: customerCount"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Customer</p>
+										<span data-bind="text: customerCount"></span>
+									</div>
+									<div class="span6">
+										<p>Number Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>Number Customer</p>
-									<span data-bind="text: count"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Customer Balance</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>Open Invoice</p>
+										<span data-bind="text: openInvoice"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Customer Balance</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Open Invoice</p>
-									<span data-bind="text: openInvoice"></span>
-								</div>
-							</div>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span>CUSTOMER NAME</span></th>
-								<th><span>ACCOUNT RECEIVABLE BALANCE</span></th>
-							</tr>
-						</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-				                data-template="balance-summary-tmpl"
-				                data-bind="source: summaryBalance.dataSource" >
-				        </tbody>
-	            	</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>CUSTOMER NAME</span></th>
+									<th><span>ACCOUNT RECEIVABLE BALANCE</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="balance-summary-tmpl"
+					                data-bind="source: summaryBalance.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>
 				</div>
 			</div>
 		</div>
@@ -22044,7 +22028,7 @@
 		<td>#=customer#</td>
 		<td align="right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
-</script>
+</script>	
 <script id="customerBalanceDetail" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -22064,106 +22048,96 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: saleDetail.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Customer Balance Detail</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Customer Balance Detail</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Customer</p>
-									<span data-bind="text: customerCount"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Customer</p>
+										<span data-bind="text: customerCount"></span>
+									</div>
+									<div class="span6">
+										<p>Number Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>Number Customer</p>
-									<span data-bind="text: count"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Customer Balance</p>
+										<span data-bind="text: total"></span>
+									</div>	
+									<div class="span6">
+										<p>Open Invoice</p>
+										<span data-bind="text: openInvoice"></span>
+									</div>							
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Customer Balance</p>
-									<span data-bind="text: total"></span>
-								</div>	
-								<div class="span6">
-									<p>Open Invoice</p>
-									<span data-bind="text: openInvoice"></span>
-								</div>							
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>								
+									<th>AMOUNT</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: saleDetail.dataSource"
+										 data-template="customerBalanceDetail-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3"><span data-bind="text: total"></span></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>								
-								<th>AMOUNT</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: saleDetail.dataSource"
-									 data-template="customerBalanceDetail-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3"><span data-bind="text: total"></span></th>
-							</tr>
-						</tfoot>
-					</table>
-
-
 				</div>
 			</div>
 		</div>
@@ -22184,7 +22158,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>				
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -22211,102 +22187,92 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: receivableAging.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Receivable Aging Summary</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Receivable Aging Summary</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Customer</p>
-									<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Average Aging</p>
+										<span data-bind="text: aging"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>Average Aging</p>
-									<span data-bind="text: aging"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<p>Customer Balance</p>
+									<span data-bind="text: total"></span>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<p>Customer Balance</p>
-								<span data-bind="text: total"></span>
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>CURRENT</th>
+									<th>1-30</th>
+									<th>31-60</th>
+									<th>61-90</th>
+									<th>OVER 90</th>
+									<th>TOTAL</th>							
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: receivableAging.dataSource"
+										 data-template="receivableAginglist-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>CURRENT</th>
-								<th>1-30</th>
-								<th>31-60</th>
-								<th>61-90</th>
-								<th>OVER 90</th>
-								<th>TOTAL</th>							
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: receivableAging.dataSource"
-									 data-template="receivableAginglist-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-
-
 				</div>
 			</div>
 		</div>
@@ -22321,7 +22287,7 @@
 		<td>#=kendo.toString(sixty, 'c2')#</td>
 		<td>#=kendo.toString(ninety, 'c2')#</td>
 		<td>#=kendo.toString(overNinety, 'c2')#</td>
-		<td>#=kendo.toString(amount, 'c2')#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="receivableAgingDetail" type="text/x-kendo-template">
@@ -22343,101 +22309,91 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: receivableDetail.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Receivable Aging Detail</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<p>Total Sale</p>
-								<span data-bind="text: total"></span>
-							</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Receivable Aging Detail</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Number of Customer</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p>Average Aging</p>
-									<span data-bind="text: aging"></span>	
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<p>Total Sale</p>
+									<span data-bind="text: total"></span>
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number of Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Average Aging</p>
+										<span data-bind="text: aging"></span>	
+									</div>
+								</div>
+							</div>
 						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Aging</th>
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: receivableDetail.dataSource"
+										 data-template="receivableAgingDetaillist-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Aging</th>
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: receivableDetail.dataSource"
-									 data-template="receivableAgingDetaillist-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-					
-
 				</div>		
 			</div>
 		</div>
@@ -22459,7 +22415,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td>#=items[i].outstanding#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
@@ -22495,100 +22453,90 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: listInvoicesCollect.search"><i class="icon-search"></i></button>							
+									    </div>									        								       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>List Invoices Collect</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">								
-								<p>Total Sale</p>
-								<span data-bind="text: total"></span>								
-							</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>List Invoices Collect</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Number of Customer Balance</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p>Average Aging</p>
-									<span data-bind="text: aging"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">								
+									<p>Total Sale</p>
+									<span data-bind="text: total"></span>								
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number of Customer Balance</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Average Aging</p>
+										<span data-bind="text: aging"></span>
+									</div>
+								</div>
+							</div>
 						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: listInvoicesCollect.dataSource"
+										 data-template="listInvoicesCollectlist-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: listInvoicesCollect.dataSource"
-									 data-template="listInvoicesCollectlist-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-
-
 				</div>
 			</div>
 		</div>
@@ -22610,7 +22558,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -22644,105 +22594,90 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: collectReportDB.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2>Collect Report</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: institute.name"></h3>
-						<h2>Collect Report</h2>
-						<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: total"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+										<p>Total Sale</p>
+										<span data-bind="text: total"></span>
 								</div>
-								<div class="span6">
-									<p>Customer Balance</p>
-									<span data-bind="text: total"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>NUmber of Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Number</p>
+										<span data-bind="text: totalInvoice"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>NUmber of Customer</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p>Number</p>
-									<span data-bind="text: totalInvoice"></span>
-								</div>
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: collectReportDB.dataSource"
+										 data-template="collectReportlist-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="3">Total</th>
+									<th colspan="5" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: collectReportDB.dataSource"
-									 data-template="collectReportlist-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="3">Total</th>
-								<th colspan="5" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-
 				</div>
 			</div>
 		</div>
@@ -22762,7 +22697,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
@@ -22796,108 +22733,99 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: invoiceListDB.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Invoice List</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Invoice List</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: totalCreditSale"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Sale</p>
+										<span data-bind="text: totalCreditSale"></span>
+									</div>
+									<div class="span6">
+										<p>Number</p>
+										<span data-bind="text: totalInvoice"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p>Customer Balance</p>
-									<span data-bind="text: totalBalance"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number of Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Customer Balance</p>
+										<span data-bind="text: totalBalance"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Number of Customer</p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p>Number</p>
-									<span data-bind="text: totalInvoice"></span>
-								</div>
-							</div>
-						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Due Date</th>
+									<th>Memo</th>
+									<th>Status</th>
+									<th>Segment</th>
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: invoiceListDB.dataSource"
+										 data-template="invoice-list-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4" data-bind="text: totalBalance"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Due Date</th>
-								<th>Memo</th>
-								<th>Status</th>
-								<th>Segment</th>
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: invoiceListDB.dataSource"
-									 data-template="invoice-list-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4" data-bind="text: totalBalance"></th>
-							</tr>
-						</tfoot>
-					</table>
-
 				</div>
 			</div>
 		</div>
@@ -22920,7 +22848,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].due_date#</td>
 				<td>#=items[i].memo#</td>
 				<td>#=items[i].status#</td>
@@ -23111,13 +23041,12 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<div class="widget-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="tab-1">
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
 									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
@@ -23138,105 +23067,63 @@
 										           placeholder="To ..." />
 
 										  	 <button type="button" data-role="button" data-bind="click: saleJob.search"><i class="icon-search"></i></button>							
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span ></span>Filtered by</label>
-													<input id="ddlAR" name="ddlAR"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: saleJob.filterDB, events: {change: saleJob.filterChange}"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />													
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span ></span>Sorted By</label>
-													<input id="ddlRA" name="ddlRA"
-														   data-role="dropdownlist"														   										                   
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="source: saleJob.sortDB"										                              
-										                   data-option-label="(--- Select ---)"
-										                   required data-required-msg="required" style="width: 100%;" />							         										
-												</div>																															
-											</div>
-				        				</div>
-				        				<div class="tab-pane" id="tab-3">
-								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>
-									</div>
+									    </div>									        						       
+								    </div>
 								</div>
 							</div>
 						</div>
 					</div>	
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Sale by Job/Engagement</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Sale by Job/Engagement</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Total Sale</p>
-									<span data-bind="text: saleNumber"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Sale</p>
+										<span data-bind="text: saleNumber"></span>
+									</div>
+									<div class="span6">
+										<p>Number of Customer</p>
+										<span data-bind="text: count"></span>
+									</div>	
 								</div>
-								<div class="span6">
-									<p>Number of Customer</p>
-									<span data-bind="text: count"></span>
-								</div>	
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+										<p>Customer Balance</p>
+										<span data-bind="text: total"></span>							
+								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Customer Balance</p>
-									<span data-bind="text: total"></span>
-								</div>								
-							</div>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Type</th>
-								<th>Date</th>
-								<th>No</th>
-								<th>Memo</th>
-								<th>Segment</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: saleJob.dataSource"
-									 data-template="saleJobEngagement-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-					
-
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Date</th>
+									<th>No</th>
+									<th>Memo</th>
+									<th>Segment</th>
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: saleJob.dataSource"
+										 data-template="saleJobEngagement-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="3" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>					
+					</div>	
 				</div>		
 			</div>
 		</div>
@@ -23258,7 +23145,9 @@
 			<tr>
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
+				<td>
+					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
+				</td>
 				<td>#=items[i].memo#</td>
 
 				<td>#if (items[i].segments.length){#
@@ -23299,108 +23188,99 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: saleOrderDB.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Sale Order List</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Product Items</p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p>Product Items on Hand</p>
-									<span data-bind="text: count"></span>
-								</div>	
-							</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Sale Order List</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Customer Order</p>
-									<span data-bind="text: customer"></span>
-								</div>
-								<div class="span6">
-									<p>Order</p>
-									<span data-bind="text: order"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Product Items</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>Product Items on Hand</p>
+										<span data-bind="text: count"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Customer Order</p>
+										<span data-bind="text: customer"></span>
+									</div>
+									<div class="span6">
+										<p>Order</p>
+										<span data-bind="text: order"></span>
+									</div>
+								</div>
+							</div>
 						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th>Customer Name</th>
+									<th>Sale Order</th>
+									<th>Item</th>
+									<th>Memo Date</th>
+									<th>Cost</th>
+									<th>QTY</th>
+									<th>Price</th>
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: saleOrderDB.dataSource"
+										 data-template="saleOrder-list-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4">Total</th>
+									<th colspan="4" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>Customer Name</th>
-								<th>Sale Order</th>
-								<th>Item</th>
-								<th>Memo Date</th>
-								<th>Cost</th>
-								<th>QTY</th>
-								<th>Price</th>
-								<th>Balance</th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: saleOrderDB.dataSource"
-									 data-template="saleOrder-list-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4">Total</th>
-								<th colspan="4" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-
 				</div>		
 			</div>
 		</div>
@@ -23472,7 +23352,7 @@
 								<div class="colorPalatte span12">
 									<div class="" style="margin-top: 15px;">
 										<input type="text" id="formtitle" name="Form Title" class="k-textbox" placeholder="Form Title" required validationMessage="" data-bind="value: obj.title" style="width: 100%;" />
-										<textarea data-bind="value: obj.note, text: obj.note" class="span12" style="min-height: 100px;margin-top: 15px;"></textarea>
+										<textarea data-bind="value: obj.note, text: obj.note" placeholder="Note" class="span12" style="min-height: 100px;margin-top: 15px;padding-left: 10px;"></textarea>
                                 	</div>
                                 </div>
 							</div>
@@ -23535,42 +23415,40 @@
 	<div class="inv1">
     	<div class="head">
         	<div class="logo">
-            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
             </div>
             <div class="cover-name-company">
             	<h2 ></h2>
-                <h3 data-bind="text: company.name"></h3>
+                <h3 style="text-align:left;" data-bind="text: company.name"></h3>
                 <div class="vattin">
                 	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
                 </div>
                 <div class="clear">
-                	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
-                    <pre>Address      </pre>
-                    <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: company.phone"></span></pre>
-                    <pre>Telephone N<sup>o</sup></pre>
+                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
                 </div>
             </div>
         </div>
         <div class="content">
-        	<h1>វិក្កយបត្រ</h1>
-            <h2>invoice</h2>
-            <div class="clear">
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
             	<div class="cover-customer">
-                	<h5>អតិថិជន​ / Customer :</h5>
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
                     <div class="clear">
-                    	<div class="left">
-                    		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
-                            <span>Company name / Customer</span>
-                        </div>
                         <div class="left dotted-ruler" style="width: 62%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].name"></p>
+                        	<p style="font-weight:bold">
+                        		<span data-bind="text: obj.contact[0].name"></span><br>
+                        		<span data-bind="text: obj.contact[0].address"></span>
+                        	</p>
                         </div>
                     </div>
                     <div class="clear">
-                    	<div class="left">
-                    		<p>ទូរស័ព្ទ​លេខ</p>
-                            <span>Telephone N<sup>o</sup></span>
-                        </div>
+                    	<!--div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
+                        </div-->
                         <div class="left dotted-ruler" style="width: 78%;">
                         	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
                         </div>
@@ -23579,8 +23457,7 @@
                 <div class="cover-inv-number">
                 	<div class="clear">
                     	<div class="left">
-                    		<p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
-                            <span>​​Invoice N<sup>o</sup></span>
+                    		<p>លេខ No. :</p>
                         </div>
                         <div class="left dotted-ruler" style="width: 42%;">
                         	<p style="font-weight:bold" data-bind="text: obj.number"></p>
@@ -23588,8 +23465,7 @@
                     </div>
                     <div class="clear">
                     	<div class="left">
-                    		<p>កាល​បរិច្ឆេទ៖</p>
-                            <span>​​Date</span>
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
                         </div>
                         <div class="left dotted-ruler" style="width: 57%;">
                         	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
@@ -23598,9 +23474,9 @@
                 </div>
             </div>
         	<div class="clear">
-            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
                 	<thead>
-                        <tr class="main-color" data-bind="style: {backgroundColor: obj.color}">
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
                             <th>ល.រ<br />N<sup>0</sup></th>
                             <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
                             <th>បរិមាណ<br />Quantity</th>
@@ -23615,8 +23491,20 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​<br />Total (VAT included)</td>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​ Total (VAT included)</td>
                             <td data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
+                            <td data-bind="text: obj.deposit"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td data-bind="text: obj.amount_due"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -23639,43 +23527,41 @@
 	<div class="inv1">
     	<div class="head">
         	<div class="logo">
-            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
             </div>
             <div class="cover-name-company">
             	<h2 ></h2>
-                <h3 data-bind="text: company.name"></h3>
+                <h3 style="text-align:left;" data-bind="text: company.name"></h3>
                 <div class="vattin">
                 	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
                 </div>
                 <div class="clear">
-                	<pre>អាស័យ​ដ្ឋាន៖ <span data-bind="text: company.address"></span></pre>
-                    <pre>Address      </pre>
-                    <pre>ទូរស័ព្ទលេខ៖ <span data-bind="text: company.phone"></span></pre>
-                    <pre>Telephone N<sup>o</sup></pre>
+                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
                 </div>
             </div>
         </div>
         <div class="content">
-        	<h1>វិក្កយបត្រអាករ</h1>
-            <h2>invoice</h2>
-            <div class="clear">
-            	<div class="cover-customer" style="width: 80%;">
-                	<h5>អតិថិជន​ / Customer :</h5>
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រអាករ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
                     <div class="clear">
-                    	<div class="left">
-                    		<p>ឈ្មោះ​ក្រុមហ៊ុន ឬ​អតិថិជន</p>
-                            <span>Company name / Customer</span>
-                        </div>
-                        <div class="left dotted-ruler" style="width: 42%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].name"></p>
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold">
+                        		<span data-bind="text: obj.contact[0].name"></span><br>
+                        		<span data-bind="text: obj.contact[0].address"></span>
+                        	</p>
                         </div>
                     </div>
                     <div class="clear">
-                    	<div class="left">
-                    		<p>ទូរស័ព្ទ​លេខ</p>
-                            <span>Telephone N<sup>o</sup></span>
-                        </div>
-                        <div class="left dotted-ruler" style="width: 52%;">
+                    	<!--div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
+                        </div-->
+                        <div class="left dotted-ruler" style="width: 78%;">
                         	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
                         </div>
                     </div>
@@ -23683,33 +23569,30 @@
                 	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
                 	</div>
                 </div>
-                <div class="cover-inv-number" style="width: 20%;">
-                	<div style="position: absolute;left:-70%;width:165%; ">
-                        <div class="clear">
-                            <div class="left">
-                                <p>លេខ​រៀង​វិក្កយ​បត្រ៖</p>
-                                <span>​​Invoice N<sup>o</sup></span>
-                            </div>
-                            <div class="left dotted-ruler" style="width: 46%;">
-                                <p style="font-weight:bold" data-bind="text: obj.number"></p>
-                            </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
                         </div>
-                        <div class="clear">
-                            <div class="left">
-                                <p>កាល​បរិច្ឆេទ៖</p>
-                                <span>​​Date</span>
-                            </div>
-                            <div class="left dotted-ruler" style="width: 59%;">
-                                <p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
-                            </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
                         </div>
                     </div>
                 </div>
             </div>
+            
         	<div class="clear inv2">
-            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;margin-top: 2%;">
+            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
                 	<thead>
-                        <tr class="main-color" data-bind="style: {backgroundColor: obj.color}">
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
                             <th>ល.រ<br />N<sup>0</sup></th>
                             <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
                             <th>បរិមាណ<br />Quantity</th>
@@ -23724,16 +23607,28 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​<br />Sub Total</td>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​ Sub Total</td>
                             <td data-bind="text: obj.sub_total"></td>
                         </tr>
                         <tr>
-                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០%<br />VAT (10%)</td>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០% VAT (10%)</td>
                             <td data-bind="text: obj.tax"></td>
                         </tr>
                         <tr>
-                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​<br />Grand Total</td>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​ Grand Total</td>
                             <td data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">ប្រាក់កក់ Deposit</td>
+                            <td data-bind="text: obj.deposit"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td data-bind="text: obj.amount_due"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -24100,12 +23995,12 @@
         </div>
     </div>
 </script-->
-<script id="invoiceForm6" type="text/x-kendo-template">
+<!-- <script id="invoiceForm6" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24184,18 +24079,14 @@
         			<td>POSITION</td><td width="100"></td>
         			<td>DATE</td><td width="80"></td>
         		</tr>
-        		<tr>
-        			<td>REVIEWED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
+        		
         		<tr>
         			<td>APROVED BY</td><td></td>
         			<td>POSITION</td><td></td>
         			<td>DATE</td><td></td>
         		</tr>
         		<tr>
-        			<td>ACCEPTED BY</td><td></td>
+        			<td>យល់ព្មរដោយ ACCEPTED BY</td><td></td>
         			<td>POSITION</td><td></td>
         			<td>DATE</td><td></td>
         		</tr>
@@ -24208,7 +24099,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24311,7 +24202,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24414,7 +24305,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24511,19 +24402,19 @@
         	</table>
         </div>
     </div>
-</script>
-<script id="invoiceForm10" type="text/x-kendo-template">
+</script> -->
+<script id="invoiceForm6" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
         		<div class="span5">
         			<p data-bind="text: company.name"></p>
-        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
         			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
@@ -24532,35 +24423,390 @@
         		</div>
         	</div>
         	<div class="span12 clear mid-header">
-        		<div class="span3" style="margin-right: 15px;">
-        			<b>Customer Information</b><br><br>
+        		<div class="span7" style="margin-right: 15px;">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			<span data-bind="text: obj.contact[0].address"></span>
         			</p>
-        		</div>
-        		<div class="span3">
-        			<br>
         		</div>
         		<div class="span4" style="float:right;">
         			<p class="form-title" data-bind="text: obj.title"></p>
-        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
-        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span4">TERM OF PAYMENT</div>
-        		<div class="span4">MODE OF PAYMENT</div>
-        		<div class="span4">VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
         			<tr>
-        				<th width="90">CODE</th>
-        				<th>ITEM DESCRIPTION</th>
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>UM</th>
-        				<th>QTY</th>
-        				<th>UNIT PRICE</th>
-        				<th width="80">Total</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th width="80">សរុប<br>Total</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template6"
+						data-bind="source: lineDS">
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm7" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span7" style="margin-right: 15px;">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr>
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th width="80">សរុប<br>Total</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template6"
+						data-bind="source: lineDS">
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm8" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5" style="margin-right: 30px;">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" >
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear" style="margin: 20px 0;">
+        		<div class="span4" style="margin-right:45px;">
+        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>សរុប TOTAL <span data-bind="text: obj.amount"></span></p></div>
+        		</div>
+        		<div class="span7">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr>
+        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th width="80">សរុប<br>Total</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template8"
+						data-bind="source: lineDS">
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm9" type="text/x-kendo-template">
+	<div class="inv1 pcg pcg-border">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5" style="margin-right: 30px;">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" >
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear" style="margin: 20px 0;">
+        		<div class="span4" style="margin-right:45px;">
+        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>សរុប TOTAL <span data-bind="text: obj.amount"></span></p></div>
+        		</div>
+        		<div class="span7">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr>
+        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th width="80">សរុប<br>Total</th>
+        			</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template8"
+						data-bind="source: lineDS">
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
+        				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm10" type="text/x-kendo-template">
+	<div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span5">
+        		<div class="logo" style="width: 50%">
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+	            </div>
+        	</div>
+        	<div class="span7">
+        		<div class="span5">
+        			<p data-bind="text: company.name"></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        		</div>
+        		<div class="span5" style="float:right">
+        			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
+        			<p><b>Email: </b><span data-bind="text: company.email"></span></p>
+        			<p><b>Website: </b><span data-bind="text: company.website"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 clear mid-header">
+        		<div class="span7" style="margin-right: 15px;">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
+        			<p><span data-bind="text: obj.contact[0].name"></span><br>
+        			<span data-bind="text: obj.contact[0].address"></span>
+        			</p>
+        		</div>
+        		<div class="span4" style="float:right;">
+        			<p class="form-title" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+        			<tr>
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
+        				<th>UM</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th width="80">សរុប<br>Total</th>
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -24570,37 +24816,36 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
-        				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
         			</tr>
         			<tr>
-        				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
         				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
         	</table>
-        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
         		<tr>
-        			<td width="90">PREPARED BY</td><td width="120"></td>
-        			<td width="80">POSITION</td><td width="80"></td>
-        			<td>DATE</td><td width="120"></td>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
         		<tr>
-        			<td>REVIEWED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        		<tr>
-        			<td>APPROVED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
         	</table>
         </div>
@@ -24611,13 +24856,13 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
         		<div class="span5">
         			<p data-bind="text: company.name"></p>
-        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
         			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
@@ -24626,35 +24871,32 @@
         		</div>
         	</div>
         	<div class="span12 clear mid-header">
-        		<div class="span3" style="margin-right: 15px;">
-        			<b>Customer Information</b><br><br>
+        		<div class="span7" style="margin-right: 15px;">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			<span data-bind="text: obj.contact[0].address"></span>
         			</p>
-        		</div>
-        		<div class="span3">
-        			<br>
         		</div>
         		<div class="span4" style="float:right;">
         			<p class="form-title" data-bind="text: obj.title"></p>
-        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
-        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span4">TERM OF PAYMENT</div>
-        		<div class="span4">MODE OF PAYMENT</div>
-        		<div class="span4">VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
         	</div>
-        	<table class="span12" style="border-left: 0;border-bottom: 0;">
+        	<table class="span12" rules="rows">
         		<thead>
         			<tr>
-        				<th width="90">CODE</th>
-        				<th>ITEM DESCRIPTION</th>
+        				<th width="90">លេខកូដ<br>CODE</th>
+        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>UM</th>
-        				<th>QTY</th>
-        				<th>UNIT PRICE</th>
-        				<th width="80">Total</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th width="80">សរុប<br>Total</th>
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -24663,38 +24905,37 @@
 						data-template="invoiceForm-lineDS-template10"
 						data-bind="source: lineDS">
         		<tfoot>
-        			<tr style="border-left:0">
-        				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        			<tr>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
-        				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
         			</tr>
         			<tr>
-        				<td style="border:none;" colspan="3"></td>
-        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
         				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
         	</table>
-        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
         		<tr>
-        			<td width="120">PREPARED BY</td><td width="100"></td>
-        			<td>POSITION</td><td width="100"></td>
-        			<td>DATE</td><td width="80"></td>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
         		<tr>
-        			<td>REVIEWED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        		<tr>
-        			<td>APPROVED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
         	</table>
         </div>
@@ -24705,13 +24946,13 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
         		<div class="span5" style="margin-right: 30px;">
         			<p data-bind="text: company.name"></p>
-        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
         			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
@@ -24720,32 +24961,32 @@
         		</div>
         	</div>
         	<div class="span12 clear" style="margin: 20px 0;">
-        		<div class="span4" style="margin-right:65px;">
+        		<div class="span4" style="margin-right:45px;">
         			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
-        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
-        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
-        			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>TOTAL ORDER <span data-bind="text: obj.amount"></span></p></div>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>សរុប TOTAL <span data-bind="text: obj.amount"></span></p></div>
         		</div>
-        		<div class="span3">
-        			<b>Customer Information</b><br><br>
+        		<div class="span7">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			<span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span4">TERM OF PAYMENT</div>
-        		<div class="span4">MODE OF PAYMENT</div>
-        		<div class="span4">VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
         			<tr>
-        				<th width="200">ITEM DESCRIPTION</th>
+        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>UM</th>
-        				<th width="80">QTY</th>
-        				<th width="80">UNIT PRICE</th>
-        				<th width="100">Total</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th width="80">សរុប<br>Total</th>
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -24755,37 +24996,35 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
-        				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
         			</tr>
         			<tr>
-        				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
         				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
         	</table>
-        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
         		<tr>
-        			<td width="120">PREPARED BY</td><td width="100"></td>
-        			<td>POSITION</td><td width="100"></td>
-        			<td>DATE</td><td width="80"></td>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
         		<tr>
-        			<td>REVIEWED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        		<tr>
-        			<td>APROVED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
         	</table>
         </div>
@@ -24796,13 +25035,13 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
         		<div class="span5" style="margin-right: 30px;">
         			<p data-bind="text: company.name"></p>
-        			<p><b>Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
         			<p><b>Tel: </b><span data-bind="text: company.phone"></span></p>
@@ -24811,32 +25050,32 @@
         		</div>
         	</div>
         	<div class="span12 clear" style="margin: 20px 0;">
-        		<div class="span4" style="margin-right:65px;">
+        		<div class="span4" style="margin-right:45px;">
         			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
-        			<p><b>Sale Order Date : </b><span data-bind="text: obj.issued_date"></span></p>
-        			<p><b>Sale Order No. : </b><span data-bind="text: obj.number"></span></p>
-        			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>TOTAL ORDER <span data-bind="text: obj.amount"></span></p></div>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>សរុប TOTAL <span data-bind="text: obj.amount"></span></p></div>
         		</div>
-        		<div class="span3">
-        			<b>Customer Information</b><br><br>
+        		<div class="span7">
+        			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			<span data-bind="text: obj.contact[0].address"></span>
         			</p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span4">TERM OF PAYMENT</div>
-        		<div class="span4">MODE OF PAYMENT</div>
-        		<div class="span4">VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		
+        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
         	</div>
-        	<table class="span12" style="border-left:none;border-bottom: none;">
+        	<table class="span12" rules="rows">
         		<thead>
         			<tr>
-        				<th width="200">ITEM DESCRIPTION</th>
+        				<th>ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>UM</th>
-        				<th width="80">QTY</th>
-        				<th width="80">UNIT PRICE</th>
-        				<th width="100">Total</th>
+        				<th>ចំនួន<br>QTY</th>
+        				<th>តម្លៃ​ឯកតា<br>UNIT PRICE</th>
+        				<th width="80">សរុប<br>Total</th>
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -24844,39 +25083,37 @@
 						data-auto-bind="false"
 						data-template="invoiceForm-lineDS-template12"
 						data-bind="source: lineDS">
-        		<tfoot style="border-left:none;">
+        		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">SUB TOTAL</td>
+        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
-        				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">TAX (Rate:       )</td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
         			</tr>
         			<tr>
-        				<td style="border:none;" colspan="2"></td>
-        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">GRAND TOTAL</td>
+        				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
         				<td style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
         		</tfoot>
         	</table>
-        	<table class="span12" rules="rows" style="margin-top: 20px;">
+        	<table class="span12 left-tbl" rules="rows" style="margin-top: 20px;">
         		<tr>
-        			<td width="120">PREPARED BY</td><td width="100"></td>
-        			<td>POSITION</td><td width="100"></td>
-        			<td>DATE</td><td width="80"></td>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
         		<tr>
-        			<td>REVIEWED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
-        		</tr>
-        		<tr>
-        			<td>APROVED BY</td><td></td>
-        			<td>POSITION</td><td></td>
-        			<td>DATE</td><td></td>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
         	</table>
         </div>
@@ -24887,7 +25124,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -24979,7 +25216,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25106,7 +25343,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25233,7 +25470,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25356,7 +25593,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25509,7 +25746,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25664,7 +25901,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25819,7 +26056,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -25933,7 +26170,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -26066,7 +26303,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -26169,7 +26406,7 @@
         <div class="content clear">
         	<div class="span5">
         		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
         	<div class="span7">
@@ -26262,114 +26499,121 @@
         	<div class="span12">
 	        	<div class="span7">
 	        		<div class="logo" style="width: 40%">
-		            	<img style="width: " data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+		            	<img style="width: " data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 		            </div>
 	        	</div>
 	        	<div class="span5">
 	        		<div class="span12" style="margin-bottom: 10px;">
-	        			<img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" />
+	        			<h2 style="font-size: 24px;text-align: left;color:#10253f " data-bind="text: obj.title"></h2>
+	        			<!--img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" /-->
 	        		</div>
 	        		<div class="span12">
 	        			<table class="span12">
 	        				<tr>
-	        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Date</td>
-	        					<td data-bind="text: obj.issued_date"></td>
+	        					<td class="light-blue-td" width="100">កាលបរិច្ឆេទ Date</td>
+	        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
 	        				</tr>
 	        				<tr>
-	        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Receipt No.</td>
-	        					<td data-bind="text: obj.number"></td>
+	        					<td class="light-blue-td">លេខបបង្កាន់ដៃ Receipt No.</td>
+	        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 	        				</tr>
 	        			</table>
 	        		</div>
 	        	</div>
 	        </div>
         	<div class="span12" style="margin-top: 10px;">
-		    	<div class="span6" style="">
-		    		<table class="span12">
+		    	<div class="span7" style="margin-top: 10px;">
+		    		<table class="span11">
 						<tr>
-							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Recieve From</td>
-							<td data-bind="text: obj.issued_date"></td>
+							<td class="light-blue-td" width="120">ទទួលពីឈ្មោះ​ <br>Recieve From</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
 						</tr>
 						<tr>
-							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Contact Address</td>
-							<td data-bind="text: obj.number"></td>
+							<td class="light-blue-td">អស័យដ្ឋាន <br>Contact Address</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 						<tr>
-							<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Purpose</td>
-							<td data-bind="text: obj.number"></td>
+							<td class="light-blue-td">គោលបំណង​​ <br>Purpose</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+						</tr>
+						<tr>
+							<td class="light-blue-td">លេខយោង <br> Reference Document</td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 					</table>
 		    	</div>
 		    	<div class="span5" style="float:right">
-		    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
-		    		<div class="span12 main-color order-price">
-		    			<p><span style="color:#fff;text-align: center;" >USD 2,700.00</span></p>
+		    		<p style="padding: 5px 0; text-align: left;font-weight: bold;color: #000;">ចំនួនទទួលសរុប​ <br> TOTAL RECEIVED AMOUNT</p>
+		    		<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}">
+		    			<p><span class="total-amount" data-bind="text: obj.amount"></span></p>		    			
 		    		</div>
-		    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
+		    		<p style="padding: 5px 0;font-weight: bold;color: #000;clear:both;">វិធីសាស្រ្តទូទាត់​ Mode of payment</p>
 		    	</div>
 		    </div>
-        	<div class="span12" style="margin-top: 5px">
+        	<!--div class="span12">
         		<div class="span5">
-        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Reference Document</p>
         			<table class="span12">
 						<tr>
-							<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
-							<td data-bind="text: obj.issued_date"></td>
+							<td  width="120"></td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 						<tr>
 							<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
-							<td data-bind="text: obj.number"></td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 						<tr>
 							<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
-							<td data-bind="text: obj.number"></td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 						</tr>
 					</table>
         		</div>
         		<div class="span6" style="float:right">
-        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Mode of payment</p>
+        			<p style="padding: 5px 0;font-weight: bold;color: #000;">វិធីសាស្រ្តទូទាត់​ <br> Mode of payment</p>
         			<div class="span12">
         				<div class="span4">
         					<input type="radio" /> Cash<br>
         					<input type="radio" /> Direct debit<br>
-        					<input type="radio" /> In-kind
+        					<input type="radio" /> In-kind >
         				</div>
         				<div class="span4">
         					<input type="radio" /> Bank transfer<br>
         					<input type="radio" /> Check<br>
-        					<input type="radio" /> Others:
+        					<input type="radio" /> Others: >
         				</div>
         				<div class="span4">
+        					
         					Bank Acc:<br>
         					Check No.<br>
         					
         				</div>
         			</div>
         		</div>
-        	</div>
+        	</div-->
         	<div class="span12">
         		<div class="span8">
-        			<p style="color:black;margin: 10px 0;">The official receipt is considered official only it bears the offical stamp of PCG & Partners and the genuin signature of PCG & Partners officers.</p>
+        			<p style="color:black;margin: 10px 0;" data-bind="text: obj.note"></p>
         		</div>
         	</div>
         	<div class="span12">
         		<div class="span5">
-        			<p>On behalf of PCG & Partners Co., Ltd</p>
+        			<p>On behalf of <span data-bind="text: company.name"></span></p>
         			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
-        			<p style="font-weight: bold;">Sothy Lalinda</p>
+        			<p style="font-weight: bold;">Name</p>
         		</div>
         		<div class="span4" style="float:right;">
         			<p>Paid By:</p>
         			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
-        			<p style="font-weight: bold;"></p>
+        			<p style="font-weight: bold;">Name</p>
         		</div>
         	</div>
-
-        	<div class="span12 copywatermark">
+        	<div style="margin-top: 15px" class="span12">
+        		<p>Address: <span data-bind="text: company.address"></span> <sapn data-bind="text: company.city"></sapn> <span data-bind="text: company.country.name"></span>.</p>
+        	</div>
+        	<!--div class="span12 copywatermark">
 	        	<div class="span12" style="margin-top: 20px;border-top: 1px solid #000;padding-top: 15px;">
 		        	<div class="span7">
 		        		<div class="logo" style="width: 40%">
-			            	<img style="width: " data-bind="attr: { src: company.logo, alt: company.name, title: company.name }" />
+			            	<img style="width: " data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 			            </div>
 		        	</div>
 		        	<div class="span5">
@@ -26379,12 +26623,12 @@
 		        		<div class="span12">
 		        			<table class="span12">
 		        				<tr>
-		        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Date</td>
-		        					<td data-bind="text: obj.issued_date"></td>
+		        					<td class="light-blue-td" width="100">Date</td>
+		        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
 		        				</tr>
 		        				<tr>
-		        					<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Receipt No.</td>
-		        					<td data-bind="text: obj.number"></td>
+		        					<td class="light-blue-td">Receipt No.</td>
+		        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 		        				</tr>
 		        			</table>
 		        		</div>
@@ -26394,25 +26638,25 @@
 			    	<div class="span6" style="">
 			    		<table class="span12">
 							<tr>
-								<td style="background: #c6d9f1;text-align: left;padding-left: 5px;" width="100">Recieve From</td>
-								<td data-bind="text: obj.issued_date"></td>
+								<td class="light-blue-td"width="100">Recieve From</td>
+								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
 							</tr>
 							<tr>
-								<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Contact Address</td>
-								<td data-bind="text: obj.number"></td>
+								<td class="light-blue-td">Contact Address</td>
+								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 							</tr>
 							<tr>
-								<td style="background: #c6d9f1;text-align: left;padding-left: 5px;">Purpose</td>
-								<td data-bind="text: obj.number"></td>
+								<td class="light-blue-td">Purpose</td>
+								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 							</tr>
 						</table>
 			    	</div>
 			    	<div class="span5" style="float:right">
 			    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
-			    		<div class="span12 main-color order-price">
-			    			<p><span style="color:#fff;text-align: center;" >USD 2,700.00</span></p>
+			    		<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}">
+			    			<p><span class="total-amount" data-bind="text: obj.amount"></span></p>
 			    		</div>
-			    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;">Two Thousand Seven Hundred Fifty Dollars</p>
+			    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;"></p>
 			    	</div>
 			    </div>
 	        	<div class="span12" style="margin-top: 5px">
@@ -26421,15 +26665,15 @@
 	        			<table class="span12">
 							<tr>
 								<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
-								<td data-bind="text: obj.issued_date"></td>
+								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 							</tr>
 							<tr>
 								<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
-								<td data-bind="text: obj.number"></td>
+								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 							</tr>
 							<tr>
 								<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
-								<td data-bind="text: obj.number"></td>
+								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
 							</tr>
 						</table>
 	        		</div>
@@ -26471,7 +26715,7 @@
 	        			<p style="font-weight: bold;"></p>
 	        		</div>
 	        	</div>
-	        </div>
+	        </div-->
         </div>
     </div>
 </script>
@@ -26577,6 +26821,461 @@
         </div>
     </div>
 </script>
+<script id="invoiceForm27" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content">
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold">
+                        		<span data-bind="text: obj.contact[0].name"></span><br>
+                        		<span data-bind="text: obj.contact[0].address"></span>
+                        	</p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<!--div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
+                        </div-->
+                        <div class="left dotted-ruler" style="width: 78%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
+                            <td data-bind="text: obj.deposit"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td data-bind="text: obj.amount_due"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm28" type="text/x-kendo-template">
+	<div class="inv1">
+    	<div class="head">
+        	<div class="logo">
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+            </div>
+            <div class="cover-name-company">
+            	<h2 ></h2>
+                <h3 style="text-align:left;" data-bind="text: company.name"></h3>
+                <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
+                </div>
+                <div class="clear">
+                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold">
+                        		<span data-bind="text: obj.contact[0].name"></span><br>
+                        		<span data-bind="text: obj.contact[0].address"></span>
+                        	</p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<!--div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
+                        </div-->
+                        <div class="left dotted-ruler" style="width: 78%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​ Total (VAT included)</td>
+                            <td data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
+                            <td data-bind="text: obj.deposit"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td data-bind="text: obj.amount_due"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ទទួលបាន Cash Receipt</td>
+                            <td data-bind="text: obj.cash_receipt"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សមតុល្យ Balance</td>
+                            <td data-bind="text: obj.balance"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm29" type="text/x-kendo-template">
+	<div class="inv1">
+    	<div class="head">
+        	<div class="logo">
+            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+            </div>
+            <div class="cover-name-company">
+            	<h2 ></h2>
+                <h3 style="text-align:left;" data-bind="text: company.name"></h3>
+                <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
+                </div>
+                <div class="clear">
+                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
+                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.phone"></span></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រអាករ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold">
+                        		<span data-bind="text: obj.contact[0].name"></span><br>
+                        		<span data-bind="text: obj.contact[0].address"></span>
+                        	</p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<!--div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
+                        </div-->
+                        <div class="left dotted-ruler" style="width: 78%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                    <div class="vattin">
+                	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+                	</div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        	<div class="clear inv2">
+            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​ Sub Total</td>
+                            <td data-bind="text: obj.sub_total"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">អាករ​លើ​តម្លៃ​បន្ថែម ១០% VAT (10%)</td>
+                            <td data-bind="text: obj.tax"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">សរុបរួម​ Grand Total</td>
+                            <td data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">ប្រាក់កក់ Deposit</td>
+                            <td data-bind="text: obj.deposit"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">
+                        	សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td data-bind="text: obj.amount_due"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">
+                        	សាច់ប្រាក់ទទួលបាន Cash Receipt</td>
+                            <td data-bind="text: obj.cash_receipt"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding-right:10px;font-weight:bold;">
+                        	សមតុល្យ Balance</td>
+                            <td data-bind="text: obj.balance"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="invoiceForm30" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content">
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-weight:bold">
+                        		<span data-bind="text: obj.contact[0].name"></span><br>
+                        		<span data-bind="text: obj.contact[0].address"></span>
+                        	</p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<!--div class="left">
+                    		<p>ទូរស័ព្ទ​លេខ HP:</p>
+                        </div-->
+                        <div class="left dotted-ruler" style="width: 78%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th>ល.រ<br />N<sup>0</sup></th>
+                            <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th>បរិមាណ<br />Quantity</th>
+                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th>ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
+                            <td data-bind="text: obj.deposit"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td data-bind="text: obj.amount_due"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ទទួលបាន Cash Receipt</td>
+                            <td data-bind="text: obj.cash_receipt"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សមតុល្យ Balance</td>
+                            <td data-bind="text: obj.balance"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
 
 
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
@@ -26586,7 +27285,7 @@
 </script>
 <script id="invoiceForm-lineDS-template" type="text/x-kendo-template">
 	<tr>
-		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i></td>
+		<td><!--i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i-->&nbsp;</td>
 		<td style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td>#= quantity#</td>
 		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
@@ -28310,8 +29009,8 @@
 						<div class="span4">
 							<p style="text-align: center">Transaction</p>
 							<div class="total-customer" style="background: #d9edf7; color: #333;"> 
-								<span class="number">1.00</span>GB
-								<p>of 100.000 transaction</p>
+								<span class="number" data-bind="text:transactionSize"></span>GB
+								<p>of <span data-bind="text: transactionNu"></span> transaction</p>
 								
 								
 							</div>
@@ -28320,15 +29019,15 @@
 						<div class="span4">
 							<p style="text-align: center">Contacts/items</p>
 							<div class="total-customer" style="color: #333;">
-								<span class="number">0.50</span>GB
-								<p>of 50 contact/ items</p>
+								<span class="number" data-bind="text: contactSize"></span>GB
+								<p>of <span data-bind="text: contactNu"></span> contact/ items</p>
 							</div>
 						</div>
 
 						<div class="span4" style="padding-left: 15px;">
 							<p style="text-align: center">Total Attachment</p>
 							<div class="total-customer" style="background: #496cad; color: #fff;">
-								<span class="number">1.50</span>GB
+								<span class="number" data-bind="text: totalSize"></span>GB
 								<p>Used of 2.00 GB</p>
 							</div>
 						</div>
@@ -28357,12 +29056,16 @@
 </script>
 <script id="document-list-template" type="text/x-kendo-template">
 	<tr>
-		<td>#=name#</td>
+		<td><a href="#=url#">#=name#</a></td>
 		<td>#=description#</td>
 		<td>#=size#</td>
 		<td>
 			# if(attachedTo.type == "contact") {#
 				<a href="\#/customer_center/#=attachedTo.id#">#=attachedTo.name#</a>
+			#} else if(attachedTo.type == "transaction") {#
+				# var link = attachedTo.go; #
+				# var lowcase = link.toLowerCase(); #
+				<a href="\#/#=lowcase#/#=attachedTo.id#">#=attachedTo.name#</a>
 			#} else {#
 				<a href="\#/item_center/#=attachedTo.id#">#=attachedTo.name#</a>
 			#}#
@@ -28404,6 +29107,16 @@
 						    <div class="span4">
 						       	<a href="#/item_service" class="center">
 						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/txn_item" class="center">
+						       		<img title="Add Txn Item"  src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_txn_item.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/fixed_assets" class="center">
+						       		<img title="Add Txn Item"  src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_fixed_assets.ico" />
 						       	</a>
 						    </div>
 						</div>
@@ -28989,8 +29702,8 @@
 					
 			    	<div class="row-fluid">
 			    		<div class="span6 well">									
-							<div class="row-fluid">
-								<div class="span6">														
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">														
 									<!-- Group -->
 									<div class="control-group">										
 										<label for="ddlCategory"><span data-bind="text: lang.lang.category"></span> <span style="color:red">*</span></label>										
@@ -29031,8 +29744,8 @@
 								</div>
 							</div>
 							
-							<div class="row-fluid">
-								<div class="span6">										
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">										
 									<!-- Group -->
 									<div class="control-group">							
 										<label for="txtNumber">Number<span style="color:red">*</span></label>
@@ -29048,7 +29761,7 @@
 					              							events:{change: checkExistingNumber}" 
 					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
-					              				style="width: 127px;" />
+					              				style="width: 157px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
@@ -29066,8 +29779,8 @@
 								</div>								
 							</div>
 
-							<div class="row-fluid">
-								<div class="span6">
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="ddlCurrency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>							            
@@ -29103,7 +29816,7 @@
 						</div>
 						<div class="span6">
 
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -29123,7 +29836,7 @@
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6">
+								<div class="span6" style="padding: 0; ">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtCost"><span data-bind="text: lang.lang.cost"></span></label>
@@ -29139,7 +29852,7 @@
 								</div>
 							</div>
 
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -29154,7 +29867,7 @@
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6">	
+								<div class="span6" style="padding: 0; ">	
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtPrice"><span data-bind="text: lang.lang.price"></span></label>
@@ -29170,7 +29883,7 @@
 								</div>
 							</div>
 
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -29180,7 +29893,7 @@
 									</div>																		
 									<!-- // Group END -->
 								</div>
-								<div class="span6">
+								<div class="span6" style="padding: 0; ">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtSaleDescription">Sale Description</label>
@@ -29909,8 +30622,8 @@
 					
 			    	<div class="row-fluid">
 			    		<div class="span6 well">									
-							<div class="row-fluid">
-								<div class="span6">														
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">														
 									<!-- Group -->
 									<div class="control-group">										
 										<label for="ddlCategory"><span data-bind="text: lang.lang.category"></span> <span style="color:red">*</span></label>										
@@ -29951,8 +30664,8 @@
 								</div>
 							</div>
 							
-							<div class="row-fluid">
-								<div class="span6">	
+							<div class="row">
+								<div class="span6" style="padding-right: 0">	
 									<!-- Group -->
 									<div class="control-group">							
 										<label for="txtNumber">Number<span style="color:red">*</span></label>
@@ -29968,7 +30681,7 @@
 					              							events:{change: checkExistingNumber}" 
 					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
-					              				style="width: 128px;" />
+					              				style="width: 157px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
@@ -29986,7 +30699,7 @@
 								</div>								
 							</div>
 
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">																					
 									<!-- Group -->
 									<div class="control-group">										
@@ -30015,7 +30728,7 @@
 						</div>
 						<div class="span6">
 						
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -30035,7 +30748,7 @@
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6">
+								<div class="span6"  style="padding: 0;">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtCost"><span data-bind="text: lang.lang.cost"></span></label>
@@ -30051,7 +30764,7 @@
 								</div>
 							</div>
 
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -30069,7 +30782,7 @@
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6">	
+								<div class="span6"  style="padding: 0;">	
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtPrice"><span data-bind="text: lang.lang.price"></span></label>
@@ -30085,7 +30798,7 @@
 								</div>
 							</div>
 
-							<div class="row-fluid">
+							<div class="row">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -30095,7 +30808,7 @@
 									</div>																		
 									<!-- // Group END -->
 								</div>
-								<div class="span6">
+								<div class="span6" style="padding: 0;">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtSaleDescription">Sale Description</label>
@@ -30320,8 +31033,8 @@
 					
 			    	<div class="row-fluid">
 			    		<div class="span6 well">									
-							<div class="row-fluid">
-								<div class="span6">														
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">														
 									<!-- Group -->
 									<div class="control-group">										
 										<label for="ddlCategory"><span data-bind="text: lang.lang.category"></span> <span style="color:red">*</span></label>										
@@ -30362,8 +31075,8 @@
 								</div>
 							</div>
 							
-							<div class="row-fluid">
-								<div class="span6">	
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">	
 									<!-- Group -->
 									<div class="control-group">							
 										<label for="txtNumber">Number<span style="color:red">*</span></label>
@@ -30379,7 +31092,7 @@
 					              							events:{change: checkExistingNumber}" 
 					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
-					              				style="width: 128px;" />
+					              				style="width: 157px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
@@ -30388,17 +31101,17 @@
 								<div class="span6">						
 									<!-- Group -->
 									<div class="control-group">
-										<label for="txtName"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
+										<label for="txtName"><span data-bind="text: lang.lang.name"></span> <span style="color:red; resize: none;">*</span></label>
 					              		<input id="txtName" name="txtName" class="k-textbox" data-header-template="item-group-header-tmpl" data-bind="value: obj.name, disabled: obj.is_pattern" 
 							              		placeholder="item name..." required data-required-msg="required"
-							              		style="width: 100%;" />
+							              		style="width: 100%; resize: none;" />
 									</div>
 									<!-- // Group END -->	
 								</div>								
 							</div>
 
-							<div class="row-fluid">
-								<div class="span6">																					
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">																					
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="ddlMeasurement"><span data-bind="text: lang.lang.unit_measure"></span> <span style="color:red">*</span></label>
@@ -30434,25 +31147,25 @@
 								</div>								
 							</div>							
 						</div>
-						<div class="span6">	
+						<div class="span6" style="padding-right: 0;">	
 
 							<div class="row-fluid">
 
 								<!-- Group -->
-								<div class="control-group">								
+								<div class="control-group" style="padding: 0; margin-bottom: 9px;">								
 									<label for="txtPurchaseDescription">Purchase Description</label>
 						            <textarea id="txtPurchaseDescription" cols="0" rows="3" class="k-textbox" 
-										data-bind="value: obj.purchase_description" style="width: 100%;"></textarea>
+										data-bind="value: obj.purchase_description" style="width: 100%; resize: none;"></textarea>
 								</div>																		
 								<!-- // Group END -->
 
-								<br>
+								
 
 								<!-- Group -->
-								<div class="control-group">								
+								<div class="control-group" style="padding: 0;">								
 									<label for="txtSaleDescription">Sale Description</label>
 						            <textarea id="txtSaleDescription" cols="0" rows="3" class="k-textbox" 
-										data-bind="value: obj.sale_description" style="width: 100%;"></textarea>
+										data-bind="value: obj.sale_description" style="width: 100%;resize: none;"></textarea>
 								</div>																		
 								<!-- // Group END -->
 
@@ -30735,8 +31448,8 @@
 					
 			    	<div class="row-fluid">
 			    		<div class="span6 well">									
-							<div class="row-fluid">
-								<div class="span6">														
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">														
 									<!-- Group -->
 									<div class="control-group">										
 										<label for="ddlCategory"><span data-bind="text: lang.lang.category"></span> <span style="color:red">*</span></label>										
@@ -30756,7 +31469,7 @@
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6">	
+								<div class="span6" >	
 									<!-- Group -->
 									<div class="control-group">										
 										<label for="ddlItemGroup"><span data-bind="text: lang.lang.group"></span> </label>										
@@ -30777,8 +31490,8 @@
 								</div>
 							</div>
 							
-							<div class="row-fluid">
-								<div class="span6">										
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">										
 									<!-- Group -->
 									<div class="control-group">							
 										<label for="txtNumber">Number<span style="color:red">*</span></label>
@@ -30794,7 +31507,7 @@
 					              							events:{change: checkExistingNumber}" 
 					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
-					              				style="width: 128px;" />
+					              				style="width: 157px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
@@ -30812,8 +31525,8 @@
 								</div>								
 							</div>
 
-							<div class="row-fluid">
-								<div class="span6">
+							<div class="row">
+								<div class="span6" style="padding-right: 0;">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
@@ -30832,7 +31545,7 @@
 															
 							</div>							
 						</div>
-						<div class="span6">
+						<div class="span6" style="    padding: 0;">
 
 							<div class="row-fluid">
 								<div class="span6">
@@ -30854,7 +31567,7 @@
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6">
+								<div class="span6" style="    padding: 0;">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtCost"><span data-bind="text: lang.lang.cost"></span></label>
@@ -30887,7 +31600,7 @@
 									</div>																		
 									<!-- // Group END -->								
 								</div>
-								<div class="span6">
+								<div class="span6" style="    padding: 0;">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="txtPrice"><span data-bind="text: lang.lang.price"></span></label>
@@ -30906,7 +31619,7 @@
 							</div>
 
 							<div class="row-fluid">
-								<div class="span12">
+								<div class="span12" style="padding-right: 0;">
 									
 									<!-- Group -->
 									<div class="control-group">								
@@ -32040,7 +32753,7 @@
 					    <button class="btn btn-default" type="button" data-bind="click: addCategory"><i class="icon-plus"></i> Add Category</button>					  
 					</div>
 		            
-	            	<table class="table table-bordered table-white">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>	
 	            				<th>NAME</th>	
@@ -32075,7 +32788,7 @@
 					    <button class="btn btn-default" type="button" data-bind="click: addItemGroup"><i class="icon-plus"></i> Add Group</button>					  
 					</div>
 		            
-	            	<table class="table table-bordered table-white">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
 	            				<th>Name</th>	
@@ -32098,7 +32811,7 @@
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Measurement..." data-bind="value: measurement_name">					    
 					    <button class="btn btn-default" type="button" data-bind="click: addMeasurement"><i class="icon-plus"></i> Add Measurement</button>					  
 					</div>
-	            	<table class="table table-bordered table-white">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
 	            				<th>Measurement</th>	            				
@@ -32122,7 +32835,7 @@
 					    <button class="btn btn-default" type="button" data-bind="click: addBrand"><i class="icon-plus"></i> Add Brand</button>					  
 					</div>
 		            
-	            	<table class="table table-bordered table-white">
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
 	            				<th>Code</th>
@@ -32151,13 +32864,13 @@
    		<td>
     		#:name#
    		</td>
-   		<td>
+   		<td align="center">
     		#:abbr#
    		</td>
-   		<td>
+   		<td align="center">
     		#:item_type.length>0 ? item_type[0].name : ""#
    		</td>   		
-   		<td>   			
+   		<td align="center">   			
    			<div class="edit-buttons">       
 		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
 		        #if(is_system=="0"){#
@@ -32199,13 +32912,13 @@
    		<td>
     		#:name#
    		</td>
-   		<td>
+   		<td align="center">
     		#:abbr#
    		</td>
-   		<td>
+   		<td align="center">
     		#:category[0].name#
    		</td>   		
-   		<td>	        
+   		<td align="center">	        
         	<div class="edit-buttons">
 	        	<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
 	        	<a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
@@ -32246,7 +32959,7 @@
     	<td>
     		#:name#
    		</td>
-   		<td>   			
+   		<td align="center">   			
    			<div class="edit-buttons">       
 		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
 		        #if(is_system=="0"){#
@@ -32275,13 +32988,13 @@
     	<td>
     		 #:code#
    		</td>
-   		<td>
+   		<td align="center">
     		 #:name#
    		</td>
-   		<td>
+   		<td align="center">
     		 #:abbr#
    		</td>
-   		<td>
+   		<td align="center">
    			<div class="edit-buttons">		        
 	        	<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
 	        	<a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>		        
@@ -35623,11 +36336,10 @@
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="span4 report-module">
-				<p>
-					<span style="font-size: 20px;font-weight: 700; width: 100%">Reports</span><br>
-					<span>
-						This module consolidates different modules report into one place. In addition, ratio analysis is also included in this module
-					</span>
+				<h2 style="font-family: 'Open Sans', sans-serif;margin: 0 0 5px;font-weight: 400; color: #4d4d4d; font-size: 26px;">REPORTS</h2>
+				<p style="margin: 0 0 10px; line-height: normal;">					
+					This module consolidates different modules report into one place. In addition, ratio analysis is also included in this module
+					
 				</p>
 			</div>
 			<div class="span8">				
@@ -35637,7 +36349,7 @@
 		<div class="span12">
 			<div class="span4">
 				<div class="widget widget-3 customer-border">
-					<div class="widget-head">
+					<div class="widget-head header-custome">
 						<h4 class="heading">
 							How efficient is your working capital management?
 						</h4>
@@ -35674,7 +36386,7 @@
 			</div>
 			<div class="span4">				
 				<div class="widget widget-3 customer-border">
-					<div class="widget-head">
+					<div class="widget-head header-custome">
 						<h4 class="heading">
 							WHAT IS YOUR ABILITY TO MEET YOUR PRESENT OBLIGATIONS?
 						</h4>
@@ -35711,7 +36423,7 @@
 			</div>
 			<div class="span4">	
 				<div class="widget widget-3 customer-border">
-					<div class="widget-head">
+					<div class="widget-head header-custome">
 						<h4 class="heading">
 							How profitable is your business?
 						</h4>
@@ -35756,7 +36468,11 @@
 							<li class="active"><a href="#tab-1" data-toggle="tab"><i></i>Customer</a></li>
 							<li><a href="#tab-2" data-toggle="tab"><i></i>Suppliers</a></li>
 							<li><a href="#tab-3" data-toggle="tab"><i></i>Products/Services</a></li>
-							<li><a href="#tab-4" data-toggle="tab"><i></i>Accounting</a></li>
+							<li><a href="#tab-4" data-toggle="tab"><i></i>Cash</a></li>
+							<li><a href="#tab-5" data-toggle="tab"><i></i>Periods-end</a></li>
+							<li><a href="#tab-6" data-toggle="tab"><i></i>Financial Statements</a></li>
+							<li><a href="#tab-7" data-toggle="tab"><i></i>Segments Reporting</a></li>
+							<li><a href="#tab-8" data-toggle="tab"><i></i>Job Tracking</a></li>
 						</ul>
 					</div>
 
@@ -36218,6 +36934,53 @@
 
 				        	<div class="tab-pane" id="tab-4">								        	
 					        	<div class="row-fluid">
+									<div class="row-fluid sale-report" style="margin-top: 15px;">
+										<h2>CASH POSITION</h2>
+										<p>
+											The following reports provide summary and detailed reports on employee related transactions.  
+										</p>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/">Cash Position Report</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/">Cash Payment Report</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/">Cash Receipt Report</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price. 
+													</td>
+													<td class="span4">
+														Lists of all transactions related to and grouped by each inventory with analysis of average gross profit margin.
+													</td>
+													<td class="span4">
+														Lists individual inventory movement transactions by date for each inventory within a period of time.
+													</td>
+												</tr>
+												<tr>													
+													<td class="span4">
+														<h3><a href="#/">Reconciliation Report</a></h3>
+													</td>
+												</tr>
+												<tr>													
+													<td class="span4">
+														List of all cash related reconciliation reports.
+													</td>
+												</tr>
+											</table>					
+										</div>
+									</div>									
+					        	</div>
+				        	</div>
+
+				        	<div class="tab-pane" id="tab-5">								        	
+					        	<div class="row-fluid">
 					        		<div class="row-fluid sale-report">
 										<h2>PERIOD-END CLOSING REPORTS</h2>
 										<div class="row-fluid">
@@ -36269,7 +37032,55 @@
 												</tr>
 											</table>
 										</div>
+									</div>									
+					        	</div>
+
+					        	<div class="row-fluid recevable-report" style="margin-top: 15px; display: inline-block;">
+										<h2>OTHER REPORTS/ LISTS</h2>
+										<div class="row-fluid">
+											<table class="span12">
+												<tr>
+													<td class="span4">
+														<h3><a href="#/chart_of_account">Chart of Account </a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/audit_trial_report">Audit Trial Report</a></h3>								
+													</td>
+													<td class="span4">
+														<h3><a href="#/recurring_journal_list">Recurring Journal List</a></h3>							
+													</td>						
+												</tr>
+												<tr>
+													<td class="span4">
+														Lists of all accounts with name, type, and balance.
+													</td>
+													<td class="span4"></td>
+													<td class="span4"></td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<h3><a href="#/">Realized Exchange Gains & Losses</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/">Unrealized Exchange Gains & Losses</a></h3>							
+													</td>						
+												</tr>
+												<tr>
+													<td class="span4">
+														This detailed report lists foreign transactions that are closed (referred to as realized gains and losses) and totals the gains and losses due to changes in exchange rates.
+													</td>
+													<td class="span4">
+														This summary report lists your foreign accounts and calculates the potential gain or loss for each account.
+													</td>							
+												</tr>												
+											</table>
+										</div>
 									</div>
+
+				        	</div>
+
+				        	<div class="tab-pane" id="tab-6">								        	
+					        	<div class="row-fluid">
 
 									<div class="row-fluid recevable-report" style="margin-top: 15px;">
 										<h2>FINANCIAL STATEMENTS</h2>
@@ -36324,92 +37135,23 @@
 										</div>
 									</div>
 
-									<div class="row-fluid sale-report" style="margin-top: 15px;">
-										<h2>CASH POSITION</h2>
-										<p>
-											The following reports provide summary and detailed reports on employee related transactions.  
-										</p>
-										<div class="row-fluid">
-											<table class="span12">
-												<tr>
-													<td class="span4">
-														<h3><a href="#/">Cash Position Report</a></h3>
-													</td>
-													<td class="span4">
-														<h3><a href="#/">Cash Payment Report</a></h3>
-													</td>
-													<td class="span4">
-														<h3><a href="#/">Cash Receipt Report</a></h3>
-													</td>
-												</tr>
-												<tr>
-													<td class="span4">
-														Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price. 
-													</td>
-													<td class="span4">
-														Lists of all transactions related to and grouped by each inventory with analysis of average gross profit margin.
-													</td>
-													<td class="span4">
-														Lists individual inventory movement transactions by date for each inventory within a period of time.
-													</td>
-												</tr>
-												<tr>													
-													<td class="span4">
-														<h3><a href="#/">Reconciliation Report</a></h3>
-													</td>
-												</tr>
-												<tr>													
-													<td class="span4">
-														List of all cash related reconciliation reports.
-													</td>
-												</tr>
-											</table>					
-										</div>
-									</div>
+									
 
-									<div class="row-fluid recevable-report" style="margin-top: 15px; display: inline-block;">
-										<h2>OTHER REPORTS/ LISTS</h2>
-										<div class="row-fluid">
-											<table class="span12">
-												<tr>
-													<td class="span4">
-														<h3><a href="#/chart_of_account">Chart of Account </a></h3>
-													</td>
-													<td class="span4">
-														<h3><a href="#/audit_trial_report">Audit Trial Report</a></h3>								
-													</td>
-													<td class="span4">
-														<h3><a href="#/recurring_journal_list">Recurring Journal List</a></h3>							
-													</td>						
-												</tr>
-												<tr>
-													<td class="span4">
-														Lists of all accounts with name, type, and balance.
-													</td>
-													<td class="span4"></td>
-													<td class="span4"></td>
-												</tr>
-												<tr>
-													<td class="span4">
-														<h3><a href="#/">Realized Exchange Gains & Losses</a></h3>
-													</td>
-													<td class="span4">
-														<h3><a href="#/">Unrealized Exchange Gains & Losses</a></h3>							
-													</td>						
-												</tr>
-												<tr>
-													<td class="span4">
-														This detailed report lists foreign transactions that are closed (referred to as realized gains and losses) and totals the gains and losses due to changes in exchange rates.
-													</td>
-													<td class="span4">
-														This summary report lists your foreign accounts and calculates the potential gain or loss for each account.
-													</td>							
-												</tr>												
-											</table>
-										</div>
-									</div>
+									
 					        	</div>
 				        	</div>
+
+				        	<div class="tab-pane" id="tab-7">
+				        		<div align="center" style="min-height: 150px;">
+				        			<h1 style="font-style: 30px; margin-top: 20px;">Coming Soon</h1>
+				        		</div>
+				        	</div>
+				        	<div class="tab-pane" id="tab-8">
+				        		<div align="center" style="min-height: 150px;">
+				        			<h1 style="font-style: 30px;margin-top: 20px;">Coming Soon</h1>
+				        		</div>
+				        	</div>
+
 					    </div>
 					</div>
 				</div>
@@ -36685,15 +37427,16 @@
 	  	<li><a href='#/accounting_center'>CENTER</a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'> 				 				  				
-  				<li><a href='#/segment'>Add Segment</a></li>  				
-  				<li><a href='#/sale_tax'>Add Tax Item</a></li>  				
-  				<li><a href='#/account'>Add Account</a></li>  
+  			<ul class='dropdown-menu'>
+  				<li><a href='#/sale_tax'>Add Transaction Item</a></li>  				
+  				<li><a href='#/account'>Add Account</a></li>
+  				<li><a href='#/segment'>Add Segment</a></li>    
   				<li> <span class="li-line"></span></li>
-  				<li><a href='#/journal'>Add Journal Entry</a></li> 
-  				<li><a href='#/cash_transaction'>Add Cash Transacetion</a></li>
-  				<li><a href='#/cash_advance'>Add Cash Advance</a></li>
-  				<li><a href='#/expense'>Add Expense</a></li> 
+  				<li><a href='#/journal'>Make Journal Entry</a></li> 
+  				<li><a href='#/cash_transaction'>Make Cash Transaction</a></li>
+  				<li><a href='#/cash_advance'>Make Cash Advance</a></li>
+  				<li><a href='#/expense'>Make Expense</a></li> 
+  				<li> <span class="li-line"></span></li> 		
   				<li><a href='#/currency_rate'>Set Exchange Rate</a></li>				  				 				  				 				
   			</ul>
 	  	</li>	  	  	
@@ -36726,17 +37469,18 @@
   			<ul class='dropdown-menu'>
   				<li><a href='#/vendor'>Add Supplier</a></li>
   				<li><a href='#/item'>Add Inventory</a></li>
-  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+  				<li><a href='#/non_inventory_part'>Add Non-Inventory for Sale</a></li>
   				<li><a href='#/item_service'>Add Service</a></li>
-  				<li><a href='#/fixed_asset'>Add Fixed Assets</a></li>
+  				<li><a href='#/fixed_assets'>Add Fixed Assets</a></li>
   				<li><a href="#/txn_item">Add Transaction Item</a></li>
   				<li> <span class="li-line"></span></li>			  				
-  				<li  style="padding-top: 10px;"><a href='#/purchase_order'>Create Purchase Order</a></li>
+  				<li  style="padding-top: 10px;"><a href='#/purchase_order'>Make Purchase Order</a></li>
   				<li><a href='#/vendor_deposit'>Make Supplier Deposit</a></li>
-  				<li><a href='#/grn'>Goods Received Note</a></li> 
+  				<li><a href='#/grn'>Make Goods Received Note</a></li> 
   				<li><a href='#/purchase'>Make Purchase</a></li>  				
-  				<li><a href='#/purchase_return'>Purchase Return</a></li>  				
-  				<li><a href='#/cash_payment'>Cash Payment</a></li>
+  				<li><a href='#/purchase_return'>Make Purchase Return</a></li>  				
+  				<li><a href='#/cash_payment'>Make Cash Payment</a></li>
+  				<li> <span class="li-line"></span></li> 		
   				<li><a href='#/customer_recurring'>Supplier Recurring List</a></li>  			 				  				 				
   			</ul>
 	  	</li>	  	  	
@@ -36754,18 +37498,20 @@
   				<li><a href='#/customer'>Add Customer</a></li> 
   				<li ><a href='#/job'>Add Job</a></li>
   				<li><a href='#/item'>Add Inventory</a></li>
-  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
+  				<li><a href='#/non_inventory_part'>Add Non-Inventory for Sale</a></li>
   				<li><a href='#/item_service'>Add Service</a></li>
   				<li ><a href="#/txn_item">Add Transaction Item</a></li>
   				<li> <span class="li-line"></span></li>
-  				<li style="padding-top: 10px;"><a href='#/quote'>Add Quote</a></li>  				
-  				<li><a href='#/sale_order'>Add Sale Order</a></li>
-  				<li><a href='#/gdn'>Add Goods Delivery Note</a></li>
-  				<li><a href='#/customer_deposit'>Receive Customer Deposit</a></li>
-  				<li><a href='#/cash_sale'>Make Cash Sale</a></li>  				
+  				<li style="padding-top: 10px;"><a href='#/quote'>Create Quotation</a></li>  				
+  				<li><a href='#/sale_order'>Create Sale Order</a></li>
+  				<li><a href='#/gdn'>Create Goods Delivery Note</a></li>
+  				<li><a href='#/customer_deposit'>Create Customer Deposit</a></li>
+  				<li><a href='#/cash_sale'>Create Cash Sale</a></li>  				
   				<li><a href='#/invoice'>Create Invoice</span></a></li>  				
-  				<li><a href='#/cash_receipt'>Make Cash Receipt</a></li>
-  				<li><a href='#/statement'>Prepare Statement</a></li>  				
+  				<li><a href='#/cash_receipt'>Create Cash Receipt</a></li>
+  				<li><a href='#/sale_return'>Create Sale Return</a></li>
+  				<li><a href='#/statement'>Create Statement</a></li> 
+  				<li> <span class="li-line"></span></li> 				
   				<li><a href='#/customer_recurring'>Customer Recurring List</a></li>  				 				  				 				
   			</ul>
 	  	</li>	  	  	
@@ -36844,18 +37590,19 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/item'>Add Inventory</a></li>
+  				<li><a href='#/item'>Add Inventory for Sale</a></li>
+  				<li><a href='#/non_inventory_part'>Add Non-Inventory for Sale</a></li>
+  				<li><a href='#/item_service'>Add Service Items</a></li>
+  				<li ><a href="#/txn_item">Add Transaction Item</a></li>
+  				<li><a href='#/item_assembly'>Add Item Assembly</a></li>  
   				<li><a href='#/item_catalog'>Add Catalog</a></li>
-  				<li><a href='#/item_assembly'>Add Assembly</a></li>
-  				<li><a href='#/non_inventory_part'>Add Other Inventory</a></li>
-  				<li><a href='#/item_service'>Add Service</a></li>
-  				<li ><a href="#/txn_item">Add Transaction Item</a></li>  				
-  				<li><a href='#/fixed_assets'>Add Fixed Assets</a></li>
-  				<li><a href='#/internal_usage'>Add Internal Usage</a></li>
+  				<li><a href='#/fixed_assets'>Add Fixed Assets</a></li>  				
   				<li> <span class="li-line"></span></li> 
-  				<li><a href='#/grn'>Add Received Note</a></li>
-  				<li><a href='#/gdn'>Add Delivery Note</a></li>
-  				<li><a href='#/item_adjustment'>Item Adjustment</a></li>
+  				<li><a href='#/grn'>Create Received Note</a></li>
+  				<li><a href='#/gdn'>Create Delivery Note</a></li>
+  				<li><a href='#/item_adjustment'>Create Item Adjustment</a></li>  				
+  				<li><a href='#/internal_usage'>Create Internal Usage</a></li>	
+  				<li> <span class="li-line"></span></li> 	
   				<li><a href='#/customer_recurring'>Inventory Recurring List</a></li>  				 				 				  				 				
   			</ul>
 	  	</li>	  	  	
@@ -36877,7 +37624,6 @@
 	  	<li><a href='#/' class='glyphicons settings'><i></i></a></li>	  				
 	</ul>
 </script>
-
 
 
 
@@ -36990,6 +37736,11 @@
             file            : files[0].rawFile
           });
         },
+        transactionSize: 0,
+        contactSize   : 0,
+        totalSize 	  : 0,
+        transactionNu : 0,
+        contactNu 	  : 0,
         save                : function(contact_id){
           $.each(banhji.fileManagement.dataSource.data(), function(index, value){ 
             banhji.fileManagement.dataSource.at(index).set("transaction_id", contact_id);
@@ -38400,11 +39151,12 @@
 	});
 	banhji.index = kendo.observable({
 		lang 				: langVM,
-		dataSource			: dataStore(apiUrl+"contact_reports/home"),
+		dataSource			: dataStore(apiUrl+"dashboards/home"),
+		summaryDS			: dataStore(apiUrl+"accounting_reports/home_summary"),
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "contact_reports/home_graph",
+					url: apiUrl + "dashboards/home_graph",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -38494,7 +39246,13 @@
 		ap 					: 0,
 		ap_open 			: 0,
 		ap_vendor 			: 0,
-		ap_overdue 			: 0,		
+		ap_overdue 			: 0,
+		income 				: 0,
+		expense 			: 0,
+		net_income 			: 0,
+		asset 				: 0,
+		liability 	 		: 0,
+		equity 	 			: 0,		
 		pageLoad 			: function(){
 			var self = this;
 
@@ -38516,6 +39274,22 @@
 				self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
 				self.set("ap_vendor", kendo.toString(view[0].ap_vendor, "n0"));
 				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
+			});
+
+			this.summaryDS.query({
+				filter: [],								
+				page: 1,
+				pageSize: 5
+			}).then(function(){
+				var view = self.summaryDS.view();				
+				
+				self.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				
+				self.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
 			});										
 		}
 	});
@@ -41591,7 +42365,9 @@
 		showSegment 		: false,
 		currentSort 		: "asc",							
 		pageLoad 			: function(){
-			
+			if(this.dataSource.total()>0){
+				this.dataSource.fetch();
+			}
 		},
 		sort 				: function(e){
 			var col = "",
@@ -41661,6 +42437,9 @@
 		currentSort 		: "asc",
 		company 			: banhji.institute,							
 		pageLoad 			: function(){
+			if(this.dataSource.total()>0){
+				this.search();
+			}
 		},
 		displayDate 		: function(){
 			var d = "",
@@ -42012,11 +42791,11 @@
 	**********************/
 	banhji.employeeDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "contact_reports/customer_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
-		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_product"),
-		graphDS 			: dataStore(apiUrl + 'contact_reports/monthly_sale'),
+		summaryDS 			: dataStore(apiUrl + "dashboards/customer_summary"),
+		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
+		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "dashboards/top_product"),
+		graphDS 			: dataStore(apiUrl + 'dashboards/monthly_sale'),
 		sale 				: 0,
 		sale_customer 		: 0,
 		sale_product 		: 0,
@@ -42999,7 +43778,8 @@
 
 			this.dataSource.insert(0, {
 				recurring_id 		: "",
-				account_id 			: "",				
+				account_id 			: 1,
+				payment_method_id 	: 1,				
 				user_id 			: this.get("uer_id"), 	    			    		
 			   	type				: "Cash_Advance", //required			   		   				   		   					   				   	
 			   	amount				: 0,
@@ -43257,6 +44037,8 @@
 					locale				: value.locale
 				});						
 			});
+
+			this.journalLineDS.sync();
 		},
 		//Recurring	
 		loadRecurring 		: function(){
@@ -43528,6 +44310,7 @@
 		currencyDS  		: banhji.source.currencyDS,
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),		
 		accountDS  			: banhji.source.accountDS,
+		jobDS				: dataStore(apiUrl + "jobs"),
 		cashAccountDS  		: banhji.source.cashAccountDS,
 		expenseAccountDS    : banhji.source.expenseAccountDS,
 		taxItemDS  			: dataStore(apiUrl + "tax_items"),
@@ -43590,6 +44373,7 @@
 		enableRef 	 		: false,
 		showRef 			: true,
 		showName 			: false,
+		showJob 			: false,
 		showSegment 		: false,
 		showCashAdvance 	: false,		
 		sub_total 			: 0,
@@ -43726,31 +44510,11 @@
 			var obj = this.get("obj");
 
 	    	if(obj.contact_id>0){		    			    	
-		    	contact = this.contactDS.get(obj.contact_id);
+		    	var contact = this.contactDS.get(obj.contact_id);
 		    			    	
-		    	obj.set("locale", contact.locale);
-
-		    	this.referenceDS.filter([
-		    		{ field:"contact_id", value: obj.contact_id },
-		    		{ field:"type", value: "Cash_Advance" },
-		    		{ field:"status", value: 0 }
-		    	]);
-		    	
+		    	obj.set("locale", contact.locale);		    	
 		    	this.setRate();		    			    			    	
 	    	}
-	    },
-	    referenceChanges 	: function(){
-	    	var obj = this.get("obj");
-	    	if(obj.reference_id>0){
-	    		var reference = this.referenceDS.get(obj.reference_id);
-	    		obj.set("credit", reference.amount);
-
-	    		this.referenceLineDS.filter({ field:"transaction_id", value:obj.reference_id });
-	    	}else{
-	    		obj.set("credit", 0);
-	    	}
-
-	    	this.changes();
 	    },
 	    typeChanges 		: function(){
 	    	var obj = this.get("obj");
@@ -43836,7 +44600,7 @@
 			this.dataSource.insert(0, {
 				recurring_id 		: "",
 				reference_id 		: "",
-				account_id 			: "",				
+				account_id 			: 1,				
 				user_id 			: this.get("uer_id"), 	    			    		
 			   	type				: "Direct_Expense", //required
 			   	sub_total 			: 0,
@@ -43873,6 +44637,7 @@
 			this.lineDS.add({					
 				transaction_id 		: obj.id,
 				tax_item_id 		: "",
+				job_id 				: "",
 				contact_id 			: "",				
 				account_id 			: "",								
 				description 		: "",
@@ -44590,14 +45355,14 @@
 	**********************/
 	banhji.vendorDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "contact_reports/supplier_dashboard_summary"),
-		topContactDS 		: dataStore(apiUrl + "contact_reports/top_supplier"),
-		topAPDS 			: dataStore(apiUrl + "contact_reports/top_ap"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_purchase_product"),		
+		summaryDS 			: dataStore(apiUrl + "dashboards/supplier_dashboard_summary"),
+		topContactDS 		: dataStore(apiUrl + "dashboards/top_supplier"),
+		topAPDS 			: dataStore(apiUrl + "dashboards/top_ap"),
+		topProductDS 		: dataStore(apiUrl + "dashboards/top_purchase_product"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "contact_reports/monthly_purchase",
+					url: apiUrl + "dashboards/monthly_purchase",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -44632,16 +45397,12 @@
 		ap_customer 		: 0,
 		ap_overdue 			: 0,						
 		pageLoad 			: function(){
-			var self = this, today = new Date(),
-			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+			var self = this;
 
 			this.summaryDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],								
+				filter: [],								
 				page: 1,
-				pageSize: 5
+				pageSize: 100
 			}).then(function(){
 				var view = self.summaryDS.view();
 				
@@ -44661,28 +45422,19 @@
 			});
 
 			this.topContactDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],								
+				filter: [],								
 				page: 1,
 				pageSize: 5
 			});
 
 			this.topAPDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],							
+				filter: [],							
 				page: 1,
 				pageSize: 5
 			});
 
 			this.topProductDS.query({
-				filter: [
-					{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],							
+				filter: [],							
 				page: 1,
 				pageSize: 5
 			});										
@@ -45161,6 +45913,7 @@
 		settlementDiscountDS 	: banhji.source.supplierSettlementDiscountDS,
 		genders					: banhji.source.genderList,
 		statusList 				: banhji.source.statusList,
+		confirmMessage 			: banhji.source.confirmMessage,
 		isEdit 					: false,
         obj 					: null,
         saveClose 				: false,
@@ -45436,7 +46189,7 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
 
-			if(obj.status==0){
+			if(obj.is_pattern==0){
 				this.deleteDS.query({
 				  	filter: { field: "contact_id", value: obj.id },
 				  	page: 1,
@@ -50528,7 +51281,7 @@
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "contact_reports/monthly_sale",
+					url: apiUrl + "dashboards/monthly_sale",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -51146,14 +51899,14 @@
 	**************************/
 	banhji.customerDashboard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "contact_reports/customer_dashboard_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_customer"),
-		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_sale_product"),		
+		summaryDS 			: dataStore(apiUrl + "dashboards/customer_dashboard_summary"),
+		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
+		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "contact_reports/monthly_sale",
+					url: apiUrl + "dashboards/monthly_sale",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -52016,22 +52769,24 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
 
-			this.deleteDS.query({
-			  	filter: { field: "contact_id", value: obj.id },
-			  	page: 1,
-			  	pageSize: 1
-			}).then(function() {
-				var view = self.deleteDS.view();
+			if(obj.is_pattern==0){
+				this.deleteDS.query({
+				  	filter: { field: "contact_id", value: obj.id },
+				  	page: 1,
+				  	pageSize: 1
+				}).then(function() {
+					var view = self.deleteDS.view();
 
-				if(view.length>0){
-					alert("Sorry, you can not delete it because it is using now.");
-				}else{
-					obj.set("deleted", 1);
-			        self.dataSource.sync();
+					if(view.length>0){
+						alert("Sorry, you can not delete it because it is using now.");
+					}else{
+						obj.set("deleted", 1);
+				        self.dataSource.sync();
 
-			        window.history.back();				        
-				}
-			});	
+				        window.history.back();				        
+					}
+				});
+			}	
 		},
 		openConfirm 			: function(){
 			this.set("showConfirm", true);
@@ -59410,11 +60165,11 @@
 	});
 	banhji.customerReportCenter = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "contact_reports/summary"),				
+		summaryDS 			: dataStore(apiUrl + "dashboards/customer_dashboard_summary"),				
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "contact_reports/monthly_sale",
+					url: apiUrl + "dashboards/monthly_sale",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -59725,7 +60480,6 @@
 										obj.set("title", view[0].title);
 										obj.set("note", view[0].note);
 									}
-									
 								});	
 								setTimeout(function(e){ $('#formStyle a').eq(0).click(); },2000);
 					        },
@@ -59798,14 +60552,17 @@
 				case 20: Active = banhji.view.invoiceForm20; break;
 				case 21: Active = banhji.view.invoiceForm21; break;
 				case 22: Active = banhji.view.invoiceForm22; break;
-				case 23: Active = banhji.view.invoiceForm1; break;
-				case 24: Active = banhji.view.invoiceForm2; break;
+				case 23: Active = banhji.view.invoiceForm28; break;
+				case 24: Active = banhji.view.invoiceForm29; break;
 				case 25: Active = banhji.view.invoiceForm23; break;
 				case 26: Active = banhji.view.invoiceForm24; break;
 				case 27: Active = banhji.view.invoiceForm19; break;
 				case 28: Active = banhji.view.invoiceForm25; break;
 				case 29: Active = banhji.view.invoiceForm26; break;
 				case 30: Active = banhji.view.invoiceForm25; break;
+				case 31: Active = banhji.view.invoiceForm25; break;
+				case 32: Active = banhji.view.invoiceForm27; break;
+				case 33: Active = banhji.view.invoiceForm30; break;
 			}
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 		},
@@ -59915,7 +60672,7 @@
 	banhji.invoiceForm =  kendo.observable({
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
-		obj 				: {issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
+		obj 				: {title: "Quotation", issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
 		company 			: banhji.institute,		
 		lineDS 				: dataStore(apiUrl + "transactions/line"),
 		user_id				: banhji.source.user_id,
@@ -59926,6 +60683,12 @@
 			}
 		},	 
 		printGrid			: function() {
+			var obj = this.get('obj'), colorM;
+			if(obj.color == null){
+				colorM = "#10253f";
+			}else{
+				colorM = obj.color;
+			}
 			var gridElement = $('#grid'),
 		        printableContent = '',
 		        win = window.open('', '', 'width=800, height=900'),
@@ -59949,7 +60712,7 @@
 		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
 		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style>' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm; } .inv1 .main-color { background-color: '+colorM+'!important; -webkit-print-color-adjust:exact; } .inv1 .light-blue-td { background-color: #c6d9f1!important;text-align: left;padding-left: 5px;-webkit-print-color-adjust:exact; }.inv1 span.total-amount { color:#fff!important;}</style>' +
 		            '</head>' +
 		            '<body>';
 		    var htmlEnd =
@@ -59961,7 +60724,7 @@
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();
-		    	win.close();
+		    	//win.close();
 		    },2000);
 		},
 		activeInvoiceTmp		: function(e){
@@ -59989,14 +60752,17 @@
 				case 20: Active = banhji.view.invoiceForm20; break;
 				case 21: Active = banhji.view.invoiceForm21; break;
 				case 22: Active = banhji.view.invoiceForm22; break;
-				case 23: Active = banhji.view.invoiceForm1; break;
-				case 24: Active = banhji.view.invoiceForm2; break;
+				case 23: Active = banhji.view.invoiceForm28; break;
+				case 24: Active = banhji.view.invoiceForm29; break;
 				case 25: Active = banhji.view.invoiceForm23; break;
 				case 26: Active = banhji.view.invoiceForm24; break;
 				case 27: Active = banhji.view.invoiceForm19; break;
 				case 28: Active = banhji.view.invoiceForm25; break;
 				case 29: Active = banhji.view.invoiceForm26; break;
 				case 30: Active = banhji.view.invoiceForm25; break;
+				case 31: Active = banhji.view.invoiceForm25; break;
+				case 32: Active = banhji.view.invoiceForm27; break;
+				case 33: Active = banhji.view.invoiceForm30; break;
 			}
 			banhji.view.invoiceForm.showIn('#invFormContent', Active);
 		},
@@ -60023,8 +60789,8 @@
 				take: 100
 			}).then(function(e){
 				var view = self.txnTemplateDS.view(), Index = parseInt(view[0].transaction_form_id), Active;
-				console.log(Index);
 				obj.set("color", view[0].color);
+				obj.set("title", view[0].title);
 				self.activeInvoiceTmp(Index);
 				self.lineDS.filter({ field:"transaction_id", value: transaction_id });
 				setTimeout(function(){ 	
@@ -60368,8 +61134,8 @@
 		],
 		search 	: function() {
 
-			banhji.listInvoice.dataSource.filter({
-				logic: banhji.listInvoice.get('filteredBy'),
+			banhji.listInvoicesCollect.dataSource.filter({
+				logic: banhji.listInvoicesCollect.get('filteredBy'),
 				filters: [			
 					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
@@ -60377,7 +61143,7 @@
 			});
 		}, 
 		filterChange  : function(e){
-			banhji.listInvoice.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
+			banhji.listInvoicesCollect.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
 		}
 	});
 	banhji.collectReport = kendo.observable({
@@ -60526,7 +61292,27 @@
 		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
 		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</style><style type="text/css" media="print"> '+
+		            '@page { size: landscape; margin:0mm; }'+
+		            '.saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { '+
+		            	'background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }'+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { '+
+		            	'background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}'+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ '+
+		            	'color: #fff!important; }'+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {'+
+		              	'background-color: #fff!important; -webkit-print-color-adjust:exact;} '+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { '+
+		            	'background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; }'+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ '+
+		            	'color: #fff!important; }'+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {'+
+		              	'background-color: #fff!important; -webkit-print-color-adjust:exact;} '+
+		            '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { '+
+		            	'background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; }'+
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ '+
+		            	'color: #fff!important; }'+		            
+		            '</style>' +
 		            '</head>' +
 		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
 		    var htmlEnd =
@@ -60538,7 +61324,7 @@
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();
-		    	win.close();
+		    	// win.close();
 		    },2000);
 		},
 		dateChange 			: function(){
@@ -63433,14 +64219,14 @@
 	**************************/
 	banhji.itemDashBoard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "contact_reports/supplier_dashboard_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "contact_reports/top_supplier"),
-		topARDS 			: dataStore(apiUrl + "contact_reports/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "contact_reports/top_sale_product"),
+		summaryDS 			: dataStore(apiUrl + "dashboards/supplier_dashboard_summary"),
+		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_supplier"),
+		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "contact_reports/item_monthly_purchase_sale",
+					url: apiUrl + "dashboards/item_monthly_purchase_sale",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -68158,6 +68944,12 @@
 		invoiceForm22: new kendo.Layout("#invoiceForm22", {model: banhji.invoiceForm}),
 		invoiceForm23: new kendo.Layout("#invoiceForm23", {model: banhji.invoiceForm}),
 		invoiceForm24: new kendo.Layout("#invoiceForm24", {model: banhji.invoiceForm}),
+		invoiceForm25: new kendo.Layout("#invoiceForm25", {model: banhji.invoiceForm}),
+		invoiceForm26: new kendo.Layout("#invoiceForm26", {model: banhji.invoiceForm}),
+		invoiceForm27: new kendo.Layout("#invoiceForm27", {model: banhji.invoiceForm}),
+		invoiceForm28: new kendo.Layout("#invoiceForm28", {model: banhji.invoiceForm}),
+		invoiceForm29: new kendo.Layout("#invoiceForm29", {model: banhji.invoiceForm}),
+		invoiceForm30: new kendo.Layout("#invoiceForm30", {model: banhji.invoiceForm}),
 		
 		saleSummaryCustomer: new kendo.Layout("#saleSummaryCustomer", {model: banhji.customerSale}),
 		saleDetailCustomer: new kendo.Layout("#saleDetailCustomer", {model: banhji.customerSale}),
@@ -68319,7 +69111,7 @@
 			// var vm = banhji.accountingDashboard;
 						
 			banhji.view.layout.showIn("#content", banhji.view.accountingDashboard);
-			banhji.userManagement.addMultiTask("Account Dashboard","accounting",null);
+			banhji.userManagement.addMultiTask("Accounting Dashboard","accounting",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
@@ -70746,7 +71538,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.saleTax);
 
-			banhji.userManagement.addMultiTask("Tax","sale_tax",null);
+			banhji.userManagement.addMultiTask("Tax Item","sale_tax",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.saleTaxMenu);			
@@ -71797,13 +72589,30 @@
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
 
+			var vm = banhji.vendorReportCenter;
+			banhji.userManagement.addMultiTask("Supplier Report Center","vendor_report_center");
+
 			//var vm = banhji.customerReportCenter;			
 			banhji.userManagement.addMultiTask("Expense/Purchase Managment Reports","vendor_report_center",null);
 
 			if(banhji.pageLoaded["vendor_report_center"]==undefined){
 				banhji.pageLoaded["vendor_report_center"] = true;				
 								
-			}			
+			}
+			banhji.vendorReportCenter.dataSource.read();			
+			banhji.vendorReportCenter.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.vendorReportCenter.set('count', e.response.count);
+					kendo.culture(banhji.locale);					
+					banhji.vendorReportCenter.set('total', kendo.toString(e.response.total, 'c2'));
+					banhji.vendorReportCenter.set('supplierCount', kendo.toString(e.response.supplierCount, 'n0'));
+					banhji.vendorReportCenter.set('order', kendo.toString(e.response.order, 'n0'));
+					banhji.vendorReportCenter.set('items', kendo.toString(e.response.items, 'n0'));
+					banhji.vendorReportCenter.set('overDate', kendo.toString(e.response.overDate, 'n0'));
+					banhji.vendorReportCenter.set('totalBalance', kendo.toString(e.response.totalBalance, 'c2'));
+					banhji.vendorReportCenter.set('openBalance', kendo.toString(e.response.openBalance, 'n0'));
+				}
+			});			
 		}		
 	});
 	banhji.router.route("/expenses_purchase_summary_supplier", function(){
@@ -72966,6 +73775,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');			
 		}else{
+			var vm = banhji.saleSummaryCustomer;			
+			banhji.userManagement.addMultiTask("Sale Summary Customer Report","sale_summary_customer",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.saleSummaryCustomer);
 			banhji.customerSale.saleSummary.dataSource.read();			
 			banhji.customerSale.saleSummary.dataSource.bind('requestEnd', function(e){
@@ -72981,6 +73793,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.saleDetailCustomer;			
+			banhji.userManagement.addMultiTask("Sale Detail Customer Report","sale_detail_customer",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.saleDetailCustomer);
 			banhji.customerSale.detailSummary.dataSource.read();
 			banhji.customerSale.detailSummary.dataSource.bind('requestEnd', function(e){
@@ -72996,6 +73811,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.depositDetailCustomer;			
+			banhji.userManagement.addMultiTask("Deposit Detail by Customer","deposit_detail_customer",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.depositDetailCustomer);
 			banhji.customerSale.detailSummary.dataSource.read();
 			banhji.customerSale.detailSummary.dataSource.bind('requestEnd', function(e){
@@ -73011,6 +73829,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.customerTransactionList;			
+			banhji.userManagement.addMultiTask("Customer Transaction List","customer_transaction_list",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.customerTransactionList);
 			banhji.customerSale.customerTransaction.dataSource.read();
 			banhji.customerSale.customerTransaction.dataSource.bind('requestEnd', function(e){
@@ -73031,6 +73852,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.saleSummaryProduct;			
+			banhji.userManagement.addMultiTask("Sale Summary by Product","sale_summary_product",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.saleSummaryProduct);
 			banhji.customerSale.summaryProductSale.dataSource.read();
 			banhji.customerSale.summaryProductSale.dataSource.bind('requestEnd', function(e){
@@ -73049,6 +73873,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.saleDetailProduct;			
+			banhji.userManagement.addMultiTask("Sale Detail by Product","sale_detail_product",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.saleDetailProduct);
 			banhji.customerSale.detailCustomerSale.dataSource.read();
 			banhji.customerSale.detailCustomerSale.dataSource.bind('requestEnd', function(e){
@@ -73066,6 +73893,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');			
 		}else{
+			var vm = banhji.customerBalanceSummary;			
+			banhji.userManagement.addMultiTask("Customer Balance Summary","customer_balance_summary",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.customerBalanceSummary);
 			banhji.customerSale.summaryBalance.dataSource.read();			
 			banhji.customerSale.summaryBalance.dataSource.bind('requestEnd', function(e){
@@ -73083,6 +73913,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.customerBalanceDetail;			
+			banhji.userManagement.addMultiTask("Customer Balance Detail","customer_balance_detail",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.customerBalanceDetail);
 			banhji.customerSale.saleDetail.dataSource.read();
 			banhji.customerSale.saleDetail.dataSource.bind('requestEnd', function(e){
@@ -73100,6 +73933,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.receivableAgingSummary;			
+			banhji.userManagement.addMultiTask("Receivable Aging Summary","receivable_aging_summary",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.receivableAgingSummary);
 			banhji.customerSale.receivableAging.dataSource.read();
 			banhji.customerSale.receivableAging.dataSource.bind('requestEnd', function(e){
@@ -73117,6 +73953,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.receivableAgingDetail;			
+			banhji.userManagement.addMultiTask("Receivable Aging Detail","receivable_aging_detail",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.receivableAgingDetail);
 			banhji.customerSale.receivableDetail.dataSource.read();
 			banhji.customerSale.receivableDetail.dataSource.bind('requestEnd', function(e){
@@ -73133,6 +73972,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.listInvoicesCollect;			
+			banhji.userManagement.addMultiTask("List Invoice Collect","list_invoices_collect",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.listInvoicesCollect);
 			banhji.customerSale.listInvoicesCollect.dataSource.read();
 			banhji.customerSale.listInvoicesCollect.dataSource.bind('requestEnd', function(e){
@@ -73149,6 +73991,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.collectReport;			
+			banhji.userManagement.addMultiTask("Report to be Collect","collect_report",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.collectReport);
 			banhji.customerSale.collectReportDB.dataSource.read();
 			banhji.customerSale.collectReportDB.dataSource.bind('requestEnd', function(e){
@@ -73165,6 +74010,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.invoiceList;			
+			banhji.userManagement.addMultiTask("Invoice List","invoice_list",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.invoiceList);
 			banhji.customerSale.invoiceListDB.dataSource.read();
 			banhji.customerSale.invoiceListDB.dataSource.bind('requestEnd', function(e){
@@ -73182,6 +74030,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.customerList;			
+			banhji.userManagement.addMultiTask("Customer List","customer_list",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.customerList);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
@@ -73198,6 +74049,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.saleJobEngagement;			
+			banhji.userManagement.addMultiTask("Sale Job Engagement","sale_job_engagement",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.saleJobEngagement);
 			banhji.customerSale.saleJob.dataSource.read();
 			banhji.customerSale.saleJob.dataSource.bind('requestEnd', function(e){
@@ -73214,6 +74068,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.saleOrderList;			
+			banhji.userManagement.addMultiTask("List of Sale Order","sale_order_list",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.saleOrderList);
 			banhji.customerSale.saleOrderDB.dataSource.read();
 			banhji.customerSale.saleOrderDB.dataSource.bind('requestEnd', function(e){
@@ -73583,12 +74440,21 @@
 			//banhji.view.layout.showIn('#menu', banhji.view.menu);
 			//banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
-			var vm = banhji.customerList;			
-			banhji.userManagement.addMultiTask("Documents","documents",null);
+			var vm = banhji.fileManagement;			
+			banhji.userManagement.addMultiTask("Attach Documents","documents",null);
 			if(banhji.pageLoaded["documents"]==undefined){
-				banhji.pageLoaded["documents"] = true;				
-				
-			}			
+				banhji.pageLoaded["documents"] = true;					
+			}
+			vm.dataSource.read();
+			vm.dataSource.bind('requestEnd', function(e){
+				if(e.type == 'read') {
+					vm.set('contactNu', e.response.contactNumber);
+					vm.set('contactSize', e.response.contactSize);
+					vm.set('transactionNu', e.response.transactionNumber);
+					vm.set('transactionSize', e.response.transactionSize);
+					vm.set('totalSize', e.response.total);
+				}
+			});			
 		}		
 	});
 
@@ -73605,7 +74471,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
 			
 			var vm = banhji.itemDashBoard;
-			banhji.userManagement.addMultiTask("Inventory Dashboard","inventories",null);
+			banhji.userManagement.addMultiTask("Products/Services Dashboard","inventories",null);
 
 			if(banhji.pageLoaded["inventories"]==undefined){							
 				banhji.pageLoaded["inventories"] = true;
@@ -74689,7 +75555,7 @@
 			banhji.view.layout.showIn("#content", banhji.view.reportDashboard);
 			
 			var vm = banhji.reportDashboard;
-			banhji.userManagement.addMultiTask("No. of Reports/lists by Module","reports",null);
+			banhji.userManagement.addMultiTask("Reporting Module","reports",null);
 
 			if(banhji.pageLoaded["reports"]==undefined){
 				banhji.pageLoaded["reports"] = true;				

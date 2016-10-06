@@ -18,7 +18,8 @@
 #cbbCustomer-list,
 #cbbInvoice-list,
 #ddlSegment-list,
-#ddlJob-list
+#ddlJob-list,
+#ddlAccount-list
 {
   width: 350px !important;
 }
@@ -52,7 +53,6 @@
 #ddlMeasurement-list,
 #ddlMesurement-list,
 #txtPrice-list,
-#ddlAccount-list,
 #ddlOption-list,
 #ddlOption-list,
 #showName-list,
@@ -349,7 +349,9 @@
     width: 313px !important;
   }
 
-
+.dropdown-menu > li > a{
+  white-space: normal !important;
+}
 
   .board-chart{
     width: 100%;
@@ -357,7 +359,7 @@
     background: #fff;
     float: left;
     position: relative;
-    margin-top: 12px;
+    margin-top: 18px;
     color: #333;
     overflow: hidden;
   }
@@ -1861,8 +1863,8 @@ and (orientation : portrait) {
 }
 /* FeedBack */
 a.rightfixed {
-        position: relative;
-    background: #1F4774;
+    position: relative;
+    background: #1f4774;
     padding: 11px 25px;
     z-index: 99;
     color: #fff;
@@ -1877,66 +1879,67 @@ a.rightfixed {
     margin-bottom: 1px;
     clear: both;
     float: none;
-    left: 0;
+    left: 0
 }
 a.rightfixed:hover {
-  opacity: 1;
+    opacity: 1
 }
 a.rightfixed i::before {
-        color: #fff;
+    color: #fff;
     top: 10px;
     left: 7px;
-    font-size: 20px;
+    font-size: 20px
 }
 a.feedback {
-    background: #a22314;
+    background: #a22314
 }
 a.referral {
-  background: #1b8330;
+    background: #1b8330
 }
 .popRightBlog {
     width: 350px;
     height: 260px;
     left: 35%;
-    top: 10%;
+    top: 10%
 }
-.popRightBlog textarea{
+.popRightBlog textarea {
     height: 150px;
     min-height: 150px;
     max-height: 150px;
     width: 100%;
     min-width: 100%;
-    max-width: 100%;
+    max-width: 100%
 }
-.popRightBlog input[type=email], .popRightBlog input[type=text]{
+.popRightBlog input[type="email"],
+.popRightBlog input[type="text"] {
     width: 65%;
     margin-bottom: 2px;
     padding: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #ccc
 }
-.popRightBlog input[type=text] {
-  width: 34%;
-  margin-right: 2px;
+.popRightBlog input[type="text"] {
+    width: 34%;
+    margin-right: 2px
 }
 a.feedback:hover {
-    margin-left: -66px;
+    margin-left: -66px
 }
 a.enquiries:hover {
-    left: -95px;
+    left: -95px
 }
 a.referral:hover {
-    margin-left: -56px;
+    margin-left: -56px
 }
 .cover-rightfixed {
     position: fixed;
     top: 40%;
     right: -108px;
     z-index: 99999;
-    text-align: left;
+    text-align: left
 }
 .enquiry-content {
     background: #fff;
-    border: 1px solid #D7D7D7;
+    border: 1px solid #d7d7d7;
     padding: 6px 10px 0;
     position: absolute;
     width: 144px;
@@ -1948,8 +1951,9 @@ a.referral:hover {
     transition: all .5s;
     padding-bottom: 10px;
     color: #444;
-    z-index: -1;
+    z-index: -1
 }
-a.enquiries:hover .enquiry-content, .enquiry-content:hover {
-   right: 0px;
+a.enquiries:hover .enquiry-content,
+.enquiry-content:hover {
+    right: 0px
 }
