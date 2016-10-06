@@ -45,7 +45,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', Battambang;
   margin: 0 0 5px;
   font-weight: 400;
   color: #4d4d4d;
@@ -144,7 +144,7 @@ input,
 button,
 select,
 textarea {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', Battambang;
 }
 pre.prettyprint {
   word-break: normal;
@@ -2393,7 +2393,7 @@ html.top-full .navbar.main .topnav .dropdown-menu {
   display: none;
 }
 .widget.widget-3 .widget-head {
-      height: 60px;
+      height:40px;
     line-height: 23px;
     padding: 5px 0;
 }
@@ -5551,7 +5551,7 @@ img.flag {
   font-size: 14px;
 }
 .table-primary tbody td {
-  color: #7c7c7c;
+  color: #000;
   background: #fafafa;
   border-width: 0px;
 }
