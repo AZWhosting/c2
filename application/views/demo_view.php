@@ -11124,7 +11124,7 @@
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
 									<div align="left"><span data-bind="text: lang.lang.amount_purchased"></span></div>
-									<h2 data-bind="text: total" align="right"></h2>
+									<h2 data-bind="text: amount_due" align="right"></h2>
 								</div>
 							</div>						
 						</div>					   
@@ -42526,6 +42526,10 @@
 			}
 
 			return rate;
+		},
+		testDS						: dataStore(apiUrl + "transactions/generate_number"),
+		test 						: function(){
+			this.testDS.read();
 		}
 	});
 	
@@ -50314,6 +50318,7 @@
 		balance 			: 0,
 		total 				: 0,
 		remaining 			: 0,
+		amount_due 			: 0,
 		additional_cost 	: 0,
 		original_deposit	: 0,
 		original_total 		: 0,
@@ -50767,6 +50772,7 @@
 				self.set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
 		        self.set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
 		        self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
+		        self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c", view[0].locale));
 		        self.set("additional_cost", kendo.toString(view[0].additional_cost, "c", view[0].locale));
 								
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
@@ -50800,7 +50806,7 @@
 
 			if(this.lineDS.total()>0 || this.accountLineDS.total()>0 || this.additionalCostDS.total()>0){			
 				var total = 0, subTotal = 0, discount =0, tax = 0, 
-				countAdditCheck = 0, amountAdditCheck = 0, additionalCost = 0, remaining = 0;													
+				countAdditCheck = 0, amountAdditCheck = 0, additionalCost = 0, remaining = 0, amount_due = 0;													
 				
 				//Item
 				$.each(this.lineDS.data(), function(index, value) {				
@@ -50889,6 +50895,7 @@
 
 		    	//Total
 		        total = subTotal + tax;
+		        amount_due = total - obj.deposit;
 
 		        //Apply Deposit
 		        if(obj.deposit>0){
@@ -50926,6 +50933,7 @@
 		        this.set("total", kendo.toString(total, "c", obj.locale));
 		        this.set("additional_cost", kendo.toString(additionalCost, "c", obj.locale));
 		        this.set("remaining", kendo.toString(remaining, "c", obj.locale));
+		        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
 
 		        obj.set("sub_total", subTotal);
 		        obj.set("discount", discount);
@@ -50949,6 +50957,7 @@
 			this.set("tax", 0);						
 			this.set("total", 0);
 			this.set("remaining", 0);
+			this.set("amount_due", 0);
 			this.set("additional_cost", 0);
 			this.set("amtDueColor", banhji.source.amtDueColor);
 
@@ -54870,7 +54879,8 @@
 
 			this.dataSource.insert(0,{				
 				contact_id 				: "",				
-				transaction_template_id : 1,				
+				transaction_template_id : 1,
+				payment_term_id 		: 0,				
 				recurring_id 			: "",				
 				user_id 				: this.get("user_id"),
 				employee_id 			: "", 	    		

@@ -288,6 +288,7 @@ var themerPrimaryColor = primaryColor;
 			    }
 			});
 		});
+		
 	});
    </script>
 </body>

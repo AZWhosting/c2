@@ -195,27 +195,11 @@ class Transactions extends REST_Controller {
 		foreach ($models as $value) {
 			//Generate Number
 			if(isset($value->is_recurring)){
-				if($value->is_recurring==0){				
-					if($number==""){				
-						$number = $this->_generate_number($value->type);
-					}else{
-						$last_no = $number;
-						$header = substr($last_no, 0, -5);
-						$no = intval(substr($last_no, strlen($last_no) - 5));
-						$no++;
-						$number = $header . str_pad($no, 5, "0", STR_PAD_LEFT);
-					}
+				if($value->is_recurring==0){
+					$number = $this->_generate_number($value->type, $value->issued_date);
 				}
-			}else{
-				if($number==""){				
-					$number = $this->_generate_number($value->type);
-				}else{
-					$last_no = $number;
-					$header = substr($last_no, 0, -5);
-					$no = intval(substr($last_no, strlen($last_no) - 5));
-					$no++;
-					$number = $header . str_pad($no, 5, "0", STR_PAD_LEFT);
-				}	
+			}else{			
+				$number = $this->_generate_number($value->type, $value->issued_date);
 			}			
 
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -950,159 +934,60 @@ class Transactions extends REST_Controller {
 	
 
     //Generate invoice number
-	private function _generate_number($type, $date){
-		$txnDate = date("Y-m-d");		
-		$header = "";
-
-		if(isset($date)){
-			$txnDate = $date;
-		}
-
-    	switch($type){
-    	//SME
-		case "Invoice":
-		  	$header = "IN";
-		  	break;
-		case "eInvoice":
-		  	$header = "EI";
-		  	break;
-		case "wInvoice":
-		  	$header = "WI";
-		  	break;
-		case "Cash_Sale":
-		  	$header = "CS";
-		  	break;		
-		case "Quote":
-		  	$header = "QO";
-		  	break;
-		case "Sale_Order":
-		  	$header = "SO";
-		  	break;
-		case "Sale_Return":
-		  	$header = "SR";
-		  	break;
-		//Vendor		
-		case "Cash_Purchase":
-		  	$header = "PU";
-		  	break;  	
-		case "Credit_Purchase":
-		  	$header = "BI";
-		  	break;
-		case "Additional_Cost":
-		  	$header = "AC";
-		  	break;
-		case "Purchase_Order":
-		  	$header = "PO";
-		  	break;
-		case "Cash_Payment":
-		  	$header = "PM";
-		  	break;		
-		case "Purchase_Return":
-		  	$header = "PR";
-		  	break;
-		case "Debit_Note":
-		  	$header = "DR";
-		  	break;
-		case "Credit_Note":
-		  	$header = "CN";
-		  	break;
-		case "Offset_Invoice":
-		  	$header = "OI";
-		  	break;
-		case "Offset_Bill":
-		  	$header = "OB";
-		  	break;
-		//Deposit
-		case "Deposit":
-		  	$header = "DE";
-		  	break;
-		case "Customer_Deposit":
-		  	$header = "CD";
-		  	break;
-		case "Vendor_Deposit":
-		  	$header = "VD";
-		  	break;		
-		case "eDeposit":
-		  	$header = "ED";
-		  	break;
-		case "wDeposit":
-		  	$header = "WD";
-		  	break;
-		case "Witdraw":
-		  	$header = "CW";
-		  	break;
-		//Employee
-		case "Cash_Receipt":
-		  	$header = "CR";
-		  	break;		
-		case "Cash_Advance":
-		  	$header = "CA";
-		  	break;
-		case "Direct_Expense":
-		  	$header = "EX";
-		  	break;
-		case "Reimbursement":
-		  	$header = "RE";
-		  	break;
-		case "Advance_Settlement":
-		  	$header = "AS";
-		  	break;
-		case "Transfer":
-		  	$header = "CT";
-		  	break;
-		//Inventory
-		case "GRN":
-		  	$header = "RN";
-		  	break;
-		case "GDN":
-		  	$header = "DN";
-		  	break;
-		case "Adjustment":
-		  	$header = "AD";
-		  	break;
-		case "Internal_Usage":
-		  	$header = "IU";
-		  	break;
-		//Accounting
-		case "Journal":
-		  	$header = "JV";
-		  	break;
-		default:
-		  	
-		}			
-		
+	public function _generate_number($type, $date){
 		$YY = date("y");
 		$MM = date("m");
-		$headerWithDate = $header . $YY . $MM;
+		$startDate = date("Y")."-01-01";
+		$endDate = date("Y")."-12-31";
+
+		if(isset($date)){
+			$YY = date('y', strtotime($date));
+			$MM = date('m', strtotime($date));
+			$startDate = $YY."-01-01";
+			$endDate = $YY."-12-31";
+		}
+
+		$prefix = new Prefix(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$prefix->where('type', $type);
+		$prefix->limit(1);
+		$prefix->get();
+
+		$headerWithDate = $prefix->abbr . $YY . $MM;				
 
 		$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$txn->where('type', $type);
-		// $txn->where("issued_date");
+		$txn->where("issued_date >=", $startDate);
+		$txn->where("issued_date <=", $endDate);
 		$txn->where('is_recurring', 0);
 		$txn->order_by('id', 'desc');
+		$txn->limit(1);
 		$txn->get();
-
-		$last_no = "";		
-		if(count($txn)>0){
-			$last_no = $txn->number;
-		}
-		$no = 0;
-		$curr_YY = 0;
-		if(strlen($last_no)>10){
-			$no = intval(substr($last_no, strlen($last_no) - 5));
-			$curr_YY = intval(substr($last_no, strlen($last_no) - 9, 2));			
-		}				 
 		
-		//Reset transaction number back to 1 for the new year starts
-		if(intval($YY)>$curr_YY){
-			$no = 1;
-		}else{
+		$number = "";	
+		if($txn->exists()){
+			$no = 0;
+			if(strlen($txn->number)>10){
+				$no = intval(substr($txn->number, strlen($txn->number) - 5));			
+			}
 			$no++;
-		}
-								
-		$number = $headerWithDate . str_pad($no, 5, "0", STR_PAD_LEFT);					
-		
-		return $number;				
+
+			$number = $headerWithDate . str_pad($no, 5, "0", STR_PAD_LEFT);
+		}else{
+			//Check existing txn
+			$existTxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$existTxn->where('type', $type);
+			$existTxn->where('is_recurring', 0);
+			$existTxn->limit(1);
+			$existTxn->get();
+
+			if($existTxn->exists()){
+				$number = $headerWithDate . str_pad(1, 5, "0", STR_PAD_LEFT);
+			}else{
+				$number = $headerWithDate . str_pad($prefix->startup_number, 5, "0", STR_PAD_LEFT);
+			}			
+		}		 
+				
+		return $number;
 	}
 	
 	
