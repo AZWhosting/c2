@@ -13624,48 +13624,48 @@
 							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
 
-<<<<<<< HEAD
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.deposit_detail_by_supplier"></span></h2> 
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2><span data-bind="text: lang.lang.deposit_detail_by_supplier"></span></h2> 
+							<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
+						</div>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">								
+									<p><span data-bind="text: lang.lang.number_of_customer_deposit"></span></p>
+									<span data-bind="text: count"></span>								
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">								
+									<p><span data-bind="text: lang.lang.customer_deposit_balance"></span></p>
+									<span data-bind="text: total"></span>							
+								</div>
+							</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span data-bind="text: lang.lang.type"></span></th>
+									<th><span data-bind="text: lang.lang.date"></span></th>
+									<th><span data-bind="text: lang.lang.no"></span></th>
+									<th><span data-bind="text: lang.lang.memo"></span></th>
+									<th><span data-bind="text: lang.lang.amount"></span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: depositDetail.dataSource"
+										 data-template="depositDetailSupplier-temp"
+							></tbody>
+							<tfoot>
+								<tr>
+									<th colspan="4"><span data-bind="text: lang.lang.total"></span></th>
+									<th colspan="4" data-bind="text: total"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">								
-								<p><span data-bind="text: lang.lang.number_of_customer_deposit"></span></p>
-								<span data-bind="text: count"></span>								
-							</div>
-						</div>
-						<div class="span7">
-							<div class="total-customer">								
-								<p><span data-bind="text: lang.lang.customer_deposit_balance"></span></p>
-								<span data-bind="text: total"></span>							
-							</div>
-						</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span data-bind="text: lang.lang.type"></span></th>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.no"></span></th>
-								<th><span data-bind="text: lang.lang.memo"></span></th>
-								<th><span data-bind="text: lang.lang.amount"></span></th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: depositDetail.dataSource"
-									 data-template="depositDetailSupplier-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4"><span data-bind="text: lang.lang.total"></span></th>
-								<th colspan="4" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
 				</div>		
 			</div>
 		</div>
@@ -18487,13 +18487,8 @@
 
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
-<<<<<<< HEAD
-									<div align="left">AMOUNT RECEIVED</div>
-									<h2 data-bind="text: amount_due" align="right"></h2>
-=======
 									<div align="left"><span data-bind="text: lang.lang.amount_received"></span></div>
-									<h2 data-bind="text: total" align="right"></h2>
->>>>>>> origin/master
+									<h2 data-bind="text: amount_due" align="right"></h2>
 								</div>
 
 							</div>						
@@ -19125,13 +19120,8 @@
 
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
-<<<<<<< HEAD
-									<div align="left">AMOUNT DUE</div>
-									<h2 data-bind="text: amount_due" align="right"></h2>
-=======
 									<div align="left"><span data-bind="text: lang.lang.amount_due"></span></div>
-									<h2 data-bind="text: total" align="right"></h2>
->>>>>>> origin/master
+									<h2 data-bind="text: amount_due" align="right"></h2>
 								</div>
 
 							</div>						
@@ -20982,11 +20972,9 @@
 				                 data-bind="source: txnTemplateDS">				            
 	            		</tbody>
 	            	</table>
-<<<<<<< HEAD
+
 	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
-=======
-	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" href="#/invoice_custom" style="width: 110px;"><i></i><span data-bind="text: lang.lang.add_new"></span></a>
->>>>>>> origin/master
+
 	            </div>
 	            <!-- // Tab Invoice Custom content END -->
 
