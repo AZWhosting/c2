@@ -34,7 +34,7 @@
     <script type="text/x-kendo-template" id="header-menu">
       <header class="site-header">
           <div class="container-fluid">
-              <a href="<?php echo base_url(); ?>rrd" class="site-logo">
+              <a href="#" data-bind="click: checkRole" class="site-logo">
                   <div class="hidden-xs">
                       <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">
                   </div>
@@ -1917,6 +1917,14 @@
 
       banhji.profile = kendo.observable({
         dataSource: banhji.profileDS,
+        checkRole  : function(e) {
+          e.preventDefault();
+        if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
+                banhji.router.navigate("");
+              } else {
+                window.location.replace("<?php echo base_url(); ?>admin");
+              }
+        },
         showAdmin: function() {
           if(JSON.parse(localStorage.getItem('userData/user')).role == 1) {
             return true;

@@ -201,9 +201,10 @@ var themerPrimaryColor = primaryColor;
 	<div class="modal fade popRightBlog" id="referralContent">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3>Referral</h3>
+			<h3>Refer to Friends</h3>
 		</div>
 		<div class="modal-body">
+			<p class="span12">Help us grow and earn rewards! Get 100MB of storage when you refer customers to BanhJi that signup.</p>
 		  	<input type="text" name="refferalName1" id="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail1" placeholder="Email" />
 		  	<input type="text" name="refferalName2" id="refferalName2" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail2" placeholder="Email" />
 		  	<input type="text" name="refferalName3" id="refferalName3" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail3" placeholder="Email" />
