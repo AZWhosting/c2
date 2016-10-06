@@ -12,24 +12,40 @@ class Referrals extends REST_Controller {
 	}
 	//POST
 	function index_post() {
-		$models = $this->post('msg');
-		$MSG = $this->post('msg');
+		
 		$DS = $this->post('datesend');
-		$cURL = $this->post('cURL');
 		$uName = $this->post('uName');
-			
+		$rName1 = $this->post('rName1');
+		$rName1 = $this->post('rName1');
+		$rName2 = $this->post('rName2');
+		$rName3 = $this->post('rName3');
+		$rName4 = $this->post('rName4');
+		$rName5 = $this->post('rName5');
+		$rMail1 = $this->post('rMail1');
+		$rMail2 = $this->post('rMail2');
+		$rMail3 = $this->post('rMail3');
+		$rMail4 = $this->post('rMail4');
+		$rMail5 = $this->post('rMail5');
 		
 		
 		// foreach ($models as $value) {
-			$obj = new Referral();			
-			isset($MSG)? 				$obj->feedback_message 		= $MSG : "";
+			$obj = new Referral();		
 			isset($DS)? 				$obj->date 					= $DS : "";
-			isset($cURL)? 				$obj->feedback_link 		= $cURL : "";
 			isset($uName)? 				$obj->user_name 			= $uName : "";
-						
+			isset($rName1)? 			$obj->rname1 				= $rName1 : "";
+			isset($rName2)? 			$obj->rname2 				= $rName2 : "";
+			isset($rName3)? 			$obj->rname3 				= $rName3 : "";
+			isset($rName4)? 			$obj->rname4 				= $rName4 : "";
+			isset($rName5)? 			$obj->rname5 				= $rName5 : "";
+			isset($rMail1)? 			$obj->remail1 				= $rMail1 : "";
+			isset($rMail2)? 			$obj->remail2 				= $rMail2 : "";
+			isset($rMail3)? 			$obj->remail3 				= $rMail3 : "";
+			isset($rMail4)? 			$obj->remail4 				= $rMail4 : "";
+			isset($rMail5)? 			$obj->remail5 				= $rMail5 : "";
+
 			if($obj->save()){
 				$data['message'] = "Success";
-				$data['results'] = array('msg' =>  $MSG, 'date' => $DS, 'url' => $cURL);
+				//$data['results'] = array('msg' =>  $MSG, 'date' => $DS, 'url' => $cURL);
 			}else{
 				$data['message'] = "error";
 			}

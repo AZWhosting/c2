@@ -2221,7 +2221,7 @@
     	</td>
    	</tr>
 </script>
-<script id="recurring" type="text/x-kendo-template">
+<!-- <script id="accountRecurring" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">					
@@ -2232,12 +2232,12 @@
 			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back();"><i></i></span>						
 					</div>
 
-			        <h2>RECURRING TRANSACTION LISTS</h2>				        				        				        	
+			        <h2>ACCOUNTING RECURRING TRANSACTION LISTS</h2>				        				        				        	
 			    </div>
 
 			    <br>			   
 			   
-				<!-- Item List -->
+				
 				<table class="table table-bordered table-primary table-striped table-vertical-center">
 			        <thead>
 			            <tr>
@@ -2259,8 +2259,8 @@
 			</div>
 		</div>
 	</div>
-</script>
-<script id="recurring-template" type="text/x-kendo-tmpl">		
+</script> -->
+<!-- <script id="recurring-template" type="text/x-kendo-tmpl">		
 	<tr data-uid="#: uid #">		
 		<td class="center">			
 			#:banhji.recurring.dataSource.indexOf(data)+1#			
@@ -2275,6 +2275,87 @@
 			<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete" style="width: 80px;"><i></i> Delete</span>
 		</td>
     </tr>   
+</script> -->
+<script id="accountRecurring" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+
+					<div class="hidden-print">
+				    	<div class="pull-right">
+
+				    		<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>						
+						</div>
+
+				        <h2>Accounting Recurring</h2>				        				        				        	
+				    </div>			   
+
+				    <br>
+
+				    <div data-role="window"
+		                 data-title="Job"		                 
+		                 data-width="600"
+		                 data-actions="{}"
+		                 data-position="{top: '30%', left: '30%'}"
+		                 data-height="300"
+		                 data-bind="visible: isVisible">
+
+						<table class="table table-bordered table-primary table-striped table-vertical-center">							
+							<tr>
+								<td>Name</td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>Description</td>
+								<td>
+									<input class="k-textbox" placeholder="type description ..." data-bind="value: obj.description" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>Customer</td>
+								<td>
+									<input data-role="combobox"
+										   data-template="contact-list-tmpl"				            			               			   		                   
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.contact_id,
+						                              source: contactDS"
+						                   style="width: 100%;" />
+								</td>
+							</tr>							
+						</table>
+
+						<br>
+
+						<div align="center">
+							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> Save</span>
+							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> Close</span>						
+						</div>
+					</div>
+					
+										                           					
+	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
+	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
+	            			<th style="width: 1%;">No.</th>
+			                <th>TEMPLATE NAME</th>
+			                <th>NAME</th>
+			                <th class="center" style="width: 10%">TYPE</th>
+			                <th class="center">START DATE</th>
+			                <th class="center">FREQUENCY</th>
+			                <th></th>
+	            		</thead>
+	            		<tbody ></tbody>
+	            	</table>
+	            </div>	            						
+			</div>
+		</div>
+	</div>
 </script>
 
 <script id="accountingReportCenter" type="text/x-kendo-template">
@@ -12463,6 +12544,88 @@
     </tr>   
 </script>
 
+<script id="vendorRecurring" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+
+					<div class="hidden-print">
+				    	<div class="pull-right">
+
+				    		<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>						
+						</div>
+
+				        <h2>Supplier Recurring</h2>				        				        				        	
+				    </div>			   
+
+				    <br>
+
+				    <div data-role="window"
+		                 data-title="Job"		                 
+		                 data-width="600"
+		                 data-actions="{}"
+		                 data-position="{top: '30%', left: '30%'}"
+		                 data-height="300"
+		                 data-bind="visible: isVisible">
+
+						<table class="table table-bordered table-primary table-striped table-vertical-center">							
+							<tr>
+								<td>Name</td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>Description</td>
+								<td>
+									<input class="k-textbox" placeholder="type description ..." data-bind="value: obj.description" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>Customer</td>
+								<td>
+									<input data-role="combobox"
+										   data-template="contact-list-tmpl"				            			               			   		                   
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.contact_id,
+						                              source: contactDS"
+						                   style="width: 100%;" />
+								</td>
+							</tr>							
+						</table>
+
+						<br>
+
+						<div align="center">
+							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> Save</span>
+							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> Close</span>						
+						</div>
+					</div>
+					
+										                           					
+	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
+	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
+	            			<th style="width: 1%;">No.</th>
+			                <th>TEMPLATE NAME</th>
+			                <th>NAME</th>
+			                <th class="center" style="width: 10%">TYPE</th>
+			                <th class="center">START DATE</th>
+			                <th class="center">FREQUENCY</th>
+			                <th></th>
+	            		</thead>
+	            		<tbody ></tbody>
+	            	</table>
+	            </div>	            						
+			</div>
+		</div>
+	</div>
+</script>
+
 <script id="vendorSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
@@ -20752,8 +20915,11 @@
 						</div>
 					</div>
 					
-					<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> Add New Job</button>
-					                                					
+					<button class="btn btn-inverse" data-bind="click: openWindow" style="margin-bottom: 20px;">
+						<i class="icon-plus icon-white"></i> 
+						Add New Job
+					</button>
+					                           					
 	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
 	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
 	            			<tr>	            				
@@ -20785,12 +20951,94 @@
     			#}#
     		#}#
     	</td>    	
-    	<td>
-    		<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
+    	<td align="center">
+    		<span data-bind="click: edit" style="cursor:pointer;"><i class="icon-edit"></i> Edit</span>
     		|
-    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
+    		<span data-bind="click: delete" style="cursor:pointer;"><i class="icon-remove"></i> Delete</span>
     	</td>
    	</tr>
+</script>
+
+<script id="customerRecurring" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+
+					<div class="hidden-print">
+				    	<div class="pull-right">
+
+				    		<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>						
+						</div>
+
+				        <h2>Customer Recurring</h2>				        				        				        	
+				    </div>			   
+
+				    <br>
+
+				    <div data-role="window"
+		                 data-title="Job"		                 
+		                 data-width="600"
+		                 data-actions="{}"
+		                 data-position="{top: '30%', left: '30%'}"
+		                 data-height="300"
+		                 data-bind="visible: isVisible">
+
+						<table class="table table-bordered table-primary table-striped table-vertical-center">							
+							<tr>
+								<td>Name</td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>Description</td>
+								<td>
+									<input class="k-textbox" placeholder="type description ..." data-bind="value: obj.description" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>Customer</td>
+								<td>
+									<input data-role="combobox"
+										   data-template="contact-list-tmpl"				            			               			   		                   
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.contact_id,
+						                              source: contactDS"
+						                   style="width: 100%;" />
+								</td>
+							</tr>							
+						</table>
+
+						<br>
+
+						<div align="center">
+							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> Save</span>
+							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> Close</span>						
+						</div>
+					</div>
+					
+					                           					
+	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
+	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
+	            			<th style="width: 1%;">No.</th>
+			                <th>TEMPLATE NAME</th>
+			                <th>NAME</th>
+			                <th class="center" style="width: 10%">TYPE</th>
+			                <th class="center">START DATE</th>
+			                <th class="center">FREQUENCY</th>
+			                <th></th>
+	            		</thead>
+	            		<tbody ></tbody>
+	            	</table>
+	            </div>	            						
+			</div>
+		</div>
+	</div>
 </script>
 
 <script id="customerReportCenter" type="text/x-kendo-template">
@@ -28992,66 +29240,63 @@
 *	Document Section      	  *
 **************************** -->
 <script id="documents" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content saleSummaryCustomer">					
-				    
-			    	<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
-							data-bind="click: cancel"><i></i></span>
+	
+							
+	<div  class="row-fluid saleSummaryCustomer">
 
-			        <h2>Attach Documents</h2>
+        <h2>Attached Documents</h2>
 
-				    <br>
-						
-					<div class="row-fluid">
-						<div class="span4">
-							<p style="text-align: center">Transaction</p>
-							<div class="total-customer" style="background: #d9edf7; color: #333;"> 
-								<span class="number" data-bind="text:transactionSize"></span>GB
-								<p>of <span data-bind="text: transactionNu"></span> transaction</p>
-								
-								
-							</div>
-						</div>
+	    <br>
+			
+		<div class="row-fluid">
+			<div class="span4">
+				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;">
+					Transaction
+				</p>
+				<div class="total-customer" style="background: #d9edf7; color: #333;"> 
+					<span class="number" data-bind="text:transactionSize"></span>GB
+					<p>of <span data-bind="text: transactionNu"></span> transaction</p>
+					
+					
+				</div>
+			</div>
 
-						<div class="span4">
-							<p style="text-align: center">Contacts/items</p>
-							<div class="total-customer" style="color: #333;">
-								<span class="number" data-bind="text: contactSize"></span>GB
-								<p>of <span data-bind="text: contactNu"></span> contact/ items</p>
-							</div>
-						</div>
+			<div class="span4">
+				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;">Contacts/items</p>
+				<div class="total-customer" style="color: #333;">
+					<span class="number" data-bind="text: contactSize"></span>GB
+					<p>of <span data-bind="text: contactNu"></span> contact/ items</p>
+				</div>
+			</div>
 
-						<div class="span4" style="padding-left: 15px;">
-							<p style="text-align: center">Total Attachment</p>
-							<div class="total-customer" style="background: #496cad; color: #fff;">
-								<span class="number" data-bind="text: totalSize"></span>GB
-								<p>Used of 2.00 GB</p>
-							</div>
-						</div>
-					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th>File Name</th>
-								<th>Description</th>
-								<th>Size</th>
-								<th>Attach to</th>
-								<th>Upload by</th>
-								<th>Date</th>
-								<th>Action</th>								
-							</tr>
-						</thead>
-						<tbody data-role="listview" data-bind="source: dataSource" data-template="document-list-template">
-						</tbody>
-					</table>								
-
-				</div>							
+			<div class="span4" style="padding-left: 15px;">
+				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;">Total Attachment</p>
+				<div class="total-customer" style="background: #496cad; color: #fff;min-height: 112px;">
+					<span class="number" data-bind="text: totalSize"></span>GB
+					<p>Used of 2.00 GB</p>
+				</div>
 			</div>
 		</div>
+
+		<div class="row-fluid" style="background: #fff; padding: 15px;">
+
+			<table class="table table-borderless table-condensed " style="color: #000;">
+				<thead>
+					<tr>
+						<th>File Name</th>
+						<th>Description</th>
+						<th>Size</th>
+						<th>Attach to</th>
+						<th>Upload by</th>
+						<th>Date</th>
+						<th>Action</th>								
+					</tr>
+				</thead>
+				<tbody data-role="listview" data-bind="source: dataSource" data-template="document-list-template">
+				</tbody>
+			</table>								
+		</div>
+	
 	</div>
 </script>
 <script id="document-list-template" type="text/x-kendo-template">
@@ -29072,7 +29317,7 @@
 		</td>
 		<td>#=user.name#</td>
 		<td>#=created_at#</td>
-		<td><a href="\#" data-bind="click: remove">Delete</a></td>
+		<td align="center"><a href="\#" data-bind="click: remove">Delete</a></td>
 	</tr>
 </script>
 
@@ -33028,6 +33273,88 @@
             <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
         </div>
     </div>
+</script>
+
+<script id="itemRecurring" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+
+					<div class="hidden-print">
+				    	<div class="pull-right">
+
+				    		<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>						
+						</div>
+
+				        <h2>Products/Services Recurring</h2>				        				        				        	
+				    </div>			   
+
+				    <br>
+
+				    <div data-role="window"
+		                 data-title="Job"		                 
+		                 data-width="600"
+		                 data-actions="{}"
+		                 data-position="{top: '30%', left: '30%'}"
+		                 data-height="300"
+		                 data-bind="visible: isVisible">
+
+						<table class="table table-bordered table-primary table-striped table-vertical-center">							
+							<tr>
+								<td>Name</td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>Description</td>
+								<td>
+									<input class="k-textbox" placeholder="type description ..." data-bind="value: obj.description" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>Customer</td>
+								<td>
+									<input data-role="combobox"
+										   data-template="contact-list-tmpl"				            			               			   		                   
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.contact_id,
+						                              source: contactDS"
+						                   style="width: 100%;" />
+								</td>
+							</tr>							
+						</table>
+
+						<br>
+
+						<div align="center">
+							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> Save</span>
+							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> Close</span>						
+						</div>
+					</div>
+					
+					                           					
+	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
+	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
+	            			<th style="width: 1%;">No.</th>
+			                <th>TEMPLATE NAME</th>
+			                <th>NAME</th>
+			                <th class="center" style="width: 10%">TYPE</th>
+			                <th class="center">START DATE</th>
+			                <th class="center">FREQUENCY</th>
+			                <th></th>
+	            		</thead>
+	            		<tbody ></tbody>
+	            	</table>
+	            </div>	            						
+			</div>
+		</div>
+	</div>
 </script>
 
 <script id="serviceSetting" type="text/x-kendo-template">
@@ -37437,7 +37764,8 @@
   				<li><a href='#/cash_advance'>Make Cash Advance</a></li>
   				<li><a href='#/expense'>Make Expense</a></li> 
   				<li> <span class="li-line"></span></li> 		
-  				<li><a href='#/currency_rate'>Set Exchange Rate</a></li>				  				 				  				 				
+  				<li><a href='#/currency_rate'>Set Exchange Rate</a></li>
+  				<li><a href='#/account_recurring'>Accounting Recurring List</a></li>  				  				 				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/accounting_report_center'>REPORTS</a></li>	  	
@@ -37481,7 +37809,7 @@
   				<li><a href='#/purchase_return'>Make Purchase Return</a></li>  				
   				<li><a href='#/cash_payment'>Make Cash Payment</a></li>
   				<li> <span class="li-line"></span></li> 		
-  				<li><a href='#/customer_recurring'>Supplier Recurring List</a></li>  			 				  				 				
+  				<li><a href='#/vendor_recurring'>Supplier Recurring List</a></li>  			 				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/vendor_report_center'>REPORTS</a></li>	  	
@@ -37603,7 +37931,7 @@
   				<li><a href='#/item_adjustment'>Create Item Adjustment</a></li>  				
   				<li><a href='#/internal_usage'>Create Internal Usage</a></li>	
   				<li> <span class="li-line"></span></li> 	
-  				<li><a href='#/customer_recurring'>Inventory Recurring List</a></li>  				 				 				  				 				
+  				<li><a href='#/item_recurring'>Inventory Recurring List</a></li>  				 				 				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/item_report_center'>REPORTS</a></li>	  	
@@ -68839,7 +69167,9 @@
 		txnItem: new kendo.Layout("#txnItem", {model: banhji.txnItem}),
 		journal: new kendo.Layout("#journal", {model: banhji.journal}),
 		currencyRate: new kendo.Layout("#currencyRate", {model: banhji.currencyRate}),
-		recurring: new kendo.Layout("#recurring", {model: banhji.recurring}),
+
+		accountRecurring: new kendo.Layout("#accountRecurring", {model: banhji.accountRecurring}),
+
 		journalReport: new kendo.Layout("#journalReport", {model: banhji.journalReport}),
 		trialBalance: new kendo.Layout("#trialBalance", {model: banhji.trialBalance}),
 		chartOfAccount: new kendo.Layout("#chartOfAccount", {model: banhji.chartOfAccount}),
@@ -68900,6 +69230,7 @@
 		billPaymentList: new kendo.Layout("#billPaymentList", {model: banhji.vendorSale}),
 		productServiceList: new kendo.Layout("#productServiceList", {model: banhji.vendorSale}),
 		supplierList: new kendo.Layout("#supplierList", {model: banhji.supplierList}),
+		vendorRecurring: new kendo.Layout("#vendorRecurring", {model: banhji.vendorRecurring}),
 
 		//Customer
 		customerDashboard: new kendo.Layout("#customerDashboard", {model: banhji.customerDashboard}),
@@ -68916,6 +69247,9 @@
 		customerReportCenter: new kendo.Layout("#customerReportCenter", {model: banhji.customerReportCenter}),
 		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
 		customerBalance : new kendo.Layout("#customerBalance", {model: banhji.customerBalance}),
+
+		customerRecurring : new kendo.Layout("#customerRecurring", {model: banhji.customerRecurring}),
+
 		customerSetting: new kendo.Layout("#customerSetting", {model: banhji.customerSetting}),
 		job: new kendo.Layout("#job", {model: banhji.job}),
 		invoiceCustom: new kendo.Layout("#invoiceCustom", {model: banhji.invoiceCustom}),
@@ -68999,6 +69333,8 @@
 		inventoryPurchaseByVendorSummary: new kendo.Layout("#inventoryPurchaseByVendorSummary", {model: banhji.inventoryPurchaseByVendorSummary}),
 		inventoryPurchaseByVendorDetail: new kendo.Layout("#inventoryPurchaseByVendorDetail", {model: banhji.inventoryPurchaseByVendorDetail}),
 		fixedAssets: new kendo.Layout("#fixedAssets", {model: banhji.fixedAssets}),
+
+		itemRecurring: new kendo.Layout("#itemRecurring", {model: banhji.itemRecurring}),	
 
 
 		//Cash Managment
@@ -69520,18 +69856,18 @@
 			vm.pageLoad();			
 		}		
 	});
-	banhji.router.route("/recurring", function(){
+	banhji.router.route("/account_recurring", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.recurring);			
+			banhji.view.layout.showIn("#content", banhji.view.accountRecurring);			
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.recurring;
-			banhji.userManagement.addMultiTask("Recurring Transaction Lists","recurring",null);
+			var vm = banhji.accountRecurring;
+			banhji.userManagement.addMultiTask("Account Recurring","account_recurring",null);
 			
-			if(banhji.pageLoaded["recurring"]==undefined){
-				banhji.pageLoaded["recurring"] = true;   
+			if(banhji.pageLoaded["account_recurring"]==undefined){
+				banhji.pageLoaded["account_recurring"] = true;   
 				
 				vm.dataSource.filter({ field:"is_recurring", value: 1 });
 
@@ -72972,6 +73308,136 @@
 			}			
 		}		
 	});
+	banhji.router.route("/vendor_recurring", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{						
+			banhji.view.layout.showIn("#content", banhji.view.vendorRecurring);			
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.vendorRecurring;
+			banhji.userManagement.addMultiTask("Supplier Recurring","vendor_recurring",null);
+			
+			if(banhji.pageLoaded["vendor_recurring"]==undefined){
+				banhji.pageLoaded["vendor_recurring"] = true;   
+				
+				vm.dataSource.filter({ field:"is_recurring", value: 1 });
+
+				function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+
+                    dateChanges();
+                }
+
+                function dateChanges(){
+                	var strDate = "";
+
+					if(start.value() && end.value()){
+						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
+					}else if(start.value()){
+						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
+					}else if(end.value()){
+						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
+					}else{
+						strDate = "";
+					}
+
+					$("#strDate").text(strDate);
+                }
+
+                var start = $("#sdate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: startChange
+                }).data("kendoDatePicker");               
+
+                var end = $("#edate").kendoDatePicker({
+                	format: "dd-MM-yyyy",
+                    change: endChange
+                }).data("kendoDatePicker");
+
+                var sorter = $("#sorter").change(function(){
+                	var today = new Date(),
+                	sdate = "",
+                	edate = "",
+                	value = $("#sorter").val();
+
+					switch(value){
+					case "today":								
+						sdate = today;
+															  					
+					  	break;
+					case "week":			  	
+						var first = today.getDate() - today.getDay(),
+						last = first + 6;
+
+						var sdate = new Date(today.setDate(first)),
+						edate = new Date(today.setDate(last));						
+						
+					  	break;
+					case "month":							  	
+						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
+						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+					  	break;
+					case "year":				
+					  	var sdate = new Date(today.getFullYear(), 0, 1),
+					  	edate = new Date(today.getFullYear(), 11, 31);
+
+					  	break;
+					default:
+											  
+					}
+
+					start.value(sdate);
+					end.value(edate);
+					
+					start.max(end.value());
+                	end.min(start.value());
+
+                	dateChanges();                	
+                });
+                
+                start.max(end.value());
+                end.min(start.value());
+				 		
+			}
+
+			vm.pageLoad();					
+		}		
+	});
+	
 
 	/*************************
 	*   Customer Section   *
@@ -74105,6 +74571,26 @@
 	});
 
 
+	banhji.router.route("/customer_recurring", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerRecurring);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.cashMenu);
+
+			var vm = banhji.customerRecurring;
+			banhji.userManagement.addMultiTask("Customer Recurring","customer_recurring",null);
+			if(banhji.pageLoaded["customer_recurring"]==undefined){
+				banhji.pageLoaded["customer_recurring"] = true;
+				
+				vm.contactTypeDS.filter({ field:"parent_id", value:1 });
+			}
+
+			vm.pageLoad();			     		
+		}
+	});
+
 	/*************************
 	*   Cashier Section   *
 	**************************/
@@ -74441,7 +74927,7 @@
 			//banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
 			var vm = banhji.fileManagement;			
-			banhji.userManagement.addMultiTask("Attach Documents","documents",null);
+			banhji.userManagement.addMultiTask("Attached Documents","documents",null);
 			if(banhji.pageLoaded["documents"]==undefined){
 				banhji.pageLoaded["documents"] = true;					
 			}
@@ -74813,6 +75299,59 @@
 
 			if(banhji.pageLoaded["item_adjustment"]==undefined){
 				banhji.pageLoaded["item_adjustment"] = true;
+								
+				var validator = $("#example").kendoValidator().data("kendoValidator");
+												
+		        $("#saveNew").click(function(e){				
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();		            				  
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }		            
+				});
+
+				$("#saveClose").click(function(e){				
+					e.preventDefault();
+
+					if(validator.validate()){
+						vm.set("saveClose", true);
+		            	vm.save();		            	
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#savePrint").click(function(e){				
+					e.preventDefault();
+					
+					if(validator.validate()){
+						vm.set("savePrint", true);
+		            	vm.save();       				  
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }		            
+				});
+			}
+
+			vm.pageLoad(id);
+		}		
+	});
+	banhji.router.route("/item_recurring", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.itemRecurring);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+
+			var vm = banhji.itemRecurring;
+
+			banhji.userManagement.addMultiTask("Products/Services Recurring","item_recurring",vm);
+
+			if(banhji.pageLoaded["item_recurring"]==undefined){
+				banhji.pageLoaded["item_recurring"] = true;
 								
 				var validator = $("#example").kendoValidator().data("kendoValidator");
 												

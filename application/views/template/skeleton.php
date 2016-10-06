@@ -271,15 +271,15 @@ var themerPrimaryColor = primaryColor;
 			var email3 = $("#refferalEmail3").val();
 			var name4 = $("#refferalName4").val();
 			var email4 = $("#refferalEmail4").val();
-			var name1 = $("#refferalName5").val();
-			var email1 = $("#refferalEmail5").val();
+			var name5 = $("#refferalName5").val();
+			var email5 = $("#refferalEmail5").val();
 			var UserName = banhji.userData.username;
 			var d = new Date();
 			var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
 			$.ajax({  
 			    type: 'POST',
 			    url: '<?php echo base_url(); ?>api/referrals',
-			    data: { uName: UserName, datesend: strDate, rName1: name1, rName2: name2, rName3: name3, rName4: name4, rName5: name5,},
+			    data: { uName: UserName, datesend: strDate, rName1: name1, rName2: name2, rName3: name3, rName4: name4, rName5: name5, rMail1: email1, rMail2: email2, rMail3: email3, rMail4: email4, rMail5: email5 },
 			    success: function(response) {
 			        alert(response.message);
 			        //$("#feedbackMsg").val("");

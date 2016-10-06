@@ -38,6 +38,7 @@ a:hover .text-underline {
 a {
   color: #e5412d;
   outline: 0 ;
+  cursor: pointer;
 }
 h1,
 h2,
