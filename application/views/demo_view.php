@@ -15671,7 +15671,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary" style="min-height: 148px;">
+						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary">
 							
 							<div align="center" class="text-large strong" data-bind="text: sale"></div>
 							<table width="100%">
@@ -15714,7 +15714,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert-info" style="min-height: 148px;">
+						<div class="widget-body alert-info">
 							
 							<div align="center" class="text-large strong" data-bind="text: order"></div>
 							<table width="100%">
@@ -15973,7 +15973,7 @@
 								            			<span class="btn btn-block btn-inverse" data-bind="click: goQuote"><span><span data-bind="text: lang.lang.quote"></span></span>
 								            		</td>
 								            		<td width="50%">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit"><span><span data-bind="text: lang.lang.deposit"></span></span>								            			
+								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit"><span><span data-bind="text: lang.lang.c_deposit"></span></span>								            			
 								            		</td>
 								            	</tr>
 								            	<tr>
@@ -16763,7 +16763,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2><span data-bind="text: lang.lang.quote"></span></h2>
+			        <h2 data-bind="text: lang.lang.quote"></h2>
 
 				    <br>
 						
@@ -16773,7 +16773,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no."></span></td>
+										<td><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -16811,7 +16811,7 @@
 
 								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
-									<div align="left"><span data-bind="text: lang.lang.amount_quote"></span></div>
+									<div align="left"><span data-bind="text: lang.lang.amount_quoted"></span></div>
 									<h2 data-bind="text: total" align="right"></h2>
 								</div>
 
@@ -16871,7 +16871,7 @@
 								            </tr>
 								            <tr>
 								            	<td>
-								            		Term					            						            		
+								            		<span data-bind="text: lang.lang.term"></span>     		
 								            	</td>				
 												<td>
 													<input data-role="dropdownlist"														
@@ -17115,7 +17115,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no."></span></th>             
+				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>             
 				                <th><span data-bind="text: lang.lang.items"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 15%;"><span data-bind="text: lang.lang.quantity"></span></th>
@@ -17356,7 +17356,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>					
 
-			        <h2><span data-bind="text: lang.lang.sale_order"></span></h2>			    		   
+			        <h2 data-bind="text: lang.lang.sale_order"></h2>			    		   
 
 				    <br>				   				
 						
@@ -17366,7 +17366,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no."></span></td>
+										<td><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -17703,7 +17703,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no."></span></th>                
+				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>                
 				                <th><span data-bind="text: lang.lang.items"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 15%;"><span data-bind="text: lang.lang.quantity"></span></th>
@@ -17949,7 +17949,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2><span data-bind="text: lang.lang.customer_deposit"></span></h2>			    		   
+			        <h2 data-bind="text: lang.lang.customer_deposit"></h2>			    		   
 
 				    <br>				   				
 						
@@ -18040,7 +18040,7 @@
 											</tr>   
 											<tr>							            				
 												<td>
-								            		<span data-bind="text: lang.lang.refrence"></span>   						     		
+								            		<span data-bind="text: lang.lang.reference"></span>   						     		
 								            	</td>
 								            	<td>
 													<input data-role="combobox"
@@ -18284,10 +18284,10 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;"><span data-bind="text: lang.lang.no."></span></th>			               
+				                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			               
 				                <th style="width: 30%;"><span data-bind="text: lang.lang.account"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
-				                <th style="width: 15%;"><span data-bind="text: lang.lang.refrence"></span></th>			                
+				                <th style="width: 15%;"><span data-bind="text: lang.lang.reference"></span></th>			                
 				                <th style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>			                
 				            </tr> 
 				        </thead>
@@ -18444,7 +18444,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2><span data-bind="text: lang.lang.cash_sale"></span></h2>			    		   
+			        <h2 data-bind="text: lang.lang.cash_sale"></h2>			    		   
 
 				    <br>				   				
 						
@@ -19077,7 +19077,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2><span data-bind="text: lang.lang.invoice"></span></h2>			    		   
+			        <h2 data-bind="text: lang.lang.invoice"></h2>			    		   
 
 				    <br>				   				
 						
@@ -19445,7 +19445,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no."></span></th>			  
+				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			  
 				                <th><span data-bind="text: lang.lang.items"></span></th>
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>
@@ -19703,7 +19703,7 @@
 							data-bind="click: cancel"><i></i></span>						
 					</div>
 
-			        <h2><span data-bind="text: lang.lang.goods_delivery_note"></span></h2>			    		   
+			        <h2 data-bind="text: lang.lang.goods_delivery_note"></h2>			    		   
 
 				    <br>				   				
 						
@@ -20163,7 +20163,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no."></span></td>
+										<td><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -20233,7 +20233,7 @@
 							        <div class="tab-pane active" id="tab1-4">						            
 							            <table class="table table-borderless table-condensed cart_total">										
 											<tr>							            				
-												<td><span data-bind="text: lang.lang.related_invoice"></span></td>
+												<td><span data-bind="text: lang.lang.related_invoices"></span></td>
 								            	<td>
 													<input data-role="combobox"														
 															data-auto-bind="false"
@@ -20682,7 +20682,7 @@
 					
 					<div class="block-title">
 						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.segments"></span></h2>
+						<h2 data-bind="text: lang.lang.segments"></h2>
 						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
 					<div class="customer-name">
@@ -21172,7 +21172,7 @@
 
 		<div class="span7">
 			<div class="row-fluid sale-report">				
-				<h2><span data-bind="text: lang.lang.sale_managment_reports"></span></h2>
+				<h2 data-bind="text: lang.lang.sale_managment_reports"></h2>
 				<p>
 					<span data-bind="text: lang.lang.the_following_reports_provide"></span>
 				</p>
@@ -21180,10 +21180,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td width="50%">
-								<h3><a href="#/sale_summary_customer"><span data-bind="text: lang.lang.sale_summary_by_customer"></span></a></h3>
+								<a href="#/sale_summary_customer"><h3 data-bind="text: lang.lang.sale_summary_by_customer"></h3></a>
 							</td>
 							<td width="50%">
-								<h3><a href="#/customer_transaction_list"><span data-bind="text: lang.lang.customer_transaction_list"></span></a></h3>								
+								<a href="#/customer_transaction_list"><h3 data-bind="text: lang.lang.customer_transaction_list"></h3></a>								
 							</td>						
 						</tr>
 						<tr>
@@ -21202,10 +21202,10 @@
 						</tr>
 						<tr>
 							<td width="50%">
-								<h3><a href="#/sale_detail_customer"><span data-bind="text: lang.lang.sale_detail_by_customer"></span></a></h3>
+								<a href="#/sale_detail_customer"><h3 data-bind="text: lang.lang.sale_detail_by_customer"></h3></a>
 							</td>
 							<td width="50%">
-								<h3><a href="#/deposit_detail_customer"><span data-bind="text: lang.lang.deposit_detail_by_customer"></span></a></h3>
+								<a href="#/deposit_detail_customer"><h3 data-bind="text: lang.lang.deposit_detail_by_customer"></h3></a>
 							</td>
 						</tr>
 						<tr>
@@ -21223,10 +21223,10 @@
 
 						<tr>
 							<td width="50%">
-								<h3><a href="#/sale_summary_product"><span data-bind="text: lang.lang.sale_summary_by_product_Services"></span></a></h3>
+								<a href="#/sale_summary_product"><h3 data-bind="text: lang.lang.sale_summary_by_product_Services"></h3></a>
 							</td>
 							<td width="50%">
-								<h3><a href="#/sale_detail_product"><span data-bind="text: lang.lang.sale_detail_by_product_services"></span></a></h3>
+								<a href="#/sale_detail_product"><h3 data-bind="text: lang.lang.sale_detail_by_product_services"></h3></a>
 							</td>
 						</tr>
 						<tr>
@@ -21243,10 +21243,10 @@
 						</tr>
 						<tr>
 							<td width="50%">
-								<h3><a href="#/sale_job_engagement"><span data-bind="text: lang.lang.sale_by_job_engagement"></span></a></h3>
+								<a href="#/sale_job_engagement"><h3 data-bind="text: lang.lang.sale_by_job_engagement"></h3></a>
 							</td>
 							<td width="50%">
-								<h3><a href="#/sale_order_list"><span data-bind="text: lang.lang.sale_order_list"></span></a></h3>
+								<a href="#/sale_order_list"><h3 data-bind="text: lang.lang.sale_order_list"></h3></a>
 							</td>
 						</tr>
 					</table>
@@ -21261,17 +21261,17 @@
 				<div class="row-fluid">
 					<table class="table table-borderless table-condensed">
 						<tr>
-							<td >
-								<h3><a href="#/customer_balance_summary"><span data-bind="text: lang.lang.customer_balance_summary"></span></a></h3>
+							<td>
+								<a href="#/customer_balance_summary"><h3 data-bind="text: lang.lang.customer_balance_summary"></h3></a>
 							</td>
 							<td >
-								<h3><a href="#/customer_balance_detail"><span data-bind="text: lang.lang.customer_balance_detail"></span></a></h3>								
+								<a href="#/customer_balance_detail"><h3 data-bind="text: lang.lang.customer_balance_detail"></h3></a>								
 							</td>						
 						</tr>
 						<tr>
 							<td>
 								<p>
-									<span data-bind="text: lang.lang.show_each_customer’s_total_outstanding_balances"></span>
+									<span data-bind="text: lang.lang.show_each_customers_total_outstanding_balances"></span>
 								</p>
 								
 							</td>
@@ -21283,8 +21283,8 @@
 							
 						</tr>
 						<tr>
-							<td >
-								<h3><a href="#/receivable_aging_summary">Receivable Aging Summary</a></h3>
+							<td>
+								<a href="#/receivable_aging_summary"><h3>Receivable Aging Summary</h3></a>
 							</td>
 							<td >
 								<h3><a href="#/receivable_aging_detail">Receivable Aging Detail</a></h3>
@@ -29305,7 +29305,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2>CASH RECEIPT</h2>			    		   
+			        <h2 data-bind="text: lang.lang.cash_receipt"></h2>			    		   
 
 				    <br>				   				
 						
@@ -29348,7 +29348,7 @@
 							
 							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 								data-bind="style: { backgroundColor: amtDueColor}">
-								<div align="left">AMOUNT RECEIVED</div>
+								<div align="left"><span data-bind="text: lang.lang.amount_received"></span></div>
 								<h2 data-bind="text: total" align="right"></h2>
 							</div>												
 						</div>					   
@@ -29374,7 +29374,7 @@
 							        <div class="tab-pane active" id="tab1-2">						            
 							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
 							            	<tr>
-												<td>Date</td>
+												<td><span data-bind="text: lang.lang.date"></span></td>
 												<td class="right">
 													<input id="issuedDate" name="issuedDate" 
 															data-role="datepicker"
@@ -29388,7 +29388,7 @@
 											</tr>							            
 											<tr>
 								            	<td>
-								            		Payment Method					            						            		
+								            		<span data-bind="text: lang.lang.payment_term"></span>
 								            	</td>				
 												<td>
 													<input id="ddlPaymentMethod" name="ddlPaymentMethod"
@@ -29405,7 +29405,7 @@
 												</td>
 											</tr>
 											<tr>
-								            	<td>Cash Account</td>							            	
+								            	<td><span data-bind="text: lang.lang.cash_account"></span></td>							            	
 							            		<td>
 													<input id="ddlCashAccount" name="ddlCashAccount" 
 														data-role="dropdownlist"
@@ -29422,7 +29422,7 @@
 												</td>							            	
 								            </tr>							            
 								            <tr>
-												<td>Segments</td>
+												<td><span data-bind="text: lang.lang.segment"></span></td>
 												<td>
 													<select data-role="multiselect"
 														   data-value-primitive="true"
@@ -29461,7 +29461,7 @@
 												</td>							            	
 								            </tr>				            
 								            <tr>
-												<td>Segments</td>
+												<td><span data-bind="text: lang.lang.segment"></span></td>
 												<td>
 													<select data-role="multiselect"
 														   data-value-primitive="true"
@@ -29490,14 +29490,14 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th class="center" style="width: 1%;">No.</th>			                
-				                <th>DATE</th>
-				                <th>NAME</th>
-				                <th>INVOICE</th>
-				                <th data-bind="visible: showCheckNo" style="width: 10%">CHECK NO</th>
-				                <th style="width: 15%">AMOUNT</th>			                
-				                <th style="width: 15%">DISCOUNT</th>
-				                <th style="width: 15%">PAY</th>
+				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+				                <th><span data-bind="text: lang.lang.date"></span></th>
+				                <th><span data-bind="text: lang.lang.name"></span></th>
+				                <th><span data-bind="text: lang.lang.invoice"></span></th>
+				                <th data-bind="visible: showCheckNo" style="width: 10%"><span data-bind="text: lang.lang.check_number"></span></th>
+				                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>			                
+				                <th style="width: 15%"><span data-bind="text: lang.lang.discount"></span></th>
+				                <th style="width: 15%"><span data-bind="text: lang.lang.pay"></span></th>
 				            </tr> 
 				        </thead>
 				        <tbody data-role="listview" 
@@ -29520,7 +29520,7 @@
 								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
 									<li>
 										<input type="checkbox" id="chbCheckNo" class="k-checkbox" data-bind="checked: showCheckNo">
-	  									<label class="k-checkbox-label" for="chbCheckNo">CHECK NO</label>
+	  									<label class="k-checkbox-label" for="chbCheckNo"><span data-bind="text: lang.lang.check_number"></span></label>
 									</li>															
 								</ul>
 							</div>
@@ -29538,15 +29538,15 @@
 							<table class="table table-condensed table-striped table-white">
 								<tbody>
 									<tr>
-										<td class="right">Total Received:</td>
+										<td class="right"><span data-bind="text: lang.lang.total_received"></span>:</td>
 										<td class="right strong"><span data-bind="text: pay"></span></td>
-										<td class="right">Subtotal:</td>
+										<td class="right"><span data-bind="text: lang.lang.subtotal"></span>:</td>
 										<td class="right strong" width="40%"><span data-bind="text: sub_total"></span></td>
 									</tr>								
 									<tr>
-										<td class="right">Remaining:</td>
+										<td class="right"><span data-bind="text: lang.lang.remaining"></span>:</td>
 										<td class="right strong"><span data-bind="text: remain"></span></td>
-										<td class="right">Total Discount:</td>
+										<td class="right"><span data-bind="text: lang.lang.total_discount"></span>:</td>
 										<td class="right strong">
 											<span data-bind="text: discount"></span>
 	                   					</td>
@@ -29554,7 +29554,7 @@
 									<tr>
 										<td></td>
 										<td></td>
-										<td class="right"><h4>Total Due:</h4></td>
+										<td class="right"><h4><span data-bind="text: lang.lang.total_due"></span>:</h4></td>
 										<td class="right strong"><h4 data-bind="text: total"></h4></td>
 									</tr>								
 								</tbody>
@@ -29579,10 +29579,10 @@
 					                   data-option-label="Select Template..." />
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>																	
-								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> Save Print</span>
-								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>				
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_new"></span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_close"></span></span>																	
+								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_print"></span></span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>				
 							</div>
 						</div>
 					</div>
@@ -38469,31 +38469,31 @@
 <script id="customerMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 	  	<li><a href='#/customers' class='glyphicons show_big_thumbnails'><i></i></a></li>
-	  	<li><a href='#/customer_center'>CENTER</a></li>
+	  	<li><a href='#/customer_center'><span data-bind="text: lang.lang.center"></span></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/customer'>Add Customer</a></li> 
-  				<li ><a href='#/job'>Add Job</a></li>
-  				<li><a href='#/item'>Add Inventory</a></li>
-  				<li><a href='#/non_inventory_part'>Add Non-Inventory for Sale</a></li>
-  				<li><a href='#/item_service'>Add Service</a></li>
-  				<li ><a href="#/txn_item">Add Transaction Item</a></li>
+  				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer"></span></a></li> 
+  				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li>
+  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory"></span></a></li>
+  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_non_inventory_part"></span></a></li>
+  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
+  				<li ><a href="#/txn_item"><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>
   				<li> <span class="li-line"></span></li>
-  				<li style="padding-top: 10px;"><a href='#/quote'>Create Quotation</a></li>  				
-  				<li><a href='#/sale_order'>Create Sale Order</a></li>
-  				<li><a href='#/gdn'>Create Goods Delivery Note</a></li>
-  				<li><a href='#/customer_deposit'>Create Customer Deposit</a></li>
-  				<li><a href='#/cash_sale'>Create Cash Sale</a></li>  				
-  				<li><a href='#/invoice'>Create Invoice</span></a></li>  				
-  				<li><a href='#/cash_receipt'>Create Cash Receipt</a></li>
-  				<li><a href='#/sale_return'>Create Sale Return</a></li>
-  				<li><a href='#/statement'>Create Statement</a></li> 
+  				<li style="padding-top: 10px;"><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>  				
+  				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
+  				<li><a href='#/gdn'><span data-bind="text: lang.lang.create_goods_delivery_note"></span></a></li>
+  				<li><a href='#/customer_deposit'><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
+  				<li><a href='#/cash_sale'><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>  
+  				<li><a href='#/invoice'><span data-bind="text: lang.lang.create_invoice"></span></span></a></li>
+  				<li><a href='#/cash_receipt'><span data-bind="text: lang.lang.create_cash_receipt"></span></span></a></li>
+  				<li><a href='#/sale_return'><span data-bind="text: lang.lang.create_sale_return"></span></a></li>
+  				<li><a href='#/statement'><span data-bind="text: lang.lang.create_statement"></span></a></li> 
   				<li> <span class="li-line"></span></li> 				
-  				<li><a href='#/customer_recurring'>Customer Recurring List</a></li>  				 				  				 				
+  				<li><a href='#/customer_recurring'><span data-bind="text: lang.lang.customer_recurring_list"></span></a></li>  				 				  				 				
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href="#/customer_report_center">REPORTS</a></li>	  	
+	  	<li><a href="#/customer_report_center">Reports</a></li>	  	
 	  	<li><a href='#/customer_setting' class='glyphicons settings'><i></i></a></li>
 	</ul>
 </script>
@@ -75083,7 +75083,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
 			var vm = banhji.customerReportCenter;			
-			banhji.userManagement.addMultiTask("Sale Managment Reports","customer_report_center",null);
+			banhji.userManagement.addMultiTask("Customer Report Center","customer_report_center",null);
 			if(banhji.pageLoaded["customer_report_center"]==undefined){
 				banhji.pageLoaded["customer_report_center"] = true;				
 								

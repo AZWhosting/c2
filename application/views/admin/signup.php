@@ -283,8 +283,8 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 
                                 <select class="signup-country" 
                                         data-role="dropdownlist" 
-                                        data-bind="source: countries, value: country"
-                                        data-text-field="name"
+                                        data-bind="source: currencies, value: country"
+                                        data-text-field="country"
                                         data-value-field="id"
                                         data-option-label="Select the main Currency" style="text-align: left;">
                                 </select><br>
@@ -513,6 +513,38 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
           pageSize: 1
         });
 
+        banhji.currencies = new kendo.data.DataSource({
+            transport: {
+              read  : {
+                url: baseUrl + 'api/monetaries',
+                type: "GET",
+                dataType: 'json'
+              },
+              parameterMap: function(options, operation) {
+                if(operation === 'read') {
+                  return {
+                    limit: options.take,
+                    page: options.page,
+                    filter: options.filter
+                  };
+                } else {
+                  return {models: kendo.stringify(options.models)};
+                }
+              }
+            },
+            schema  : {
+              model: {
+                id: 'id'
+              },
+              data: 'results',
+              total: 'count'
+            },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 100
+        });
+
         banhji.typeDS = new kendo.data.DataSource({
           transport: {
             read  : {
@@ -582,6 +614,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             password  : null,
             cPassword : null,
             name      : '',
+            currency  : null,
             country   : null,
             industry  : null,
             type      : null,
@@ -589,6 +622,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             industries: banhji.industry,
             types     : banhji.typeDS,
             userDS    : banhji.userDS,
+            currencies: banhji.currencies,
             createDB  : new kendo.data.DataSource({
                 transport: {
                     create  : {
@@ -663,6 +697,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                                             // create company
                                             banhji.companyDS.insert(0, {
                                                 name:  banhji.index.get('name'),
+                                                currency: banhji.index.get('currency'),
                                                 country:  banhji.index.get('country'),
                                                 industry:  banhji.index.get('industry'),
                                                 type: banhji.index.get('type'),
@@ -674,6 +709,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                                                 banhji.index.set('password', null);
                                                 banhji.index.set('cPassword', null);
                                                 banhji.index.set('name', '');
+                                                banhji.index.set('currency', '');
                                                 banhji.index.set('country', null);
                                                 banhji.index.set('industry', null);
                                                 banhji.index.set('type', null);
