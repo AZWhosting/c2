@@ -166,6 +166,9 @@ var themerPrimaryColor = primaryColor;
 	//mail('loat.choeun@gmail.com', 'test', 'test', 'test');
 ?>
 	<div class="cover-rightfixed">
+		<a class="rightfixed feedback btn-rounded glyphicons no-js circle_exclamation_mark" href="#firstPopUp" data-toggle="modal"><i></i>
+			wellcome
+		</a><br>
 		<a class="rightfixed feedback btn-rounded glyphicons no-js circle_exclamation_mark" href="#feedbackContent" data-toggle="modal"><i></i>
 			Feedback
 		</a><br>
@@ -184,6 +187,16 @@ var themerPrimaryColor = primaryColor;
 			  size="standard" ></div>
 		</div>
 		</a>
+	</div>
+	<div class="modal fade popRightBlog" id="firstPopUp">
+		<div class="span12">
+			<div class="span5">
+				
+			</div>
+			<div class="span6">
+				
+			</div>
+		</div>
 	</div>
 	<div class="modal fade popRightBlog" id="feedbackContent">
 		<div class="modal-header">
