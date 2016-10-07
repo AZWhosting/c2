@@ -3,7 +3,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Transaction_templates extends REST_Controller {
+class Prefixes extends REST_Controller {
 	public $_database;
 	public $server_host;
 	public $server_user;
@@ -28,10 +28,10 @@ class Transaction_templates extends REST_Controller {
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
 
-		$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Prefix(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -76,7 +76,7 @@ class Transaction_templates extends REST_Controller {
 	    		}
 			}									 			
 		}
-		$obj->order_by("type","desc");
+		
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
 
@@ -84,18 +84,11 @@ class Transaction_templates extends REST_Controller {
 			foreach ($obj as $value) {				
 				//Results				
 				$data["results"][] = array(
-					"id" 					=> $value->id,
-					"transaction_form_id" 	=> $value->transaction_form_id,					
-					"user_id" 				=> $value->user_id,
-					"type" 					=> $value->type,
-					"name" 	 				=> $value->name,
-					"color" 				=> $value->color,
-					"title" 				=> $value->title,
-					"note" 					=> $value->note,
-					"moduls" 				=> $value->moduls,
-					"status" 				=> $value->status,
-					"created_at" 			=> $value->created_at,
-					"updated_at" 			=> $value->updated_at	
+					"id" 				=> $value->id,
+					"type" 				=> $value->type,
+					"abbr" 				=> $value->abbr,
+					"startup_number" 	=> $value->startup_number,
+					"name" 	 			=> $value->name
 				);
 			}
 		}
@@ -109,30 +102,20 @@ class Transaction_templates extends REST_Controller {
 		$models = json_decode($this->post('models'));
 
 		foreach ($models as $value) {
-			$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-			isset($value->transaction_form_id)? $obj->transaction_form_id 	= $value->transaction_form_id : "";
-			isset($value->user_id)? 			$obj->user_id 				= $value->user_id : "";
-			isset($value->type)? 				$obj->type 					= $value->type : "";
-			isset($value->name)? 				$obj->name 					= $value->name : "";
-			isset($value->title)? 				$obj->title 				= $value->title : "";
-			isset($value->note)? 				$obj->note 					= $value->note : "";
-			isset($value->moduls)? 				$obj->moduls 				= $value->moduls : "";
-			isset($value->color)? 				$obj->color 				= $value->color : "";
-			isset($value->status)? 				$obj->status 				= $value->status : "";
+			$obj = new Prefix(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+			
+			isset($value->type) 			? $obj->type 			= $value->type : "";
+			isset($value->abbr) 			? $obj->abbr 			= $value->abbr : "";
+			isset($value->startup_number) 	? $obj->startup_number 	= $value->startup_number : "";
+			isset($value->name) 			? $obj->name 			= $value->name : "";
+									
 			if($obj->save()){
 				$data["results"][] = array(
-					"id" 					=> $obj->id,
-					"transaction_form_id" 	=> $obj->transaction_form_id,					
-					"user_id" 				=> $obj->user_id,
-					"type" 					=> $obj->type,
-					"name" 	 				=> $obj->name,
-					"color" 				=> $obj->color,
-					"title" 				=> $obj->title,
-					"note" 					=> $obj->note,
-					"moduls" 				=> $obj->moduls,
-					"status" 				=> $obj->status,
-					"created_at" 			=> $obj->created_at,
-					"updated_at" 			=> $obj->updated_at
+					"id" 				=> $obj->id,
+					"type" 				=> $obj->type,
+					"abbr" 				=> $obj->abbr,
+					"startup_number" 	=> $obj->startup_number,
+					"name" 	 			=> $obj->name
 				);
 			}
 		}
@@ -148,33 +131,21 @@ class Transaction_templates extends REST_Controller {
 		$data["count"] = 0;
 
 		foreach ($models as $value) {			
-			$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Prefix(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			isset($value->transaction_form_id)? $obj->transaction_form_id 	= $value->transaction_form_id : "";
-			isset($value->user_id)? 			$obj->user_id 				= $value->user_id : "";
-			isset($value->type)? 				$obj->type 					= $value->type : "";
-			isset($value->name)? 				$obj->name 					= $value->name : "";
-			isset($value->title)? 				$obj->title 				= $value->title : "";
-			isset($value->note)? 				$obj->note 					= $value->note : "";
-			isset($value->moduls)? 				$obj->moduls 				= $value->moduls : "";
-			isset($value->color)? 				$obj->color 				= $value->color : "";			
-			isset($value->status)? 				$obj->status 				= $value->status : "";
+			isset($value->type) 			? $obj->type 			= $value->type : "";
+			isset($value->abbr) 			? $obj->abbr 			= $value->abbr : "";
+			isset($value->startup_number) 	? $obj->startup_number 	= $value->startup_number : "";
+			isset($value->name) 			? $obj->name 			= $value->name : "";
 
 			if($obj->save()){				
 				$data["results"][] = array(
-					"id" 					=> $obj->id,
-					"transaction_form_id" 	=> $obj->transaction_form_id,					
-					"user_id" 				=> $obj->user_id,
-					"type" 					=> $obj->type,
-					"name" 	 				=> $obj->name,
-					"color" 				=> $obj->color,
-					"title" 				=> $obj->title,
-					"note" 					=> $obj->note,
-					"moduls" 				=> $obj->moduls,
-					"status" 				=> $obj->status,
-					"created_at" 			=> $obj->created_at,
-					"updated_at" 			=> $obj->updated_at
+					"id" 				=> $obj->id,
+					"type" 				=> $obj->type,
+					"abbr" 				=> $obj->abbr,
+					"startup_number" 	=> $obj->startup_number,
+					"name" 	 			=> $obj->name
 				);		
 			}
 		}
@@ -188,7 +159,7 @@ class Transaction_templates extends REST_Controller {
 		$models = json_decode($this->delete('models'));
 
 		foreach ($models as $key => $value) {
-			$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Prefix(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
 			
 			$data["results"][] = array(
@@ -202,5 +173,5 @@ class Transaction_templates extends REST_Controller {
 	}  
 	
 }
-/* End of file transaction_template.php */
-/* Location: ./application/controllers/api/transaction_template.php */
+/* End of file categories.php */
+/* Location: ./application/controllers/api/categories.php */

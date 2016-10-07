@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Login | Free Online Accounting</title>
+<title>Forget Password | Free Online Accounting</title>
   <!-- Boostrap-->
   <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
@@ -31,7 +31,7 @@
       }
       .login-image{
           text-align: center;
-          margin-top: -15px; 
+          margin-top: -50px; 
       }
       .login-image p{
         color: #8DB3DA;
@@ -189,46 +189,45 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 </head>
 
 <body>
-  <div class="container">
-      <div class="cover-rightfixed">
-        <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 144px;float:left;">
-          Support
-          <div class="enquiry-content">
-            <p style="font-size: 14px;">Call us at<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
-            <div class="fb-messengermessageus" 
-              messenger_app_id="1301847836514973" 
-              page_id="862386433857166"
-              color="blue"
-              width="180"
-              size="standard" ></div>
-          </div>
-        </a>
-      </div>
-      <div class="login">
-          <dis class="login-content">
-              <div class="col-sm-6">
-                <div class="login-image">
-                    <img style="width: 70%;" src="<?php echo base_url(); ?>assets/signup-new.png" />
-                    <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="login-form">
-                    <form action="" method="">
-
-                        <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
-
-                        <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
-
-                        <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
-                        <div id="loginInformation"></div>
-                    </form> 
-                    <a href="<?php echo base_url(); ?>forgetpassword">Forget Password</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
-                </div>
-              </div>
-          </div>
-      </div>
+    <div class="cover-rightfixed">
+  <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 144px;float:left;">
+    Support
+    <div class="enquiry-content">
+      <p style="font-size: 14px;">Call us at<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
+      <div class="fb-messengermessageus" 
+        messenger_app_id="1301847836514973" 
+        page_id="862386433857166"
+        color="blue"
+        width="180"
+        size="standard" ></div>
     </div>
+  </a>
+</div>
+    <div class="login">
+        <dis class="login-content">
+            <div class="col-sm-6">
+              <div class="login-image">
+                  <img style="width: 70%;" src="<?php echo base_url(); ?>assets/signup-new.png" />
+                  <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="login-form">
+                <h2 align="center">Forget Password</h2>
+                  <form action="" method="">
+
+                      <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
+
+                     
+                      <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Get New Password"><br><br>
+                      <div id="loginInformation"></div>
+                  </form> 
+                  <a href="<?php echo base_url(); ?>login"">Login</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
+              </div>
+            </div>
+        </div>
+    </div>
+
     <!-- cognito -->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
