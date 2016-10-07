@@ -71,25 +71,25 @@
 							<a href="#/customers ">
 								<img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span><span data-bind="text: lang.lang.customers"></span></span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.customers" style="margin-top: 5px; display: inline-block;"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/vendors">
 								<img title="Supplier Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg" alt="Vendor">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span><span data-bind="text: lang.lang.suppliers"></span></span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.suppliers" style="margin-top: 5px; display: inline-block;"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/inventories">
 								<img title="Products/Sercies Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg" alt="Inventory">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span><span data-bind="text: lang.lang.products_services"></span></span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.products_services" style="margin-top: 5px; display: inline-block;"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/documents">
 								<img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.jpg" alt="Attachment">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span><span data-bind="text: lang.lang.documents"></span></span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.documents" style="margin-top: 5px; display: inline-block;"></span></span>
 						</li>
 					</ul>
 					<ul id="module-image">						
@@ -97,27 +97,27 @@
 							<a href="#/accounting">
 								<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">							
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.accounting" style="margin-top: 8px;
-    display: inline-block;"></span></span>
+    display: inline-block;" style="margin-top: 5px; display: inline-block;"></span></span>
 							</a>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/reports">
 								<img title="Reports Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.jpg" alt="Reports">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span><span data-bind="text: lang.lang.reports"></span></span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.reports" style="margin-top: 5px; display: inline-block;"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="#/sale_tax">
 								<img title="Tax Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax" style="margin-top: 5px;
-    display: inline-block;"></span></span>
+    display: inline-block;" style="margin-top: 5px; display: inline-block;"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
 								<img title="Admin Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings" style="margin-top: 5px;
-    display: inline-block;"></span></span>
+    display: inline-block;" style="margin-top: 5px; display: inline-block;"></span></span>
 							</a>
 						</li>											
 					</ul>
@@ -8370,7 +8370,7 @@
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td valign="top">
-			        	<h2><span data-bind="text: lang.lang.supplier"></span></h2>
+			        	<h2 data-bind="text: lang.lang.supplier"></h2>
 			        	<p>
 			        		In here, you can manage your supplier information, and other related transactions.
 			        	</p>
@@ -8400,39 +8400,39 @@
 					<td class="center">
 						<a href="#/purchase_order">
 							<img title="Add Purchase Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase_order.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.po"></span>
+							<span data-bind="text: lang.lang.po" style="margin-top: 7px; display: inline-block;"></span>
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/grn">
 							<img title="Add Received Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/received_note.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.grn"></span>
+							<span data-bind="text: lang.lang.goods_received_note" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>
 					<td class="center" style="width:121px;">
 						<a href="#/vendor_deposit">
 							<img title="Add Supplier Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/supplier_deposit.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.deposit"></span>
+							<span data-bind="text: lang.lang.deposit" style="margin-top: 7px; display: inline-block;"></span>
 						</a>						
 					</td>					
 				</tr>
 				<tr>
-					<td class="center">
+					<td class="center" style="vertical-align: top;">
 						<a href="#/purchase">
 							<img title="Add Purchase" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.purchase"></span>
+							<span data-bind="text: lang.lang.purchase" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>
-					<td class="center">
+					<td class="center" style="vertical-align: top;">
 						<a href="#/purchase_return">
 							<img title="Add Purchase Return" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/purchase_return.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.pur.return"></span>
+							<span data-bind="text: lang.lang.purchase_return" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>
 					<td class="center">						
 						<a href="#/cash_payment">
 							<img title="Add Cash Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_payment.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.cash_payment"></span>
+							<span data-bind="text: lang.lang.cash_payment" style="margin-top: 7px; display: inline-block;"></span>
 						</a>						
 					</td>										
 				</tr>				
@@ -9878,8 +9878,8 @@
 				                <th class="center" style="width: 1%;">No.</th>			                
 				                <th>ITEMS</th>
 				                <th>DESCRIPTION</th>
-				                <th style="width: 20%;"><span data-bind="text: lang.lang.quantity"></span></th>
-				                <th style="width: 13%;"><span data-bind="text: lang.lang.cost"></span></th>
+				                <th style="width: 20%;"><span data-bind="text: lang.lang.qty1"></span></th>
+				                <th style="width: 13%;"><span data-bind="text: lang.lang.cost1"></span></th>
 				                <th style="width: 1%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>
 				                <th style="width: 10%;" data-bind="visible: showRequiredDate">DELIV.DATE<span data-bind="text: lang.lang.delivery_date"></span></th>			                
 				                <th style="width: 10%;"><span data-bind="text: lang.lang.amount"></span></th>
@@ -11075,7 +11075,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2><span data-bind="text: lang.lang.purchase"></span></h2>			    		   
+			        <h2 data-bind="text: lang.lang.purchase"></h2>			    		   
 
 				    <br>				   				
 						
@@ -13623,8 +13623,6 @@
 							<h2>Deposit Detail by Supplier</h2>
 							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-
-<<<<<<< HEAD
 					<div class="block-title">
 						<h3 data-bind="text: company.name"></h3>
 						<h2><span data-bind="text: lang.lang.deposit_detail_by_supplier"></span></h2> 
@@ -15562,7 +15560,7 @@
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td valign="top">
-			        	<h2><span data-bind="text: lang.lang.customers"></span></h2>
+			        	<h2 data-bind="text: lang.lang.customers"></h2>
 			        	<p>
 			        		<span data-bind="text: lang.lang.in_here"></span>
 			        	</p>
@@ -15591,19 +15589,19 @@
 					<td class="center">
 						<a href="#/quote">
 							<img title="Add Quote" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.quotation"></span>
+							<span data-bind="text: lang.lang.quotation" style="margin-top: 7px; display: inline-block;"></span>
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/sale_order">
 							<img title="Add Sale Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_order.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.sale_order"></span>
+							<span data-bind="text: lang.lang.sale_order" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>
 					<td class="center" >
 						<a href="#/customer_deposit">
 							<img title="Add Customer Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.deposit"></span>
+							<span data-bind="text: lang.lang.deposit" style="margin-top: 7px; display: inline-block;"></span>
 						</a>						
 					</td>					
 				</tr>
@@ -15611,39 +15609,39 @@
 					<td class="center">
 						<a href="#/cash_sale">
 							<img title="Add Cash Sale" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_receipt.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.cash_sale"></span>
+							<span data-bind="text: lang.lang.cash_sale" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/invoice">
 							<img title="Add Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/invoice.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.invoice"></span>
+							<span data-bind="text: lang.lang.invoice" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>
 					<td class="center">						
 						<a href="#/cash_receipt">
 							<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.cash_receipt"></span>
+							<span data-bind="text: lang.lang.cash_receipt" style="margin-top: 7px; display: inline-block;"></span>
 						</a>						
 					</td>										
 				</tr>
 				<tr>				
-					<td class="center">
+					<td style="vertical-align:top;" class="center">
 						<a href="#/gdn">
 							<img title="Add Delivery Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.delivery_note"></span>
+							<span data-bind="text: lang.lang.delivery_note" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>
-					<td class="center">
+					<td width="186" class="center">
 						<a href="#/sale_return">
 							<img title="Add Sale Return" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_return.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.sale_return1"></span>
+							<span data-bind="text: lang.lang.sale_return1" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>				
-					<td class="center">
+					<td width="186" class="center">
 						<a href="#/statement">
 							<img title="Add Statement" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/statement.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.statement"></span>
+							<span data-bind="text: lang.lang.statement" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>
 				</tr>				
@@ -20862,7 +20860,7 @@
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
 	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.cutomer_type"></span></span></a>
+	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.customer_type"></span></span></a>
 	            </li>
 	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
 	            </li>
@@ -37062,14 +37060,14 @@
 				<div class="widget widget-tabs widget-tabs-gray report-tab" style="padding-bottom: 20px; background: #fff; overflow: hidden;">
 					<div class="widget-head head-custom" style="height: 50px;">
 						<ul>
-							<li class="active"><a href="#tab-1" data-toggle="tab"><i></i>Customer</a></li>
-							<li><a href="#tab-2" data-toggle="tab"><i></i>Suppliers</a></li>
-							<li><a href="#tab-3" data-toggle="tab"><i></i>Products/Services</a></li>
-							<li><a href="#tab-4" data-toggle="tab"><i></i>Cash</a></li>
-							<li><a href="#tab-5" data-toggle="tab"><i></i>Periods-end</a></li>
-							<li><a href="#tab-6" data-toggle="tab"><i></i>Financial Statements</a></li>
-							<li><a href="#tab-7" data-toggle="tab"><i></i>Segments Reporting</a></li>
-							<li><a href="#tab-8" data-toggle="tab"><i></i>Job Tracking</a></li>
+							<li class="active"><a href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.customer"></span></a></li>
+							<li><a href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.supplier"></span></a></li>
+							<li><a href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.products_services"></span></a></li>
+							<li><a href="#tab-4" data-toggle="tab"><i></i><span data-bind="text: lang.lang.cash"></span></a></li>
+							<li><a href="#tab-5" data-toggle="tab"><i></i><span data-bind="text: lang.lang.period_end"></span></a></li>
+							<li><a href="#tab-6" data-toggle="tab"><i></i><span data-bind="text: lang.lang.financial_statements"></span></a></li>
+							<li><a href="#tab-7" data-toggle="tab"><i></i><span data-bind="text: lang.lang.statement_reporting"></span></a></li>
+							<li><a href="#tab-8" data-toggle="tab"><i></i><span data-bind="text: lang.lang.job_tracking"></span></a></li>
 						</ul>
 					</div>
 
