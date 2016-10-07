@@ -60520,7 +60520,7 @@
 							discount 			: value.discount,
 							rate				: value.rate,
 							locale				: value.locale,
-							movement 			: vlaue.movement,							
+							movement 			: value.movement,							
 
 							item_prices			: value.item_prices
 						});
