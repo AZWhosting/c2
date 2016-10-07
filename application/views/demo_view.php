@@ -8888,20 +8888,20 @@
 															</td>
 														</tr>								
 														<tr>
-															<td>Phone:</td>
+															<td><span data-bind="text: lang.lang.phone"></span></td>
 															<td>
 																<span data-bind="text: obj.phone"></span>
 															</td>
 														</tr>
 														<tr>
-															<td>Currency:</td>
+															<td><span data-bind="text: lang.lang.currency"></span></td>
 															<td>										
 																<span data-bind="text: currencyCode"></span>
 															</td>
 														</tr>
 													</table>
 
-													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i>View All Info / Edit</span>
+													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_all_info_edit"></span></span>
 												</div>
 											</div>
 							            </div>
@@ -8934,7 +8934,7 @@
 
 							            <!-- Attach Tab content -->
 								        <div id="tab4-4" class="tab-pane">							            	
-								            <p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+								            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
 								            <input id="files" name="files"
 							                   type="file"
 							                   data-role="upload"
@@ -8946,9 +8946,9 @@
 								            <table class="table table-bordered">
 										        <thead>
 										            <tr>			                
-										                <th>File Name</th>
-										                <th>Description</th>
-										                <th>Date</th>
+										                <th><span data-bind="text: lang.lang.file_name"></span></th>
+										                <th><span data-bind="text: lang.lang.description"></span></th>
+										                <th><span data-bind="text: lang.lang.date"></span></th>
 										                <th style="width: 13%;"></th>                			                
 										            </tr> 
 										        </thead>
@@ -9636,7 +9636,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2><span data-bind="text: lang.lang.purchase_order"></span></h2>			    		   
+			        <h2><span data-bind="text: lang.lang.c_purchase_order"></span></h2>			    		   
 
 				    <br>				   				
 						
@@ -9646,7 +9646,7 @@
 							<div class="box-generic well" style="height: 190px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no"></span>.</td>
+										<td><span data-bind="text: lang.lang.no_"></span>.</td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
@@ -9663,7 +9663,7 @@
 										</td>
 									</tr>								
 									<tr>
-										<td><span data-bind="text: lang.lang.supplier"></span></td>
+										<td><span data-bind="text: lang.lang.suppliers"></span></td>
 										<td>
 											<input id="cbbContact" name="cbbContact"
 												   data-role="combobox"											                    
@@ -10197,7 +10197,7 @@
     				onclick="javascript:window.history.back()"
 					data-bind="click: cancel"><i></i></span>
 
-		        <h2><span data-bind="text: lang.lang.goods_received_note"></span></h2>			    		   
+		        <h2 data-bind="text: lang.lang.goods_received_note"></h2>			    		   
 
 			    <br>				   				
 					
@@ -10640,7 +10640,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-		        <h2><span data-bind="text: lang.lang.supplier_deposit"></span></h2>			    		   
+		        <h2 data-bind="text: lang.lang.vendor_deposit"></h2>			    		   
 
 			    <br>				   				
 					
@@ -11034,7 +11034,7 @@
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save"></span><span data-bind="text: lang.lang.new"></span></span>
 							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_close"></span></span>																	
 							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_print"></span></span>
-							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.cancal"></span></span>
+							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
 							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i><span data-bind="text: lang.lang.delete"></span></span>					
 						</div>
 					</div>
@@ -12087,7 +12087,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2><span data-bind="text: lang.lang.purchase_return"></span></h2>			    		   
+			        <h2 data-bind="text: lang.lang.purchase_return"></h2>			    		   
 
 				    <br>				   				
 						
@@ -12167,7 +12167,7 @@
 							        <div class="tab-pane active" id="tab1-4">						            
 							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">										
 											<tr>							            				
-												<td><span data-bind="text: lang.lang.related_purchase"></span></td>
+												<td><span data-bind="text: lang.lang.relate_purchase"></span></td>
 								            	<td>
 													<input data-role="combobox"														
 															data-auto-bind="false"
@@ -47560,6 +47560,7 @@
 		}		
 	});
 	banhji.purchaseOrder =  kendo.observable({
+		lang 					: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
 		deleteDS  			: dataStore(apiUrl + "transactions"),
@@ -48398,6 +48399,7 @@
 	    }
 	});
 	banhji.grn =  kendo.observable({
+		lang 					: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
@@ -49952,6 +49954,7 @@
 	    }	    	   
 	});
 	banhji.purchase =  kendo.observable({
+		lang 					: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),
@@ -51521,6 +51524,7 @@
 	    }	 		
 	});
 	banhji.purchaseReturn =  kendo.observable({
+		lang 					: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
 		lineDS  			: dataStore(apiUrl + "transactions/line"),
 		deleteDS 			: dataStore(apiUrl + "transactions"),		
@@ -52621,7 +52625,7 @@
 		}
 	});
 	banhji.expensesPurchaseSummarySupplier = kendo.observable({
-
+		lang 					: langVM,
 		startDate 			: new Date(),
 		endDate				: new Date(),
 		dataSource 		: dataStore(apiUrl + "vendorReports/expense_summary"),
@@ -52648,7 +52652,7 @@
 		}
 	});
 	banhji.expenseDetailSupplier = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "vendorReports/expense_detail"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -52673,7 +52677,7 @@
 		}
 	});
 	banhji.summaryProductSuppplier = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "vendorReports/summary_list"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -52698,7 +52702,7 @@
 		}
 	});
 	banhji.purchaseOrderReport = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "vendorReports/purchase_order"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -52723,7 +52727,7 @@
 		}
 	});
 	banhji.detailProductSupplier = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "vendorReports/detail_list"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -52748,7 +52752,7 @@
 		}
 	});
 	banhji.supplierTransaction = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "vendorReports/transaction_vendor"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -52773,7 +52777,7 @@
 		}
 	});
 	banhji.depositDetailSupplier = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "vendorReports/deposit_detail"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -52798,7 +52802,7 @@
 		}
 	});
 	banhji.supplierBalance = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "vendorReports/summary_balance"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -52823,7 +52827,7 @@
 		}
 	});
 	banhji.balanceDetailSupplier = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "vendorReports/detail_balance"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -52848,7 +52852,7 @@
 		}
 	});
 	banhji.payablesAgingSupplier = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "vendorReports/aging_summary"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -52873,7 +52877,7 @@
 		}
 	});
 	banhji.payablesAgingDetailSupplier = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "vendorReports/aging_detail"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -52898,7 +52902,7 @@
 		}
 	});
 	banhji.listBillsPaid = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "vendorReports/bill2pay"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -52923,7 +52927,7 @@
 		}
 	});
 	banhji.billPaymentList = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "vendorReports/billPaid"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -62336,7 +62340,7 @@
 		}
 	});
 	banhji.summaryBalance = kendo.observable({
-
+		lang 					: langVM,
 		dataSource 		: dataStore(apiUrl + "sales/summary_balance"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
