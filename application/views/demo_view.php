@@ -15994,7 +15994,7 @@
 								            	</tr>
 								            	<tr>								            		
 								            		<td>
-								            			<span class="btn btn-block btn-inverse" data-bind="click: goGDN">GDN</span>
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goGDN"><span data-bind="text:lang.lang.c_gdn"></span></span>
 								            		</td>
 								            		<td class="center">
 								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt"><span data-bind="text: lang.lang.cash_receipt"></span></span>								            			
@@ -21226,7 +21226,7 @@
 			</div>
 
 			<div class="row-fluid recevable-report">
-				<h2><span data-bind="text: lang.lang.receivable_management_reports"></span></h2>
+				<h2 data-bind="text: lang.lang.receivable_management_reports"></h2>
 				<p>
 					<span data-bind="text: lang.lang.the_following_reports_provide_summary"></span>
 				</p>
