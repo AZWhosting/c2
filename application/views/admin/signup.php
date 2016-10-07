@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Sign Up</title>
+<title>Sign Up | Free Online Accounting</title>
     <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.common.min.css">
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.material.min.css">
@@ -89,9 +89,11 @@
             font-size: 30px !important;
         }
         .signup-text-bottom{
-               color: #000;
+              color: #000;
     text-align: left;
     width: 100%;
+    font-size: 11px;
+    margin-top: 5px;
         }
         .signup-text-bottom a{
             color: #8DB3DA;
@@ -256,123 +258,125 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
     </div>
   </a>
 </div>
-    <div class="sign-up">
-        <dis class="signup-content">
-            
-             <div class="col-sm-6">
-                <div class="col-md-10 col-md-offset-2">
-                    <div class="signup-form">
-                        <form action="" method="">
-                            <label>Personal Information</label><br>
+    <div class="container">
+        <div class="sign-up">
+            <dis class="signup-content">
+                
+                 <div class="col-sm-6">
+                    <div class="col-md-10 col-md-offset-2">
+                        <div class="signup-form">
+                            <form action="" method="">
+                                <label>Personal Information</label><br>
 
-                            <input type="email" data-bind="value: email" placeholder="Your email" class="signup-email"><br>
-                            <input type="numbers" data-bind="value: telephone" placeholder="Your Telephone" class="signup-email"><br>
-                            <p class="signup-noted">We will use this information to communicate with you. We never share your number with third parties without your consent.</p>
-                            <input type="password" data-bind="value: password" placeholder="Password " class="signup-email"><br>
+                                <input type="email" data-bind="value: email" placeholder="Your email" class="signup-email"><br>
+                                <input type="numbers" data-bind="value: telephone" placeholder="Your Telephone" class="signup-email"><br>
+                                <p class="signup-noted">We will use this information to communicate with you. We never share your number with third parties without your consent.</p>
+                                <input type="password" data-bind="value: password" placeholder="Password " class="signup-email"><br>
 
-                            <p class="signup-noted">The minimum requirements for password are:  at least 8 characters, letter, and numbers.</p>
-                            
-                            <input type="password" data-bind="value: cPassword" placeholder="Confirm password " class="signup-email"><br>
-                            <br>
+                                <p class="signup-noted">The minimum requirements for password are:  at least 8 characters, letter, and numbers.</p>
+                                
+                                <input type="password" data-bind="value: cPassword" placeholder="Confirm password " class="signup-email"><br>
+                                <br>
 
-                            <label>Company Information</label><br>
-                            <input type="text" data-bind="value: name" placeholder="Company Name " class="signup-email"><br>
+                                <label>Company Information</label><br>
+                                <input type="text" data-bind="value: name" placeholder="Company Name " class="signup-email"><br>
 
-                            <select class="signup-country" 
-                                    data-role="dropdownlist" 
-                                    data-bind="source: countries, value: country"
-                                    data-text-field="name"
-                                    data-value-field="id"
-                                    data-option-label="Select the main Currentcy" style="text-align: left;">
-                            </select><br>
+                                <select class="signup-country" 
+                                        data-role="dropdownlist" 
+                                        data-bind="source: countries, value: country"
+                                        data-text-field="name"
+                                        data-value-field="id"
+                                        data-option-label="Select the main Currency" style="text-align: left;">
+                                </select><br>
 
-                            <select class="signup-country" 
-                                    data-role="dropdownlist" 
-                                    data-bind="source: countries, value: country"
-                                    data-text-field="name"
-                                    data-value-field="id"
-                                    data-option-label="Select Country" style="text-align: left;">
-                            </select><br>
+                                <select class="signup-country" 
+                                        data-role="dropdownlist" 
+                                        data-bind="source: countries, value: country"
+                                        data-text-field="name"
+                                        data-value-field="id"
+                                        data-option-label="Select Country" style="text-align: left;">
+                                </select><br>
 
-                            <select class="signup-country"
-                                    data-role="dropdownlist" 
-                                    data-bind="source: types, value: type"
-                                    data-text-field="name"
-                                    data-value-field="id"
-                                    data-option-label="Select Business Type" style="text-align: left;">
-                            </select><br>
+                                <select class="signup-country"
+                                        data-role="dropdownlist" 
+                                        data-bind="source: types, value: type"
+                                        data-text-field="name"
+                                        data-value-field="id"
+                                        data-option-label="Select Business Type" style="text-align: left;">
+                                </select><br>
 
-                             <select class="signup-country"
-                                    data-role="dropdownlist" 
-                                    data-bind="source: industries, value: industry"
-                                    data-text-field="name"
-                                    data-value-field="id"
-                                    data-option-label="Select Industry Type"
-                                    data-place-holder="select one" style="text-align: left;">
-                            </select><br>
+                                 <select class="signup-country"
+                                        data-role="dropdownlist" 
+                                        data-bind="source: industries, value: industry"
+                                        data-text-field="name"
+                                        data-value-field="id"
+                                        data-option-label="Select Industry Type"
+                                        data-place-holder="select one" style="text-align: left;">
+                                </select><br>
 
-                            <input style="background: #1F4E78;font-size: 20px !important; " id="signupBtn" type="button" data-bind="click: create" class="btn-signup" value="SINGUP FOR FREE"><br>
-                            <p class="signup-text-bottom">
-                                By clicking on “signup”, you agree to the <a href="">Terms of Service</a> and <a href="">Privacy Policy</a>.
-                            </p>
+                                <input style="background: #1F4E78;font-size: 20px !important; " id="signupBtn" type="button" data-bind="click: create" class="btn-signup" value="SINGUP FOR FREE"><br>
+                                <p class="signup-text-bottom">
+                                    By clicking on “signup”, you agree to the Terms of Service and <a href="https://www.banhji.com/terms">Privacy Policy</a>.
+                                </p>
 
-                        </form> 
+                            </form> 
+                        </div>
+                    </div>
+                </div>
+               <div class="col-sm-6">
+                    <div class="singup-image">
+                        <img style="float: left;width: 67%; margin-top: -14px; margin-left: -32px;" src="<?php echo base_url(); ?>assets/signup-new.png" />
+                    </div>
+                    <div class="col-sm-12 signup-list">
+                        <ul>
+                            <li>
+                                <div class="image" style="margin-bottom: -27px; width: 12%;">
+                                    <img src="<?php echo base_url(); ?>assets/free.png" style="width: 100%;"/>
+                                </div>
+                                <div class="description" style="font-size: 12px; margin-top: 7px; width: 50%;">
+                                    មិនគិតថ្លៃ ១០០% លើប្រព័ន្ធគណនេយ្យ BanhJi ព្រមទាំងសេវាគាំទ្រ 1GB storage និងចំនួនអ្នកប្រើប្រាស់មិនកំណត់
+                                 </div>
+                             </li>
+                            <li>
+                                <div  class="image" style="width: 9%; margin-left: 7px; margin-top: 20px;">
+                                    <img src="<?php echo base_url(); ?>assets/language.png" style="width: 100%;"/>
+                                </div>
+                                <div class="description" style="color: #839ABA; font-size: 12px; margin-top: 28px; margin-left: 10px; width: 50%;">
+                                    ប្រព័ន្ធគណនេយ្យយ៉ាងពេញលេញជាខេមរៈភាសា ដែលស្របតាមទម្រង់បទដ្ឋានពន្ធ និងគំរូរបាយការណ៍ហិរញ្ញវត្ថុ
+                                </div>
+
+                            </li>
+                            <li>
+                               <div  class="image" style="width: 9%; margin-left: 7px; margin-top: 20px;">
+                                    <img src="<?php echo base_url(); ?>assets/audit.png" style="width: 100%;"/>
+                                </div>
+                                <div class="description" style=" font-size: 12px; margin-top: 28px; margin-left: 10px; width: 65%;">
+                                    ឆ្លងកាត់ការអភិវឌ្ឍន៍ វិភាគ ត្រួតពិនិត្យ រយៈពេល ១៣៦៥ ថ្ងៃ ដោយក្រុមគណនេយ្យករ និងសវនករជំនាញ របស់ក្រុមហ៊ុន PCG & Partners Co., Ltd
+                                 </div>
+                            </li>
+                            <li>
+                                <div  class="image" style="width: 9%; margin-left: 7px; margin-top: 20px;">
+                                    <img src="<?php echo base_url(); ?>assets/secure.png" style="width: 100%;"/>
+                                </div>
+                                <div class="description" style="color: #839ABA; font-size: 12px; margin-top: 28px; margin-left: 10px; width: 50%;">
+                                    មានសុវត្ថិភាព ងាយស្រួលប្រើ ព្រមទាំងផ្តល់លទ្ធភាពវិភាគលទ្ធផល និងស្ថានភាពហិរញ្ញវត្ថុស៊ីជម្រៅ
+                                 </div>
+                            </li>
+                            <li>
+                                <div  class="image" style="width: 9%; margin-left: 7px; margin-top: 20px;">
+                                    <img src="<?php echo base_url(); ?>assets/asean.png" style="width: 100%;"/>
+                                </div>
+                                <div class="description" style=" font-size: 12px; margin-top: 28px; margin-left: 10px; width: 50%;">
+                                    មោទនភាពផលិតផលខ្មែរ ប្រើ BanhJi គឺជួយគាំទ្រផលិតផលខ្មែរ ចូលក្នុងទីផ្សារតំបន់ ASEAN
+                                </div>
+                            </li>
+                        </ul>
+
                     </div>
                 </div>
             </div>
-           <div class="col-sm-6">
-                <div class="singup-image">
-                    <img style="float: left;width: 67%; margin-top: -14px; margin-left: -32px;" src="<?php echo base_url(); ?>assets/signup-new.png" />
-                </div>
-                <div class="col-sm-12 signup-list">
-                    <ul>
-                        <li>
-                            <div class="image" style="margin-bottom: -27px; width: 12%;">
-                                <img src="<?php echo base_url(); ?>assets/free.png" style="width: 100%;"/>
-                            </div>
-                            <div class="description" style="font-size: 12px; margin-top: 7px; width: 50%;">
-                                មិនគិតថ្លៃ ១០០% លើប្រព័ន្ធគណនេយ្យ BanhJi ព្រមទាំងសេវាគាំទ្រ 1GB storage និងចំនួនអ្នកប្រើប្រាស់មិនកំណត់
-                             </div>
-                         </li>
-                        <li>
-                            <div  class="image" style="width: 9%; margin-left: 7px; margin-top: 20px;">
-                                <img src="<?php echo base_url(); ?>assets/language.png" style="width: 100%;"/>
-                            </div>
-                            <div class="description" style="color: #839ABA; font-size: 12px; margin-top: 28px; margin-left: 10px; width: 50%;">
-                                ប្រព័ន្ធគណនេយ្យយ៉ាងពេញលេញជាខេមរៈភាសា ដែលស្របតាមទម្រង់បទដ្ឋានពន្ធ និងគំរូរបាយការណ៍ហិរញ្ញវត្ថុ
-                            </div>
-
-                        </li>
-                        <li>
-                           <div  class="image" style="width: 9%; margin-left: 7px; margin-top: 20px;">
-                                <img src="<?php echo base_url(); ?>assets/audit.png" style="width: 100%;"/>
-                            </div>
-                            <div class="description" style=" font-size: 12px; margin-top: 28px; margin-left: 10px; width: 65%;">
-                                ឆ្លងកាត់ការអភិវឌ្ឍន៍ វិភាគ ត្រួតពិនិត្យ រយៈពេល ១៣៦៥ ថ្ងៃ ដោយក្រុមគណនេយ្យករ និងសវនករជំនាញ របស់ក្រុមហ៊ុន PCG & Partners Co., Ltd
-                             </div>
-                        </li>
-                        <li>
-                            <div  class="image" style="width: 9%; margin-left: 7px; margin-top: 20px;">
-                                <img src="<?php echo base_url(); ?>assets/secure.png" style="width: 100%;"/>
-                            </div>
-                            <div class="description" style="color: #839ABA; font-size: 12px; margin-top: 28px; margin-left: 10px; width: 50%;">
-                                មានសុវត្ថិភាព ងាយស្រួលប្រើ ព្រមទាំងផ្តល់លទ្ធភាពវិភាគលទ្ធផល និងស្ថានភាពហិរញ្ញវត្ថុស៊ីជម្រៅ
-                             </div>
-                        </li>
-                        <li>
-                            <div  class="image" style="width: 9%; margin-left: 7px; margin-top: 20px;">
-                                <img src="<?php echo base_url(); ?>assets/asean.png" style="width: 100%;"/>
-                            </div>
-                            <div class="description" style=" font-size: 12px; margin-top: 28px; margin-left: 10px; width: 50%;">
-                                មោទនភាពផលិតផលខ្មែរ ប្រើ BanhJi គឺជួយគាំទ្រផលិតផលខ្មែរ ចូលក្នុងទីផ្សារតំបន់ ASEAN
-                            </div>
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
         </div>
-    </div>
+    </dis>
     <!-- cognito -->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>

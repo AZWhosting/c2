@@ -569,8 +569,289 @@ class Transactions extends REST_Controller {
 
 		//Response data
 		$this->response($data, 200);
-	}	
+	}
 
+	//TXN PRINT GET 
+	function txn_print_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_recurring = 0;
+		$deleted = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    				    		
+		    		}else{
+		    			$obj->where($value["field"], $value["value"]);
+		    		}
+	    		}else{	    			
+	    			if($value["field"]=="is_recurring"){
+	    				$is_recurring = $value["value"];
+	    			}else if($value["field"]=="deleted"){
+	    				$deleted = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}	    				    			
+	    		}
+			}									 			
+		}
+
+		$obj->where("is_recurring", $is_recurring);
+		$obj->where("deleted", $deleted);		
+		
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;							
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				
+				//Sum amount paid
+				$amount_paid = 0;
+				if($value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
+					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+					$paid->select_sum("amount");
+					$paid->select_sum("discount");					
+					$paid->where_in("type", array("Cash_Receipt", "Cash_Payment"));
+					if($value->type=="Cash_Receipt" || $value->type=="Cash_Payment"){
+						$paid->where("reference_id", $value->reference_id);
+						$paid->where_not_in("id", array($value->id));
+					}else{
+						$paid->where("reference_id", $value->id);
+					}
+					$paid->where("is_recurring",0);
+					$paid->where("deleted",0);					
+					$paid->get();
+					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
+				}				
+
+				$data["results"][] = array(
+					"id" 						=> $value->id,
+					"company_id" 				=> $value->company_id,
+					"location_id" 				=> $value->location_id,
+					"contact_id" 				=> $value->contact_id,					
+					"payment_term_id" 			=> $value->payment_term_id,
+					"payment_method_id" 		=> $value->payment_method_id,
+					"transaction_template_id" 	=> $value->transaction_template_id,
+					"reference_id" 				=> $value->reference_id,
+					"recurring_id" 				=> $value->recurring_id,
+					"return_id" 				=> $value->return_id,
+					"job_id" 					=> $value->job_id,					
+					"account_id" 				=> $value->account_id,
+					"item_id" 					=> $value->item_id,
+					"tax_item_id" 				=> $value->tax_item_id,					
+					"user_id" 					=> $value->user_id,
+					"employee_id" 				=> $value->employee_id,
+				   	"number" 					=> $value->number,
+				   	"reference_no" 				=> $value->reference_no,
+				   	"type" 						=> $value->type,
+				   	"journal_type" 				=> $value->journal_type,
+				   	"sub_total"					=> floatval($value->sub_total),
+				   	"discount" 					=> floatval($value->discount),
+				   	"tax" 						=> floatval($value->tax),
+				   	"amount" 					=> floatval($value->amount),
+				   	"fine" 						=> floatval($value->fine),
+				   	"deposit"					=> floatval($value->deposit),			   	
+				   	"remaining" 				=> floatval($value->remaining),
+				   	"credit_allowed"			=> floatval($value->credit_allowed),
+				   	"additional_cost" 			=> floatval($value->additional_cost),
+				   	"additional_apply" 			=> $value->additional_apply,
+				   	"rate" 						=> floatval($value->rate),
+				   	"locale" 					=> $value->locale,
+				   	"month_of"					=> $value->month_of,
+				   	"issued_date"				=> $value->issued_date,
+				   	"bill_date"					=> $value->bill_date,
+				   	"payment_date" 				=> $value->payment_date,
+				   	"due_date" 					=> $value->due_date,
+				   	"deposit_date" 				=> $value->deposit_date,
+				   	"check_no" 					=> $value->check_no,
+				   	"segments" 					=> explode(",", $value->segments),
+				   	"bill_to" 					=> $value->bill_to,
+				   	"ship_to" 					=> $value->ship_to,				   	
+				   	"memo" 						=> $value->memo,
+				   	"memo2" 					=> $value->memo2,				   	
+				   	"recurring_name" 			=> $value->recurring_name,
+				   	"start_date"				=> $value->start_date,
+				   	"frequency"					=> $value->frequency,
+					"month_option"				=> $value->month_option,
+					"interval" 					=> $value->interval,
+					"day" 						=> $value->day,
+					"week" 						=> $value->week,
+					"month" 					=> $value->month,
+				   	"status" 					=> $value->status,
+				   	"is_recurring" 				=> $value->is_recurring,
+				   	"is_journal" 				=> $value->is_journal,				   	
+				   	"print_count" 				=> $value->print_count,
+				   	"printed_by" 				=> $value->printed_by,
+				   	"deleted" 					=> $value->deleted,
+
+				   	"contact" 					=> $value->contact->get_raw()->result(),
+				   	"reference" 				=> $value->reference->get_raw()->result(),
+				   	"amount_paid"				=> $amount_paid,
+				   	"payment_term" 				=> $value->payment_term->get_raw()->result()
+				);
+			}
+		}		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}		
+
+	//ITMES LINE PRINT GET 
+	function line_print_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_related"){
+		    			$obj->where_related($value["model"], $value["field"], $value["value"]);		    			    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{	    			
+	    			$obj->where($value["field"], $value["value"]);	    				    			
+	    		}
+			}									 			
+		}		
+		
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;		
+		
+		if($obj->result_count()>0){			
+			foreach ($obj as $value) {
+				$itemPrice = [];
+				if($value->item_id>0){
+					$pl = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$pl->where("item_id", $value->item_id);					
+					$pl->get();
+					foreach ($pl as $p) {
+						$itemPrice[] = array(
+							"id" 			=> $p->id,				
+							"item_id" 		=> $p->item_id,
+							"assembly_id"	=> $p->assembly_id,
+							"measurement_id"=> $p->measurement_id,
+							"quantity"		=> floatval($p->quantity),					
+							"unit_value" 	=> floatval($p->unit_value),
+							"price" 		=> floatval($p->price),
+							"amount" 		=> floatval($p->amount),
+							"locale" 		=> $p->locale,
+
+							"measurement" 	=> $p->measurement->get()->name
+						);
+					}
+				}
+
+				$data["results"][] = array(
+					"id" 				=> $value->id,
+			   		"transaction_id"	=> $value->transaction_id,
+			   		"measurement_id" 	=> $value->measurement_id,			   		
+					"tax_item_id" 		=> $value->tax_item_id,
+					"item_id" 			=> $value->item_id,								   	
+				   	"description" 		=> $value->description,
+				   	"on_hand" 			=> floatval($value->on_hand),
+					"on_po" 			=> floatval($value->on_po),
+					"on_so" 			=> floatval($value->on_so),
+					"quantity" 			=> floatval($value->quantity),					   	
+				   	"quantity_adjusted" => floatval($value->quantity_adjusted),
+				   	"cost"				=> floatval($value->cost),
+				   	"price"				=> floatval($value->price),
+				   	"price_avg" 		=> floatval($value->price_avg),					   	
+				   	"amount" 			=> floatval($value->amount),
+				   	"discount" 			=> floatval($value->discount),
+				   	"fine" 				=> floatval($value->fine),
+				   	"additional_cost" 	=> floatval($value->additional_cost),
+				   	"additional_applied"=> $value->additional_applied,
+				   	"rate"				=> floatval($value->rate),
+				   	"locale" 			=> $value->locale,				   					   			   	
+				   	"movement" 			=> $value->movement,
+				   	"required_date"		=> $value->required_date,		   	
+
+				   	"item_prices" 		=> $itemPrice,
+				   	"item" 		=> $value->item->get_raw()->result()
+				);
+			}						 			
+		}		
+		$this->response($data, 200);		
+	}
 	
 	//LINE GET 
 	function line_get() {		

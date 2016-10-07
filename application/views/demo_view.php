@@ -9083,12 +9083,14 @@
 				#} else {#
 					Paid
 				#}#
-        	#}else if(type==="Purchase_Order" || type==="GRN"){#
+        	#}else if(type==="Purchase_Order"){#
         		#if(status==="0"){#
         			Open
         		#}else{#
         			Done        			
-        		#}#        	
+        		#}#
+        	#}else if(type==="GRN"){#
+        		Received 	
         	#}#			
 		</td>    	
     	<!-- Actions -->
@@ -10257,15 +10259,13 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i> </a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i> </a>
+							            <li class="span1 glyphicons pen"><a href="#tab2-4" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i> </a>
-							            </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
 							            </li>						            
-							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i><span data-bind="text: lang.lang.recuring"></span></a>
+							            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i></a>
 							            </li>						            								            
 							        </ul>
 							    </div>
@@ -10274,7 +10274,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-5">						            
+							        <div class="tab-pane active" id="tab1-4">						            
 							            <table class="table table-borderless table-condensed cart_total">											
 								            <tr>
 								            	<td><span data-bind="text: lang.lang.expected_date"></span></td>
@@ -10310,61 +10310,16 @@
 							        </div>
 							        <!-- // Options Tab content END -->
 
-							        <!-- Address Tab content -->
-							        <div class="tab-pane" id="tab2-5">
-							        	<span data-bind="text: lang.lang.billing_address"></span>
-										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
-										
-										<span data-bind="text: lang.lang.delivery_address"></span>
-										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
-												
+							        <!-- Memo Tab content -->
+							        <div class="tab-pane" id="tab2-4">
+							        	<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+										<br>						
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
 							        </div>
-							        <!-- // Address Tab content END -->
-
-							        <!-- Info Tab content -->
-							        <div class="tab-pane" id="tab3-5">
-							        	
-										<table class="table table-borderless table-condensed cart_total">											
-											<tr>
-												<td><span data-bind="text: lang.lang.segments"></span></td>
-												<td>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="segment-header-tmpl"
-														   data-item-template="segment-list-tmpl"				    
-														   data-value-field="id" 
-														   data-text-field="code"
-														   data-bind="value: obj.segments, 
-														   			source: segmentItemDS,
-														   			events:{ change: segmentChanges }"
-														   data-placeholder="Add Segment.."				   
-														   style="width: 100%" /></select>
-												</td>
-											</tr>
-											<tr>
-												<td>Job</td>
-												<td>
-													<input id="ddlJob" name="ddlJob"
-														   data-role="dropdownlist"
-														   data-header-template="job-header-tmpl"
-														   data-template="job-list-tmpl"
-														   data-auto-bind="false"				                
-										                   data-value-primitive="true"		   
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.job_id, 
-										                   			source: jobDS"
-										                   data-option-label="Select job..." 
-										                   style="width: 100%" />										
-												</td>
-											</tr>											
-							            </table>
-												
-							        </div>
-							        <!-- // Info Tab content END -->
+							        <!-- // Memo Tab content END -->
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab4-5">
+							        <div class="tab-pane" id="tab3-4">
 							         	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
 							            
 							            <input id="files" name="files"
@@ -10394,7 +10349,7 @@
 							        <!-- // Attach Tab content END -->						        
 
 							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab5-5">							            	
+							        <div class="tab-pane" id="tab4-4">							            	
 							            
 							            <div class="span5">
 
@@ -10557,12 +10512,6 @@
 						</ul>
 						<!--End Add New Item -->
 
-						<br><br>
-						<div class="well">
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-							<br>						
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
-						</div>
 					</div>
 					<!-- Column END -->
 
@@ -12459,25 +12408,6 @@
 					<div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>
 
-						<!-- Delete Confirmation -->
-						<div data-role="window"
-			                 data-title="Delete Confirmation"
-			                 data-width="350"
-			                 data-height="200"
-			                 data-iframe="true"
-			                 data-modal="true"
-			                 data-visible="false"
-			                 data-position="{top:'40%',left:'35%'}"
-			                 data-actions="{}"
-			                 data-resizable="false"
-			                 data-bind="visible: showConfirm"
-			                 style="text-align:center;">
-			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
-						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete"><span data-bind="text: lang.lang.yes"></span></button> 
-						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm"><span data-bind="text: lang.lang.no"></span></button>
-			            </div>
-			            <!-- // Delete Confirmation -->
-
 						<div class="row">
 							<div class="span3">
 								<input data-role="dropdownlist"
@@ -12493,7 +12423,6 @@
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_close"></span></span>																	
 								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_print"></span></span>
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i><span data-bind="text: lang.lang.delite"></span></span>					
 							</div>
 						</div>
 					</div>
@@ -16306,12 +16235,14 @@
         		#}else{#
         			Used        			
         		#}#
-        	#}else if(type==="Sale_Order" || type==="GDN"){#
+        	#}else if(type==="Sale_Order"){#
         		#if(status==="0"){#
         			Open
         		#}else{#
         			Done        			
         		#}#
+        	#}else if(type==="GDN"){#
+        		Delivered
         	#}else if(type==="Invoice"){#
         		#if(status==="0" || status==="2") {#
         			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
@@ -16702,8 +16633,7 @@
 
 							        <div class="row-fluid">
 							        	<div class="span3">
-											<label for="ddlTaxItem"><span data-bind="text: lang.lang.tax"></span>
- </label>
+											<label for="ddlTaxItem"><span data-bind="text: lang.lang.tax"></span></label>
 											<input id="ddlTaxItem" name="ddlTaxItem"
 												   data-role="dropdownlist"								
 												   data-header-template="tax-header-tmpl"
@@ -19835,15 +19765,13 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i> </a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab2-5" data-toggle="tab"><i></i> </a>
+							            <li class="span1 glyphicons pen"><a href="#tab2-4" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons circle_info"><a href="#tab3-5" data-toggle="tab"><i></i> </a>
-							            </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
 							            </li>						            
-							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.recurring"></span></a>
+							            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.recurring"></span></a>
 							            </li>						            								            
 							        </ul>
 							    </div>
@@ -19852,7 +19780,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-5">						            
+							        <div class="tab-pane active" id="tab1-4">						            
 							            <table class="table table-borderless table-condensed cart_total">											
 								            <tr>
 								            	<td><span data-bind="text: lang.lang.expected_date"></span></td>
@@ -19883,82 +19811,31 @@
 								              							events:{change: referenceChanges}" 
 								              				style="width: 100%" />
 												</td>
+											</tr>
+											<tr>
+												<td valign="top">
+													<span data-bind="text: lang.lang.billing_address"></span>
+												</td>
+												<td>
+													<textarea cols="0" rows="2" class="k-textbox"
+															data-bind="value: obj.bill_to" 
+															placeholder="Billing to ..." style="width:100%"></textarea>
+												</td>
 											</tr>	
 							            </table>						            
 							        </div>
 							        <!-- // Options Tab content END -->
 
-							        <!-- Address Tab content -->
-							        <div class="tab-pane" id="tab2-5">
-							        	<span data-bind="text: lang.lang.billing_address"></span>
-										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
-										
-										<span data-bind="text: lang.lang.delivery_address"></span>
-										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
-												
+							        <!-- Memo Tab content -->
+							        <div class="tab-pane" id="tab2-4">
+							        	<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+										<br>						
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
 							        </div>
-							        <!-- // Address Tab content END -->
-
-							        <!-- Info Tab content -->
-							        <div class="tab-pane" id="tab3-5">
-							        	
-										<table class="table table-borderless table-condensed cart_total">							                        	
-											<tr>
-												<td><span data-bind="text: lang.lang.sale_rep"></span></td>
-												<td>
-													<input id="cbbEmployee" name="cbbEmployee"
-														   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-header-template="employee-header-tmpl"
-										                   data-template="contact-list-tmpl"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.employee_id,
-										                              source: employeeDS"
-										                   data-placeholder="Type Name..." 
-										                   style="width: 100%" />
-												</td>
-											</tr>
-											<tr>
-												<td><span data-bind="text: lang.lang.segments"></span></td>
-												<td>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="segment-header-tmpl"
-														   data-item-template="segment-list-tmpl"				    
-														   data-value-field="id" 
-														   data-text-field="code"
-														   data-bind="value: obj.segments, 
-														   			source: segmentItemDS,
-														   			events:{ change: segmentChanges }"
-														   data-placeholder="Add Segment.."				   
-														   style="width: 100%" /></select>
-												</td>
-											</tr>
-											<tr>
-												<td>Job</td>
-												<td>
-													<input id="ddlJob" name="ddlJob"
-														   data-role="dropdownlist"
-														   data-header-template="job-header-tmpl"
-														   data-template="job-list-tmpl"
-														   data-auto-bind="false"				                
-										                   data-value-primitive="true"		   
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.job_id, 
-										                   			source: jobDS"
-										                   data-option-label="Select job..." 
-										                   style="width: 100%" />										
-												</td>
-											</tr>											
-							            </table>
-												
-							        </div>
-							        <!-- // Info Tab content END -->
+							        <!-- // Memo Tab content END -->
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab4-5">
+							        <div class="tab-pane" id="tab3-4">
 							         	<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>	
 							            <input id="files" name="files"
 						                   type="file"
@@ -19987,7 +19864,7 @@
 							        <!-- // Attach Tab content END -->						        
 
 							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab5-5">							            	
+							        <div class="tab-pane" id="tab4-4">							            	
 							            
 							            <div class="span5">
 
@@ -20149,12 +20026,6 @@
 							</ul>
 							<!--End Add New Item -->
 
-							<br><br>
-							<div class="well">
-								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-								<br>						
-								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
-							</div>
 						</div>
 						<!-- Column END -->
 
@@ -20283,7 +20154,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2><span data-bind="text: lang.lang.sale_return"></span></h2>
+			        <h2 data-bind="text: lang.lang.sale_return"></h2>
 				    <br>				   				
 						
 					<!-- Upper Part -->
@@ -20604,25 +20475,6 @@
 					<div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>
 
-						<!-- Delete Confirmation -->
-						<div data-role="window"
-			                 data-title="Delete Confirmation"
-			                 data-width="350"
-			                 data-height="200"
-			                 data-iframe="true"
-			                 data-modal="true"
-			                 data-visible="false"
-			                 data-position="{top:'40%',left:'35%'}"
-			                 data-actions="{}"
-			                 data-resizable="false"
-			                 data-bind="visible: showConfirm"
-			                 style="text-align:center;">
-			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
-						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
-						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
-			            </div>
-			            <!-- // Delete Confirmation -->
-
 						<div class="row">
 							<div class="span3">
 								<input data-role="dropdownlist"
@@ -20638,7 +20490,6 @@
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>															
 								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
 							</div>
 						</div>
 					</div>
@@ -20937,13 +20788,13 @@
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
 	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.cutomer_type"></span></span></a>
+	            <li class="active"><a href="#tab1-4" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.cutomer_type"></span></span></a>
 	            </li>
-	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
+	            <li><a href="#tab2-4" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
 	            </li>
-	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_terms"></span></span></a>
+	            <li><a href="#tab3-4" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_terms"></span></span></a>
 	            </li>
-	            <li><a href="#tab4-1" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span></a>
+	            <li><a href="#tab4-4" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span></a>
 	            </li>	                        
 	        </ul>
 	    </div>
@@ -20953,7 +20804,7 @@
 	        <div class="tab-content">
 
 	            <!-- CUSTOMER TYPE -->
-	            <div class="tab-pane active" id="tab1-1">
+	            <div class="tab-pane active" id="tab1-4">
 	            	<div class="input-append">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input abbr ..." data-bind="value: contactTypeAbbr">
@@ -20972,8 +20823,7 @@
 	            				<th class="center"></th>
 	            			</tr>
 	            		</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"	            				
+	            		<tbody data-role="listview"	            				
 		            			data-edit-template="customerSetting-edit-contact-type-template"
 				                data-template="customerSetting-contact-type-template"
 				                data-bind="source: contactTypeDS"></tbody>
@@ -20982,7 +20832,7 @@
 	            <!-- // CUSTOMER TYPE END -->
 
 	            <!-- PAYMENT METHOD -->
-	            <div class="tab-pane" id="tab2-1">
+	            <div class="tab-pane" id="tab2-4">
 	            	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_method"></span></button>
@@ -21003,7 +20853,7 @@
 	            <!-- // PAYMENT METHOD END -->
 
 	            <!-- PAYMENT TERM -->
-	            <div class="tab-pane" id="tab3-1">
+	            <div class="tab-pane" id="tab3-4">
             		<div class="input-append">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="net due ..." data-bind="value: paymentTermNetDue">
@@ -21030,7 +20880,7 @@
 	            <!-- // PAYMENT TERM END -->
 
 	            <!-- Tab Invocice Custom content -->
-	            <div class="tab-pane" id="tab4-1">
+	            <div class="tab-pane" id="tab4-4">
             		
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
@@ -29717,25 +29567,6 @@
 					<div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>
 
-						<!-- Delete Confirmation -->
-						<div data-role="window"
-			                 data-title="Delete Confirmation"
-			                 data-width="350"
-			                 data-height="200"
-			                 data-iframe="true"
-			                 data-modal="true"
-			                 data-visible="false"
-			                 data-position="{top:'40%',left:'35%'}"
-			                 data-actions="{}"
-			                 data-resizable="false"
-			                 data-bind="visible: showConfirm"
-			                 style="text-align:center;">
-			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
-						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
-						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
-			            </div>
-			            <!-- // Delete Confirmation -->
-
 						<div class="row">
 							<div class="span3">
 								<input data-role="dropdownlist"
@@ -29750,8 +29581,7 @@
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>																	
 								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> Save Print</span>
-								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>				
 							</div>
 						</div>
 					</div>
@@ -30036,25 +29866,6 @@
 				<div class="box-generic bg-action-button">
 					<div id="ntf1" data-role="notification"></div>
 
-					<!-- Delete Confirmation -->
-					<div data-role="window"
-		                 data-title="Delete Confirmation"
-		                 data-width="350"
-		                 data-height="200"
-		                 data-iframe="true"
-		                 data-modal="true"
-		                 data-visible="false"
-		                 data-position="{top:'40%',left:'35%'}"
-		                 data-actions="{}"
-		                 data-resizable="false"
-		                 data-bind="visible: showConfirm"
-		                 style="text-align:center;">
-		                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
-					    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
-					    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
-		            </div>
-		            <!-- // Delete Confirmation -->
-
 					<div class="row">
 						<div class="span3">
 							<input data-role="dropdownlist"
@@ -30070,7 +29881,6 @@
 							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>																	
 							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> Save Print</span>
 							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
 						</div>
 					</div>
 				</div>
@@ -40830,59 +40640,7 @@
 			pageSize: 100
 		}),
 		//Contact Type
-		contactTypeDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "contacts/type",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				create 	: {
-					url: apiUrl + "contacts/type",
-					type: "POST",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				update 	: {
-					url: apiUrl + "contacts/type",
-					type: "PUT",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				destroy 	: {
-					url: apiUrl + "contacts/type",
-					type: "DELETE",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,	
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}				
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		contactTypeDS				: dataStore(apiUrl + "contacts/type"),
 		customerTypeDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -40992,41 +40750,7 @@
 			pageSize: 100
 		}),
 		//Job
-		jobDS						: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "jobs",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		jobDS						: dataStore(apiUrl + "jobs"),
 		//Currency
 		currencyDS					: new kendo.data.DataSource({
 			transport: {
@@ -42238,7 +41962,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		accumulatedAccountDS			: new kendo.data.DataSource({
+		accumulatedAccountDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -42319,76 +42043,8 @@
 			pageSize: 100
 		}),
 		//Payment Term, Method, Segment
-		paymentTermDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "payment_terms",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},			
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		paymentMethodDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "payment_methods",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},			
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),				
+		paymentTermDS				: dataStore(apiUrl + "payment_terms"),
+		paymentMethodDS				: dataStore(apiUrl + "payment_methods"),
 		segmentItemDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -42551,6 +42207,8 @@
 		paidSrc 					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/paid.ico",
 		partialyPaidSrc 			: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/partialy_paid.ico",
 		usedSrc 					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/used.ico",
+		receivedSrc 				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/received.ico",
+		deliveredSrc 				: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/delivered.ico",
 		successMessage 				: "Saved Successful!",
 		errorMessage 				: "Warning, please review it again!",
 		confirmMessage 				: "Are you sure, you want to delete it?",
@@ -48818,7 +48476,6 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		jobDS				: dataStore(apiUrl + "jobs"),
 		measurementDS	 	: dataStore(apiUrl + "measurements"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),			
 		txnTemplateDS		: new kendo.data.DataSource({
@@ -48857,15 +48514,10 @@
 			page:1,
 			pageSize: 100
 		}),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.supplierDS,					
 		itemDS  			: banhji.source.itemDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
-		segmentItemDS		: banhji.source.segmentItemDS,		
-		referenceTypes 		: [
-			{ id:"Purchase_Order", name:"Purchase Order" }			
-		],
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
 		frequencyList 		: banhji.source.frequencyList,
@@ -49027,24 +48679,6 @@
 			
 			obj.set("rate", rate);						
 		},
-		//Segment	
-	    segmentChanges 		: function(e) {
-			var dataArr = this.get("obj").segments,
-			lastIndex = dataArr.length - 1,
-			last = this.segmentItemDS.get(dataArr[lastIndex]);
-			
-			if(dataArr.length > 1) {
-				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current_index = dataArr[i],
-					current = this.segmentItemDS.get(current_index);
-
-					if(current.segment_id === last.segment_id) {
-						dataArr.splice(lastIndex, 1);
-						break;
-					}
-				}
-			}				
-		},
 		//Item		
 		itemChanges 		: function(e){								
 			var self = this, 
@@ -49127,11 +48761,10 @@
 			}).then(function(e){
 				var view = self.dataSource.view();
 				
-		        self.set("total", kendo.toString(view[0].amount, "n0"));				
-				
 				self.set("obj", view[0]);
+				self.set("total", kendo.toString(view[0].amount, "n0"));
 				
-				self.set("statusSrc", banhji.source.acceptedSrc);
+				self.set("statusSrc", banhji.source.receivedSrc);
 
 				self.lineDS.filter({ field: "transaction_id", value: id });
 				self.attachmentDS.filter({ field: "transaction_id", value: id });
@@ -49140,16 +48773,14 @@
 			});				
 		},
 		changes				: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, obj = this.get("obj"), total = 0;										
 
-			if(this.lineDS.total()>0){			
-				var total = 0;										
+			$.each(this.lineDS.data(), function(index, value) {				
+				total += value.quantity;										
+	        });
 
-				$.each(this.lineDS.data(), function(index, value) {				
-					total += value.quantity;										
-		        });		       	       			
-				obj.set("amount", total);									    	
-	    	}
+			this.set("total", kendo.toString(total, "n0"));
+			obj.set("amount", total);	    	
 		},					
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
@@ -50413,29 +50044,12 @@
 		accountDS  			: dataStore(apiUrl + "accounts"),		
 		expenseAccountDS  	: banhji.source.expenseAccountDS,
 		itemDS  			: banhji.source.itemDS,
-		depositDS  			: new kendo.data.DataSource({
+		depositDS  			: dataStore(apiUrl + "transactions"),
+		depositSumDS  		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "transactions/amount_sum",
 					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				create 	: {
-					url: apiUrl + "transactions",
-					type: "POST",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				update 	: {
-					url: apiUrl + "transactions",
-					type: "PUT",
-					headers: banhji.header,
-					dataType: 'json'
-				},
-				destroy 	: {
-					url: apiUrl + "transactions",
-					type: "DELETE",
 					headers: banhji.header,
 					dataType: 'json'
 				},
@@ -50655,15 +50269,22 @@
 		loadDeposit 		: function(){
 			var self = this, obj = this.get("obj");
 
-			this.depositDS.query({
+			if(this.get("isEdit")){
+				this.depositDS.filter([
+					{ field:"type", value:"Vendor_Deposit" },
+					{ field:"reference_id", value:obj.id }
+				]);
+			}
+
+			this.depositSumDS.query({
 				filter:[
 					{ field:"type", value:"Vendor_Deposit" },
 					{ field:"contact_id", value:obj.contact_id }
 				],
 				page: 1,
-				pageSize: 100
+				pageSize: 1000
 			}).then(function(){
-				var view = self.depositDS.view(),
+				var view = self.depositSumDS.view(),
 				total_deposit = view[0].amount + obj.deposit;
 
 				self.set("total_deposit", total_deposit);
@@ -50671,9 +50292,9 @@
 		},
 		addDeposit 			: function(id){
 			var obj = this.get("obj");
-
-			this.depositDS.data([]);
 			
+			this.depositDS.data([]);
+
 			if(obj.deposit>0){				
 				this.depositDS.add({				
 					contact_id 			: obj.contact_id,								
@@ -50687,7 +50308,7 @@
 		    	});
 			}
 		},		
-		saveDeposit 		: function(){			
+		saveDeposit 		: function(id){			
 			var obj = this.get("obj");
 			
     		if(this.get("isEdit")){
@@ -50695,10 +50316,10 @@
 					var deposit = this.depositDS.at(0);
 					deposit.set("amount", obj.deposit*-1);
 				}else{
-					this.addDeposit();
+					this.addDeposit(id);
 				}
     		}else{
-				this.addDeposit();
+				this.addDeposit(id);
     		}
 
 			this.depositDS.sync();
@@ -52032,13 +51653,11 @@
 			{ id:"Debit_Note", name:"Cash Refund" }
 		],
 		amtDueColor 		: banhji.source.amtDueColor,
-	    confirmMessage 		: banhji.source.confirmMessage,
 		obj 				: null,
 		isEdit 				: false,
 		saveClose 			: false,
 		savePrint 			: false,
 		saveRecurring 		: false,
-		showConfirm 		: false,
 		statusSrc 			: "",
 		enableRef 			: false,
 		showReturn 			: true,
@@ -52645,35 +52264,6 @@
 
 			banhji.userManagement.removeMultiTask("purchase_return");
 		},
-		delete 				: function(){
-			var self = this, obj = this.get("obj");
-			this.set("showConfirm",false);			
-			
-	        this.deleteDS.query({
-	        	filter:[
-	        		{ field:"reference_id", value:obj.id },
-	        	],
-	        	page:1,
-	        	pageSize:1
-	        }).then(function(){
-	        	var view = self.deleteDS.view();
-
-	        	if(view.length>0){
-	        		alert("Sorry, you can not delete it.");
-	        	}else{
-	        		obj.set("deleted", 1);
-			        self.dataSource.sync();
-
-			        window.history.back();
-	        	}
-	        });		    	    	
-		},
-		openConfirm 		: function(){
-			this.set("showConfirm", true);
-		},
-		closeConfirm 		: function(){
-			this.set("showConfirm", false);
-		},
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
@@ -52779,19 +52369,21 @@
 			}
 
 			//A/P on Dr
-			var ap = (obj.amount - obj.amount_paid) + sumInvoice;						
-			this.journalLineDS.add({					
-				transaction_id 		: transaction_id,
-				account_id 			: contact.account_id,				
-				contact_id 			: obj.contact_id,				
-				description 		: "",
-				reference_no 		: "",
-				segments 	 		: [],								
-				dr 	 				: ap,
-				cr 					: 0,				
-				rate				: obj.rate,
-				locale				: obj.locale
-			});
+			var ap = (obj.amount - obj.amount_paid) + sumInvoice;
+			if(ap>0){						
+				this.journalLineDS.add({					
+					transaction_id 		: transaction_id,
+					account_id 			: contact.account_id,				
+					contact_id 			: obj.contact_id,				
+					description 		: "",
+					reference_no 		: "",
+					segments 	 		: [],								
+					dr 	 				: ap,
+					cr 					: 0,				
+					rate				: obj.rate,
+					locale				: obj.locale
+				});
+			}
 
 			//Deposit on Dr
 			if(sumCredit>0){			
@@ -59884,10 +59476,7 @@
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
 		referenceDS			: dataStore(apiUrl + "transactions"),
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
-		jobDS				: dataStore(apiUrl + "jobs"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactDS  			: banhji.source.customerDS,
-		employeeDS  		: banhji.source.saleRepDS,
 		itemDS  			: banhji.source.itemDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
@@ -60081,7 +59670,6 @@
 		},
 		contactChanges 		: function(){
 			var obj = this.get("obj");
-			this.jobDS.filter({ field:"contact_id", value: obj.contact_id });
 
 	    	if(obj.contact_id>0){		    			    	
 		    	var contact = this.contactDS.get(obj.contact_id);
@@ -60105,24 +59693,6 @@
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
 			obj.set("rate", rate);						
-		},
-		//Segment	
-	    segmentChanges 		: function(e) {
-			var dataArr = this.get("obj").segments,
-			lastIndex = dataArr.length - 1,
-			last = this.segmentItemDS.get(dataArr[lastIndex]);
-			
-			if(dataArr.length > 1) {
-				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current_index = dataArr[i],
-					current = this.segmentItemDS.get(current_index);
-
-					if(current.segment_id === last.segment_id) {
-						dataArr.splice(lastIndex, 1);
-						break;
-					}
-				}
-			}				
 		},
 		//Item		
 		itemChanges 		: function(e){								
@@ -60234,7 +59804,7 @@
 
 				self.set("obj", view[0]);
 				
-				self.set("statusSrc", banhji.source.acceptedSrc);
+				self.set("statusSrc", banhji.source.deliveredSrc);
 							
 				self.lineDS.filter({ field: "transaction_id", value: view[0].id });
 				self.attachmentDS.filter({ field: "transaction_id", value: id });
@@ -60249,6 +59819,7 @@
 				total += value.quantity;										
 	        });
 
+	        this.set("total", kendo.toString(total, "n0"));
 	        obj.set("amount", total);	    	
 		},					
 		addEmpty 		 	: function(){			
@@ -60258,7 +59829,11 @@
 
 			this.set("isEdit", false);
 			this.set("obj", null);
-			this.set("total", 0);				
+			this.set("total", 0);
+
+			//Set Date
+			var duedate = new Date();
+			duedate.setDate(duedate.getDate() + 7);				
 
 			this.dataSource.insert(0, {				
 				contact_id 			: "",
@@ -60273,6 +59848,7 @@
 			   	rate				: 1,			   	
 			   	locale 				: banhji.locale,			   	
 			   	issued_date 		: new Date(),
+			   	due_date 			: duedate,//Delivery Date
 			   	bill_to 			: "",
 			   	ship_to 			: "",
 			   	memo 				: "",
@@ -60783,13 +60359,11 @@
 			{ id:"Credit_Note", name:"Cash Refund" }
 		],
 		amtDueColor 		: banhji.source.amtDueColor,
-		confirmMessage 		: banhji.source.confirmMessage,
 		obj 				: null,
 		isEdit 				: false,
 		saveClose 			: false,
 		savePrint 			: false,
 		saveRecurring 		: false,
-		showConfirm 		: false,
 		statusSrc 			: "",
 		enableRef 	 		: false,
 		showReturn 			: true,
@@ -61480,35 +61054,6 @@
 
 			banhji.userManagement.removeMultiTask("sale_return");
 		},
-		delete 				: function(){
-			var self = this, obj = this.get("obj");
-			this.set("showConfirm",false);			
-			
-	        this.deleteDS.query({
-	        	filter:[
-	        		{ field:"reference_id", value:obj.id }
-	        	],
-	        	page:1,
-	        	pageSize:1
-	        }).then(function(){
-	        	var view = self.deleteDS.view();
-
-	        	if(view.length>0){
-	        		alert("Sorry, you can not delete it.");
-	        	}else{
-	        		obj.set("deleted", 1);
-			        self.dataSource.sync();
-
-			        window.history.back();
-	        	}
-	        });		    	    	
-		},
-		openConfirm 		: function(){
-			this.set("showConfirm", true);
-		},
-		closeConfirm 		: function(){
-			this.set("showConfirm", false);
-		},
 	    //Journal	        
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
@@ -61677,19 +61222,21 @@
 			}
 
 			//A/R on Cr
-			var ar = obj.amount - (obj.amount_paid + obj.deposit);						
-			this.journalLineDS.add({					
-				transaction_id 		: transaction_id,
-				account_id 			: contact.account_id,				
-				contact_id 			: obj.contact_id,				
-				description 		: "",
-				reference_no 		: "",
-				segments 	 		: [],								
-				dr 	 				: 0,
-				cr 					: ar,				
-				rate				: obj.rate,
-				locale				: obj.locale
-			});			
+			var ar = obj.amount - (obj.amount_paid + obj.deposit);
+			if(ar>0){						
+				this.journalLineDS.add({					
+					transaction_id 		: transaction_id,
+					account_id 			: contact.account_id,				
+					contact_id 			: obj.contact_id,				
+					description 		: "",
+					reference_no 		: "",
+					segments 	 		: [],								
+					dr 	 				: 0,
+					cr 					: ar,				
+					rate				: obj.rate,
+					locale				: obj.locale
+				});
+			}			
 
 			//Deposit on Cr
 			if(sumCredit>0){			
@@ -62005,7 +61552,7 @@
 	banhji.customerSetting =  kendo.observable({
 		lang 				: langVM,		
         contactTypeDS 		: banhji.source.customerTypeDS,
-        paymentMethodDS		: dataStore(apiUrl+"payment_methods"),
+        paymentMethodDS		: banhji.source.paymentMethodDS,
         paymentTermDS		: dataStore(apiUrl+"payment_terms"),
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
         contactTypeName 	: "",
@@ -64623,13 +64170,11 @@
 		}),
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
-	    confirmMessage 		: banhji.source.confirmMessage,
 		showCheckNo 		: false,
 		obj 				: null,		
 		isEdit 				: false,
 		saveClose 			: false,
 		savePrint 			: false,
-		showConfirm 		: false,	
 		searchText 			: "",
 		contact_id 			: "",
 		invoice_id 			: 0,		
@@ -64899,9 +64444,8 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");	    			
 	    	
+	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		this.dataSource.sync();	    		
-	    		
 	    		if(this.get("original_total")!==obj.amount+obj.discount){
 	    			this.set("original_total", obj.amount+obj.discount)
 
@@ -64937,68 +64481,41 @@
 	    			value.set("memo2", obj.memo2);
 	    			value.set("segments", obj.segments);
 	    		});
-	    		
-				this.objSync()
-				.then(function(data){
-					self.addCredit(data[0].id);
-					self.addJournal(data[0].id);					
-					return data;
-				}, function(reason) { //Error
-					$("#ntf1").data("kendoNotification").error(reason);
-				}).then(function(result){				
-					$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
-
-					if(self.get("saveClose")){
-						//Save Close					
-						self.set("saveClose", false);
-						self.cancel();
-						window.history.back();
-					}else if(self.get("savePrint")){
-						//Save Print					
-						self.set("savePrint", false);
-						self.cancel();
-						banhji.router.navigate("/invoice_form/"+result[0].id);
-					}else{
-						//Save New
-						self.addEmpty();
-					}
-				});
 			}
+
+			this.objSync()
+			.then(function(data){
+				if(self.get("isEdit")==false){
+					self.addCredit(data[0].id);
+					self.addJournal(data[0].id);
+				}
+									
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					window.history.back();
+				}else if(self.get("savePrint")){
+					//Save Print					
+					self.set("savePrint", false);
+					self.cancel();
+					banhji.router.navigate("/invoice_form/"+result[0].id);
+				}else{
+					//Save New
+					self.addEmpty();
+				}
+			});
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
 			
 			banhji.userManagement.removeMultiTask("cash_receipt");
-		},
-		delete 				: function(){
-			var self = this, obj = this.get("obj");
-			this.set("showConfirm",false);			
-			
-	        this.deleteDS.query({
-	        	filter:[
-	        		{ field:"type", operator:"where_in", value:["Cash_Sale","Invoice"] },
-	        		{ field:"reference_id", value:obj.id },
-	        	],
-	        	page:1,
-	        	pageSize:1
-	        }).then(function(){
-	        	var view = self.deleteDS.view();
-
-	        	if(view.length>0){
-	        		alert("Sorry, you can not delete it.");
-	        	}else{
-	        		obj.set("deleted", 1);
-			        self.dataSource.sync();
-
-			        window.history.back();
-	        	}
-	        });		    	    	
-		},
-		openConfirm 		: function(){
-			this.set("showConfirm", true);
-		},
-		closeConfirm 		: function(){
-			this.set("showConfirm", false);
 		},
 		//Deposit
 		addCredit 			: function(cash_receipt_id){
@@ -65089,7 +64606,7 @@
 					reference_no 		: "",
 					segments 	 		: [],								
 					dr 	 				: 0,
-					cr 					: value.amount - value.discount,				
+					cr 					: value.amount + value.discount,				
 					rate				: value.rate,
 					locale				: value.locale
 				});
@@ -65164,13 +64681,11 @@
 		}),
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
-		confirmMessage 		: banhji.source.confirmMessage,
 		showCheckNo 		: false,
 		obj 				: null,		
 		isEdit 				: false,
 		saveClose 			: false,
 		savePrint 			: false,
-		showConfirm 		: false,	
 		searchText 			: "",
 		contact_id 			: "",
 		invoice_id 			: 0,		
@@ -65440,9 +64955,7 @@
 		save 				: function(){				
 	    	var self = this, obj = this.get("obj");	    			
 	    	
-	    	if(this.get("isEdit")){
-	    		this.dataSource.sync();	    		
-	    		
+	    	if(this.get("isEdit")){	    		
 	    		if(this.get("original_total")!==obj.amount+obj.discount){
 	    			this.set("original_total", obj.amount+obj.discount)
 
@@ -65478,11 +64991,14 @@
 	    			value.set("memo2", obj.memo2);
 	    			value.set("segments", obj.segments);
 	    		});
-	    		
-				this.objSync()
+			}
+
+			this.objSync()
 				.then(function(data){
-					self.addCredit(data[0].id);
-					self.addJournal(data[0].id);					
+					if(self.get("isEdit")==false){
+						self.addCredit(data[0].id);
+						self.addJournal(data[0].id);
+					}					
 					return data;
 				}, function(reason) { //Error
 					$("#ntf1").data("kendoNotification").error(reason);
@@ -65504,42 +65020,11 @@
 						self.addEmpty();
 					}
 				});
-			}
 		},
 		cancel 				: function(){
 			this.dataSource.cancelChanges();
 			
 			banhji.userManagement.removeMultiTask("cash_payment");
-		},
-		delete 				: function(){
-			var self = this, obj = this.get("obj");
-			this.set("showConfirm",false);			
-			
-	        this.deleteDS.query({
-	        	filter:[
-	        		{ field:"type", operator:"where_in", value:["Cash_Purchase","Credit_Purchase"] },
-	        		{ field:"reference_id", value:obj.id },
-	        	],
-	        	page:1,
-	        	pageSize:1
-	        }).then(function(){
-	        	var view = self.deleteDS.view();
-
-	        	if(view.length>0){
-	        		alert("Sorry, you can not delete it.");
-	        	}else{
-	        		obj.set("deleted", 1);
-			        self.dataSource.sync();
-
-			        window.history.back();
-	        	}
-	        });		    	    	
-		},
-		openConfirm 		: function(){
-			this.set("showConfirm", true);
-		},
-		closeConfirm 		: function(){
-			this.set("showConfirm", false);
 		},
 		//Deposit
 		addCredit 			: function(cash_receipt_id){
@@ -65599,7 +65084,7 @@
 					description 		: "",
 					reference_no 		: "",
 					segments 	 		: [],								
-					dr 	 				: value.amount - value.discount,
+					dr 	 				: value.amount + value.discount,
 					cr 					: 0,				
 					rate				: value.rate,
 					locale				: value.locale

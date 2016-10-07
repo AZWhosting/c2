@@ -24035,7 +24035,7 @@
         		<h1>វិក្កយបត្រ</h1>
             	<h2 data-bind="text: obj.title"></h2>
         	</div>
-            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
             	<div class="cover-customer">
                 	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
                     <div class="clear">
@@ -24147,7 +24147,7 @@
         		<h1>វិក្កយបត្រអាករ</h1>
             	<h2 data-bind="text: obj.title"></h2>
         	</div>
-            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
             	<div class="cover-customer">
                 	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
                     <div class="clear">
@@ -24601,7 +24601,7 @@
 	<div class="inv1 pcg">
         <div class="content clear">
         	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        		<div class="logo" style="width: 35%">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
@@ -24691,7 +24691,7 @@
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
         	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        		<div class="logo" style="width: 35%">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
@@ -24959,7 +24959,7 @@
 	<div class="inv1 pcg">
         <div class="content clear">
         	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        		<div class="logo" style="width: 35%">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
@@ -25049,7 +25049,7 @@
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
         	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        		<div class="logo" style="width: 35%">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
@@ -27026,7 +27026,7 @@
         		<h1>វិក្កយបត្រ</h1>
             	<h2 data-bind="text: obj.title"></h2>
         	</div>
-            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
             	<div class="cover-customer">
                 	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
                     <div class="clear">
@@ -28392,7 +28392,7 @@
 </script>
 <script id="invoiceForm-lineDS-template" type="text/x-kendo-template">
 	<tr>
-		<td><!--i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i-->&nbsp;</td>
+		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i>&nbsp;</td>
 		<td style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td>#= quantity#</td>
 		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
@@ -62428,11 +62428,11 @@
 	});
 	banhji.invoiceForm =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "transactions"),
+		dataSource 			: dataStore(apiUrl + "transactions/txn_print"),
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
 		obj 				: {title: "Quotation", issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
 		company 			: banhji.institute,		
-		lineDS 				: dataStore(apiUrl + "transactions/line"),
+		lineDS 				: dataStore(apiUrl + "transactions/line_print"),
 		user_id				: banhji.source.user_id,
 		selectForm 			: null,
 		pageLoad 			: function(id, is_recurring){
@@ -62478,6 +62478,7 @@
 		            		'background-color: '+colorM+'!important; ' + ts +
 		            		'-webkit-print-color-adjust:exact; ' +
 		            	'} ' +
+		            	'.inv1 .main-color th {'+ts+'}'+
 		            	'.inv1 .light-blue-td { ' +
 		            		'background-color: #c6d9f1!important;' +
 		            		'text-align: left;' +
@@ -62488,8 +62489,9 @@
 		            		'background-color: rgb(242, 242, 242)!important;'+
 		            		'-webkit-print-color-adjust:exact; ' +
 		            	'}'+
-		            	'.pcg .mid-title div {' + ts + '}' +
-		            	'.pcg .mid-header {' +
+		            	'.pcg p.form-title {font-size: 40px!important;}'+
+		            	'.inv1 .mid-title div {' + ts + '}' +
+		            	'.inv1 .mid-header {' +
 		            		'background-color: #dce6f2!important; ' +
 		            		'-webkit-print-color-adjust:exact; ' +
 		            	'}'+
@@ -62565,13 +62567,14 @@
 				page: 1,
 				take: 100
 			}).then(function(e){
-				var view = self.dataSource.view();	
+				var view = self.dataSource.view(), amountDue;	
+				amountDue = view[0].amount - view[0].deposit;
 				view[0].set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));	
 				view[0].set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
 				view[0].set("amount", kendo.toString(view[0].amount, "c", view[0].locale));
 				view[0].set("discount", kendo.toString(view[0].discount, "c", view[0].locale));	
-				view[0].set("deposit", kendo.toString(view[0].deposit, "c", view[0].locale));	
-				view[0].set("amount_due", kendo.toString(view[0].amount_due, "c", view[0].locale));				
+				view[0].set("deposit", kendo.toString(view[0].deposit, "c", view[0].locale));
+				view[0].set("amount_due", kendo.toString(amountDue, "c", view[0].locale));				
 				self.set("obj", view[0]);
 				self.loadObjTemplate(view[0].transaction_template_id, id);		
 			});	
@@ -75375,49 +75378,50 @@
 				banhji.pageLoaded["sale_order"] = true;				        
 
 				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+				setTimeout(function(){								
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				},2000);
 			}
 
 			vm.pageLoad(id, is_recurring);			
