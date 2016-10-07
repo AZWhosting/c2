@@ -23911,7 +23911,7 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
-			        <h2 style="padding:0 15px;"">CUSTOM FORMS</h2>
+			        <h2 style="padding:0 15px;"" data-bind="text: lang.lang.custom_forms"></h2>
 				    <br>	
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span4">	
@@ -62459,7 +62459,7 @@
 		            '<html>' +
 		            '<head>' +
 		            '<meta charset="utf-8" />' +
-		            '<title></title>' +
+		            '<title>'+obj.title+'</title>' +
 		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
 		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
 		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+

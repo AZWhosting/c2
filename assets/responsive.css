@@ -19,7 +19,8 @@
 #cbbInvoice-list,
 #ddlSegment-list,
 #ddlJob-list,
-#ddlAccount-list
+#ddlAccount-list,
+#ddlCategory-list
 {
   width: 350px !important;
 }

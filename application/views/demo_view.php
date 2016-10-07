@@ -32390,7 +32390,7 @@
 					
 			    	<div class="row-fluid">
 			    		<div class="span6 well">									
-							<div class="row">
+							<div class="row-fluid">
 								<div class="span6" style="padding-right: 0;">														
 									<!-- Group -->
 									<div class="control-group">										
@@ -32432,7 +32432,7 @@
 								</div>
 							</div>
 							
-							<div class="row">
+							<div class="row-fluid">
 								<div class="span6" style="padding-right: 0;">										
 									<!-- Group -->
 									<div class="control-group">							
@@ -32449,7 +32449,7 @@
 					              							events:{change: checkExistingNumber}" 
 					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
-					              				style="width: 157px;" />
+					              				style="width: 142px;" />
 					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
@@ -32465,10 +32465,13 @@
 									</div>
 									<!-- // Group END -->	
 								</div>								
-							</div>
+							</div>					
+						</div>
 
-							<div class="row">
-								<div class="span6" style="padding-right: 0;">
+						<div class="span6">
+							<div class="row-fluid">
+
+								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
 										<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
@@ -32484,12 +32487,6 @@
 									<!-- // Group END -->								
 								</div>
 
-															
-							</div>							
-						</div>
-						<div class="span6" style="    padding: 0;">
-
-							<div class="row-fluid">
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
@@ -32509,68 +32506,29 @@
 									<!-- // Group END -->
 								</div>
 
-								<div class="span6" style="    padding: 0;">
-									<!-- Group -->
-									<div class="control-group">								
-										<label for="txtCost"><span data-bind="text: lang.lang.cost"></span></label>
-							            <input id="txtCost" name="txtCost" 
-							               data-role="numerictextbox"
-							               data-spinners="false"
-						                   data-format="n"
-						                   data-min="0"						                   
-						                   data-bind="value: obj.cost"
-						                   style="width: 100%">
-									</div>																		
-									<!-- // Group END -->			
-								</div>
 							</div>
 
 							<div class="row-fluid">
+
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
-										<label for="ddlCurrency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>							            
-							            <input id="ddlCurrency" name="ddlCurrency"							            	 
-				              				data-role="dropdownlist"
-				              				data-option-label="(--- Select ---)"
-				              				data-template="currency-list-tmpl"
-				              				data-value-primitive="true"
-						            		data-text-field="code"
-			           						data-value-field="locale"			           						 
-						            		data-bind="source: currencyDS, value: obj.locale"						            		
-						            		required data-required-msg="required" style="width: 100%;" />						            		
-									</div>																		
-									<!-- // Group END -->								
-								</div>
-								<div class="span6" style="    padding: 0;">
-									<!-- Group -->
-									<div class="control-group">								
-										<label for="txtPrice"><span data-bind="text: lang.lang.price"></span></label>
-							            <input id="txtPrice" name="txtPrice" 
-							               data-role="numerictextbox"
-							               data-spinners="false"
-						                   data-format="n"
-						                   data-min="0"						                   
-						                   data-bind="value: obj.price"
-						                   style="width: 100%">
+										<label for="txtPurchaseDescription">Purchase Description</label>
+							            <textarea id="txtPurchaseDescription" class="k-textbox" 
+											data-bind="value: obj.purchase_description" style="resize:none; width: 100%;height:60px;"></textarea>
 									</div>																		
 									<!-- // Group END -->
 								</div>
-
-								
-							</div>
-
-							<div class="row-fluid">
-								<div class="span12" style="padding-right: 0;">
-									
+								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">								
-										<label for="txtSaleDescription">Description</label>
+										<label for="txtSaleDescription">Sale Description</label>
 							            <textarea id="txtSaleDescription" class="k-textbox" 
 											data-bind="value: obj.sale_description" style="resize:none; width: 100%;height:60px;"></textarea>
 									</div>																		
 									<!-- // Group END -->
 								</div>
+
 							</div>
 
 						</div>
@@ -32623,7 +32581,7 @@
 								                   data-option-label="Select Account..."
 								                   required data-required-msg="required" style="width: 100%;" />											
 										</div>
-										<div class="span4">
+										<div class="span4" style="padding-left: 15px;">
 											<label for="ddlDeposalAccount">Deposal Account<span style="color:red">*</span></label>
 											<input id="ddlDeposalAccount" name="ddlDeposalAccount"
 												   data-role="dropdownlist"
@@ -66107,7 +66065,6 @@
     	isEdit 					: false,
     	saveClose 				: false,
 		showConfirm 			: false,
-		originalNo 				: "",
 		isDuplicateNumber 		: false,
 		user_id					: banhji.source.user_id,
     	pageLoad 				: function(id, is_pattern){			
@@ -66207,17 +66164,22 @@
       	//Number      	
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
-			obj = this.get("obj"),
-			originalNo = this.get("originalNo");			
+			obj = this.get("obj");			
 			
-			if(obj.number!=="" && obj.number!==originalNo){
+			if(obj.number!==""){
+
+				if(this.get("isEdit")){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+
+				para.push({ field:"abbr", value: obj.abbr });
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"category_id", value: obj.category_id });
+
 				this.existingDS.query({
-					filter: [
-						{ field:"number", value: obj.number },
-						{ field:"category_id", value: obj.category_id }
-					],
+					filter: para,
 					page: 1,
-					pageSize: 100
+					pageSize: 1
 				}).then(function(e){
 					var view = self.existingDS.view();
 					
@@ -66340,7 +66302,6 @@
 				var view = self.dataSource.view();
 						    	
 		    	self.set("obj", view[0]);
-		    	self.set("originalNo", view[0].number);
 		    	self.loadItemContact();
 			});
     	},    	   	
@@ -67740,7 +67701,6 @@
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
-    	currencyDS 				: banhji.source.currencyDS,
     	fixedAssetAccountDS 	: banhji.source.fixedAssetAccountDS,
     	accumulatedAccountDS 	: banhji.source.accumulatedAccountDS,
     	deposalAccountDS 		: banhji.source.deposalAccountDS,
@@ -67750,7 +67710,6 @@
     	isEdit 					: false,
     	saveClose 				: false,
 		showConfirm 			: false,
-		originalNo 				: "",
 		isDuplicateNumber 		: false,    	
     	pageLoad 				: function(id, is_pattern){			
 			if(id){
@@ -67762,81 +67721,25 @@
 				}								
 			}  																							
 		},
-		//Pattern
-		setPattern 				: function(category_id){
-			var obj = this.get("obj");
-
-			obj.set("category_id", category_id);
-			obj.set("is_pattern", 1);
-		},
-		savePattern 			: function(category_id, item_id){
-			var data = banhji.itemSetting.categoryDS.get(category_id);
-			data.set("item_id", item_id);
-			banhji.itemSetting.categoryDS.sync();			
-			window.history.back();
-		},
-		loadPattern 			: function(){
-			var self = this, obj = self.get("obj");
-
-			if(obj.category_id){
-				var cat = this.categoryDS.get(obj.category_id);
-
-				this.patternDS.query({
-					filter: [
-						{ field:"id", value: cat.item_id },
-						{ field:"is_pattern", value: 1 }
-					],
-					page: 1,
-					pageSize: 1
-				}).then(function(){
-					var view = self.patternDS.view();				
-
-					if(view.length>0){
-		      			obj.set("item_group_id", view[0].item_group_id),
-		      			obj.set("brand_id", view[0].brand_id),
-		      			obj.set("measurement_id", view[0].measurement_id),
-		      			obj.set("abbr", cat.abbr),
-		      			obj.set("number", ""),
-		      			obj.set("name", ""),
-		      			obj.set("purchase_description", view[0].purchase_description),
-		      			obj.set("sale_description", view[0].sale_description),
-		      			obj.set("measurements", view[0].measurements),
-		      			obj.set("color_code", view[0].color_code),
-		      			obj.set("international_code", view[0].international_code),
-		      			obj.set("inventory_account_id", view[0].inventory_account_id),
-		      			obj.set("favorite", view[0].favorite)
-					}else{
-		      			obj.set("item_group_id", ""),
-		      			obj.set("brand_id", ""),
-		      			obj.set("measurement_id", ""),
-		      			obj.set("abbr", ""),
-		      			obj.set("number", ""),
-		      			obj.set("name", ""),
-		      			obj.set("purchase_description", ""),
-		      			obj.set("sale_description", ""),
-		      			obj.set("measurements", ""),
-		      			obj.set("color_code", ""),
-		      			obj.set("international_code", ""),
-		      			obj.set("inventory_account_id", ""),
-		      			obj.set("favorite", false)
-					}
-				});
-			}
-		},
       	//Number      	
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
-			obj = this.get("obj"),
-			originalNo = this.get("originalNo");			
+			obj = this.get("obj");
 			
-			if(obj.number!=="" && obj.number!==originalNo){
+			if(obj.number!==""){
+
+				if(this.get("isEdit")){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+
+				para.push({ field:"abbr", value: obj.abbr });
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"category_id", value: obj.category_id });
+				
 				this.existingDS.query({
-					filter: [
-						{ field:"number", value: obj.number },
-						{ field:"item_type_id", value: obj.item_type_id }
-					],
+					filter: para,
 					page: 1,
-					pageSize: 100
+					pageSize: 1
 				}).then(function(e){
 					var view = self.existingDS.view();
 					
@@ -67878,7 +67781,10 @@
 			var obj = this.get("obj");
 
 			if(obj.category_id){
-				this.loadPattern();
+				var cat = this.categoryDS.get(obj.category_id);
+
+				obj.set("abbr", cat.abbr);
+				
 				this.generateNumber();
 			}
 		},
@@ -67912,54 +67818,36 @@
 				var view = self.dataSource.view();
 						    	
 		    	self.set("obj", view[0]);
-		    	self.set("originalNo", view[0].number);
 			});
     	},    	   	
       	addEmpty 				: function(){
       		var self = this;
-
       		this.dataSource.data([]);
       		
 	      	this.set("isEdit", false);
       		this.set("obj", null);
 
-      		this.patternDS.query({
-      			filter:[
-      				{ field:"id", value:10 },
-      				{ field:"is_pattern", value:1 }
-      			],
-      			page:1,
-      			pageSize:1
-      		}).then(function(){
-      			var view = self.patternDS.view(),
-      			cat = self.categoryDS.at(0);
+      		this.dataSource.insert(0, {				
+				item_type_id 			: 3,//Fixed Assets      			      			
+      			category_id 			: 0,
+      			measurement_id			: 0,
+      			abbr 					: "",
+      			number 					: "",
+      			name 					: "",
+      			locale 					: banhji.locale,
+      			purchase_description	: "",
+      			sale_description		: "",
+      			fixed_assets_account_id : 0,
+      			accumulated_account_id 	: 0,
+      			deposal_account_id 		: 0,
+      			is_pattern 				: 0,
+      			status 					: 1,
+      			deleted 				: 0								
+			});
 
-      			self.dataSource.insert(0, {				
-					item_type_id 			: 3,//Fixed Assets      			      			
-	      			category_id 			: view[0].category_id,
-	      			measurement_id			: view[0].measurement_id,
-	      			abbr 					: cat.abbr,
-	      			number 					: "",
-	      			name 					: "",
-	      			cost 					: "",
-	      			price 					: "",
-	      			locale 					: banhji.locale,
-	      			purchase_description	: view[0].purchase_description,
-	      			sale_description		: view[0].sale_description,
-	      			measurements 			: view[0].measurements,
-	      			income_account_id 		: view[0].income_account_id,
-	      			cogs_account_id 		: view[0].cogs_account_id,
-	      			inventory_account_id 	: view[0].inventory_account_id,
-	      			favorite 				: view[0].favorite,
-	      			is_pattern 				: 0,
-	      			status 					: 1,
-	      			deleted 				: 0								
-				});
-
-				var obj = self.dataSource.at(0);
-				self.set("obj", obj);
-				self.generateNumber();
-      		});
+			var obj = this.dataSource.at(0);
+			this.set("obj", obj);
+			this.generateNumber();
       	},
       	objSync 				: function(){
 	    	var dfd = $.Deferred();	        
