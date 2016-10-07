@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.dataviz.material.min.css">
 <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.dataviz.bootstrap.min.css">
 
+
 <!-- Bootstrap -->
 <!--<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/css/responsive.css"-->
 <link rel="stylesheet" href="<?php echo base_url()?>assets/bootstrap.css" >
@@ -166,9 +167,6 @@ var themerPrimaryColor = primaryColor;
 	//mail('loat.choeun@gmail.com', 'test', 'test', 'test');
 ?>
 	<div class="cover-rightfixed">
-		<a class="rightfixed feedback btn-rounded glyphicons no-js circle_exclamation_mark" href="#firstPopUp" data-toggle="modal"><i></i>
-			wellcome
-		</a><br>
 		<a class="rightfixed feedback btn-rounded glyphicons no-js circle_exclamation_mark" href="#feedbackContent" data-toggle="modal"><i></i>
 			Feedback
 		</a><br>
@@ -188,13 +186,49 @@ var themerPrimaryColor = primaryColor;
 		</div>
 		</a>
 	</div>
+	<a class="aWelcome" href="#firstPopUp" data-toggle="modal"></a>
 	<div class="modal fade popRightBlog" id="firstPopUp">
-		<div class="span12">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<div class="span12 welcome">
 			<div class="span5">
-				
+				<img src="<?php echo base_url(); ?>assets/img/welcome/welcome.png" style="width:100%" />
+				<div style="padding: 20px 0;" class="span12">
+					<a href="https://www.facebook.com/BanhjiApp/" target="_blank"> 
+						<img src="<?php echo base_url(); ?>assets/img/welcome/f-icon.png" style="float: left;" />
+						<p style="font-size: 10px;color: #fff;float:right;width: 83%;margin-top: 7px;">សូមចូលទៅកាន់ទំព័រ Facebook របស់ BanhJi ដើម្បីទទួលបានព័តមានថ្មី និងការណែនាំផ្សេង</p>
+					</a>
+				</div>
 			</div>
-			<div class="span6">
-				
+			<div class="span7" style="float:right;">
+				<h2 style="font-size: 16px; color: #bdd7ee;">មុនពេលចាប់ផ្តើមជាមួយBanhJi សូមមើលការណែនាំទីនេះ<br> <a style="color: #0063c1;" target="_blank" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/welcome_guide.pdf">[Welcome Guide]</a> ដើម្បីជាជំនួយ</h2>
+				<div class="span12 cover-welcome-four-blog">
+					<p style="color: #fff;font-size:12px;">ជាទូទៅដើម្បីចាប់ផ្តើមប្រើប្រាស់ អ្នកគួរមាន ផលិតផល ឬសេវាកម្មដើម្បីលក់ អតិថិជនដែលត្រូវចេញវិក័យបត្រអោយ និងអ្នកផ្គត់ផ្គង់ដែលអ្នកត្រូវទិញផលិតផលទាំងនោះ</p>
+					<a href="#/customer">
+						<div class="cover-blog-welcome span3">
+							<img src="<?php echo base_url(); ?>assets/img/welcome/1.png">
+							<p style="color: #fff;font-size:10px;">កត់ត្រាអតិថិជនរបស់អ្នក</p>
+						</div>
+					</a>
+					<a href="#/vendor">
+						<div class="cover-blog-welcome span3">
+							<img src="<?php echo base_url(); ?>assets/img/welcome/2.png">
+							<p style="color: #fff;font-size:10px;">បន្ថែមអ្នកផ្គត់ផ្គង់របស់អ្នក</p>
+						</div>
+					</a>
+					<a href="#/item">
+						<div class="cover-blog-welcome span3">
+							<img src="<?php echo base_url(); ?>assets/img/welcome/3.png">
+							<p style="color: #fff;font-size:10px;">កត់ត្រាផលិតផលដែលដែលអ្នកលក់​ និងទិញ</p>
+						</div>
+					</a>
+					<a href="#/item_service">
+						<div class="cover-blog-welcome span3">
+							<img src="<?php echo base_url(); ?>assets/img/welcome/4.png">
+							<p style="color: #fff;font-size:10px;">កត់ត្រាសេវាកម្មដែលផ្តល់អោយអតិថិជន</p>
+						</div>
+					</a>
+				</div>
+				<p style="color: #bdd7ee;font-size:12px;">យើងខ្ញុំកំពុងបកប្រែទំព័រមួយចំនួន ដូចនេះទំព័រទាំងនោះមិនទាន់មានភាសាខ្មែរនៅឡើយទេ សូមអភ័យទោសចំពោះការយឺតយាវនេះ។ លើសពីនេះប្រសិនបើមានសំណួរ ឬមតិយោបល់សូមចុចលើប៊ូតុងទាំងនេះ </p>
 			</div>
 		</div>
 	</div>
@@ -258,6 +292,30 @@ var themerPrimaryColor = primaryColor;
 
   </script>
   <script type="text/javascript">
+
+	function createCookie(name,value,days) {
+	    if (days) {
+	        var date = new Date();
+	        date.setTime(date.getTime()+(days*24*60*60*1000));
+	        var expires = "; expires="+date.toGMTString();
+	    }
+	    else var expires = "";
+	    document.cookie = name+"="+value+expires+"; path=/";
+	}
+	function readCookie(name) {
+	    var nameEQ = name + "=";
+	    var ca = document.cookie.split(';');
+	    for(var i=0;i < ca.length;i++) {
+	        var c = ca[i];
+	        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+	        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	    }
+	    return null;
+	}
+	function eraseCookie(name) {
+	    createCookie(name,"",-1);
+	}
+
 	$(document).ready(function(e) {
 		$("#feedBackSend").click(function(){
 			var MSG = $("#feedbackMsg").val();
@@ -301,7 +359,21 @@ var themerPrimaryColor = primaryColor;
 			    }
 			});
 		});
+
+		eraseCookie("isshow");
+		var isshow = readCookie("isshow");
 		
+	    if (isshow != 1) {
+	        createCookie("isshow", 1);
+			$(".aWelcome").click();  
+			setTimeout(function(){
+				//$(".close").click();
+			},5000);
+		}
+
+		$(".cover-welcome-four-blog a").click(function(){
+			$(".close").click();
+		});
 	});
    </script>
 </body>

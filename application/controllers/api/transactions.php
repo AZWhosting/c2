@@ -1349,14 +1349,12 @@ class Transactions extends REST_Controller {
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
 		$balance_forward_date = "";
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$pay = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-
+		
 		//Sort
 		if(!empty($sort) && isset($sort)){					
 			foreach ($sort as $value) {
@@ -1367,34 +1365,24 @@ class Transactions extends REST_Controller {
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    			$pay->where_in($value["field"], $value["value"]);	    				    			    		
-		    		}
-	    		}else{	    		    			
-	    			$obj->where($value["field"], $value["value"]);
-
-	    			if($value["field"]=="issued_date" || $value["field"]=="issued_date <=" || $value["field"]=="issued_date >="){
-	    				$pay->where("payment_date", $value["value"]);
-	    			}else{
-	    				$pay->where($value["field"], $value["value"]);
-	    			}
-
-	    			if($value["field"]=="issued_date" || $value["field"]=="issued_date >="){
-	    				$balance_forward_date = $value["value"];
-	    				$bf->where("issued_date <=", $value["value"]);
-	    			}
-	    		}	    		
+	    		$obj->where($value["field"], $value["value"]);
 			}									 			
 		}
 
-		$obj->where_in("type", array("Invoice", "Cash_Sale"));
-		$pay->where("type", "invoice");		
-		
-		//Results
-		$obj->get();
-		$pay->get();
+		$obj->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return"));
+		$obj->get_iterated();
+
+		foreach ($obj as $value) {
+			$data["results"][] = array(
+				"id" 				=> $value->id,				   	
+			   	"description" 		=> "Balance Forward",				   	   	
+			   	"amount" 			=> floatval($bf->amount),
+			   	"balance" 			=> floatval($bf->amount),			   	
+			   	"rate" 				=> $bf->rate,
+			   	"locale" 			=> $bf->locale,				   	
+			   	"issued_date"		=> $newdate	   	
+			);
+		}		
 
 		//Balance Forward
 		if($balance_forward_date!==""){			

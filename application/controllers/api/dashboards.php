@@ -190,7 +190,8 @@ class Dashboards extends REST_Controller {
 		$obj->include_related("transaction", "issued_date");
 		$obj->where_in_related("account/account_type", "id", array(10,11));
 		$obj->where_related("transaction", "issued_date >=", $this->startFiscalDate);
-		$obj->where_related("transaction", "issued_date <", $this->endFiscalDate);		
+		$obj->where_related("transaction", "issued_date <", $this->endFiscalDate);
+		$obj->order_by("issued_date");		
 		$obj->where("is_recurring", $is_recurring);		
 		$obj->where("deleted", $deleted);										
 		$obj->get_iterated();
