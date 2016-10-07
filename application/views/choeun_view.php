@@ -5449,15 +5449,7 @@
 	        <ul>
 	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Financial Reporting Standards</span></a>
 	            </li>
-	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Chart of Accounts Condition</span></a>
-	            </li>
-	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Segments Setting</span></a>
-	            </li>
-	            <li><a href="#tab4-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Transaction Item </span></a>
-	            </li>
-	            <li><a href="#tab5-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Tax Setting </span></a>
-	            </li>	
-	            <li><a href="#tab6-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Prefix Setting </span></a>
+	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Prefix Setting </span></a>
 	            </li>	                        
 	        </ul>
 	    </div>
@@ -5485,7 +5477,7 @@
 	            <!-- // Tab Branch content END -->
 
 	            <!-- Tab Contact Type content -->
-	            <div class="tab-pane" id="tab2-1">
+	            <!--div class="tab-pane" id="tab2-1">
 	            	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i></button>
@@ -5502,11 +5494,11 @@
 				                data-template="customerSetting-payment-method-template"
 				                data-bind="source: paymentMethodDS"></tbody>
 	            	</table>			            
-	            </div>
+	            </div-->
 	            <!-- // Tab Contact Type content END -->
 
 	            <!-- Tab Block content -->
-	            <div class="tab-pane" id="tab3-1">
+	            <!--div class="tab-pane" id="tab3-1">
             		<div class="input-append">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="term ..." data-bind="value: paymentTerm">
@@ -5527,18 +5519,18 @@
 				                data-template="customerSetting-payment-term-template"
 				                data-bind="source: paymentTermDS"></tbody>
 	            	</table>
-	            </div>
+	            </div-->
 	            <!-- // Tab Block content END -->
 
 	            <!-- Tab Block content -->
-	            <div class="tab-pane" id="tab6-1">
+	            <div class="tab-pane" id="tab2-1">
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr class="widget-head">
 	            				<th class="center" data-bind="text: lang.lang.type"></th>
 	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
 	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
-	            				<th class="center" data-bind="text: lang.lang.name"></th>
+	            				<th data-bind="text: lang.lang.name" style="text-align: left; padding-left: 10px;"></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
 	            			</tr>
 	            		</thead>
@@ -5566,10 +5558,10 @@
 		<td class="center"> 
 			#= startup_number#
 		</td>
-		<td class="center">
+		<td style="text-align: left;padding-left: 10px;" >
 			<a style="text-align: left;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
 		</td>
-		<td class="center">
+		<td class="center" >
 			<a class="btn-action glyphicons pencil btn-success" href="\\#/add_accountingprefix/#= id # "><i></i></a>
 		</td>
 	</tr>
@@ -26089,6 +26081,118 @@
         		<tr>
         			<td style="text-align: left;padding-left: 5px;">Doc. Control</td>
         			<td style="text-align: left;padding-left: 5px;"><b>TRM02-03</b></td>
+        		</tr>
+        	</table>
+        </div>
+    </div>
+    <div class="inv1 pcg">
+        <div class="content clear">
+        	<div class="span12 clear mid-header">
+        		<div class="span5" style="margin-right: 15px;">
+        			<div class="logo" style="width: 100%;">
+		            	<img style="width: 55%" data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+        			
+        		</div>
+        		<div class="span6" style="float:right;">
+        			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
+        	</div>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ឈ្មោះ Name : <span>Choeun </span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ទូទាត់ដោយ Mode of Payment : <span>Cash</span></div>
+				<div class="span12" style="text-align: left;padding-left: 10px;margin-top: 10px;">គោលបំណងការចំណាយ Purpose of Payment : <span>abc</span></div>
+        	</div>
+        	<table class="span12" rules="rows">
+        		<thead>
+	        		<tr style="background: #c6d9f1;">
+	        			<th style="border-top: 0;" width="60">
+	        				ល.រ<br>No.
+	        			</th>
+	        			<th style="border-top: 0;" width="120">
+	        				វិក្កយបត្រលេខ<br>Invoice No.
+	        			</th>
+	        			<th style="text-align: left;padding-left: 10px;">
+	        				បរិយាយ​<br>Description
+	        			</th>
+	        			<th style="border-top: 0;" width="120">
+	        				ចំនួន<br>Amount
+	        			</th>
+	        		</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView" 
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template19"
+						data-bind="source: lineDS">
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;text-align: left;" colspan="2" rowspan="3">
+        				</td>
+        				<td style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
+        				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td class="rside" style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+
+
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
+        		<tr>
+        			<td style="background: #10253f; color: #fff;text-align:center;" rowspan="5" width="20"><p class="upside">Finance Department</p></td>
+        			<td width="100">រៀបចំដោយ<br>PREPARED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td><b>សំរេចដោយ<br>APPROVED BY</b></td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>ទួទាត់ដោយ<br>PAID BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td>ទទួលដោយ<br>RECEIVED BY</td>
+        			<td></td>
+        			<td></td>
+        			<td></td>
+        		</tr>
+        		<tr>
+        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<!--tr>
+        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr-->
+        		<tr>
+        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
         	</table>
         </div>
