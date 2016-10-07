@@ -193,7 +193,7 @@
 				<div class="board-chart">
 					<div class="span12">
 						<h4 data-bind="text: companyName"></h4>
-						<h2 style="color: #113051;"><span data-bind="text: lang.lang.financial_snapshot"></span></h2>
+						<h2 style="color: #113051; margin-bottom: 11px; display: inline-block; width: 100%;" data-bind="text: lang.lang.financial_snapshot"></h2>
 						<span style="color: #000000;"><span data-bind="text: lang.lang.as_of"></span>:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
 					</div>
 				</div>
@@ -8958,7 +8958,7 @@
 										        		data-bind="source: attachmentDS"></tbody>			        
 										    </table>
 
-										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile"><i></i><span data-bind="text: lang.lang.save"></span></span>
+										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i><span data-bind="text: lang.lang.save"></span></span>
 
 								        </div>
 								        <!-- // Attach Tab content END -->								            								            
@@ -15605,7 +15605,7 @@
 					<td class="center" >
 						<a href="#/customer_deposit">
 							<img title="Add Customer Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.deposit" style="margin-top: 7px; display: inline-block;"></span>
+							<span data-bind="text: lang.lang.c_deposit" style="margin-top: 7px; display: inline-block;"></span>
 						</a>						
 					</td>					
 				</tr>
@@ -15663,7 +15663,7 @@
 				<div class="span4">
 				
 					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
+					<div class="widget widget-3 customer-border"  >
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
@@ -15671,22 +15671,22 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary">
+						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary" style="min-height: 148px;">
 							
 							<div align="center" class="text-large strong" data-bind="text: sale"></div>
 							<table width="100%">
 								<tr align="center">
-									<td width="33%">										
+									<td width="33%" style="vertical-align: top">										
 										<span data-bind="text: sale_customer"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.customers"></span></span>
 									</td>
-									<td width="33%">
+									<td width="33%" style="vertical-align: top">
 										<span data-bind="text: sale_product"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.product"></span></span>
 									</td>
-									<td width="33%">
+									<td width="33%" style="vertical-align: top">
 										<span data-bind="text: sale_order"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.order"></span></span>
@@ -15714,17 +15714,17 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert-info">
+						<div class="widget-body alert-info" style="min-height: 148px;">
 							
 							<div align="center" class="text-large strong" data-bind="text: order"></div>
 							<table width="100%">
 								<tr align="center">
-									<td width="50%">										
+									<td width="50%" style="vertical-align: top">										
 										<span data-bind="text: order_avg"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.average"></span></span>
 									</td>
-									<td width="50%">
+									<td width="50%" style="vertical-align: top">
 										<span data-bind="text: order_open"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.open1"></span></span>
@@ -15757,17 +15757,17 @@
 							<div align="center" class="text-large strong" data-bind="text: ar"></div>
 							<table width="100%">
 								<tr align="center">
-									<td width="33%">										
+									<td width="33%" style="vertical-align: top">										
 										<span data-bind="text: ar_open"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.open1"></span></span>
 									</td>
-									<td width="33%">
+									<td width="33%" style="vertical-align: top">
 										<span data-bind="text: ar_customer"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.customers"></span></span>
 									</td>
-									<td width="33%">
+									<td width="33%" style="vertical-align: top">
 										<span data-bind="text: ar_overdue"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.overdue"></span></span>
@@ -15997,7 +15997,7 @@
 								            			<span class="btn btn-block btn-inverse" data-bind="click: goGDN">GDN</span>
 								            		</td>
 								            		<td class="center">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt"><span data-bind="text: lang.lang.receive_payment"></span></span>								            			
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt"><span data-bind="text: lang.lang.cash_receipt"></span></span>								            			
 
 								            		</td>
 								            	</tr>
@@ -16114,7 +16114,7 @@
 										        		data-bind="source: attachmentDS"></tbody>			        
 										    </table>
 
-										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile"><i></i> <span data-bind="text: lang.lang.save"></span></span>
+										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
 
 								        </div>
 								        <!-- // Attach Tab content END -->							            								            
@@ -16186,8 +16186,8 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.customers"></span></th>
 								<th><span data-bind="text: lang.lang.type"></span></th>								
-								<th><span data-bind="text: lang.lang.refrence_no"></span></th>
-								<th><span data-bind="text: lang.lang.amont"></span></th>
+								<th><span data-bind="text: lang.lang.reference_no"></span></th>
+								<th><span data-bind="text: lang.lang.amount"></span></th>
 								<th><span data-bind="text: lang.lang.status"></span></th>
 								<th><span data-bind="text: lang.lang.action"></span></th>
 							</tr>
