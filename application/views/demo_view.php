@@ -20635,76 +20635,70 @@
 				<div id="example" class="k-content saleSummaryCustomer">
 					<span class="pull-right glyphicons no-js remove_2" 
 						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-					
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-							
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filters"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->
+					<br><br>
 								
-								<div>
-									<input id="sorter" name="sorter"
-							    	   data-role="dropdownlist"
-							           data-value-primitive="true"
-							           data-text-field="text"
-							           data-value-field="value"
-							           data-bind="value: sorter,
-							                      source: sortList,
-							                      events: {change: dateChange}" />
+					<div>
+						<input id="cbbContact" name="cbbContact"
+							   data-role="combobox"											                    
+			                   data-value-primitive="true"
+			                   data-auto-bind="false"
+			                   data-header-template="contact-header-tmpl"
+			                   data-template="contact-list-tmpl"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="value: contact_id,
+			                              source: contactDS"
+			                   data-placeholder="Customer..." />
 
-							        <input id="sdate" name="sdate"
-							        	   data-role="datepicker"
-								           data-bind="value: startDate, events: {change: dateMax}"
-								           placeholder="From ..." />
+						<input data-role="dropdownlist"
+							   class="sorter"                  
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList,                              
+					                      events: { change: sorterChanges }" />
 
-							       	<input id="edate" name="edate"
-							       		   data-role="datepicker"
-								           data-bind="value: endDate, events: {change: dateMin}"
-								           placeholder="To ..." />
+						<input data-role="datepicker"
+							   class="sdate"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					           			  max: edate"
+					           placeholder="From ..." >
 
-								  	 <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->						
+					    <input data-role="datepicker"
+					    	   class="edate"
+					    	   data-format="dd-MM-yyyy"
+					           data-bind="value: edate,
+					                      min: sdate"
+					           placeholder="To ..." >
+
+					  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 					</div>
+
+					<br><br>
 					
 					<div class="block-title">
 						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.segments"></span></h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
+						<h2 data-bind="text: lang.lang.statement"></h2>
+						<p data-bind="text: displayDate"></p>
+						<h3 data-bind="text: obj.name"></h3>
 					</div>
-					<div class="customer-name">
-						<p><b><span data-bind="text: lang.lang.customer_name"></span> Test</b></p>
-					</div>
-
-					<table class="table table-borderless table-condensed ">
+					
+					<table class="table table-borderless table-condensed">
 						<thead>
 							<tr>
 								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.description"></span></th>
-								<th><span data-bind="text: lang.lang.no"></span></th>
-								<th><span data-bind="text: lang.lang.due_date"></span></th>
-								<th><span data-bind="text: lang.lang.memo"></span></th>
-								<th><span data-bind="text: lang.lang.charge"></span></th>
-								<th><span data-bind="text: lang.lang.credit"></span></th>
+								<th><span data-bind="text: lang.lang.type"></span></th>
+								<th><span data-bind="text: lang.lang.job"></span></th>
+								<th><span data-bind="text: lang.lang.reference_no"></span></th>
 								<th><span data-bind="text: lang.lang.amount"></span></th>
+								<th><span data-bind="text: lang.lang.balance"></span></th>
 							</tr>
 						</thead>
 						<tbody data-role="listview"
-									 data-bind="source: stamentSummary.dataSource"
-									 data-template="statement-row-template"
+							data-bind="source: dataSource"
+							data-template="statement-row-template"
 						></tbody>
 						<tfoot>
 							<tr>
@@ -20713,6 +20707,7 @@
 							</tr>
 						</tfoot>
 					</table>
+
 					<table class="table-statement">
 						<tr>
 							<th><span data-bind="text: lang.lang.current"></span></th>
@@ -20737,8 +20732,7 @@
 	</div>
 </script>
 <script id="statement-row-template" type="text/x-kendo-template" >
-	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
+	<tr>
 		<td>#=group#</td>
 		<td></td>
 		<td></td>
@@ -20748,30 +20742,6 @@
 		<td></td>
 		<td></td>
 	</tr>
-	# if (items.length) {#
-		#for(var i= 0; i <items.length; i++) {#
-			<tr>
-				<td>#=items[i].date#</td>
-				<td>#=items[i].number#</td>
-				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].due_date#</td>
-				<td>#=items[i].memo#</td>
-				<td style="text-align: right;">#=kendo.toString(items[i].dr, 'c2')#</td>
-				<td style="text-align: right;">#=kendo.toString(items[i].cr, 'c2')#</td>			
-				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
-			</tr>
-
-		#}#
-	#}#
-</script>
-<script id="currentDate-row-template" type="text/x-kendo-tmpl">
-    <tr data-uid="#: uid #">
-        <td>##</td>         
-        <td style="text-align: right;">#=kendo.toString(underThirty, 'c2')#</td>
-        <td style="text-align: right;">#=kendo.toString(thirty, 'c2')#</td>
-    	<td style="text-align: right;">#=kendo.toString(sixty, 'c2')#</td>
-    	<td style="text-align: right;">#=kendo.toString(ninety, 'c2')#</td>
-    	<td style="text-align: right;">#=kendo.toString(overNinety, 'c2')#</td>    
 </script>
 
 
@@ -29985,7 +29955,6 @@
 						<th>Description</th>
 						<th>Size</th>
 						<th>Attach to</th>
-						<th>Upload by</th>
 						<th>Date</th>
 						<th>Action</th>								
 					</tr>
@@ -30012,7 +29981,6 @@
 				<a href="\#/item_center/#=attachedTo.id#">#=attachedTo.name#</a>
 			#}#
 		</td>
-		<td>#=user.name#</td>
 		<td>#=created_at#</td>
 		<td align="center"><a href="\#" data-bind="click: remove">Delete</a></td>
 	</tr>
@@ -61346,6 +61314,89 @@
 				this.addRowOption();
 			}							
 		}
+	});
+	banhji.statement = kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "transactions/statement"),
+		contactDS 			: banhji.source.customerDS,
+		sortList 			: banhji.source.sortList,
+		sorter 				: "all",
+		sdate 				: "",
+		edate 				: "",
+		company 			: banhji.institute,
+		obj 				: null,
+		displayDate 		: "",
+		contact_id 			: "",
+		pageLoad 			: function(){
+
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		search				: function(){
+			var para = [], obj = this.get("obj"),
+				contact_id = this.get("contact_id"),
+				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+
+        	if(contact_id>0){
+        		para.push({ field:"contact_id", value: contact_id });
+        	
+	        	//Dates
+	        	if(start && end){
+	            	para.push({ field:"issued_date >=", value: start });
+	            	para.push({ field:"issued_date <=", value: end });
+	            }else if(start){
+	            	para.push({ field:"issued_date", value: start });
+	            }else if(end){
+	            	para.push({ field:"issued_date <=", value: end });
+	            }else{
+	            	
+	            }
+
+	            this.dataSource.query({
+	            	filter: para,
+	            	sort: [
+				  		{ field: "issued_date", dir: "desc" },
+				  		{ field: "id", dir: "desc" }
+				  	],
+	            	page: 1,
+	            	pageSize: 100
+	            });
+	        }            
+		},
 	});	
 	banhji.stamentSummary = kendo.observable({
 		lang 				: langVM,
@@ -65874,12 +65925,24 @@
 		edit				: function(){
 			var obj = this.get("obj");
 
-			if(obj.is_catalog=="1"){
-				banhji.router.navigate('/item_catalog/'+obj.id);
-			}else if(obj.is_assembly=="1"){
-				banhji.router.navigate('/item_assembly/'+obj.id);
+			if(obj.item_type_id=="1"){
+				if(obj.is_catalog=="1"){
+					banhji.router.navigate('/item_catalog/'+obj.id);
+				}else if(obj.is_assembly=="1"){
+					banhji.router.navigate('/item_assembly/'+obj.id);
+				}else{
+					banhji.router.navigate('/item/'+obj.id);
+				}
+			}else if(obj.item_type_id=="2"){
+				banhji.router.navigate('/non_inventory_part/'+obj.id);
+			}else if(obj.item_type_id=="3"){
+				banhji.router.navigate('/fixed_assets/'+obj.id);
+			}else if(obj.item_type_id=="4"){
+				banhji.router.navigate('/item_service/'+obj.id);
+			}else if(obj.item_type_id=="5"){
+				banhji.router.navigate('/txn_item/'+obj.id);
 			}else{
-				banhji.router.navigate('/item/'+obj.id);
+
 			}
 		},
 		pricing				: function(){
@@ -67788,20 +67851,6 @@
 				this.generateNumber();
 			}
 		},
-		//Item Price
-		addItemPrice 			: function (id) {
-			var obj = this.get("obj");
-
-      		this.itemPriceDS.add({      			      			
-      			item_id			: id,
-      			measurement_id 	: obj.measurement_id,
-      			price 			: obj.price,
-      			unit_value		: 0,
-      			locale 			: obj.locale
-			});
-
-			this.itemPriceDS.sync();
-      	},
 		//Obj
 		loadObj 				: function(id, is_pattern){
     		var self = this, para = [];
@@ -67871,11 +67920,7 @@
 			this.objSync()
 			.then(function(data){ //Success												
 				if(self.get("isEdit")==false){					
-	      			if(data[0].is_pattern){
-						self.savePattern(data[0].category_id, data[0].id);
-					}
-
-					self.addItemPrice(data[0].id);
+	      			
 				}      			
 				
 				return data;
@@ -67905,23 +67950,25 @@
 		delete 					: function(){
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
+			
+			if(!obj.is_system==1){
+				this.deleteDS.query({
+				  	filter: { field: "item_id", value: obj.id },
+				  	page: 1,
+				  	pageSize: 1
+				}).then(function() {
+					var view = self.deleteDS.view();
 
-			this.deleteDS.query({
-			  	filter: { field: "item_id", value: obj.id },
-			  	page: 1,
-			  	pageSize: 1
-			}).then(function() {
-				var view = self.deleteDS.view();
+					if(view.length>0){
+						alert("Sorry, you can not delete it because it is using now.");
+					}else{
+						obj.set("deleted", 1);
+				        self.dataSource.sync();
 
-				if(view.length>0){
-					alert("Sorry, you can not delete it because it is using now.");
-				}else{
-					obj.set("deleted", 1);
-			        self.dataSource.sync();
-
-			        window.history.back();				        
-				}
-			});	
+				        window.history.back();				        
+					}
+				});
+			}	
 		},
 		openConfirm 			: function(){
 			this.set("showConfirm", true);
@@ -70048,7 +70095,7 @@
 		quote: new kendo.Layout("#quote", {model: banhji.quote}),		
 		gdn: new kendo.Layout("#gdn", {model: banhji.gdn}),
 		saleReturn: new kendo.Layout("#saleReturn", {model: banhji.saleReturn}),		
-		statement: new kendo.Layout("#statement", {model: banhji.customerSale}),
+		statement: new kendo.Layout("#statement", {model: banhji.statement}),
 		customerDeposit: new kendo.Layout("#customerDeposit", {model: banhji.customerDeposit}),
 		customerReportCenter: new kendo.Layout("#customerReportCenter", {model: banhji.customerReportCenter}),
 		customerList : new kendo.Layout("#customerList", {model: banhji.customerList}),
@@ -72866,7 +72913,7 @@
 			banhji.userManagement.addMultiTask("Tax Item","sale_tax",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.saleTaxMenu);			
+			//banhji.view.menu.showIn('#secondary-menu', banhji.view.saleTaxMenu);			
 			
 			var vm = banhji.saleTax;
 
@@ -75059,19 +75106,16 @@
 			banhji.router.navigate('/manage');
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.statement);
-			banhji.customerSale.stamentSummary.dataSource.read();
-			banhji.customerSale.stamentSummary.dataSource.bind('requestEnd', function(e){
-				if(e.response) {
-					banhji.customerSale.set('count', e.response.count);
-					kendo.culture(banhji.locale);
-					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
-					banhji.customerSale.set('underThirty', kendo.toString(e.response.underThirty, 'c2'));
-					banhji.customerSale.set('thirty', kendo.toString(e.response.thirty, 'c2'));
-					banhji.customerSale.set('sixty', kendo.toString(e.response.sixty, 'c2'));
-					banhji.customerSale.set('ninety', kendo.toString(e.response.ninety, 'c2'));
-					banhji.customerSale.set('overNinety', kendo.toString(e.response.overNinety, 'c2'));
-				}
-			});
+
+			var vm = banhji.statement;
+			banhji.userManagement.addMultiTask("Statement","statement",null);
+
+			if(banhji.pageLoaded["statement"]==undefined){
+				banhji.pageLoaded["statement"] = true;
+				
+			}
+
+			vm.pageLoad();
 		}
 	});
 	banhji.router.route("/customer_report_center", function(){

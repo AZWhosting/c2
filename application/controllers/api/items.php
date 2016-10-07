@@ -184,6 +184,7 @@ class Items extends REST_Controller {
 				   	"is_pattern" 				=> intval($value->is_pattern),				  
 				   	"status" 					=> $value->status,
 				   	"deleted" 					=> $value->deleted,
+				   	"is_system" 				=> $value->is_system,
  					
  					"category" 				=> $value->category_name,
 				   	"item_prices"			=> $itemPrice
@@ -298,7 +299,8 @@ class Items extends REST_Controller {
 				   	"is_assembly" 				=> $obj->is_assembly,
 				   	"is_pattern" 				=> intval($obj->is_pattern),				  
 				   	"status" 					=> $obj->status,
-				   	"deleted" 					=> $obj->deleted
+				   	"deleted" 					=> $obj->deleted,
+				   	"is_system" 				=> $obj->is_system
 			   	);
 		    }	
 		}
@@ -413,7 +415,8 @@ class Items extends REST_Controller {
 				   	"is_assembly" 				=> $obj->is_assembly,
 				   	"is_pattern" 				=> intval($obj->is_pattern),				  
 				   	"status" 					=> $obj->status,
-				   	"deleted" 					=> $obj->deleted
+				   	"deleted" 					=> $obj->deleted,
+				   	"is_system" 				=> $obj->is_system
 				);						
 			}
 		}

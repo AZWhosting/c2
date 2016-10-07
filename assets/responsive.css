@@ -1960,3 +1960,33 @@ a.enquiries:hover .enquiry-content,
 .enquiry-content:hover {
     right: 0px
 }
+/* --- Welcome ---*/
+#firstPopUp {
+    width: 850px;
+    margin: 0 auto;
+    height: 400px;
+    top: 20%;
+    left: 0;
+    padding-top: 25px;
+    background-color: #13294f;
+}
+.cover-blog-welcome p {
+    text-align: center;
+}
+.cover-blog-welcome img {
+    width: 100%;
+}
+.cover-welcome-four-blog {
+    padding: 10px;
+    border:1px solid #2c74b5;
+    margin-bottom: 10px;
+}
+#firstPopUp .close {
+        position: absolute;
+    color: #fff;
+    right: 10px;
+    top: 10px;
+}
+a.aWelcome {
+    display: none;
+}
