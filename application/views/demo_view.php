@@ -61372,12 +61372,15 @@
 			}
 		},
 		search				: function(){
-			var para = [], obj = this.get("obj"),
+			var para = [],
 				contact_id = this.get("contact_id"),
 				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
         		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
 
         	if(contact_id>0){
+        		var contact = this.contactDS.get(contact_id);
+        		this.set("obj", contact);
+
         		para.push({ field:"contact_id", value: contact_id });
         	
 	        	//Dates
@@ -61402,7 +61405,7 @@
 	            	pageSize: 100
 	            });
 	        }            
-		},
+		}
 	});	
 	banhji.stamentSummary = kendo.observable({
 		lang 				: langVM,
