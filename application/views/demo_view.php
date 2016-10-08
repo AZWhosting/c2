@@ -2025,25 +2025,23 @@
 		<div class="customer-background">
 			<div class="container-960" style="overflow: hidden;">					
 			<div id="example" class="k-content">
+				
+		    	<span class="glyphicons no-js remove_2 pull-right" 
+						onclick="javascript: window.history.back()"><i></i></span>
 
-				<div class="hidden-print">
-			    	<div class="pull-right">
+		        <h2>TAX</h2>
 
-			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"><i></i></span>						
-					</div>
-
-			        <h2>TAX</h2>
+			    <div class="row">
 			        <div class="span6">
 			        	<p>
 				        	These are the tax items required by your countries. 
 				        	You can add more tax items or edit the existing items. If you are not sure, please consult with your tax advisor.
 				        </p>
 			        </div>
-			         <div class="span6">
+			        <div class="span6">
 			         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbspAdd New Tax Type</button>
 						
-			        </div>
-			        				        				        				        	
+			        </div>		        				        				        	
 			    </div>			   
 
 			    <br>
@@ -2152,6 +2150,12 @@
 							</td>
 						</tr>
 						<tr style="border-bottom: 8px solid #fff;">
+							<td width="34%">Description</td>
+							<td>
+								<input class="k-textbox" placeholder="type description ..." data-bind="value: item.description" style="width: 100%;">
+							</td>
+						</tr>
+						<tr style="border-bottom: 8px solid #fff;">
 							<td>Item Rate</td>
 							<td>
 								<input data-role="numerictextbox"
@@ -2188,14 +2192,15 @@
 					</div>  
 				</div>
 
-				<h3 data-bind="text: taxName"></h3>
+				<h3 data-bind="text: taxName" style="margin-left: 20px;"></h3>
 
 				<div class="row">
-	            	<div class="span8" style="padding-left: 30px;">		                	
-					    <table class="table table-bordered table-white">
+	            	<div class="span12" style="padding-left: 30px;">		                	
+					    <table class="table table-bordered table-white" style="width: 98%;">
 		            		<thead>
 		            			<tr>
-		            				<th>Name</th>
+		            				<th style="width:15%">Name</th>
+		            				<th style="width: 45%;">Description</th>
 		            				<th>Rate</th>
 		            				<th>Account</th>		            					            				
 		            				<th></th>
@@ -2224,8 +2229,6 @@
     	<td align="center">
     		<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
     		|
-    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
-    		|
     		<span data-bind="click: view"><i class="icon-view"></i> View Item</span>
     		|
     		<span data-bind="click: addItem"><i class="icon-plus icon-white"></i> Add Item</span>
@@ -2235,12 +2238,11 @@
 <script id="saleTax-item-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>#=name#</td>
+    	<td>#=description#</td>
     	<td>#=rate#</td>
     	<td>#=account[0].name#</td>     	 		
    		<td>
     		<span data-bind="click: editItem"><i class="icon-edit"></i> Edit</span>
-    		|
-    		<span data-bind="click: deleteItem"><i class="icon-remove"></i> Delete</span>
     	</td>
    	</tr>
 </script>
@@ -2670,47 +2672,45 @@
 			<br>
 			<div class="report-chart" style="overflow: hidden;">
 				<div class="statement">
-					<h2>Statement of Financial Position</h2>
 					<div class="account-stement">
-						<a href="#/statement_profit_loss">
-							<table class="performance">
-								<tr>
-									<td>Income</td>
-									<td></td>
-									<td align="right">12,600,000</td>
-								</tr>
-								<tr>
-									<td>Expense</td>
-									<td></td>
-									<td align="right">8,500,000</td>
-								</tr>
-								<tr>
-									<td><b>Net Income</b></td>
-									<td></td>
-									<td align="right"><b>4,100,000</b></td>
-								</tr>
-							</table>
-						</a> 
-							
-						<a href="#/statement_financial_position">
-							<table class="position">
-								<tr>
-									<td>Assets</td>
-									<td></td>
-									<td align="right">17,537,000</td>
-								</tr>
-								<tr>
-									<td>Liabilities</td>
-									<td></td>
-									<td align="right">3,437,000</td>
-								</tr>
-								<tr>
-									<td><b>Equity</b></td>
-									<td></td>
-									<td align="right"><b>14,100,000</b></td>
-								</tr>
-							</table>
-						</a>
+						<h2 style="color: #496cad; font-size: 20px;">Statement of Profit or Loss</h2>
+						<table class="performance" style="width:100%; background: #fff; color: #000; padding: 0; margin-bottom: 20px;">
+							<tr>
+								<td>Income</td>
+								<td></td>
+								<td align="right">12,600,000</td>
+							</tr>
+							<tr>
+								<td>Expense</td>
+								<td></td>
+								<td align="right">8,500,000</td>
+							</tr>
+							<tr>
+								<td><b>Net Income</b></td>
+								<td></td>
+								<td align="right"><b>4,100,000</b></td>
+							</tr>
+						</table>
+
+						<h2 style="color: #496cad; font-size: 20px;">Statement of Financial Position</h2>
+						<table class="position" style="width:100%; background: #fff; color: #000; padding: 0;">
+							<tr>
+								<td>Assets</td>
+								<td></td>
+								<td align="right">17,537,000</td>
+							</tr>
+							<tr>
+								<td>Liabilities</td>
+								<td></td>
+								<td align="right">3,437,000</td>
+							</tr>
+							<tr>
+								<td><b>Equity</b></td>
+								<td></td>
+								<td align="right"><b>14,100,000</b></td>
+							</tr>
+						</table>
+						
 					</div>
 				</div>
 			</div>
@@ -5699,166 +5699,120 @@
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960" style="overflow: hidden;">					
-			<div id="example" class="k-content">
+				<div id="example" class="k-content">
 
-				<div class="hidden-print">
-			    	<div class="pull-right">
-			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"><i></i></span>						
-					</div>
+					<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
 
 			        <h2>Segment</h2>
-			        <div class="span6">
-			        	<p>
-				        	Segment is important for monitoring or in-depth analysis of your company performance. There are two default segments created. You can edit or add more segment and its items.
-				        </p>
-			        </div>
-			         <div class="span6">
-			         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbspAdd New Segment</button>
-						
-			        </div>
-			        				        				        				        	
-			    </div>			   
 
-			    <br>
+			        <div class="row">
+				        <div class="span6">
+				        	<p>
+					        	Segment is important for monitoring or in-depth analysis of your company performance. There are two default segments created. You can edit or add more segment and its items.
+					        </p>
+				        </div>
+				         <div class="span6">
+				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbspAdd New Segment</button>
+							
+				        </div>
+			        </div>				    			   
 
-			    <!-- Window -->
-			    <div data-role="window"
-		                 data-title="Segment"		                 
-		                 data-width="280"
-		                 data-height="165"
-		                 data-actions="{}"
-		                 data-position="{top: '30%', left: '37%'}"
-		                 data-bind="visible: windowVisible">
-			    	<table>							
-						<tr style="border-bottom: 8px solid #fff;">
-							<td width="40%">NAME</td>
-							<td>
-								<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td>CODE LENGTH</td>
-							<td>
-								<input class="k-textbox" placeholder="Code Length..." data-bind="value: obj.code_length" style="width: 100%;">
-							</td>
-						</tr>
-						<tr>
-							<td>STATUS</td>
-							<td>
-								<input data-role="dropdownlist"						                   
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: obj.status,
-					                              source: statusList"
-					                   style="width: 100%;" />
-							</td>
-						</tr>							
-					</table>
+				    <br>
 
-					<br>
-					<div style="text-align: center;">
-						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
-						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
+				    <!-- Window -->
+				    <div data-role="window"
+			                 data-title="Segment"		                 
+			                 data-width="280"
+			                 data-height="165"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"
+			                 data-bind="visible: windowVisible">
+				    	
+				    	<table>							
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="40%">NAME</td>
+								<td>
+									<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
+								</td>
+							</tr>		
+						</table>
+
+						<br>
+
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
+						</div>
 					</div>
-				</div>
-						
-                <div class="row-fluid">
-	                <div class="span12 table-segment" style="padding: 0;">	                					
-		            	<table class="table table-condensed">
-		            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
-		            			<tr>
-		            				<th>NAME</th>
-		            				<th>CODE</th>
-		            				<th>STATUS</th>		            					            				
-		            				<th></th>
-		            			</tr>
-		            		</thead>
-		            		<tbody data-role="listview"			            			
-					                data-template="segment-template"
-					                data-bind="source: dataSource"></tbody>
-		            	</table>
-	            	</div>
+							
+	                <div class="row-fluid">
+		                <div class="span12 table-segment" style="padding: 0;">	                					
+			            	<table class="table table-condensed">
+			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
+			            			<tr>
+			            				<th>NAME</th>            					            				
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            			
+						                data-template="segment-template"
+						                data-bind="source: dataSource"></tbody>
+			            	</table>
+		            	</div>
 
-	            <!-- Item Window -->
-	            <div data-role="window"
-		                 data-title="Segment Item"		                 
-		                 data-width="250"
-		                 data-height="201"
-		                 data-actions="{}"
-		                 data-position="{top: '30%', left: '37%'}"		                 
-		                 data-bind="visible: windowItemVisible">
-            		<table>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td width="35%">CODE</td>
-							<td>
-								<input class="k-textbox" placeholder="type code ..." data-bind="value: item.code" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td>NAME</td>
-							<td>
-								<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td>STATUS</td>
-							<td>
-								<input data-role="dropdownlist"						                   
-						                   data-value-primitive="true"
-						                   data-text-field="name"
-						                   data-value-field="id"
-						                   data-bind="value: item.status,
-						                              source: statusList"
-						                   style="width: 100%;" />
-							</td>
-						</tr>
-						<tr>
-							<td>SEGMENT</td>
-							<td>
-								<input data-role="dropdownlist"
-					                   data-option-label="Select Segment..."
-					                   data-value-primitive="true"					                   
-					                   data-text-field="name"
-					                   data-header-template="segment-header-tmpl"
-					                   data-value-field="id"
-					                   data-bind="value: item.segment_id,
-					                              source: dataSource"
-					                   style="width: 100%" />
-							</td>
-						</tr>
-						
-					</table>
+		            <!-- Item Window -->
+		            <div data-role="window"
+			                 data-title="Segment Item"		                 
+			                 data-width="250"
+			                 data-height="201"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"		                 
+			                 data-bind="visible: windowItemVisible">
+	            		<table>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="35%">CODE</td>
+								<td>
+									<input class="k-textbox" placeholder="type code ..." data-bind="value: item.code" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td>NAME</td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
+								</td>
+							</tr>
+						</table>
 
-					<br>
-					<div style="text-align: center;">
-						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i>Save</span>
-						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i>Close</span>  
+						<br>
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i>Save</span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i>Close</span>  
+						</div>
 					</div>
-				</div>
 
-				<h3 data-bind="text: objName"></h3>
+					<h3 data-bind="text: objName"></h3>
 
-				<div class="row-fluid">
-	            	<div class="span8">		                	
-					    <table class="table table-bordered table-white">
-		            		<thead>
-		            			<tr>
-		            				<th>CODE</th>
-		            				<th>NAME</th>
-		            				<th>SEGMENT</th>
-		            				<th>STATUS</th>		            					            				
-		            				<th></th>
-		            			</tr>
-		            		</thead>
-		            		<tbody data-role="listview"			            				
-					                data-template="segment-item-template"
-					                data-auto-bind="false"
-					                data-bind="source: itemDS"></tbody>
-		            	</table>
+					<div class="row">
+		            	<div class="span12">		                	
+						    <table class="table table-bordered table-white">
+			            		<thead>
+			            			<tr>
+			            				<th>CODE</th>
+			            				<th>NAME</th>
+			            				<th>SEGMENT</th>   					            				
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            				
+						                data-template="segment-item-template"
+						                data-auto-bind="false"
+						                data-bind="source: itemDS"></tbody>
+			            	</table>
+		            	</div>
 	            	</div>
-            	</div>
-			</div>							
+				</div>							
 			</div>
 		</div>
 	</div>
@@ -5866,12 +5820,12 @@
 <script id="segment-template" type="text/x-kendo-tmpl">                    
     <tr>    	
     	<td>#=name#</td>
-    	<td>#=code_length#</td>
-    	<td>#=status#</td>    	
     	<td>
     		<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
-    		|
-    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
+    		#if(!is_system=="1"){#
+	    		|
+	    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
+    		#}#
     		|
     		<span data-bind="click: view"><i class="icon-view"></i> View Item</span>
     		|
@@ -5884,11 +5838,12 @@
     	<td>#=code#</td>
     	<td>#=name#</td>
     	<td>#=segment[0].name#</td>
-    	<td>#=status#</td>     	 		
    		<td>
     		<span data-bind="click: editItem"><i class="icon-edit"></i> Edit</span>
-    		|
-    		<span data-bind="click: deleteItem"><i class="icon-remove"></i> Delete</span>
+    		#if(!is_system=="1"){#
+	    		|
+	    		<span data-bind="click: deleteItem"><i class="icon-remove"></i> Delete</span>
+    		#}#
     	</td>
    	</tr>
 </script>
@@ -7837,6 +7792,22 @@
 												required data-required-msg="required"
 												style="width:100%;" />
 									</td>
+								</tr>
+								<tr>
+									<td>Currency</td>
+									<td>
+										<input id="cbbCurrency" name="cbbCurrency"
+											   data-role="combobox"											                    
+							                   data-value-primitive="true"
+							                   data-template="currency-list-tmpl"
+							                   data-text-field="code"
+							                   data-value-field="id"
+							                   data-bind="value: obj.locale,
+							                              source: currencyDS,
+							                              events:{ change: setRate }"
+							                   data-placeholder="Type Name.."                    
+							                   required data-required-msg="required" style="width: 100%" />
+									</td>
 								</tr>								
 								<tr>
 									<td>Employee</td>
@@ -7873,13 +7844,11 @@
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
 						        <ul class="row-fluid row-merge">
-						            <li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i></a>
+						            <li class="span1 glyphicons cogwheels active"><a href="#tab1-3" data-toggle="tab"><i></i></a>
 						            </li>
-						            <li class="span1 glyphicons circle_info"><a href="#tab2-4" data-toggle="tab"><i></i></a>
+						            <li class="span1 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i></a>
 						            </li>
-						            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
-						            </li>
-						            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i></a>
+						            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
 						            </li>								            
 						        </ul>
 						    </div>
@@ -7888,7 +7857,7 @@
 						    <div class="tab-content">
 
 						        <!-- Option Tab content -->
-						        <div class="tab-pane active" id="tab1-4" >
+						        <div class="tab-pane active" id="tab1-3" >
 						        	<table class="table table-borderless table-condensed cart_total">
 						        		<tr>
 							        		<td colspan="2">
@@ -7950,29 +7919,6 @@
 									                   data-placeholder="Select Cash Advance.." style="width: 100%" />	
 							        		</td>
 							        	</tr>
-						        	</table>
-						        </div>
-						        <!-- // Option Tab content END -->
-
-						        <!-- Info Tab content -->
-						        <div class="tab-pane" id="tab2-4">
-						        	<table class="table table-borderless table-condensed cart_total">						        		
-						        		<tr>
-											<td>Currency</td>
-											<td>
-												<input id="cbbCurrency" name="cbbCurrency"
-													   data-role="combobox"											                    
-									                   data-value-primitive="true"
-									                   data-template="currency-list-tmpl"
-									                   data-text-field="code"
-									                   data-value-field="id"
-									                   data-bind="value: obj.locale,
-									                              source: currencyDS,
-									                              events:{ change: setRate }"
-									                   data-placeholder="Type Name.."                    
-									                   required data-required-msg="required" style="width: 100%" />
-											</td>
-										</tr>
 							        	<tr>
 											<td>Segments</td>
 											<td>
@@ -7988,13 +7934,13 @@
 													   data-placeholder="Add Segment.."				   
 													   style="width: 100%" /></select>
 											</td>
-										</tr>							        	
+										</tr>
 						        	</table>
 						        </div>
-						        <!-- // Info Tab content END -->
+						        <!-- // Option Tab content END -->						       
 
 						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab3-4">
+						        <div class="tab-pane" id="tab2-3">
 
 						        	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>					            	
 						            
@@ -8025,7 +7971,7 @@
 						        <!-- // Attach Tab content END -->
 
 						        <!-- Recuring Tab content -->
-						        <div class="tab-pane" id="tab4-4">							            	
+						        <div class="tab-pane" id="tab3-3">							            	
 						            
 						            <div class="span5">
 
@@ -14956,7 +14902,7 @@
 								</div>
 							</div>
 						</div>
-<<<<<<< HEAD
+
 					</div>
 
 					<table class="table table-borderless table-condensed ">
@@ -20464,8 +20410,9 @@
 					<span class="pull-right glyphicons no-js remove_2" 
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br><br>
-								
-					<div>
+
+					<h1 style="font-size: 25px; text-align: center;">Coming Soon</h1>								
+					<!-- <div>
 						<input id="cbbContact" name="cbbContact"
 							   data-role="combobox"											                    
 			                   data-value-primitive="true"
@@ -20553,7 +20500,7 @@
 							<td><span data-bind="text: ninety"></span></td>
 							<td><span data-bind="text: overNinety"></span></td>
 						</tr>
-					</table>
+					</table> -->
 				</div>							
 			</div>
 		</div>
@@ -40862,7 +40809,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter: { field: "tax_type_id", operator:"where_in", value:[1,3] },
+			filter: { field: "tax_type_id", operator:"where_in", value:[3,9] },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -40898,7 +40845,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter: { field: "tax_type_id", value:1 },
+			filter: { field: "tax_type_id", operator:"where_in", value:[1,2,3,9] },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -41138,7 +41085,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		adjustmentAccountDS				: new kendo.data.DataSource({
+		adjustmentAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -41741,41 +41688,7 @@
 		//Payment Term, Method, Segment
 		paymentTermDS				: dataStore(apiUrl + "payment_terms"),
 		paymentMethodDS				: dataStore(apiUrl + "payment_methods"),
-		segmentItemDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "segments/item",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			group: { field: "segment[0].name"},
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
+		segmentItemDS				: dataStore(apiUrl + "segments/item"),
 		//Recurring
 		frequencyList 				: [
 			{ id: 'Daily', name: 'Day' },
@@ -43378,6 +43291,8 @@
 		lang 				: langVM,
         dataSource 			: dataStore(apiUrl + "tax_types"),
         itemDS 	 			: dataStore(apiUrl + "tax_items"),
+        deleteDS 			: dataStore(apiUrl + "tax_items"),
+        itemDeleteDS 		: dataStore(apiUrl + "transactions/line"),
         accountDS 			: banhji.source.accountDS,
         typeList			: [ 
 	 		{ id:"Invoice Based", name: "Invoice Based" },
@@ -43398,7 +43313,8 @@
         		agency 				: "",
         		tax_system 			: "Invoice Based",
         		end_date 			: new Date(),
-        		submission_date 	: new Date()
+        		submission_date 	: new Date(),
+        		is_system 			: 0
         	});
         	var data = this.dataSource.data();
 			var obj = data[data.length-1];
@@ -43419,7 +43335,7 @@
         	this.dataSource.sync();
         	this.dataSource.bind("requestEnd", function(e){
         		if( e.type == "create" || e.type == "update"){ 
-        			this.set("windowVisible", false); 
+        			self.set("windowVisible", false); 
         		}
         	});
         },
@@ -43431,9 +43347,22 @@
       	},      	
       	delete 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
-		        var data = e.data;
-		        this.dataSource.remove(data);
-		        this.dataSource.sync();
+		        var self = this, data = e.data;
+
+		        this.deleteDS.query({
+		        	filter: { field:"tax_type_id", value:data.id},
+		        	page:1,
+		        	pageSize:1
+		        }).then(function(){
+		        	var view = self.deleteDS.view();
+
+		        	if(view.length>0){
+		        		this.dataSource.remove(data);
+		        		this.dataSource.sync();
+		        	}else{
+		        		alert("Sorry, this item can not be deleted.");
+		        	}
+		        });
 	    	}	    	
 	    },
 	    view 				: function(e){
@@ -43469,6 +43398,7 @@
         		tax_type_id 		: data.id,
         		account_id 			: 0,
         		name 				: "",
+        		description 		: "",
         		rate 				: "",
         		is_system 			: "",
         		account 			: [{name: ""}]
@@ -43495,16 +43425,31 @@
       	}, 
       	deleteItem 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {        
-		        var data = e.data;
-		        this.itemDS.remove(data);
-		        this.itemDS.sync();
+		        var self = this, data = e.data;
+
+		        this.deleteDS.query({
+		        	filter: { field:"tax_item_id", value:data.id},
+		        	page:1,
+		        	pageSize:1
+		        }).then(function(){
+		        	var view = self.deleteDS.view();
+
+		        	if(view.length>0){
+		        		this.dataSource.remove(data);
+		        		this.dataSource.sync();
+		        	}else{
+		        		alert("Sorry, this item can not be deleted.");
+		        	}
+		        });
 	    	}	    	
 	    }
     });
 	banhji.segment =  kendo.observable({
 		lang 				: langVM,
         dataSource 			: dataStore(apiUrl + "segments"),
-        itemDS 	 			: dataStore(apiUrl + "segments/item"),
+        itemDS 	 			: banhji.source.segmentItemDS,
+        deleteDS 			: dataStore(apiUrl + "segments/item"),
+        itemDeleteDS 		: dataStore(apiUrl + "transactions"),
         statusList 			: banhji.source.statusList,
 		obj 				: null,
 		item 				: null,
@@ -43517,7 +43462,7 @@
         	this.dataSource.add({
         		code_length			: "",
         		name 				: "",
-        		status 				: 1
+        		is_system			: 0
         	});
         	var data = this.dataSource.data();
 			var obj = data[data.length-1];
@@ -43538,7 +43483,7 @@
         	this.dataSource.sync();
         	this.dataSource.bind("requestEnd", function(e){
         		if( e.type == "create" || e.type == "update"){ 
-        			this.set("windowVisible", false);
+        			self.set("windowVisible", false);
         		}
         	});
         },
@@ -43550,9 +43495,22 @@
       	},      	
       	delete 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
-		        var data = e.data;
-		        this.dataSource.remove(data);
-		        this.dataSource.sync();		        
+		        var self = this, data = e.data;
+
+		        this.deleteDS.query({
+		        	filter: { field:"segment_id", value:data.id},
+		        	page:1,
+		        	pageSize:1
+		        }).then(function(){
+		        	var view = self.deleteDS.view();
+
+		        	if(view.length>0){
+		        		this.dataSource.remove(data);
+		        		this.dataSource.sync();
+		        	}else{
+		        		alert("Sorry, this item can not be deleted.");
+		        	}
+		        });		        		        
 	    	}	    	
 	    },
 	    view 				: function(e){
@@ -43587,7 +43545,7 @@
         	this.itemDS.add({
         		segment_id 		: data.id,
         		code 			: "",
-        		status 			: 1,        		
+        		is_system		: 0,        		
         		segment 		: [{name: ""}]
         	});
         	var data = this.itemDS.data();
@@ -43600,7 +43558,7 @@
         	this.itemDS.sync();
         	this.itemDS.bind("requestEnd", function(e){
         		if( e.type == "create" || e.type == "update"){ 
-        			this.set("windowItemVisible", false);
+        			self.set("windowItemVisible", false);
         		}
         	});
         },
@@ -43612,9 +43570,22 @@
       	}, 
       	deleteItem 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
-		        var data = e.data;
-		        this.itemDS.remove(data);
-		        this.itemDS.sync();
+		        var self = this, data = e.data;
+
+		        this.itemDeleteDS.query({
+		        	filter: { field:"segments", operator:"contains", value:data.id},
+		        	page:1,
+		        	pageSize:1
+		        }).then(function(){
+		        	var view = self.itemDeleteDS.view();
+
+		        	if(view.length>0){
+		        		this.dataSource.remove(data);
+		        		this.dataSource.sync();
+		        	}else{
+		        		alert("Sorry, this item can not be deleted.");
+		        	}
+		        });
 	    	}
 	    }
     });
@@ -46501,7 +46472,7 @@
 			//Refresh
 			if(this.contactDS.total()>0){
 				this.contactDS.fetch();
-				this.transactionDS.fetch();
+				this.searchTransaction();
 				this.loadSummary();
 			}							
 		},
@@ -52364,7 +52335,7 @@
     });
 
     //Report Vendor
-   banhji.supplierList = kendo.observable({
+    banhji.supplierList = kendo.observable({
 		lang 					: langVM,
 		dataSource 				: dataStore(apiUrl + "contacts/supplier"),
 		contactTypeDS			: banhji.source.customerTypeDS,
@@ -53064,7 +53035,7 @@
 			//Refresh
 			if(this.contactDS.total()>0){
 				this.contactDS.fetch();
-				this.transactionDS.fetch();
+				this.searchTransaction();
 				this.loadSummary();
 			}
 		},
@@ -67680,7 +67651,7 @@
       			sale_description		: "",
       			fixed_assets_account_id : 0,
       			accumulated_account_id 	: 0,
-      			deposal_account_id 		: 0,
+      			depreciation_account_id	: 0,
       			is_pattern 				: 0,
       			status 					: 1,
       			deleted 				: 0								
@@ -70863,7 +70834,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.accountingReportCenter);
 
-			banhji.userManagement.addMultiTask("Period-End Closing Reports","accounting_report_center",null);
+			banhji.userManagement.addMultiTask("Accounting Report Center","accounting_report_center",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
@@ -74958,7 +74929,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
 			var vm = banhji.customerReportCenter;			
-			banhji.userManagement.addMultiTask("Sale Managment Reports","customer_report_center",null);
+			banhji.userManagement.addMultiTask("Customer Reports Center","customer_report_center",null);
 			if(banhji.pageLoaded["customer_report_center"]==undefined){
 				banhji.pageLoaded["customer_report_center"] = true;				
 								

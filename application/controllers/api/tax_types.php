@@ -93,7 +93,8 @@ class Tax_types extends REST_Controller {
 					"end_date" 			=> $value->end_date,
 					"submission_date" 	=> $value->submission_date,
 					"frequency" 		=> $value->frequency,
-					"description" 		=> $value->description
+					"description" 		=> $value->description,
+					"is_system" 		=> $value->is_system
 				);
 			}
 		}
@@ -117,6 +118,7 @@ class Tax_types extends REST_Controller {
 			isset($value->submission_date) 	? $obj->submission_date = $value->submission_date : "";
 			isset($value->frequency) 		? $obj->frequency 		= $value->frequency : "";
 			isset($value->description) 		? $obj->description 	= $value->description : "";
+			isset($value->is_system) 		? $obj->is_system 		= $value->is_system : "";
 						
 			if($obj->save()){				
 				//Respsone
@@ -129,7 +131,8 @@ class Tax_types extends REST_Controller {
 					"end_date" 			=> $obj->end_date,
 					"submission_date" 	=> $obj->submission_date,
 					"frequency" 		=> $obj->frequency,
-					"description" 		=> $obj->description
+					"description" 		=> $obj->description,
+					"is_system" 		=> $obj->is_system
 				);				
 			}			
 		}
@@ -155,7 +158,8 @@ class Tax_types extends REST_Controller {
 			isset($value->end_date) 		? $obj->end_date 		= $value->end_date : "";
 			isset($value->submission_date) 	? $obj->submission_date = $value->submission_date : "";
 			isset($value->frequency) 		? $obj->frequency 		= $value->frequency : "";
-			isset($value->description) 		? $obj->description 	= $value->description : "";			
+			isset($value->description) 		? $obj->description 	= $value->description : "";
+			isset($value->is_system) 		? $obj->is_system 		= $value->is_system : "";			
 			
 			if($obj->save()){				
 				//Results
@@ -168,7 +172,8 @@ class Tax_types extends REST_Controller {
 					"end_date" 			=> $obj->end_date,
 					"submission_date" 	=> $obj->submission_date,
 					"frequency" 		=> $obj->frequency,
-					"description" 		=> $obj->description
+					"description" 		=> $obj->description,
+					"is_system" 		=> $obj->is_system
 				);						
 			}
 		}

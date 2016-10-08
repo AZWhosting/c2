@@ -174,7 +174,7 @@ class Items extends REST_Controller {
 				   	"inventory_account_id"		=> $value->inventory_account_id,
 				   	"fixed_assets_account_id" 	=> $value->fixed_assets_account_id,
 				   	"accumulated_account_id" 	=> $value->accumulated_account_id,
-				   	"deposal_account_id" 		=> $value->deposal_account_id,
+				   	"depreciation_account_id" 	=> $value->depreciation_account_id,
 				   	"deposit_account_id" 		=> $value->deposit_account_id,	   				   	
 				   	"preferred_vendor_id" 		=> $value->preferred_vendor_id,
 				   	"image_url" 				=> $value->image_url,
@@ -240,7 +240,7 @@ class Items extends REST_Controller {
 		   	isset($value->inventory_account_id) 	? $obj->inventory_account_id 	= $value->inventory_account_id : "";
 		   	isset($value->fixed_assets_account_id) 	? $obj->fixed_assets_account_id = $value->fixed_assets_account_id : "";
 		   	isset($value->accumulated_account_id) 	? $obj->accumulated_account_id 	= $value->accumulated_account_id : "";
-		   	isset($value->deposal_account_id) 		? $obj->deposal_account_id 		= $value->deposal_account_id : "";
+		   	isset($value->depreciation_account_id) 	? $obj->depreciation_account_id = $value->depreciation_account_id : "";
 		   	isset($value->deposit_account_id) 		? $obj->deposit_account_id 		= $value->deposit_account_id : "";
 		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
 		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
@@ -290,7 +290,7 @@ class Items extends REST_Controller {
 				   	"inventory_account_id"		=> $obj->inventory_account_id,
 				   	"fixed_assets_account_id" 	=> $obj->fixed_assets_account_id,
 				   	"accumulated_account_id" 	=> $obj->accumulated_account_id,
-				   	"deposal_account_id" 		=> $obj->deposal_account_id,
+				   	"depreciation_account_id" 	=> $obj->depreciation_account_id,
 				   	"deposit_account_id" 		=> $obj->deposit_account_id,				   				   	
 				   	"preferred_vendor_id" 		=> $obj->preferred_vendor_id,
 				   	"image_url" 				=> $obj->image_url,
@@ -355,7 +355,7 @@ class Items extends REST_Controller {
 		   	isset($value->inventory_account_id) 	? $obj->inventory_account_id 	= $value->inventory_account_id : "";
 		   	isset($value->fixed_assets_account_id) 	? $obj->fixed_assets_account_id = $value->fixed_assets_account_id : "";
 		   	isset($value->accumulated_account_id) 	? $obj->accumulated_account_id 	= $value->accumulated_account_id : "";
-		   	isset($value->deposal_account_id) 		? $obj->deposal_account_id 		= $value->deposal_account_id : "";
+		   	isset($value->depreciation_account_id) 	? $obj->depreciation_account_id = $value->depreciation_account_id : "";
 		   	isset($value->deposit_account_id) 		? $obj->deposit_account_id 		= $value->deposit_account_id : "";		   	
 		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
 		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
@@ -406,7 +406,7 @@ class Items extends REST_Controller {
 				   	"inventory_account_id"		=> $obj->inventory_account_id,
 				   	"fixed_assets_account_id" 	=> $obj->fixed_assets_account_id,
 				   	"accumulated_account_id" 	=> $obj->accumulated_account_id,
-				   	"deposal_account_id" 		=> $obj->deposal_account_id,
+				   	"depreciation_account_id" 	=> $obj->depreciation_account_id,
 				   	"deposit_account_id" 		=> $obj->deposit_account_id,				   				   	
 				   	"preferred_vendor_id" 		=> $obj->preferred_vendor_id,
 				   	"image_url" 				=> $obj->image_url,
