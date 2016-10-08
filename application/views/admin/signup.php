@@ -283,7 +283,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 
                                 <select class="signup-country" 
                                         data-role="dropdownlist" 
-                                        data-bind="source: currencies, value: country"
+                                        data-bind="source: currencies, value: currency"
                                         data-text-field="country"
                                         data-value-field="id"
                                         data-option-label="Select the main Currency" style="text-align: left;">
@@ -618,6 +618,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             country   : null,
             industry  : null,
             type      : null,
+            telephone : null,
             countries : banhji.countries,
             industries: banhji.industry,
             types     : banhji.typeDS,
