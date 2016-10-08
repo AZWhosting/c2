@@ -25928,163 +25928,6 @@
     </div>
 </script>
 <script id="invoiceForm19" type="text/x-kendo-template">
-	<div class="inv1 pcg-cash">
-        <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
-	            </div>
-        	</div>
-        	<div class="span7">
-        		<h2 data-bind="text: obj.title"></h2>
-        	</div>
-        	<div class="span12" style="background:none;margin-top: 15px;">
-        		<table class="span12 left-tbl" border="1">
-        			<tr>
-        				<td width="200">ឈ្មោះ NAME</td>
-        				<td width="200" data-bind="text: obj.contact.name"></td>
-        				<td width="200">លេខសក្ខីប័ត្រ PV No.</td>
-        				<td width="200"></td>
-        			</tr>
-        			<tr>
-        				<td width="200">អ្នកផ្គត់ផ្គង់ Supplier Code</td>
-        				<td width="200"></td>
-        				<td width="200">កាលបរិច្ឆេទ Date</td>
-        				<td width="200"></td>
-        			</tr>
-        			<tr>
-        				<td width="200">ផ្នែក Department</td>
-        				<td width="200"></td>
-        				<td width="200">លេខសក្ខីប័ត្របំណុល APV No.</td>
-        				<td width="200"></td>
-        			</tr>
-        			<tr>
-        				<td width="200">ទូទាត់ដោយ Mode of<br>Payment</td>
-        				<td colspan="3"> </td>
-        			</tr>
-        			<tr>
-        				<td width="200">គោលបំណងការចំណាយ<br>Purpose of Advance</td>
-        				<td colspan="2">&nbsp;</td>
-        				<td>Budgeted: </td>
-        			</tr>
-        		</table>
-        	</div>
-        	<table class="span12" style="border-top: none;">
-        		<thead>
-	        		<tr style="background: #c6d9f1;">
-	        			<th style="border-top: 0;">
-	        				No.
-	        			</th>
-	        			<th style="border-top: 0;" width="100">
-	        				Invoice No.
-	        			</th>
-	        			<th style="border-top: 0;">
-	        				Description
-	        			</th>
-	        			<th style="border-top: 0;" width="120">
-	        				Amount
-	        			</th>
-	        		</tr>
-        		</thead>
-        		<tbody id="formListView" 
-        				data-role="listview"
-						data-auto-bind="false"
-						data-template="invoiceForm-lineDS-template19"
-						data-bind="source: lineDS">
-				<tfoot>
-	        		<tr>
-	        			<td colspan="3" style="text-align: right;padding-right: 5px;">Total</td>
-	        			<td></td>
-	        		</tr>
-	        		<tr>
-	        			<td colspan="3" style="text-align: right;padding-right: 5px;">Settlement Discounts</td>
-	        			<td></td>
-	        		</tr>
-	        		<tr>
-	        			<td colspan="3" style="text-align: right;padding-right: 5px;background: #c6d9f1;">NET AMOUNT PAID</td>
-	        			<td></td>
-	        		</tr>
-	        	</tfoot>
-        	</table>
-        	<table class="span12 left-tbl" >
-        		<tr>
-        			<td colspan="2" style="background: #c6d9f1;border-top: none;text-align:right;padding-right:5px;">
-        				Amount in Words
-        			</td>
-        			<td colspan="3" style="border-top: none;">&nbsp;</td>
-        		</tr>
-        		<tr>
-        			<td colspan="2"></td>
-        			<td style="background: #000; color: #fff;text-align:center;">SIGNATURE</td>
-        			<td style="background: #000; color: #fff;text-align:center;">POSITION</td>
-        			<td width="120" style="background: #000; color: #fff;text-align:center;">DATE</td>
-        		</tr>
-        		<tr>
-        			<td style="background: #10253f; color: #fff;text-align:center;" rowspan="5" width="20"><p class="upside">Finance Department</p></td>
-        			<td width="100">រៀបចំដោយ<br>PREPARED BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td><b>សំរេចដោយ<br>APPROVED BY</b></td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td>ទួទាត់ដោយ<br>PAID BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td>ទទួលដោយ<br>RECEIVED BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td style="background:#000;"></td>
-        			<td colspan="4">For Accounting Department Only</td>
-        		</tr>
-        		<tr>
-        			<td></td>
-        			<td style="text-align:center;">Account Code</td>
-        			<td style="text-align:center;">Account Description</td>
-        			<td style="text-align:center;">Debit</td>
-        			<td style="text-align:center;">Credit</td>
-        		</tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
-        		<tr>
-        			<td style="background: #c6d9f1;"></td>
-        			<td style="background: #c6d9f1;">កត់ត្រាដោយ<br>POSTED BY</td>
-        			<td style="text-align:center;"></td>
-        			<td style="text-align:center;"></td>
-        			<td style="text-align:center;"></td>
-        		</tr>
-        	</table>
-        	<table class="span12" border="1">
-        		<tr>
-        			<td rowspan="2" width="400" style="border-top:0;text-align: left;padding-left: 5px;" data-bind="text: obj.note"></td>
-        			<td style="border-top:0;text-align: left;padding-left: 5px;">Version</td>
-        			<td style="border-top:0;text-align: left;padding-left: 5px;"><b>V.01</b></td>
-        		</tr>
-        		<tr>
-        			<td style="text-align: left;padding-left: 5px;">Doc. Control</td>
-        			<td style="text-align: left;padding-left: 5px;"><b>TRM02-03</b></td>
-        		</tr>
-        	</table>
-        </div>
-    </div>
     <div class="inv1 pcg">
         <div class="content clear">
         	<div class="span12 clear mid-header">
@@ -26114,7 +25957,7 @@
 	        			<th style="border-top: 0;" width="120">
 	        				វិក្កយបត្រលេខ<br>Invoice No.
 	        			</th>
-	        			<th style="text-align: left;padding-left: 10px;">
+	        			<th style="border-top: 0;text-align: left;padding-left: 10px;">
 	        				បរិយាយ​<br>Description
 	        			</th>
 	        			<th style="border-top: 0;" width="120">
@@ -26146,54 +25989,49 @@
         		</tfoot>
         	</table>
 
-
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
-        		<tr>
-        			<td style="background: #10253f; color: #fff;text-align:center;" rowspan="5" width="20"><p class="upside">Finance Department</p></td>
-        			<td width="100">រៀបចំដោយ<br>PREPARED BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
+        		<tbody>
+	        		<tr>
+	        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+	        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+	        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+	        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>ទួទាត់ដោយ<br>PAID BY</td><td></td>
+	        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>ទទួលដោយ<br>RECEIVED BY</td><td></td>
+	        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        	</tbody>
+        	</table>
+
+        	<table class="span12 left-tbl" style="margin-top: 30px;">
+        		<tr class="mid-header">
+        			<td colspan="4" style="text-align:center;font-weight: bold;">For Accounting Department Only</td>
         		</tr>
         		<tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
+        			<td >Account Code</td>
+        			<td >Account Description</td>
+        			<td >Debit</td>
+        			<td >Credit</td>
         		</tr>
-        		<tr>
-        			<td><b>សំរេចដោយ<br>APPROVED BY</b></td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td>ទួទាត់ដោយ<br>PAID BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td>ទទួលដោយ<br>RECEIVED BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
-        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
-        		<tr>
-        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
         	</table>
         </div>
     </div>
@@ -27629,15 +27467,20 @@
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
         		<tr>
+        			<td width="90">ចេញដោយ <br>ISSUED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
+        			<td width="90">ដឹកជញ្ជូន <br>DELIVERED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
         		<tr>
         			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
@@ -27698,15 +27541,20 @@
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
         		<tr>
+        			<td width="90">ចេញដោយ <br>ISSUED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
+        			<td width="90">ដឹកជញ្ជូន <br>DELIVERED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
         		<tr>
         			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
@@ -27767,15 +27615,20 @@
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
         		<tr>
+        			<td width="90">ចេញដោយ <br>ISSUED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
+        			<td width="90">ដឹកជញ្ជូន <br>DELIVERED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
         		<tr>
         			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
@@ -27836,15 +27689,20 @@
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
         		<tr>
+        			<td width="90">ចេញដោយ <br>ISSUED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
+        			<td width="90">ដឹកជញ្ជូន <br>DELIVERED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
         		<tr>
         			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>

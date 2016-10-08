@@ -2416,9 +2416,9 @@
 							<td width="50%">
 								<h3><a href="#/trial_balance">Trial Balance</a></h3>
 							</td>
-							<td width="50%">
+							<!-- <td width="50%">
 								<h3><a href="#/transaction_list_date">Transaction List by Date</a></h3>
-							</td>
+							</td> -->
 						</tr>
 						<tr>
 							<td width="50%">
@@ -2426,15 +2426,15 @@
 									Summarizes each account balance on your chart of accounts in the format of debit and credit within a period of time
 								</p>
 							</td>
-							<td width="50%">
+							<!-- <td width="50%">
 								<p>
 									This is similar with journal entry; however, it does not include debit and credit. In addition, it includes not financial transactions, such as sale order or purchase order.
 
 								</p>
-							</td>
+							</td> -->
 						</tr>
 
-						<tr>
+						<!-- <tr>
 							<td width="50%">
 								<h3><a href="#/recent_transactions_list">Recent Transactions List</a></h3>
 							</td>
@@ -2466,7 +2466,7 @@
 							<td>
 								
 							</td>
-						</tr>
+						</tr> -->
 
 					</table>
 				</div>
@@ -2585,9 +2585,9 @@
 							<td >
 								<h3><a href="#/">Cash Receipt Report</a></h3>
 							</td>
-							<td >
+							<!-- <td >
 								<h3><a href="#/">Reconciliation Report</a></h3>
-							</td>
+							</td> -->
 						</tr>
 						<tr>
 							<td >
@@ -2597,11 +2597,11 @@
 
 								</p>
 							</td>
-							<td >
+							<!-- <td >
 								<p>
 									List of all cash related reconciliation reports.
 								</p>
-							</td>
+							</td> -->
 						</tr>
 					</table>					
 				</div>
@@ -2615,9 +2615,9 @@
 							<td style="width: 49%; padding-right: 8px !important;">
 								<h3><a href="#/chart_of_account">Chart of Account </a></h3>
 							</td>
-							<td >
+							<!-- <td >
 								<h3><a href="#/audit_trial_report">Audit Trial Report</a></h3>								
-							</td>						
+							</td>	 -->					
 						</tr>
 						<tr>
 							<td style="width: 49%; padding-right: 8px !important;">
@@ -2627,12 +2627,12 @@
 								</p>
 								
 							</td>
-							<td >
+							<!-- <td >
 								<h3><a href="#/recurring_journal_list">Recurring Journal List</a></h3>							
-							</td>
+							</td> -->
 							
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td>
 								<h3><a href="#/">Realized Exchange Gains & Losses</a></h3>
 							</td>
@@ -2656,7 +2656,7 @@
 
 								</p>
 							</td>							
-						</tr>
+						</tr> -->
 						
 					</table>
 				</div>
@@ -2668,92 +2668,50 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 			<br>
 			<br>
-			<div class="report-chart">
+			<div class="report-chart" style="overflow: hidden;">
 				<div class="statement">
 					<h2>Statement of Financial Position</h2>
-					<p>As of xx/xx/xxxx</p>
-					<table width="100%">
-						<tr>
-							<td>
-								<span>Current Asset</span>
-							</td>
-							<td>
-								<span> 1,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Properties, Plants & Equipment</span>
-							</td>
-							<td>
-								<span> 1,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Investment Property</span>
-							</td>
-							<td>
-								<span> 1,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Investment</span>
-							</td>
-							<td>
-								<span> 1,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Other Asset</span>
-							</td>
-							<td>
-								<span> 5,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Total Asset</span>
-							</td>
-							<td>
-								<span> 1,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Current Liabilities</span>
-							</td>
-							<td>
-								<span> 1,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Non-Current Liabilities</span>
-							</td>
-							<td>
-								<span> 2,000</span>
-							</td>
-						</tr>
-						<tr >
-							<td>
-								<span>Total Liabilities</span>
-							</td>
-							<td>
-								<span> 3,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Equity</span>
-							</td>
-							<td>
-								<span> 2,000</span>
-							</td>
-						</tr>
-					</table>
+					<div class="account-stement">
+						<a href="#/statement_profit_loss">
+							<table class="performance">
+								<tr>
+									<td>Income</td>
+									<td></td>
+									<td align="right">12,600,000</td>
+								</tr>
+								<tr>
+									<td>Expense</td>
+									<td></td>
+									<td align="right">8,500,000</td>
+								</tr>
+								<tr>
+									<td><b>Net Income</b></td>
+									<td></td>
+									<td align="right"><b>4,100,000</b></td>
+								</tr>
+							</table>
+						</a> 
+							
+						<a href="#/statement_financial_position">
+							<table class="position">
+								<tr>
+									<td>Assets</td>
+									<td></td>
+									<td align="right">17,537,000</td>
+								</tr>
+								<tr>
+									<td>Liabilities</td>
+									<td></td>
+									<td align="right">3,437,000</td>
+								</tr>
+								<tr>
+									<td><b>Equity</b></td>
+									<td></td>
+									<td align="right"><b>14,100,000</b></td>
+								</tr>
+							</table>
+						</a>
+					</div>
 				</div>
 			</div>
 			<div class="report-chart">				
@@ -5450,15 +5408,15 @@
 	        <ul>
 	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Financial Reporting Standards</span></a>
 	            </li>
-	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Chart of Accounts Condition</span></a>
+	           <!--  <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Chart of Accounts Condition</span></a>
 	            </li>
-	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Segments Setting</span></a>
+	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Segments Setting</span></a>
 	            </li>
-	            <li><a href="#tab4-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Transaction Item </span></a>
+	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Transaction Item </span></a>
 	            </li>
 	            <li><a href="#tab5-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Tax Setting </span></a>
-	            </li>	
-	            <li><a href="#tab6-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Prefix Setting </span></a>
+	            </li>	 -->
+	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Prefix Setting </span></a>
 	            </li>	                        
 	        </ul>
 	    </div>
@@ -5486,7 +5444,7 @@
 	            <!-- // Tab Branch content END -->
 
 	            <!-- Tab Contact Type content -->
-	            <div class="tab-pane" id="tab2-1">
+	            <!-- <div class="tab-pane" id="tab2-1">
 	            	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i></button>
@@ -5503,11 +5461,11 @@
 				                data-template="customerSetting-payment-method-template"
 				                data-bind="source: paymentMethodDS"></tbody>
 	            	</table>			            
-	            </div>
+	            </div> -->
 	            <!-- // Tab Contact Type content END -->
 
 	            <!-- Tab Block content -->
-	            <div class="tab-pane" id="tab3-1">
+	           <!--  <div class="tab-pane" id="tab2-1">
             		<div class="input-append">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="term ..." data-bind="value: paymentTerm">
@@ -5528,11 +5486,11 @@
 				                data-template="customerSetting-payment-term-template"
 				                data-bind="source: paymentTermDS"></tbody>
 	            	</table>
-	            </div>
+	            </div> -->
 	            <!-- // Tab Block content END -->
 
 	            <!-- Tab Block content -->
-	            <div class="tab-pane" id="tab6-1">
+	            <div class="tab-pane" id="tab2-1">
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr class="widget-head">
@@ -23608,7 +23566,7 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
-			        <h2 style="padding:0 15px;"">CUSTOM FORMS</h2>
+			        <h2 style="padding:0 15px;"" data-bind="text: lang.lang.custom_forms"></h2>
 				    <br>	
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span4">	
@@ -23732,7 +23690,7 @@
         		<h1>វិក្កយបត្រ</h1>
             	<h2 data-bind="text: obj.title"></h2>
         	</div>
-            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
             	<div class="cover-customer">
                 	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
                     <div class="clear">
@@ -23844,7 +23802,7 @@
         		<h1>វិក្កយបត្រអាករ</h1>
             	<h2 data-bind="text: obj.title"></h2>
         	</div>
-            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
             	<div class="cover-customer">
                 	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
                     <div class="clear">
@@ -24298,7 +24256,7 @@
 	<div class="inv1 pcg">
         <div class="content clear">
         	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        		<div class="logo" style="width: 35%">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
@@ -24388,7 +24346,7 @@
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
         	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        		<div class="logo" style="width: 35%">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
@@ -24478,7 +24436,7 @@
 	<div class="inv1 pcg">
         <div class="content clear">
         	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        		<div class="logo" style="width: 35%">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
@@ -24567,7 +24525,7 @@
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
         	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        		<div class="logo" style="width: 35%">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
@@ -25633,160 +25591,110 @@
     </div>
 </script>
 <script id="invoiceForm19" type="text/x-kendo-template">
-	<div class="inv1 pcg-cash">
+    <div class="inv1 pcg">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
-	            </div>
+        	<div class="span12 clear mid-header">
+        		<div class="span5" style="margin-right: 15px;">
+        			<div class="logo" style="width: 100%;">
+		            	<img style="width: 55%" data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+        			
+        		</div>
+        		<div class="span6" style="float:right;">
+        			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
         	</div>
-        	<div class="span7">
-        		<h2 data-bind="text: obj.title"></h2>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ឈ្មោះ Name : <span>Choeun </span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ទូទាត់ដោយ Mode of Payment : <span>Cash</span></div>
+				<div class="span12" style="text-align: left;padding-left: 10px;margin-top: 10px;">គោលបំណងការចំណាយ Purpose of Payment : <span>abc</span></div>
         	</div>
-        	<div class="span12" style="background:none;margin-top: 15px;">
-        		<table class="span12 left-tbl" border="1">
-        			<tr>
-        				<td width="200">ឈ្មោះ NAME</td>
-        				<td width="200" data-bind="text: obj.contact.name"></td>
-        				<td width="200">លេខសក្ខីប័ត្រ PV No.</td>
-        				<td width="200"></td>
-        			</tr>
-        			<tr>
-        				<td width="200">អ្នកផ្គត់ផ្គង់ Supplier Code</td>
-        				<td width="200"></td>
-        				<td width="200">កាលបរិច្ឆេទ Date</td>
-        				<td width="200"></td>
-        			</tr>
-        			<tr>
-        				<td width="200">ផ្នែក Department</td>
-        				<td width="200"></td>
-        				<td width="200">លេខសក្ខីប័ត្របំណុល APV No.</td>
-        				<td width="200"></td>
-        			</tr>
-        			<tr>
-        				<td width="200">ទូទាត់ដោយ Mode of<br>Payment</td>
-        				<td colspan="3"> </td>
-        			</tr>
-        			<tr>
-        				<td width="200">គោលបំណងការចំណាយ<br>Purpose of Advance</td>
-        				<td colspan="2">&nbsp;</td>
-        				<td>Budgeted: </td>
-        			</tr>
-        		</table>
-        	</div>
-        	<table class="span12" style="border-top: none;">
+        	<table class="span12" rules="rows">
         		<thead>
 	        		<tr style="background: #c6d9f1;">
-	        			<th style="border-top: 0;">
-	        				No.
-	        			</th>
-	        			<th style="border-top: 0;" width="100">
-	        				Invoice No.
-	        			</th>
-	        			<th style="border-top: 0;">
-	        				Description
+	        			<th style="border-top: 0;" width="60">
+	        				ល.រ<br>No.
 	        			</th>
 	        			<th style="border-top: 0;" width="120">
-	        				Amount
+	        				វិក្កយបត្រលេខ<br>Invoice No.
+	        			</th>
+	        			<th style="border-top: 0;text-align: left;padding-left: 10px;">
+	        				បរិយាយ​<br>Description
+	        			</th>
+	        			<th style="border-top: 0;" width="120">
+	        				ចំនួន<br>Amount
 	        			</th>
 	        		</tr>
         		</thead>
-        		<tbody id="formListView" 
+        		<tbody style="margin-top: 2px" id="formListView" 
         				data-role="listview"
 						data-auto-bind="false"
 						data-template="invoiceForm-lineDS-template19"
 						data-bind="source: lineDS">
-				<tfoot>
-	        		<tr>
-	        			<td colspan="3" style="text-align: right;padding-right: 5px;">Total</td>
-	        			<td></td>
-	        		</tr>
-	        		<tr>
-	        			<td colspan="3" style="text-align: right;padding-right: 5px;">Settlement Discounts</td>
-	        			<td></td>
-	        		</tr>
-	        		<tr>
-	        			<td colspan="3" style="text-align: right;padding-right: 5px;background: #c6d9f1;">NET AMOUNT PAID</td>
-	        			<td></td>
-	        		</tr>
-	        	</tfoot>
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;text-align: left;" colspan="2" rowspan="3">
+        				</td>
+        				<td style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
+        				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td class="rside" style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
         	</table>
-        	<table class="span12 left-tbl" >
-        		<tr>
-        			<td colspan="2" style="background: #c6d9f1;border-top: none;text-align:right;padding-right:5px;">
-        				Amount in Words
-        			</td>
-        			<td colspan="3" style="border-top: none;">&nbsp;</td>
-        		</tr>
-        		<tr>
-        			<td colspan="2"></td>
-        			<td style="background: #000; color: #fff;text-align:center;">SIGNATURE</td>
-        			<td style="background: #000; color: #fff;text-align:center;">POSITION</td>
-        			<td width="120" style="background: #000; color: #fff;text-align:center;">DATE</td>
-        		</tr>
-        		<tr>
-        			<td style="background: #10253f; color: #fff;text-align:center;" rowspan="5" width="20"><p class="upside">Finance Department</p></td>
-        			<td width="100">រៀបចំដោយ<br>PREPARED BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td><b>សំរេចដោយ<br>APPROVED BY</b></td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td>ទួទាត់ដោយ<br>PAID BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td>ទទួលដោយ<br>RECEIVED BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td style="background:#000;"></td>
-        			<td colspan="4">For Accounting Department Only</td>
-        		</tr>
-        		<tr>
-        			<td></td>
-        			<td style="text-align:center;">Account Code</td>
-        			<td style="text-align:center;">Account Description</td>
-        			<td style="text-align:center;">Debit</td>
-        			<td style="text-align:center;">Credit</td>
-        		</tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
-        		<tr>
-        			<td style="background: #c6d9f1;"></td>
-        			<td style="background: #c6d9f1;">កត់ត្រាដោយ<br>POSTED BY</td>
-        			<td style="text-align:center;"></td>
-        			<td style="text-align:center;"></td>
-        			<td style="text-align:center;"></td>
-        		</tr>
+
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
+        		<tbody>
+	        		<tr>
+	        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+	        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+	        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+	        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>ទួទាត់ដោយ<br>PAID BY</td><td></td>
+	        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>ទទួលដោយ<br>RECEIVED BY</td><td></td>
+	        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        	</tbody>
         	</table>
-        	<table class="span12" border="1">
-        		<tr>
-        			<td rowspan="2" width="400" style="border-top:0;text-align: left;padding-left: 5px;" data-bind="text: obj.note"></td>
-        			<td style="border-top:0;text-align: left;padding-left: 5px;">Version</td>
-        			<td style="border-top:0;text-align: left;padding-left: 5px;"><b>V.01</b></td>
+
+        	<table class="span12 left-tbl" style="margin-top: 30px;">
+        		<tr class="mid-header">
+        			<td colspan="4" style="text-align:center;font-weight: bold;">For Accounting Department Only</td>
         		</tr>
         		<tr>
-        			<td style="text-align: left;padding-left: 5px;">Doc. Control</td>
-        			<td style="text-align: left;padding-left: 5px;"><b>TRM02-03</b></td>
+        			<td >Account Code</td>
+        			<td >Account Description</td>
+        			<td >Debit</td>
+        			<td >Credit</td>
         		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
         	</table>
         </div>
     </div>
@@ -26723,7 +26631,7 @@
         		<h1>វិក្កយបត្រ</h1>
             	<h2 data-bind="text: obj.title"></h2>
         	</div>
-            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
             	<div class="cover-customer">
                 	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
                     <div class="clear">
@@ -27222,15 +27130,20 @@
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
         		<tr>
+        			<td width="90">ចេញដោយ <br>ISSUED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
+        			<td width="90">ដឹកជញ្ជូន <br>DELIVERED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
         		<tr>
         			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
@@ -27291,15 +27204,20 @@
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
         		<tr>
+        			<td width="90">ចេញដោយ <br>ISSUED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
+        			<td width="90">ដឹកជញ្ជូន <br>DELIVERED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
         		<tr>
         			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
@@ -27360,15 +27278,20 @@
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
         		<tr>
+        			<td width="90">ចេញដោយ <br>ISSUED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
+        			<td width="90">ដឹកជញ្ជូន <br>DELIVERED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
         		<tr>
         			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
@@ -27429,15 +27352,20 @@
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
         		<tr>
+        			<td width="90">ចេញដោយ <br>ISSUED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
+        			<td width="90">ដឹកជញ្ជូន <br>DELIVERED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
         		<tr>
         			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
@@ -28089,7 +28017,7 @@
 </script>
 <script id="invoiceForm-lineDS-template" type="text/x-kendo-template">
 	<tr>
-		<td><!--i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i-->&nbsp;</td>
+		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i>&nbsp;</td>
 		<td style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td>#= quantity#</td>
 		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
@@ -28205,6 +28133,7 @@
 		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
+
 
 
 
@@ -33968,9 +33897,12 @@
 							<td>
 								<h3><a href="#/inventory_movement_summary">Inventory Movement Summary</a></h3>
 							</td>
-							<td >
+							<!-- <td >
 								<h3><a href="#/inventory_movement_detail">Inventory Movement Detail</a></h3>								
-							</td>						
+							</td>	 -->
+							<td >
+								<h3><a href="#/purchase_summary_product_services">Purchase by Supplier Summary</a></h3>
+							</td>					
 						</tr>
 						<tr>
 							<td >
@@ -33979,48 +33911,48 @@
 								</p>
 								
 							</td>
-							<td >
+							<!-- <td >
 								<p>
 									Lists of all detailed transactions related to and grouped by each inventory
 								</p>
-							</td>
-							
-						</tr>
-						<tr>
-							<td >
-								<h3><a href="#/purchase_summary_product_services">Purchase by Supplier Summary</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/purchase_detail_product_services">Purchase by Supplier Detail</a></h3>
-							</td>
-						</tr>
-						<tr>
+							</td> -->
 							<td >
 								<p>
 									Lists all inventory purchases from each suppliers
 								</p>
 							</td>
+						</tr>
+						<tr>
+							
+							<td >
+								<h3><a href="#/purchase_detail_product_services">Purchase by Supplier Detail</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/sale_summary_customer">Sale by Customer Summary</a></h3>
+							</td>
+						</tr>
+						<tr>
+							
 							<td >
 								<p>
 									Lists of detailed inventory purchase transactions from each suppliers
 								</p>
 							</td>
-						</tr>
-
-						<tr>
-							<td >
-								<h3><a href="#/sale_summary_customer">Sale by Customer Summary</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/sale_detail_customer">Sale by Customer Detail</a></h3>
-							</td>
-						</tr>
-						<tr>
 							<td >
 								<p>
 									Lists all inventory sold to each customer
 								</p>
 							</td>
+						</tr>
+
+						<tr>
+							
+							<td >
+								<h3><a href="#/sale_detail_customer">Sale by Customer Detail</a></h3>
+							</td>
+						</tr>
+						<tr>
+							
 							<td >
 								<p>
 									Lists of detailed inventory sale transactions to each customer
@@ -34031,7 +33963,7 @@
 					</table>
 				</div>
 			</div>
-			<div class="row-fluid recevable-report">
+			<!-- <div class="row-fluid recevable-report">
 				<h2>OTHER REPORTS/ LISTS</h2>
 				<p>
 					The following reports provide summary and detailed reports on the movement of the inventories
@@ -34059,7 +33991,7 @@
 						
 					</table>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<div class="span5">
 			<span class="pull-right glyphicons no-js remove_2" 
@@ -37625,32 +37557,38 @@
 										<div class="row-fluid">
 											<table class="span12">
 												<tr>
-													<tdclass="span4">
+													<td class="span4">
 														<h3><a href="#/inventory_movement_summary">Inventory Movement Summary</a></h3>
 													</td>
-													<td class="span4">
+													<!-- <td class="span4">
 														<h3><a href="#/inventory_movement_detail">Inventory Movement Detail</a></h3>								
-													</td>
+													</td> -->
 													<td class="span4">
 														<h3><a href="#/purchase_summary_product_services">Purchase by Supplier Summary</a></h3>
-													</td>						
+													</td>
+													<td class="span4">
+														<h3><a href="#/purchase_detail_product_services">Purchase by Supplier Detail</a></h3>
+													</td>					
 												</tr>
 												<tr>
 													<td class="span4">
 														Shows the movement of each inventory by opening balance, sale, purchase and adjustment. 
 													</td>
-													<td class="span4">
+													<!-- <td class="span4">
 														Lists of all detailed transactions related to and grouped by each inventory
-													</td>
+													</td> -->
 													<td class="span4">
 														Lists all inventory purchases from each suppliers
+													</td>
+													<td class="span4">
+														Lists all inventory sold to each customer
 													</td>
 												</tr>
 												
 												<tr>
-													<td class="span4">
+													<!-- <td class="span4">
 														<h3><a href="#/purchase_detail_product_services">Purchase by Supplier Detail</a></h3>
-													</td>
+													</td> -->
 													<td class="span4">
 														<h3><a href="#/sale_summary_customer">Sale by Customer Summary</a></h3>
 													</td>
@@ -37659,9 +37597,9 @@
 													</td>
 												</tr>
 												<tr>
-													<td class="span4">
+													<!-- <td class="span4">
 														Lists all inventory sold to each customer
-													</td>
+													</td> -->
 													<td class="span4">
 														Lists of detailed inventory sale transactions to each customer
 													</td>
@@ -37673,7 +37611,7 @@
 											</table>
 										</div>
 									</div>
-									<div class="span12 recevable-report" style="margin-top: 15px; display: inline-block; padding-left: 0;">
+									<!-- <div class="span12 recevable-report" style="margin-top: 15px; display: inline-block; padding-left: 0;">
 										<h2>OTHER REPORTS/ LISTS</h2>
 										<p>
 											The following reports provide summary and detailed reports on the movement of the inventories
@@ -37702,7 +37640,7 @@
 												
 											</table>
 										</div>
-									</div>
+									</div> -->
 					        	</div>
 				        	</div>
 
@@ -37782,7 +37720,7 @@
 													</td>
 												</tr>
 
-												<tr>
+												<!-- <tr>
 													<td class="span4">
 														<h3><a href="#/transaction_list_date">Transaction List by Date</a></h3>
 													</td>
@@ -37803,13 +37741,13 @@
 													<td class="span4">
 														
 													</td>
-												</tr>
+												</tr> -->
 											</table>
 										</div>
 									</div>									
 					        	</div>
 
-					        	<div class="row-fluid recevable-report" style="margin-top: 15px; display: inline-block;">
+					        	<div class="span12 recevable-report" style="margin-top: 15px; display: inline-block; padding-left: 0;">
 										<h2>OTHER REPORTS/ LISTS</h2>
 										<div class="row-fluid">
 											<table class="span12">
@@ -37817,12 +37755,14 @@
 													<td class="span4">
 														<h3><a href="#/chart_of_account">Chart of Account </a></h3>
 													</td>
-													<td class="span4">
+													<td class="span4"></td>
+													<td class="span4"></td>
+													<!-- <td class="span4">
 														<h3><a href="#/audit_trial_report">Audit Trial Report</a></h3>								
 													</td>
 													<td class="span4">
 														<h3><a href="#/recurring_journal_list">Recurring Journal List</a></h3>							
-													</td>						
+													</td>	 -->					
 												</tr>
 												<tr>
 													<td class="span4">
@@ -37831,7 +37771,7 @@
 													<td class="span4"></td>
 													<td class="span4"></td>
 												</tr>
-												<tr>
+												<!-- <tr>
 													<td class="span4">
 														<h3><a href="#/">Realized Exchange Gains & Losses</a></h3>
 													</td>
@@ -37846,7 +37786,7 @@
 													<td class="span4">
 														This summary report lists your foreign accounts and calculates the potential gain or loss for each account.
 													</td>							
-												</tr>												
+												</tr>			 -->									
 											</table>
 										</div>
 									</div>
@@ -38377,8 +38317,8 @@
   				<li><a href='#/gdn'>Create Delivery Note</a></li>
   				<li><a href='#/item_adjustment'>Create Item Adjustment</a></li>  				
   				<li><a href='#/internal_usage'>Create Internal Usage</a></li>	
-  				<li> <span class="li-line"></span></li> 	
-  				<li><a href='#/item_recurring'>Inventory Recurring List</a></li>  				 				 				  				 				
+  				<!-- <li> <span class="li-line"></span></li>  -->	
+  				<!-- <li><a href='#/item_recurring'>Inventory Recurring List</a></li>-->
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/item_report_center'>REPORTS</a></li>	  	
@@ -52289,7 +52229,8 @@
 		}
 	});
 	banhji.vendorReportCenter = kendo.observable({
-		lang 				: langVM,				
+		lang 				: langVM,		
+		dataSource 			: dataStore(apiUrl + "vendorReports/over_view"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
