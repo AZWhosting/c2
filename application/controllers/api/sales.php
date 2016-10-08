@@ -808,7 +808,10 @@ class Sales extends REST_Controller {
 		$type->where('parent_id', 1)->get();
 
 		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$customer->where('deleted <>', 1);
+		$customer->where('is_pattern <>', 1);
 		$customerCount = $customer->where_in('contact_type_id', $type)->count();
+
 
 		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -989,6 +992,8 @@ class Sales extends REST_Controller {
 		$type->where('parent_id', 1)->get();
 
 		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$customer->where('deleted <>', 1);
+		$customer->where('is_pattern <>', 1);
 		$customerCount = $customer->where_in('contact_type_id', $type)->count();
 
 		if($this->get("filter")['logic'] == "segment") {
@@ -2790,7 +2795,10 @@ class Sales extends REST_Controller {
 		// checked if the logic is customer or segment
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
+
 		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$customer->where('deleted <>', 1);
+		$customer->where('is_pattern <>', 1);
 		$customerCount = $customer->where_in('contact_type_id', $type)->count();
 		// Segment
 		if($filters['logic'] == "segment") {

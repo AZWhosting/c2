@@ -709,6 +709,8 @@ class Vendorreports extends REST_Controller {
 		$type->where('parent_id', 2)->get();
 
 		$supplier = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$supplier->where('deleted <>', 1);
+		$supplier->where('is_pattern <>', 1);
 		$supplierCount = $supplier->where_in('contact_type_id', $type)->count();
 
 
@@ -853,6 +855,8 @@ class Vendorreports extends REST_Controller {
 		$type->where('parent_id', 2)->get();
 
 		$supplier = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$supplier->where('deleted <>', 1);
+		$supplier->where('is_pattern <>', 1);
 		$supplierCount = $supplier->where_in('contact_type_id', $type)->count();
 
 		if($this->get("filter")['logic'] == "segment") {
@@ -1696,6 +1700,8 @@ class Vendorreports extends REST_Controller {
 		$type->where('parent_id', 2)->get();
 
 		$supplier = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$supplier->where('deleted <>', 1);
+		$supplier->where('is_pattern <>', 1);
 		$supplierCount = $supplier->where_in('contact_type_id', $type)->count();
 
 		if($this->get("filter")['logic'] == "segment") {
@@ -1920,6 +1926,8 @@ class Vendorreports extends REST_Controller {
 		$type->where('parent_id', 2)->get();
 
 		$supplier = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$supplier->where('deleted <>', 1);
+		$supplier->where('is_pattern <>', 1);
 		$supplierCount = $supplier->where_in('contact_type_id', $type)->count();
 
 		if($this->get("filter")['logic'] == "segment") {
@@ -2184,6 +2192,8 @@ class Vendorreports extends REST_Controller {
 		$type->where('parent_id', 2)->get();
 
 		$supplier = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$supplier->where('deleted <>', 1);
+		$supplier->where('is_pattern <>', 1);
 		$supplierCount = $supplier->where_in('contact_type_id', $type)->count();
 
 		if($this->get("filter")['logic'] == "segment") {

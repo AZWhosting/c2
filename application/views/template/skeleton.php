@@ -313,7 +313,7 @@ var themerPrimaryColor = primaryColor;
 	    return null;
 	}
 	function eraseCookie(name) {
-	    createCookie(name,"",-1);
+	    createCookie(name,"");
 	}
 
 	$(document).ready(function(e) {
@@ -360,7 +360,7 @@ var themerPrimaryColor = primaryColor;
 			});
 		});
 
-		eraseCookie("isshow");
+		//eraseCookie("isshow");
 		var isshow = readCookie("isshow");
 		
 	    if (isshow != 1) {

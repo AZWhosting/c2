@@ -13112,8 +13112,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -13137,19 +13137,10 @@
 									       	<input id="edate" name="edate"
 									       		   data-role="datepicker"
 										           data-bind="value: endDate, events: {change: dateMin}"
-										           placeholder="To ..." />							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>									        							       
+										           placeholder="To ..." />
+
+										  	 <button type="button" data-role="button" data-bind="click: purchaseSummary.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -13162,57 +13153,34 @@
 							<h2>Expenses/ Purchase Summary by Supplier</h2>
 							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.expenses_purchase_summary_by_supplier"></span></h2>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
 
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.segment"></span></p>
-									<span data-bind="text: segments"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Segment</p>
+										<span data-bind="text: segments"></span>
+									</div>
+									<div class="span6">
+										<p>Total Supplier</p>
+										<span data-bind="text: count"></span>
+									</div>	
+										
 								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_customer"></span></p>
-									<span data-bind="text: count"></span>
-								</div>	
-									
+							</div>
+							<div class="span7">
+								<div class="total-sale">
+									<p>Total Expenses/ Purchase</p>
+									<span data-bind="text: total"></span>
+								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-sale">
-								<p><span data-bind="text: lang.lang.total_sale"></span></p>
-								<span data-bind="text: total"></span>
-							</div>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span data-bind="text: lang.lang.supplier"></span></th>
-								<th><span data-bind="text: lang.lang.total_sale"></span></th>								
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: purchaseSummary.dataSource"
-									 data-template="expensesPurchaseSummarySupplier-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th><span data-bind="text: lang.lang.total"></span></th>
-								<th><span data-bind="text: total"></span></th>
-							</tr>
-						</tfoot>
-					</table>
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Supplier</th>
-									<th>Total Expenses/ Purchase</th>								
+									<th><span>Supplier</span></th>
+									<th><span>Total Expenses/ Purchase</span></th>								
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -13221,7 +13189,7 @@
 							></tbody>
 							<tfoot>
 								<tr>
-									<th>Total</th>
+									<th><span>Total</span></th>
 									<th><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
@@ -13256,8 +13224,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -13283,20 +13251,8 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: supplierTransaction.search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: supplierTransaction.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -13310,38 +13266,30 @@
 							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.suppliers_transaction_list"></span></h2>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span4">
-									<p><span data-bind="text: lang.lang.total_suppliers"></span></p>
-									<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span4">
+										<p>Total Suppliers</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span4">
+										<p>Cash Purchase</p>
+										<span data-bind="text: totalCashPurchase"></span>
+									</div>	
+									
 								</div>
-								<div class="span4">
-									<p><span data-bind="text: lang.lang.Cash_Purchase"></span></p>
-									<span data-bind="text: totalCashPurchase"></span>
-								</div>	
-								<div class="span4">
-									<p><span data-bind="text: lang.lang.cash_payment"></span></p>
-									<span data-bind="text: totalCashPayment"></span>
-								</div>	
 							</div>
-						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_purchase"></span></p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.suppliers_balance"></span></p>
-									<span data-bind="text: total"></span>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Cash Payment</p>
+										<span data-bind="text: totalCashPayment"></span>
+									</div>	
+									<div class="span6">
+										<p>Total Purchase</p>
+										<span data-bind="text: total"></span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -13370,8 +13318,7 @@
 				</div>		
 			</div>
 		</div>
-	</div>
-</script>
+	</div><span>
 <script id="suppliersTransactionList-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
@@ -13422,8 +13369,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -13449,20 +13396,8 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								             <button type="button" data-role="button" data-bind="click: purchaseDetail.search"><i class="icon-search"></i></button>	
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: purchaseDetail.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -13471,24 +13406,25 @@
 					</div>
 					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.expenses_purchase_detail_by_supplier"></span></h2>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<p><span data-bind="text: lang.lang.total_customers"></span></p>
-								<span data-bind="text: count"></span>
-							</div>
-
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Expenses/ Purchase Detail by Supplier</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-sale">
-								<p><span data-bind="text: lang.lang.total_sale"></span></p>
-								<span data-bind="text: total"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<p>Total Supplier</p>
+									<span data-bind="text: count"></span>
+								</div>
+
+							</div>
+							<div class="span7">
+								<div class="total-sale">
+									<p>Total Expenses/ Purchase</p>
+									<span data-bind="text: total"></span>
+								</div>
 							</div>
 						</div>
 
@@ -13572,8 +13508,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -13599,20 +13535,8 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: depositDetail.search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: depositDetail.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -13625,35 +13549,32 @@
 							<h2>Deposit Detail by Supplier</h2>
 							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.deposit_detail_by_supplier"></span></h2> 
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
-
 
 						<div class="row-fluid">
 							<div class="span5">
 								<div class="total-customer">								
-									<p><span data-bind="text: lang.lang.number_of_customer_deposit"></span></p>
+									<p>Number of Supplier Deposit</p>
 									<span data-bind="text: count"></span>								
 								</div>
 							</div>
 							<div class="span7">
 								<div class="total-customer">								
-									<p><span data-bind="text: lang.lang.customer_deposit_balance"></span></p>
+									<p>Supplier Deposit Balance</p>
 									<span data-bind="text: total"></span>							
 								</div>
 							</div>
+						</div>
 
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
+
 									<th><span data-bind="text: lang.lang.type"></span></th>
 									<th><span data-bind="text: lang.lang.date"></span></th>
 									<th><span data-bind="text: lang.lang.no_"></span></th>
 									<th><span data-bind="text: lang.lang.memo"></span></th>
 									<th><span data-bind="text: lang.lang.amount"></span></th>
+
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -13662,8 +13583,8 @@
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="4"><span data-bind="text: lang.lang.total"></span></th>
-									<th colspan="4" data-bind="text: total"></th>
+									<th colspan="4"><span>Total</span></th>
+									<th colspan="4"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -13725,8 +13646,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -13752,20 +13673,8 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: summaryProduct.search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: summaryProduct.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -13774,71 +13683,48 @@
 					</div>
 					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.purchase_summaru_by_product_services"></span></h2>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_product_services"></span></p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.avg_sale"></span></p>
-									<span data-bind="text: total_avg"></span>
-								</div>	
-							</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Purchase Summary by Product/ Services</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_sale"></span></p>
-									<span data-bind="text: total_sale"></span>
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.gross_profit_margin"></span></p>
-									<span data-bind="text: gpm"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Product/services</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>AVG Purchase</p>
+										<span data-bind="text: total_avg"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Purchase</p>
+										<span data-bind="text: total_sale"></span>
+									</div>
+									<div class="span6">
+										<p>Gross Profit Margin</p>
+										<span data-bind="text: gpm"></span>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span data-bind="text: lang.lang.item"></span></th>
-								<th><span data-bind="text: lang.lang.qty"></span></th>
-								<th><span data-bind="text: lang.lang.amount"></span></th>
-								<th><span data-bind="text: lang.lang.avg_price"></span></th>
-								<th><span data-bind="text: lang.lang.cost"></span></th>
-								<th><span data-bind="text: lang.lang.gross_profit_margin"></span></th>								
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: summaryProduct.dataSource"
-									 data-template="purchaseSummaryProductServices-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4"><span data-bind="text: lang.lang.total"></span></th>
-								<th colspan="4"><span data-bind="text: total_sale"></span></th>
-							</tr>
-						</tfoot>
-					</table>
 
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>ITEM</th>
-									<th>QTY</th>
-									<th>AMOUNT</th>
-									<th>AVG PRICE</th>
-									<th>COST</th>
-									<th>GROSS PROFIT MARGIN</th>								
+									<th><span>ITEM</span></th>
+									<th><span>QTY</span></th>
+									<th><span>AMOUNT</span></th>
+									<th><span>AVG PRICE</span></th>
+									<th><span>COST</span></th>
+									<th><span>GROSS PROFIT MARGIN</span></th>								
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -13847,7 +13733,7 @@
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="4">Total</th>
+									<th colspan="4"><span>Total</span></th>
 									<th colspan="4"><span data-bind="text: total_sale"></span></th>
 								</tr>
 							</tfoot>
@@ -13887,8 +13773,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -13914,20 +13800,8 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: purchaseOrder.search"><i class="icon-search"></i></button>	
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: purchaseOrder.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -13936,75 +13810,50 @@
 					</div>
 					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2></h2><span data-bind="text: lang.lang.open_purchase_order"></span>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.product_items"></span></p>
-									<span data-bind="text: customer"></span>
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.product_items_on_hand"></span></p>
-									<span data-bind="text: count"></span>
-								</div>	
-							</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Open Purchase Order</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.purchase_order"></span></p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.order"></span></p>
-									<span data-bind="text: order"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Product Items</p>
+										<span data-bind="text: customer"></span>
+									</div>
+									<div class="span6">
+										<p>Product Items on Hand</p>
+										<span data-bind="text: count"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Purchase Order</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>Order</p>
+										<span data-bind="text: order"></span>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span data-bind="text: lang.lang.customer"></span></th>
-								<th><span data-bind="text: lang.lang.po"></span></th>
-								<th><span data-bind="text: lang.lang.item"></span></th>
-								<th><span data-bind="text: lang.lang.memo"></span></th>
-								<th><span data-bind="text: lang.lang.cost"></span></th>								
-								<th><span data-bind="text: lang.lang.qty"></span></th>
-								<th><span data-bind="text: lang.lang.price"></span></th>	
-								<th><span data-bind="text: lang.lang.amount"></span></th>							
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: purchaseOrder.dataSource"
-									 data-template="openPurchaseOrder-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4"><span data-bind="text: lang.lang.total"></span></th>
-								<th colspan="4"><span data-bind="text: total"></span></th>
-							</tr>
-						</tfoot>
-					</table>
 
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Customer</th>
-									<th>PO</th>
-									<th>Item</th>
-									<th>Memo</th>
-									<th>COST</th>								
-									<th>QTY</th>
-									<th>Price</th>	
-									<th>Amount</th>							
+									<th><span>Customer</span></th>
+									<th><span>PO</span></th>
+									<th><span>Item</span></th>
+									<th><span>Memo</span></th>
+									<th><span>COST</span></th>								
+									<th><span>QTY</span></th>
+									<th><span>Price</span></th>	
+									<th><span>Amount</span></th>							
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -14013,7 +13862,7 @@
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="4">Total</th>
+									<th colspan="4"><span>Total</span></th>
 									<th colspan="4"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
@@ -14055,8 +13904,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>/<span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -14082,20 +13931,8 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: detailProduct.search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: detailProduct.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -14104,37 +13941,39 @@
 					</div>
 					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.purchase_detail_by_product_service"></span></h2>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Purchase Detail by Product/Service</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_product"></span></p>
-									<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Product</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Total Purchase</p>
+										<span data-bind="text: total"></span>
+									</div>
 								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_purchase"></span></p>
-									<span data-bind="text: total"></span>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number Products</p>
+										<span data-bind="text: totaProdcuts"></span>									
+									</div>
+									<div class="span6">
+										<p>Qty on Hand</p>
+										<span data-bind="text: totalQuantity"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.number_products"></span></p>
-									<span data-bind="text: totaProdcuts"></span>									
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.qty_on_hand"></span></p>
-									<span data-bind="text: totalQuantity"></span>
-								</div>
-							</div>
-						</div>
+
 					</div>
 
 					<table class="table table-borderless table-condensed ">
@@ -14160,30 +13999,6 @@
 							</tr>
 						</tfoot>
 					</table>
-
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th>Type</th>
-									<th>Date</th>
-									<th>No</th>
-									<th>Memo</th>
-									<th>QTY</th>
-									<th>PRICE</th>
-									<th>AMOUNT</th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-										 data-bind="source: detailProduct.dataSource"
-										 data-template="purchaseDetailProductServices-temp"
-							></tbody>
-							<tfoot>
-								<tr>
-									<th colspan="4">Total</th>
-									<th colspan="4" data-bind="text: total"></th>
-								</tr>
-							</tfoot>
-						</table>
 					</div>	
 				</div>		
 			</div>
@@ -14248,8 +14063,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -14275,20 +14090,8 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: supplierBalance.search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: supplierBalance.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -14297,50 +14100,53 @@
 					</div>
 					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.suppliers_balance_summary"></span></h2>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Suppliers Balance Summary</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_suppliers"></span></p>
-									<span data-bind="text: supplierCount"></span>
-								</div>	
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.nuber_suppliers"></span></p>
-									<span data-bind="text: count"></span>
-								</div>	
-							</div>
-						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_suppliers_balance"></span></p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.open_credit_purchase"></span></p>
-									<span data-bind="text: openPurchase"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Suppliers</p>
+										<span data-bind="text: supplierCount"></span>
+									</div>	
+									<div class="span6">
+										<p>Number Suppliers</p>
+										<span data-bind="text: count"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Suppliers Balance</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>Open Credit Purchase</p>
+										<span data-bind="text: openPurchase"></span>
+									</div>
+								</div>
+							</div>
 						</div>
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span><span data-bind="text: lang.lang.supplier_name"></span></span></th>
-								<th><span><span data-bind="text: lang.lang.balance"></span></span></th>
-							</tr>
-						</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-				                data-template="suppliersBalanceSummary-tmpl"
-				                data-bind="source: supplierBalance.dataSource" >
-				        </tbody>
-	            	</table>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>SUPPLIER NAME</span></th>
+									<th><span>BALANCE</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="suppliersBalanceSummary-tmpl"
+					                data-bind="source: supplierBalance.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>	
 				</div>		
 			</div>
 		</div>
@@ -14370,8 +14176,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -14396,20 +14202,9 @@
 									       		   data-role="datepicker"
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
-								             <button type="button" data-role="button" data-bind="click: balanceDetailSupplier.search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>								       
+
+										  	 <button type="button" data-role="button" data-bind="click: balanceDetailSupplier.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -14418,35 +14213,35 @@
 					</div>
 					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.suppliers_balance_detail"></span></h2>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_supplier"></span></p>
-									<span data-bind="text: supplierCount"></span>
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.number_supplier"></span></p>
-									<span data-bind="text: count"></span>
-								</div>	
-							</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Supplier Balance Detail</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_suppliers_balance"></span></p>
-									<span data-bind="text: total"></span>
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.opean_credit_purchase"></span></p>
-									<span data-bind="text: openBill"></span>
 
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Supplier</p>
+										<span data-bind="text: supplierCount"></span>
+									</div>
+									<div class="span6">
+										<p>Number Supplier</p>
+										<span data-bind="text: count"></span>
+									</div>	
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Supplier Balance</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>Opean Credit Purchase</p>
+										<span data-bind="text: openBill"></span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -14472,6 +14267,7 @@
 							</tr>
 						</tfoot>
 					</table>
+
 					
 					</div>	
 				</div>		
@@ -14522,8 +14318,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -14549,20 +14345,8 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: payablesAging.search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: payablesAging.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -14571,75 +14355,49 @@
 					</div>
 					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.payables_aging_summary"></span></h2>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_supplier"></span></p>
-									<span data-bind="text: supplierCount"></span>
-								</div>	
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.supplier_balance"></span></p>
-									<span data-bind="text: total"></span>
-								</div>	
-							</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Payables Aging Summary</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.number_of_supplier"></span></p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.average_aging"></span></p>
-									<span data-bind="text: aging"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Supplier</p>
+										<span data-bind="text: supplierCount"></span>
+									</div>	
+									<div class="span6">
+										<p>Supplier Balance</p>
+										<span data-bind="text: total"></span>
+									</div>	
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>NUmber of Supplier</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Average Aging</p>
+										<span data-bind="text: aging"></span>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
-
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span data-bind="text: lang.lang.current"></span></th>
-								<th>1-30</th>
-								<th>30</th>
-								<th>31-60</th>
-								<th>61-90</th>
-								<th>OVER 90</th>
-								<th><span data-bind="text: lang.lang.total"></span></th>							
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: payablesAging.dataSource"
-									 data-template="payablesAgingSummary-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4"><span data-bind="text: lang.lang.total"></span></th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
-					
-
 
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Supplier</th>
-									<th>CURRENT</th>
-									<th>1-30</th>
-									<th>31-60</th>
-									<th>61-90</th>
-									<th>OVER 90</th>
-									<th>TOTAL</th>							
+									<th><span>Supplier</span></th>
+									<th><span>CURRENT</span></th>
+									<th><span>1-30</span></th>
+									<th><span>31-60</span></th>
+									<th><span>61-90</span></th>
+									<th><span>OVER 90</span></th>
+									<th><span>TOTAL</span></th>							
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -14648,8 +14406,8 @@
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="4">Total</th>
-									<th colspan="3" data-bind="text: total"></th>
+									<th colspan="4"><span>Total</span></th>
+									<th colspan="3"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -14689,6 +14447,7 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
+
 
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
 										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
@@ -14872,6 +14631,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
 										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -14897,21 +14657,8 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: listBillsPaid.search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>								       
-
+										  	 <button type="button" data-role="button" data-bind="click: payablesAgingDetail.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -14920,38 +14667,148 @@
 					</div>
 					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.list_of_bill_to_be_paid"></span></h2>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Payables Aging Detail</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Supplier</p>
+										<span data-bind="text: supplierCount"></span>
+									</div>
+									<div class="span6">
+										<p>Supplier Balance</p>
+										<span data-bind="text: total"></span>
+									</div>	
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number of Supplier</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Average Aging</p>
+										<span data-bind="text: aging"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Type</span></th>
+									<th><span>Date</span></th>
+									<th><span>No</span></th>
+									<th><span>Memo</span></th>
+									<th><span>Aging</span></th>
+									<th><span>Balance</span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: payablesAgingDetail.dataSource"
+										 data-template="payablesAgingDetail-temp"
+							></tbody>
+							<tfoot>
+								<tr><span>
+									<th colspan="4"><span>Total</span></th>
+									<th colspan="3"><span  data-bind="text: total"></span></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>	
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="payablesAgingDetail-temp" type="text/x-kendo-template" >
+	# kendo.culture(banhji.customerSale.locale); #
+	<tr style="font-weight: bold">
+		<td>#=group#</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	# if (items.length) {#
+		#for(var i= 0; i <items.length; i++) {#
+			<tr>
+				<td>&nbsp;&nbsp;#=items[i].type#</td>
+				<td>#=items[i].date#</td>
+				<td>
+					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
+				</td>
+				<td>#=items[i].memo#</td>
+				<td>#=items[i].outstanding#</td>
+				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
+			</tr>
+
+		#}#
+	#}#
+</script>
+<script id="listBillsPaid" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
 
 					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_supplier"></span></p>
-									<span data-bind="text: supplierCount"></span>
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
 								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.supplier_balance"></span></p>
-									<span data-bind="text: total"></span>
-								</div>	
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
+										           placeholder="From ..." />
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
+										           placeholder="To ..." />
+
+										  	 <button type="button" data-role="button" data-bind="click: listBillsPaid.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.number_of_supplier_balance"></span></p>
-									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.average_aging"></span></p>
-									<span data-bind="text: aging"></span>
-								</div>
-							</div>
-						</div>
+						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
 
 					<table class="table table-borderless table-condensed ">
 						<thead>
@@ -14974,17 +14831,44 @@
 							</tr>
 						</tfoot>
 					</table>
-					
 
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Supplier</p>
+										<span data-bind="text: supplierCount"></span>
+									</div>
+									<div class="span6">
+										<p>Supplier Balance</p>
+										<span data-bind="text: total"></span>
+									</div>	
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number of Supplier Balance</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Average Aging</p>
+										<span data-bind="text: aging"></span>
+									</div>
+								</div>
+							</div>
+						</div>
 
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
+
 								<th><span data-bind="text: lang.lang.type"></span></th>
 								<th><span data-bind="text: lang.lang.date"></span></th>
 								<th><span data-bind="text: lang.lang.no_"></span></th>							
 								<th><span data-bind="text: lang.lang.memo"></span></th>							
 								<th><span data-bind="text: lang.lang.balance"></span></th>
+
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -14993,8 +14877,8 @@
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="4">Total</th>
-									<th colspan="3" data-bind="text: total"></th>
+									<th colspan="4"><span>Total</span></th>
+									<th colspan="3"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -15048,8 +14932,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -15075,20 +14959,8 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: billPaymentList.search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: billPaymentList.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
@@ -15097,37 +14969,36 @@
 					</div>
 					<div id="invFormContent">
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.bill_payment_list"></span></h2>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Bill Payment List</h2>
+							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_purchase"></span></p>
-									<span data-bind="text: total"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Purchase</p>
+										<span data-bind="text: total"></span>
+									</div>
+										
 								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.number_supplier"></span></p>
-									<span data-bind="text: count"></span>
-								</div>	
 							</div>
-						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.supplier_balance"></span></p>
-									<span data-bind="text: total"></span>
-								</div>								
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.number"></span></p>
-									<span data-bind="text: numberPayment"></span>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number Supplier</p>
+										<span data-bind="text: count"></span>
+									</div>							
+									<div class="span6">
+										<p>Number</p>
+										<span data-bind="text: numberPayment"></span>
+									</div>
 								</div>
 							</div>
 						</div>
+<<<<<<< HEAD
 					</div>
 
 					<table class="table table-borderless table-condensed ">
@@ -15152,7 +15023,6 @@
 						</tfoot>
 					</table>					
 
-
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
@@ -15161,6 +15031,7 @@
 								<th><span data-bind="text: lang.lang.no_"></span></th>							
 								<th><span data-bind="text: lang.lang.memo"></span></th>							
 								<th><span data-bind="text: lang.lang.balance"></span></th>
+
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -15169,8 +15040,8 @@
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="4">Total</th>
-									<th colspan="3" data-bind="text: total"></th>
+									<th colspan="4"><span>Total</span></th>
+									<th colspan="3"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>					
@@ -15224,8 +15095,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -15252,14 +15123,14 @@
 							
 							        	</div>								        
 								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
+								        		Print as PDF
 								        	</span>
 								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
+								        		Export to Excel
 								        	</span>
 							        	</div>								       
 								    </div>
@@ -15271,19 +15142,19 @@
 
 					<div class="block-title">
 						<h3>ABC Co., Ltd</h3>
-						<h2><span data-bind="text: lang.lang.product_service_list"></span></h2>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
+						<h2>Product/ Service List</h2>
+						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
 
 					<div class="row-fluid">
 						<div class="span5">
 							<div class="total-customer">
 								<div class="span6">
-									<p><span data-bind="text: lang.lang.product_items"></span></p>
+									<p>Product Items</p>
 									<span>#</span>
 								</div>
 								<div class="span6">
-									<p><span data-bind="text: lang.lang.product_items_on_hand"></span></p>
+									<p>Product Items on Hand</p>
 									<span>-</span>
 								</div>	
 							</div>
@@ -15291,11 +15162,11 @@
 						<div class="span7">
 							<div class="total-customer">
 								<div class="span6">
-									<p><span data-bind="text: lang.lang.service_items"></span></p>
+									<p>Service Items</p>
 									<span>#</span>
 								</div>
 								<div class="span6">
-									<p><span data-bind="text: lang.lang.service_items_on_hand"></span></p>
+									<p>Service Items on Hand</p>
 									<span>-</span>
 								</div>
 							</div>
@@ -15304,15 +15175,15 @@
 
 					<table class="table table-borderless table-condensed ">
 						<tr>
-							<th><span data-bind="text: lang.lang.item_name"></span></th>
-							<th><span data-bind="text: lang.lang.description"></span></th>
-							<th><span data-bind="text: lang.lang.type"></span></th>
-							<th><span data-bind="text: lang.lang.sale_tax"></span></th>							
-							<th><span data-bind="text: lang.lang.record_p"></span></th>
-							<th><span data-bind="text: lang.lang.cost"></span></th>
-							<th><span data-bind="text: lang.lang.sale_price"></span></th>
-							<th><span data-bind="text: lang.lang.qoh"></span></th>
-							<th><span data-bind="text: lang.lang.suppliers"></span></th>
+							<th>Item Name</th>
+							<th>Description</th>
+							<th>Type</th>
+							<th>Sale Tax</th>							
+							<th>Record P</th>
+							<th>Cost</th>
+							<th>Sale Price</th>
+							<th>QOH</th>
+							<th>Suppliers</th>
 						</tr>
 						<tr>
 							<td></td>
@@ -15403,7 +15274,7 @@
 							<td></td>						
 						</tr>
 						<tr>
-							<th colspan="9" style="text-align: left; padding-left: 8px !important;"><span data-bind="text: lang.lang.total"></span></th>
+							<th colspan="9" style="text-align: left; padding-left: 8px !important;">Total</th>
 						</tr>
 					</table>
 
@@ -15465,7 +15336,6 @@
 		</div>
 	</div>
 </script>
-
 
 <script id="vendorRecurring" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -20680,12 +20550,10 @@
 					
 					<div class="block-title">
 						<h3 data-bind="text: company.name"></h3>
-						<h2 data-bind="text: lang.lang.segments"></h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-					<div class="customer-name">
-						<p><b><span data-bind="text: lang.lang.customer_name"></span> Test</b></p>
-					</div>
+						<h2 data-bind="text: lang.lang.statement"></h2>
+						<p data-bind="text: displayDate"></p>
+						<h3 data-bind="text: obj.name"></h3>
+					</div>					
 					
 					<table class="table table-borderless table-condensed">
 						<thead>
@@ -21144,81 +21012,83 @@
 
 		<div class="span7">
 			<div class="row-fluid sale-report">				
-				<h2 data-bind="text: lang.lang.sale_managment_reports"></h2>
+				<h2>SALE MANAGEMENT REPORTS</h2>
 				<p>
-					<span data-bind="text: lang.lang.the_following_reports_provide"></span>
+					The following reports provide summary and detailed reports in 
+					different ways to help analyze your revenue performance.
 				</p>
 				<div class="row-fluid">
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td width="50%">
-								<a href="#/sale_summary_customer"><h3 data-bind="text: lang.lang.sale_summary_by_customer"></h3></a>
+								<h3><a href="#/sale_summary_customer">Sale Summary by Customer</a></h3>
 							</td>
 							<td width="50%">
-								<a href="#/customer_transaction_list"><h3 data-bind="text: lang.lang.customer_transaction_list"></h3></a>								
+								<h3><a href="#/customer_transaction_list">Customer Transaction List</a></h3>								
 							</td>						
 						</tr>
 						<tr>
 							<td width="50%">
 								<p>
-									<span data-bind="text: lang.lang.summarizes_total_sales"></span>
+									Summarizes total sales for each customer within a period 
+									of time so you can see which ones generate the most revenue for you.
 								</p>
 								
 							</td>
 							<td width="50%">
 								<p>
-									<span data-bind="text: lang.lang.list_of_all_transactions_related"></span>
+									List of all transactions related to and grouped by each customer, including invoice, cash sale
 								</p>
 							</td>
 							
 						</tr>
 						<tr>
 							<td width="50%">
-								<a href="#/sale_detail_customer"><h3 data-bind="text: lang.lang.sale_detail_by_customer"></h3></a>
+								<h3><a href="#/sale_detail_customer">Sale Detail by Customer</a></h3>
 							</td>
 							<td width="50%">
-								<a href="#/deposit_detail_customer"><h3 data-bind="text: lang.lang.deposit_detail_by_customer"></h3></a>
+								<h3><a href="#/deposit_detail_customer">Deposit Detail by Customer</a></h3>
 							</td>
 						</tr>
 						<tr>
 							<td width="50%">
 								<p>
-									<span data-bind="text: lang.lang.lists_individual_sale_transactions"></span>
+									Lists individual sale transactions by date for each customer with a period of time.
 								</p>
 							</td>
 							<td width="50%">
 								<p>
-									<span data-bind="text: lang.lang.provides_detailed_information_about_customer_deposit"></span>
+									Provides detailed information about customer deposit for specific order, prepayment, or credit.
 								</p>
 							</td>
 						</tr>
 
 						<tr>
 							<td width="50%">
-								<a href="#/sale_summary_product"><h3 data-bind="text: lang.lang.sale_summary_by_product_Services"></h3></a>
+								<h3><a href="#/sale_summary_product">Sale Summary by Product/ Services</a></h3>
 							</td>
 							<td width="50%">
-								<a href="#/sale_detail_product"><h3 data-bind="text: lang.lang.sale_detail_by_product_services"></h3></a>
+								<h3><a href="#/sale_detail_product">Sale Detail by Product/ Services</a></h3>
 							</td>
 						</tr>
 						<tr>
 							<td width="50%">
 								<p>
-									<span data-bind="text: lang.lang.summarizes_total_sales_for_each_product"></span> 
+									Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices. 
 								</p>
 							</td>
 							<td width="50%">
 								<p>
-									<span data-bind="text: lang.lang.lists_individual_sale_transactions"></span>
+									Lists individual sale transactions by date for each product/ service with a period of time.
 								</p>
 							</td>
 						</tr>
 						<tr>
 							<td width="50%">
-								<a href="#/sale_job_engagement"><h3 data-bind="text: lang.lang.sale_by_job_engagement"></h3></a>
+								<h3><a href="#/sale_job_engagement">Sale by Job/Engagement</a></h3>
 							</td>
 							<td width="50%">
-								<a href="#/sale_order_list"><h3 data-bind="text: lang.lang.sale_order_list"></h3></a>
+								<h3><a href="#/sale_order_list">Sale Order List</a></h3>
 							</td>
 						</tr>
 					</table>
@@ -21226,24 +21096,26 @@
 			</div>
 
 			<div class="row-fluid recevable-report">
+
 				<h2 data-bind="text: lang.lang.receivable_management_reports"></h2>
+
 				<p>
-					<span data-bind="text: lang.lang.the_following_reports_provide_summary"></span>
+					The following reports provide summary and detailed reports.
 				</p>
 				<div class="row-fluid">
 					<table class="table table-borderless table-condensed">
 						<tr>
-							<td>
-								<a href="#/customer_balance_summary"><h3 data-bind="text: lang.lang.customer_balance_summary"></h3></a>
+							<td >
+								<h3><a href="#/customer_balance_summary">Customer Balance Summary</a></h3>
 							</td>
 							<td >
-								<a href="#/customer_balance_detail"><h3 data-bind="text: lang.lang.customer_balance_detail"></h3></a>								
+								<h3><a href="#/customer_balance_detail">Customer Balance Detail</a></h3>								
 							</td>						
 						</tr>
 						<tr>
 							<td>
 								<p>
-									<span data-bind="text: lang.lang.show_each_customers_total_outstanding_balances"></span>
+									Show each customer’s total outstanding balances.
 								</p>
 								
 							</td>
@@ -21255,8 +21127,8 @@
 							
 						</tr>
 						<tr>
-							<td>
-								<a href="#/receivable_aging_summary"><h3>Receivable Aging Summary</h3></a>
+							<td >
+								<h3><a href="#/receivable_aging_summary">Receivable Aging Summary</a></h3>
 							</td>
 							<td >
 								<h3><a href="#/receivable_aging_detail">Receivable Aging Detail</a></h3>
@@ -21649,11 +21521,11 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Type</th>
-									<th>Date</th>
-									<th>No</th>
-									<th>Sale Rep</th>
-									<th>Amount</th>
+									<th><span>Type</span></th>
+									<th><span>Date</span></th>
+									<th><span>No</span></th>
+									<th><span>Sale Rep</span></th>
+									<th><span>Amount</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -21663,7 +21535,7 @@
 							<tfoot>
 								<tr>
 									<th colspan="3">Total</th>
-									<th colspan="2" data-bind="text: total"></th>
+									<th colspan="4"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -21777,14 +21649,14 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Type</th>
-									<th>Date</th>
-									<th>No</th>
-									<th>Memo</th>
-									<th>Item/service</th>
-									<th>Qty</th>
-									<th>Price</th>
-									<th>Amount</th>
+									<th><span>Type</span></th>
+									<th><span>Date</span></th>
+									<th><span>No</span></th>
+									<th><span>Memo</span></th>
+									<th><span>Item/service</span></th>
+									<th><span>Qty</span></th>
+									<th><span>Price</span></th>
+									<th><span>Amount</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview" data-bind="source: detailSummary.dataSource" data-auto-bind="false" data-template="saleDetailCustomerReportItem">
@@ -21936,12 +21808,12 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>ITEM</th>
-									<th>QTY</th>
-									<th>AMOUNT</th>
-									<th>AVG PRICE</th>
-									<th>COST</th>
-									<th>GROSS PROFIT MARGIN</th>								
+									<th><span>ITEM</span></th>
+									<th><span>QTY</span></th>
+									<th><span>AMOUNT</span></th>
+									<th><span>AVG PRICE</span></th>
+									<th><span>COST</span></th>
+									<th><span>GROSS PROFIT MARGIN</span></th>								
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -22050,11 +21922,11 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Type</th>
-									<th>Date</th>
-									<th>No</th>
-									<th>Memo</th>
-									<th>Amount</th>
+									<th><span>Type</span></th>
+									<th><span>Date</span></th>
+									<th><span>No</span></th>
+									<th><span>Memo</span></th>
+									<th><span>Amount</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -22064,7 +21936,7 @@
 							<tfoot>
 								<tr>
 									<th colspan="4">Total</th>
-									<th colspan="3" span data-bind="text: total"></th>
+									<th colspan="3"> <span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -22198,13 +22070,13 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Type</th>
-									<th>Date</th>
-									<th>No</th>
-									<th>Memo</th>
-									<th>QTY</th>
-									<th>PRICE</th>
-									<th>AMOUNT</th>
+									<th><span>Type</span></th>
+									<th><span>Date</span></th>
+									<th><span>No</span></th>
+									<th><span>Memo</span></th>
+									<th><span>QTY</span></th>
+									<th><span>PRICE</span></th>
+									<th><span>AMOUNT</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -22214,7 +22086,7 @@
 							<tfoot>
 								<tr>
 									<th colspan="4">Total</th>
-									<th colspan="3" data-bind="text: total"></th>
+									<th colspan="3"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -22463,11 +22335,11 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Type</th>
-									<th>Date</th>
-									<th>No</th>
-									<th>Memo</th>								
-									<th>AMOUNT</th>
+									<th><span>Type</span></th>
+									<th><span>Date</span></th>
+									<th><span>No</span></th>
+									<th><span>Memo</span></th>								
+									<th><span>AMOUNT</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -22596,13 +22468,13 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Name</th>
-									<th>CURRENT</th>
-									<th>1-30</th>
-									<th>31-60</th>
-									<th>61-90</th>
-									<th>OVER 90</th>
-									<th>TOTAL</th>							
+									<th><span>Name</span></th>
+									<th><span>CURRENT</span></th>
+									<th><span>1-30</span></th>
+									<th><span>31-60</span></th>
+									<th><span>61-90</span></th>
+									<th><span>OVER 90</span></th>
+									<th><span>TOTAL</span></th>							
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -22612,7 +22484,7 @@
 							<tfoot>
 								<tr>
 									<th colspan="4">Total</th>
-									<th colspan="3" data-bind="text: total"></th>
+									<th colspan="3"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -22718,12 +22590,12 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Type</th>
-									<th>Date</th>
-									<th>No</th>
-									<th>Memo</th>
-									<th>Aging</th>
-									<th>Balance</th>
+									<th><span>Type</span></th>
+									<th><span>Date</span></th>
+									<th><span>No</span></th>
+									<th><span>Memo</span></th>
+									<th><span>Aging</span></th>
+									<th><span>Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -22733,7 +22605,7 @@
 							<tfoot>
 								<tr>
 									<th colspan="4">Total</th>
-									<th colspan="3" data-bind="text: total"></th>
+									<th colspan="3"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -22862,11 +22734,11 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Type</th>
-									<th>Date</th>
-									<th>No</th>
-									<th>Memo</th>
-									<th>Balance</th>
+									<th><span>Type</span></th>
+									<th><span>Date</span></th>
+									<th><span>No</span></th>
+									<th><span>Memo</span></th>
+									<th><span>Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -22876,7 +22748,7 @@
 							<tfoot>
 								<tr>
 									<th colspan="4">Total</th>
-									<th colspan="3" data-bind="text: total"></th>
+									<th colspan="3"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -23003,11 +22875,11 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Type</th>
-									<th>Date</th>
-									<th>No</th>
-									<th>Memo</th>
-									<th>Balance</th>
+									<th><span>Type</span></th>
+									<th><span>Date</span></th>
+									<th><span>No</span></th>
+									<th><span>Memo</span></th>
+									<th><span>Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -23017,7 +22889,7 @@
 							<tfoot>
 								<tr>
 									<th colspan="3">Total</th>
-									<th colspan="5" data-bind="text: total"></th>
+									<th colspan="5"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -23148,14 +23020,14 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Type</th>
-									<th>Date</th>
-									<th>No</th>
-									<th>Due Date</th>
-									<th>Memo</th>
-									<th>Status</th>
-									<th>Segment</th>
-									<th>Balance</th>
+									<th><span>Type</span></th>
+									<th><span>Date</span></th>
+									<th><span>No</span></th>
+									<th><span>Due Date</span></th>
+									<th><span>Memo</span></th>
+									<th><span>Status</span></th>
+									<th><span>Segment</span></th>
+									<th><span>Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -23165,7 +23037,7 @@
 							<tfoot>
 								<tr>
 									<th colspan="4">Total</th>
-									<th colspan="4" data-bind="text: totalBalance"></th>
+									<th colspan="4"><span data-bind="text: totalBalance"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -23448,12 +23320,12 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Type</th>
-									<th>Date</th>
-									<th>No</th>
-									<th>Memo</th>
-									<th>Segment</th>
-									<th>Amount</th>
+									<th><span>Type</span></th>
+									<th><span>Date</span></th>
+									<th><span>No</span></th>
+									<th><span>Memo</span></th>
+									<th><span>Segment</span></th>
+									<th><span>Amount</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -23463,7 +23335,7 @@
 							<tfoot>
 								<tr>
 									<th colspan="4">Total</th>
-									<th colspan="3" data-bind="text: total"></th>
+									<th colspan="3"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>					
@@ -23603,14 +23475,14 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th>Customer Name</th>
-									<th>Sale Order</th>
-									<th>Item</th>
-									<th>Memo Date</th>
-									<th>Cost</th>
-									<th>QTY</th>
-									<th>Price</th>
-									<th>Balance</th>
+									<th><span>Customer Name</span></th>
+									<th><span>Sale Order</span></th>
+									<th><span>Item</span></th>
+									<th><span>Memo Date</span></th>
+									<th><span>Cost</span></th>
+									<th><span>QTY</span></th>
+									<th><span>Price</span></th>
+									<th><span>Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -23620,7 +23492,7 @@
 							<tfoot>
 								<tr>
 									<th colspan="4">Total</th>
-									<th colspan="4" data-bind="text: total"></th>
+									<th colspan="4"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -34247,101 +34119,81 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: inventoryPositionSummary.search"><i class="icon-search"></i></button>							
+									    </div>
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Inventory Position Summary</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Product Items</p>
-									<span data-bind="text: totalProduct"></span>
-								</div>
-								<div class="span6">
-									<p>Service Items</p>
-									<span data-bind="text: totalService"></span>
-								</div>	
-							</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Inventory Position Summary</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Product Items on hand</p>
-									<span data-bind="text: totalOnhand"></span>
-								</div>
-								<div class="span6">
-									<p>Total </p>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<p>Product Items</p>
 									<span data-bind="text: count"></span>
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<p>Product Items on hand</p>
+									<span data-bind="text: onHand"></span>
+								</div>
+							</div>
 						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span>Item Name</span></th>
-								<th><span>On Hand</span></th>
-								<th><span>Purchase Order</span></th>
-								<th><span>Sale Order</span></th>
-								<th><span>Cost</span></th>
-								<th><span>Sale Price</span></th>
-							
-							</tr>
-						</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-				                data-template="inventory-position-summary-row-template"
-				                data-bind="source: inventoryPositionSummary.dataSource" >
-				        </tbody>
-	            	</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Item Name</span></th>
+									<th><span>QOH</span></th>
+									<th><span>On Purchase Order</span></th>
+									<th><span>On Sale Order</span></th>
+									<th><span>Average Cost</span></th>
+									<th><span>Average Price</span></th>
+								
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="inventory-position-summary-row-template"
+					                data-bind="source: inventoryPositionSummary.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>
 				</div>		
 			</div>
 		</div>
@@ -34350,11 +34202,11 @@
 <script id="inventory-position-summary-row-template" type="text/x-kendo-tmpl">
 	<tr>
 	    <td>#=item#</td>
-	    <td>#=onHand#</td>
-	    <td>#=po#</td>
-	    <td>#=so#</td>
-	    <td align="right">#=kendo.toString(cost, 'c2')#</td>
-	    <td align="right">#=kendo.toString(price, 'c2')#</td>
+	    <td align="center">#=onHand#</td>
+	    <td align="center">#=po#</td>
+	    <td align="center">#=so#</td>
+	    <td align="center">#=kendo.toString(cost, 'c2')#</td>
+	    <td style="text-align: right;">#=kendo.toString(price, 'c2')#</td>
 	</tr>
 </script>
 <script id="inventorySaleItemAnalysis" type="text/x-kendo-template">
@@ -34376,114 +34228,116 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: inventorySaleDB.search"><i class="icon-search"></i></button>							
+									    </div>
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Inventory Sale by Item Analysis</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span12">
-									<p>Sale</p>
-									<span data-bind="text: sale"></span>
-								</div>	
-							</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Inventory Sale by Item Analysis</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Product Items on hand</p>
-									<span data-bind="text: onHand"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span12">
+										<p>Sale</p>
+										<span data-bind="text: sale"></span>
+									</div>	
 								</div>
-								<div class="span6">
+							</div>
+							<div class="span7">
+								<div class="total-customer">
 									<p>Gross profit Margin</p>
 									<span data-bind="text: gpm"></span>
 								</div>
 							</div>
 						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span>Type</span></th>
-								<th><span>Item</span></th>
-								<th><span>QTY</span></th>
-								<th><span>Price</span></th>
-								<th><span>Amount</span></th>
-								<th><span>Cost</span></th>
-								<th><span>Gross Profit Margin</span></th>
-							
-							</tr>
-						</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-				                data-template="inventory-sale-item-analysis-template"
-				                data-bind="source: inventorySaleDB.dataSource" >
-				        </tbody>
-	            	</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Type</span></th>
+									<th><span>GPM</span></th>
+									<th><span>Number</span></th>
+									<th><span>QTY</span></th>
+									<th><span>Price</span></th>
+									<th><span>Amount</span></th>
+									<th><span>Cost</span></th>
+								
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="inventory-sale-item-analysis-template"
+					                data-bind="source: inventorySaleDB.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>	
 				</div>		
 			</div>
 		</div>
 	</div>
 </script>
 <script id="inventory-sale-item-analysis-template" type="text/x-kendo-tmpl">
-	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
-		<td>#=type#</td>
-		<td>#=items.name#</td>
-		<td>#=qty#</td>
-		<td>#=price#</td>
-		<td>#=amount#</td>
-		<td>#=cost#</td>
+		<td>#=item#</td>
 		<td>#=gpm#</td>
+		<td></td>
+		<td></td>		
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
 	</tr>
+	# if (transactions.length) {#
+		#for(var i= 0; i <transactions.length; i++) {#
+			<tr>
+				<td>&nbsp;&nbsp;#=transactions[i].type#</td>
+				<td></td>				
+				<td>
+					<a href="\#/#=transactions[i].type.toLowerCase()#/#=transactions[i].id#">#=transactions[i].number#</a>
+				</td>
+				<td>#=transactions[i].qty#</td>	
+				<td style="text-align: right;">#=kendo.toString(transactions[i].price, 'c2')#</td>	
+				<td style="text-align: right;">#=kendo.toString(transactions[i].amount, 'c2')#</td>	
+				<td style="text-align: right;">#=kendo.toString(transactions[i].cost, 'c2')#</td>
+				<td style="text-align: right;">#=kendo.toString(transactions[i].gpm, 'p0')#</td>
+			</tr>
+		#}#
+	#}#
 </script>
 <script id="inventoryPositionDetail" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -34504,102 +34358,88 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: inventoryPositionDetail.search"><i class="icon-search"></i></button>							
+									    </div>
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Inventory Position Detail</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Product Items</p>
-									<span data-bind="text: item"></span>
-								</div>
-								<div class="span6">
-									<p>Service Items</p>
-									<span data-bind="text: service"></span>
-								</div>	
-							</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Inventory Position Detail</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Product Items on hand</p>
-									<span data-bind="text: totalOnhand"></span>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Product Items</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Product Items on hand</p>
+										<span data-bind="text: totalOnhand"></span>
+									</div>
 								</div>
-								<div class="span6">
+							</div>
+							<div class="span7">
+								<div class="total-customer">
 									<p>Total </p>
 									<span data-bind="text: total"></span>
-								</div>
+							</div>
 							</div>
 						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span>Type</span></th>
-								<th><span>Date</span></th>								
-								<th><span>REF</span></th>
-								<th><span>QTY</span></th>
-								<th><span>Cost</span></th>
-								<th><span>On Hand</span></th>
-								<th><span>AVG Cost</span></th>
-								<th><span>Price</span></th>
-							</tr>
-						</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-				                data-template="inventory-position-detail-row-template"
-				                data-bind="source: inventoryPositionDetail.dataSource" >
-				        </tbody>
-	            	</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Type</span></th>
+									<th align="center"><span>Date</span></th>								
+									<th align="center"><span>REF</span></th>
+									<th><span>QTY</span></th>
+									<th><span>Cost</span></th>
+									<th><span>On Hand</span></th>
+									<th align="center"><span>AVG Cost</span></th>
+									<th><span>Price</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="inventory-position-detail-row-template"
+					                data-bind="source: inventoryPositionDetail.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>
 				</div>		
 			</div>
 		</div>
@@ -34607,13 +34447,13 @@
 </script>
 <script id="inventory-position-detail-row-template" type="text/x-kendo-tmpl">
 	<tr>
-	    <td>#=item#</td>
+	    <td style="font-weight: bold">#=item#</td>
 	    <td></td>
 	    <td></td>
 	    <td></td>	   
 	    <td></td>
-	    <td></td>
-	    <td></td>
+	    <td ></td>
+	    <td ></td>
 		<td></td>
 	</tr>
 	# if(transactions.length>0){#
@@ -34621,12 +34461,14 @@
 		<tr>
 			<td>#=transactions[i].type#</td>
 		    <td>#=transactions[i].date#</td>
-		    <td>#=transactions[i].ref#</td>
+		    <td>
+		   		<a href="\#/#=transactions[i].type.toLowerCase()#/#=transactions[i].id#">#=transactions[i].ref#</a>
+		   	</td>
 		    <td>#=transactions[i].qty#</td>
-		    <td>#=transactions[i].cost#</td>
-		    <td>#=onHand#</td>
-		    <td>#=avg_cost#</td>
-			<td  align="right">#=kendo.toString(price, 'c2')#</td>
+		    <td align="center">#=transactions[i].cost#</td>
+		    <td align="center">#=onHand#</td>
+		    <td align="center">#=kendo.toString(avg_cost, 'c2')#</td>
+			<td align="right">#=kendo.toString(price, 'c2')#</td>
 		</tr>
 		#}#
 	#}#	
@@ -34650,101 +34492,96 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: inventoryTurnoverList.search"><i class="icon-search"></i></button>							
+									    </div>
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Inventory Turnover List</h2>
+							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Inventory Turnover List</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Product Items</p>
-									<span data-bind="text: count"></span>
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Product Items</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Turnover</p>
+										<span data-bind="text: turnover"></span>
+									</div>	
 								</div>
-								<div class="span6">
-									<p>Turnover</p>
-									<span data-bind="text: turnover"></span>
-								</div>	
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<p>Product Items on hand</p>
+									<span data-bind="text: onHand"></span>
+								</div>
 							</div>
 						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<p>Product Items on hand</p>
-								<span data-bind="text: onhand"></span>
-							</div>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span>Cogs</span></th>
-								<th><span>On Hand</span></th>
-								<th><span>Turn Over</span></th>
-							</tr>
-						</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-				                data-template="inventory-turnover-list-row-template"
-				                data-bind="source: inventoryTurnoverList.dataSource" >
-				        </tbody>
-	            	</table>
-
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Product/Service</span></th>						
+									<th><span>Cogs</span></th>
+									<th><span>On Hand</span></th>
+									<th><span>Turn Over</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="inventory-turnover-list-row-template"
+					                data-bind="source: inventoryTurnoverList.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>
 				</div>		
 			</div>
 		</div>
 	</div>
 </script>
-<script id="inventory-turnover-list-row-template" type="text/x-kendo-tmpl">    
-    <td>#=cogs#</td>          
-    <td>#=onHand#</td>
-    <td>#=turnover#</td>
+<script id="inventory-turnover-list-row-template" type="text/x-kendo-tmpl">  
+	<tr>  
+	    <td>#=name#</td>
+	    <td align="right">#=kendo.toString(cogs, 'c2')#</td>
+	    <td align="right">#=onHand#</td>
+	    <td align="right">#=kendo.toString(turnover, 'n0')#</td>
+	 </tr>
 </script>
 
 <script id="inventoryMovementSummary" type="text/x-kendo-template">
@@ -34766,100 +34603,88 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
+								        <div class="tab-pane active" id="tab-1">
 											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
+									    	   data-role="dropdownlist"
 									           data-value-primitive="true"
 									           data-text-field="text"
 									           data-value-field="value"
 									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
 										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: inventoryMovementSummary.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
 
 					<div class="block-title">
 
 						<h3 data-bind="text: institute.name"></h3>
 						<h2>Inventory Movement Summary</h2>
-
-						<p>From 1 June 2016 to 30 June 2016</p>
+						<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 					</div>
 
 					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Purcahse In</p>
-									<span data-bind="text: count"></span>
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Purcahse In</p>
+										<span data-bind="text: count"></span>
+									</div>
+									<div class="span6">
+										<p>Product Items on hand</p>
+										<span data-bind="text: onHand"></span>
+									</div>
 								</div>
-								<div class="span6">
+							</div>
+							<div class="span7">
+								<div class="total-customer">
 									<p>Sale</p>
-									<span data-bind="text: total"></span>
-								</div>	
-							</div>
-						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p>Product Items on hand</p>
-									<span>-</span>
-								</div>
-								<div class="span6">
-									<p>Gross profit Margin</p>
-									<span>-</span>
+									<span data-bind="text: sale"></span>
 								</div>
 							</div>
-						</div>
 					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span>ITEM</span></th>
-								<th><span>PURCHASE</span></th>
-								<th><span>SALE</span></th>
-								<th><span>ADJUSTMENT</span></th>
-							</tr>
-						</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-				                data-template="inventory-movement-summary-row-template"
-				                data-bind="source: inventoryMovementSummary.dataSource" >
-				        </tbody>
-	            	</table>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>ITEM</span></th>
+									<th><span>PURCHASE</span></th>
+									<th><span>SALE</span></th>
+									<th><span>ON HAND</span></th>
+									<th><span>ADJUSTMENT</span></th>
+									<th><span>BALANCE</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="inventory-movement-summary-row-template"
+					                data-bind="source: inventoryMovementSummary.dataSource" >
+					        </tbody>
+		            	</table>
+	            	</div>
 				</div>		
 			</div>
 		</div>
@@ -34867,10 +34692,12 @@
 </script>
 <script id="inventory-movement-summary-row-template" type="text/x-kendo-tmpl"> 
 	<tr>   
-	    <td>#=item.name#</td>          
+	    <td>#=name#</td>          
 	    <td>#=purchase#</td>
 	    <td>#=sale#</td>
+	    <td>#=onHand#</td>
 	    <td>#=adjustment#</td>
+	    <td align="right">#=balance#</td>
 	</tr>
 </script>
 <script id="inventoryMovementDetail" type="text/x-kendo-template">
@@ -34939,7 +34766,7 @@
 					<div class="block-title">
 						<h3 data-bind="text: institute.name"></h3>
 						<h2>Inventory Movement Detail</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
+						<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
 					</div>
 
 					<div class="row-fluid">
@@ -52596,7 +52423,7 @@
     });
 
     //Report Vendor
-    banhji.supplierList = kendo.observable({
+   banhji.supplierList = kendo.observable({
 		lang 					: langVM,
 		dataSource 				: dataStore(apiUrl + "contacts/supplier"),
 		contactTypeDS			: banhji.source.customerTypeDS,
@@ -54026,13 +53853,15 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
 
-			if(obj.is_pattern==0 && obj.isProtected==false){				
-				obj.set("deleted", 1);
-		        self.dataSource.sync();
+			if(!obj.is_system==1){
+				if(obj.isProtected==false){				
+					obj.set("deleted", 1);
+			        self.dataSource.sync();
 
-		        window.history.back();					
-			}else{
-				alert("Sorry, this data is protected!");
+			        window.history.back();					
+				}else{
+					alert("Sorry, this data is protected!");
+				}
 			}	
 		},
 		openConfirm 			: function(){
@@ -61372,7 +61201,7 @@
 			}
 		},
 		search				: function(){
-			var para = [],
+			var para = [], displayDate = "",
 				contact_id = this.get("contact_id"),
 				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
         		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
@@ -61387,13 +61216,21 @@
 	        	if(start && end){
 	            	para.push({ field:"issued_date >=", value: start });
 	            	para.push({ field:"issued_date <=", value: end });
+
+	            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
 	            }else if(start){
-	            	para.push({ field:"issued_date", value: start });
+	            	para.push({ field:"issued_date", value: new Date(start) });
+
+	            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
 	            }else if(end){
-	            	para.push({ field:"issued_date <=", value: end });
+	            	para.push({ field:"issued_date <=", value: new Date(end) });
+
+	            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
 	            }else{
 	            	
 	            }
+
+	            this.set("displayDate", displayDate);
 
 	            this.dataSource.query({
 	            	filter: para,
@@ -62639,14 +62476,13 @@
 		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
 		    var htmlEnd =
 		            '</div></body>' +
-		            '</html>';
-		    
+		            '</html>'; 
 		    printableContent = $('#invFormContent').html();
 		    doc.write(htmlStart + printableContent + htmlEnd);
 		    doc.close();
 		    setTimeout(function(){
 		    	win.print();
-		    	// win.close();
+		    	win.close();
 		    },2000);
 		},
 		dateChange 			: function(){
@@ -66517,22 +66353,24 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
 
-			this.deleteDS.query({
-			  	filter: { field: "item_id", value: obj.id },
-			  	page: 1,
-			  	pageSize: 1
-			}).then(function() {
-				var view = self.deleteDS.view();
+			if(!obj.is_system==1){
+				this.deleteDS.query({
+				  	filter: { field: "item_id", value: obj.id },
+				  	page: 1,
+				  	pageSize: 1
+				}).then(function() {
+					var view = self.deleteDS.view();
 
-				if(view.length>0){
-					alert("Sorry, you can not delete it because it is using now.");
-				}else{
-					obj.set("deleted", 1);
-			        self.dataSource.sync();
+					if(view.length>0){
+						alert("Sorry, you can not delete it because it is using now.");
+					}else{
+						obj.set("deleted", 1);
+				        self.dataSource.sync();
 
-			        window.history.back();				        
-				}
-			});	
+				        window.history.back();				        
+					}
+				});
+			}	
 		},
 		openConfirm 			: function(){
 			this.set("showConfirm", true);
@@ -67358,22 +67196,24 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
 
-			this.deleteDS.query({
-			  	filter: { field: "item_id", value: obj.id },
-			  	page: 1,
-			  	pageSize: 1
-			}).then(function() {
-				var view = self.deleteDS.view();
+			if(!obj.is_system==1){
+				this.deleteDS.query({
+				  	filter: { field: "item_id", value: obj.id },
+				  	page: 1,
+				  	pageSize: 1
+				}).then(function() {
+					var view = self.deleteDS.view();
 
-				if(view.length>0){
-					alert("Sorry, you can not delete it because it is using now.");
-				}else{
-					obj.set("deleted", 1);
-			        self.dataSource.sync();
+					if(view.length>0){
+						alert("Sorry, you can not delete it because it is using now.");
+					}else{
+						obj.set("deleted", 1);
+				        self.dataSource.sync();
 
-			        window.history.back();				        
-				}
-			});	
+				        window.history.back();				        
+					}
+				});
+			}	
 		},
 		openConfirm 			: function(){
 			this.set("showConfirm", true);
@@ -67739,22 +67579,24 @@
 			var self = this, obj = this.get("obj");
 			this.set("showConfirm",false);
 
-			this.deleteDS.query({
-			  	filter: { field: "item_id", value: obj.id },
-			  	page: 1,
-			  	pageSize: 1
-			}).then(function() {
-				var view = self.deleteDS.view();
+			if(!obj.is_system==1){
+				this.deleteDS.query({
+				  	filter: { field: "item_id", value: obj.id },
+				  	page: 1,
+				  	pageSize: 1
+				}).then(function() {
+					var view = self.deleteDS.view();
 
-				if(view.length>0){
-					alert("Sorry, you can not delete it because it is using now.");
-				}else{
-					obj.set("deleted", 1);
-			        self.dataSource.sync();
+					if(view.length>0){
+						alert("Sorry, you can not delete it because it is using now.");
+					}else{
+						obj.set("deleted", 1);
+				        self.dataSource.sync();
 
-			        window.history.back();				        
-				}
-			});	
+				        window.history.back();				        
+					}
+				});
+			}	
 		},
 		openConfirm 			: function(){
 			this.set("showConfirm", true);
@@ -69412,7 +69254,7 @@
         } 
     });
 	banhji.inventoryPositionSummary = kendo.observable({
-		lang 				: langVM,
+
 		dataSource 		: dataStore(apiUrl + "itemReports/position_summary"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -69450,7 +69292,7 @@
 
 	});
 	banhji.inventoryPositionDetail = kendo.observable({
-		lang 				: langVM,
+
 		dataSource 		: dataStore(apiUrl + "itemReports/position_detail"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -69462,8 +69304,8 @@
 		],
 		search 	: function() {
 
-			banhji.inventoryDetail.dataSource.filter({
-				logic: banhji.inventoryDetail.get('filteredBy'),
+			banhji.inventoryPositionDetail.dataSource.filter({
+				logic: banhji.inventoryPositionDetail.get('filteredBy'),
 				filters: [			
 					{field: "issued_date >=", value: kendo.toString(this.startDate, "yyyy-MM-dd")},
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
@@ -69471,11 +69313,11 @@
 			});
 		}, 
 		filterChange  : function(e){
-			banhji.inventoryDetail.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
+			banhji.inventoryPositionDetail.set("filteredBy", e.sender.dataSource.at(e.sender.selectedIndex-1).id);
 		}
 	});
 	banhji.inventorySaleItemAnalysis = kendo.observable({
-		lang 				: langVM,
+
 		dataSource 		: dataStore(apiUrl + "itemReports/item_sale"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -69500,7 +69342,7 @@
 		}
 	});
 	banhji.inventoryTurnoverList = kendo.observable({
-		lang 				: langVM,
+
 		dataSource 		: dataStore(apiUrl + "itemReports/item_turnover"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -69525,7 +69367,7 @@
 		}
 	});
 	banhji.inventoryMovementSummary = kendo.observable({
-		lang 				: langVM,
+
 		dataSource 		: dataStore(apiUrl + "itemReports/movement_summary"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -69550,7 +69392,7 @@
 		}
 	});
 	banhji.inventoryMovementDetail = kendo.observable({
-		lang 				: langVM,
+
 		dataSource 		: dataStore(apiUrl + "itemReports/movement_detail"),
 		filterDB	 		: [
 			{id: 'customer', name: 'Customer'},
@@ -69633,6 +69475,45 @@
 			$('#sdate').css('width', '160px');
 			var sdate = $('#sdate').kendoDatePicker().data("kendoDatePicker");
 			sdate.max(e.sender.value());
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
 		},
 		dateChange 			: function(){
 			// var strDate = "";
@@ -75136,7 +75017,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
 			var vm = banhji.customerReportCenter;			
-			banhji.userManagement.addMultiTask("Customer Report Center","customer_report_center",null);
+			banhji.userManagement.addMultiTask("Sale Managment Reports","customer_report_center",null);
 			if(banhji.pageLoaded["customer_report_center"]==undefined){
 				banhji.pageLoaded["customer_report_center"] = true;				
 								
@@ -75191,6 +75072,7 @@
 			if(banhji.pageLoaded["customer_setting"]==undefined){
 				banhji.pageLoaded["customer_setting"] = true;
 				
+				vm.contactTypeDS.filter({ field:"parent_id", value:1 });
 			}
 
 			vm.pageLoad();			     		
@@ -76538,15 +76420,16 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.inventoryPositionSummary;			
+			banhji.userManagement.addMultiTask("Inventory Position Summary","inventory_position_summary",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.inventoryPositionSummary);
 			banhji.inventorySale.inventoryPositionSummary.dataSource.read();
 			banhji.inventorySale.inventoryPositionSummary.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.inventorySale.set('count', e.response.count);
-					kendo.culture(banhji.locale);
-					banhji.inventorySale.set('totalService', kendo.toString(e.response.totalService, 'n0'));
-					banhji.inventorySale.set('totalProduct', kendo.toString(e.response.totalProduct, 'n0'));
-					banhji.inventorySale.set('totalOnhand', kendo.toString(e.response.totalOnhand, 'n0'));
+					kendo.culture(banhji.locale);	
+					banhji.inventorySale.set('onHand', kendo.toString(e.response.onHand, 'n0'));
 				}
 			});
 		}
@@ -76555,6 +76438,9 @@
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
+			var vm = banhji.inventorySaleItemAnalysis;			
+			banhji.userManagement.addMultiTask("Inventory Sale Item Analysis","inventory_sale_item_analysis",null);
+
 			banhji.view.layout.showIn("#content", banhji.view.inventorySaleItemAnalysis);
 			banhji.inventorySale.inventorySaleDB.dataSource.read();
 			banhji.inventorySale.inventorySaleDB.dataSource.bind('requestEnd', function(e){
@@ -76596,8 +76482,8 @@
 				if(e.response) {
 					banhji.inventorySale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
-					banhji.inventorySale.set('onhand', kendo.toString(e.response.onhand, 'n0'));
-					banhji.inventorySale.set('turnover', kendo.toString(e.response.turnover, 'c2'));
+					banhji.inventorySale.set('onHand', kendo.toString(e.response.onHand, 'n0'));
+					banhji.inventorySale.set('turnover', kendo.toString(e.response.turnover, 'n0'));
 				}
 			});
 		}
@@ -76612,9 +76498,8 @@
 				if(e.response) {
 					banhji.inventorySale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
-					banhji.inventorySale.set('onhand', kendo.toString(e.response.onhand, 'n0'));
-					banhji.inventorySale.set('total', kendo.toString(e.response.total, 'c2'));
-					banhji.inventorySale.set('turnover', kendo.toString(e.response.turnover, 'c2'));
+					banhji.inventorySale.set('onHand', kendo.toString(e.response.onHand, 'n0'));
+					banhji.inventorySale.set('sale', kendo.toString(e.response.sale, 'n0'));
 				}
 			});
 		}
@@ -76651,7 +76536,8 @@
 				
 			}			
 		}		
-	});	
+	});
+	
 	banhji.router.route("/inventory_list", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');

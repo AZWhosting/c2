@@ -189,8 +189,8 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 </head>
 
 <body>
-    <div class="cover-rightfixed">
-  <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 144px;float:left;">
+  <div class="cover-rightfixed">
+    <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 144px;float:left;">
     Support
     <div class="enquiry-content">
       <p style="font-size: 14px;">Call us at<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
@@ -199,10 +199,11 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
         page_id="862386433857166"
         color="blue"
         width="180"
-        size="standard" ></div>
-    </div>
-  </a>
-</div>
+        size="standard" >
+        </div>
+      </div>
+    </a>
+  </div>
     <div class="login">
         <dis class="login-content">
             <div class="col-sm-6">
@@ -216,10 +217,9 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                 <h2 align="center">Forget Password</h2>
                   <form action="" method="">
 
-                      <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
-
+                      <input type="email" data-bind="value: email" placeholder="Your email" class="login-email"><br>
                      
-                      <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Get New Password"><br><br>
+                      <input id="loginBtn" type="button" data-bind="click: forgotPassword" class="btn-login" value="Get New Password"><br><br>
                       <div id="loginInformation"></div>
                   </form> 
                   <a href="<?php echo base_url(); ?>login"">Login</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
@@ -330,76 +330,26 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
         banhji.aws = kendo.observable({
           email: null,
           password: null,
-          signIn: function(e) {
-            // var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;  
-            // if(this.get('password').match(decimal) != null)  {   
-            // layout.showIn("#main-container", watingView);
-            // if(e.keyCode == 13) {
-            //   console.log(this.get('password'));
-              // banhji.aws.btnSignIn();
-            // }
-            console.log(this.get('password')); 
-          },
-          btnSignIn: function() {
-            $("#loginBtn").val("Loging in...");
-            var authenticationData = {
-                Username : this.get('email'),
-                Password : this.get('password')
-            };
-            var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
+          newPassword: null,
+          cPassword: null,
+          veriCode: null,
+          showReset: false,
+          reset: function() {
+            var that = this;
             var userData = {
                 Username : this.get('email'),
                 Pool : userPool
             };
             var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-            cognitoUser.authenticateUser(authenticationDetails, {
-              onSuccess: function (result) {
-                banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username});
-                    banhji.companyDS.bind('requestEnd', function(e) {
-                      var res = e.response;
-                      if(res.error) {
-                          // console.log()
-                      } else {
-                        var data = res.results[0];
-                        banhji.profileDS.filter({
-                          field: 'username', value: userPool.getCurrentUser().username
-                        });
-                        banhji.profileDS.bind('requestEnd', function(e){
-                          var id = e.response.results[0].id;
-                          if(e.response.results[0].id) {
-                            var user = {
-                              id: id,
-                              username: userPool.getCurrentUser().username,
-                              role: e.response.results[0].role,
-                              institute: data
-                            };
-                            localforage.setItem('user', user);
-                            $("#loginBtn").val("Redirecting...");
-                            window.location.replace(baseUrl + "rrd/");
-                          } else {
-                            console.log('bad');
-                          }
-                        });                          
-                      }
-                  });                    
-              },
-              onFailure: function(err) {
-                // layout.showIn("#main-container", loginView);
-                $("#loginBtn").val("Login");
-                $('#loginInformation').text('Please check username/password.');
-              }
-            }); 
-          },
-          redirect: function(data) {
-              // console.log(data.length > 0);
-              if(data.length > 0) {
-                window.location.replace(baseUrl + "rrd/");
-              } else {
-                window.location.replace(baseUrl + "app/");
-              } 
+            if(that.get('newPassword') == that.get('cPassword')) {
+              cognitoUser.confirmPassword(that.get('veriCode'), that.get('newPassword'), this);
+            } else {
+              console.log("passwords do not match");
+            }
           },
           forgotPassword: function(e) {
             e.preventDefault();
+            var that = this;
             var userData = {
                 Username : this.get('email'),
                 Pool : userPool
@@ -407,24 +357,17 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
             cognitoUser.forgotPassword({
                 onSuccess: function (result) {
-                    console.log('call result: ' + result);
+                    
                 },
                 onFailure: function(err) {
                     alert(err);
                 },
-                inputVerificationCode() {
+                inputVerificationCode(data) {
                     var verificationCode = prompt('Please input verification code ' ,'');
                     var newPassword = prompt('Enter new password ' ,'');
                     cognitoUser.confirmPassword(verificationCode, newPassword, this);
                 }
             });
-          },
-          getCurrentUser: function() {
-              var cognitoUser = null;
-              if (userPool.getCurrentUser() != null) {
-                  cognitoUser = userPool.getCurrentUser();
-              }
-              return cognitoUser;
           }
         });
       $(function(){

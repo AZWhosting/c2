@@ -329,6 +329,9 @@ pre {
 	color: #fff;
 	font-weight: bold;
 }
+.pcg .mid-title span {
+	color: #fff!important;
+}
 .pcg table th {
 	padding: 8px 0;
 }
