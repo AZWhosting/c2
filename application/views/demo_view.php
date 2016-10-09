@@ -29662,36 +29662,36 @@
 							
 	<div  class="row-fluid saleSummaryCustomer">
 
-        <h2>Attached Documents</h2>
+        <h2 data-bind="text: lang.lang.attached_documents"></h2>
 
 	    <br>
 			
 		<div class="row-fluid">
 			<div class="span4">
 				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;">
-					Transaction
+					<span data-bind="text: lang.lang.transaction"></span>
 				</p>
 				<div class="total-customer" style="background: #d9edf7; color: #333;"> 
 					<span class="number" data-bind="text:transactionSize"></span>GB
-					<p>of <span data-bind="text: transactionNu"></span> transaction</p>
+					<p>of <span data-bind="text: transactionNu"></span> <span data-bind="text: lang.lang.transaction"></span></p>
 					
 					
 				</div>
 			</div>
 
 			<div class="span4">
-				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;">Contacts/items</p>
+				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;"><span data-bind="text: lang.lang.contact_items"></span></p>
 				<div class="total-customer" style="color: #333;">
 					<span class="number" data-bind="text: contactSize"></span>GB
-					<p>of <span data-bind="text: contactNu"></span> contact/ items</p>
+					<p>of <span data-bind="text: contactNu"></span> <span data-bind="text: lang.lang.contact_items"></span></p>
 				</div>
 			</div>
 
 			<div class="span4" style="padding-left: 15px;">
-				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;">Total Attachment</p>
+				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;"><span data-bind="text: lang.lang.total_attachment"></span></p>
 				<div class="total-customer" style="background: #496cad; color: #fff;min-height: 112px;">
 					<span class="number" data-bind="text: totalSize"></span>GB
-					<p>Used of 2.00 GB</p>
+					<p><span data-bind="text: lang.lang.use_of"></span> 2.00 GB</p>
 				</div>
 			</div>
 		</div>
@@ -29701,12 +29701,12 @@
 			<table class="table table-borderless table-condensed " style="color: #000;">
 				<thead>
 					<tr>
-						<th>File Name</th>
-						<th>Description</th>
-						<th>Size</th>
-						<th>Attach to</th>
-						<th>Date</th>
-						<th>Action</th>								
+						<th data-bind="text: lang.lang.file_name"></th>
+						<th data-bind="text: lang.lang.description"></th>
+						<th data-bind="text: lang.lang.size"></th>
+						<th data-bind="text: lang.lang.attach"></th>
+						<th data-bind="text: lang.lang.date"></th>
+						<th data-bind="text: lang.lang.action"></th>								
 					</tr>
 				</thead>
 				<tbody data-role="listview" data-bind="source: dataSource" data-template="document-list-template">
@@ -33370,15 +33370,15 @@
 			                   data-value-field="id"
 			                   data-bind="value: category_item_type_id,
 			                              source: itemTypeDS" />
-					    <button class="btn btn-default" type="button" data-bind="click: addCategory"><i class="icon-plus"></i> Add Category</button>					  
+					    <button class="btn btn-default" type="button" data-bind="click: addCategory"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_new_category"></span></button>					  
 					</div>
 		            
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>	
-	            				<th>NAME</th>	
-	            				<th>ABBR</th>
-	            				<th>TYPE</th>	            				
+	            				<th data-bind="text: lang.lang.name"></th>	
+	            				<th data-bind="text: lang.lang.abbr"></th>
+	            				<th data-bind="text: lang.lang.type"></th>	            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
@@ -33405,15 +33405,15 @@
 					    	
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New Group Name..." data-bind="value: item_group_name">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Group Abbr..." data-bind="value: item_group_abbr">					    
-					    <button class="btn btn-default" type="button" data-bind="click: addItemGroup"><i class="icon-plus"></i> Add Group</button>					  
+					    <button class="btn btn-default" type="button" data-bind="click: addItemGroup"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_new_group"></span></button>					  
 					</div>
 		            
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th>Name</th>	
-	            				<th>Abbr</th>
-	            				<th>Category</th>	            				
+	            				<th data-bind="text: lang.lang.name"></th>	
+	            				<th data-bind="text: lang.lang.abbr"></th>
+	            				<th data-bind="text: lang.lang.category"></th>	            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
@@ -33429,12 +33429,12 @@
 	            <div class="tab-pane" id="tab3-1">
                 	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Measurement..." data-bind="value: measurement_name">					    
-					    <button class="btn btn-default" type="button" data-bind="click: addMeasurement"><i class="icon-plus"></i> Add Measurement</button>					  
+					    <button class="btn btn-default" type="button" data-bind="click: addMeasurement"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_measurement"></span></button>		
 					</div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th>Measurement</th>	            				
+	            				<th data-bind="text: lang.lang.measurement"></th>	            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
@@ -33452,15 +33452,15 @@
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: brand_code">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="New Brand..." data-bind="value: brand_name">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: brand_abbr">					    
-					    <button class="btn btn-default" type="button" data-bind="click: addBrand"><i class="icon-plus"></i> Add Brand</button>					  
+					    <button class="btn btn-default" type="button" data-bind="click: addBrand"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_brand"></span></button>					  
 					</div>
 		            
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th>Code</th>
-	            				<th>Name</th>	            				
-	            				<th>abbr</th>	            				
+	            				<th data-bind="text: lang.lang.code"></th>
+	            				<th data-bind="text: lang.lang.name"></th>
+	            				<th data-bind="text: lang.lang.abbr"></th>	            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
@@ -33496,7 +33496,7 @@
 		        #if(is_system=="0"){#
 			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
 		        #}#
-		        <span class="k-button" data-bind="click: goPattern">Pattern</span>
+		        <span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
 		   	</div>		   	
    		</td>
    	</tr>
@@ -33654,7 +33654,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2>GENERAL SERVICE SETTING</h2>
+	<h2 data-bind="text: lang.lang.general_service_setting"></h2>
 
 	<br>
 
@@ -33663,11 +33663,11 @@
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
 	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons bookmark" data-toggle="tab"><i></i><span class="strong">Category</span></a>
+	            <li class="active"><a href="#tab1-1" class="glyphicons bookmark" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.category"></span></span></a>
 	            </li>
-	            <li><a href="#tab2-1" class="glyphicons tag" data-toggle="tab"><i></i><span class="strong">Group</span></a>
+	            <li><a href="#tab2-1" class="glyphicons tag" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.group"></span></span></a>
 	            </li>
-	            <li><a href="#tab3-1" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong">Measurement</span></a>
+	            <li><a href="#tab3-1" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.measurement"></span></span></a>
 	            </li>	            	            
 	        </ul>
 	    </div>
@@ -33690,16 +33690,16 @@
 			                   data-value-field="id"
 			                   data-bind="value: category_item_type_id,
 			                              source: itemTypeDS" />
-					    <button class="btn btn-default" type="button" data-bind="click: addCategory"><i class="icon-plus"></i> Add Category</button>					  
+					    <button class="btn btn-default" type="button" data-bind="click: addCategory"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_new_category"></span></button>					  
 					</div>
 		            
 	            	<table class="table table-bordered table-white">
 	            		<thead>
 	            			<tr>	            				            				
-	            				<th>CODE</th>	
-	            				<th>NAME</th>	
-	            				<th>ABBR</th>
-	            				<th>TYPE</th>	            				
+	            				<th data-bind="text: lang.lang.code"></th>	
+	            				<th data-bind="text: lang.lang.name"></th>	
+	            				<th data-bind="text: lang.lang.abbr"></th>
+	            				<th data-bind="text: lang.lang.type"></th>            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
@@ -33727,15 +33727,16 @@
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: item_group_code">	
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="New Name..." data-bind="value: item_group_name">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: item_group_abbr">					    
-					    <button class="btn btn-default" type="button" data-bind="click: addItemGroup"><i class="icon-plus"></i> Add Group</button>					  
+					    <button class="btn btn-default" type="button" data-bind="click: addItemGroup"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_new_group"></span></button>					  
 					</div>
 		            
 	            	<table class="table table-bordered table-white">
 	            		<thead>
 	            			<tr>	            					            				
-	            				<th>Code</th>	
-	            				<th>Name</th>	
-	            				<th>abbr</th>	            				
+	            				<th data-bind="text: lang.lang.code"></th>	
+	            				<th data-bind="text: lang.lang.name"></th>	
+	            				<th data-bind="text: lang.lang.abbr"></th>
+	            				<th data-bind="text: lang.lang.type"></th> 	            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
@@ -33752,12 +33753,12 @@
 	            <div class="tab-pane" id="tab3-1">
                 	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="Measurement..." data-bind="value: measurement_name">					    
-					    <button class="btn btn-default" type="button" data-bind="click: addMeasurement"><i class="icon-plus"></i> Add Measurement</button>					  
+					    <button class="btn btn-default" type="button" data-bind="click: addMeasurement"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_measurement"></span></button>			
 					</div>
 	            	<table class="table table-bordered table-white">
 	            		<thead>
 	            			<tr>
-	            				<th>Measurement</th>	            				
+	            				<th data-bind="text: lang.lang.measurement"></th>	            				
 	            				<th></th>
 	            			</tr>
 	            		</thead>
@@ -38254,18 +38255,18 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/item'>Add Inventory for Sale</a></li>
-  				<li><a href='#/non_inventory_part'>Add Non-Inventory for Sale</a></li>
-  				<li><a href='#/item_service'>Add Service Items</a></li>
-  				<li ><a href="#/txn_item">Add Transaction Item</a></li>
-  				<li><a href='#/item_assembly'>Add Item Assembly</a></li>  
-  				<li><a href='#/item_catalog'>Add Catalog</a></li>
-  				<li><a href='#/fixed_assets'>Add Fixed Assets</a></li>  				
+  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
+  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
+  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
+  				<li ><a href="#/txn_item"><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>
+  				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.build_assembly"></span></a></li>  
+  				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.add_new_catalog"></span></a></li>
+  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>  		
   				<li> <span class="li-line"></span></li> 
-  				<li><a href='#/grn'>Create Received Note</a></li>
-  				<li><a href='#/gdn'>Create Delivery Note</a></li>
-  				<li><a href='#/item_adjustment'>Create Item Adjustment</a></li>  				
-  				<li><a href='#/internal_usage'>Create Internal Usage</a></li>	
+  				<li><a href='#/grn'><span data-bind="text: lang.lang.add_received_note"></span></a></li>
+  				<li><a href='#/gdn'><span data-bind="text: lang.lang.add_delivery_note"></span></a></li>
+  				<li><a href='#/item_adjustment'><span data-bind="text: lang.lang.create_item_adjustment"></span></a></li>  				
+  				<li><a href='#/internal_usage'><span data-bind="text: lang.lang.create_internal_usage"></span></a></li>	
   				<!-- <li> <span class="li-line"></span></li>  -->	
   				<!-- <li><a href='#/item_recurring'>Inventory Recurring List</a></li>-->
   			</ul>
