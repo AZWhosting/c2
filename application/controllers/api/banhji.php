@@ -758,11 +758,10 @@ class Banhji extends REST_Controller {
 						// add currency based on company to contact
 						$this->db->where('locale <>', "");
 						$this->db->update('contacts', array('locale'=> "$inst->monetary_locale"));
-						$this->db->get();
+
 						// add currency based on company to inventory
 						$this->db->where('locale <>', "");
 						$this->db->update('items', array('locale'=> "$inst->monetary_locale"));
-						$this->db->get();
 
 						// add currency to rate
 						$this->db->insert('currency_rates', array(
@@ -776,7 +775,6 @@ class Banhji extends REST_Controller {
 							'created_at' => date('Y-m-d', new Date()),
 							'locale'=> "$inst->monetary_locale"
 						));
-						$this->db->get();
 					}
 				}
 
