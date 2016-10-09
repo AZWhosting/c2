@@ -2025,25 +2025,23 @@
 		<div class="customer-background">
 			<div class="container-960" style="overflow: hidden;">					
 			<div id="example" class="k-content">
+				
+		    	<span class="glyphicons no-js remove_2 pull-right" 
+						onclick="javascript: window.history.back()"><i></i></span>
 
-				<div class="hidden-print">
-			    	<div class="pull-right">
+		        <h2>TAX</h2>
 
-			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"><i></i></span>						
-					</div>
-
-			        <h2>TAX</h2>
+			    <div class="row">
 			        <div class="span6">
 			        	<p>
 				        	These are the tax items required by your countries. 
 				        	You can add more tax items or edit the existing items. If you are not sure, please consult with your tax advisor.
 				        </p>
 			        </div>
-			         <div class="span6">
+			        <div class="span6">
 			         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbspAdd New Tax Type</button>
 						
-			        </div>
-			        				        				        				        	
+			        </div>		        				        				        	
 			    </div>			   
 
 			    <br>
@@ -2152,6 +2150,12 @@
 							</td>
 						</tr>
 						<tr style="border-bottom: 8px solid #fff;">
+							<td width="34%">Description</td>
+							<td>
+								<input class="k-textbox" placeholder="type description ..." data-bind="value: item.description" style="width: 100%;">
+							</td>
+						</tr>
+						<tr style="border-bottom: 8px solid #fff;">
 							<td>Item Rate</td>
 							<td>
 								<input data-role="numerictextbox"
@@ -2188,14 +2192,15 @@
 					</div>  
 				</div>
 
-				<h3 data-bind="text: taxName"></h3>
+				<h3 data-bind="text: taxName" style="margin-left: 20px;"></h3>
 
 				<div class="row">
-	            	<div class="span8" style="padding-left: 30px;">		                	
-					    <table class="table table-bordered table-white">
+	            	<div class="span12" style="padding-left: 30px;">		                	
+					    <table class="table table-bordered table-white" style="width: 98%;">
 		            		<thead>
 		            			<tr>
-		            				<th>Name</th>
+		            				<th style="width:15%">Name</th>
+		            				<th style="width: 45%;">Description</th>
 		            				<th>Rate</th>
 		            				<th>Account</th>		            					            				
 		            				<th></th>
@@ -2224,8 +2229,6 @@
     	<td align="center">
     		<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
     		|
-    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
-    		|
     		<span data-bind="click: view"><i class="icon-view"></i> View Item</span>
     		|
     		<span data-bind="click: addItem"><i class="icon-plus icon-white"></i> Add Item</span>
@@ -2235,12 +2238,11 @@
 <script id="saleTax-item-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>#=name#</td>
+    	<td>#=description#</td>
     	<td>#=rate#</td>
     	<td>#=account[0].name#</td>     	 		
    		<td>
     		<span data-bind="click: editItem"><i class="icon-edit"></i> Edit</span>
-    		|
-    		<span data-bind="click: deleteItem"><i class="icon-remove"></i> Delete</span>
     	</td>
    	</tr>
 </script>
@@ -2416,9 +2418,9 @@
 							<td width="50%">
 								<h3><a href="#/trial_balance">Trial Balance</a></h3>
 							</td>
-							<td width="50%">
+							<!-- <td width="50%">
 								<h3><a href="#/transaction_list_date">Transaction List by Date</a></h3>
-							</td>
+							</td> -->
 						</tr>
 						<tr>
 							<td width="50%">
@@ -2426,15 +2428,15 @@
 									Summarizes each account balance on your chart of accounts in the format of debit and credit within a period of time
 								</p>
 							</td>
-							<td width="50%">
+							<!-- <td width="50%">
 								<p>
 									This is similar with journal entry; however, it does not include debit and credit. In addition, it includes not financial transactions, such as sale order or purchase order.
 
 								</p>
-							</td>
+							</td> -->
 						</tr>
 
-						<tr>
+						<!-- <tr>
 							<td width="50%">
 								<h3><a href="#/recent_transactions_list">Recent Transactions List</a></h3>
 							</td>
@@ -2466,7 +2468,7 @@
 							<td>
 								
 							</td>
-						</tr>
+						</tr> -->
 
 					</table>
 				</div>
@@ -2585,9 +2587,9 @@
 							<td >
 								<h3><a href="#/">Cash Receipt Report</a></h3>
 							</td>
-							<td >
+							<!-- <td >
 								<h3><a href="#/">Reconciliation Report</a></h3>
-							</td>
+							</td> -->
 						</tr>
 						<tr>
 							<td >
@@ -2597,11 +2599,11 @@
 
 								</p>
 							</td>
-							<td >
+							<!-- <td >
 								<p>
 									List of all cash related reconciliation reports.
 								</p>
-							</td>
+							</td> -->
 						</tr>
 					</table>					
 				</div>
@@ -2615,9 +2617,9 @@
 							<td style="width: 49%; padding-right: 8px !important;">
 								<h3><a href="#/chart_of_account">Chart of Account </a></h3>
 							</td>
-							<td >
+							<!-- <td >
 								<h3><a href="#/audit_trial_report">Audit Trial Report</a></h3>								
-							</td>						
+							</td>	 -->					
 						</tr>
 						<tr>
 							<td style="width: 49%; padding-right: 8px !important;">
@@ -2627,12 +2629,12 @@
 								</p>
 								
 							</td>
-							<td >
+							<!-- <td >
 								<h3><a href="#/recurring_journal_list">Recurring Journal List</a></h3>							
-							</td>
+							</td> -->
 							
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td>
 								<h3><a href="#/">Realized Exchange Gains & Losses</a></h3>
 							</td>
@@ -2656,7 +2658,7 @@
 
 								</p>
 							</td>							
-						</tr>
+						</tr> -->
 						
 					</table>
 				</div>
@@ -2668,92 +2670,48 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 			<br>
 			<br>
-			<div class="report-chart">
+			<div class="report-chart" style="overflow: hidden;">
 				<div class="statement">
-					<h2>Statement of Financial Position</h2>
-					<p>As of xx/xx/xxxx</p>
-					<table width="100%">
-						<tr>
-							<td>
-								<span>Current Asset</span>
-							</td>
-							<td>
-								<span> 1,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Properties, Plants & Equipment</span>
-							</td>
-							<td>
-								<span> 1,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Investment Property</span>
-							</td>
-							<td>
-								<span> 1,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Investment</span>
-							</td>
-							<td>
-								<span> 1,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Other Asset</span>
-							</td>
-							<td>
-								<span> 5,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Total Asset</span>
-							</td>
-							<td>
-								<span> 1,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Current Liabilities</span>
-							</td>
-							<td>
-								<span> 1,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Non-Current Liabilities</span>
-							</td>
-							<td>
-								<span> 2,000</span>
-							</td>
-						</tr>
-						<tr >
-							<td>
-								<span>Total Liabilities</span>
-							</td>
-							<td>
-								<span> 3,000</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span>Equity</span>
-							</td>
-							<td>
-								<span> 2,000</span>
-							</td>
-						</tr>
-					</table>
+					<div class="account-stement">
+						<h2 style="color: #496cad; font-size: 20px;">Statement of Profit or Loss</h2>
+						<table class="performance" style="width:100%; background: #fff; color: #000; padding: 0; margin-bottom: 20px;">
+							<tr>
+								<td>Income</td>
+								<td></td>
+								<td align="right">12,600,000</td>
+							</tr>
+							<tr>
+								<td>Expense</td>
+								<td></td>
+								<td align="right">8,500,000</td>
+							</tr>
+							<tr>
+								<td><b>Net Income</b></td>
+								<td></td>
+								<td align="right"><b>4,100,000</b></td>
+							</tr>
+						</table>
+
+						<h2 style="color: #496cad; font-size: 20px;">Statement of Financial Position</h2>
+						<table class="position" style="width:100%; background: #fff; color: #000; padding: 0;">
+							<tr>
+								<td>Assets</td>
+								<td></td>
+								<td align="right">17,537,000</td>
+							</tr>
+							<tr>
+								<td>Liabilities</td>
+								<td></td>
+								<td align="right">3,437,000</td>
+							</tr>
+							<tr>
+								<td><b>Equity</b></td>
+								<td></td>
+								<td align="right"><b>14,100,000</b></td>
+							</tr>
+						</table>
+						
+					</div>
 				</div>
 			</div>
 			<div class="report-chart">				
@@ -5450,15 +5408,15 @@
 	        <ul>
 	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Financial Reporting Standards</span></a>
 	            </li>
-	            <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Chart of Accounts Condition</span></a>
+	           <!--  <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Chart of Accounts Condition</span></a>
 	            </li>
-	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Segments Setting</span></a>
+	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Segments Setting</span></a>
 	            </li>
-	            <li><a href="#tab4-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Transaction Item </span></a>
+	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Transaction Item </span></a>
 	            </li>
 	            <li><a href="#tab5-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Tax Setting </span></a>
-	            </li>	
-	            <li><a href="#tab6-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Prefix Setting </span></a>
+	            </li>	 -->
+	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Prefix Setting </span></a>
 	            </li>	                        
 	        </ul>
 	    </div>
@@ -5486,7 +5444,7 @@
 	            <!-- // Tab Branch content END -->
 
 	            <!-- Tab Contact Type content -->
-	            <div class="tab-pane" id="tab2-1">
+	            <!-- <div class="tab-pane" id="tab2-1">
 	            	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i></button>
@@ -5503,11 +5461,11 @@
 				                data-template="customerSetting-payment-method-template"
 				                data-bind="source: paymentMethodDS"></tbody>
 	            	</table>			            
-	            </div>
+	            </div> -->
 	            <!-- // Tab Contact Type content END -->
 
 	            <!-- Tab Block content -->
-	            <div class="tab-pane" id="tab3-1">
+	           <!--  <div class="tab-pane" id="tab2-1">
             		<div class="input-append">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="term ..." data-bind="value: paymentTerm">
@@ -5528,11 +5486,11 @@
 				                data-template="customerSetting-payment-term-template"
 				                data-bind="source: paymentTermDS"></tbody>
 	            	</table>
-	            </div>
+	            </div> -->
 	            <!-- // Tab Block content END -->
 
 	            <!-- Tab Block content -->
-	            <div class="tab-pane" id="tab6-1">
+	            <div class="tab-pane" id="tab2-1">
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr class="widget-head">
@@ -5741,166 +5699,120 @@
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960" style="overflow: hidden;">					
-			<div id="example" class="k-content">
+				<div id="example" class="k-content">
 
-				<div class="hidden-print">
-			    	<div class="pull-right">
-			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back()"><i></i></span>						
-					</div>
+					<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
 
 			        <h2>Segment</h2>
-			        <div class="span6">
-			        	<p>
-				        	Segment is important for monitoring or in-depth analysis of your company performance. There are two default segments created. You can edit or add more segment and its items.
-				        </p>
-			        </div>
-			         <div class="span6">
-			         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbspAdd New Segment</button>
-						
-			        </div>
-			        				        				        				        	
-			    </div>			   
 
-			    <br>
+			        <div class="row">
+				        <div class="span6">
+				        	<p>
+					        	Segment is important for monitoring or in-depth analysis of your company performance. There are two default segments created. You can edit or add more segment and its items.
+					        </p>
+				        </div>
+				         <div class="span6">
+				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbspAdd New Segment</button>
+							
+				        </div>
+			        </div>				    			   
 
-			    <!-- Window -->
-			    <div data-role="window"
-		                 data-title="Segment"		                 
-		                 data-width="280"
-		                 data-height="165"
-		                 data-actions="{}"
-		                 data-position="{top: '30%', left: '37%'}"
-		                 data-bind="visible: windowVisible">
-			    	<table>							
-						<tr style="border-bottom: 8px solid #fff;">
-							<td width="40%">NAME</td>
-							<td>
-								<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td>CODE LENGTH</td>
-							<td>
-								<input class="k-textbox" placeholder="Code Length..." data-bind="value: obj.code_length" style="width: 100%;">
-							</td>
-						</tr>
-						<tr>
-							<td>STATUS</td>
-							<td>
-								<input data-role="dropdownlist"						                   
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: obj.status,
-					                              source: statusList"
-					                   style="width: 100%;" />
-							</td>
-						</tr>							
-					</table>
+				    <br>
 
-					<br>
-					<div style="text-align: center;">
-						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
-						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
+				    <!-- Window -->
+				    <div data-role="window"
+			                 data-title="Segment"		                 
+			                 data-width="280"
+			                 data-height="165"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"
+			                 data-bind="visible: windowVisible">
+				    	
+				    	<table>							
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="40%">NAME</td>
+								<td>
+									<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
+								</td>
+							</tr>		
+						</table>
+
+						<br>
+
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
+						</div>
 					</div>
-				</div>
-						
-                <div class="row-fluid">
-	                <div class="span12 table-segment" style="padding: 0;">	                					
-		            	<table class="table table-condensed">
-		            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
-		            			<tr>
-		            				<th>NAME</th>
-		            				<th>CODE</th>
-		            				<th>STATUS</th>		            					            				
-		            				<th></th>
-		            			</tr>
-		            		</thead>
-		            		<tbody data-role="listview"			            			
-					                data-template="segment-template"
-					                data-bind="source: dataSource"></tbody>
-		            	</table>
-	            	</div>
+							
+	                <div class="row-fluid">
+		                <div class="span12 table-segment" style="padding: 0;">	                					
+			            	<table class="table table-condensed">
+			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
+			            			<tr>
+			            				<th>NAME</th>            					            				
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            			
+						                data-template="segment-template"
+						                data-bind="source: dataSource"></tbody>
+			            	</table>
+		            	</div>
 
-	            <!-- Item Window -->
-	            <div data-role="window"
-		                 data-title="Segment Item"		                 
-		                 data-width="250"
-		                 data-height="201"
-		                 data-actions="{}"
-		                 data-position="{top: '30%', left: '37%'}"		                 
-		                 data-bind="visible: windowItemVisible">
-            		<table>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td width="35%">CODE</td>
-							<td>
-								<input class="k-textbox" placeholder="type code ..." data-bind="value: item.code" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td>NAME</td>
-							<td>
-								<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
-							</td>
-						</tr>
-						<tr style="border-bottom: 8px solid #fff;">
-							<td>STATUS</td>
-							<td>
-								<input data-role="dropdownlist"						                   
-						                   data-value-primitive="true"
-						                   data-text-field="name"
-						                   data-value-field="id"
-						                   data-bind="value: item.status,
-						                              source: statusList"
-						                   style="width: 100%;" />
-							</td>
-						</tr>
-						<tr>
-							<td>SEGMENT</td>
-							<td>
-								<input data-role="dropdownlist"
-					                   data-option-label="Select Segment..."
-					                   data-value-primitive="true"					                   
-					                   data-text-field="name"
-					                   data-header-template="segment-header-tmpl"
-					                   data-value-field="id"
-					                   data-bind="value: item.segment_id,
-					                              source: dataSource"
-					                   style="width: 100%" />
-							</td>
-						</tr>
-						
-					</table>
+		            <!-- Item Window -->
+		            <div data-role="window"
+			                 data-title="Segment Item"		                 
+			                 data-width="250"
+			                 data-height="201"
+			                 data-actions="{}"
+			                 data-position="{top: '30%', left: '37%'}"		                 
+			                 data-bind="visible: windowItemVisible">
+	            		<table>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td width="35%">CODE</td>
+								<td>
+									<input class="k-textbox" placeholder="type code ..." data-bind="value: item.code" style="width: 100%;">
+								</td>
+							</tr>
+							<tr style="border-bottom: 8px solid #fff;">
+								<td>NAME</td>
+								<td>
+									<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
+								</td>
+							</tr>
+						</table>
 
-					<br>
-					<div style="text-align: center;">
-						<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i>Save</span>
-						<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i>Close</span>  
+						<br>
+						<div style="text-align: center;">
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i>Save</span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i>Close</span>  
+						</div>
 					</div>
-				</div>
 
-				<h3 data-bind="text: objName"></h3>
+					<h3 data-bind="text: objName"></h3>
 
-				<div class="row-fluid">
-	            	<div class="span8">		                	
-					    <table class="table table-bordered table-white">
-		            		<thead>
-		            			<tr>
-		            				<th>CODE</th>
-		            				<th>NAME</th>
-		            				<th>SEGMENT</th>
-		            				<th>STATUS</th>		            					            				
-		            				<th></th>
-		            			</tr>
-		            		</thead>
-		            		<tbody data-role="listview"			            				
-					                data-template="segment-item-template"
-					                data-auto-bind="false"
-					                data-bind="source: itemDS"></tbody>
-		            	</table>
+					<div class="row">
+		            	<div class="span12">		                	
+						    <table class="table table-bordered table-white">
+			            		<thead>
+			            			<tr>
+			            				<th>CODE</th>
+			            				<th>NAME</th>
+			            				<th>SEGMENT</th>   					            				
+			            				<th></th>
+			            			</tr>
+			            		</thead>
+			            		<tbody data-role="listview"			            				
+						                data-template="segment-item-template"
+						                data-auto-bind="false"
+						                data-bind="source: itemDS"></tbody>
+			            	</table>
+		            	</div>
 	            	</div>
-            	</div>
-			</div>							
+				</div>							
 			</div>
 		</div>
 	</div>
@@ -5908,12 +5820,12 @@
 <script id="segment-template" type="text/x-kendo-tmpl">                    
     <tr>    	
     	<td>#=name#</td>
-    	<td>#=code_length#</td>
-    	<td>#=status#</td>    	
     	<td>
     		<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
-    		|
-    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
+    		#if(!is_system=="1"){#
+	    		|
+	    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>
+    		#}#
     		|
     		<span data-bind="click: view"><i class="icon-view"></i> View Item</span>
     		|
@@ -5926,11 +5838,12 @@
     	<td>#=code#</td>
     	<td>#=name#</td>
     	<td>#=segment[0].name#</td>
-    	<td>#=status#</td>     	 		
    		<td>
     		<span data-bind="click: editItem"><i class="icon-edit"></i> Edit</span>
-    		|
-    		<span data-bind="click: deleteItem"><i class="icon-remove"></i> Delete</span>
+    		#if(!is_system=="1"){#
+	    		|
+	    		<span data-bind="click: deleteItem"><i class="icon-remove"></i> Delete</span>
+    		#}#
     	</td>
    	</tr>
 </script>
@@ -7879,6 +7792,22 @@
 												required data-required-msg="required"
 												style="width:100%;" />
 									</td>
+								</tr>
+								<tr>
+									<td>Currency</td>
+									<td>
+										<input id="cbbCurrency" name="cbbCurrency"
+											   data-role="combobox"											                    
+							                   data-value-primitive="true"
+							                   data-template="currency-list-tmpl"
+							                   data-text-field="code"
+							                   data-value-field="id"
+							                   data-bind="value: obj.locale,
+							                              source: currencyDS,
+							                              events:{ change: setRate }"
+							                   data-placeholder="Type Name.."                    
+							                   required data-required-msg="required" style="width: 100%" />
+									</td>
 								</tr>								
 								<tr>
 									<td>Employee</td>
@@ -7915,13 +7844,11 @@
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
 						        <ul class="row-fluid row-merge">
-						            <li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i></a>
+						            <li class="span1 glyphicons cogwheels active"><a href="#tab1-3" data-toggle="tab"><i></i></a>
 						            </li>
-						            <li class="span1 glyphicons circle_info"><a href="#tab2-4" data-toggle="tab"><i></i></a>
+						            <li class="span1 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i></a>
 						            </li>
-						            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
-						            </li>
-						            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i></a>
+						            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
 						            </li>								            
 						        </ul>
 						    </div>
@@ -7930,7 +7857,7 @@
 						    <div class="tab-content">
 
 						        <!-- Option Tab content -->
-						        <div class="tab-pane active" id="tab1-4" >
+						        <div class="tab-pane active" id="tab1-3" >
 						        	<table class="table table-borderless table-condensed cart_total">
 						        		<tr>
 							        		<td colspan="2">
@@ -7992,29 +7919,6 @@
 									                   data-placeholder="Select Cash Advance.." style="width: 100%" />	
 							        		</td>
 							        	</tr>
-						        	</table>
-						        </div>
-						        <!-- // Option Tab content END -->
-
-						        <!-- Info Tab content -->
-						        <div class="tab-pane" id="tab2-4">
-						        	<table class="table table-borderless table-condensed cart_total">						        		
-						        		<tr>
-											<td>Currency</td>
-											<td>
-												<input id="cbbCurrency" name="cbbCurrency"
-													   data-role="combobox"											                    
-									                   data-value-primitive="true"
-									                   data-template="currency-list-tmpl"
-									                   data-text-field="code"
-									                   data-value-field="id"
-									                   data-bind="value: obj.locale,
-									                              source: currencyDS,
-									                              events:{ change: setRate }"
-									                   data-placeholder="Type Name.."                    
-									                   required data-required-msg="required" style="width: 100%" />
-											</td>
-										</tr>
 							        	<tr>
 											<td>Segments</td>
 											<td>
@@ -8030,13 +7934,13 @@
 													   data-placeholder="Add Segment.."				   
 													   style="width: 100%" /></select>
 											</td>
-										</tr>							        	
+										</tr>
 						        	</table>
 						        </div>
-						        <!-- // Info Tab content END -->
+						        <!-- // Option Tab content END -->						       
 
 						        <!-- Attach Tab content -->
-						        <div class="tab-pane" id="tab3-4">
+						        <div class="tab-pane" id="tab2-3">
 
 						        	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>					            	
 						            
@@ -8067,7 +7971,7 @@
 						        <!-- // Attach Tab content END -->
 
 						        <!-- Recuring Tab content -->
-						        <div class="tab-pane" id="tab4-4">							            	
+						        <div class="tab-pane" id="tab3-3">							            	
 						            
 						            <div class="span5">
 
@@ -14998,7 +14902,7 @@
 								</div>
 							</div>
 						</div>
-<<<<<<< HEAD
+
 					</div>
 
 					<table class="table table-borderless table-condensed ">
@@ -20506,8 +20410,9 @@
 					<span class="pull-right glyphicons no-js remove_2" 
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br><br>
-								
-					<div>
+
+					<h1 style="font-size: 25px; text-align: center;">Coming Soon</h1>								
+					<!-- <div>
 						<input id="cbbContact" name="cbbContact"
 							   data-role="combobox"											                    
 			                   data-value-primitive="true"
@@ -20595,7 +20500,7 @@
 							<td><span data-bind="text: ninety"></span></td>
 							<td><span data-bind="text: overNinety"></span></td>
 						</tr>
-					</table>
+					</table> -->
 				</div>							
 			</div>
 		</div>
@@ -23608,7 +23513,7 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
-			        <h2 style="padding:0 15px;"">CUSTOM FORMS</h2>
+			        <h2 style="padding:0 15px;"" data-bind="text: lang.lang.custom_forms"></h2>
 				    <br>	
 				    <div class="row" style="margin-left:0;">			   				
 						<div class="span4">	
@@ -23732,7 +23637,7 @@
         		<h1>វិក្កយបត្រ</h1>
             	<h2 data-bind="text: obj.title"></h2>
         	</div>
-            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
             	<div class="cover-customer">
                 	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
                     <div class="clear">
@@ -23844,7 +23749,7 @@
         		<h1>វិក្កយបត្រអាករ</h1>
             	<h2 data-bind="text: obj.title"></h2>
         	</div>
-            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
             	<div class="cover-customer">
                 	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
                     <div class="clear">
@@ -24298,7 +24203,7 @@
 	<div class="inv1 pcg">
         <div class="content clear">
         	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        		<div class="logo" style="width: 35%">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
@@ -24388,7 +24293,7 @@
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
         	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        		<div class="logo" style="width: 35%">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
@@ -24478,7 +24383,7 @@
 	<div class="inv1 pcg">
         <div class="content clear">
         	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        		<div class="logo" style="width: 35%">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
@@ -24567,7 +24472,7 @@
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
         	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        		<div class="logo" style="width: 35%">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
@@ -25633,160 +25538,110 @@
     </div>
 </script>
 <script id="invoiceForm19" type="text/x-kendo-template">
-	<div class="inv1 pcg-cash">
+    <div class="inv1 pcg">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
-	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
-	            </div>
+        	<div class="span12 clear mid-header">
+        		<div class="span5" style="margin-right: 15px;">
+        			<div class="logo" style="width: 100%;">
+		            	<img style="width: 55%" data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+        			
+        		</div>
+        		<div class="span6" style="float:right;">
+        			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
+        		</div>
         	</div>
-        	<div class="span7">
-        		<h2 data-bind="text: obj.title"></h2>
+        	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ឈ្មោះ Name : <span>Choeun </span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ទូទាត់ដោយ Mode of Payment : <span>Cash</span></div>
+				<div class="span12" style="text-align: left;padding-left: 10px;margin-top: 10px;">គោលបំណងការចំណាយ Purpose of Payment : <span>abc</span></div>
         	</div>
-        	<div class="span12" style="background:none;margin-top: 15px;">
-        		<table class="span12 left-tbl" border="1">
-        			<tr>
-        				<td width="200">ឈ្មោះ NAME</td>
-        				<td width="200" data-bind="text: obj.contact.name"></td>
-        				<td width="200">លេខសក្ខីប័ត្រ PV No.</td>
-        				<td width="200"></td>
-        			</tr>
-        			<tr>
-        				<td width="200">អ្នកផ្គត់ផ្គង់ Supplier Code</td>
-        				<td width="200"></td>
-        				<td width="200">កាលបរិច្ឆេទ Date</td>
-        				<td width="200"></td>
-        			</tr>
-        			<tr>
-        				<td width="200">ផ្នែក Department</td>
-        				<td width="200"></td>
-        				<td width="200">លេខសក្ខីប័ត្របំណុល APV No.</td>
-        				<td width="200"></td>
-        			</tr>
-        			<tr>
-        				<td width="200">ទូទាត់ដោយ Mode of<br>Payment</td>
-        				<td colspan="3"> </td>
-        			</tr>
-        			<tr>
-        				<td width="200">គោលបំណងការចំណាយ<br>Purpose of Advance</td>
-        				<td colspan="2">&nbsp;</td>
-        				<td>Budgeted: </td>
-        			</tr>
-        		</table>
-        	</div>
-        	<table class="span12" style="border-top: none;">
+        	<table class="span12" rules="rows">
         		<thead>
 	        		<tr style="background: #c6d9f1;">
-	        			<th style="border-top: 0;">
-	        				No.
-	        			</th>
-	        			<th style="border-top: 0;" width="100">
-	        				Invoice No.
-	        			</th>
-	        			<th style="border-top: 0;">
-	        				Description
+	        			<th style="border-top: 0;" width="60">
+	        				ល.រ<br>No.
 	        			</th>
 	        			<th style="border-top: 0;" width="120">
-	        				Amount
+	        				វិក្កយបត្រលេខ<br>Invoice No.
+	        			</th>
+	        			<th style="border-top: 0;text-align: left;padding-left: 10px;">
+	        				បរិយាយ​<br>Description
+	        			</th>
+	        			<th style="border-top: 0;" width="120">
+	        				ចំនួន<br>Amount
 	        			</th>
 	        		</tr>
         		</thead>
-        		<tbody id="formListView" 
+        		<tbody style="margin-top: 2px" id="formListView" 
         				data-role="listview"
 						data-auto-bind="false"
 						data-template="invoiceForm-lineDS-template19"
 						data-bind="source: lineDS">
-				<tfoot>
-	        		<tr>
-	        			<td colspan="3" style="text-align: right;padding-right: 5px;">Total</td>
-	        			<td></td>
-	        		</tr>
-	        		<tr>
-	        			<td colspan="3" style="text-align: right;padding-right: 5px;">Settlement Discounts</td>
-	        			<td></td>
-	        		</tr>
-	        		<tr>
-	        			<td colspan="3" style="text-align: right;padding-right: 5px;background: #c6d9f1;">NET AMOUNT PAID</td>
-	        			<td></td>
-	        		</tr>
-	        	</tfoot>
+        		<tfoot>
+        			<tr>
+        				<td style="border:none;text-align: left;" colspan="2" rowspan="3">
+        				</td>
+        				<td style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
+        				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td class="rside" style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        		</tfoot>
         	</table>
-        	<table class="span12 left-tbl" >
-        		<tr>
-        			<td colspan="2" style="background: #c6d9f1;border-top: none;text-align:right;padding-right:5px;">
-        				Amount in Words
-        			</td>
-        			<td colspan="3" style="border-top: none;">&nbsp;</td>
-        		</tr>
-        		<tr>
-        			<td colspan="2"></td>
-        			<td style="background: #000; color: #fff;text-align:center;">SIGNATURE</td>
-        			<td style="background: #000; color: #fff;text-align:center;">POSITION</td>
-        			<td width="120" style="background: #000; color: #fff;text-align:center;">DATE</td>
-        		</tr>
-        		<tr>
-        			<td style="background: #10253f; color: #fff;text-align:center;" rowspan="5" width="20"><p class="upside">Finance Department</p></td>
-        			<td width="100">រៀបចំដោយ<br>PREPARED BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td><b>សំរេចដោយ<br>APPROVED BY</b></td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td>ទួទាត់ដោយ<br>PAID BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td>ទទួលដោយ<br>RECEIVED BY</td>
-        			<td></td>
-        			<td></td>
-        			<td></td>
-        		</tr>
-        		<tr>
-        			<td style="background:#000;"></td>
-        			<td colspan="4">For Accounting Department Only</td>
-        		</tr>
-        		<tr>
-        			<td></td>
-        			<td style="text-align:center;">Account Code</td>
-        			<td style="text-align:center;">Account Description</td>
-        			<td style="text-align:center;">Debit</td>
-        			<td style="text-align:center;">Credit</td>
-        		</tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
-        		<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
-        		<tr>
-        			<td style="background: #c6d9f1;"></td>
-        			<td style="background: #c6d9f1;">កត់ត្រាដោយ<br>POSTED BY</td>
-        			<td style="text-align:center;"></td>
-        			<td style="text-align:center;"></td>
-        			<td style="text-align:center;"></td>
-        		</tr>
+
+        	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
+        		<tbody>
+	        		<tr>
+	        			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
+	        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
+	        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+	        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>ទួទាត់ដោយ<br>PAID BY</td><td></td>
+	        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>ទទួលដោយ<br>RECEIVED BY</td><td></td>
+	        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+	        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+	        		</tr>
+	        	</tbody>
         	</table>
-        	<table class="span12" border="1">
-        		<tr>
-        			<td rowspan="2" width="400" style="border-top:0;text-align: left;padding-left: 5px;" data-bind="text: obj.note"></td>
-        			<td style="border-top:0;text-align: left;padding-left: 5px;">Version</td>
-        			<td style="border-top:0;text-align: left;padding-left: 5px;"><b>V.01</b></td>
+
+        	<table class="span12 left-tbl" style="margin-top: 30px;">
+        		<tr class="mid-header">
+        			<td colspan="4" style="text-align:center;font-weight: bold;">For Accounting Department Only</td>
         		</tr>
         		<tr>
-        			<td style="text-align: left;padding-left: 5px;">Doc. Control</td>
-        			<td style="text-align: left;padding-left: 5px;"><b>TRM02-03</b></td>
+        			<td >Account Code</td>
+        			<td >Account Description</td>
+        			<td >Debit</td>
+        			<td >Credit</td>
         		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
         	</table>
         </div>
     </div>
@@ -26723,7 +26578,7 @@
         		<h1>វិក្កយបត្រ</h1>
             	<h2 data-bind="text: obj.title"></h2>
         	</div>
-            <div class="clear" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
             	<div class="cover-customer">
                 	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
                     <div class="clear">
@@ -27222,15 +27077,20 @@
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
         		<tr>
+        			<td width="90">ចេញដោយ <br>ISSUED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
+        			<td width="90">ដឹកជញ្ជូន <br>DELIVERED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
         		<tr>
         			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
@@ -27291,15 +27151,20 @@
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
         		<tr>
+        			<td width="90">ចេញដោយ <br>ISSUED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
+        			<td width="90">ដឹកជញ្ជូន <br>DELIVERED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
         		<tr>
         			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
@@ -27360,15 +27225,20 @@
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
         		<tr>
+        			<td width="90">ចេញដោយ <br>ISSUED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
+        			<td width="90">ដឹកជញ្ជូន <br>DELIVERED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
         		<tr>
         			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
@@ -27429,15 +27299,20 @@
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 40px;">
         		<tr>
+        			<td width="90">ចេញដោយ <br>ISSUED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
+        			<td width="90">ដឹកជញ្ជូន <br>DELIVERED BY</td><td width="120"></td>
+        			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
+        		<tr>
         			<td width="90">រៀបចំដោយ <br>PREPARED BY</td><td width="120"></td>
         			<td width="80">តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
-        		<!--tr>
-        			<td>ត្រួតពិនិត្យដោយ<br>REVIEWED BY</td><td></td>
-        			<td>តំណែង<br>POSITION</td><td width="80"></td>
-        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
-        		</tr-->
         		<tr>
         			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
@@ -28089,7 +27964,7 @@
 </script>
 <script id="invoiceForm-lineDS-template" type="text/x-kendo-template">
 	<tr>
-		<td><!--i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i-->&nbsp;</td>
+		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i>&nbsp;</td>
 		<td style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td>#= quantity#</td>
 		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
@@ -28205,6 +28080,7 @@
 		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
+
 
 
 
@@ -33968,9 +33844,12 @@
 							<td>
 								<h3><a href="#/inventory_movement_summary">Inventory Movement Summary</a></h3>
 							</td>
-							<td >
+							<!-- <td >
 								<h3><a href="#/inventory_movement_detail">Inventory Movement Detail</a></h3>								
-							</td>						
+							</td>	 -->
+							<td >
+								<h3><a href="#/purchase_summary_product_services">Purchase by Supplier Summary</a></h3>
+							</td>					
 						</tr>
 						<tr>
 							<td >
@@ -33979,48 +33858,48 @@
 								</p>
 								
 							</td>
-							<td >
+							<!-- <td >
 								<p>
 									Lists of all detailed transactions related to and grouped by each inventory
 								</p>
-							</td>
-							
-						</tr>
-						<tr>
-							<td >
-								<h3><a href="#/purchase_summary_product_services">Purchase by Supplier Summary</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/purchase_detail_product_services">Purchase by Supplier Detail</a></h3>
-							</td>
-						</tr>
-						<tr>
+							</td> -->
 							<td >
 								<p>
 									Lists all inventory purchases from each suppliers
 								</p>
 							</td>
+						</tr>
+						<tr>
+							
+							<td >
+								<h3><a href="#/purchase_detail_product_services">Purchase by Supplier Detail</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/sale_summary_customer">Sale by Customer Summary</a></h3>
+							</td>
+						</tr>
+						<tr>
+							
 							<td >
 								<p>
 									Lists of detailed inventory purchase transactions from each suppliers
 								</p>
 							</td>
-						</tr>
-
-						<tr>
-							<td >
-								<h3><a href="#/sale_summary_customer">Sale by Customer Summary</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/sale_detail_customer">Sale by Customer Detail</a></h3>
-							</td>
-						</tr>
-						<tr>
 							<td >
 								<p>
 									Lists all inventory sold to each customer
 								</p>
 							</td>
+						</tr>
+
+						<tr>
+							
+							<td >
+								<h3><a href="#/sale_detail_customer">Sale by Customer Detail</a></h3>
+							</td>
+						</tr>
+						<tr>
+							
 							<td >
 								<p>
 									Lists of detailed inventory sale transactions to each customer
@@ -34031,7 +33910,7 @@
 					</table>
 				</div>
 			</div>
-			<div class="row-fluid recevable-report">
+			<!-- <div class="row-fluid recevable-report">
 				<h2>OTHER REPORTS/ LISTS</h2>
 				<p>
 					The following reports provide summary and detailed reports on the movement of the inventories
@@ -34059,7 +33938,7 @@
 						
 					</table>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<div class="span5">
 			<span class="pull-right glyphicons no-js remove_2" 
@@ -37625,32 +37504,38 @@
 										<div class="row-fluid">
 											<table class="span12">
 												<tr>
-													<tdclass="span4">
+													<td class="span4">
 														<h3><a href="#/inventory_movement_summary">Inventory Movement Summary</a></h3>
 													</td>
-													<td class="span4">
+													<!-- <td class="span4">
 														<h3><a href="#/inventory_movement_detail">Inventory Movement Detail</a></h3>								
-													</td>
+													</td> -->
 													<td class="span4">
 														<h3><a href="#/purchase_summary_product_services">Purchase by Supplier Summary</a></h3>
-													</td>						
+													</td>
+													<td class="span4">
+														<h3><a href="#/purchase_detail_product_services">Purchase by Supplier Detail</a></h3>
+													</td>					
 												</tr>
 												<tr>
 													<td class="span4">
 														Shows the movement of each inventory by opening balance, sale, purchase and adjustment. 
 													</td>
-													<td class="span4">
+													<!-- <td class="span4">
 														Lists of all detailed transactions related to and grouped by each inventory
-													</td>
+													</td> -->
 													<td class="span4">
 														Lists all inventory purchases from each suppliers
+													</td>
+													<td class="span4">
+														Lists all inventory sold to each customer
 													</td>
 												</tr>
 												
 												<tr>
-													<td class="span4">
+													<!-- <td class="span4">
 														<h3><a href="#/purchase_detail_product_services">Purchase by Supplier Detail</a></h3>
-													</td>
+													</td> -->
 													<td class="span4">
 														<h3><a href="#/sale_summary_customer">Sale by Customer Summary</a></h3>
 													</td>
@@ -37659,9 +37544,9 @@
 													</td>
 												</tr>
 												<tr>
-													<td class="span4">
+													<!-- <td class="span4">
 														Lists all inventory sold to each customer
-													</td>
+													</td> -->
 													<td class="span4">
 														Lists of detailed inventory sale transactions to each customer
 													</td>
@@ -37673,7 +37558,7 @@
 											</table>
 										</div>
 									</div>
-									<div class="span12 recevable-report" style="margin-top: 15px; display: inline-block; padding-left: 0;">
+									<!-- <div class="span12 recevable-report" style="margin-top: 15px; display: inline-block; padding-left: 0;">
 										<h2>OTHER REPORTS/ LISTS</h2>
 										<p>
 											The following reports provide summary and detailed reports on the movement of the inventories
@@ -37702,7 +37587,7 @@
 												
 											</table>
 										</div>
-									</div>
+									</div> -->
 					        	</div>
 				        	</div>
 
@@ -37782,7 +37667,7 @@
 													</td>
 												</tr>
 
-												<tr>
+												<!-- <tr>
 													<td class="span4">
 														<h3><a href="#/transaction_list_date">Transaction List by Date</a></h3>
 													</td>
@@ -37803,13 +37688,13 @@
 													<td class="span4">
 														
 													</td>
-												</tr>
+												</tr> -->
 											</table>
 										</div>
 									</div>									
 					        	</div>
 
-					        	<div class="row-fluid recevable-report" style="margin-top: 15px; display: inline-block;">
+					        	<div class="span12 recevable-report" style="margin-top: 15px; display: inline-block; padding-left: 0;">
 										<h2>OTHER REPORTS/ LISTS</h2>
 										<div class="row-fluid">
 											<table class="span12">
@@ -37817,12 +37702,14 @@
 													<td class="span4">
 														<h3><a href="#/chart_of_account">Chart of Account </a></h3>
 													</td>
-													<td class="span4">
+													<td class="span4"></td>
+													<td class="span4"></td>
+													<!-- <td class="span4">
 														<h3><a href="#/audit_trial_report">Audit Trial Report</a></h3>								
 													</td>
 													<td class="span4">
 														<h3><a href="#/recurring_journal_list">Recurring Journal List</a></h3>							
-													</td>						
+													</td>	 -->					
 												</tr>
 												<tr>
 													<td class="span4">
@@ -37831,7 +37718,7 @@
 													<td class="span4"></td>
 													<td class="span4"></td>
 												</tr>
-												<tr>
+												<!-- <tr>
 													<td class="span4">
 														<h3><a href="#/">Realized Exchange Gains & Losses</a></h3>
 													</td>
@@ -37846,7 +37733,7 @@
 													<td class="span4">
 														This summary report lists your foreign accounts and calculates the potential gain or loss for each account.
 													</td>							
-												</tr>												
+												</tr>			 -->									
 											</table>
 										</div>
 									</div>
@@ -38377,8 +38264,8 @@
   				<li><a href='#/gdn'>Create Delivery Note</a></li>
   				<li><a href='#/item_adjustment'>Create Item Adjustment</a></li>  				
   				<li><a href='#/internal_usage'>Create Internal Usage</a></li>	
-  				<li> <span class="li-line"></span></li> 	
-  				<li><a href='#/item_recurring'>Inventory Recurring List</a></li>  				 				 				  				 				
+  				<!-- <li> <span class="li-line"></span></li>  -->	
+  				<!-- <li><a href='#/item_recurring'>Inventory Recurring List</a></li>-->
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/item_report_center'>REPORTS</a></li>	  	
@@ -40922,7 +40809,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter: { field: "tax_type_id", operator:"where_in", value:[1,3] },
+			filter: { field: "tax_type_id", operator:"where_in", value:[3,9] },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -40958,7 +40845,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter: { field: "tax_type_id", value:1 },
+			filter: { field: "tax_type_id", operator:"where_in", value:[1,2,3,9] },
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -41198,7 +41085,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		adjustmentAccountDS				: new kendo.data.DataSource({
+		adjustmentAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -41801,41 +41688,7 @@
 		//Payment Term, Method, Segment
 		paymentTermDS				: dataStore(apiUrl + "payment_terms"),
 		paymentMethodDS				: dataStore(apiUrl + "payment_methods"),
-		segmentItemDS				: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "segments/item",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			group: { field: "segment[0].name"},
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
+		segmentItemDS				: dataStore(apiUrl + "segments/item"),
 		//Recurring
 		frequencyList 				: [
 			{ id: 'Daily', name: 'Day' },
@@ -43438,6 +43291,8 @@
 		lang 				: langVM,
         dataSource 			: dataStore(apiUrl + "tax_types"),
         itemDS 	 			: dataStore(apiUrl + "tax_items"),
+        deleteDS 			: dataStore(apiUrl + "tax_items"),
+        itemDeleteDS 		: dataStore(apiUrl + "transactions/line"),
         accountDS 			: banhji.source.accountDS,
         typeList			: [ 
 	 		{ id:"Invoice Based", name: "Invoice Based" },
@@ -43458,7 +43313,8 @@
         		agency 				: "",
         		tax_system 			: "Invoice Based",
         		end_date 			: new Date(),
-        		submission_date 	: new Date()
+        		submission_date 	: new Date(),
+        		is_system 			: 0
         	});
         	var data = this.dataSource.data();
 			var obj = data[data.length-1];
@@ -43479,7 +43335,7 @@
         	this.dataSource.sync();
         	this.dataSource.bind("requestEnd", function(e){
         		if( e.type == "create" || e.type == "update"){ 
-        			this.set("windowVisible", false); 
+        			self.set("windowVisible", false); 
         		}
         	});
         },
@@ -43491,9 +43347,22 @@
       	},      	
       	delete 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
-		        var data = e.data;
-		        this.dataSource.remove(data);
-		        this.dataSource.sync();
+		        var self = this, data = e.data;
+
+		        this.deleteDS.query({
+		        	filter: { field:"tax_type_id", value:data.id},
+		        	page:1,
+		        	pageSize:1
+		        }).then(function(){
+		        	var view = self.deleteDS.view();
+
+		        	if(view.length>0){
+		        		this.dataSource.remove(data);
+		        		this.dataSource.sync();
+		        	}else{
+		        		alert("Sorry, this item can not be deleted.");
+		        	}
+		        });
 	    	}	    	
 	    },
 	    view 				: function(e){
@@ -43529,6 +43398,7 @@
         		tax_type_id 		: data.id,
         		account_id 			: 0,
         		name 				: "",
+        		description 		: "",
         		rate 				: "",
         		is_system 			: "",
         		account 			: [{name: ""}]
@@ -43555,16 +43425,31 @@
       	}, 
       	deleteItem 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {        
-		        var data = e.data;
-		        this.itemDS.remove(data);
-		        this.itemDS.sync();
+		        var self = this, data = e.data;
+
+		        this.deleteDS.query({
+		        	filter: { field:"tax_item_id", value:data.id},
+		        	page:1,
+		        	pageSize:1
+		        }).then(function(){
+		        	var view = self.deleteDS.view();
+
+		        	if(view.length>0){
+		        		this.dataSource.remove(data);
+		        		this.dataSource.sync();
+		        	}else{
+		        		alert("Sorry, this item can not be deleted.");
+		        	}
+		        });
 	    	}	    	
 	    }
     });
 	banhji.segment =  kendo.observable({
 		lang 				: langVM,
         dataSource 			: dataStore(apiUrl + "segments"),
-        itemDS 	 			: dataStore(apiUrl + "segments/item"),
+        itemDS 	 			: banhji.source.segmentItemDS,
+        deleteDS 			: dataStore(apiUrl + "segments/item"),
+        itemDeleteDS 		: dataStore(apiUrl + "transactions"),
         statusList 			: banhji.source.statusList,
 		obj 				: null,
 		item 				: null,
@@ -43577,7 +43462,7 @@
         	this.dataSource.add({
         		code_length			: "",
         		name 				: "",
-        		status 				: 1
+        		is_system			: 0
         	});
         	var data = this.dataSource.data();
 			var obj = data[data.length-1];
@@ -43598,7 +43483,7 @@
         	this.dataSource.sync();
         	this.dataSource.bind("requestEnd", function(e){
         		if( e.type == "create" || e.type == "update"){ 
-        			this.set("windowVisible", false);
+        			self.set("windowVisible", false);
         		}
         	});
         },
@@ -43610,9 +43495,22 @@
       	},      	
       	delete 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
-		        var data = e.data;
-		        this.dataSource.remove(data);
-		        this.dataSource.sync();		        
+		        var self = this, data = e.data;
+
+		        this.deleteDS.query({
+		        	filter: { field:"segment_id", value:data.id},
+		        	page:1,
+		        	pageSize:1
+		        }).then(function(){
+		        	var view = self.deleteDS.view();
+
+		        	if(view.length>0){
+		        		this.dataSource.remove(data);
+		        		this.dataSource.sync();
+		        	}else{
+		        		alert("Sorry, this item can not be deleted.");
+		        	}
+		        });		        		        
 	    	}	    	
 	    },
 	    view 				: function(e){
@@ -43647,7 +43545,7 @@
         	this.itemDS.add({
         		segment_id 		: data.id,
         		code 			: "",
-        		status 			: 1,        		
+        		is_system		: 0,        		
         		segment 		: [{name: ""}]
         	});
         	var data = this.itemDS.data();
@@ -43660,7 +43558,7 @@
         	this.itemDS.sync();
         	this.itemDS.bind("requestEnd", function(e){
         		if( e.type == "create" || e.type == "update"){ 
-        			this.set("windowItemVisible", false);
+        			self.set("windowItemVisible", false);
         		}
         	});
         },
@@ -43672,9 +43570,22 @@
       	}, 
       	deleteItem 				: function(e){
 			if (confirm("Are you sure, you want to delete it?")) {
-		        var data = e.data;
-		        this.itemDS.remove(data);
-		        this.itemDS.sync();
+		        var self = this, data = e.data;
+
+		        this.itemDeleteDS.query({
+		        	filter: { field:"segments", operator:"contains", value:data.id},
+		        	page:1,
+		        	pageSize:1
+		        }).then(function(){
+		        	var view = self.itemDeleteDS.view();
+
+		        	if(view.length>0){
+		        		this.dataSource.remove(data);
+		        		this.dataSource.sync();
+		        	}else{
+		        		alert("Sorry, this item can not be deleted.");
+		        	}
+		        });
 	    	}
 	    }
     });
@@ -46561,7 +46472,7 @@
 			//Refresh
 			if(this.contactDS.total()>0){
 				this.contactDS.fetch();
-				this.transactionDS.fetch();
+				this.searchTransaction();
 				this.loadSummary();
 			}							
 		},
@@ -52289,7 +52200,8 @@
 		}
 	});
 	banhji.vendorReportCenter = kendo.observable({
-		lang 				: langVM,				
+		lang 				: langVM,		
+		dataSource 			: dataStore(apiUrl + "vendorReports/over_view"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -52423,7 +52335,7 @@
     });
 
     //Report Vendor
-   banhji.supplierList = kendo.observable({
+    banhji.supplierList = kendo.observable({
 		lang 					: langVM,
 		dataSource 				: dataStore(apiUrl + "contacts/supplier"),
 		contactTypeDS			: banhji.source.customerTypeDS,
@@ -53123,7 +53035,7 @@
 			//Refresh
 			if(this.contactDS.total()>0){
 				this.contactDS.fetch();
-				this.transactionDS.fetch();
+				this.searchTransaction();
 				this.loadSummary();
 			}
 		},
@@ -67739,7 +67651,7 @@
       			sale_description		: "",
       			fixed_assets_account_id : 0,
       			accumulated_account_id 	: 0,
-      			deposal_account_id 		: 0,
+      			depreciation_account_id	: 0,
       			is_pattern 				: 0,
       			status 					: 1,
       			deleted 				: 0								
@@ -70922,7 +70834,7 @@
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.accountingReportCenter);
 
-			banhji.userManagement.addMultiTask("Period-End Closing Reports","accounting_report_center",null);
+			banhji.userManagement.addMultiTask("Accounting Report Center","accounting_report_center",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
@@ -75017,7 +74929,7 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
 			var vm = banhji.customerReportCenter;			
-			banhji.userManagement.addMultiTask("Sale Managment Reports","customer_report_center",null);
+			banhji.userManagement.addMultiTask("Customer Reports Center","customer_report_center",null);
 			if(banhji.pageLoaded["customer_report_center"]==undefined){
 				banhji.pageLoaded["customer_report_center"] = true;				
 								
