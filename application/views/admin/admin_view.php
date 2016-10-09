@@ -785,7 +785,7 @@
           
           <div data-role="listview" data-template="user-profile-list" data-bind="source:users.users" data-bind="false" class="row" style="border: 0;">
           </div>
-          
+          <div id="ntf1" data-role="notification"></div>
       </article>
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-employee">

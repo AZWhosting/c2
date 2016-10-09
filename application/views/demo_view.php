@@ -15509,7 +15509,7 @@
 					<td width="186" class="center">
 						<a href="#/sale_return">
 							<img title="Add Sale Return" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_return.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.sale_return1" style="margin-top: 7px; display: inline-block;"></span>
+							<span data-bind="text: lang.lang.sale_return" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>				
 					<td width="186" class="center">
@@ -15559,7 +15559,7 @@
 									<td width="33%" style="vertical-align: top">
 										<span data-bind="text: sale_order"></span>
 										<br>
-										<span><span data-bind="text: lang.lang.order"></span></span>
+										<span><span data-bind="text: lang.lang.sale_order"></span></span>
 									</td>
 								</tr>
 							</table>
@@ -15580,7 +15580,7 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><span data-bind="text: lang.lang.order"></span></h4>
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><span data-bind="text: lang.lang.sale_order"></span></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
@@ -16054,7 +16054,7 @@
 					<table class="table table-bordered table-striped table-white">
 						<thead>
 							<tr>
-								<th><span data-bind="text: lang.lang.customers"></span></th>
+								<th><span data-bind="text: lang.lang.date"></span></th>
 								<th><span data-bind="text: lang.lang.type"></span></th>								
 								<th><span data-bind="text: lang.lang.reference_no"></span></th>
 								<th><span data-bind="text: lang.lang.amount"></span></th>
@@ -17031,7 +17031,7 @@
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_other_inventory"></span></a></li>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
 						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
@@ -17623,7 +17623,7 @@
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_other_inventory"></span></a></li>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
 						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>	
@@ -18183,7 +18183,7 @@
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_other_inventory"></span></a></li>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
 						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li> 
@@ -18735,7 +18735,7 @@
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_other_inventory"></span></a></li>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
 						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li> 	
@@ -19360,7 +19360,7 @@
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_other_inventory"></span></a></li>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
 						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
@@ -19887,7 +19887,7 @@
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_other_inventory"></span></a></li>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
 						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
@@ -20259,7 +20259,7 @@
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_other_inventory"></span></a></li>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
 						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
@@ -38273,7 +38273,7 @@
   				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer"></span></a></li> 
   				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li>
   				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory"></span></a></li>
-  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_non_inventory_part"></span></a></li>
+  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
   				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
   				<li ><a href="#/txn_item"><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>
   				<li> <span class="li-line"></span></li>
