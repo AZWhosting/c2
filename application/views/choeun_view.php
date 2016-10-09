@@ -26369,30 +26369,9 @@
         				<td width="200" style="text-align:center;" data-bind="text: obj.issued_date"></td>
         			</tr>
         			<tr>
-        				<td colspan="4">ប្រភេទប្រតិបត្តិការ Type of transaction</td>
+        				<td colspan="4">ប្រភេទប្រតិបត្តិការ Type of transaction : <span data-bind="text: obj."></span></td>
         			</tr>
-        			<tr>
-        				<td colspan="4" style="padding: 5px 0;">
-        					<div class="row">
-        						<div class="span4">
-        							<input type="checkbox" name="">កែតម្រូវ Adjustment<br>
-        							<input type="checkbox" name="">ប្តូរចំណាត់ថ្នាក់ Reclassification<
-        						</div>
-        						<div class="span4">
-        							<input type="checkbox" name="">សមតុល្យដើមគ្រា Opening Balance<br>
-        							<input type="checkbox" name="">ប្រតិបត្តិការបង្ករ Accrual
-        						</div>
-        						<div class="span4">
-        							<input type="checkbox" name="">សមតុស្យចុងគ្រា Closing Entries<br>
-        							<input type="checkbox" name="">កាត់រំលោះ Depreciation/Amortization
-        						</div>
-        					</div>
-        					<div class="row">
-        						<div class="span8"><input type="checkbox" name="">ប្រតិបត្តិការញាតិសម្ព័ន្ធ Parties Transactions</div>
-        						<div class="span4"><input type="checkbox" name="">ប្តូរចំណាត់ថ្នាក់ Reclassification</div>
-        					</div>
-        				</td>
-        			</tr>
+        			
         			<tr>
         				<td colspan="4">Please specify, if applicable</td>
         			</tr>
@@ -26468,17 +26447,7 @@
     				<p style="font-size:10px;">Name: <br>Date:</p>
         		</div>
         	</div>
-        	<table class="span12" border="1">
-        		<tr>
-        			<td rowspan="2" width="400" style="text-align: left;padding-left: 5px;">Used for mainly non cash transactions and (but not limited to) Adjustment, Reclassification, Opening Balance, Closing Entries, Accrual, and Depreciation or Amortization</td>
-        			<td style="text-align: left;padding-left: 5px;">Version</td>
-        			<td style="text-align: left;padding-left: 5px;"><b>V.01</b></td>
-        		</tr>
-        		<tr>
-        			<td style="text-align: left;padding-left: 5px;">Doc. Ref.</td>
-        			<td style="text-align: left;padding-left: 5px;"><b>AMS02-01</b></td>
-        		</tr>
-        	</table>
+        	
         </div>
     </div>
 </script>
