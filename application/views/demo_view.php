@@ -5492,7 +5492,7 @@
 	            				<th class="center" data-bind="text: lang.lang.type"></th>
 	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
 	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
-	            				<th class="center" data-bind="text: lang.lang.name"></th>
+	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
 	            			</tr>
 	            		</thead>
@@ -5520,8 +5520,8 @@
 		<td class="center"> 
 			#= startup_number#
 		</td>
-		<td class="center">
-			<a style="text-align: left;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
+		<td class="center" style="text-align: left;">
+			<a style="text-align: left;padding-left: 5px;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
 		</td>
 		<td class="center">
 			<a class="btn-action glyphicons pencil btn-success" href="\\#/add_accountingprefix/#= id # "><i></i></a>
@@ -11574,11 +11574,12 @@
 							            <tr>
 							                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
 							                <th><span data-bind="text: lang.lang.type"></span></th>
+							                <th><span data-bind="text: lang.lang.account"></span></th>
 							                <th><span data-bind="text: lang.lang.supplier"></span></th>
 							                <th>INV.#</th>
 							                <th><span data-bind="text: lang.lang.date"></span></th>
 							                <th data-bind="visible: showDueDateColumn"><span data-bind="text: lang.lang.due_date"></span></th>
-							                <th><span data-bind="text: lang.lang.description"></span></th>						                						                			                
+							                <th data-bind="visible: showDescriptionColumn"><span data-bind="text: lang.lang.description"></span></th>						                						                			                
 							                <th class="center" style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
 							                <th class="center" style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			                			                
 							            </tr> 
@@ -11933,7 +11934,22 @@
                    required data-required-msg="required" style="width: 100%" />	
 		</td>
 		<td>
-			<input id="ddlVendor"
+			<input id="ddlAccount" name="ddlAccount-#:uid#" 
+					data-role="dropdownlist"
+					data-auto-bind="false"														
+      				data-value-primitive="true"
+      				data-header-template="account-header-tmpl"
+      				data-template="account-list-tmpl"
+					data-text-field="name" 
+      				data-value-field="id"						              				 
+      				data-bind="value: account_id,
+      							source: accountList"
+      				data-option-label="Select Account..."
+      				required data-required-msg="required" 
+      				style="width: 100%" />
+		</td>
+		<td>
+			<input id="ddlVendor" name="ddlVendor-#:uid#"
 					data-role="combobox"                   
                    data-value-primitive="true"
                    data-header-template="vendor-header-tmpl"
@@ -11941,7 +11957,8 @@
                    data-text-field="name"
                    data-value-field="id"
                    data-bind="value: contact_id,
-                              source: contactListDS"
+                              source: contactListDS,
+                              events:{ change : contactColumnChanges }"
                    data-placeholder="Add Name.."                    
                    style="width: 100%" />
 		</td>
@@ -11965,7 +11982,7 @@
 					data-bind="value: due_date"
 					style="width:100%;" />
 		</td>		
-		<td>
+		<td data-bind="visible: showDescriptionColumn">
 			<input type="text" class="k-textbox" 
 					data-bind="value: memo"					
 					style="width: 100%; margin-bottom: 0;" />
@@ -24269,18 +24286,18 @@
         		<tfoot>
         			<tr>
         				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
+
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
+        				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
-        				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
-        			</tr>
-        			<tr>
-        				
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
-        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -24364,23 +24381,24 @@
         		<tfoot>
         			<tr>
         				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
+
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
+        				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
-        				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
-        			</tr>
-        			<tr>
-        				
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
-        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
         				<td class="rside" style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
+
         		</tfoot>
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
@@ -24459,17 +24477,16 @@
         		<tfoot>
         			<tr>
         				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
-        			</tr>
-        			<tr>
-        				
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
-        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -24553,17 +24570,16 @@
         		<tfoot>
         			<tr>
         				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
-        			</tr>
-        			<tr>
-        				
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
-        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -24647,6 +24663,10 @@
         		<tfoot>
         			<tr>
         				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -24654,11 +24674,6 @@
         				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
-        			</tr>
-        			<tr>
-        				
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
-        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -24742,6 +24757,10 @@
         		<tfoot>
         			<tr>
         				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -24749,11 +24768,6 @@
         				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
-        			</tr>
-        			<tr>
-        				
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
-        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -24837,17 +24851,18 @@
         		<tfoot>
         			<tr>
         				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
+
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        				
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
-        			</tr>
-        			<tr>
-        				
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
-        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -24931,17 +24946,16 @@
         		<tfoot>
         			<tr>
         				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
-        			</tr>
-        			<tr>
-        				
-        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
-        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -25636,8 +25650,12 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="2" rowspan="3">
+        				<td style="border:none;text-align: left;" colspan="2" rowspan="4">
         				</td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -25980,41 +25998,20 @@
 	            </div>
         	</div>
         	<div class="span7">
-        		<h2>សក្ខីប័ត្រទិន្នានុប្បវត្តិ JOURNAL VOUCHER</h2>
+        		<h2 data-bind="text: obj.title"></h2>
         	</div>
         	<div class="span12" style="background:none;margin-top: 15px;">
         		<table class="span12 left-tbl" border="1">
         			<tr>
         				<td width="200" style="text-align:center;"><b>លេខសក្ខីប័ត្រ JV No.</b></td>
-        				<td width="200" style="text-align:center;"></td>
+        				<td width="200" style="text-align:center;" data-bind="text: obj.number"></td>
         				<td width="200" style="text-align:center;"><b>កាលបរិច្ឆេត Date<b></td>
-        				<td width="200" style="text-align:center;"></td>
+        				<td width="200" style="text-align:center;" data-bind="text: obj.issued_date"></td>
         			</tr>
         			<tr>
-        				<td colspan="4">ប្រភេទប្រតិបត្តិការ Type of transaction</td>
+        				<td colspan="4">ប្រភេទប្រតិបត្តិការ Type of transaction : <span data-bind="text: obj."></span></td>
         			</tr>
-        			<tr>
-        				<td colspan="4" style="padding: 5px 0;">
-        					<div class="row">
-        						<div class="span4">
-        							<input type="checkbox" name="">កែតម្រូវ Adjustment<br>
-        							<input type="checkbox" name="">ប្តូរចំណាត់ថ្នាក់ Reclassification<
-        						</div>
-        						<div class="span4">
-        							<input type="checkbox" name="">សមតុល្យដើមគ្រា Opening Balance<br>
-        							<input type="checkbox" name="">ប្រតិបត្តិការបង្ករ Accrual
-        						</div>
-        						<div class="span4">
-        							<input type="checkbox" name="">សមតុស្យចុងគ្រា Closing Entries<br>
-        							<input type="checkbox" name="">កាត់រំលោះ Depreciation/Amortization
-        						</div>
-        					</div>
-        					<div class="row">
-        						<div class="span8"><input type="checkbox" name="">ប្រតិបត្តិការញាតិសម្ព័ន្ធ Parties Transactions</div>
-        						<div class="span4"><input type="checkbox" name="">ប្តូរចំណាត់ថ្នាក់ Reclassification</div>
-        					</div>
-        				</td>
-        			</tr>
+        			
         			<tr>
         				<td colspan="4">Please specify, if applicable</td>
         			</tr>
@@ -26090,17 +26087,7 @@
     				<p style="font-size:10px;">Name: <br>Date:</p>
         		</div>
         	</div>
-        	<table class="span12" border="1">
-        		<tr>
-        			<td rowspan="2" width="400" style="text-align: left;padding-left: 5px;">Used for mainly non cash transactions and (but not limited to) Adjustment, Reclassification, Opening Balance, Closing Entries, Accrual, and Depreciation or Amortization</td>
-        			<td style="text-align: left;padding-left: 5px;">Version</td>
-        			<td style="text-align: left;padding-left: 5px;"><b>V.01</b></td>
-        		</tr>
-        		<tr>
-        			<td style="text-align: left;padding-left: 5px;">Doc. Ref.</td>
-        			<td style="text-align: left;padding-left: 5px;"><b>AMS02-01</b></td>
-        		</tr>
-        	</table>
+        	
         </div>
     </div>
 </script>
@@ -26336,15 +26323,15 @@
 						</tr>
 						<tr>
 							<td class="light-blue-td">អស័យដ្ឋាន <br>Contact Address</td>
-							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.contact[0].address"></td>
 						</tr>
 						<tr>
 							<td class="light-blue-td">គោលបំណង​​ <br>Purpose</td>
-							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.memo"></td>
 						</tr>
 						<tr>
 							<td class="light-blue-td">លេខយោង <br> Reference Document</td>
-							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.reference_id"></td>
 						</tr>
 					</table>
 		    	</div>
@@ -26354,6 +26341,7 @@
 		    			<p><span class="total-amount" data-bind="text: obj.amount"></span></p>		    			
 		    		</div>
 		    		<p style="padding: 5px 0;font-weight: bold;color: #000;clear:both;">វិធីសាស្រ្តទូទាត់​ Mode of payment</p>
+		    		<p style="padding: 5px 0;font-weight: bold;color: #000;clear:both;" data-bind="text: obj.payment_method"></p>
 		    	</div>
 		    </div>
         	<div class="span12">
@@ -27287,7 +27275,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -27377,7 +27369,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -27467,7 +27463,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -27556,7 +27556,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -37514,8 +37518,11 @@
 					        	</div>
 				        	</div>
 
-				        	<div class="tab-pane" id="tab-4">								        	
-					        	<div class="row-fluid">
+				        	<div class="tab-pane" id="tab-4">	
+				        		<div align="center" style="min-height: 150px;">
+				        			<h1 style="font-style: 30px; margin-top: 20px;">Coming Soon</h1>
+				        		</div>							        	
+					        	<!-- <div class="row-fluid">
 									<div class="row-fluid sale-report" style="margin-top: 15px;">
 										<h2>CASH POSITION</h2>
 										<p>
@@ -37545,7 +37552,7 @@
 														Lists individual inventory movement transactions by date for each inventory within a period of time.
 													</td>
 												</tr>
-												<!-- <tr>													
+												< <tr>													
 													<td class="span4">
 														<h3><a href="#/">Reconciliation Report</a></h3>
 													</td>
@@ -37554,11 +37561,11 @@
 													<td class="span4">
 														List of all cash related reconciliation reports.
 													</td>
-												</tr> -->
+												</tr> >
 											</table>					
 										</div>
 									</div>									
-					        	</div>
+					        	</div> -->
 				        	</div>
 
 				        	<div class="tab-pane" id="tab-5">								        	
@@ -40132,6 +40139,43 @@
 			page:1,
 			pageSize: 100
 		}),
+		supplierListDS				: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter: { field:"parent_id", operator:"where_related", model:"contact_type", value:2 },
+			// group: { field: "contact_type" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		employeeDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -41731,7 +41775,6 @@
 		genderList					: ["M", "F"],
 		typeList 					: ['Invoice','eInvoice','wInvoice','Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','eDeposit','wDeposit','Customer_Deposit','Vendor_Deposit','Witdraw','Transfer','Journal','Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
 		user_id						: banhji.userData.id,
-		cash_account_id 			: 10,
 		amtDueColor 				: "#D5DBDB",
 		acceptedSrc					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/accepted.ico",
 		approvedSrc					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/approved.ico",
@@ -41753,6 +41796,7 @@
 				page:1,
 				pageSize:1000
 			});
+			this.accountDS.read();
 		},
 		getFiscalDate 				: function(){
 			var today = new Date(),	
@@ -49709,9 +49753,9 @@
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		measurementDS		: dataStore(apiUrl + "measurements"),
 		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
-		contactListDS 		: banhji.source.supplierDS,
+		contactListDS 		: banhji.source.supplierListDS,
 		contactDS  			: banhji.source.supplierDS,
-		accountDS  			: dataStore(apiUrl + "accounts"),		
+		accountDS  			: dataStore(apiUrl + "accounts"),
 		expenseAccountDS  	: banhji.source.expenseAccountDS,
 		itemDS  			: banhji.source.itemDS,
 		depositDS  			: dataStore(apiUrl + "transactions"),
@@ -49829,7 +49873,8 @@
 		showRef 			: true,
 		showName 			: false,
 		showSegment 		: false,
-		showDueDateColumn	: false,								
+		showDueDateColumn	: false,
+		showDescriptionColumn : false,								
 		sub_total 			: 0,
 		tax 				: 0,
 		discount 			: 0,
@@ -50179,7 +50224,14 @@
 		},
 		//Additional Cost
 		addRowAdditionalCost: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, obj = this.get("obj"), accountList = [];
+
+			//Add default account list
+			$.each(banhji.source.accountDS.data(), function(index, value){
+				if(value.account_type_id=="10"){
+					accountList.push(value);
+				}
+			});
 			
 			this.additionalCostDS.add({				
 				contact_id 			: "",
@@ -50212,7 +50264,9 @@
 			   	day 				: 1,
 			   	week 				: 0,
 			   	month 				: 0,
-			   	is_recurring 		: 0				
+			   	is_recurring 		: 0,
+
+			   	accountList 		: accountList				
 	    	});
 
 	    	$.each(this.lineDS.data(), function(index, value) {	    		
@@ -50231,16 +50285,42 @@
 			this.additionalCostDS.remove(d);
 	        this.changes();	        		        
 		},
-		typeColumnChanges 	: function(e){
+		contactColumnChanges: function(e){
 			var data = e.data;
+
+			if(data.contact_id>0){
+				var contact = this.contactListDS.get(data.contact_id);
+				var rate = banhji.source.getRate(contact.locale, new Date(data.issued_date));
+				data.set("rate", rate);
+				data.set("locale", contact.locale);
+			}
+		},
+		typeColumnChanges 	: function(e){
+			var data = e.data, accountList = [];
 
 			if(data.type=="Cash_Purchase"){
 				data.set("status", 1);
 				this.set("showDueDateColumn", false);
+
+				//Add default cash account list
+				$.each(banhji.source.accountDS.data(), function(index, value){
+					if(value.account_type_id=="10"){
+						accountList.push(value);
+					}
+				});
 			}else{
 				data.set("status", 0);
-				this.set("showDueDateColumn", true);				
+				this.set("showDueDateColumn", true);
+
+				//Add default ap account list
+				$.each(banhji.source.accountDS.data(), function(index, value){
+					if(value.account_type_id=="23" || value.account_type_id=="24"){
+						accountList.push(value);
+					}
+				});				
 			}
+
+			data.set("accountList", accountList);
 		},			
 		typeChanges 		: function(){
 			var obj = this.get("obj");
@@ -50248,7 +50328,7 @@
 			if(obj.type=="Cash_Purchase"){
 				this.set("isCash", true);				
 
-				this.accountDS.filter({ field:"account_type_id", value: banhji.source.cash_account_id });
+				this.accountDS.filter({ field:"account_type_id", value: 10 });
 			}else{
 				this.set("isCash", false);				
 
@@ -50767,7 +50847,8 @@
 	    	obj = this.get("obj"),
 	    	contact = this.contactDS.get(obj.contact_id),	    	
 	    	taxList = {},
-	    	inventoryList = {};			
+	    	inventoryList = {},
+	    	additionalList = {};			
 			
 			//Item line
 			$.each(this.lineDS.data(), function(index, value){										
@@ -50829,6 +50910,21 @@
 
 			//Additional Cost line
 			$.each(this.additionalCostDS.data(), function(index, value){				
+				if(value.amount>0){
+					additionalAccountID = value.account_id;
+					additionalAmt = value.amount;
+
+					if(additionalList[additionalAccountID]===undefined){
+						additionalList[additionalAccountID]={"id": additionalAccountID, "amount": additionalAmt, "contact_id": value.contact_id };						
+					}else{											
+						if(additionalList[additionalAccountID].id===additionalAccountID){
+							additionalList[additionalAccountID].amount += additionalAmt;
+						}else{
+							additionalList[additionalAccountID]={"id": additionalAccountID, "amount": additionalAmt, "contact_id": value.contact_id };
+						}
+					}
+				}
+
 				//Add tax list																							
 				if(value.tax_item_id>0){
 					var taxItem = self.taxItemDS.get(value.tax_item_id),
@@ -50844,7 +50940,7 @@
 							taxList[taxID]={"id": taxID, "amount": taxAmt};
 						}
 					}
-				}								  	
+				}
 			});
 
 			//Start journal
@@ -50899,20 +50995,36 @@
 					});										
 				});
 			}
+			
+			//Add Obj Account
+			var objAccountID = obj.account_id, objAmount = obj.amount;
+			if(additionalList[objAccountID]===undefined){
+				additionalList[objAccountID]={"id": objAccountID, "amount": objAmount };						
+			}else{											
+				if(additionalList[objAccountID].id===objAccountID){
+					additionalList[objAccountID].amount += objAmount;
+				}else{
+					additionalList[objAccountID]={"id": objAccountID, "amount": objAmount };
+				}
+			}
 
-			//Cash OR A/P on Cr
-			this.journalLineDS.add({					
-				transaction_id 		: transaction_id,
-				account_id 			: obj.account_id,				
-				contact_id 			: obj.contact_id,				
-				description 		: "",
-				reference_no 		: "",
-				segments 	 		: [],								
-				dr 	 				: 0,
-				cr 					: obj.amount + obj.additional_cost,				
-				rate				: obj.rate,
-				locale				: obj.locale
-			});			
+			//Additional Cash OR A/P on Cr
+			if(!jQuery.isEmptyObject(additionalList)){
+				$.each(additionalList, function(index, value){				
+					self.journalLineDS.add({					
+						transaction_id 		: transaction_id,
+						account_id 			: value.id,				
+						contact_id 			: value.contact_id,				
+						description 		: "",
+						reference_no 		: "",
+						segments 	 		: [],								
+						dr 	 				: 0,
+						cr 					: value.amount,				
+						rate				: obj.rate,
+						locale				: obj.locale
+					});
+				});				
+			}			
 
 			//Discount on Cr			
 			if(obj.discount > 0){				

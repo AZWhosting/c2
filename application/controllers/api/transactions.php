@@ -728,6 +728,7 @@ class Transactions extends REST_Controller {
 				   	"amount_paid"				=> $amount_paid,
 				   	"payment_term" 				=> $value->payment_term->get_raw()->result(),
 				   	"payment_method" 			=> $value->payment_method->get_raw()->result()
+
 				);
 			}
 		}		
@@ -847,7 +848,8 @@ class Transactions extends REST_Controller {
 				   	"required_date"		=> $value->required_date,		   	
 
 				   	"item_prices" 		=> $itemPrice,
-				   	"item" 		=> $value->item->get_raw()->result()
+				   	"item" 		=> $value->item->get_raw()->result(),
+				   	"journal" 			=> $value->journal->get_raw()->result()
 				);
 			}						 			
 		}		
