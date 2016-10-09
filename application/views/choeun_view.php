@@ -21033,6 +21033,7 @@
 	            		</thead>
 	            		<tbody data-role="listview"
 								 data-selectable="false"
+
 				                 data-template="customerSetting-form-template"
 				                 data-bind="source: txnTemplateDS">				            
 	            		</tbody>
@@ -24631,7 +24632,7 @@
         			<tr class="ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
         				<th width="80" class="rside">សរុប<br>Total</th>
@@ -24644,12 +24645,17 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
+
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
+        				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
-        				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
         			</tr>
@@ -24721,7 +24727,7 @@
         			<tr class="ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
         				<th width="80" class="rside">សរុប<br>Total</th>
@@ -24734,12 +24740,17 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
+
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
+        				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
-        				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
         			</tr>
@@ -24747,6 +24758,7 @@
         				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
         				<td class="rside" style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
         			</tr>
+
         		</tfoot>
         	</table>
         	<table class="span12 left-tbl ten" rules="rows" style="margin-top: 20px;">
@@ -24811,7 +24823,7 @@
         		<thead>
         			<tr>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
         				<th class="rside" width="80">សរុប<br>Total</th>
@@ -24824,7 +24836,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -24900,7 +24916,7 @@
         		<thead>
         			<tr>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
         				<th class="rside" width="80">សរុប<br>Total</th>
@@ -24913,7 +24929,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -24989,7 +25009,7 @@
         			<tr class="ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
         				<th width="80" class="rside">សរុប<br>Total</th>
@@ -25002,7 +25022,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -25079,7 +25103,7 @@
         			<tr class="ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
         				<th width="80" class="rside">សរុប<br>Total</th>
@@ -25092,7 +25116,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -25169,7 +25197,7 @@
         		<thead>
         			<tr>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
         				<th class="rside" width="80">សរុប<br>Total</th>
@@ -25182,7 +25210,13 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
+
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        				
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -25258,7 +25292,7 @@
         		<thead>
         			<tr>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
         				<th class="rside" width="80">សរុប<br>Total</th>
@@ -25271,7 +25305,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -25930,23 +25968,23 @@
 <script id="invoiceForm19" type="text/x-kendo-template">
     <div class="inv1 pcg">
         <div class="content clear">
-        	<div class="span12 clear mid-header">
+        	<div class="span12 clear" style="padding:20px 0;">
         		<div class="span5" style="margin-right: 15px;">
         			<div class="logo" style="width: 100%;">
-		            	<img style="width: 55%" data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            	<img style="width: 45%" data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 		            </div>
         			
         		</div>
         		<div class="span6" style="float:right;">
-        			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p class="form-title" style="font-size: 24px;margin-bottom: 5px;margin-top: 22px;line-height: 28px;" data-bind="text: obj.title"></p>
         			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ឈ្មោះ Name : <span>Choeun </span></div>
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ទូទាត់ដោយ Mode of Payment : <span>Cash</span></div>
-				<div class="span12" style="text-align: left;padding-left: 10px;margin-top: 10px;">គោលបំណងការចំណាយ Purpose of Payment : <span>abc</span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ឈ្មោះ Name : <span data-bind="text: obj.contact.name"> </span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ទូទាត់ដោយ Mode of Payment : <span data-bind="text: obj.payment_method[0].name"></span></div>
+				<div class="span12" style="text-align: left;padding-left: 10px;margin-top: 10px;">គោលបំណងការចំណាយ Purpose of Payment : <span ></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -25972,8 +26010,12 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="2" rowspan="3">
+        				<td style="border:none;text-align: left;" colspan="2" rowspan="4">
         				</td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -26029,6 +26071,8 @@
         			<td >Debit</td>
         			<td >Credit</td>
         		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
         		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
         		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
         		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
@@ -26487,7 +26531,7 @@
         			<tr>
         				<th width="90">CODE</th>
         				<th>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>QTY</th>
         				<th>UNIT PRICE</th>
         				<th width="80">Total</th>
@@ -26593,7 +26637,7 @@
         				<th width="50" style="background: #c6d9f1;">NO</th>
         				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">ITEM CODE</th>
         				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">DESCRIPTION</th>
-        				<th style="background: #c6d9f1;">UM</th>
+        				<th style="background: #c6d9f1;">ឯកតា<br>UM</th>
         				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">QTY</th>
         				<th style="background: #c6d9f1;text-align: left;padding-left: 5px;">REMARK</th>
         			</tr>
@@ -26670,15 +26714,15 @@
 						</tr>
 						<tr>
 							<td class="light-blue-td">អស័យដ្ឋាន <br>Contact Address</td>
-							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.contact[0].address"></td>
 						</tr>
 						<tr>
 							<td class="light-blue-td">គោលបំណង​​ <br>Purpose</td>
-							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.memo"></td>
 						</tr>
 						<tr>
 							<td class="light-blue-td">លេខយោង <br> Reference Document</td>
-							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
+							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.reference_id"></td>
 						</tr>
 					</table>
 		    	</div>
@@ -26688,47 +26732,9 @@
 		    			<p><span class="total-amount" data-bind="text: obj.amount"></span></p>		    			
 		    		</div>
 		    		<p style="padding: 5px 0;font-weight: bold;color: #000;clear:both;">វិធីសាស្រ្តទូទាត់​ Mode of payment</p>
+		    		<p style="padding: 5px 0;font-weight: bold;color: #000;clear:both;" data-bind="text: obj.payment_method"></p>
 		    	</div>
 		    </div>
-        	<!--div class="span12">
-        		<div class="span5">
-        			<table class="span12">
-						<tr>
-							<td  width="120"></td>
-							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
-						</tr>
-						<tr>
-							<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
-							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
-						</tr>
-						<tr>
-							<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
-							<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
-						</tr>
-					</table>
-        		</div>
-        		<div class="span6" style="float:right">
-        			<p style="padding: 5px 0;font-weight: bold;color: #000;">វិធីសាស្រ្តទូទាត់​ <br> Mode of payment</p>
-        			<div class="span12">
-        				<div class="span4">
-        					<input type="radio" /> Cash<br>
-        					<input type="radio" /> Direct debit<br>
-        					<input type="radio" /> In-kind >
-        				</div>
-        				<div class="span4">
-        					<input type="radio" /> Bank transfer<br>
-        					<input type="radio" /> Check<br>
-        					<input type="radio" /> Others: >
-        				</div>
-        				<div class="span4">
-        					
-        					Bank Acc:<br>
-        					Check No.<br>
-        					
-        				</div>
-        			</div>
-        		</div>
-        	</div-->
         	<div class="span12">
         		<div class="span8">
         			<p style="color:black;margin: 10px 0;" data-bind="text: obj.note"></p>
@@ -26749,113 +26755,6 @@
         	<div style="margin-top: 15px" class="span12">
         		<p>Address: <span data-bind="text: company.address"></span> <sapn data-bind="text: company.city"></sapn> <span data-bind="text: company.country.name"></span>.</p>
         	</div>
-        	<!--div class="span12 copywatermark">
-	        	<div class="span12" style="margin-top: 20px;border-top: 1px solid #000;padding-top: 15px;">
-		        	<div class="span7">
-		        		<div class="logo" style="width: 40%">
-			            	<img style="width: " data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
-			            </div>
-		        	</div>
-		        	<div class="span5">
-		        		<div class="span12" style="margin-bottom: 10px;">
-		        			<img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" />
-		        		</div>
-		        		<div class="span12">
-		        			<table class="span12">
-		        				<tr>
-		        					<td class="light-blue-td" width="100">Date</td>
-		        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
-		        				</tr>
-		        				<tr>
-		        					<td class="light-blue-td">Receipt No.</td>
-		        					<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
-		        				</tr>
-		        			</table>
-		        		</div>
-		        	</div>
-		        </div>
-	        	<div class="span12" style="margin-top: 10px;">
-			    	<div class="span6" style="">
-			    		<table class="span12">
-							<tr>
-								<td class="light-blue-td"width="100">Recieve From</td>
-								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.issued_date"></td>
-							</tr>
-							<tr>
-								<td class="light-blue-td">Contact Address</td>
-								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
-							</tr>
-							<tr>
-								<td class="light-blue-td">Purpose</td>
-								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
-							</tr>
-						</table>
-			    	</div>
-			    	<div class="span5" style="float:right">
-			    		<p style="padding: 5px 0; text-align: center;font-weight: bold;color: #000;">TOTAL RECEIVED AMOUNT</p>
-			    		<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}">
-			    			<p><span class="total-amount" data-bind="text: obj.amount"></span></p>
-			    		</div>
-			    		<p style="padding: 8px 0;text-align: center;color: #000;clear:both;"></p>
-			    	</div>
-			    </div>
-	        	<div class="span12" style="margin-top: 5px">
-	        		<div class="span5">
-	        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Reference Document</p>
-	        			<table class="span12">
-							<tr>
-								<td style="text-align: left;padding-left: 5px;" width="120">Invoice No.</td>
-								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
-							</tr>
-							<tr>
-								<td style="text-align: left;padding-left: 5px;">Engagement No.</td>
-								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
-							</tr>
-							<tr>
-								<td style="text-align: left;padding-left: 5px;">Proposal No.</td>
-								<td style="text-align: left;padding-left: 5px;" data-bind="text: obj.number"></td>
-							</tr>
-						</table>
-	        		</div>
-	        		<div class="span6" style="float:right">
-	        			<p style="padding: 5px 0;font-weight: bold;color: #000;">Mode of payment</p>
-	        			<div class="span12">
-	        				<div class="span4">
-	        					<input type="radio" /> Cash<br>
-	        					<input type="radio" /> Direct debit<br>
-	        					<input type="radio" /> In-kind
-	        				</div>
-	        				<div class="span4">
-	        					<input type="radio" /> Bank transfer<br>
-	        					<input type="radio" /> Check<br>
-	        					<input type="radio" /> Others:
-	        				</div>
-	        				<div class="span4">
-	        					Bank Acc:<br>
-	        					Check No.<br>
-	        					
-	        				</div>
-	        			</div>
-	        		</div>
-	        	</div>
-	        	<div class="span12">
-	        		<div class="span8">
-	        			<p style="color:black;margin: 10px 0;">The official receipt is considered official only it bears the offical stamp of PCG & Partners and the genuin signature of PCG & Partners officers.</p>
-	        		</div>
-	        	</div>
-	        	<div class="span12">
-	        		<div class="span5">
-	        			<p>On behalf of PCG & Partners Co., Ltd</p>
-	        			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
-	        			<p style="font-weight: bold;">Sothy Lalinda</p>
-	        		</div>
-	        		<div class="span4" style="float:right;">
-	        			<p>Paid By:</p>
-	        			<div style="height: 60px;border-bottom: 1px solid #000" class="span12"></div>
-	        			<p style="font-weight: bold;"></p>
-	        		</div>
-	        	</div>
-	        </div-->
         </div>
     </div>
 </script>
@@ -27453,7 +27352,7 @@
         			<tr class="main-color ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
         			</tr>
@@ -27527,7 +27426,7 @@
         			<tr class="main-color ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
         			</tr>
@@ -27602,7 +27501,7 @@
         			<tr class="main-color ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
         			</tr>
@@ -27676,7 +27575,7 @@
         			<tr class="main-color ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
         			</tr>
@@ -27754,7 +27653,7 @@
         			<tr class="ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT COST</th>
         				<th width="80" class="rside">សរុប<br>Total</th>
@@ -27767,7 +27666,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -27844,7 +27747,7 @@
         			<tr class="ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT COST</th>
         				<th width="80" class="rside">សរុប<br>Total</th>
@@ -27857,7 +27760,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -27934,7 +27841,7 @@
         		<thead>
         			<tr>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT COST</th>
         				<th class="rside" width="80">សរុប<br>Total</th>
@@ -27947,7 +27854,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -28023,7 +27934,7 @@
         		<thead>
         			<tr>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT COST</th>
         				<th class="rside" width="80">សរុប<br>Total</th>
@@ -28036,7 +27947,11 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.discount"></td>
+        			</tr>
+        			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -28107,7 +28022,7 @@
         			<tr class="main-color ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
         			</tr>
@@ -28176,7 +28091,7 @@
         			<tr class="main-color ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
         			</tr>
@@ -28246,7 +28161,7 @@
         			<tr class="main-color ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
         			</tr>
@@ -28315,7 +28230,7 @@
         			<tr class="main-color ten">
         				<th width="90">លេខកូដ<br>CODE</th>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
         			</tr>
@@ -53016,8 +52931,8 @@
 
 		    banhji.invoiceCustom.set("selectTypeList", banhji.source.vendorFormList);
 		    banhji.invoiceCustom.set("selectCustom", "vendor_mg");
-		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm23);
-		    banhji.invoiceCustom.set("formTitle", "PO");
+		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm35);
+		    banhji.invoiceCustom.set("formTitle", "Purchase Order");
 		    banhji.invoiceCustom.set("formType", "Purchase_Order");
 		    var obj= banhji.invoiceCustom.get("obj");
 		    obj.set("type", "Purchase_Order");
@@ -62219,9 +62134,15 @@
 				name.set("title", this.formTitle);
 			}
 		},
-		addRowLineDS			: function(e){
+		addRowLineDS			: function(e,nu){
+			var mu
+			if(nu == null){
+				mu = 15;
+			}else {
+				mu = nu;
+			}
 			banhji.invoiceForm.lineDS.data([]);
-			for (var i = 0; i < 15; i++) { 
+			for (var i = 0; i < mu; i++) { 
 				banhji.invoiceForm.lineDS.add({				
 					id			: i,
 					description : '',

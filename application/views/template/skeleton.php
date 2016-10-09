@@ -360,7 +360,7 @@ var themerPrimaryColor = primaryColor;
 			});
 		});
 
-		//eraseCookie("isshow");
+		eraseCookie("isshow");
 		var isshow = readCookie("isshow");
 		
 	    if (isshow != 1) {

@@ -726,7 +726,8 @@ class Transactions extends REST_Controller {
 				   	"contact" 					=> $value->contact->get_raw()->result(),
 				   	"reference" 				=> $value->reference->get_raw()->result(),
 				   	"amount_paid"				=> $amount_paid,
-				   	"payment_term" 				=> $value->payment_term->get_raw()->result()
+				   	"payment_term" 				=> $value->payment_term->get_raw()->result(),
+				   	"payment_method" 			=> $value->payment_method->get_raw()->result()
 				);
 			}
 		}		
