@@ -21033,6 +21033,7 @@
 	            		</thead>
 	            		<tbody data-role="listview"
 								 data-selectable="false"
+
 				                 data-template="customerSetting-form-template"
 				                 data-bind="source: txnTemplateDS">				            
 	            		</tbody>
@@ -24644,7 +24645,7 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -24652,6 +24653,11 @@
         				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -24734,7 +24740,7 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -24742,6 +24748,11 @@
         				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -24824,13 +24835,18 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -24913,13 +24929,18 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -25002,7 +25023,7 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -25010,6 +25031,11 @@
         				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -25092,7 +25118,7 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;text-align: left;" colspan="3" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;text-align: left;" colspan="3" rowspan="4" data-bind="text: obj.note"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
         			</tr>
@@ -25100,6 +25126,11 @@
         				
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -25182,13 +25213,18 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -25258,7 +25294,7 @@
         		<thead>
         			<tr>
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th>UM</th>
+        				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
         				<th class="rside">តម្លៃ​ឯកតា<br>UNIT PRICE</th>
         				<th class="rside" width="80">សរុប<br>Total</th>
@@ -25271,13 +25307,18 @@
 						data-bind="source: lineDS">
         		<tfoot>
         			<tr>
-        				<td style="border:none;" colspan="2" rowspan="3" data-bind="text: obj.note"></td>
+        				<td style="border:none;" colspan="2" rowspan="4" data-bind="text: obj.note"></td>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
         				<td style="background-color: #eee;" data-bind="text: obj.sub_total"></td>
         			</tr>
         			<tr>
         				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
         				<td style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ប្រាក់កក់ Deposit</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
         			</tr>
         			<tr>
         				<td colspan="2" class="main-color" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
@@ -25930,23 +25971,23 @@
 <script id="invoiceForm19" type="text/x-kendo-template">
     <div class="inv1 pcg">
         <div class="content clear">
-        	<div class="span12 clear mid-header">
+        	<div class="span12 clear" style="padding:20px 0;">
         		<div class="span5" style="margin-right: 15px;">
         			<div class="logo" style="width: 100%;">
-		            	<img style="width: 55%" data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            	<img style="width: 45%" data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 		            </div>
         			
         		</div>
         		<div class="span6" style="float:right;">
-        			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
+        			<p class="form-title" style="font-size: 24px;margin-bottom: 5px;margin-top: 22px;line-height: 28px;" data-bind="text: obj.title"></p>
         			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ឈ្មោះ Name : <span>Choeun </span></div>
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ទូទាត់ដោយ Mode of Payment : <span>Cash</span></div>
-				<div class="span12" style="text-align: left;padding-left: 10px;margin-top: 10px;">គោលបំណងការចំណាយ Purpose of Payment : <span>abc</span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ឈ្មោះ Name : <span data-bind="text: obj.contact.name"> </span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">ទូទាត់ដោយ Mode of Payment : <span data-bind="text: obj.payment_method[0].name"></span></div>
+				<div class="span12" style="text-align: left;padding-left: 10px;margin-top: 10px;">គោលបំណងការចំណាយ Purpose of Payment : <span ></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -26029,6 +26070,8 @@
         			<td >Debit</td>
         			<td >Credit</td>
         		</tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+        		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
         		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
         		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
         		<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
@@ -53017,7 +53060,7 @@
 		    banhji.invoiceCustom.set("selectTypeList", banhji.source.vendorFormList);
 		    banhji.invoiceCustom.set("selectCustom", "vendor_mg");
 		    banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm23);
-		    banhji.invoiceCustom.set("formTitle", "PO");
+		    banhji.invoiceCustom.set("formTitle", "Purchase Order");
 		    banhji.invoiceCustom.set("formType", "Purchase_Order");
 		    var obj= banhji.invoiceCustom.get("obj");
 		    obj.set("type", "Purchase_Order");
@@ -62219,9 +62262,15 @@
 				name.set("title", this.formTitle);
 			}
 		},
-		addRowLineDS			: function(e){
+		addRowLineDS			: function(e,nu){
+			var mu
+			if(nu == null){
+				mu = 15;
+			}else {
+				mu = nu;
+			}
 			banhji.invoiceForm.lineDS.data([]);
-			for (var i = 0; i < 15; i++) { 
+			for (var i = 0; i < mu; i++) { 
 				banhji.invoiceForm.lineDS.add({				
 					id			: i,
 					description : '',
