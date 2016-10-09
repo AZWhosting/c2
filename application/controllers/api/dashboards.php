@@ -246,7 +246,7 @@ class Dashboards extends REST_Controller {
 				
 		//Sale
 		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-		$sale->where_in("type", array("Invoice", "Cash_Sale"));
+		$sale->where_in("type", array("Invoice", "Cash_Sale", "Sale_Return"));
 		$sale->where("issued_date >=", $this->startFiscalDate);
 		$sale->where("issued_date <", $this->endFiscalDate);
 		$sale->where("is_recurring", 0);		
@@ -259,7 +259,12 @@ class Dashboards extends REST_Controller {
 		$saleCustomerCount = 0;
 		foreach($sale as $value) {
 			//Total sale
-			$saleAmount += floatval($value->amount) / floatval($value->rate);
+			if($value->type=="Invoice" || $value->type=="Cash_Sale"){
+				$saleAmount += floatval($value->amount) / floatval($value->rate);
+			}else{
+				//Sale Return
+				$saleAmount -= floatval($value->amount) / floatval($value->rate);
+			}
 
 			//Group customer
 			if(isset($saleCustomer[$value->contact_id])){
@@ -811,7 +816,7 @@ class Dashboards extends REST_Controller {
 						
 		//Purchase
 		$purchase = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-		$purchase->where_in("type", array("Cash_Purchase","Credit_Purchase"));
+		$purchase->where_in("type", array("Cash_Purchase","Credit_Purchase", "Purchase_Return"));
 		$purchase->where("issued_date >=", $this->startFiscalDate);
 		$purchase->where("issued_date <", $this->endFiscalDate);
 		$purchase->where("is_recurring", 0);		
@@ -822,10 +827,16 @@ class Dashboards extends REST_Controller {
 		$purchaseAmount = 0;
 		$purchaseSupplier = [];
 		$purchaseSupplierCount = 0;
-		foreach($purchase as $value) {
-			//Total sale
-			$item = $value->item_line->count();
-			$purchaseAmount += floatval($value->amount) / floatval($value->rate);
+		foreach($purchase as $value) {			
+			//Total Purchase
+			if($value->type=="Cash_Purchase" || $value->type=="Credit_Purchase"){
+				$purchaseAmount += floatval($value->amount) / floatval($value->rate);
+			}else{
+				//Purhcase Return
+				$purchaseAmount -= floatval($value->amount) / floatval($value->rate);
+			}
+
+			
 
 			//Group customer
 			if(isset($purchaseSupplier[$value->contact_id])){

@@ -841,17 +841,17 @@
 						<a href="#/statement_profit_loss">
 							<table class="performance">
 								<tr>
-									<td>Income</td>
+									<td style="padding-left: 0;">Income</td>
 									<td></td>
 									<td align="right"><span data-bind="text: income"></span></td>
 								</tr>
 								<tr>
-									<td>Expense</td>
+									<td style="padding-left: 0;">Expense</td>
 									<td></td>
 									<td align="right"><span data-bind="text: expense"></span></td>
 								</tr>
 								<tr>
-									<td><b>Net Income</b></td>
+									<td style="padding-left: 0;"><b>Net Income</b></td>
 									<td></td>
 									<td align="right"><b data-bind="text: net_income"></b></td>
 								</tr>
@@ -861,17 +861,17 @@
 						<a href="#/statement_financial_position">
 							<table class="position">
 								<tr>
-									<td>Assets</td>
+									<td style="padding-left: 0;">Assets</td>
 									<td></td>
 									<td align="right"><span data-bind="text: asset"></span></td>
 								</tr>
 								<tr>
-									<td>Liabilities</td>
+									<td style="padding-left: 0;">Liabilities</td>
 									<td></td>
 									<td align="right"><span data-bind="text: liability"></span></td>
 								</tr>
 								<tr>
-									<td><b>Equity</b></td>
+									<td style="padding-left: 0;"><b>Equity</b></td>
 									<td></td>
 									<td align="right"><b data-bind="text: equity"></b></td>
 								</tr>
@@ -1807,7 +1807,7 @@
 					style="width: 100%; margin-bottom: 0;" />		
 		</td>					
 		<td data-bind="visible: showName">
-			<input data-role="combobox"                   
+			<input data-role="combobox" id="ddlName"                  
                    data-value-primitive="true"
                    data-template="contact-list-tmpl"
                    data-text-field="name"
@@ -1843,14 +1843,16 @@
 		</td>
 		<td class="right">
 			<input id="ntbDr" name="ntbDr" 
-					data-role="numerictextbox" 
+					data-role="numerictextbox"
+					data-spinners="false" 
 					data-format="n0" 
 					data-bind="value: dr, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>
 		<td class="right">
 			<input id="ntbCr" name="ntbCr" 
-					data-role="numerictextbox" 
+					data-role="numerictextbox"
+					data-spinners="false" 
 					data-format="n0" 
 					data-bind="value: cr, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />										
@@ -7794,7 +7796,7 @@
 							                   data-value-primitive="true"
 							                   data-template="currency-list-tmpl"
 							                   data-text-field="code"
-							                   data-value-field="id"
+							                   data-value-field="locale"
 							                   data-bind="value: obj.locale,
 							                              source: currencyDS,
 							                              events:{ change: setRate }"
@@ -7926,6 +7928,22 @@
 													   			events:{ change: transactionSegmentChanges }"
 													   data-placeholder="Add Segment.."				   
 													   style="width: 100%" /></select>
+											</td>
+										</tr>
+										<tr>
+											<td><span data-bind="text: lang.lang.job"></span></td>
+											<td>
+												<input id="ddlJob" name="ddlJob"
+													   data-role="dropdownlist"
+													   data-header-template="job-header-tmpl"
+													   data-template="job-list-tmpl"
+									                   data-value-primitive="true"		   
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: obj.job_id, 
+									                   			source: jobDS"
+									                   data-option-label="Select job..." 
+									                   style="width: 100%" />										
 											</td>
 										</tr>
 						        	</table>
@@ -12861,35 +12879,38 @@
 				<div class="row-fluid">
 					<table class="table table-borderless table-condensed">
 						<tr>
-							<td style="width: 48%; padding-right: 8px !important;">
+							<!-- <td style="width: 48%; padding-right: 8px !important;">
 								<h3><a href="#/product_service_list">Product/ Service List</a></h3>
-							</td>
+							</td> -->
 							<td >
 								<h3><a href="#/supplier_list">Supplier List</a></h3>								
+							</td>
+							<td >
+								<h3><a href="#/customer_recurring">Recurring Supplier Template List</a></h3>								
 							</td>						
 						</tr>
 						<tr>
-							<td style="width: 48%; padding-right: 8px !important;" >
+							<!-- <td style="width: 48%; padding-right: 8px !important;" >
 								<p>
 									Lists the products and services you purchase. The following information is included: name, 
 									description, cost, sales price, and quantity on hand.
-
-								</p>
-								
-							</td>
+								</p>								
+							</td> -->
 							<td >
 								<p>
 									Lists of all active suppliers
 								</p>
-							</td>							
+							</td>
+							<td>								
+							</td>						
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td>
 							</td>
 							<td >
 								<h3><a href="#/customer_recurring">Recurring Supplier Template List</a></h3>								
 							</td>
-						</tr>
+						</tr> -->
 					</table>
 				</div>
 			</div>
@@ -30221,8 +30242,12 @@
     <tr>    	  	
     	<td>#=kendo.toString(new Date(invoice[0].issued_date), "dd-MM-yyyy")#</td>
     	<td>#=invoice[0].type#</td>
-        <td>
-			<a href="\#/#=invoice[0].type.toLowerCase()#/#=id#"><i></i> #=invoice[0].number#</a>
+        <td>		
+			#if(invoice[0].type=="Cash_Purchase" || invoice[0].type=="Credit_Purchase"){#
+				<a href="\#/purchase/#=id#">#=invoice[0].number#</a>
+			#}else{#
+				<a href="\#/#=invoice[0].type.toLowerCase()#/#=id#">#=invoice[0].number#</a>
+			#}#
         </td>
     	<td>#=kendo.toString(quantity, "n0")#</td>
     	<td>
@@ -33703,8 +33728,11 @@
 							<td >
 								<h3><a href="#/inventory_position_detail">Inventory Position Detail</a></h3>
 							</td>
-							<td >
+							<!-- <td >
 								<h3><a href="#/inventory_turnover_list">Inventory Turnover List</a></h3>
+							</td> -->
+							<td>
+								
 							</td>
 						</tr>
 						<tr>
@@ -33714,12 +33742,13 @@
 
 								</p>
 							</td>
-							<td >
+							<td></td>
+							<!-- <td >
 								<p>
 									Provides analysis of inventory turnover days by each inventory.
 
 								</p>
-							</td>
+							</td> -->
 						</tr>
 					</table>
 				</div>
@@ -37314,23 +37343,27 @@
 										<div class="row-fluid">
 											<table class="span12">
 												<tr>
-													<td class="span4">
+													<!-- <td class="span4">
 														<h3><a href="#/product_service_list">Product/ Service List</a></h3>
-													</td>
+													</td> -->
 													<td class="span4">
 														<h3><a href="#/supplier_list">Supplier List</a></h3>								
 													</td>
 													<td class="span4">
 														<h3><a href="#/customer_recurring">Recurring Supplier Template List</a></h3>								
+													</td>
+													<td class="span4">
 													</td>						
 												</tr>
 												<tr>
-													<td class="span4">
+													<!-- <td class="span4">
 														Lists the products and services you purchase. The following information is included: name, 
 															description, cost, sales price, and quantity on hand.
-													</td>
+													</td> -->
 													<td class="span4">
 														Lists of all active suppliers
+													</td>
+													<td class="span4">
 													</td>
 													<td class="span4">
 													</td>						
@@ -37372,7 +37405,7 @@
 														Lists individual inventory movement transactions by date for each inventory within a period of time.
 													</td>
 												</tr>
-												<tr>													
+												<!-- <tr>													
 													<td class="span4">
 														<h3><a href="#/inventory_turnover_list">Inventory Turnover List</a></h3>
 													</td>
@@ -37381,7 +37414,7 @@
 													<td class="span4">
 														Provides analysis of inventory turnover days by each inventory.
 													</td>
-												</tr>
+												</tr> -->
 											</table>
 										</div>
 									</div>
@@ -42282,7 +42315,8 @@
 		showJob 			: false,
 		showSegment 		: false,
 		dr 					: 0,
-		cr 					: 0,			
+		cr 					: 0,
+		isValid 			: true,			
 		uer_id				: banhji.source.user_id,
 		pageLoad 			: function(id, is_recurring){
 			if(id){
@@ -42388,7 +42422,10 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+
+
+			this.changes();						
 		},
 		//Segment
 		segmentChanges  	: function(e) {					
@@ -42441,6 +42478,7 @@
 
 			this.dataSource.insert(0, {
 				recurring_id 		: "",
+				transaction_template_id : 13,
 				user_id 			: this.get("uer_id"), 	    			    		
 			   	type				: "Journal", //required
 			   	journal_type 		: "Journal",			   				   		   					   				   	
@@ -42496,44 +42534,24 @@
 	        }		        
 		},
 		changes				: function(){
-			var obj = this.get("obj"), dr = 0, cr = 0;								
+			var obj = this.get("obj"), dr = 0, cr = 0;
+			this.set("isValid", true);								
 			
 			$.each(this.lineDS.data(), function(index, value) {
-				if(value.dr >0 && value.cr >0){
-					value.set("dr", 0);
-					value.set("cr", 0);
+				value.set("rate", obj.rate);
+				
+				dr += kendo.parseFloat(value.dr);
+				cr += kendo.parseFloat(value.cr);				
+	        });
 
-					alert("Please enter only one side.");
-				}else{
-					dr += kendo.parseFloat(value.dr);
-					cr += kendo.parseFloat(value.cr);						
-				}
-	        });		       	
+			if(dr!==cr){
+				this.set("isValid", false);
+			}		       	
 
 	        this.set("dr", kendo.toString(dr, "c0", obj.locale));
 	        this.set("cr", kendo.toString(cr, "c0", obj.locale));
 	        
 	        obj.set("amount", dr);
-		},					
-		validates 			: function(){
-			var dr = 0, cr = 0, has_account = false, result = true;
-
-			$.each(this.lineDS.data(), function(index, value){
-				dr += kendo.parseFloat(value.dr);
-				cr += kendo.parseFloat(value.cr);
-			});
-			
-			if(dr==0 || cr==0){
-				result = false;
-				alert("Please enter amount of DEBIT and CREDIT");
-			}
-
-			if(dr!==cr){
-				result = false;
-				alert("TOTAL DEBIT must equal to TOTAL CREDIT");
-			}
-
-			return result;
 		},
 		objSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -42607,9 +42625,6 @@
 					$.each(self.attachmentDS.data(), function(index, value){
 			    		value.set("transaction_id", data[0].id);
 		            });
-
-		            //Journal
-		            self.addJournal(data[0].id);
 				}
 
 				self.lineDS.sync();
@@ -42635,9 +42650,6 @@
 					//Save New
 					self.addEmpty();
 				}
-
-				//Refresh Supplier
-				self.contactDS.filter({ field:"parent_id", operator:"where_related", model:"contact_type", value:3 });
 			});
 		},
 		cancel 				: function(){
@@ -44487,7 +44499,7 @@
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),		
 		contactDS 			: banhji.source.employeeDS,				
 		currencyDS 			: banhji.source.currencyDS,
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
+		jobDS				: banhji.source.jobDS,
 		paymentMethodDS		: banhji.source.paymentMethodDS,
 		accountDS  			: banhji.source.accountDS,
 		cashAccountDS  		: banhji.source.cashAccountDS,
@@ -44658,7 +44670,8 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+			this.changes();						
 		},
 		//Segment
 		segmentChanges  	: function(e) {					
@@ -44786,6 +44799,8 @@
 				var sum = 0;								
 				
 				$.each(this.lineDS.data(), function(index, value) {
+					value.set("rate", obj.rate);
+
 					sum += value.amount;
 		        });		       	
 
@@ -45433,7 +45448,8 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+			this.changes();						
 		},
 		//Contact
 		loadContact 		: function(id){
@@ -45547,14 +45563,15 @@
 			this.dataSource.insert(0, {
 				recurring_id 		: "",
 				reference_id 		: "",
-				account_id 			: 1,				
-				user_id 			: this.get("uer_id"), 	    			    		
+				account_id 			: 1,
+				job_id 				: 0,				
+				user_id 			: this.get("user_id"), 	    			    		
 			   	type				: "Direct_Expense", //required
 			   	sub_total 			: 0,
 			   	tax 				: 0,			   		   				   		   					   				   	
 			   	amount				: 0,
 			   	rate				: 1,			   	
-			   	locale 				: banhji.institute.locale,			   	
+			   	locale 				: banhji.locale,			   	
 			   	issued_date 		: new Date(),			   			   	   	
 			   	memo 				: "",
 			   	memo2 				: "",
@@ -45597,42 +45614,43 @@
 			});																	
 		},		
 		remove 				: function(e){						
-			var d = e.data;			
-						
-			this.lineDS.remove(d);
-        	this.changes();        	        	        
+			var data = e.data;			
+			
+			if(this.lineDS.total()>1){			
+				this.lineDS.remove(data);
+	        	this.changes();
+        	}        	        	        
 		},
 		changes				: function(){
-			var self = this, obj = this.get("obj");
+			var self = this, obj = this.get("obj"), 
+			subTotal = 0, total = 0, tax = 0, remain = 0;								
 			
-			//if(this.lineDS.total()>0){			
-				var subTotal = 0, total = 0, tax = 0, remain = 0;								
-				
-				$.each(this.lineDS.data(), function(index, value) {					
-					if(value.tax_item_id>0){
-						var taxItem = self.taxItemDS.get(value.tax_item_id);
-						tax += value.amount * taxItem.rate;
-					}
+			$.each(this.lineDS.data(), function(index, value) {
+				value.set("rate", obj.rate);
 
-					subTotal += value.amount;
-		        });
+				if(value.tax_item_id>0){
+					var taxItem = self.taxItemDS.get(value.tax_item_id);
+					tax += value.amount * taxItem.rate;
+				}
 
-		        total = subTotal + tax;
+				subTotal += value.amount;
+	        });
 
-		        if(obj.credit>0){
-		        	remain = obj.credit - total;
-		        }
+	        total = subTotal + tax;
 
-		        this.set("sub_total", kendo.toString(subTotal, "c0", obj.locale));
-		        this.set("tax", kendo.toString(tax, "c0", obj.locale));
-		        this.set("total", kendo.toString(total, "c0", obj.locale));
-		        this.set("credit", kendo.toString(obj.credit, "c0", obj.locale));
-		        this.set("remain", kendo.toString(remain, "c0", obj.locale));
+	        if(obj.credit>0){
+	        	remain = obj.credit - total;
+	        }
 
-		        obj.set("sub_total", subTotal);
-		        obj.set("tax", tax);
-		        obj.set("amount", total);		       								    	
-	    	//}	
+	        this.set("sub_total", kendo.toString(subTotal, "c0", obj.locale));
+	        this.set("tax", kendo.toString(tax, "c0", obj.locale));
+	        this.set("total", kendo.toString(total, "c0", obj.locale));
+	        this.set("credit", kendo.toString(obj.credit, "c0", obj.locale));
+	        this.set("remain", kendo.toString(remain, "c0", obj.locale));
+
+	        obj.set("sub_total", subTotal);
+	        obj.set("tax", tax);
+	        obj.set("amount", total);	    		
 		},
 		objSync 			: function(){
 	    	var dfd = $.Deferred();	        
@@ -46056,6 +46074,7 @@
 				var recur = this.recurringDS.get(obj.recurring_id);				
 				
 				obj.set("account_id", recur.account_id);
+				obj.set("job_id", recur.job_id);
 				obj.set("segments", recur.segments);
 				obj.set("sub_total", recur.sub_total);
 				obj.set("discount", recur.discount);
@@ -63137,6 +63156,7 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),						
 		lineDS  			: dataStore(apiUrl + "account_lines"),
+		deleteDS 			: dataStore(apiUrl + "transactions"),
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),		
@@ -63328,7 +63348,8 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+			this.changes();						
 		},
 		//Segment
 		transactionSegmentChanges  	: function() {									
@@ -63453,21 +63474,17 @@
         	}	        	        
 		},
 		changes				: function(){
-			var obj = this.get("obj");
+			var obj = this.get("obj"),
+			sum = 0;								
 			
-			if(this.lineDS.total()>0){			
-				var sum = 0;								
-				
-				$.each(this.lineDS.data(), function(index, value) {
-					sum += value.amount;
-		        });		       	
+			$.each(this.lineDS.data(), function(index, value) {
+				value.set("rate", obj.rate);
 
-		        this.set("total", kendo.toString(sum, "c0", obj.locale));		        
-		        obj.set("amount", sum);		       								    	
-	    	}else{
-	    		this.set("total", 0);		        
-		        obj.set("amount", 0);				
-	    	}   	
+				sum += value.amount;
+	        });		       	
+
+	        this.set("total", kendo.toString(sum, "c0", obj.locale));		        
+	        obj.set("amount", sum);
 		},
 		typeChanges 		: function(){
 			var obj = this.get("obj");
@@ -68080,7 +68097,7 @@
 				para.push({ field:"category_id", value:category_id });
 			}
 
-			para.push({ field:"item_type_id", value:1 });
+			// para.push({ field:"item_type_id", value:1 });
 			para.push({ field:"is_catalog", value: 0 });
 			para.push({ field:"is_assembly", value: 0 });          
 
@@ -68096,7 +68113,7 @@
             			transaction_id 		: 0,
 						item_id 			: value.id,
 						measurement_id 		: value.measurement_id,						
-						description 		: value.purchase_description,
+						description 		: value.name,
 						on_hand 			: value.on_hand,
 						quantity_adjusted 	: "",				
 						quantity 	 		: 0,
@@ -68185,7 +68202,7 @@
 				employee_id 			: "",
 				job_id 					: "",
 				account_id 	 			: 0,
-			   	type					: "Adjustment",			   				   
+			   	type					: "Item_Adjustment",			   				   
 			   	rate					: banhji.source.getRate(banhji.locale, new Date()),			   	
 			   	locale 					: banhji.locale,			   	
 			   	issued_date 			: new Date(),			   	
@@ -68381,7 +68398,7 @@
     	dataSource  			: dataStore(apiUrl + "transactions"),	
     	lineDS  				: dataStore(apiUrl + "transactions/line"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),	
-		itemDS  				: banhji.source.itemInventoryDS,
+		itemDS  				: banhji.source.itemDS,
 		measurementDS			: dataStore(apiUrl + "measurements"),		
 		segmentItemDS			: banhji.source.segmentItemDS,
 		attachmentDS	 		: dataStore(apiUrl + "attachments"),
@@ -70333,7 +70350,7 @@
 		        $("#saveNew").click(function(e){				
 					e.preventDefault();
 
-					if(validator.validate()){
+					if(validator.validate() && vm.get("isValid")){
 		            	vm.save();		            				  
 			        }else{
 			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
@@ -70343,7 +70360,7 @@
 				$("#saveClose").click(function(e){				
 					e.preventDefault();
 
-					if(validator.validate()){
+					if(validator.validate() && vm.get("isValid")){
 						vm.set("saveClose", true);
 		            	vm.save();		            	
 			        }else{
@@ -70354,7 +70371,7 @@
 				$("#savePrint").click(function(e){				
 					e.preventDefault();
 					
-					if(validator.validate()){
+					if(validator.validate() && vm.get("isValid")){
 						vm.set("savePrint", true);
 		            	vm.save();       				  
 			        }else{
@@ -70365,7 +70382,7 @@
 				$("#saveRecurring").click(function(e){				
 					e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
+					if(validator.validate() && vm.get("isValid") && vm.validateRecurring()){
 		            	vm.set("saveRecurring", true);
 		            	vm.save();
 			        }else{
