@@ -163,8 +163,8 @@ class Accounting_reports extends REST_Controller {
 		$this->response($data, 200);	
 	}
 
-	//GET ACCOUNT DASHBOARD
-	function accounting_dashboard_get() {		
+	//GET RATIO ANALYSIS
+	function ratio_analysis_get() {		
 		$filters 	= $this->get("filte r")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
