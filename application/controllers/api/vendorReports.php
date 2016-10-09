@@ -2846,7 +2846,6 @@ class Vendorreports extends REST_Controller {
 		$data['segments'] = $segments;
 		$data['order'] = $order;
 		$data['count'] = count($customers);
-		$data['items'] = count($items);
 		$this->response($data, 200);
 	}
 }//End Of Class
