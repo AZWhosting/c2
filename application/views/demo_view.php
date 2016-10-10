@@ -782,7 +782,7 @@
 					<td class="center">
 						<a href="#/journal">
 							<img title="Add Account" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/journal.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.journal"></span>
+							<span data-bind="text: lang.lang.journal1"></span>
 						</a>						
 					</td>					
 					<td class="center">
