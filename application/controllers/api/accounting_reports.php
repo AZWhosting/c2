@@ -868,7 +868,7 @@ class Accounting_reports extends REST_Controller {
 		$currPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		$retainEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				
-		//Filter		
+		// Filter		
 		// if(!empty($filters) && isset($filters)){			
 	 //    	foreach ($filters as $value) {
 	 //    		if(!empty($value["operator"]) && isset($value["operator"])){
@@ -880,13 +880,18 @@ class Accounting_reports extends REST_Controller {
 	 //    		}
 		// 	}									 			
 		// }
-		$asOf = date("Y-m-d");
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		$asOf = date("Y-m-d", $value["value"]);
-			}									 			
-		}
-		$data["asOf"] = $asOf;
+
+
+		// $asOf = date("Y-m-d");
+		// if(!empty($filters) && isset($filters)){			
+	 //    	foreach ($filters as $value) {
+	 //    		$asOf = $value["value"];
+		// 	}									 			
+		// }
+		// $year = date("Y",strtotime($asOf));
+
+		// $data["asOf"] = date("Y",strtotime($asOf));
+		
 		
 		//BALANCE SHEET (from begining to as of)
 		$balanceSheet->include_related("account", array("number","name"));
