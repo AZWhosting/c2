@@ -2359,7 +2359,7 @@
 								<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a href="#/general_ledger">General Ledger</a></h3>								
+								<h3><a >General Ledger(Comming on 12/10/2016)</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -2444,10 +2444,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td >
-								<h3><a href="#/statement_profit_loss">Statement of Profit or Loss</a></h3>
+								<h3><a >Statement of Profit or Loss(Comming on 12/10/2016)</a></h3>
 							</td>
 							<td >
-								<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
+								<h3><a >Statement of Financial Position(Comming on 12/10/2016)</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -3425,8 +3425,10 @@
 								    	<!-- //GENERAL INFO -->
 								          <div class="tab-pane active" id="tab-1">									
 									        As of:
-									       	<input data-role="datepicker"
-								                   data-bind="value: as_of">
+									        <input data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd" 
+													data-bind="value: as_of" />
 
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
@@ -3473,13 +3475,13 @@
 							<p>
 								Total Dr. Balance
 							</p>
-							<span data-bind="text: totalDr"></span>
+							<span data-bind="text: dr"></span>
 						</div>
 						<div class="span4">
 							<p>
 								Total Cr. Balance
 							</p>
-							<span data-bind="text: totalCr"></span>
+							<span data-bind="text: cr"></span>
 						</div>
 					</div>
 
@@ -29330,9 +29332,7 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-2" data-toggle="tab"><i></i> </a>
-							            </li>
-							            <li class="span1 glyphicons info"><a href="#tab2-2" data-toggle="tab"><i></i> </a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-1" data-toggle="tab"><i></i> </a>
 							            </li>
 							        </ul>
 							    </div>
@@ -29341,7 +29341,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-2">						            
+							        <div class="tab-pane active" id="tab1-1">						            
 							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
 							            	<tr>
 												<td><span data-bind="text: lang.lang.date"></span></td>
@@ -29410,45 +29410,6 @@
 							            </table>						            
 							        </div>
 							        <!-- // Options Tab content END -->
-
-							        <!-- INFO Tab content -->
-							        <div class="tab-pane" id="tab2-2">						            
-							            <table class="table table-borderless table-condensed cart_total">
-											<tr>
-								            	<td>Collector</td>							            	
-							            		<td>
-													<input id="cbbEmployee" name="cbbEmployee"
-														   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-header-template="employee-header-tmpl"
-										                   data-template="contact-list-tmpl"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.employee_id,
-										                              source: employeeDS"
-										                   data-placeholder="Type Name..." 
-										                   style="width: 100%" />
-												</td>							            	
-								            </tr>				            
-								            <tr>
-												<td><span data-bind="text: lang.lang.segment"></span></td>
-												<td>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="segment-header-tmpl"
-														   data-item-template="segment-list-tmpl"				    
-														   data-value-field="id" 
-														   data-text-field="code"
-														   data-bind="value: obj.segments, 
-														   			source: segmentItemDS,
-														   			events:{ change: segmentChanges }"
-														   data-placeholder="Add Segment.."				   
-														   style="width: 100%" /></select>
-												</td>
-											</tr>											
-							            </table>						            
-							        </div>
-							        <!-- // INFO Tab content END -->
 
 							    </div>
 							</div>
@@ -37898,7 +37859,7 @@
 														<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 													</td>
 													<td class="span4">
-														<h3><a href="#/general_ledger">General Ledger</a></h3>
+														<h3><a >General Ledger(Comming on 12/10/2016)</a></h3>
 													</td>
 													<td class="span4">
 														<h3><a href="#/trial_balance">Trial Balance</a></h3>
@@ -37998,10 +37959,10 @@
 											<table class="span12">
 												<tr>
 													<td class="span4">
-														<h3><a href="#/statement_profit_loss">Statement of Profit or Loss</a></h3>
+														<h3><a >Statement of Profit or Loss(Comming on 12/10/2016)</a></h3>
 													</td>
 													<td class="span4">
-														<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
+														<h3><a >Statement of Financial Position(Comming on 12/10/2016)</a></h3>								
 													</td>
 													<td class="span4">
 														<!-- <h3><a href="#/statement_profit_loss_comparison">Statement of Profit or Loss Comparison</a></h3> -->
@@ -43629,21 +43590,13 @@
 		}),
 		sortList			: banhji.source.sortList,
 		as_of 				: new Date(),		
-		currentSort 		: "asc",
-		company 			: banhji.institute,							
+		displayDate 		: "",
+		company 			: banhji.institute,
+		dr 					: 0,
+		cr 					: 0,							
 		pageLoad 			: function(){
 			this.search();
 		},
-		displayDate 		: function(){
-			var d = "",
-			asOf = this.get("as_of");
-
-			if(asOf){
-				d = "As Of " + kendo.toString(asOf, "dd-MM-yyyy");
-			}
-
-			return d;
-		},		
 		sort 				: function(e){
 			var col = "",
 			target = e.currentTarget.innerText;
@@ -43674,15 +43627,20 @@
 			var as_of = this.get("as_of");
 
 			if(as_of){
+				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
+				this.set("displayDate", displayDate);
+
 				this.dataSource.filter({ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") });
 			}
-		},		
+		},				
 		totalDr 			: function() {
 	        var sum = 0;
 
 	        $.each(this.dataSource.data(), function(index, value) {
 	            sum += kendo.parseFloat(value.dr);
 	        });
+
+	        this.set("dr", kendo.toString(sum, "c", banhji.locale));
 
 	        return kendo.toString(sum, "c", banhji.locale);
 	    },
@@ -43692,6 +43650,8 @@
 	        $.each(this.dataSource.data(), function(index, value) {
 	            sum += kendo.parseFloat(value.cr);
 	        });
+
+	        this.set("cr", kendo.toString(sum, "c", banhji.locale));
 
 	        return kendo.toString(sum, "c", banhji.locale);
 	    }		      		

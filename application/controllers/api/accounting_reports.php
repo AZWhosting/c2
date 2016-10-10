@@ -7,6 +7,7 @@ class Accounting_reports extends REST_Controller {
 	public $server_host;
 	public $server_user;
 	public $server_pwd;
+	public $fiscalDate;
 	public $startFiscalDate;
 	public $endFiscalDate;
 	//CONSTRUCTOR
@@ -23,6 +24,7 @@ class Accounting_reports extends REST_Controller {
 			
 			//Fiscal Date
 			//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate
+			$this->fiscalDate = $institute->fiscal_date;
 			$today = date("Y-m-d");
 			$fdate = date("Y") ."-". $institute->fiscal_date;
 			if($today > $fdate){
@@ -854,50 +856,42 @@ class Accounting_reports extends REST_Controller {
 
 	//GET TRIAL BALANCE
 	function trial_balance_get() {		
-		$filters 	= $this->get("filte r")["filters"];		
+		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = [];
 		$data["count"] = 0;
 		$is_recurring = 0;
-		$deleted = 0;		
+		$deleted = 0;
 		
+		$asOf = date("Y-m-d");
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		$asOf = $value["value"];
+			}									 			
+		}				
+
+		//Fiscal Date
+		//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate		
+		$asOfYear = date("Y",strtotime($asOf));
+		$fdate = $asOfYear ."-". $this->fiscalDate;
+		if($asOf > $fdate){
+			$startDate 	= $asOfYear ."-". $this->fiscalDate;
+			$endDate 	= intval($asOfYear)+1 ."-". $this->fiscalDate;
+		}else{
+			$startDate 	= intval($asOfYear)-1 ."-". $this->fiscalDate;
+			$endDate 	= $asOfYear ."-". $this->fiscalDate;
+		}
+
+		
+		//BALANCE SHEET (As Of)
 		$balanceSheet = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$prevPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$currPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-		$retainEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				
-		// Filter		
-		// if(!empty($filters) && isset($filters)){			
-	 //    	foreach ($filters as $value) {
-	 //    		if(!empty($value["operator"]) && isset($value["operator"])){
-		//     		if($value["operator"]=="where_related"){
-		//     			$balanceSheet->where_related($value["model"], $value["field"], $value["value"]);
-		//     			$currPL->where_related($value["model"], $value["field"], $value["value"]);		    			
-		//     			$retainEarning->where_related($value["model"], $value["field"], $value["value"]);		    				    				    		
-		//     		}	    				    			
-	 //    		}
-		// 	}									 			
-		// }
-
-
-		// $asOf = date("Y-m-d");
-		// if(!empty($filters) && isset($filters)){			
-	 //    	foreach ($filters as $value) {
-	 //    		$asOf = $value["value"];
-		// 	}									 			
-		// }
-		// $year = date("Y",strtotime($asOf));
-
-		// $data["asOf"] = date("Y",strtotime($asOf));
-		
-		
-		//BALANCE SHEET (from begining to as of)
 		$balanceSheet->include_related("account", array("number","name"));
 		$balanceSheet->include_related("account/account_type", array("name","nature"));		
 		$balanceSheet->where_related("account", "account_type_id >=", 10);
 		$balanceSheet->where_related("account", "account_type_id <=", 33);
+		$balanceSheet->where_related("transaction", "issued_date <=", $asOf);
 		$balanceSheet->where_related("transaction", "is_recurring", $is_recurring);
 		$balanceSheet->where_related("transaction", "deleted", $deleted);
 		$balanceSheet->where("deleted", $deleted);		
@@ -951,12 +945,14 @@ class Accounting_reports extends REST_Controller {
 		//END BALANCE SHEET
 
 
-		//CURRENT PROFIT AND LOSS (from fiscal date to as of)
+		//CURRENT PROFIT AND LOSS (startFiscalDate to As Of)
+		$currPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$currPL->include_related("account", array("number","name"));
 		$currPL->include_related("account/account_type", array("name","nature"));		
 		$currPL->where_related("account", "account_type_id >=", 35);
 		$currPL->where_related("account", "account_type_id <=", 43);
-		$currPL->where_related("transaction", "issued_date >", $this->startFiscalDate);
+		$currPL->where_related("transaction", "issued_date >", $startDate);
+		$currPL->where_related("transaction", "issued_date <=", $asOf);
 		$currPL->where_related("transaction", "is_recurring", $is_recurring);
 		$currPL->where_related("transaction", "deleted", $deleted);		
 		$currPL->where("deleted", $deleted);
@@ -1011,10 +1007,11 @@ class Accounting_reports extends REST_Controller {
 
 
 		//RETAINED EARNING = Profit Loss + Retained Earning
-		//PREVIOUSE PROFIT AND LOSS (from begining to fiscal date) Cr - Dr				
+		//PREVIOUSE PROFIT AND LOSS (From Begining to startFiscalDate) Cr - Dr
+		$prevPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
 		$prevPL->where_related("account", "account_type_id >=", 35);
 		$prevPL->where_related("account", "account_type_id <=", 43);
-		$prevPL->where_related("transaction", "issued_date <=", $this->startFiscalDate);
+		$prevPL->where_related("transaction", "issued_date <=", $startDate);
 		$prevPL->where_related("transaction", "is_recurring", $is_recurring);
 		$prevPL->where_related("transaction", "deleted", $deleted);		
 		$prevPL->where("deleted", $deleted);
@@ -1035,8 +1032,10 @@ class Accounting_reports extends REST_Controller {
 		//END PREVIOUSE PROFIT AND LOSS
 		
 
-		//RETAINED EARNING (from begining to as of)
-		$retainEarning->where("account_id", 70);		
+		//RETAINED EARNING (As Of)
+		$retainEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$retainEarning->where("account_id", 70);
+		$retainEarning->where_related("transaction", "issued_date <=", $asOf);		
 		$retainEarning->where_related("transaction", "is_recurring", $is_recurring);
 		$retainEarning->where_related("transaction", "deleted", $deleted);		
 		$retainEarning->where("deleted", $deleted);
