@@ -827,12 +827,10 @@
 			<div class="row">
 				<div class="span6 accounting-right">
 					<div class="financial-report" style="padding-bottom: 0;">
-						<p>
-							<span data-bind="text: lang.lang.financial_report_standard"></span> <b>Cambodia International Financial Reporting Standards for SMEs (CIFRSn for SMEs)</b>
+						<p><span data-bind="text: lang.lang.financial_report_standard"></span> <b>Cambodia International Financial Reporting Standards for SMEs (CIFRSn for SMEs)</b>
 						</p>
-						<a style="margin: 0 0 0px;" class="btn-download" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/IFRS+for+SME_Khmer.pdf" target="_blank"><span data-bind="text: lang.lang.take_this_standard"></span></a>
-						<br><br>
-						<a style="margin: -10px 0 8px;" class="btn-download" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/IFRS+for+SMEs_Standard_2015.pdf" target="_blank">Download Standards</a>
+						<a style="margin: 0 0 15px;" class="btn-download" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/IFRS+for+SME_Khmer.pdf" target="_blank"><span data-bind="text: lang.lang.take_this_standard"></span></a>
+						<a style="margin: 0px 0 15px; float: right;" class="btn-download" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/IFRS+for+SMEs_Standard_2015.pdf" target="_blank">Download Standards</a>
 						<p><span data-bind="text: lang.lang.reporting_currency"></span> <b data-bind="text: reportCurrency"></b></p>
 						<p><span data-bind="text: lang.lang.fiscal_year"></span> <b data-bind="text: fiscalDate"></b></p>
 					</div>
@@ -844,15 +842,12 @@
 									<td></td>
 									<td align="right"><span data-bind="text: income"></span></td>
 								</tr>
-								<tr>
-
-									
+								<tr> 									
 									<td><span data-bind="text: lang.lang.expense"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: expense"></span></td>
 								</tr>
 								<tr>
-
 									<td><b><span data-bind="text: lang.lang.net_income"></span></b></td>
 									<td></td>
 									<td align="right"><b data-bind="text: net_income"></b></td>
@@ -892,14 +887,14 @@
 						<span>10</span>
 						<p class="month">Unsettled accrual transactions</p>
 					</div> -->
-					<div class="span12" style="padding: 0; margin-bottom: 10px;">
+					<div class="span12" style="padding: 0;">
 						<div class="span6 capital-box" >
 							<span data-bind="text: currentRatio"></span> <span>x</span>
-							<p class="month"><span data-bind="text: lang.lang.current_ratio"></span></p>
+							<p class="month" data-bind="text: lang.lang.current_ratio"></p>
 						</div>
 						<div class="span6 capital-box">
 							<span data-bind="text: quickRatio"></span> <span>x</span>
-							<p class="month"><span data-bind="text: lang.lang.quick_ratio"></span></p>
+							<p class="month" data-bind="text: lang.lang.quick_ratio"></p>
 						</div>
 					</div>
 					<table width="100%">
@@ -1884,80 +1879,51 @@
 						    	<div class="span6 alert alert-primary">Reporting currency: <span data-bind="text: reportCode"></span> </div>
 					    	</div>
 
-					    	<div class="hidden-print well">
-					    		<input id="cbbCurrency" name="cbbCurrency"
-									   data-role="combobox"				                
-					                   data-value-primitive="true"
-					                   data-template="currency-list-tmpl"				   
-					                   data-text-field="code"
-					                   data-value-field="locale"
-					                   data-bind="value: currency_locale, 
-					                   			source: currencyDS"
-					                   placeholder="Add currency..." 
-					                   required data-required-msg="required" style="width: 300px" />
-
-					            <input id="sorter" name="sorter"
-						    	   data-role="dropdownlist"                   
-						           data-value-primitive="true"
-						           data-text-field="text"
-						           data-value-field="value"
-						           data-bind="value: sorter,
-						                      source: sortList" />
-						                                   
-						        <input id="sdate" name="sdate"						           
-						           data-bind="value: sdate"
-						           placeholder="From ..." />
-						        
-						       	<input id="edate" name="edate"						           
-						           data-bind="value: edate"
-						           placeholder="To ..." />
-
-					            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
-				          		|
-								<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>							
-					    	</div>						
-
-							<div align="center">
-								<span id="strDate"></span>
-							</div>
-
 							<br>					
 							
 							<button class="btn btn-inverse hidden-print" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> Add New Rate</button>
-							&nbsp;
-							<span class="hidden-print">Please click on the column header to sort based on currency.</span>
+							
+							<!-- Item List -->
+							<table style="margin-top: 15px;" class="table table-bordered table-primary table-striped table-vertical-center">
+						        <thead>
+						            <tr>
+						                <th style="width: 15%;">DATE</th>
+						                <th style="width: 6%;">CODE</th>
+						                <th style="width: 25%">COUNTRY</th>
+						                <th style="width: 15%;">RATE</th>
+						                <th style="width: 15%;">SOURCE</th>
+						                <th style="width: 15%;">METHOD</th>
+						                <th style="width: 10%;"></th>			                
+						            </tr> 
+						        </thead>
+						        <tbody data-role="listview"
+						        		data-template="currencyRate-template"
+						        		data-bind="source: dataSource"></tbody>			        
+						    </table>
+							
+				            <div data-role="pager"
+					            data-bind="source: dataSource"></div>
+						   
 
-							<div data-role="grid"
-								 data-sortable="true"							 
-								 data-row-template="currencyRate-row-template"			                
-				                 data-columns="[
-	                                { 'field': 'date', 'title':'Date', width: 90 },
-	                                { 'field': 'currency_id', 'title':'Code', width: 60 },
-	                                { 'field': 'currency_id', 'title':'Country' },
-	                                { 'field': 'rate', 'title':'Rate', width: 140 },
-	                                { 'field': 'source', 'title':'Source', width: 70 },
-	                                { 'field': 'method', 'title':'Method', width: 70 },
-	                                { 'title':'', width: 130 }
-	                             ]"
-				                 data-bind="source: dataSource"></div>
-
-				            <div data-role="pager" 
-							    	data-auto-bind="false"
-						            data-bind="source: dataSource"></div>
-
-						    <span id="notification"></span>
-
-						    <div id="window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
-								<table class="table table-borderless table-condensed cart_total" style="width: 400px;">
+						    <!-- Window -->
+						    <div data-role="window"
+					                 data-title="Exchange Rate"		                 
+					                 data-width="350"
+					                 data-height="250"
+					                 data-actions="{}"
+					                 data-position="{top: '30%', left: '37%'}"
+					                 data-bind="visible: windowVisible">
+						    	
+						    	<table class="table table-borderless table-condensed cart_total" >
 									<tr>
 										<td>										
-									    	<input data-role="combobox"
-								                   data-placeholder="Select Currency"
+									    	<input data-role="dropdownlist"
+								                   data-option-label="Select Currency"
 								                   data-value-primitive="true"
 								                   data-text-field="code"
 								                   data-value-field="id"
-								                   data-template="currencyRate-currency-template"
-								                   data-bind="value: obj.locale,
+								                   data-template="currency-list-tmpl"
+								                   data-bind="value: obj.currency_id,
 								                              source: currencyDS"
 								                   style="width: 100%" />
 							            </td>
@@ -1969,7 +1935,8 @@
 					        					data-bind="value: obj.date" 
 					        					data-format="dd-MM-yyyy"
 					        					data-parse-formats="yyyy-MM-dd" 
-					        					placeholder="dd-MM-yyyy" required data-required-msg="required"
+					        					placeholder="dd-MM-yyyy" 
+					        					required data-required-msg="required"
 					        					style="width: 100%" />
 					        			</td>
 					            	</tr>
@@ -1990,8 +1957,10 @@
 					            <div align="center">
 									<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
 									<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>
-								</div>					  
-							</div>						
+								</div>
+
+							</div>
+						  					
 
 						</div> <!-- End Widget-Body List -->
 					</div>
@@ -2002,7 +1971,7 @@
 		</div>
 	</div>
 </script>
-<script id="currencyRate-row-template" type="text/x-kendo-tmpl">		
+<script id="currencyRate-template" type="text/x-kendo-tmpl">		
 	<tr>			
 		<td>#=kendo.toString(new Date(date), "dd-MM-yyyy")#</td>		
 		<td>#=currency.length>0?currency[0].code:""#</td>
@@ -2011,14 +1980,9 @@
 		<td>#=source#</td>
 		<td>#=method#</td>				
 		<td>			
-			<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>
-    		|    		
-    		<span data-bind="click: delete"><i class="icon-remove"></i> Delete</span>					
+			<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>					
 		</td>		
     </tr>   
-</script>
-<script id="currencyRate-currency-template" type="text/x-kendo-template">	
-	#=code# #=country#
 </script>
 <script id="saleTax" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -2050,7 +2014,7 @@
 			    <div data-role="window"
 		                 data-title="Tax Type"		                 
 		                 data-width="350"
-		                 data-height="273"
+		                 data-height="29 0"
 		                 data-actions="{}"
 		                 data-position="{top: '30%', left: '35%'}"
 		                 data-bind="visible: windowVisible">
@@ -2992,8 +2956,7 @@
 								<th>Type</th>
 								<th>Date</th>
 								<th>TXN #</th>
-								<th>TXN Description</th>							
-								<th>Account</th>
+								<th>TXN Description</th>
 								<th class="right">Debit</th>
 								<th class="right">Credit</th>
 								<th class="center">Balance</th>
@@ -3530,8 +3493,11 @@
 				                <th class="right">CREDIT</th>
 				            </tr>
 				        </thead>
-				        <tbody data-template="trialBalance-template" data-bind="source: dataSource"></tbody>
-				        <tfoot data-template="trialBalance-footer-template" data-bind="source: this"></tfoot>
+				        <tbody data-template="trialBalance-template"
+				        		data-auto-bind="false" 
+				        		data-bind="source: dataSource"></tbody>
+				        <tfoot data-template="trialBalance-footer-template" 
+				        		data-bind="source: this"></tfoot>
 					</table>					  
 		        </div>		        
 			</div>							
@@ -3675,7 +3641,7 @@
 		</td>				
     </tr>    
 </script>
-<script id="statementProfitLoss" type="text/x-kendo-template">
+<!-- <script id="statementProfitLoss" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">
 			<div class="container-960">	
@@ -4009,6 +3975,417 @@
 							<td></td>
 							<td></td>
 							<td></td>
+						</tr>
+						<tr>
+							<td class="bold">EQUITY & LIABILITIES</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Shareholders Equity</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Share Capital</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Retained Earning</td>
+							<td></td>
+							<td ></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Shareholders Equity</i></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Non-Current Liabilities</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Interest Bearing Loans and Borrowing</td>
+							<td><a href="">10</a></td>
+							<td class="right">36,445,536</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Long term Loan based on Customer Portfolio</td>
+							<td><a href="">10</a></td>
+							<td class="right">60,334,222</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Long term loan from Related Parties</td>
+							<td><a href="">11</a></td>
+							<td class="right">9,429,028</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Land Purchase Payable</td>
+							<td><a href="">12</a></td>
+							<td class="right">150,595,772</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Deposit for Sale of Properties inventory</td>
+							<td><a href="">13</a></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Installment Payment Scheme</td>
+							<td><a href=""></a></td>
+							<td class="right">95,979,147</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Mortgage Payment Scheme</td>
+							<td><a href=""></a></td>
+							<td class="right">76,736,253</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Other Deposit</td>
+							<td><a href=""></a></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Non-Current Liabilities</i></td>
+							<td><a href=""></a></td>
+							<td class="right bold">429,519,958</td>
+						</tr>
+						<tr>
+							<td>Current Liabilities</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Trade Payable</td>
+							<td><a href="">14</a></td>
+							<td class="right">5,720,691</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Short term Bank Borrowing (OD)</td>
+							<td><a href="">9</a></td>
+							<td class="right">7,645,991</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Current Customer Deposit & Prepayment</td>
+							<td><a href="">13</a></td>
+							<td class="right">11,837,636</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Accrued Expenses (including bonus)</td>
+							<td><a href="">15</a></td>
+							<td class="right">280,607</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Salary Payable</td>
+							<td><a href="">16</a></td>
+							<td class="right">1,074,153</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Interest Payable</td>
+							<td><a href=""></a></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">General Provision</td>
+							<td><a href=""></a></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Current Tax Payable</td>
+							<td><a href=""></a></td>
+							<td class="right"></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Current Liabilities</i></td>
+							<td><a href=""></a></td>
+							<td class="right bold-border border-bottom">126,558,805</td>
+						</tr>
+						<tr>
+							<td class="bold">Total Liabilities</td>
+							<td><a href=""></a></td>
+							<td class="right bold border-bottom">556,078,762</td>
+						</tr>
+						<tr>
+							<td class="bold fontBig">Total Liabilities</td>
+							<td><a href=""></a></td>
+							<td class="right bold under-bottom">556,078,762</td>
+						</tr>
+					</table>
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script> -->
+<script id="statementProfitLoss" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryCustomer">
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<div class="block-title">
+						<h3>Company is Name</h3>
+						<h2>Statement of Profit or Loss</h2>
+						<p>for the year ended 31 December 2016</p>
+					</div>
+			    
+					<table width="100%" class="table table-borderless table-condensed">
+						<tr>
+							<th></th>
+							<th>Note</th>
+							<th class="right">2016</th>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="right">KHR</td>
+						</tr>
+						<tr>
+							<td>Revenue</td>
+							<td><a href="">10</a></td>
+							<td class="right">680,000</td>
+						</tr>
+						<tr>
+							<td>Cost</td>
+							<td></td>
+							<td class="right">(400,000)</td>
+						</tr>
+						<tr>
+							<td class="bold">Gross Profit</td>
+							<td></td>
+							<td class="right bold-border">280,000</td>
+						</tr>
+						<tr>
+							<td>Distribution costs</td>
+							<td></td>
+							<td class="right">(8,580)</td>
+						</tr>
+						<tr>
+							<td>Administrative Expense</td>
+							<td></td>
+							<td class="right">(50,000)</td>
+						</tr>
+						<tr>
+							<td>Finance Costs</td>
+							<td><a href="">10</a></td>
+							<td class="right">(22,300)</td>
+						</tr>
+						<tr>
+							<td>Share of profit of associate</td>
+							<td><a href="">10</a></td>
+							<td class="right">42,100</td>
+						</tr>
+						<tr>
+							<td class="bold">Profit before Tax</td>
+							<td><a href="">10</a></td>
+							<td class="right bold-border">241,220</td>
+						</tr>
+						<tr>
+							<td>Income tax expense</td>
+							<td><a href="">10</a></td>
+							<td class="right">(60,305)</td>
+						</tr>
+						<tr>
+							<td class="bold">Profit for the year from continuing operations</td>
+							<td></td>
+							<td class="right bold-border">180,915</td>
+						</tr>
+						<tr>
+							<td>Loss for the year discoutinued operations</td>
+							<td><a href="">10</a></td>
+							<td class="right">(24,780)</td>
+						</tr>
+						<tr>
+							<td class="bold">Profit for the year</td>
+							<td></td>
+							<td class="right bold-border border-bottom">156,135</td>
+						</tr>
+					</table>
+
+		        </div>		        
+			</div>							
+		</div>
+	</div>
+</script>
+<script id="statementFinancialPosition" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background ">
+			<div class="container-960">	
+				<div id="example" class="k-content saleSummaryCustomer">
+					<span class="glyphicons no-js remove_2 pull-right" 
+							onclick="javascript: window.history.back()"><i></i></span>
+					<div class="block-title">
+						<h3>Company is Name</h3>
+						<h2>Statement of Financial Position</h2>
+						<p>for the year ended 31 December 2016</p>
+					</div>
+			    	
+					<table width="100%"  class="table table-borderless table-condensed">
+						<tr>
+							<th></th>
+							<th>Note</th>
+							<th class="right">2016</th>
+						</tr>
+						<tr>
+							<td class="bold">ASSET</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="bold">Non-Current Asset</td>
+							<td></td>
+							<td></td>
+						</tr>						
+						<tr>
+							<td class="paddingLeft20">Properties, Plants, & Equipment</td>
+							<td><a href="">1</a></td>
+							<td class="right bold-border border-bottom">138,923,361</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Freehold Land</td>
+							<td><a href="">1</a></td>
+							<td class="right">123,670,644</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Building & Structure</td>
+							<td><a href="">1</a></td>
+							<td class="right">9,848,345</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Electrical Systems, Machineries and Improvement</td>
+							<td><a href="">1</a></td>
+							<td class="right">838,559</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Automobiles & Vehicles</td>
+							<td><a href="">1</a></td>
+							<td class="right">123,670,644</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Furniture, Fixtures & Fittings</td>
+							<td><a href="">1</a></td>
+							<td class="right">663,429</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Computer and Related Equipment</td>
+							<td><a href="">1</a></td>
+							<td class="right">286,688</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Equipments, Electricles Device & Tools</td>
+							<td>1</td>
+							<td class="right">779,835</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Heavy Machinaries</td>
+							<td><a href="">1</a></td>
+							<td class="right">341505</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Completed Investment Properties</td>
+							<td><a href="">1</a></td>
+							<td class="right">3,701,848</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">I​nvestment Properties under-construction</td>
+							<td><a href="">1</a></td>
+							<td class="right">10,087,257</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Investment in Subsidiaries</td>
+							<td><a href="">1</a></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Non-Current Asset</i></td>
+							<td><a href="">1</a></td>
+							<td class="right bold-border border-bottom">152,712,466</td>
+						</tr>
+						<tr>
+							<td class="bold">Current Assets</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20">Inventory</td>
+							<td><a href="">1</a></td>
+							<td class="right bold-border border-bottom">389,142,635</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Raw Material</td>
+							<td><a href="">1</a></td>
+							<td class="right">175,561,951</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Working-in-progress</td>
+							<td><a href="">1</a></td>
+							<td class="right">80,575,454</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Finished goods</td>
+							<td><a href="">1</a></td>
+							<td class="right">205,523,139</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Operating Equipment</td>
+							<td><a href="">1</a></td>
+							<td class="right">142,635</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Trade Receivables</td>
+							<td><a href="">1</a></td>
+							<td class="right">142,635</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Properties Sale Receivable</td>
+							<td><a href="">1</a></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Installment Payment Scheme</td>
+							<td><a href="">1</a></td>
+							<td class="right">205,523,139</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft40">Mortgage Payment Scheme</td>
+							<td><a href="">1</a></td>
+							<td class="right">9,003,967</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">AR from Related Parties</td>
+							<td><a href="">1</a></td>
+							<td class="right">-</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Other receivables</td>
+							<td><a href="">1</a></td>
+							<td class="right">34,859</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Interest Receivable</td>
+							<td><a href="">1</a></td>
+							<td class="right">138,835</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Prepayment & Deposit</td>
+							<td><a href="">1</a></td>
+							<td class="right">3,741,185</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 ">Cash and Cash Equivalent</td>
+							<td><a href="">1</a></td>
+							<td class="right">7,359,195</td>
+						</tr>
+						<tr>
+							<td class="paddingLeft20 bold"><i>Total Current Assets</i></td>
+							<td><a href="">1</a></td>
+							<td class="right bold-border border-bottom">419,215,778</td>
+						</tr>
+						<tr>
+							<td class="bold">TOTAL ASSETS</td>
+							<td><a href="">1</a></td>
+							<td class="right bold under-bottom">571,928,244</td>
 						</tr>
 						<tr>
 							<td class="bold">EQUITY & LIABILITIES</td>
@@ -5396,8 +5773,8 @@
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
 	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.financial_report"></span></span></a>
-	            </li>
+	            <!-- <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.financial_report"></span></span></a>
+	            </li> -->
 	           <!--  <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Chart of Accounts Condition</span></a>
 	            </li>
 	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Segments Setting</span></a>
@@ -5406,7 +5783,7 @@
 	            </li>
 	            <li><a href="#tab5-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Tax Setting </span></a>
 	            </li>	 -->
-	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span> </span></a>
+	            <li class="active"><a href="#tab1-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span> </span></a>
 	            </li>	                        
 	        </ul>
 	    </div>
@@ -5416,7 +5793,7 @@
 	        <div class="tab-content">
 
 	            <!-- Tab Branch content -->
-	            <div class="tab-pane active" id="tab1-1">
+	            <!-- <div class="tab-pane active" id="tab1-1">
 	            	<p>The selected Financial Reporting Standard</p>
 	            	<div class="tab1-aacountsetting">
 	            		<p>
@@ -5430,7 +5807,7 @@
 	            		BanhJi does not guarantee the full compliance with above selected financial reporting 
 	            		standards. We only provide the recommended format of the financial statements of selected standard. 
 	            	</p>	            
-	            </div>
+	            </div> -->
 	            <!-- // Tab Branch content END -->
 
 	            <!-- Tab Contact Type content -->
@@ -5480,7 +5857,7 @@
 	            <!-- // Tab Block content END -->
 
 	            <!-- Tab Block content -->
-	            <div class="tab-pane" id="tab2-1">
+	            <div class="tab-pane active" id="tab1-1">
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr class="widget-head">
@@ -9451,7 +9828,7 @@
 
 						        <!-- //CONTACT PERSON -->
 						        <div class="tab-pane" id="tab4">
-						        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i> <span data-bind="text: lang.lang.new_agent"></span></span>
+						        	<span style="margin-bottom: 15px;" class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i> <span data-bind="text: lang.lang.new_agent"></span></span>
 						        	
 						        	<table class="table table-bordered table-white">
 								        <thead>
@@ -9911,7 +10288,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 						  				 				
@@ -10413,7 +10790,7 @@
 					  			<ul class="dropdown-menu addNewItem">  				  				
 					  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 					  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-					  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+					  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 					  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 					  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 					  				 				
@@ -10877,7 +11254,7 @@
 					  			<ul class="dropdown-menu addNewItem">  				  				
 					  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 					  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-					  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+					  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 					  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 					  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 					  				 				
@@ -11484,7 +11861,7 @@
 									  			<ul class="dropdown-menu addNewItem">  				  				
 									  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 									  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-									  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+									  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 									  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 									  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 									  				 				
@@ -11548,7 +11925,7 @@
 								  			<ul class="dropdown-menu addNewItem">  				  				
 								  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 								  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-								  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+								  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 								  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 								  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 								  				 				
@@ -12224,10 +12601,10 @@
 				    </table>
 									
 		            <!-- Bottom part -->
-		            <div class="row-fluid">
+		            <div class="row">
 			
 						<!-- Column -->
-						<div class="span6">		
+						<div class="span9">		
 							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
 						
 							<div class="btn-group">
@@ -12253,7 +12630,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 						  				 				
@@ -12285,9 +12662,9 @@
 						<!-- Column END -->
 
 						<!-- Column -->
-						<div class="span3" align="center">
+						<!-- <div class="span3" align="center">
 							<img data-bind="visible: isEdit, attr: { src: statusSrc }" width="150px;" height="150px;" />	
-						</div>
+						</div> -->
 						<!-- Column END -->
 						
 						<!-- Column -->
@@ -16459,7 +16836,7 @@
 
 						        <!-- //CONTACT PERSON -->
 						        <div class="tab-pane" id="tab3">
-						        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i><span data-bind="text: lang.lang.new_contact_person"></span></span>
+						        	<span style="margin-bottom: 15px;" class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i><span data-bind="text: lang.lang.new_contact_person"></span></span>
 
 						        	<table class="table table-bordered table-white">
 								        <thead>
@@ -16962,7 +17339,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span>
+						  				<li><a href='#/fixed_assetss'><span data-bind="text: lang.lang.add_fixed_assets"></span>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 						  				 				
@@ -17554,7 +17931,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>	
 						  			</ul>
@@ -18114,7 +18491,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li> 
 						  			</ul>
@@ -18666,7 +19043,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li> 	
 						  			</ul>
@@ -19291,7 +19668,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
 						  			</ul>
@@ -19818,7 +20195,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
 						  			</ul>
@@ -20161,10 +20538,10 @@
 				    </table>			    
 									
 		            <!-- Bottom part -->
-		            <div class="row-fluid">
+		            <div class="row">
 			
 						<!-- Column -->
-						<div class="span6">
+						<div class="span9">
 							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
 
 							<div class="btn-group">
@@ -20190,7 +20567,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
 						  			</ul>
@@ -20221,9 +20598,9 @@
 						<!-- Column END -->
 
 						<!-- Column -->
-						<div class="span3" align="center">
+						<!-- <div class="span3" align="center">
 							<img data-bind="visible: isEdit, attr: { src: statusSrc }" width="150px;" height="150px;" />	
-						</div>
+						</div> -->
 						<!-- Column END -->
 						
 						<!-- Column -->
@@ -20847,7 +21224,7 @@
 								data-bind="click: cancel"><i></i></span>						
 						</div>
 
-				        <h2><span data-bind="text: lang.lang.job"></span></h2>				        				        				        	
+				        <h2 data-bind="text: lang.lang.job"></h2>				        				        				        	
 				    </div>			   
 
 				    <br>
@@ -20896,7 +21273,7 @@
 						</div>
 					</div>
 					
-					<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_new_job"></span></button>
+					<button style="margin-bottom: 15px;" class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_new_job"></span></button>
 					                                					
 
 	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
@@ -21319,7 +21696,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Sale Summary by Customer</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -21419,7 +21796,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Customer Transaction List</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -21455,7 +21832,6 @@
 									<th><span>Type</span></th>
 									<th><span>Date</span></th>
 									<th><span>No</span></th>
-									<th><span>Sale Rep</span></th>
 									<th><span>Amount</span></th>
 								</tr>
 							</thead>
@@ -21483,18 +21859,16 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
-				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
@@ -21558,7 +21932,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Sale Detail by Customer</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -21583,7 +21957,6 @@
 									<th><span>Type</span></th>
 									<th><span>Date</span></th>
 									<th><span>No</span></th>
-									<th><span>Memo</span></th>
 									<th><span>Item/service</span></th>
 									<th><span>Qty</span></th>
 									<th><span>Price</span></th>
@@ -21618,18 +21991,17 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			#for(var x = 0; x < items[i].lines.length; x++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
-				<td>#=items[i].memo#</td>
 				<td>#=items[i].lines[x].name#</td>
 				<td>#=items[i].lines[x].quantity#</td>
 				<td align="right">#=kendo.toString(items[i].lines[x].price, 'c2')#</td>
@@ -21639,7 +22011,6 @@
 		#}#
 	#}#
 	<tr style="font-weight: 700;">
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -21706,7 +22077,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Sale Summary by Product/Services</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -21832,7 +22203,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Deposit Detail By Customer</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -21892,8 +22263,9 @@
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
@@ -21968,7 +22340,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Sale Detail by Product/Service</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -21979,21 +22351,15 @@
 										<span data-bind="text: count"></span>
 									</div>
 									<div class="span6">
-										<p>Total Sale</p>
-										<span data-bind="text: total"></span>
+										<p>Number of Product Sale</p>
+										<span data-bind="text: productSale"></span>
 									</div>
 								</div>
 							</div>
 							<div class="span7">
-								<div class="total-customer">
-									<div class="span6">
-										<p>Number of Product Sale</p>
-										<span data-bind="text: productSale"></span>
-									</div>
-									<div class="span6">
-										<p>Qty on Hand</p>
-										<span data-bind="text: totalQty"></span>
-									</div>
+								<div class="total-customer">									
+									<p>Total Sale</p>
+									<span data-bind="text: total"></span>
 								</div>
 							</div>
 						</div>
@@ -22041,8 +22407,9 @@
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
@@ -22121,7 +22488,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Customer Balance Summary</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -22233,7 +22600,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Customer Balance Detail</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -22268,8 +22635,7 @@
 								<tr>
 									<th><span>Type</span></th>
 									<th><span>Date</span></th>
-									<th><span>No</span></th>
-									<th><span>Memo</span></th>								
+									<th><span>No</span></th>								
 									<th><span>AMOUNT</span></th>
 								</tr>
 							</thead>
@@ -22279,8 +22645,8 @@
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="4">Total</th>
-									<th colspan="3"><span data-bind="text: total"></span></th>
+									<th colspan="3">Total</th>
+									<th colspan="1"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -22296,19 +22662,17 @@
 		<td>#=group#</td>
 		<td></td>
 		<td></td>
-		<td></td>		
-		<td></td>
 		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
-				</td>
-				<td>#=items[i].memo#</td>				
+				</td>			
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
@@ -22372,14 +22736,14 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Receivable Aging Summary</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p>Total Customer</p>
+										<p>Customer</p>
 										<span data-bind="text: count"></span>
 									</div>
 									<div class="span6">
@@ -22494,13 +22858,13 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Receivable Aging Detail</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span5">
 								<div class="total-customer">
-									<p>Total Sale</p>
+									<p>Total Customer Balance</p>
 									<span data-bind="text: total"></span>
 								</div>
 							</div>
@@ -22523,8 +22887,8 @@
 								<tr>
 									<th><span>Type</span></th>
 									<th><span>Date</span></th>
+									<th><span>Due Date</span></th>
 									<th><span>No</span></th>
-									<th><span>Memo</span></th>
 									<th><span>Aging</span></th>
 									<th><span>Balance</span></th>
 								</tr>
@@ -22535,7 +22899,7 @@
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="4">Total</th>
+									<th colspan="3">Total</th>
 									<th colspan="3"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
@@ -22555,18 +22919,19 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
+				# var dueDate = kendo.toString(new Date(items[i].dueDate),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
+				<td>#=dueDate#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
-				<td>#=items[i].memo#</td>
-				<td>#=items[i].outstanding#</td>
+				<td>#=items[i].outstanding# days</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
@@ -22638,7 +23003,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>List Invoices Collect</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -22667,8 +23032,8 @@
 								<tr>
 									<th><span>Type</span></th>
 									<th><span>Date</span></th>
-									<th><span>No</span></th>
-									<th><span>Memo</span></th>
+									<th><span>Name</span></th>
+									<th><span>No</span></th>									
 									<th><span>Balance</span></th>
 								</tr>
 							</thead>
@@ -22678,7 +23043,7 @@
 							></tbody>
 							<tfoot>
 								<tr>
-									<th colspan="4">Total</th>
+									<th colspan="2">Total</th>
 									<th colspan="3"><span data-bind="text: total"></span></th>
 								</tr>
 							</tfoot>
@@ -22697,24 +23062,23 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
+				<td>#=items[i].name#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
-				</td>
-				<td>#=items[i].memo#</td>
+				</td>				
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
+	<tr style="font-weight: bold; color: \#000;">
 		<td></td>
 		<td></td>
 		<td></td>
@@ -22779,7 +23143,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: institute.name"></h3>
 							<h2>Collect Report</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -22792,7 +23156,7 @@
 							<div class="span7">
 								<div class="total-customer">
 									<div class="span6">
-										<p>NUmber of Customer</p>
+										<p>Number of Customer</p>
 										<span data-bind="text: count"></span>
 									</div>
 									<div class="span6">
@@ -22809,7 +23173,6 @@
 									<th><span>Type</span></th>
 									<th><span>Date</span></th>
 									<th><span>No</span></th>
-									<th><span>Memo</span></th>
 									<th><span>Balance</span></th>
 								</tr>
 							</thead>
@@ -22837,24 +23200,22 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
-				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
-		<td></td>
+	<tr style="font-weight: bold; color: \#000;">
 		<td></td>
 		<td></td>
 		<td></td>
@@ -22918,20 +23279,14 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Invoice List</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span5">
-								<div class="total-customer">
-									<div class="span6">
-										<p>Total Sale</p>
-										<span data-bind="text: totalCreditSale"></span>
-									</div>
-									<div class="span6">
-										<p>Number</p>
-										<span data-bind="text: totalInvoice"></span>
-									</div>
+								<div class="total-customer">									
+									<p>Customer Balance</p>
+									<span data-bind="text: totalCreditSale"></span>
 								</div>
 							</div>
 							<div class="span7">
@@ -22941,8 +23296,8 @@
 										<span data-bind="text: count"></span>
 									</div>
 									<div class="span6">
-										<p>Customer Balance</p>
-										<span data-bind="text: totalBalance"></span>
+										<p>Number Invoice</p>
+										<span data-bind="text: totalInvoice"></span>
 									</div>
 								</div>
 							</div>
@@ -22955,9 +23310,6 @@
 									<th><span>Date</span></th>
 									<th><span>No</span></th>
 									<th><span>Due Date</span></th>
-									<th><span>Memo</span></th>
-									<th><span>Status</span></th>
-									<th><span>Segment</span></th>
 									<th><span>Balance</span></th>
 								</tr>
 							</thead>
@@ -22986,37 +23338,24 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
+				# var due_date = kendo.toString(new Date(items[i].due_date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
-				<td>#=items[i].due_date#</td>
-				<td>#=items[i].memo#</td>
-				<td>#=items[i].status#</td>
-				<td>#if (items[i].segments.length){#
-					#for (var x=0; x<items[i].segments.length; x++) {#
-						#=items[i].segments[x].code#
-						<br>
-
-					#}#
-				#}#</td>
+				<td>#=due_date#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
 		#}#
 	#}#
 	<tr style="font-weight: bold; color: black;">
-		<td></td>
-		<td></td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -23224,7 +23563,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Sale by Job/Engagement</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -23290,8 +23629,9 @@
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 				</td>
@@ -23373,23 +23713,11 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Sale Order List</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span5">
-								<div class="total-customer">
-									<div class="span6">
-										<p>Product Items</p>
-										<span data-bind="text: total"></span>
-									</div>
-									<div class="span6">
-										<p>Product Items on Hand</p>
-										<span data-bind="text: count"></span>
-									</div>	
-								</div>
-							</div>
-							<div class="span7">
 								<div class="total-customer">
 									<div class="span6">
 										<p>Customer Order</p>
@@ -23401,16 +23729,27 @@
 									</div>
 								</div>
 							</div>
+							<div class="span7">
+								<div class="total-customer">									
+									<div class="span6">
+										<p>Amount Order</p>
+										<span data-bind="text: total"></span>
+									</div>
+									<div class="span6">
+										<p>QTY Order</p>
+										<span data-bind="text: totalQty"></span>
+									</div>
+								</div>
+							</div>
 						</div>
 
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
 									<th><span>Customer Name</span></th>
+									<th><span>Date</span></th>
 									<th><span>Sale Order</span></th>
-									<th><span>Item</span></th>
-									<th><span>Memo Date</span></th>
-									<th><span>Cost</span></th>
+									<th><span>Item</span></th>									
 									<th><span>QTY</span></th>
 									<th><span>Price</span></th>
 									<th><span>Balance</span></th>
@@ -23435,14 +23774,16 @@
 </script>
 <script id="saleOrder-list-temp" type="text/x-kendo-template">
 	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
+	<tr>
+		# var myDate = kendo.toString(new Date(date),'dd-MM-yyyy'); #
 		<td>#=customer#</td>
-		<td>#=SO#</td>
-		<td>#=item#</td>
-		<td>#=memo#</td>
-		<td>#=kendo.toString(cost, 'c2')#</td>
+		<td>#=myDate#</td>
+		<td>
+			<a href="\#/#=type.toLowerCase()#/#=id#">#=SO#</a>
+		</td>
+		<td>#=item#</td>		
 		<td>#=kendo.toString(qty, 'n')#</td>
-		<td>#=kendo.toString(price, 'c2')#</td>
+		<td align="right">#=kendo.toString(price, 'c2')#</td>
 		<td align="right">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
@@ -29684,7 +30025,7 @@
 						       	</a>
 						    </div>
 						    <div class="span4">
-						       	<a href="#/fixed_assets" class="center">
+						       	<a href="#/fixed_assetss" class="center">
 						       		<img title="Add Txn Item"  src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_fixed_assets.ico" />
 						       	</a>
 						    </div>
@@ -29859,7 +30200,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>
 				            <tr>
-				                <th colspan="2" class="center">Top 5 Best Purcash Products</th>				                			                
+				                <th colspan="2" class="center">Top 5 Best Purchase Products</th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -30609,7 +30950,7 @@
 
 						        	<div class="row">
 						        		<div class="span6">
-						        			<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemVendor"><i></i> <span data-bind="text: lang.lang.new_vendor_item"></span></span>
+						        			<span style="margin-bottom: 15px;" class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemVendor"><i></i> <span data-bind="text: lang.lang.new_vendor_item"></span></span>
 								        	
 								        	<table class="table table-bordered table-white">
 										        <thead>
@@ -30627,7 +30968,7 @@
 										    </table>
 						        		</div>
 						        		<div class="span6">
-						        			<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemCustomer"><i></i> <span data-bind="text: lang.lang.new_customer_item"></span></span>
+						        			<span style="margin-bottom: 15px;" class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemCustomer"><i></i> <span data-bind="text: lang.lang.new_customer_item"></span></span>
 								        	
 								        	<table class="table table-bordered table-white">
 										        <thead>
@@ -31059,7 +31400,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 						  				 				
@@ -31433,7 +31774,7 @@
 
 						        	<div class="row">
 						        		<div class="span6">
-						        			<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemVendor"><i></i> <span data-bind="text: lang.lang.new_vendor_item"></span></span>
+						        			<span style="margin-bottom: 15px;" class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemVendor"><i></i> <span data-bind="text: lang.lang.new_vendor_item"></span></span>
 								        	
 								        	<table class="table table-bordered table-white">
 										        <thead>
@@ -31451,7 +31792,7 @@
 										    </table>
 						        		</div>
 						        		<div class="span6">
-						        			<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemCustomer"><i></i> <span data-bind="text: lang.lang.new_customer_item"></span></span>
+						        			<span style="margin-bottom: 15px;" class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyItemCustomer"><i></i> <span data-bind="text: lang.lang.new_customer_item"></span></span>
 								        	
 								        	<table class="table table-bordered table-white">
 										        <thead>
@@ -33099,7 +33440,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 						  				 				
@@ -38042,7 +38383,7 @@
   				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory"></span></a></li>
   				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
   				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
-  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+  				<li><a href='#/fixed_assetss'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
   				<li><a href="#/txn_item"><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>
   				<li> <span class="li-line"></span></li>			  				
   				<li  style="padding-top: 10px;"><a href='#/purchase_order'><span data-bind="text: lang.lang.make_purchase_order"></span></a></li>
@@ -38167,7 +38508,7 @@
   				<li ><a href="#/txn_item"><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>
   				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.build_assembly"></span></a></li>  
   				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.add_new_catalog"></span></a></li>
-  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>  		
+  				<li><a href='#/fixed_assetss'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>  		
   				<li> <span class="li-line"></span></li> 
   				<li><a href='#/grn'><span data-bind="text: lang.lang.add_received_note"></span></a></li>
   				<li><a href='#/gdn'><span data-bind="text: lang.lang.add_delivery_note"></span></a></li>
@@ -40341,6 +40682,7 @@
 		//Job
 		jobDS						: dataStore(apiUrl + "jobs"),
 		//Currency
+		currencyAllDS				: dataStore(apiUrl + "currencies"),
 		currencyDS					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -40369,7 +40711,8 @@
 				data: 'results',
 				total: 'count'
 			},
-			group: { field: "group"},
+			filter: { field:"status", value: 1 },
+			// group: { field: "group"},
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -42973,51 +43316,30 @@
 	});
 	banhji.currencyRate =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "currencies/rate"),
-		baseCurrencyDS		: banhji.source.currencyDS,
-		currencyDS 			: banhji.source.currencyDS,
-		sortList			: banhji.source.sortList,
-		sorter 				: "all",		
-		sdate 				: "",
-		edate 				: "",
+		dataSource 			: banhji.source.currencyRateDS,
+		currencyDS 			: banhji.source.currencyAllDS,
 		obj 				: null,
 		isEdit 				: false,
-		user_id				: banhji.source.user_id,				
 		baseCode 			: banhji.institute.currency.country +' - '+ banhji.institute.currency.code,
 		reportCode 			: banhji.institute.reportCurrency.country +' - '+ banhji.institute.reportCurrency.code,						
-		pageLoad 			: function(id){
-			if(id){
-				this.set("isEdit", true);							
-				this.loadObj(id);
-			}else{				
-				if(this.get("isEdit")){
-					this.set("isEdit", false);
-					
-					this.dataSource.data([]);					
-					
-					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();					
-				}								
-			}
+		windowVisible 		: false,
+		user_id				: banhji.source.user_id,
+		pageLoad 			: function(){
 		},		
 		openWindow			: function(){
       		this.addEmpty();
 
-         	var window = $("#window").data("kendoWindow");
-          	window.title("Exchange Rate");          	
-          	window.center().open();         	
+         	this.set("windowVisible", true);
       	},
-      	closeWindow 		: function(){	      		
+      	closeWindow 		: function(){
       		this.dataSource.cancelChanges();
 
-      		var window = $("#window").data("kendoWindow");          	         	
-          	window.close();          	
-      	},	   								
+      		this.set("windowVisible", false);
+      	},   								
 		addEmpty 		 	: function(){			
-			this.dataSource.add({				
-				currency_id : "",				
+			this.dataSource.insert(0, {		
 				user_id 	: this.get("user_id"),
+				currency_id : 0,
  	    		rate 		: 1,
  	    		locale 		: "",
 			   	source		: "",
@@ -43027,37 +43349,28 @@
 			   	currency 	: []			   				
 	    	});		    		
 			
-			var data = this.dataSource.data();
-			var obj = data[data.length-1];			
+			var obj = this.dataSource.at(0);		
 			this.set("obj", obj);					
-		},			
-		remove 				: function(e){						
-			var d = e.data;				
-			this.lineDS.remove(d);
-	        this.changes();		        
 		},
 		save 				: function(){
+			var obj = this.get("obj"),
+			currency = this.currencyDS.get(obj.currency_id);
+			obj.set("locale", currency.locale);
+
       		this.dataSource.sync();
       		
-      		var window = $("#window").data("kendoWindow");          	         	
-          	window.close(); 		
+      		this.set("windowVisible", false); 		
       	},
       	edit 				: function(e){
       		var data = e.data;
       		
       		this.set("obj", data);
 
-      		var window = $("#window").data("kendoWindow");
-          	window.title("Exchange Rate");          	
-          	window.center().open();       		
-      	},      	
-      	delete 				: function(e){
-			if (confirm("Are you sure, you want to delete it?")) {        
-		        var data = e.data;
-		        this.dataSource.remove(data);
-		        this.dataSource.sync();		        
-	    	}	    	
-	    }			         		
+      		this.set("windowVisible", true);
+      	},
+      	cancel 				: function(){
+      		banhji.userManagement.removeMultiTask("currency_rate");
+      	}		         		
 	});
 	banhji.recurring =  kendo.observable({
 		lang 				: langVM,
@@ -43319,9 +43632,7 @@
 		currentSort 		: "asc",
 		company 			: banhji.institute,							
 		pageLoad 			: function(){
-			if(this.dataSource.total()>0){
-				this.search();
-			}
+			this.search();
 		},
 		displayDate 		: function(){
 			var d = "",
@@ -43360,12 +43671,10 @@
 			this.dataSource.sort({ field:col, dir:this.get("currentSort") });
 		},
 		search 				: function(){
-			var as_of = kendo.toString(this.get("as_of"), "yyyy-MM-dd");
+			var as_of = this.get("as_of");
 
 			if(as_of){
-				this.dataSource.filter([
-					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:as_of }
-				]);
+				this.dataSource.filter({ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") });
 			}
 		},		
 		totalDr 			: function() {
@@ -62552,6 +62861,12 @@
 				]
 			});
 		},
+		displayDateStart    : function() {
+			return kendo.toString(new Date(this.get('startDate')), 'dd-MM-yyyy');
+		},
+		displayDateEnd    : function() {
+			return kendo.toString(new Date(this.get('endDate')), 'dd-MM-yyyy');
+		},
 		trnxSearch 			: function() {},
 		depositDetailSearch : function() {},
 		summaryProductSearch: function() {},
@@ -63398,10 +63713,10 @@
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),		
-		contactDS 			: dataStore(apiUrl + "contacts"),				
-		currencyDS 			: dataStore(apiUrl + "currencies"),
+		contactDS 			: banhji.source.contactDS,				
+		currencyDS 			: banhji.source.currencyDS,
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		paymentMethodDS		: dataStore(apiUrl + "payment_methods"),
+		paymentMethodDS		: banhji.source.paymentMethodDS,
 		accountDS  			: banhji.source.cashAccountDS,
 		segmentItemDS 		: banhji.source.segmentItemDS,
 		txnTemplateDS		: new kendo.data.DataSource({
@@ -65978,7 +66293,7 @@
     	poDS 				: dataStore(apiUrl + "transactions/line"),
     	soDS 				: dataStore(apiUrl + "transactions/line"),
     	currencyDS  		: banhji.source.currencyDS,
-    	unitDS	   			: dataStore(apiUrl + "measurements"),
+    	unitDS	   			: banhji.source.measurementDS,
     	obj 				: null,
     	priceList 			: null,
     	on_po 				: 0,
@@ -66123,7 +66438,7 @@
     	categoryDS 				: banhji.source.inventoryCategoryDS,
     	itemGroupDS 			: dataStore(apiUrl + "items/group"),   	
     	brandDS 	 			: dataStore(apiUrl + "brands"),    	   	   	
-    	measurementDS			: dataStore(apiUrl + "measurements"),
+    	measurementDS			: banhji.source.measurementDS,
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
@@ -67012,9 +67327,9 @@
     	existingDS 				: dataStore(apiUrl + "items"),
     	categoryDS 				: banhji.source.serviceCategoryDS,
     	itemGroupDS 			: dataStore(apiUrl + "items/group"),    	  	   	
-    	measurementDS			: dataStore(apiUrl + "measurements"),
-    	vendorDS 	 			: dataStore(apiUrl + "contacts"),
-    	customerDS 	 			: dataStore(apiUrl + "contacts"),
+    	measurementDS			: banhji.source.measurementDS,
+    	vendorDS 	 			: banhji.source.supplierDS,
+    	customerDS 	 			: banhji.source.customerDS,
     	itemVendorDS 	 		: dataStore(apiUrl + "items/contact"),
     	itemCustomerDS 	 		: dataStore(apiUrl + "items/contact"),
     	currencyDS 	 			: banhji.source.currencyDS,  	
@@ -70716,143 +71031,8 @@
 			banhji.userManagement.addMultiTask("Currency Rate","currency_rate",null);
 			
 			if(banhji.pageLoaded["currency_rate"]==undefined){
-				banhji.pageLoaded["currency_rate"] = true;				
+				banhji.pageLoaded["currency_rate"] = true;
 
-				function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
-
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
-
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function dateChanges(){
-                	var strDate = "";
-
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}
-
-					$("#strDate").text(strDate);
-                }
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $("#sorter").val();
-
-					switch(value){
-					case "today":								
-						sdate = today;
-															  					
-					  	break;
-					case "week":			  	
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
-					  	break;
-					case "month":							  	
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":				
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-											  
-					}
-
-					start.value(sdate);
-					end.value(edate);
-					
-					start.max(end.value());
-                	end.min(start.value());
-
-                	dateChanges();                	
-                });
-
-                start.max(end.value());
-                end.min(start.value());				
-
-				$("#search").click(function(e){
-		        	e.preventDefault();
-
-		        	var para = [],
-		        	locale = vm.currency_locale, 
-					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
-					edate = kendo.toString(end.value(), "yyyy-MM-dd");
-					
-		        	//Dates
-		        	if(start.value() && end.value()){        		
-		            	para.push({ field:"date >=", value: sdate });
-		            	para.push({ field:"date <=", value: edate });            	          	            	
-		            }else if(start.value()){
-		            	para.push({ field:"date", value: sdate });
-		            }else if(end.value()){
-		            	para.push({ field:"date <=", value: edate });
-		            }else{
-		            	
-		            }
-
-		            if(locale){
-		            	para.push({ field:"locale", value: locale }); 
-		            }         
-
-		            vm.dataSource.filter(para);		            
-		        });
 			}
 
 			vm.pageLoad();			
@@ -75202,7 +75382,15 @@
 			banhji.userManagement.addMultiTask("Sale Summary Customer Report","sale_summary_customer",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.saleSummaryCustomer);
-			banhji.customerSale.saleSummary.dataSource.read();			
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.saleSummaryCustomer.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
+		
 			banhji.customerSale.saleSummary.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75220,7 +75408,14 @@
 			banhji.userManagement.addMultiTask("Sale Detail Customer Report","sale_detail_customer",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.saleDetailCustomer);
-			banhji.customerSale.detailSummary.dataSource.read();
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.detailSummary.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.customerSale.detailSummary.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75238,8 +75433,15 @@
 			banhji.userManagement.addMultiTask("Deposit Detail by Customer","deposit_detail_customer",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.depositDetailCustomer);
-			banhji.customerSale.detailSummary.dataSource.read();
-			banhji.customerSale.detailSummary.dataSource.bind('requestEnd', function(e){
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.depositDetail.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
+			banhji.customerSale.depositDetail.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
 					kendo.culture(banhji.locale);
@@ -75256,7 +75458,14 @@
 			banhji.userManagement.addMultiTask("Customer Transaction List","customer_transaction_list",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.customerTransactionList);
-			banhji.customerSale.customerTransaction.dataSource.read();
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.customerTransaction.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.customerSale.customerTransaction.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75279,7 +75488,14 @@
 			banhji.userManagement.addMultiTask("Sale Summary by Product","sale_summary_product",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.saleSummaryProduct);
-			banhji.customerSale.summaryProductSale.dataSource.read();
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.summaryProductSale.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.customerSale.summaryProductSale.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75300,7 +75516,14 @@
 			banhji.userManagement.addMultiTask("Sale Detail by Product","sale_detail_product",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.saleDetailProduct);
-			banhji.customerSale.detailCustomerSale.dataSource.read();
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.detailCustomerSale.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.customerSale.detailCustomerSale.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75320,7 +75543,14 @@
 			banhji.userManagement.addMultiTask("Customer Balance Summary","customer_balance_summary",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.customerBalanceSummary);
-			banhji.customerSale.summaryBalance.dataSource.read();			
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.summaryBalance.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});			
 			banhji.customerSale.summaryBalance.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75340,7 +75570,14 @@
 			banhji.userManagement.addMultiTask("Customer Balance Detail","customer_balance_detail",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.customerBalanceDetail);
-			banhji.customerSale.saleDetail.dataSource.read();
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.saleDetail.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});	
 			banhji.customerSale.saleDetail.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75360,7 +75597,14 @@
 			banhji.userManagement.addMultiTask("Receivable Aging Summary","receivable_aging_summary",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.receivableAgingSummary);
-			banhji.customerSale.receivableAging.dataSource.read();
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.receivableAging.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.customerSale.receivableAging.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75379,8 +75623,15 @@
 			var vm = banhji.receivableAgingDetail;			
 			banhji.userManagement.addMultiTask("Receivable Aging Detail","receivable_aging_detail",null);
 
-			banhji.view.layout.showIn("#content", banhji.view.receivableAgingDetail);
-			banhji.customerSale.receivableDetail.dataSource.read();
+			banhji.view.layout.showIn("#content", banhji.view.receivableAgingDetail)
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.receivableDetail.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.customerSale.receivableDetail.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75399,7 +75650,14 @@
 			banhji.userManagement.addMultiTask("List Invoice Collect","list_invoices_collect",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.listInvoicesCollect);
-			banhji.customerSale.listInvoicesCollect.dataSource.read();
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.listInvoicesCollect.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.customerSale.listInvoicesCollect.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75418,7 +75676,14 @@
 			banhji.userManagement.addMultiTask("Report to be Collect","collect_report",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.collectReport);
-			banhji.customerSale.collectReportDB.dataSource.read();
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.collectReportDB.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.customerSale.collectReportDB.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75437,7 +75702,14 @@
 			banhji.userManagement.addMultiTask("Invoice List","invoice_list",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.invoiceList);
-			banhji.customerSale.invoiceListDB.dataSource.read();
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.invoiceListDB.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.customerSale.invoiceListDB.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75476,7 +75748,14 @@
 			banhji.userManagement.addMultiTask("Sale Job Engagement","sale_job_engagement",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.saleJobEngagement);
-			banhji.customerSale.saleJob.dataSource.read();
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.saleJob.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.customerSale.saleJob.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75495,7 +75774,14 @@
 			banhji.userManagement.addMultiTask("List of Sale Order","sale_order_list",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.saleOrderList);
-			banhji.customerSale.saleOrderDB.dataSource.read();
+			banhji.customerSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.customerSale.saleOrderDB.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.customerSale.saleOrderDB.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.customerSale.set('count', e.response.count);
@@ -75503,6 +75789,7 @@
 					banhji.customerSale.set('total', kendo.toString(e.response.total, 'c2'));
 					banhji.customerSale.set('order', kendo.toString(e.response.order, 'n0'));
 					banhji.customerSale.set('customer', kendo.toString(e.response.customer, 'n0'));
+					banhji.customerSale.set('totalQty', kendo.toString(e.response.totalQty, 'n0'));
 				}
 			});
 		}

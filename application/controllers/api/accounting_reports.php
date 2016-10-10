@@ -22,6 +22,7 @@ class Accounting_reports extends REST_Controller {
 			$this->_database = $conn->inst_database;
 			
 			//Fiscal Date
+			//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate
 			$today = date("Y-m-d");
 			$fdate = date("Y") ."-". $institute->fiscal_date;
 			if($today > $fdate){
@@ -51,7 +52,7 @@ class Accounting_reports extends REST_Controller {
 		//INCOME (Begin FiscalDate To As Of)
 		$income = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$income->where_in_related("account/account_type", "id", array(35,39));
-		$income->where_related("transaction", "issued_date >=", $this->startFiscalDate);
+		$income->where_related("transaction", "issued_date >", $this->startFiscalDate);
 		$income->where_related("transaction", "issued_date <=", $today);
 		$income->where_related("transaction", "is_recurring", 0);
 		$income->where_related("transaction", "deleted", 0);
@@ -77,7 +78,7 @@ class Accounting_reports extends REST_Controller {
 		//EXPENSE (Begin FiscalDate To As Of)
 		$expense = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$expense->where_in_related("account/account_type", "id", array(36,37,38,40,41,42));
-		$expense->where_related("transaction", "issued_date >=", $this->startFiscalDate);
+		$expense->where_related("transaction", "issued_date >", $this->startFiscalDate);
 		$expense->where_related("transaction", "issued_date <=", $today);
 		$expense->where_related("transaction", "is_recurring", 0);
 		$expense->where_related("transaction", "deleted", 0);
@@ -179,7 +180,7 @@ class Accounting_reports extends REST_Controller {
 		//INCOME (Begin FiscalDate To As Of)
 		$income = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$income->where_in_related("account/account_type", "id", array(35,39));
-		$income->where_related("transaction", "issued_date >=", $this->startFiscalDate);
+		$income->where_related("transaction", "issued_date >", $this->startFiscalDate);
 		$income->where_related("transaction", "issued_date <=", $today);
 		$income->where_related("transaction", "is_recurring", 0);
 		$income->where_related("transaction", "deleted", 0);
@@ -205,7 +206,7 @@ class Accounting_reports extends REST_Controller {
 		//EXPENSE (Begin FiscalDate To As Of)
 		$expense = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$expense->where_in_related("account/account_type", "id", array(36,37,38,40,41,42));
-		$expense->where_related("transaction", "issued_date >=", $this->startFiscalDate);
+		$expense->where_related("transaction", "issued_date >", $this->startFiscalDate);
 		$expense->where_related("transaction", "issued_date <=", $today);
 		$expense->where_related("transaction", "is_recurring", 0);
 		$expense->where_related("transaction", "deleted", 0);
@@ -231,7 +232,7 @@ class Accounting_reports extends REST_Controller {
 		//EXPENSE EBIT (Begin FiscalDate To As Of)
 		$expenseEBIT = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$expenseEBIT->where_in_related("account/account_type", "id", array(36,37,38,40));
-		$expenseEBIT->where_related("transaction", "issued_date >=", $this->startFiscalDate);
+		$expenseEBIT->where_related("transaction", "issued_date >", $this->startFiscalDate);
 		$expenseEBIT->where_related("transaction", "issued_date <=", $today);
 		$expenseEBIT->where_related("transaction", "is_recurring", 0);
 		$expenseEBIT->where_related("transaction", "deleted", 0);
@@ -407,7 +408,7 @@ class Accounting_reports extends REST_Controller {
 		//COGS (Begin FiscalDate To As Of)
 		$cogs = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$cogs->where_related("account/account_type", "id", 36);
-		$cogs->where_related("transaction", "issued_date >=", $this->startFiscalDate);
+		$cogs->where_related("transaction", "issued_date >", $this->startFiscalDate);
 		$cogs->where_related("transaction", "issued_date <=", $today);
 		$cogs->where_related("transaction", "is_recurring", 0);
 		$cogs->where_related("transaction", "deleted", 0);
@@ -508,7 +509,7 @@ class Accounting_reports extends REST_Controller {
 		//SALE (Begin FiscalDate To As Of)
 		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$sale->where_in("type", array("Invoice","Cash_Sale","Sale_Return"));
-		$sale->where("issued_date >=", $this->startFiscalDate);
+		$sale->where("issued_date >", $this->startFiscalDate);
 		$sale->where("issued_date <=", $today);
 		$sale->where("is_recurring", 0);
 		$sale->where("deleted", 0);
@@ -530,7 +531,7 @@ class Accounting_reports extends REST_Controller {
 		//CREDIT SALE (Begin FiscalDate To As Of)
 		$creditSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$creditSale->where("type", "Invoice");
-		$creditSale->where("issued_date >=", $this->startFiscalDate);
+		$creditSale->where("issued_date >", $this->startFiscalDate);
 		$creditSale->where("issued_date <=", $today);
 		$creditSale->where("is_recurring", 0);
 		$creditSale->where("deleted", 0);
@@ -547,7 +548,7 @@ class Accounting_reports extends REST_Controller {
 		//CREDIT PURCHASE (Begin FiscalDate To As Of)
 		$creditPurchase = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$creditPurchase->where("type", "Credit_Purchase");
-		$creditPurchase->where("issued_date >=", $this->startFiscalDate);
+		$creditPurchase->where("issued_date >", $this->startFiscalDate);
 		$creditPurchase->where("issued_date <=", $today);
 		$creditPurchase->where("is_recurring", 0);
 		$creditPurchase->where("deleted", 0);
@@ -564,7 +565,7 @@ class Accounting_reports extends REST_Controller {
 		//TRANSACTION RECORDED (Begin FiscalDate To As Of)
 		$txnRecorded = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$txnRecorded->where("is_journal", 1);
-		$txnRecorded->where("issued_date >=", $this->startFiscalDate);
+		$txnRecorded->where("issued_date >", $this->startFiscalDate);
 		$txnRecorded->where("issued_date <=", $today);
 		$txnRecorded->where("is_recurring", 0);
 		$txnRecorded->where("deleted", 0);
@@ -799,7 +800,7 @@ class Accounting_reports extends REST_Controller {
 		
 		$obj->include_related("transaction", array("type", "number", "issued_date", "memo"));
 		$obj->include_related("account", array("number","name"));
-		$obj->include_related("contact", array("abbr","number","name"));
+		
 		$obj->where_related("transaction", "is_journal", 1);
 		$obj->where_related("transaction", "is_recurring", 0);		
 		$obj->where_related("transaction", "deleted", 0);
@@ -813,36 +814,31 @@ class Accounting_reports extends REST_Controller {
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {
-				if(isset($objList[$value->transaction_id])){
-					$objList[$value->transaction_id]["line"][] = array(
-						"id" 			=> $value->id,
-						"description" 	=> $value->description,
-						"reference_no" 	=> $value->reference_no,
-						"segments" 		=> $value->segments,
+				if(isset($objList[$value->account_id])){
+					$objList[$value->account_id]["line"][] = array(
+						"id" 			=> $value->transaction_id,
+						"type" 			=> $value->transaction_type,
+						"number" 		=> $value->transaction_number,
+						"issued_date" 	=> $value->transaction_issued_date,
+						"memo" 			=> $value->transaction_memo,
 						"dr" 			=> floatval($value->dr),
 						"cr" 			=> floatval($value->cr),
 						"rate" 			=> floatval($value->rate),
-						"locale" 		=> $value->locale,
-						"account" 		=> $value->account_name,
-						"contact" 		=> $value->contact_name
+						"locale" 		=> $value->locale
 					);
 				}else{
-					$objList[$value->transaction_id]["id"] = $value->transaction_id;
-					$objList[$value->transaction_id]["type"] = $value->transaction_type;
-					$objList[$value->transaction_id]["number"] = $value->transaction_number;
-					$objList[$value->transaction_id]["issued_date"] = $value->transaction_issued_date;
-					$objList[$value->transaction_id]["memo"] = $value->transaction_memo;
-					$objList[$value->transaction_id]["line"][] = array(
-						"id" 			=> $value->id,
-						"description" 	=> $value->description,
-						"reference_no" 	=> $value->reference_no,
-						"segments" 		=> $value->segments,
+					$objList[$value->account_id]["id"] = $value->account_id;
+					$objList[$value->account_id]["type"] = $value->transaction_type;
+					$objList[$value->account_id]["line"][] = array(
+						"id" 			=> $value->transaction_id,
+						"type" 			=> $value->transaction_type,
+						"number" 		=> $value->transaction_number,
+						"issued_date" 	=> $value->transaction_issued_date,
+						"memo" 			=> $value->transaction_memo,
 						"dr" 			=> floatval($value->dr),
 						"cr" 			=> floatval($value->cr),
 						"rate" 			=> floatval($value->rate),
-						"locale" 		=> $value->locale,
-						"account" 		=> $value->account_name,
-						"contact" 		=> $value->contact_name
+						"locale" 		=> $value->locale
 					);			
 				}
 			}
@@ -873,17 +869,24 @@ class Accounting_reports extends REST_Controller {
 		$retainEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				
 		//Filter		
+		// if(!empty($filters) && isset($filters)){			
+	 //    	foreach ($filters as $value) {
+	 //    		if(!empty($value["operator"]) && isset($value["operator"])){
+		//     		if($value["operator"]=="where_related"){
+		//     			$balanceSheet->where_related($value["model"], $value["field"], $value["value"]);
+		//     			$currPL->where_related($value["model"], $value["field"], $value["value"]);		    			
+		//     			$retainEarning->where_related($value["model"], $value["field"], $value["value"]);		    				    				    		
+		//     		}	    				    			
+	 //    		}
+		// 	}									 			
+		// }
+		$asOf = date("Y-m-d");
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_related"){
-		    			$balanceSheet->where_related($value["model"], $value["field"], $value["value"]);
-		    			$currPL->where_related($value["model"], $value["field"], $value["value"]);		    			
-		    			$retainEarning->where_related($value["model"], $value["field"], $value["value"]);		    				    				    		
-		    		}	    				    			
-	    		}
+	    		$asOf = date("Y-m-d", $value["value"]);
 			}									 			
 		}
+		$data["asOf"] = $asOf;
 		
 		//BALANCE SHEET (from begining to as of)
 		$balanceSheet->include_related("account", array("number","name"));
@@ -1006,7 +1009,7 @@ class Accounting_reports extends REST_Controller {
 		//PREVIOUSE PROFIT AND LOSS (from begining to fiscal date) Cr - Dr				
 		$prevPL->where_related("account", "account_type_id >=", 35);
 		$prevPL->where_related("account", "account_type_id <=", 43);
-		$prevPL->where_related("transaction", "issued_date <", $this->startFiscalDate);
+		$prevPL->where_related("transaction", "issued_date <=", $this->startFiscalDate);
 		$prevPL->where_related("transaction", "is_recurring", $is_recurring);
 		$prevPL->where_related("transaction", "deleted", $deleted);		
 		$prevPL->where("deleted", $deleted);

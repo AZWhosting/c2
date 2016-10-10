@@ -196,7 +196,7 @@
     <script>
         function AnimateSlide() {
           jQuery(".flip-container").eq(0).addClass("hover");
-          var Duration = 500;
+          var Duration = 400;
           setTimeout(function(){
             jQuery(".flip-container").eq(1).addClass("hover");
             setTimeout(function(){
@@ -459,7 +459,9 @@
                           banhji.userDS.sync();
                         });
                         $('#proccessMsg').text("Redirecting...");
-                        window.location.replace(baseUrl + "login/");
+                        setTimeout(function(){
+                          window.location.replace(baseUrl + "login/");
+                        },2000);
                       }
                     });
                   });

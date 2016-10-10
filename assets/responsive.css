@@ -1301,12 +1301,12 @@ width: 50% !important;
   text-align: left;
 }
 .accounting-right .btn-download{
-  padding: 10px 20px;
+  padding: 10px 15px;
   color: #fff;
   background: #30618B;
   margin-top: 10px;
   margin-bottom: 20px;
-  display: inline-block;
+  float: left;
   cursor: pointer;
   font-size: 15px;
   font-weight: 600;
