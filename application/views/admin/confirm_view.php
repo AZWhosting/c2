@@ -20,11 +20,73 @@
     <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/css/custom.css" rel="stylesheet">
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/styles/kendo.common.min.css">
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/styles/kendo.material.min.css">
+
+    <!-- Customize CSS-->
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" >
   </head>
 
   <body>
-    <div id="layout">
-      <div id="main-container"></div>
+    <div id="conFirm-cover" class="container-fluid">
+
+
+
+        <div class="conFirm">
+            <div class="flip-container" >
+              <div class="flipper">
+                <div class="front">
+                  <img src="<?php echo base_url(); ?>assets/img/b-logo.jpg" class="logo-animate" />
+                </div>
+                <div class="back">
+                  <img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-container" >
+              <div class="flipper">
+                <div class="front">
+                  <img src="<?php echo base_url(); ?>assets/img/b-logo.jpg" class="logo-animate" />
+                </div>
+                <div class="back">
+                  <img title="Supplier Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg" alt="Vendor">
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-container" >
+              <div class="flipper">
+                <div class="front">
+                  <img src="<?php echo base_url(); ?>assets/img/b-logo.jpg" class="logo-animate" />
+                </div>
+                <div class="back">
+                  <img title="Products/Sercies Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg" alt="Inventory">
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-container" >
+              <div class="flipper">
+                <div class="front">
+                  <img src="<?php echo base_url(); ?>assets/img/b-logo.jpg" class="logo-animate" />
+                </div>
+                <div class="back">
+                  <img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.jpg" alt="Attachment">
+                </div>
+              </div>
+            </div>
+
+            <!--img src="<?php echo base_url(); ?>assets/img/b-logo.jpg" class="logo-animate" /-->
+            <div class="imgFix">
+              <!--img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
+              <img title="Supplier Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg" alt="Vendor">
+              <img title="Products/Sercies Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg" alt="Inventory">
+              <img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.jpg" alt="Attachment"-->
+              <img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">             
+              <img title="Reports Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.jpg" alt="Reports">
+              <img title="Tax Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
+              <img title="Admin Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
+            </div>
+        </div>
     </div>
     <script type="text/x-kendo-template" id="template-waiting-page">
       <div class="nav-md">
@@ -104,6 +166,13 @@
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
     <!-- kendoui-->
     <!-- cognito -->
+    <script type="text/javascript">
+      $(document).read(function(e){
+        $("img.logo-animate").animate({left: '250px'}, 500);
+
+      });
+
+    </script>
     <script>
         var banhji = banhji || {};
         localforage.config({

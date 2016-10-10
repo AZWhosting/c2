@@ -783,19 +783,19 @@
 					<td class="center">
 						<a href="#/journal">
 							<img title="Add Account" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/journal.png" width="110" height="200" />
-							Journal
+							<span style="margin-top: 7px; display: inline-block;">Journal</span>
 						</a>						
 					</td>					
 					<td class="center">
 						<a href="#/cash_transaction">
 							<img title="Add Cash Transaction" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />
-							C.Transaction
+							<span style="margin-top: 7px; display: inline-block;">C.Transaction</span>
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/cash_advance">
 							<img title="Add Cash Advance" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_advance.png" width="110" height="200" />
-							C.Advance
+							<span style="margin-top: 7px; display: inline-block;">C.Advance</span>
 						</a>
 					</td>		
 				</tr>
@@ -803,19 +803,19 @@
 					<td class="center">						
 						<a href="#/expense">
 							<img title="Add Expense" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/expense.png" width="110" height="200" />
-							Expense
+							<span style="margin-top: 7px; display: inline-block;">Expense</span>
 						</a>						
 					</td>
 					<td class="center">						
 						<a href="#/currency_rate">
 							<img title="Add Exchange Rate Record" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/currency_record.png" width="110" height="200" />
-							Ex.Rate Record
+							<span style="margin-top: 7px; display: inline-block;">Ex.Rate Record</span>
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/segment">
 							<img title="Add Segment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/segment.png" width="110" height="200" />
-							Segment
+							<span style="margin-top: 7px; display: inline-block;">Segment</span>
 						</a>
 					</td>			
 				</tr>								
@@ -832,7 +832,6 @@
 							Financial Reporting Standards: <b>Cambodia International Financial Reporting Standards for SMEs (CIFRSn for SMEs)</b>
 						</p>
 						<a style="margin: 0 0 0px;" class="btn-download" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/IFRS+for+SME_Khmer.pdf" target="_blank">ទាញយកស្ដង់ដានេះ</a>
-						<br><br>
 						<a style="margin: -10px 0 8px;" class="btn-download" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/IFRS+for+SMEs_Standard_2015.pdf" target="_blank">Download Standards</a>
 						<p>Reporting Currency: <b data-bind="text: reportCurrency"></b></p>
 						<p>Fiscal year: <b data-bind="text: fiscalDate"></b></p>
@@ -2724,6 +2723,8 @@
 							onclick="javascript: window.history.back()"><i></i></span>
 					<br>
 					<br>
+
+					<!-- Search Taps -->
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
@@ -2739,26 +2740,36 @@
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
-											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
-									           data-value-primitive="true"
-									           data-text-field="text"
-									           data-value-field="value"
-									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
-										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
-										           placeholder="To ..." />
+								        <div class="tab-pane active" id="tab-1">
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+																		
+							        	</div>
+
+							        	<!-- PRINT/EXPORT  -->
 								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
@@ -2778,9 +2789,9 @@
 					</div>
 
 					<div class="block-title">
-						<h3 data-bind="text: banhji.institute.name"></h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>JOURNAL ENTRY REPORTS</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
+						<p data-bind="text: displayDate"></p>
 					</div>
 
 					<div class="row-fluid journal_block">
@@ -2822,11 +2833,14 @@
 			                <th><i class="icon-paper-clip"></i></th>		                
 			            </tr> 
 				        <tbody data-role="listview"
+				        		data-auto-bind="false"
 				        		data-template="journalReport-template"			        		
 				        		data-bind="source: dataSource"></tbody>			        
 				    </table>
 
-		            <div data-role="pager" data-bind="source: dataSource"></div>					  
+		            <div data-role="pager"
+		            	data-auto-bind="false" 
+		            	data-bind="source: dataSource"></div>					  
 
 				</div>
 			</div>						
@@ -15476,7 +15490,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary">
+						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary" style="min-height: 148px;">
 							
 							<div align="center" class="text-large strong" data-bind="text: sale"></div>
 							<table width="100%">
@@ -15519,7 +15533,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert-info">
+						<div class="widget-body alert-info" style="min-height: 148px;">
 							
 							<div align="center" class="text-large strong" data-bind="text: order"></div>
 							<table width="100%">
@@ -15557,7 +15571,7 @@
 						</div>
 						<!-- // Widget heading END -->
 						
-						<a href="#/customer_balance_summary"><div class="widget-body alert-info3" style="background-color: LightGray">
+						<a href="#/customer_balance_summary"><div class="widget-body alert-info3" style="background-color: LightGray; min-height: 148px;">
 							
 							<div align="center" class="text-large strong" data-bind="text: ar"></div>
 							<table width="100%">
@@ -29702,19 +29716,19 @@
 					<td class="center">
 						<a href="#/grn">
 							<img title="Add Received Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/received_note.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.goods_received_note"></span>
+							<span data-bind="text: lang.lang.goods_received_note" style="margin-top: 7px; display: inline-block;"></span>
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/gdn">
 							<img title="Add Delivery Address Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.goods_delivery_note"></span>
+							<span data-bind="text: lang.lang.goods_delivery_note" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/item_adjustment">
 							<img title="Add Adjustment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/adjustment.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.adjustment"></span>
+							<span data-bind="text: lang.lang.adjustment" style="margin-top: 7px; display: inline-block;"></span>
 						</a>						
 					</td>					
 				</tr>
@@ -29722,19 +29736,19 @@
 					<td class="center">
 						<a href="#/internal_usage">
 							<img title="Add Internal Usage" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/internal_usage.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.internal_usage"></span>
+							<span data-bind="text: lang.lang.internal_usage" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/item_assembly">
 							<img title="Add Build Assembly" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/build_assembly.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.build_assembly"></span>
+							<span data-bind="text: lang.lang.build_assembly" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/item_catalog">
 							<img title="Add Catalog" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/catalog.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.catalog"></span>
+							<span data-bind="text: lang.lang.catalog" style="margin-top: 7px; display: inline-block;"></span>
 						</a>
 					</td>
 				</tr>				
@@ -29762,24 +29776,24 @@
 						
 						<a href="#/inventory_position_summary"><div class="widget-body alert alert-primary" >
 							
-							<div align="center" class="text-large strong" >0</div>
+							<div align="center" class="text-large strong" data-bind="text: onHand"></div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span data-bind="text: a">0</span>
+										<span ></span>
 									</td>
 									<td>
-										<span >0</span>
+										<span data-bind="text: purchaseSupplierCount"></span>
 										<br>
 										<span data-bind="text: lang.lang.supplier"></span>
 									</td>
 									<td>
-										<span >0</span>
+										<span data-bind="text: purchaseProductCount"></span>
 										<br>
 										<span data-bind="text: lang.lang.product"></span>
 									</td>
 									<td>
-										<span >0</span>
+										<span data-bind="text: purchase_order"></span>
 										<br>
 										<span data-bind="text: lang.lang.order"></span>
 									</td>
@@ -29806,23 +29820,13 @@
 						
 						<a href="#/inventory_sale_item_analysis"><div class="widget-body alert-info" >
 							
-							<div align="center" class="text-large strong">0</div>
+							<div align="center" class="text-large strong" data-bind="text: grossProfitMargin"></div>
 							<table width="100%">
 								<tr align="center">
 									<td>										
-										<span>0</span>
+										<span data-bind="text: product"></span>
 										<br>
-										<span data-bind="text: lang.lang.open"></span>
-									</td>
-									<td>
-										<span >0</span>
-										<br>
-										<span data-bind="text: lang.lang.supplier"></span>
-									</td>
-									<td>
-										<span >0</span>
-										<br>
-										<span data-bind="text: lang.lang.margin"></span>
+										<span data-bind="text: lang.lang.product"></span>
 									</td>
 								</tr>
 							</table>
@@ -29847,21 +29851,11 @@
 						
 						<a href="#/inventory_turn_over_list"><div class="widget-body alert-info3" style="background-color: LightGray">
 							
-							<div align="center" class="text-large strong" >0</div>
+							<div align="center" class="text-large strong"  data-bind="text: inventoryTurnOver"></div>
 							<table width="100%">
 								<tr align="center">
-									<td>										
-										<span >0</span>
-										<br>
-										<span data-bind="text: lang.lang.open"></span>
-									</td>
 									<td>
-										<span >0</span>
-										<br>
-										<span data-bind="text: lang.lang.supplier"></span>
-									</td>
-									<td>
-										<span >0</span>
+										<span data-bind="text: product"></span>
 										<br>
 										<span data-bind="text: lang.lang.turnover"></span>
 									</td>
@@ -29884,13 +29878,13 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th colspan="2" class="center"><span data-bind="text: lang.lang.turnover_days"></span></th>				                			                
+				                <th colspan="2" class="center">Top 5 Best Purcash Products</th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
 				        	 data-auto-bind="false"				        	                 
 			                 data-template="itemDashboard-top-customer-template"
-			                 data-bind="source: topProductDS"></tbody>			        
+			                 data-bind="source: topPurchase"></tbody>			        
 				    </table>			
 				</div>
 				<div class="span4">					
@@ -29943,9 +29937,9 @@
 		</div>
 	</div>	
 </script>
-<script id="itemDashboard-top-customer-template" type="text/x-kendo-tmpl">	
-	<tr data-uid="#: uid #">
-		<td style="width: 1%">#:banhji.itemDashBoard.topProductDS.indexOf(data)+1#</td>		
+<script id="itemDashboard-top-customer-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td style="width: 1%">#:banhji.itemDashBoard.topPurchase.indexOf(data)+1#</td>		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -29954,8 +29948,8 @@
 					#=name#
 				#}#
 			</span>
-			<span class="pull-right">#=kendo.toString(quantity, "n0")# days</span>
-		</td>		
+			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
+		</td>
 	</tr>
 </script>
 <script id="itemDashboard-top-ar-template" type="text/x-kendo-tmpl">
@@ -33873,33 +33867,39 @@
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>Inventory Balance</h2>
-					<div align="center" class="text-large strong">$183,690,640</div>
+					<div align="center" class="text-large strong" data-bind="text: inventoryBalance"></div>
 					<table width="100%">
 						<tr align="center">
-							<td>										
-								<span>6</span>
-								<br>
-								<span>Inventory items</span>
-							</td>
 							<td>
-								<span>1</span>
-								<br>
-								<span>Categories</span>
-							</td>
-							<td>
-								<span>10%</span>
+								<span data-bind="text: grossProfitMargin"></span>
 								<br>
 								<span>Average Margin</span>
 							</td>
 							<td>
-								<span>20 days</span>
+								<span data-bind="text: inventoryTurnOver"></span>
 								<br>
 								<span>Turnover Days</span>
 							</td>
 						</tr>
 					</table>
 				</div>
-				<div id="sale-report-chart">Chart</div>
+				<div class="home-chart" >
+				<div data-role="chart"
+	                 data-legend="{ position: 'top' }"
+	                 data-series-defaults="{ type: 'column' }"
+	                 data-tooltip='{
+	                    visible: true,
+	                    format: "{0}%",
+	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+	                 }'                 
+	                 data-series="[
+	                                { field: 'purchase', name: 'Monthly Purchase', categoryField:'month', color: '#236DA4' },
+	                                { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#A6C9E3' }
+	                            ]"	                             
+	                 data-bind="source: graphDS"
+	                 style="height: 250px;" ></div>            
+           		</div>
+
 			</div>
 		</div>
 	</div>
@@ -34085,7 +34085,7 @@
 							<div class="span7">
 								<div class="total-customer">
 									<p>Gross profit Margin</p>
-									<span data-bind="text: gpm"></span>
+									<span data-bind="text: grossProfitMargin"></span>
 								</div>
 							</div>
 						</div>
@@ -34094,7 +34094,6 @@
 							<thead>
 								<tr>
 									<th><span>Type</span></th>
-									<th><span>GPM</span></th>
 									<th><span>Number</span></th>
 									<th><span>QTY</span></th>
 									<th><span>Price</span></th>
@@ -34118,7 +34117,6 @@
 <script id="inventory-sale-item-analysis-template" type="text/x-kendo-tmpl">
 	<tr style="font-weight: bold">
 		<td>#=item#</td>
-		<td>#=gpm#</td>
 		<td></td>
 		<td></td>		
 		<td></td>
@@ -34129,8 +34127,7 @@
 	# if (transactions.length) {#
 		#for(var i= 0; i <transactions.length; i++) {#
 			<tr>
-				<td>&nbsp;&nbsp;#=transactions[i].type#</td>
-				<td></td>				
+				<td>&nbsp;&nbsp;#=transactions[i].type#</td>			
 				<td>
 					<a href="\#/#=transactions[i].type.toLowerCase()#/#=transactions[i].id#">#=transactions[i].number#</a>
 				</td>
@@ -43115,41 +43112,87 @@
 		sorter 				: "all",
 		sdate 				: "",
 		edate 				: "",
+		obj 				: null,
+		company 			: banhji.institute,
+		displayDate 		: "",
 		showDescription 	: false,
 		showRef 			: true,
 		showName 			: false,
 		showSegment 		: false,
-		currentSort 		: "asc",							
 		pageLoad 			: function(){
 			if(this.dataSource.total()>0){
-				this.dataSource.fetch();
+				this.search();
 			}
 		},
-		sort 				: function(e){
-			var col = "",
-			target = e.currentTarget.innerText;
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
 
-			if(this.get("currentSort")=="asc"){
-				this.set("currentSort", "desc");
-			}else{
-				this.set("currentSort", "asc");
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
 			}
+		},
+		search				: function(){
+			var para = [], displayDate = "",
+				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+    	
+        	//Dates
+        	if(start && end){
+            	para.push({ field:"issued_date >=", value: start });
+            	para.push({ field:"issued_date <=", value: end });
 
-			switch(target) {
-			    case "TYPE":
-			        col = "type";
-			        break;
-			    case "DATE":
-			        col = "issued_date";
-			        break;
-			    case "ACCOUNT":
-			        col = "account_id";
-			        break;
-			    default:
-			        //default code block
-			}			
+            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            }else if(start){
+            	para.push({ field:"issued_date", value: new Date(start) });
 
-			this.dataSource.sort({ field:col, dir:this.get("currentSort") });
+            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+            }else if(end){
+            	para.push({ field:"issued_date <=", value: new Date(end) });
+
+            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            }else{
+            	
+            }
+
+            this.set("displayDate", displayDate);
+
+            this.dataSource.query({
+            	filter: para,
+            	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
+            	page: 1,
+            	pageSize: 50
+            });	                  
 		}		      		
 	});	
 	banhji.trialBalance =  kendo.observable({
@@ -52813,8 +52856,8 @@
 		gpm 				: 0,
 		total_sale 			: 0,
 		companyName 		: null,
-		startDate 			: new Date(),
-		endDate				: new Date(),
+		startDate 			: "<?php echo date("d-m-y"); ?>",
+		endDate				: "<?php echo date("d-m-y"); ?>",
 		sorter				: '',
 		openInvoice 		: 0,	
 		company 			: banhji.institute,		
@@ -62392,8 +62435,8 @@
 		gpm 				: 0,
 		total_sale 			: 0,
 		companyName 		: null,
-		startDate 			: new Date(),
-		endDate				: new Date(),
+		startDate 			: "<?php echo date("d-m-y"); ?>",
+		endDate				: "<?php echo date("d-m-y"); ?>",
 		sorter				: '',
 		openInvoice 		: 0,
 		company 			: banhji.institute,		
@@ -65343,10 +65386,14 @@
 	**************************/
 	banhji.itemDashBoard = kendo.observable({
 		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "dashboards/supplier_dashboard_summary"),
+		summaryDS 			: dataStore(apiUrl + "dashboards/inventory_dashboard_summary"),
+		dataSource 			: dataStore(apiUrl + "itemReports/item_sale"),
+		positionSummary 	: dataStore(apiUrl + "itemReports/position_summary"),
 		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_supplier"),
 		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
 		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),
+		topPurchase 		: dataStore(apiUrl + "dashboards/top_purchase"),
+		topTurnOver 		: dataStore(apiUrl + "dashboards/top_inventory_turnover"),
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -65398,19 +65445,17 @@
 			}).then(function(){
 				var view = self.summaryDS.view();
 				
-				self.set("sale", kendo.toString(17205, "n0"));
-				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
-				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
-				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
+			
+				self.set("purchaseSupplierCount", kendo.toString(view[0].purchaseSupplierCount, "n0"));
+				self.set("purchaseProductCount", kendo.toString(view[0].purchaseProductCount, "n0"));
+				self.set("purchase_order", kendo.toString(view[0].purchase_order, "n0"));
 
-				self.set("order", kendo.toString(261, "n0"));
-				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));				
-				self.set("order_open", kendo.toString(view[0].order_open, "n0"));
+				self.set("inventoryTurnOver", kendo.toString(view[0].inventoryTurnOver, "n0"));
+				self.set("turnover", kendo.toString(view[0].turnover, "n0"));
 
-				self.set("ar", kendo.toString(view[0].ar, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale));
-				self.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
-				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
-				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
+				self.set("grossProfitMargin", kendo.toString(view[0].grossProfitMargin, "p"));
+				self.set("product", kendo.toString(view[0].product, "n0"));
+
 			});
 
 			this.topCustomerDS.query({
@@ -65431,7 +65476,25 @@
 				pageSize: 5
 			});
 
+			this.topPurchase.query({
+				filter: [
+					{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
+					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:  kendo.toString(today, "yyyy-MM-dd") }
+				],							
+				page: 1,
+				pageSize: 5
+			});	
+
 			this.topProductDS.query({
+				filter: [
+					{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
+					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:  kendo.toString(today, "yyyy-MM-dd") }
+				],							
+				page: 1,
+				pageSize: 5
+			});	
+
+			this.topTurnOver.query({
 				filter: [
 					{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
 					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:  kendo.toString(today, "yyyy-MM-dd") }
@@ -69275,6 +69338,58 @@
         	}
         } 
     });
+    banhji.itemReportCenter = kendo.observable({
+		lang 				: langVM,
+		summaryDS 			: dataStore(apiUrl + "dashboards/inventory_report"),				
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "dashboards/item_monthly_purchase_sale",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),					
+		pageLoad 			: function(){
+			var self = this,
+			today = new Date(),			        	
+			start = kendo.toString(banhji.source.getFiscalDate(), "yyyy-MM-dd"),
+			end = kendo.toString(today, "yyyy-MM-dd");
+			console.log("akjdsflksj");
+			this.summaryDS.query({
+				filter: [
+					{ field:"issued_date >=", value: start },
+					{ field:"issued_date <=", value: end }
+				],								
+				page: 1,
+				pageSize: 5
+			}).then(function(){
+				var view = self.summaryDS.view();
+			
+				self.set("inventoryTurnOver", kendo.toString(view[0].inventoryTurnOver, "n2"));				
+				self.set("grossProfitMargin", kendo.toString(view[0].grossProfitMargin, "p"));
+
+				self.set("inventoryBalance", kendo.toString(view[0].inventoryBalance, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+			});
+		}	
+	});
 	banhji.inventoryPositionSummary = kendo.observable({
 
 		dataSource 		: dataStore(apiUrl + "itemReports/position_summary"),
@@ -69449,8 +69564,8 @@
 		gpm 				: 0,
 		total_sale 			: 0,
 		companyName 		: null,
-		startDate 			: new Date(),
-		endDate				: new Date(),
+		startDate 			: "<?php echo date("d-m-y"); ?>",
+		endDate				: "<?php echo date("d-m-y"); ?>",
 		sorter				: '',
 		openInvoice 		: 0,
 		company 			: banhji.institute,		
@@ -69473,6 +69588,7 @@
 				]
 			});
 		},
+
 		trnxSearch 			: function() {},
 		depositDetailSearch : function() {},
 		summaryProductSearch: function() {},
@@ -70133,7 +70249,7 @@
 		itemSetting: new kendo.Layout("#itemSetting", {model: banhji.itemSetting}),
 		internalUsage: new kendo.Layout("#internalUsage", {model: banhji.internalUsage}),
 		serviceSetting: new kendo.Layout("#serviceSetting", {model: banhji.serviceSetting}),
-		itemReportCenter: new kendo.Layout("#itemReportCenter"),
+		itemReportCenter: new kendo.Layout("#itemReportCenter", {model: banhji.itemReportCenter}),
 		inventoryPositionSummary: new kendo.Layout("#inventoryPositionSummary", {model: banhji.inventorySale}),
 		inventoryPositionDetail: new kendo.Layout("#inventoryPositionDetail", {model: banhji.inventorySale}),
 		inventoryTurnoverList: new kendo.Layout("#inventoryTurnoverList", {model: banhji.inventorySale}),
@@ -70800,140 +70916,11 @@
 			banhji.userManagement.addMultiTask("Journal Entry Reports","journal_report",null);
 
 			if(banhji.pageLoaded["journal_report"]==undefined){
-				banhji.pageLoaded["journal_report"] = true;
-
-				function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
-
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
-
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function dateChanges(){
-                	var strDate = "";
-
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}
-
-					$("#strDate").text(strDate);
-                }
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");               
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $("#sorter").val();
-
-					switch(value){
-					case "today":								
-						sdate = today;
-															  					
-					  	break;
-					case "week":			  	
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
-					  	break;
-					case "month":							  	
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":				
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-											  
-					}
-
-					start.value(sdate);
-					end.value(edate);
-					
-					start.max(end.value());
-                	end.min(start.value());
-
-                	dateChanges();                	
-                });
-                
-                start.max(end.value());
-                end.min(start.value());				
-
-				$("#search").click(function(e){
-		        	e.preventDefault();
-
-		        	var para = [],		        	
-					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
-					edate = kendo.toString(end.value(), "yyyy-MM-dd");
-					
-		        	//Dates
-		        	if(start.value() && end.value()){        		
-		            	para.push({ field:"issued_date >=", value: sdate });
-		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
-		            }else if(start.value()){
-		            	para.push({ field:"issued_date", value: sdate });
-		            }else if(end.value()){
-		            	para.push({ field:"issued_date <=", value: edate });
-		            }else{
-		            	
-		            }
-
-		            vm.dataSource.filter(para);		            
-		        });								
+				banhji.pageLoaded["journal_report"] = true;									
 						
 			}
+
+			vm.pageLoad();
 		}		
 	});
 	banhji.router.route("/trial_balance", function(){
@@ -75976,10 +75963,17 @@
 			banhji.userManagement.addMultiTask("Products/Services Dashboard","inventories",null);
 
 			if(banhji.pageLoaded["inventories"]==undefined){							
-				banhji.pageLoaded["inventories"] = true;
-												
+				banhji.pageLoaded["inventories"] = true;												
 			}
 
+			banhji.itemDashBoard.positionSummary.read();
+			banhji.itemDashBoard.positionSummary.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.itemDashBoard.set('count', e.response.count);
+					kendo.culture(banhji.locale);
+					banhji.itemDashBoard.set('onHand', kendo.toString(e.response.onHand, 'n0'));
+				}
+			});
 			vm.pageLoad();
 		}				
 	});	
@@ -76455,21 +76449,17 @@
 	banhji.router.route("/item_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.itemReportCenter);
+		}else{						
+			banhji.view.layout.showIn("#content", banhji.view.itemReportCenter);			
+			kendo.fx($("#slide-form")).slideIn("down").play();
 
-			banhji.userManagement.addMultiTask("Inventory Position","item_report_center",null);
-
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
-
-			//var vm = banhji.itemReportCenter;			
+			var vm = banhji.itemReportCenter;
 			
 			if(banhji.pageLoaded["item_report_center"]==undefined){
-				banhji.pageLoaded["item_report_center"] = true;				
-											
-			}			
-		}		
+				banhji.pageLoaded["item_report_center"] = true;		
+			};
+			vm.pageLoad();		
+		};
 	});
 	banhji.router.route("/inventory_position_summary", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -76504,11 +76494,12 @@
 					kendo.culture(banhji.locale);
 					banhji.inventorySale.set('onHand', kendo.toString(e.response.onHand, 'n0'));
 					banhji.inventorySale.set('sale', kendo.toString(e.response.sale, 'c2'));
-					banhji.inventorySale.set('gpm', kendo.toString(e.response.gpm, 'p'));
+					banhji.inventorySale.set('grossProfitMargin', kendo.toString(e.response.grossProfitMargin, 'p'));
 				}
 			});
 		}
 	});
+
 	banhji.router.route("/inventory_position_detail", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');

@@ -115,6 +115,7 @@ class Sales extends REST_Controller {
 			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where('is_recurring', 0);
+			$obj->where("deleted",0);
 			$obj->where_in("type", array("Invoice", "Cash_Sale"));
 			$obj->where_in("status", array(0,2));
 			// $obj->include_related("contact_type", "name");
@@ -426,7 +427,7 @@ class Sales extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Quote", "Sale_Return", "GDN"));
+				$txn->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return"));
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -466,7 +467,7 @@ class Sales extends REST_Controller {
 			$type->where('parent_id', 1)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
-			$obj->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Quote", "Sale_Return", "GDN"));
+			$obj->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return"));
 			$obj->where('is_recurring', 0);
 			$obj->where("deleted",0);
 

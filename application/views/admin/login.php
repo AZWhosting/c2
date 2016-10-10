@@ -25,7 +25,7 @@
           height: auto;
       }
       .login-content{
-          margin: 238px 0 50px;
+          margin: 200px 0 50px;
           display: inline-block;
           width: 100%;
       }
