@@ -5449,6 +5449,14 @@
 	        <ul>
 	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Financial Reporting Standards</span></a>
 	            </li>
+	           <!--  <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Chart of Accounts Condition</span></a>
+	            </li>
+	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Segments Setting</span></a>
+	            </li>
+	            <li><a href="#tab3-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Transaction Item </span></a>
+	            </li>
+	            <li><a href="#tab5-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Tax Setting </span></a>
+	            </li>	 -->
 	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Prefix Setting </span></a>
 	            </li>	                        
 	        </ul>
@@ -5477,7 +5485,7 @@
 	            <!-- // Tab Branch content END -->
 
 	            <!-- Tab Contact Type content -->
-	            <!--div class="tab-pane" id="tab2-1">
+	            <!-- <div class="tab-pane" id="tab2-1">
 	            	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i></button>
@@ -5494,11 +5502,11 @@
 				                data-template="customerSetting-payment-method-template"
 				                data-bind="source: paymentMethodDS"></tbody>
 	            	</table>			            
-	            </div-->
+	            </div> -->
 	            <!-- // Tab Contact Type content END -->
 
 	            <!-- Tab Block content -->
-	            <!--div class="tab-pane" id="tab3-1">
+	           <!--  <div class="tab-pane" id="tab2-1">
             		<div class="input-append">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="term ..." data-bind="value: paymentTerm">
@@ -5519,7 +5527,7 @@
 				                data-template="customerSetting-payment-term-template"
 				                data-bind="source: paymentTermDS"></tbody>
 	            	</table>
-	            </div-->
+	            </div> -->
 	            <!-- // Tab Block content END -->
 
 	            <!-- Tab Block content -->
@@ -5530,7 +5538,7 @@
 	            				<th class="center" data-bind="text: lang.lang.type"></th>
 	            				<th class="center" data-bind="text: lang.lang.abbr"></th>
 	            				<th class="center" data-bind="text: lang.lang.startup_number"></th>
-	            				<th data-bind="text: lang.lang.name" style="text-align: left; padding-left: 10px;"></th>
+	            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
 	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
 	            			</tr>
 	            		</thead>
@@ -5558,10 +5566,10 @@
 		<td class="center"> 
 			#= startup_number#
 		</td>
-		<td style="text-align: left;padding-left: 10px;" >
-			<a style="text-align: left;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
+		<td class="center" style="text-align: left;">
+			<a style="text-align: left;padding-left: 5px;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
 		</td>
-		<td class="center" >
+		<td class="center">
 			<a class="btn-action glyphicons pencil btn-success" href="\\#/add_accountingprefix/#= id # "><i></i></a>
 		</td>
 	</tr>
@@ -26358,41 +26366,20 @@
 	            </div>
         	</div>
         	<div class="span7">
-        		<h2>សក្ខីប័ត្រទិន្នានុប្បវត្តិ JOURNAL VOUCHER</h2>
+        		<h2 data-bind="text: obj.title"></h2>
         	</div>
         	<div class="span12" style="background:none;margin-top: 15px;">
         		<table class="span12 left-tbl" border="1">
         			<tr>
         				<td width="200" style="text-align:center;"><b>លេខសក្ខីប័ត្រ JV No.</b></td>
-        				<td width="200" style="text-align:center;"></td>
+        				<td width="200" style="text-align:center;" data-bind="text: obj.number"></td>
         				<td width="200" style="text-align:center;"><b>កាលបរិច្ឆេត Date<b></td>
-        				<td width="200" style="text-align:center;"></td>
+        				<td width="200" style="text-align:center;" data-bind="text: obj.issued_date"></td>
         			</tr>
         			<tr>
-        				<td colspan="4">ប្រភេទប្រតិបត្តិការ Type of transaction</td>
+        				<td colspan="4">ប្រភេទប្រតិបត្តិការ Type of transaction : <span data-bind="text: obj."></span></td>
         			</tr>
-        			<tr>
-        				<td colspan="4" style="padding: 5px 0;">
-        					<div class="row">
-        						<div class="span4">
-        							<input type="checkbox" name="">កែតម្រូវ Adjustment<br>
-        							<input type="checkbox" name="">ប្តូរចំណាត់ថ្នាក់ Reclassification<
-        						</div>
-        						<div class="span4">
-        							<input type="checkbox" name="">សមតុល្យដើមគ្រា Opening Balance<br>
-        							<input type="checkbox" name="">ប្រតិបត្តិការបង្ករ Accrual
-        						</div>
-        						<div class="span4">
-        							<input type="checkbox" name="">សមតុស្យចុងគ្រា Closing Entries<br>
-        							<input type="checkbox" name="">កាត់រំលោះ Depreciation/Amortization
-        						</div>
-        					</div>
-        					<div class="row">
-        						<div class="span8"><input type="checkbox" name="">ប្រតិបត្តិការញាតិសម្ព័ន្ធ Parties Transactions</div>
-        						<div class="span4"><input type="checkbox" name="">ប្តូរចំណាត់ថ្នាក់ Reclassification</div>
-        					</div>
-        				</td>
-        			</tr>
+        			
         			<tr>
         				<td colspan="4">Please specify, if applicable</td>
         			</tr>
@@ -26468,17 +26455,7 @@
     				<p style="font-size:10px;">Name: <br>Date:</p>
         		</div>
         	</div>
-        	<table class="span12" border="1">
-        		<tr>
-        			<td rowspan="2" width="400" style="text-align: left;padding-left: 5px;">Used for mainly non cash transactions and (but not limited to) Adjustment, Reclassification, Opening Balance, Closing Entries, Accrual, and Depreciation or Amortization</td>
-        			<td style="text-align: left;padding-left: 5px;">Version</td>
-        			<td style="text-align: left;padding-left: 5px;"><b>V.01</b></td>
-        		</tr>
-        		<tr>
-        			<td style="text-align: left;padding-left: 5px;">Doc. Ref.</td>
-        			<td style="text-align: left;padding-left: 5px;"><b>AMS02-01</b></td>
-        		</tr>
-        	</table>
+        	
         </div>
     </div>
 </script>
@@ -62313,6 +62290,7 @@
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions/txn_print"),
 		txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),		
+		journalLineDS     	: dataStore(apiUrl + "journal_lines"),
 		obj 				: {title: "Quotation", issued_date : "<?php echo date('d/M/Y'); ?>", number : "QO123456", type : "Quote", amount: "$500,000.00", contact: []},
 		company 			: banhji.institute,		
 		lineDS 				: dataStore(apiUrl + "transactions/line_print"),
@@ -62459,7 +62437,10 @@
 				view[0].set("deposit", kendo.toString(view[0].deposit, "c", view[0].locale));
 				view[0].set("amount_due", kendo.toString(amountDue, "c", view[0].locale));				
 				self.set("obj", view[0]);
-				self.loadObjTemplate(view[0].transaction_template_id, id);		
+				self.loadObjTemplate(view[0].transaction_template_id, id);
+				if(view[0].is_journal == 1){
+					this.journalLineDS.filter({ field: "transaction_id", value : id });
+				}	
 			});	
 		},
 		loadObjTemplate 		: function(id, transaction_id){

@@ -117,7 +117,7 @@ class Items extends REST_Controller {
 				if($value->item_type_id=="1"){					
 					$itemIn = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$itemIn->select_sum("quantity");
-					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
+					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));
 					$itemIn->where_related("transaction", "is_recurring", 0);
 					$itemIn->where_related("transaction", "deleted", 0);
 					$itemIn->where("item_id", $value->id);
@@ -126,7 +126,7 @@ class Items extends REST_Controller {
 					
 					$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$itemOut->select_sum("quantity");
-					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
+					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Item_Adjustment"));
 					$itemOut->where_related("transaction", "is_recurring", 0);
 					$itemOut->where_related("transaction", "deleted", 0);
 					$itemOut->where("item_id", $value->id);
@@ -1008,7 +1008,7 @@ class Items extends REST_Controller {
 			}									 			
 		}
 
-		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Cash_Purchase", "Credit_Purchase", "Adjustment"));		
+		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -1245,7 +1245,7 @@ class Items extends REST_Controller {
 				//Adjustment
 				$adj->where("item_id", $value->id);
 				$adj->select_sum("quantity");
-				$adj->where_related("transaction", "type", "Adjustment");							
+				$adj->where_related("transaction", "type", "Item_Adjustment");							
 				$adj->get();
 
 				$data["results"][] = array(
@@ -1293,7 +1293,7 @@ class Items extends REST_Controller {
 			}									 			
 		}
 
-		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Cash_Purchase", "Credit_Purchase", "Adjustment"));		
+		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);

@@ -330,7 +330,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 
                                 <input style="background: #1F4E78;font-size: 20px !important; " id="signupBtn" type="button" data-bind="click: create" class="btn-signup" value="SINGUP FOR FREE"><br>
                                 <p class="signup-text-bottom">
-                                    By clicking on “signup”, you agree to the Terms of Service and <a href="https://www.banhji.com/terms">Privacy Policy</a>.
+                                    By clicking on “signup”, you agree to the <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a>  and <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a>.
                                 </p>
 
                             </form> 

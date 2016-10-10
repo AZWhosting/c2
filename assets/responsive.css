@@ -1994,3 +1994,84 @@ a.enquiries:hover .enquiry-content,
 a.aWelcome {
     display: none;
 }
+#conFirm-cover {
+    height: 100%;
+    position: absolute;
+    clear: both;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: #13294f;
+    z-index: 99;
+}
+.conFirm {
+    width: 710px;
+    margin: 0 auto;
+    margin-top: 10%;
+    overflow: hidden;
+    position: relative;
+}
+.conFirm .imgFix img {
+      float: left;
+    width: 170px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.conFirm .imgFix img+img+img+img, .conFirm .imgFix img+img+img+img+img+img+img+img {
+    margin-right: 0;
+}
+.conFirm .imgFix img+img+img+img+img {
+    margin-right: 10px;
+}
+.conFirm img.logo-animate {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 170px;
+}
+
+
+
+  /* flip the pane when hovered */
+  .flip-container:hover .flipper, .flip-container.hover .flipper {
+    transform: rotateY(180deg);
+  }
+.flip-container {
+  float:left;
+}
+.flip-container, .front, .back {
+  width: 170px;
+  height: 184px;
+}
+.flip-container img {
+  width: 170px;
+}
+/* flip speed goes here */
+.flipper {
+  transition: 0.6s;
+  transform-style: preserve-3d;
+
+  position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+  backface-visibility: hidden;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+  z-index: 2;
+  /* for firefox 31 */
+  transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+  transform: rotateY(180deg);
+}
