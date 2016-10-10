@@ -605,7 +605,7 @@
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td>Fiscal Date</td>
+                                  <td>Fiscal Date(Ending Date) </td>
                                   <td>:</td>
                                   <td>
                                     <input 

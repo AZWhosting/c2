@@ -1518,6 +1518,7 @@ html.top-full .navbar.main .topnav > li {
   display: block;
   padding: 0;
   border-right: 1px solid #333333;
+  text-transform: uppercase;
 }
 html.top-full .navbar.main .topnav > li a {
   cursor: pointer;

@@ -1301,12 +1301,12 @@ width: 50% !important;
   text-align: left;
 }
 .accounting-right .btn-download{
-  padding: 10px 20px;
+  padding: 10px 15px;
   color: #fff;
   background: #30618B;
   margin-top: 10px;
   margin-bottom: 20px;
-  display: inline-block;
+  float: left;
   cursor: pointer;
   font-size: 15px;
   font-weight: 600;
@@ -1592,13 +1592,13 @@ width: 50% !important;
 }
 .journal_block>.span4:last-child {
   background: #496cad;
+  margin-bottom: 15px;
 }
 .journal_block>.span4 p{
   font-size: 15px;
 }
 .journal_block>.span4 span{
-    font-size: 50px;
-    font-weight: 800;
+    font-size: 35px;
 }
 .journal_block{
   margin-bottom: 20px;
@@ -2034,15 +2034,23 @@ a.aWelcome {
 
 
   /* flip the pane when hovered */
-  .flip-container:hover .flipper, .flip-container.hover .flipper {
+.flip-container.hover .flipper {
     transform: rotateY(180deg);
-  }
+}
 .flip-container {
   float:left;
+}
+.flip-container+.flip-container+.flip-container+.flip-container, .flip-container+.flip-container+.flip-container+.flip-container+.flip-container+.flip-container+.flip-container+.flip-container {
+    margin-right: 0;
+}
+.flip-container+.flip-container+.flip-container+.flip-container+.flip-container {
+    margin-right: 10px;
 }
 .flip-container, .front, .back {
   width: 170px;
   height: 184px;
+  margin-bottom: 10px;
+  margin-right: 10px;
 }
 .flip-container img {
   width: 170px;
