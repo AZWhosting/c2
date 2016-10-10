@@ -2800,42 +2800,32 @@
 
 					<div class="row-fluid journal_block">
 						<div class="span4">
-							<p>
-								Total no. of transactions
-							</p>
-							<span>
-								200
-							</span>
+							<p>Total no. of transactions</p>
+							<span data-bind="text: totalTxn"></span>
 						</div>
 						<div class="span4">
-							<p>
-								Total Dr. Balance
-							</p>
-							<span>
-								200
-							</span>
+							<p>Total Dr. Balance</p>
+							<span data-bind="text: dr"></span>
 						</div>
 						<div class="span4">
-							<p>
-								Total Cr. Balance
-							</p>
-							<span>
-								200
-							</span>
+							<p>Total Cr. Balance</p>
+							<span data-bind="text: dr"></span>
 						</div>
 					</div>
 
 					<table class="table table-borderless table-condensed">
-			            <tr>
-			                <th>TYPE</th>
-			                <th>DATE</th>
-			                <th>TXN#</th>
-			                <th>TXN DESCRIPTION</th>
-			                <th>ACCOUNT</th>                		                
-			                <th class="right">DEBITS (Dr)</th>
-			                <th class="right">CREDITS (Cr)</th>
-			                <th><i class="icon-paper-clip"></i></th>		                
-			            </tr> 
+			            <thead>
+				            <tr>
+				                <th>TYPE</th>
+				                <th>DATE</th>
+				                <th>TXN#</th>
+				                <th>TXN DESCRIPTION</th>
+				                <th>ACCOUNT</th>                		                
+				                <th class="right">DEBITS (Dr)</th>
+				                <th class="right">CREDITS (Cr)</th>
+				                <th><i class="icon-paper-clip"></i></th>		                
+				            </tr>
+			            </thead> 
 				        <tbody data-role="listview"
 				        		data-auto-bind="false"
 				        		data-template="journalReport-template"			        		
@@ -2859,13 +2849,7 @@
 	<tr>
 		<td style="color: black;">
 			#if(i==0){#
-				#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
-					<a href="\#/purchase/#=id#"><i></i> #=type#</a>
-				#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
-					<a href="\#/cash_transaction/#=id#"><i></i> #=type#</a>				
-				#}else{#
-					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=type#</a>
-				#}#
+				#=type#
 			#}#
 		</td>		
 		<td style="color: black;">
@@ -2890,16 +2874,16 @@
 			#}#
 		</td>
 		<td style="color: black;">
-			#=line[i].account.length>0 ? line[i].account[0].name : ""#
+			#=line[i].account#
 		</td>			
 		<td class="right" style="color: black;">
 			#if(line[i].dr>0){#
-				#=kendo.toString(line[i].dr / line[i].rate, "c0", banhji.institute.locale)#
+				#=kendo.toString(line[i].dr / line[i].rate, "c0", banhji.locale)#
 			#}#
 		</td>
 		<td class="right" style="color: black;">
 			#if(line[i].cr>0){#
-				#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.institute.locale)#
+				#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.locale)#
 			#}#
 		</td>
 		<td></td>  			
@@ -2912,10 +2896,10 @@
     	<td></td>
     	<td></td>    	
     	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumDr, "c0", banhji.institute.locale)#
+    		#=kendo.toString(sumDr, "c0", banhji.locale)#
     	</td>
     	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumCr, "c0", banhji.institute.locale)#
+    		#=kendo.toString(sumCr, "c0", banhji.locale)#
     	</td>
     	<td class="right" style="padding-right: 8px !important;"><i class="icon-paper-clip"></i></td>  	
     </tr>  
@@ -2945,26 +2929,38 @@
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
-											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
-									           data-value-primitive="true"
-									           data-text-field="text"
-									           data-value-field="value"
-									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
-										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
-										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+										<!-- Date -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
-							        	</div>								        
+							        	</div>
+
+							        	<!-- PRINT / EXPORT								         -->
 								        <div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
@@ -2975,7 +2971,8 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>								       
+							        	</div>
+
 								    </div>
 								</div>
 							</div>
@@ -2984,122 +2981,102 @@
 					</div>
 			    	
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>General Ledger</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
+						<p data-bind="text: displayDate"></p>
 					</div>
 
-					<table class="table table-borderless table-condensed ">
-						<tr>
-							<th>Type</th>
-							<th>Date</th>
-							<th>TXN #</th>
-							<th>TXN Description</th>							
-							<th>Account</th>
-							<th class="right">Debit</th>
-							<th class="right">Credit</th>
-							<th class="center">Balance</th>
-							<th><i class="icon-paper-clip"></i></th>
-						</tr>
-						<tr>
-							<td>10100 Cash & Cash Equivalent</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td><i class="icon-paper-clip"></i></td>
-						</tr>
-						<tr>						
-							<td>Invoice</td>
-							<td>7/1/16</td>
-							<td>IV-0001</td>
-							<td>anmsjssd</td>
-							<td>Account Receivable</td>
-							<td>1,000.00</td>
-							<td>1,000.00</td>
-							<td>Account Receivable</td>
-							<td><i class="icon-paper-clip"></i></td>						
-						</tr>
-						<tr>					
-							<td>Cash Sale</td>
-							<td></td>
-							<td>SR-0003</td>
-							<td>anmsjssd</td>
-							<td>Cash on hand</td>
-							<td>500.00</td>	
-							<td></td>
-							<td></td>
-							<td><i class="icon-paper-clip"></i></td>						
-						</tr>
-						<tr>
-							<td>Toni</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td><i class="icon-paper-clip"></i></td>
-						</tr>
-						<tr>						
-							<td>Invoice</td>
-							<td>7/1/16</td>
-							<td>IV-0015</td>
-							<td>asg</td>
-							<td>Account Receivable</td>
-							<td>1,200.00</td>
-							<td></td>
-							<td></td>
-							<td><i class="icon-paper-clip"></i></td>						
-						</tr>
-						<tr>												
-							<td>Cash Receipt</td>
-							<td></td>
-							<td>CR-0122</td>
-							<td>ss</td>
-							<td>Cash on hand</td>
-							<td>(1,200.00)</td>
-							<td></td>
-							<td></td>
-							<td><i class="icon-paper-clip"></i></td>					
-						</tr>
-						<tr>					
-							<td>Deposit</td>
-							<td></td>
-							<td>DS-0123</td>
-							<td>aa</td>
-							<td>Cash on hand</td>
-							<td>(2,100.00)</td>
-							<td></td>
-							<td></td>
-							<td><i class="icon-paper-clip"></i></td>						
-						</tr>
-						<tr>						
-							<td>Sub-total</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td>(2,100.00)</td>
-							<td></td>
-							<td></td>
-							<td><i class="icon-paper-clip"></i></td>						
-						</tr>
-						
-						<tr class="bg-total">
-							<th colspan="4">Total</th>
-							<th colspan="5">(600.00)</th>
-						</tr>
-					</table>					  
+					<table class="table table-borderless table-condensed">
+						<thead>
+							<tr>
+								<th>Type</th>
+								<th>Date</th>
+								<th>TXN #</th>
+								<th>TXN Description</th>							
+								<th>Account</th>
+								<th class="right">Debit</th>
+								<th class="right">Credit</th>
+								<th class="center">Balance</th>
+								<th><i class="icon-paper-clip"></i></th>
+							</tr>
+						</thead>
+						<tbody data-role="listview"
+				        		data-auto-bind="false"
+				        		data-template="generalLedger-template"			        		
+				        		data-bind="source: dataSource"></tbody>
+					</table>
+
+					<div data-role="pager"
+		            	data-auto-bind="false" 
+		            	data-bind="source: dataSource"></div>					  
 
 				</div>
 			</div>						
 		</div>
 	</div>
+</script>
+<script id="generalLedger-template" type="text/x-kendo-tmpl">
+	#var sumDr =0, sumCr = 0;#
+	#for(var i=0; i<line.length; i++){#
+	#sumDr += line[i].dr / line[i].rate;#
+	#sumCr += line[i].cr / line[i].rate;#
+	<tr>
+		<td style="color: black;">
+			#if(i==0){#
+				#=type#
+			#}#
+		</td>		
+		<td style="color: black;">
+			#if(i==0){#
+				#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy")#
+			#}#
+		</td>
+		<td style="color: black;">
+			#if(i==0){#
+				#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
+					<a href="\#/purchase/#=id#"><i></i> #=number#</a>
+				#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
+					<a href="\#/cash_transaction/#=id#"><i></i> #=number#</a>				
+				#}else{#
+					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+				#}#
+			#}#
+		</td>		
+		<td style="color: black;">
+			#if(i==0){#
+				#=memo#
+			#}#
+		</td>
+		<td style="color: black;">
+			#=line[i].account#
+		</td>			
+		<td class="right" style="color: black;">
+			#if(line[i].dr>0){#
+				#=kendo.toString(line[i].dr / line[i].rate, "c0", banhji.locale)#
+			#}#
+		</td>
+		<td class="right" style="color: black;">
+			#if(line[i].cr>0){#
+				#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.locale)#
+			#}#
+		</td>
+		<td></td>  			
+    </tr>    
+    #}# 
+    <tr>
+    	<td style="color: black;">Total:</td>
+    	<td></td>    	
+    	<td></td>
+    	<td></td>
+    	<td></td>    	
+    	<td class="right strong" style="border-top-color: black; color: black;">
+    		#=kendo.toString(sumDr, "c0", banhji.locale)#
+    	</td>
+    	<td class="right strong" style="border-top-color: black; color: black;">
+    		#=kendo.toString(sumCr, "c0", banhji.locale)#
+    	</td>
+    	<td class="right" style="padding-right: 8px !important;"><i class="icon-paper-clip"></i></td>  	
+    </tr>  
 </script>
 <script id="transactionListDate" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -8581,7 +8558,7 @@
 			<!-- Top 5 -->
 			<div class="row-fluid">
 				<div class="span4">			
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>
 				            <tr>				                
 				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_suppliers"></span></th>			                
@@ -8594,7 +8571,7 @@
 				    </table>			
 				</div>
 				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>
 				            <tr>
 				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_ap_balance"></span></th>
@@ -8607,7 +8584,7 @@
 				    </table>
 				</div>
 				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>
 				            <tr>
 				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_purchased_products"></span></th>			                		                
@@ -8645,7 +8622,7 @@
 </script>
 <script id="vendorDashboard-top-vendor-template" type="text/x-kendo-tmpl">	
 	<tr data-uid="#: uid #">
-		<td style="width: 1%">#:banhji.vendorDashboard.topContactDS.indexOf(data)+1#</td>		
+		<!-- <td style="width: 1%">#:banhji.vendorDashboard.topContactDS.indexOf(data)+1#</td> -->		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -8660,7 +8637,7 @@
 </script>
 <script id="vendorDashboard-top-ap-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td style="width: 1%">#:banhji.vendorDashboard.topAPDS.indexOf(data)+1#</td>		
+		<!-- <td style="width: 1%">#:banhji.vendorDashboard.topAPDS.indexOf(data)+1#</td> -->		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -8675,7 +8652,7 @@
 </script>
 <script id="vendorDashboard-top-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td style="width: 1%">#:banhji.vendorDashboard.topProductDS.indexOf(data)+1#</td>		
+		<!-- <td style="width: 1%">#:banhji.vendorDashboard.topProductDS.indexOf(data)+1#</td> -->		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -9070,7 +9047,7 @@
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>
 
-			        <h2><span data-bind="text: lang.lang.supplier"></span></h2>			    		   
+			        <h2 data-bind="text: lang.lang.supplier"></h2>			    		   
 
 				    <br>
 
@@ -15512,7 +15489,7 @@
 									<td width="33%" style="vertical-align: top">
 										<span data-bind="text: sale_order"></span>
 										<br>
-										<span><span data-bind="text: lang.lang.sale_order"></span></span>
+										<span><span data-bind="text: lang.lang.order"></span></span>
 									</td>
 								</tr>
 							</table>
@@ -15550,7 +15527,7 @@
 									<td width="50%" style="vertical-align: top">
 										<span data-bind="text: order_open"></span>
 										<br>
-										<span><span data-bind="text: lang.lang.open"></span></span>
+										<span><span data-bind="text: lang.lang.order_open"></span></span>
 									</td>									
 								</tr>
 							</table>
@@ -15611,7 +15588,7 @@
 			<!-- Top 5 -->
 			<div class="row-fluid">
 				<div class="span4">								
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>
 				            <tr>
 				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_customers"></span></th>				                			                
@@ -15624,7 +15601,7 @@
 				    </table>			
 				</div>
 				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>				           
 				            <tr>
 				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_ar_balance"></span></th>				                			                
@@ -15637,7 +15614,7 @@
 				    </table>
 				</div>
 				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>				           
 				            <tr>
 				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_products"></span></th>				                			                
@@ -15675,7 +15652,7 @@
 </script>
 <script id="customerDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
 	<tr data-uid="#: uid #">
-		<td style="width: 1%">#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td>		
+		<!-- <td style="width: 1%">#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td -->>		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -15690,7 +15667,7 @@
 </script>
 <script id="customerDashBoard-top-ar-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td style="width: 1%">#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		
+		<!-- <td style="width: 1%">#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		 -->
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -15705,7 +15682,7 @@
 </script>
 <script id="customerDashBoard-top-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td style="width: 1%">#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		
+		<!-- <td style="width: 1%">#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		 -->
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -16123,7 +16100,7 @@
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>						
 					
-			        <h2><span data-bind="text: lang.lang.customers"></span></h2>			    		   
+			        <h2 span data-bind="text: lang.lang.customers"></h2>			    		   
 
 				    <br>
 
@@ -16482,8 +16459,8 @@
 
 						        <!-- //CONTACT PERSON -->
 						        <div class="tab-pane" id="tab3">
-						        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i> <span ></span><span data-bind="text: lang.lang.new_contact_person"></span></span>
-						        	
+						        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i><span data-bind="text: lang.lang.new_contact_person"></span></span>
+
 						        	<table class="table table-bordered table-white">
 								        <thead>
 								            <tr>
@@ -16676,7 +16653,7 @@
 												</td>
 											</tr>
 								            <tr>
-								            	<td><span data-bind="text: lang.lang.expected_date"></span></td>
+								            	<td><span data-bind="text: lang.lang.validity_date"></span></td>
 								            	<td>
 								            		<input id="txtDueDate" name="txtDueDate" 
 															data-role="datepicker"
@@ -16985,7 +16962,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_asset'><span data-bind="text: lang.lang.add_fixed_assets"></span>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 						  				 				
@@ -18397,7 +18374,7 @@
 								            </tr>
 											<tr>							            				
 												<td>
-								            		<span data-bind="text: lang.lang.refrence"></span>	                		
+								            		<span data-bind="text: lang.lang.reference"></span>	                		
 								            	</td>
 								            	<td>
 													<input data-role="combobox"
@@ -29879,7 +29856,7 @@
 			<!-- Top 5 -->
 			<div class="row-fluid">
 				<div class="span4">									
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>
 				            <tr>
 				                <th colspan="2" class="center">Top 5 Best Purcash Products</th>				                			                
@@ -29892,7 +29869,7 @@
 				    </table>			
 				</div>
 				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>
 				            <tr>
 				                <th colspan="2" class="center"><span data-bind="text: lang.lang.top_5_suppliers"></span></th>		                
@@ -29905,7 +29882,7 @@
 				    </table>
 				</div>
 				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>
 				            <tr>
 				                <th colspan="2" class="center"><span data-bind="text: lang.lang.top_5_best_selling_products"></span></th>			                		                
@@ -29943,7 +29920,7 @@
 </script>
 <script id="itemDashboard-top-customer-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td style="width: 1%">#:banhji.itemDashBoard.topPurchase.indexOf(data)+1#</td>		
+		<!-- <td style="width: 1%">#:banhji.itemDashBoard.topPurchase.indexOf(data)+1#</td> -->		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -29958,7 +29935,7 @@
 </script>
 <script id="itemDashboard-top-ar-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td style="width: 1%">#:banhji.itemDashBoard.topCustomerDS.indexOf(data)+1#</td>		
+		<!-- <td style="width: 1%">#:banhji.itemDashBoard.topCustomerDS.indexOf(data)+1#</td> -->		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -29973,7 +29950,7 @@
 </script>
 <script id="itemDashboard-top-product-template" type="text/x-kendo-tmpl">
 	<tr>
-		<td style="width: 1%">#:banhji.itemDashBoard.topProductDS.indexOf(data)+1#</td>		
+		<!-- <td style="width: 1%">#:banhji.itemDashBoard.topProductDS.indexOf(data)+1#</td> -->		
 		<td>
 			<span>
 				#if(name.length>15){#
@@ -43111,7 +43088,8 @@
 	});
 	banhji.journalReport =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "accounting_reports/journal"),		
+		dataSource 			: dataStore(apiUrl + "accounting_reports/journal"),
+		summaryDS 			: dataStore(apiUrl + "accounting_reports/journal_summary"),		
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -43123,10 +43101,11 @@
 		showRef 			: true,
 		showName 			: false,
 		showSegment 		: false,
+		dr 					: 0,
+		cr 					: 0,
+		totalTxn 			: 0,
 		pageLoad 			: function(){
-			if(this.dataSource.total()>0){
-				this.search();
-			}
+			this.search();
 		},
 		sorterChanges 		: function(){
 	        var today = new Date(),
@@ -43164,22 +43143,22 @@
 			}
 		},
 		search				: function(){
-			var para = [], displayDate = "",
-				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+			var self = this, para = [], displayDate = "",
+				start = this.get("sdate"),
+        		end = this.get("edate");
     	
         	//Dates
         	if(start && end){
-            	para.push({ field:"issued_date >=", value: start });
-            	para.push({ field:"issued_date <=", value: end });
+            	para.push({ field:"issued_date >=", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else if(start){
-            	para.push({ field:"issued_date", value: new Date(start) });
+            	para.push({ field:"issued_date", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
 
             	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
             }else if(end){
-            	para.push({ field:"issued_date <=", value: new Date(end) });
+            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
             	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
             }else{
@@ -43192,11 +43171,111 @@
             	filter: para,
             	sort: [
 			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
+			  		{ field: "number", dir: "desc" }
 			  	],
             	page: 1,
             	pageSize: 50
+            });
+
+            this.summaryDS.query({
+            	filter: para,
+            	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "number", dir: "desc" }
+			  	],
+            	page: 1,
+            	pageSize: 50
+            }).then(function(){
+            	var view = self.summaryDS.view();
+
+            	self.set("dr", kendo.toString(view[0].dr, "c", banhji.locale));
+            	self.set("cr", kendo.toString(view[0].cr, "c", banhji.locale));
+            	self.set("totalTxn", kendo.toString(view[0].totalTxn, "n0"));
             });	                  
+		}		      		
+	});
+	banhji.generalLedger =  kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "accounting_reports/journal"),		
+		sortList			: banhji.source.sortList,
+		sorter 				: "all",
+		sdate 				: "",
+		edate 				: "",
+		obj 				: null,
+		company 			: banhji.institute,
+		displayDate 		: "",
+		pageLoad 			: function(){
+			this.search();
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		search				: function(){
+			var self = this, para = [], displayDate = "",
+				start = this.get("sdate"),
+        		end = this.get("edate");
+    	
+        	//Dates
+        	if(start && end){
+            	para.push({ field:"issued_date >=", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+
+            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            }else if(start){
+            	para.push({ field:"issued_date", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+
+            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+            }else if(end){
+            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+
+            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            }else{
+            	
+            }
+
+            this.set("displayDate", displayDate);
+
+            this.dataSource.query({
+            	filter: para,
+            	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "number", dir: "desc" }
+			  	],
+            	page: 1,
+            	pageSize: 50
+            });            
 		}		      		
 	});	
 	banhji.trialBalance =  kendo.observable({
@@ -61274,8 +61353,8 @@
 		search				: function(){
 			var para = [], displayDate = "",
 				contact_id = this.get("contact_id"),
-				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+				start = this.get("sdate"),
+        		end = this.get("edate");
 
         	if(contact_id>0){
         		var contact = this.contactDS.get(contact_id);
@@ -61284,22 +61363,22 @@
         		para.push({ field:"contact_id", value: contact_id });
         	
 	        	//Dates
-	        	if(start && end){
-	            	para.push({ field:"issued_date >=", value: start });
-	            	para.push({ field:"issued_date <=", value: end });
+		    	if(start && end){
+		        	para.push({ field:"issued_date >=", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+		        	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
-	            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
-	            }else if(start){
-	            	para.push({ field:"issued_date", value: new Date(start) });
+		        	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+		        }else if(start){
+		        	para.push({ field:"issued_date", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
 
-	            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
-	            }else if(end){
-	            	para.push({ field:"issued_date <=", value: new Date(end) });
+		        	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+		        }else if(end){
+		        	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
 
-	            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
-	            }else{
-	            	
-	            }
+		        	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+		        }else{
+		        	
+		        }
 
 	            this.set("displayDate", displayDate);
 
@@ -70089,6 +70168,7 @@
 		currencyRate: new kendo.Layout("#currencyRate", {model: banhji.currencyRate}),
 		recurring: new kendo.Layout("#recurring", {model: banhji.recurring}),
 		journalReport: new kendo.Layout("#journalReport", {model: banhji.journalReport}),
+		generalLedger: new kendo.Layout("#generalLedger", {model: banhji.generalLedger}),
 		trialBalance: new kendo.Layout("#trialBalance", {model: banhji.trialBalance}),
 		chartOfAccount: new kendo.Layout("#chartOfAccount", {model: banhji.chartOfAccount}),
 		accountingReportCenter: new kendo.Layout("#accountingReportCenter", {model: banhji.accountingReportCenter}),
@@ -70097,7 +70177,6 @@
 		addAccountingprefix: new kendo.Layout("#addAccountingprefix", {model: banhji.addAccountingprefix}),
 
 		segment: new kendo.Layout("#segment", {model: banhji.segment}),
-		generalLedger: new kendo.Layout("#generalLedger", {model: banhji.generalLedger}),
 		transactionListDate: new kendo.Layout("#transactionListDate", {model: banhji.transactionListDate}),
 		recentTransactionsList: new kendo.Layout("#recentTransactionsList", {model: banhji.recentTransactionsList}),
 		recurringJournalList: new kendo.Layout("#recurringJournalList", {model: banhji.recurringJournalList}),
@@ -71083,139 +71162,10 @@
 
 			if(banhji.pageLoaded["general_ledger"]==undefined){
 				banhji.pageLoaded["general_ledger"] = true;
-
-				function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
-
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
-
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function dateChanges(){
-                	var strDate = "";
-
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}
-
-					$("#strDate").text(strDate);
-                }
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");               
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $("#sorter").val();
-
-					switch(value){
-					case "today":								
-						sdate = today;
-															  					
-					  	break;
-					case "week":			  	
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
-					  	break;
-					case "month":							  	
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":				
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-											  
-					}
-
-					start.value(sdate);
-					end.value(edate);
-					
-					start.max(end.value());
-                	end.min(start.value());
-
-                	dateChanges();                	
-                });
-                
-                start.max(end.value());
-                end.min(start.value());				
-
-				$("#search").click(function(e){
-		        	e.preventDefault();
-
-		        	var para = [],		        	
-					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
-					edate = kendo.toString(end.value(), "yyyy-MM-dd");
-					
-		        	//Dates
-		        	if(start.value() && end.value()){        		
-		            	para.push({ field:"issued_date >=", value: sdate });
-		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
-		            }else if(start.value()){
-		            	para.push({ field:"issued_date", value: sdate });
-		            }else if(end.value()){
-		            	para.push({ field:"issued_date <=", value: edate });
-		            }else{
-		            	
-		            }
-
-		            vm.dataSource.filter(para);		            
-		        });								
 						
 			}
+
+			vm.pageLoad();
 		}		
 	});
 	banhji.router.route("/transaction_list_date", function(){

@@ -224,7 +224,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
           <dis class="login-content">
               <div class="col-sm-6">
                 <div class="login-image">
-                    <img style="width: 70%;" src="<?php echo base_url(); ?>assets/signup-new.png" />
+                    <img style="width: 90%;" src="<?php echo base_url(); ?>assets/signup-new.png" />
                 </div>
               </div>
               <div class="col-sm-6">
@@ -258,7 +258,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                 <div style="margin-left:135px; padding-right: 20px; border-right: 1px solid #fff; width: 7%; float: left; margin-right: 13px; ">
                   <img style="width: 30px; height: 30px; " src="https://storage.googleapis.com/instapage-user-media/e315080c/7548513-0-Banhji-Logo-3.png" />
                 </div>
-                <p style="text-align: left; margin-bottom: 0; margin-top: 7px; font-size: 13px;">Taking Fear out of Accounting</p>
+                <p style="text-align: left; margin-bottom: 0; margin-top: 7px; font-size: 15px;">Taking Fear out of Accounting</p>
             </div>
              <div class="col-sm-6 footer-list">
               <ul>
@@ -272,7 +272,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 
             </div>           
           </div>
-           <p style="width: 35%; font-size: 12px; margin-top: 10px; margin-left: 140px; float: left;">©2016 BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>
+           <p style="width: 35%; font-size: 11px; margin-top: 10px; margin-left: 140px; float: left;">©2016 BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>
             <span style="float: right; width: 45%; text-align: right; margin-right: 35px;" id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=lNpq2OuFwU0nDcZ5f7uSQ9D1rwgIIgTNOoYBNRt4BqE4CMLt8GMhEDKt66EL"></script></span>
          </div>
      </div>

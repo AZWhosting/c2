@@ -626,81 +626,230 @@ class Accounting_reports extends REST_Controller {
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
 		$is_recurring = 0;
 		$deleted = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-		$objAll = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		
 		//Sort
 		if(!empty($sort) && isset($sort)){					
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				$obj->order_by_related("transaction", $value["field"], $value["dir"]);
 			}
 		}
 		
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {
-	    			
-	    			if($value["field"]=="is_recurring"){
-	    				$is_recurring = $value["value"];
-	    			}else if($value["field"]=="deleted"){
-	    				$deleted = $value["value"];
-	    			}else{
-	    				$obj->where($value["field"], $value["value"]);
-	    			}	    				    			
-	    		
+	    		$obj->where_related("transaction", $value["field"], $value["value"]);
 			}									 			
 		}
 		
-		$obj->where("is_journal", 1);
-		$obj->where("is_recurring", 0);		
+		$obj->include_related("transaction", array("type", "number", "issued_date", "memo"));
+		$obj->include_related("account", array("number","name"));
+		$obj->include_related("contact", array("abbr","number","name"));
+		$obj->where_related("transaction", "is_journal", 1);
+		$obj->where_related("transaction", "is_recurring", 0);		
+		$obj->where_related("transaction", "deleted", 0);
 		$obj->where("deleted", 0);
-		$obj->order_by("issued_date", "desc");		
+		$obj->order_by("dr", "desc");
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;							
-
+		$data["count"] = $obj->paged->total_rows;
+		
 		if($obj->exists()){
-			foreach ($obj as $value) {				
-				$lines = $value->journal_line->where("deleted",0)->order_by("dr", "desc")->get();
-				$line = [];
-				foreach ($lines as $l) {
-					// $segmentLists = new SegmentList(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					// $segmentLists->where_in("id", explode(",",$l->segments));
-					
-					$line[] = array(
-						"description" 	=> $l->description,
-						"reference_no" 	=> $l->reference_no,
-						"segments" 		=> $l->segments,
-						"dr" 			=> floatval($l->dr),
-						"cr" 			=> floatval($l->cr),
-						"rate" 			=> floatval($l->rate),
-						"locale" 		=> $l->locale,
-
-						"account" 		=> $l->account->get_raw()->result(),
-						"contact" 		=> $l->contact->get_raw()->result(),
-						"segmentList" 	=> []//$segmentLists->get_raw()->result()
-					); 
+			$objList = [];
+			foreach ($obj as $value) {
+				if(isset($objList[$value->transaction_id])){
+					$objList[$value->transaction_id]["line"][] = array(
+						"id" 			=> $value->id,
+						"description" 	=> $value->description,
+						"reference_no" 	=> $value->reference_no,
+						"segments" 		=> $value->segments,
+						"dr" 			=> floatval($value->dr),
+						"cr" 			=> floatval($value->cr),
+						"rate" 			=> floatval($value->rate),
+						"locale" 		=> $value->locale,
+						"account" 		=> $value->account_name,
+						"contact" 		=> $value->contact_name
+					);
+				}else{
+					$objList[$value->transaction_id]["id"] = $value->transaction_id;
+					$objList[$value->transaction_id]["type"] = $value->transaction_type;
+					$objList[$value->transaction_id]["number"] = $value->transaction_number;
+					$objList[$value->transaction_id]["issued_date"] = $value->transaction_issued_date;
+					$objList[$value->transaction_id]["memo"] = $value->transaction_memo;
+					$objList[$value->transaction_id]["line"][] = array(
+						"id" 			=> $value->id,
+						"description" 	=> $value->description,
+						"reference_no" 	=> $value->reference_no,
+						"segments" 		=> $value->segments,
+						"dr" 			=> floatval($value->dr),
+						"cr" 			=> floatval($value->cr),
+						"rate" 			=> floatval($value->rate),
+						"locale" 		=> $value->locale,
+						"account" 		=> $value->account_name,
+						"contact" 		=> $value->contact_name
+					);			
 				}
-
-				$data["results"][] = array(
-					"id" 			=> $value->id,
-					"number" 		=> $value->number,				
-				   	"type" 			=> $value->type,
-				   	"amount" 		=> floatval($value->amount),
-				   	"rate" 			=> floatval($value->rate),
-				   	"locale" 		=> $value->locale,				   	
-				   	"issued_date"	=> $value->issued_date,
-				   	"memo" 			=> $value->memo,
-
-				   	"line" 			=> $line
-				);
 			}
+
+			foreach ($objList as $value) {				
+				$data["results"][] = $value;
+			}			
+		}		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET JOURNAL SUMMARY
+	function journal_summary_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_recurring = 0;
+		$deleted = 0;
+
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by_related("transaction", $value["field"], $value["dir"]);
+				$txn->order_by($value["field"], $value["dir"]);
+			}
+		}
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		$obj->where_related("transaction", $value["field"], $value["value"]);
+	    		$txn->where($value["field"], $value["value"]);
+			}									 			
+		}
+		
+		$obj->where_related("transaction", "is_journal", 1);
+		$obj->where_related("transaction", "is_recurring", 0);		
+		$obj->where_related("transaction", "deleted", 0);
+		$obj->where("deleted", 0);
+		
+		//Results
+		$obj->get_iterated();
+
+		//Txn
+		$txn->where("is_journal", 1);
+		$txn->where("is_recurring", 0);
+		$txn->where("deleted", 0);
+		
+
+		$totalDr = 0;
+		$totalCr = 0;
+		foreach ($obj as $value) {
+			$totalDr += floatval($value->dr) / floatval($value->rate);
+			$totalCr += floatval($value->cr) / floatval($value->rate);
+		}
+
+		$data["results"][] = array(
+			"id" 		=> 0,
+			"dr" 		=> $totalDr,				
+		   	"cr" 		=> $totalCr,
+		   	"totalTxn" 	=> $txn->count()
+		);			
+
+		$data["count"] = count($data["results"]);		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET GENERAL LEDGER
+	function general_ledger_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
+		$deleted = 0;
+
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by_related("transaction", $value["field"], $value["dir"]);
+			}
+		}
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		$obj->where_related("transaction", $value["field"], $value["value"]);
+			}									 			
+		}
+		
+		$obj->include_related("transaction", array("type", "number", "issued_date", "memo"));
+		$obj->include_related("account", array("number","name"));
+		$obj->include_related("contact", array("abbr","number","name"));
+		$obj->where_related("transaction", "is_journal", 1);
+		$obj->where_related("transaction", "is_recurring", 0);		
+		$obj->where_related("transaction", "deleted", 0);
+		$obj->where("deleted", 0);
+		$obj->order_by("dr", "desc");
+		
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {
+				if(isset($objList[$value->transaction_id])){
+					$objList[$value->transaction_id]["line"][] = array(
+						"id" 			=> $value->id,
+						"description" 	=> $value->description,
+						"reference_no" 	=> $value->reference_no,
+						"segments" 		=> $value->segments,
+						"dr" 			=> floatval($value->dr),
+						"cr" 			=> floatval($value->cr),
+						"rate" 			=> floatval($value->rate),
+						"locale" 		=> $value->locale,
+						"account" 		=> $value->account_name,
+						"contact" 		=> $value->contact_name
+					);
+				}else{
+					$objList[$value->transaction_id]["id"] = $value->transaction_id;
+					$objList[$value->transaction_id]["type"] = $value->transaction_type;
+					$objList[$value->transaction_id]["number"] = $value->transaction_number;
+					$objList[$value->transaction_id]["issued_date"] = $value->transaction_issued_date;
+					$objList[$value->transaction_id]["memo"] = $value->transaction_memo;
+					$objList[$value->transaction_id]["line"][] = array(
+						"id" 			=> $value->id,
+						"description" 	=> $value->description,
+						"reference_no" 	=> $value->reference_no,
+						"segments" 		=> $value->segments,
+						"dr" 			=> floatval($value->dr),
+						"cr" 			=> floatval($value->cr),
+						"rate" 			=> floatval($value->rate),
+						"locale" 		=> $value->locale,
+						"account" 		=> $value->account_name,
+						"contact" 		=> $value->contact_name
+					);			
+				}
+			}
+
+			foreach ($objList as $value) {				
+				$data["results"][] = $value;
+			}			
 		}		
 
 		//Response Data		
