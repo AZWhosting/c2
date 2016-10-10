@@ -1035,37 +1035,37 @@
 							<div class="accounCetner-textedit">
 							<table width="100%">
 								<tr>
-									<td width="40%">Account Code:</td>
+									<td width="40%"><span data-bind="text: lang.lang.account_number"></span>:</td>
 									<td width="60%">
 										<span class="strong" data-bind="text: obj.number"></span>
 									</td>
 								</tr>
 								<tr>
-									<td>Account Title</td>
+									<td><span data-bind="text: lang.lang.account_title"></span>:</td>
 									<td>
 										<span class="strong" data-bind="text: obj.name"></span>
 									</td>
 								</tr>
 								<tr>
-									<td>Sub of account:</td>
+									<td><span data-bind="text: lang.lang.sub_account"></span>:</td>
 									<td>
 										<span data-bind="text: subName"></span>
 									</td>
 								</tr>
 								<tr>
-									<td>Account Type:</td>
+									<td><span data-bind="text: lang.lang.account_type"></span>:</td>
 									<td>
 										<span data-bind="text: typeName"></span>
 									</td>
 								</tr>								
 								<tr>
-									<td>Description:</td>
+									<td><span data-bind="text: lang.lang.description"></span>:</td>
 									<td>
 										<span data-bind="text: obj.description"></span>
 									</td>
 								</tr>
 								<tr>
-									<td>Taxable:</td>
+									<td><span data-bind="text: lang.lang.taxable"></span>:</td>
 									<td>										
 										<input type="checkbox" id="chbTaxable" class="k-checkbox" data-bind="checked: obj.is_taxable">
           								<label class="k-checkbox-label" for="chbTaxable"></label>
@@ -1073,7 +1073,7 @@
 								</tr>
 							</table>
 
-							<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i>Edit</span>
+							<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.edit"></span></span>
 
 							</div>
 						</div>
@@ -1084,7 +1084,7 @@
 									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadTransaction" style=" width: 425px; height:114px; background:#424242; margin-left:0;">
 										<span class="glyphicons coins"><i></i></span>										
 										<span class="txt">
-											Balance as of today
+											<span data-bind="text: lang.lang.balance_as_of_today"></span>
 											<span data-bind="text: balance"></span>
 										</span>
 										<div class="clearfix"></div>
@@ -1098,7 +1098,7 @@
 										<span class="glyphicons adjust_alt"><i></i></span>
 										<span class="txt">
 											<span data-bind="text: nature"></span>
-											Nature Balance
+											<span data-bind="text: lang.lang.nature_balance"></span>
 										</span>
 										<div class="clearfix"></div>
 									</div>
@@ -1108,7 +1108,7 @@
 										<span class="glyphicons random"><i></i></span>										
 										<span class="txt">
 											<span data-bind="text: totalTxn"></span>
-											Transactions											
+											<span data-bind="text: lang.lang.transaction"></span>
 										</span>										
 										<div class="clearfix"></div>
 									</div>
@@ -1140,12 +1140,12 @@
 					<table class="table table-bordered table-striped table-white">
 						<thead>
 							<tr>
-								<th>Date</th>
-								<th>Type</th>								
-								<th>Reference No</th>
-								<th>Description</th>
-								<th>Dr</th>
-								<th>Cr</th>
+								<th data-bind="text: lang.lang.date"></th>
+								<th data-bind="text: lang.lang.type"></th>							
+								<th data-bind="text: lang.lang.reference_no"></th>
+								<th data-bind="text: lang.lang.description"></th>
+								<th data-bind="text: lang.lang.dr"></th>
+								<th data-bind="text: lang.lang.cr"></th>
 								<th></th>
 							</tr>
 						</thead>	            		
@@ -1236,7 +1236,7 @@
 								data-bind="click: cancel"><i></i></span>						
 						</div>
 
-				        <h2>ACCOUNT</h2>				        				        				        	
+				        <h2 data-bind="text: lang.lang.account"></h2>				        				        				        	
 				    </div>			   
 
 				    <br>
@@ -1245,7 +1245,7 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="ddlType">Account Type<span style="color:red">*</span></label>
+								<label for="ddlType"><span data-bind="text: lang.lang.account_type"></span><span style="color:red">*</span></label>
 								<input id="ddlType" name="ddlType" 
 									   data-role="dropdownlist"					                   
 					                   data-value-primitive="true"
@@ -1262,7 +1262,7 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="txtNumber">Account Code<span style="color:red">*</span></label>
+								<label for="txtNumber"><span data-bind="text: lang.lang.account_code"></span><span style="color:red">*</span></label>
 								<input id="txtNumber" name="txtNumber" 
 										class="k-textbox"
 										data-bind="value: obj.number"										
@@ -1276,7 +1276,7 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="txtName">Account Name<span style="color:red">*</span></label>
+								<label for="txtName"><span data-bind="text: lang.lang.account_name"></span><span style="color:red">*</span></label>
 								<input id="txtName" name="txtName" 
 										class="k-textbox"
 										data-bind="value: obj.name"										
@@ -1287,7 +1287,7 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="txtNonLocalName">Non-Local Name</label>
+								<label for="txtNonLocalName"><span data-bind="text: lang.lang.non_local_name"></span></label>
 								<input id="txtNonLocalName" name="txtNonLocalName" 
 										class="k-textbox"
 										data-bind="value: obj.name_2"
@@ -1301,7 +1301,7 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="ddlSubOf">Sub Of Account</label>
+								<label for="ddlSubOf"><span data-bind="text: lang.lang.sub_account"></span></label>
 								<input id="ddlSubOf" name="ddlSubOf" 
 									   data-role="dropdownlist"
 									   data-template="account-list-tmpl"					                   
@@ -1318,7 +1318,7 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="ddlStatus">Status<span style="color:red">*</span></label>
+								<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span><span style="color:red">*</span></label>
 								<input id="ddlStatus" name="ddlStatus" 
 									   data-role="dropdownlist"									   				                   
 					                   data-value-primitive="true"
@@ -1337,14 +1337,14 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label><input type="checkbox" data-bind="checked: obj.is_taxable" /> Taxable</label>								
+								<label><input type="checkbox" data-bind="checked: obj.is_taxable" /> <span data-bind="text: lang.lang.taxable"></span></label>			
 							</div>
 							<!-- // Group END -->
 						</div>
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="txtDescription">Description</label>
+								<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
 								<input id="txtDescription" name="txtDescription" 
 										class="k-textbox"
 										data-bind="value: obj.description" 
@@ -1360,7 +1360,7 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="txtBankName">Bank Name</label>
+								<label for="txtBankName"><span data-bind="text: lang.lang.bank_name"></span></label>
 								<input id="txtBankName" name="txtBankName" 
 										class="k-textbox"
 										data-bind="value: obj.bank_name"
@@ -1371,7 +1371,7 @@
 				    	<div class="span6">														
 							<!-- Group -->
 							<div class="control-group">										
-								<label for="txtBankAccountNumber">Bank Account No.</label>
+								<label for="txtBankAccountNumber"><span data-bind="text: lang.lang.bank_account_no"></span></label>
 								<input id="txtBankAccountNumber" name="txtBankAccountNumber" 
 										class="k-textbox"
 										data-bind="value: obj.bank_account_number"
@@ -1388,10 +1388,10 @@
 					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
 						<span id="notification"></span>
 
-						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> Save New</span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>						
-						<span class="btn btn-icon btn-default glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
+						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>
+						<span class="btn btn-icon btn-default glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
 					</div>
 					<!-- // Form actions END -->						
 			    	
@@ -1410,7 +1410,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-				    <h2>JOURNAL ENTRY</h2>				        				        				        	
+				    <h2 span data-bind="text: lang.lang.journal_entry"></h2>				        				        				        	
 				   
 				    <br>				   				
 						
@@ -1420,11 +1420,11 @@
 							<div class="box-generic well" style="height: 150px;">				
 								<table class="table table-borderless table-condensed cart_total">									
 									<tr data-bind="visible: isEdit">				
-										<td>No.</td>
+										<td><span data-bind="text: lang.lang.no_"></span></td>
 										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 									</tr>
 									<tr>
-										<td>Date</td>
+										<td><span data-bind="text: lang.lang.date"></span></td>
 										<td class="right">
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
@@ -1437,7 +1437,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td>Type</td>
+										<td><span data-bind="text: lang.lang.type"></span></td>
 										<td>
 											<input id="ddlType" name="ddlType"
 												   data-role="dropdownlist"								                   
@@ -1452,7 +1452,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td>Currency</td>
+										<td><span data-bind="text: lang.lang.currency"></span></td>
 										<td>
 											<input id="cbbCurrency" name="cbbCurrency"
 												   data-role="combobox"				                
@@ -1500,7 +1500,7 @@
 
 							        <!-- Attach Tab content -->
 							        <div class="tab-pane" id="tab2-3">
-							         	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
+							         	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
 							            
 							            <input id="files" name="files"
 						                   type="file"
@@ -1513,9 +1513,9 @@
 							            <table class="table table-bordered">
 									        <thead>
 									            <tr>			                
-									                <th>File Name</th>
-									                <th>Description</th>
-									                <th>Date</th>
+									                <th data-bind="text: lang.lang.file_name"></th>
+									                <th data-bind="text: lang.lang.description"></th>
+									                <th data-bind="text: lang.lang.date"></th>
 									                <th style="width: 13%;"></th>                			                
 									            </tr> 
 									        </thead>
@@ -1547,7 +1547,7 @@
 							                <br><br>
 
 							                <div align="right">
-								                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
+								                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>						                
 								            </div>
 
 							            </div>
@@ -1557,13 +1557,13 @@
 								            <table style="width: 100%">
 								            	<tr align="right">
 								            		<td>
-								            			Name
+								            			<span data-bind="text: lang.lang.name"></span>
 								            		</td>
 								            		<td>
 								            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
 								            					placeholder="Recurring name.." 
 								            					style="width: 40%;" />
-								            			Start
+								            			<span data-bind="text: lang.lang.start"></span>
 										                <input data-role="datepicker"
 																data-format="dd-MM-yyyy"
 																data-parse-formats="yyyy-MM-dd"
@@ -1573,7 +1573,7 @@
 								            	</tr>
 								            	<tr align="right">
 								            		<td>
-									            		Every
+									            		<span data-bind="text: lang.lang.every"></span>
 									            	</td>
 								            		<td>
 									            		<input data-role="numerictextbox"
@@ -1594,7 +1594,7 @@
 								            	</tr>
 									            <tr align="right">
 									            	<td>
-									            		On
+									            		<span data-bind="text: lang.lang.on"></span>
 									            	</td>							            	
 									            	<td>
 
@@ -1654,15 +1654,15 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;">No.</th>
-				                <th style="width: 30%;">ACCOUNT</th>
-				                <th>DESCRIPTION</th>
-				                <th data-bind="visible: showRef" style="width: 7%;">REF</th>
-				                <th data-bind="visible: showName" style="width: 15%;">NAME</th>
-				                <th data-bind="visible: showJob" style="width: 7%;">JOB</th>
-				                <th data-bind="visible: showSegment" style="width: 15%;">SEGMENT</th>
-				                <th style="width: 15%;">DEBITS (Dr)</th>
-				                <th style="width: 15%;">CREDITS (Cr)</th>			                
+				                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>
+				                <th style="width: 30%;"><span data-bind="text: lang.lang.account"></span></th>
+				                <th data-bind="text: lang.lang.description"></th>
+				                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.reference"></span></th>
+				                <th data-bind="visible: showName" style="width: 15%;"><span data-bind="text: lang.lang.name"></span></th>
+				                <th data-bind="visible: showJob" style="width: 7%;"><span data-bind="text: lang.lang.job"></span></th>
+				                <th data-bind="visible: showSegment" style="width: 15%;"><span data-bind="text: lang.lang.segment"></span></th>
+				                <th style="width: 15%;"><span data-bind="text: lang.lang.dr_"></span></th>
+				                <th style="width: 15%;"><span data-bind="text: lang.lang.cr_"></span></th>			                
 				            </tr> 
 				        </thead>
 				        <tbody data-role="listview"
@@ -1686,21 +1686,21 @@
 								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
 								<ul class="dropdown-menu" style="padding: 5px; border-radius:0; ">
 									<li>
-										<input type="checkbox" data-bind="checked: showRef" /> REF
+										<input type="checkbox" data-bind="checked: showRef" /> <span data-bind="text: lang.lang.reference"></span>
 									</li>
 									<li>
-										<input type="checkbox" data-bind="checked: showName" /> NAME
+										<input type="checkbox" data-bind="checked: showName" /> <span data-bind="text: lang.lang.name"></span>
 									</li>
 									<li>
-										<input type="checkbox" data-bind="checked: showJob" /> JOB
+										<input type="checkbox" data-bind="checked: showJob" /> <span data-bind="text: lang.lang.job"></span>
 									</li>
 									<li>
-										<input type="checkbox" data-bind="checked: showSegment" /> SEGMENT
+										<input type="checkbox" data-bind="checked: showSegment" /> <span data-bind="text: lang.lang.segment"></span>
 									</li>								
 								</ul>
 							</div>
 
-							<a href="#/account" class="btn btn-default">Add New Account</a>						
+							<a href="#/account" class="btn btn-default"><span data-bind="text: lang.lang.add_account"></span></a>						
 							
 						</div>
 						<!-- Column END -->
@@ -1711,13 +1711,13 @@
 								<div class="row-fluid row-merge">
 									<div class="span6">
 										<div class="center">
-											<h5 class="strong muted text-uppercase">Total Debit</h5>
+											<h5 class="strong muted text-uppercase"><span data-bind="text: lang.lang.total_dr"></span></h5>
 											<span class="text-large strong text-primary" data-bind="text: dr"></span>
 										</div>
 									</div>
 									<div class="span6">
 										<div class="center muted">
-											<h5 class="strong muted text-uppercase">Total Credit</h5>
+											<h5 class="strong muted text-uppercase"><span data-bind="text: lang.lang.total_cr"></span></h5>
 											<span class="text-large strong" data-bind="text: cr"></span>
 										</div>
 									</div>
@@ -1764,11 +1764,11 @@
 					                   data-option-label="Select Template..." />
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>																	
-								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> Save Print</span>
-								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>																	
+								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
 							</div>
 						</div>
 					</div>
@@ -1871,7 +1871,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-					<h2 >Exchange Rate</h2>			    		   
+					<h2 span data-bind="text: lang.lang.exchange_rate"></h2>			    		   
 
 				    <br>
 
@@ -1880,8 +1880,8 @@
 					    <div class="widget-body">
 
 					    	<div class="row-fluid">
-						    	<div class="span6 alert alert-primary">Company currency: <span data-bind="text: baseCode"></span> </div>
-						    	<div class="span6 alert alert-primary">Reporting currency: <span data-bind="text: reportCode"></span> </div>
+						    	<div class="span6 alert alert-primary"><span data-bind="text: lang.lang.company_currency"></span> <span data-bind="text: baseCode"></span> </div>
+						    	<div class="span6 alert alert-primary"><span data-bind="text: lang.lang.reporting_currency"></span> <span data-bind="text: reportCode"></span> </div>
 					    	</div>
 
 					    	<div class="hidden-print well">
@@ -1923,9 +1923,9 @@
 
 							<br>					
 							
-							<button class="btn btn-inverse hidden-print" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> Add New Rate</button>
+							<button class="btn btn-inverse hidden-print" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_new_rate"></span></button>
 							&nbsp;
-							<span class="hidden-print">Please click on the column header to sort based on currency.</span>
+							<span class="hidden-print"><span data-bind="text: lang.lang.please_click_on_the_column_header_to_sort_based_on_currency"></span>.</span>
 
 							<div data-role="grid"
 								 data-sortable="true"							 
@@ -9233,7 +9233,7 @@
 						        <div class="tab-pane active" id="tab1">
 					            	<table class="table table-borderless table-condensed cart_total">					            		
 							            <tr>
-							                <td>VAT Number</td>
+							                <td><span data-bind="text: lang.lang.vat_no"></span></td>
 							              	<td>
 					            				<input class="k-textbox" data-bind="value: obj.vat_no" 
 													placeholder="e.g. 01234567897" style="width: 100%;" />									
@@ -9242,7 +9242,7 @@
 							              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" style="width: 100%;" /></td>
 							            </tr>
 							            <tr>
-							            	<td>Country</td>
+							            	<td><span data-bind="text: lang.lang.country"></span></td>
 							              	<td>
 							              		<input data-role="dropdownlist"
 							              			   data-option-label="(--- Select ---)"									                   
@@ -9256,9 +9256,9 @@
 							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" style="width: 100%;" />							            	
 							            </tr>
 							            <tr>
-							            	<td>City</td>
+							            	<td><span data-bind="text: lang.lang.city"></span></td>
 							              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." style="width: 100%;" />							              	
-							            	<td>Post Code</td>
+							            	<td><span data-bind="text: lang.lang.post_code"></span></td>
 							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" style="width: 100%;" />
 							            </tr>							            
 							            <tr>
@@ -9269,12 +9269,12 @@
 							            </tr>									            
 							            <tr>
 							            	<td>
-							            		<label for="txtBillTo" data-bind="click: copyBillTo">Billed To <i class="icon-share"></i></label>											            
+							            		<label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label>											            
 							            	</td>
 							            	<td>
 							            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="billed to ..."></textarea>
 							            	</td>
-							            	<td>Delivered To</td>
+							            	<td><span data-bind="text: lang.lang.delivered_to"></span></td>
 							            	<td>
 							            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="delivered to ..."></textarea>
 							            	</td>
@@ -9977,7 +9977,7 @@
 										<td class="right strong"><span data-bind="text: tax"></span></td>
 									</tr>					
 									<tr>
-										<td class="right"><h4><span data-bind="text: lang.lang.tatal"></span></h4></td>
+										<td class="right"><h4 data-bind="text: lang.lang.total"></h4></td>
 										<td class="right strong"><h4 data-bind="text: total"></h4></td>
 									</tr>								
 								</tbody>
@@ -10223,7 +10223,7 @@
 								            </tr>							           
 											<tr>							            				
 												<td>
-								            		<span data-bind="text: lang.lang.c_reference"></span>	            						            		
+								            		<span data-bind="text: lang.lang.reference"></span>	            						            		
 								            	</td>
 								            	<td>
 													<input data-role="combobox"
@@ -11174,7 +11174,7 @@
 											</tr>																				
 											<tr>							            				
 												<td>
-								            		<span data-bind="text: lang.lang.c_reference"></span>	            						            		
+								            		<span data-bind="text: lang.lang.reference"></span>	            						            		
 								            	</td>
 								            	<td>
 													<input data-role="combobox"
@@ -19356,7 +19356,7 @@
 										<td class="right strong"><span data-bind="text: tax"></span></td>
 									</tr>
 									<tr>
-										<td class="right"><h4><span data-bind="text: lang.lang.total"></span></h4></td>
+										<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
 										<td class="right strong"><h4 data-bind="text: total"></h4></td>
 									</tr>
 									<tr>
@@ -19619,7 +19619,7 @@
 								            </tr>							           
 											<tr>							            				
 												<td>
-								            		<span data-bind="text: lang.lang.c_reference"></span>	            						  
+								            		<span data-bind="text: lang.lang.reference"></span>	            						  
 								            	</td>
 								            	<td>
 													<input data-role="combobox"
@@ -19863,7 +19863,7 @@
 							<table class="table table-condensed table-striped table-white">
 								<tbody>																								
 									<tr>
-										<td class="right"><h4><span data-bind="text: lang.lang.total"></span></h4></td>
+										<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
 										<td class="right strong"><h4 data-format="n0" data-bind="text: obj.amount"></h4></td>
 									</tr>								
 								</tbody>
@@ -20268,7 +20268,7 @@
 										<td class="right strong"><span data-bind="text: tax"></span></td>
 									</tr>																
 									<tr>
-										<td class="right"><h4><span data-bind="text: lang.lang.total"></span></h4></td>
+										<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
 										<td class="right strong"><h4 data-bind="text: total"></h4></td>
 									</tr>
 									<tr>
@@ -32602,7 +32602,7 @@
 					            <tr>	            	
 					            	<th data-bind="text: lang.lang.date"></th>
 					            	<th data-bind="text: lang.lang.type"></th>	                
-					                <th data-bind="text: lang.lang.c_reference"></th>				               
+					                <th data-bind="text: lang.lang.reference"></th>				               
 					                <th data-bind="text: lang.lang.quantity"></th>
 					                <th data-bind="text: lang.lang.cost"></th>
 					                <th data-bind="text: lang.lang.price"></th>			                	             
@@ -32858,7 +32858,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				            	<th width="5%"><span data-bind="text: lang.lang.no"></span></th>				                
+				            	<th width="5%"><span data-bind="text: lang.lang.no_"></span></th>				                
 				                <th data-bind="text: lang.lang.item"></th>
 				                <th data-bind="text: lang.lang.qoh"></th>
 				                <th data-bind="text: lang.lang.quantity_count"></th>
@@ -36207,7 +36207,7 @@
 										<div class="span6">	
 											<!-- Group -->
 											<div class="control-group">
-												<label for="vatNo">VAT Number</label>								
+												<label for="vatNo"><span data-bind="text: lang.lang.vat_no"></span></label>								
 							            		<input id="vatNo" name="vatNo" class="k-textbox" data-bind="enabled: isCompany, value: obj.vat_no" 
 														placeholder="e.g. 01234567897"
 														style="width: 100%;" />												
@@ -38021,17 +38021,17 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/sale_tax'>Add Transaction Item</a></li>  				
-  				<li><a href='#/account'>Add Account</a></li>
-  				<li><a href='#/segment'>Add Segment</a></li>    
+  				<li><a href='#/sale_tax'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
+  				<li><a href='#/account'><span data-bind="text: lang.lang.add_account"></span></a></li>
+  				<li><a href='#/segment'><span data-bind="text: lang.lang.add_segment"></span></a></li> 
   				<li> <span class="li-line"></span></li>
-  				<li><a href='#/journal'>Make Journal Entry</a></li> 
-  				<li><a href='#/cash_transaction'>Make Cash Transaction</a></li>
-  				<li><a href='#/cash_advance'>Make Cash Advance</a></li>
-  				<li><a href='#/expense'>Make Expense</a></li> 
+  				<li><a href='#/journal'><span data-bind="text: lang.lang.make_journal"></span></a></li>
+  				<li><a href='#/cash_transaction'><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
+  				<li><a href='#/cash_advance'><span data-bind="text: lang.lang.make_cash_advance"></span></a></li>
+  				<li><a href='#/expense'><span data-bind="text: lang.lang.make_expense"></span></a></li>
   				<li> <span class="li-line"></span></li> 		
-  				<li><a href='#/currency_rate'>Set Exchange Rate</a></li>
-  				<li><a href='#/account_recurring'>Accounting Recurring List</a></li>  				  				 				  				 				
+  				<li><a href='#/currency_rate'><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
+  				<li><a href='#/account_recurring'><span data-bind="text: lang.lang.accounting_recurring_list"></span></a></li> 			  				 		
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/accounting_report_center'>REPORTS</a></li>	  	
