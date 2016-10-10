@@ -753,10 +753,9 @@
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td valign="top">
-			        	<h2>ACCOUNTING MODULE</h2>
+			        	<h2 data-bind="text: lang.lang.accounting"></h2>
 			        	<p>
-			        		In this module, you can prepare your journal entry record, set your tax, 
-			        		create segment, and determine your financial reporting standards.
+			        		<span data-bind="text: lang.lang.acc_in_this_module"></span>
 			        	</p>
 			        	<div class="supplier-icon">
 						    <div class="span4">
@@ -783,19 +782,19 @@
 					<td class="center">
 						<a href="#/journal">
 							<img title="Add Account" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/journal.png" width="110" height="200" />
-							Journal
+							<span data-bind="text: lang.lang.journal"></span>
 						</a>						
 					</td>					
 					<td class="center">
 						<a href="#/cash_transaction">
 							<img title="Add Cash Transaction" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_transaction.png" width="110" height="200" />
-							C.Transaction
+							<span data-bind="text: lang.lang.cash_transaction"></span>
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/cash_advance">
 							<img title="Add Cash Advance" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_advance.png" width="110" height="200" />
-							C.Advance
+							<span data-bind="text: lang.lang.cash_advance"></span>
 						</a>
 					</td>		
 				</tr>
@@ -803,19 +802,19 @@
 					<td class="center">						
 						<a href="#/expense">
 							<img title="Add Expense" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/expense.png" width="110" height="200" />
-							Expense
+							<span data-bind="text: lang.lang.expense"></span>
 						</a>						
 					</td>
 					<td class="center">						
 						<a href="#/currency_rate">
 							<img title="Add Exchange Rate Record" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/currency_record.png" width="110" height="200" />
-							Ex.Rate Record
+							<span data-bind="text: lang.lang.ex_rate_record"></span>
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/segment">
 							<img title="Add Segment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/segment.png" width="110" height="200" />
-							Segment
+							<span data-bind="text: lang.lang.segment"></span>
 						</a>
 					</td>			
 				</tr>								
@@ -829,29 +828,31 @@
 				<div class="span6 accounting-right">
 					<div class="financial-report" style="padding-bottom: 0;">
 						<p>
-							Financial Reporting Standards: <b>Cambodia International Financial Reporting Standards for SMEs (CIFRSn for SMEs)</b>
+							<span data-bind="text: lang.lang.financial_report_standard"></span> <b>Cambodia International Financial Reporting Standards for SMEs (CIFRSn for SMEs)</b>
 						</p>
-						<a style="margin: 0 0 0px;" class="btn-download" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/IFRS+for+SME_Khmer.pdf" target="_blank">ទាញយកស្ដង់ដានេះ</a>
+						<a style="margin: 0 0 0px;" class="btn-download" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/IFRS+for+SME_Khmer.pdf" target="_blank"><span data-bind="text: lang.lang.take_this_standard"></span></a>
 						<br><br>
 						<a style="margin: -10px 0 8px;" class="btn-download" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/IFRS+for+SMEs_Standard_2015.pdf" target="_blank">Download Standards</a>
-						<p>Reporting Currency: <b data-bind="text: reportCurrency"></b></p>
-						<p>Fiscal year: <b data-bind="text: fiscalDate"></b></p>
+						<p><span data-bind="text: lang.lang.reporting_currency"></span> <b data-bind="text: reportCurrency"></b></p>
+						<p><span data-bind="text: lang.lang.fiscal_year"></span> <b data-bind="text: fiscalDate"></b></p>
 					</div>
 					<div class="account-stement">
 						<a href="#/statement_profit_loss">
 							<table class="performance">
 								<tr>
-									<td>Income</td>
+									
+									<td><span data-bind="text: lang.lang.income"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: income"></span></td>
 								</tr>
 								<tr>
-									<td>Expense</td>
+									
+									<td><span data-bind="text: lang.lang.expense"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: expense"></span></td>
 								</tr>
 								<tr>
-									<td><b>Net Income</b></td>
+									<td><b><span data-bind="text: lang.lang.net_income"></span></b></td>
 									<td></td>
 									<td align="right"><b data-bind="text: net_income"></b></td>
 								</tr>
@@ -861,17 +862,17 @@
 						<a href="#/statement_financial_position">
 							<table class="position">
 								<tr>
-									<td>Assets</td>
+									<td><span data-bind="text: lang.lang.asset"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: asset"></span></td>
 								</tr>
 								<tr>
-									<td>Liabilities</td>
+									<td><span data-bind="text: lang.lang.liabilities"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: liability"></span></td>
 								</tr>
 								<tr>
-									<td><b>Equity</b></td>
+									<td><b><span data-bind="text: lang.lang.equity"></span></b></td>
 									<td></td>
 									<td align="right"><b data-bind="text: equity"></b></td>
 								</tr>
@@ -883,7 +884,7 @@
 
 					<div class="span12 capital-box" style="width: 100%;">
 						<span data-bind="text: txnRecorded"></span>
-						<p class="month" style="width: 70%; text-align: center; margin: 0 auto;">Transactions recorded from the begining of fiscal date</p>
+						<p class="month" style="width: 70%; text-align: center; margin: 0 auto;" data-bind="text: lang.lang.transactions_recorded"></p>
 					</div>
 					<!-- <div class="span6 capital-box">
 						<span>10</span>
@@ -892,17 +893,17 @@
 					<div class="span12" style="padding: 0; margin-bottom: 10px;">
 						<div class="span6 capital-box" >
 							<span data-bind="text: currentRatio"></span> <span>x</span>
-							<p class="month">Current Ratio</p>
+							<p class="month"><span data-bind="text: lang.lang.current_ratio"></span></p>
 						</div>
 						<div class="span6 capital-box">
 							<span data-bind="text: quickRatio"></span> <span>x</span>
-							<p class="month">Quick Ratio</p>
+							<p class="month"><span data-bind="text: lang.lang.quick_ratio"></span></p>
 						</div>
 					</div>
 					<table width="100%">
 						<tr>
 							<td>
-								<span>Return on Capital Employed</span>
+								<span data-bind="text: lang.lang.return_on_capital_employed"></span>
 							</td>
 							<td align="right">
 								<span data-bind="text: roce"></span>
@@ -910,7 +911,7 @@
 						</tr>
 						<tr>
 							<td>
-								<span>Gross Profit Margin</span>
+								<span data-bind="text: lang.lang.gross_profit_margin"></span>
 							</td>
 							<td align="right">
 								<span data-bind="text: grossProfitMargin"></span>
@@ -918,7 +919,7 @@
 						</tr>
 						<tr>
 							<td>
-								<span>Profit Margin</span>
+								<span data-bind="text: lang.lang.profit_margin"></span>
 							</td>
 							<td align="right">
 								<span data-bind="text: profitMargin"></span>
@@ -926,7 +927,7 @@
 						</tr>
 						<tr>
 							<td>
-								<span>Return On Asset</span>
+								<span data-bind="text: lang.lang.return_on_asset"></span>
 							</td>
 							<td align="right">
 								<span data-bind="text: returnOnAsset"></span> <span>x</span>
@@ -934,7 +935,7 @@
 						</tr>
 						<tr>
 							<td>
-								<span>Account Receivable Collection Period</span>
+								<span data-bind="text: lang.lang.account_receivable_collection_period"></span>
 							</td>
 							<td align="right">
 								<span data-bind="text: arCollectionPeriod"></span> <span>days</span>
@@ -942,7 +943,7 @@
 						</tr>
 						<tr>
 							<td>
-								<span>Payable Payment Period</span>
+								<span data-bind="text: lang.lang.payable_payment_period"></span>
 							</td>
 							<td align="right">
 								<span data-bind="text: apPaymentPeriod"></span> <span>days</span>
@@ -950,7 +951,7 @@
 						</tr>
 						<tr>
 							<td>
-								<span>Inventory Turnover</span>
+								<span data-bind="text: lang.lang.inventory_turnover"></span>
 							</td>
 							<td align="right">
 								<span data-bind="text: inventoryTurnOver"></span> <span>days</span>
@@ -958,7 +959,7 @@
 						</tr>
 						<tr>
 							<td>
-								<span>Cash Conversion Cycle</span>
+								<span data-bind="text: lang.lang.cash_conversion_cycle"></span>
 							</td>
 							<td align="right">
 								<span data-bind="text: ccc"></span> <span>days</span>
@@ -966,7 +967,7 @@
 						</tr>
 						<tr>
 							<td>
-								<span>Working Capital To Sale Ratio</span>
+								<span data-bind="text: lang.lang.working_capital_to_sale_ratio"></span>
 							</td>
 							<td align="right">
 								<span data-bind="text: wcSale"></span>
@@ -5390,7 +5391,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2>General Accounting Setting</h2>
+	<h2 data-bind="text: lang.lang.general_accounting_setting"></h2>
 
 	<br>
 
@@ -5399,7 +5400,7 @@
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
 	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Financial Reporting Standards</span></a>
+	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.financial_report"></span></span></a>
 	            </li>
 	           <!--  <li><a href="#tab2-1" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong">Chart of Accounts Condition</span></a>
 	            </li>
@@ -5409,7 +5410,7 @@
 	            </li>
 	            <li><a href="#tab5-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Tax Setting </span></a>
 	            </li>	 -->
-	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong">Prefix Setting </span></a>
+	            <li><a href="#tab2-1" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span> </span></a>
 	            </li>	                        
 	        </ul>
 	    </div>
@@ -8342,7 +8343,7 @@
 			        <td valign="top">
 			        	<h2 data-bind="text: lang.lang.supplier"></h2>
 			        	<p>
-			        		In here, you can manage your supplier information, and other related transactions.
+			        		<span data-bind="text: lang.lang.S_inhere"></span>
 			        	</p>
 			        	<div class="supplier-icon">
 					       	<div class="span4">
