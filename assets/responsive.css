@@ -20,7 +20,8 @@
 #ddlSegment-list,
 #ddlJob-list,
 #ddlAccount-list,
-#ddlCategory-list
+#ddlCategory-list,
+#ddlName-list
 {
   width: 350px !important;
 }
@@ -1967,7 +1968,7 @@ a.enquiries:hover .enquiry-content,
 #firstPopUp {
     width: 850px;
     margin: 0 auto;
-    height: 400px;
+    height: 375px;
     top: 20%;
     left: 0;
     padding-top: 25px;

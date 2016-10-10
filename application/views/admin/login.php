@@ -65,7 +65,21 @@
         cursor: pointer;
         font-size: 30px !important;
       }
+      .footer-list ul li{
+            float: right;
+    width: 120px;
+    margin-left: 25px;
+    font-size: 12px;
+    list-style: none;
+    border-right: 1px solid #fff;
+}
+ .footer-list ul li:first-child{ border-right: 0; }
+.footer-list ul li a,
+.footer-list ul li a:hover{
+  color: #839ABA;
+}
 
+      
       
   </style>
   <style>
@@ -189,7 +203,9 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 </head>
 
 <body>
-  <div class="container">
+
+   <div class="body-wrapper">
+    <div class="container">
       <div class="cover-rightfixed">
         <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 144px;float:left;">
           Support
@@ -209,7 +225,6 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
               <div class="col-sm-6">
                 <div class="login-image">
                     <img style="width: 70%;" src="<?php echo base_url(); ?>assets/signup-new.png" />
-                    <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -223,12 +238,48 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                         <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
                         <div id="loginInformation"></div>
                     </form> 
+                    <p>By clicking Login,you agree to our <a href="https://www.banhji.com/terms" target="_blank">Term of Service.</a></p>
                     <a href="<?php echo base_url(); ?>forgetpassword">Forget Password</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
                 </div>
               </div>
           </div>
       </div>
-    </div>
+
+   
+
+    </div>  
+
+  </div>
+  <div class="footer-wrapper" style="position: fixed;width: 100%; bottom:0; left: 0;">
+       <div class="footer" style="width: 100%; background: #111F3F; padding: 10px 0; color: #839ABA;">
+         <div class="container">
+          <div class="row">
+            <div class="col-sm-6">
+                <div style="margin-left:135px; padding-right: 20px; border-right: 1px solid #fff; width: 7%; float: left; margin-right: 13px; ">
+                  <img style="width: 30px; height: 30px; " src="https://storage.googleapis.com/instapage-user-media/e315080c/7548513-0-Banhji-Logo-3.png" />
+                </div>
+                <p style="text-align: left; margin-bottom: 0; margin-top: 7px; font-size: 13px;">Taking Fear out of Accounting</p>
+            </div>
+             <div class="col-sm-6 footer-list">
+              <ul>
+                <li>
+                  <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a> 
+                </li>
+                 <li>
+                  <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a> 
+                </li>
+              </ul>
+
+            </div>           
+          </div>
+           <p style="width: 35%; font-size: 12px; margin-top: 10px; margin-left: 140px; float: left;">©2016 BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>
+            <span style="float: right; width: 45%; text-align: right; margin-right: 35px;" id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=lNpq2OuFwU0nDcZ5f7uSQ9D1rwgIIgTNOoYBNRt4BqE4CMLt8GMhEDKt66EL"></script></span>
+         </div>
+     </div>
+  </div>
+
+    
+     
     <!-- cognito -->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>

@@ -30,7 +30,7 @@
             height: auto;
         }
         .signup-content{
-            margin: 45px 0;
+            margin: 25px 0;
             display: inline-block;
             width: 100%;
         }
@@ -122,6 +122,20 @@
         .k-dropdown .k-input, .k-dropdown .k-state-focused .k-input, .k-menu .k-popup{
             color: #000;
         }
+        .footer-list ul li{
+            float: right;
+    width: 120px;
+    margin-left: 25px;
+    font-size: 12px;
+    list-style: none;
+    color: #839ABA;
+    border-right: 1px solid #fff;
+}
+ .footer-list ul li:first-child{ border-right: 0; }
+.footer-list ul li a,
+.footer-list ul li a:hover{
+  color: #839ABA;
+}
     </style>
     <style>
   /* FeedBack */
@@ -376,7 +390,34 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                 </div>
             </div>
         </div>
-    </dis>
+    </div>
+    <div class="footer-wrapper" style="position: fixed;width: 100%; bottom:0; left: 0;">
+       <div class="footer" style="width: 100%; background: #111F3F; padding: 10px 0; color: #839ABA;">
+         <div class="container">
+          <div class="row">
+            <div class="col-sm-6">
+                <div style="margin-left:113px; padding-right: 20px; border-right: 1px solid #fff; width: 7%; float: left; margin-right: 13px; ">
+                  <img style="width: 30px; height: 30px; " src="https://storage.googleapis.com/instapage-user-media/e315080c/7548513-0-Banhji-Logo-3.png" />
+                </div>
+                <p style="text-align: left; margin-bottom: 0; margin-top: 7px; font-size: 13px;">Taking Fear out of Accounting</p>
+            </div>
+             <div class="col-sm-6 footer-list">
+              <ul>
+                <li>
+                  <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a> 
+                </li>
+                 <li>
+                  <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a> 
+                </li>
+              </ul>
+
+            </div>           
+          </div>
+           <p style="width: 35%; font-size: 12px; margin-top: 10px; margin-left: 120px; float: left;">©2016 BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>
+            <span style="float: right; width: 45%; text-align: right; margin-right: 35px;" id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=lNpq2OuFwU0nDcZ5f7uSQ9D1rwgIIgTNOoYBNRt4BqE4CMLt8GMhEDKt66EL"></script></span>
+         </div>
+     </div>
+  </div>
     <!-- cognito -->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>

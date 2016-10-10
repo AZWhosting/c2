@@ -190,19 +190,19 @@ var themerPrimaryColor = primaryColor;
 	<div class="modal fade popRightBlog" id="firstPopUp">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<div class="span12 welcome">
-			<div class="span5">
-				<img src="<?php echo base_url(); ?>assets/img/welcome/welcome.png" style="width:100%" />
+			<div class="span5" style="text-align: center;">
+				<img src="<?php echo base_url(); ?>assets/img/welcome/welcome.png" style="width:93%;margin-top: 20px;" />
 				<div style="padding: 20px 0;" class="span12">
 					<a href="https://www.facebook.com/BanhjiApp/" target="_blank"> 
-						<img src="<?php echo base_url(); ?>assets/img/welcome/f-icon.png" style="float: left;" />
-						<p style="font-size: 10px;color: #fff;float:right;width: 83%;margin-top: 7px;">សូមចូលទៅកាន់ទំព័រ Facebook របស់ BanhJi ដើម្បីទទួលបានព័តមានថ្មី និងការណែនាំផ្សេង</p>
+						<img src="<?php echo base_url(); ?>assets/img/welcome/f-icon.png" style="float: left;width: 40px;" />
+						<p style="font-size: 10px;color: #8497b0;float:left;text-align: left;width: 64%;">សូមចូលទៅកាន់ទំព័រ Facebook របស់ BanhJi ដើម្បីទទួលបានព័តមានថ្មី និងការណែនាំផ្សេង</p>
 					</a>
 				</div>
 			</div>
 			<div class="span7" style="float:right;">
 				<h2 style="font-size: 16px; color: #bdd7ee;">មុនពេលចាប់ផ្តើមជាមួយBanhJi សូមមើលការណែនាំទីនេះ<br> <a style="color: #0063c1;" target="_blank" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/welcome_guide.pdf">[Welcome Guide]</a> ដើម្បីជាជំនួយ</h2>
 				<div class="span12 cover-welcome-four-blog">
-					<p style="color: #fff;font-size:12px;">ជាទូទៅដើម្បីចាប់ផ្តើមប្រើប្រាស់ អ្នកគួរមាន ផលិតផល ឬសេវាកម្មដើម្បីលក់ អតិថិជនដែលត្រូវចេញវិក័យបត្រអោយ និងអ្នកផ្គត់ផ្គង់ដែលអ្នកត្រូវទិញផលិតផលទាំងនោះ</p>
+					<p style="color: #8497b0;font-size:12px;">ជាទូទៅដើម្បីចាប់ផ្តើមប្រើប្រាស់ អ្នកគួរមាន ផលិតផល ឬសេវាកម្មដើម្បីលក់ អតិថិជនដែលត្រូវចេញវិក័យបត្រអោយ និងអ្នកផ្គត់ផ្គង់ដែលអ្នកត្រូវទិញផលិតផលទាំងនោះ</p>
 					<a href="#/customer">
 						<div class="cover-blog-welcome span3">
 							<img src="<?php echo base_url(); ?>assets/img/welcome/1.png">
@@ -228,7 +228,7 @@ var themerPrimaryColor = primaryColor;
 						</div>
 					</a>
 				</div>
-				<p style="color: #bdd7ee;font-size:12px;">យើងខ្ញុំកំពុងបកប្រែទំព័រមួយចំនួន ដូចនេះទំព័រទាំងនោះមិនទាន់មានភាសាខ្មែរនៅឡើយទេ សូមអភ័យទោសចំពោះការយឺតយាវនេះ។ លើសពីនេះប្រសិនបើមានសំណួរ ឬមតិយោបល់សូមចុចលើប៊ូតុងទាំងនេះ </p>
+				<p style="color: #8497b0;font-size:11px;">យើងខ្ញុំកំពុងបកប្រែទំព័រមួយចំនួន ដូចនេះទំព័រទាំងនោះមិនទាន់មានភាសាខ្មែរនៅឡើយទេ សូមអភ័យទោសចំពោះការយឺតយាវនេះ។ លើសពីនេះប្រសិនបើមានសំណួរ ឬមតិយោបល់សូមចុចលើប៊ូតុងទាំងនេះ </p>
 			</div>
 		</div>
 	</div>
@@ -360,7 +360,7 @@ var themerPrimaryColor = primaryColor;
 			});
 		});
 
-		eraseCookie("isshow");
+		//eraseCookie("isshow");
 		var isshow = readCookie("isshow");
 		
 	    if (isshow != 1) {
