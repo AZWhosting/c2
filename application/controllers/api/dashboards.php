@@ -65,10 +65,18 @@ class Dashboards extends REST_Controller {
 			//Sum amount
 			if($value->status==2){
 				$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$paid->select_sum("amount");
+				$paid->where("type", "Cash_Receipt");
 				$paid->where("reference_id", $value->id);
-				$paid->get();
-				$arAmount += (floatval($value->amount) - floatval($paid->amount)) / floatval($value->rate);
+				$paid->where("is_recurring", 0);		
+				$paid->where("deleted", 0);
+				$paid->get_iterated();
+
+				$paidAmount = 0;
+				foreach ($paid as $p) {
+					$paidAmount += ($p->amount + $p->discount);
+				}
+				
+				$arAmount += ($value->amount - $paidAmount) / $value->rate;								
 			}else{
 				$arAmount += floatval($value->amount) / floatval($value->rate);
 			}
@@ -111,12 +119,18 @@ class Dashboards extends REST_Controller {
 			//Sum amount
 			if($value->status==2){
 				$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$paid->select_sum("amount");
+				$paid->where("type", "Cash_Payment");
 				$paid->where("reference_id", $value->id);
 				$paid->where("is_recurring", 0);		
 				$paid->where("deleted", 0);
 				$paid->get();
-				$apAmount += (floatval($value->amount) - floatval($paid->amount)) / floatval($value->rate);
+
+				$paidAmount = 0;
+				foreach ($paid as $p) {
+					$paidAmount += ($p->amount + $p->discount);
+				}
+				
+				$apAmount += ($value->amount - $paidAmount) / $value->rate;
 			}else{
 				$apAmount += floatval($value->amount) / floatval($value->rate);
 			}
@@ -174,7 +188,10 @@ class Dashboards extends REST_Controller {
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 		$obj->include_related("transaction", "issued_date");
-		$obj->where_in_related("account/account_type", "id", array(10,11));		
+		$obj->where_in_related("account/account_type", "id", array(10,11));
+		$obj->where_related("transaction", "issued_date >=", $this->startFiscalDate);
+		$obj->where_related("transaction", "issued_date <", $this->endFiscalDate);
+		$obj->order_by("issued_date");		
 		$obj->where("is_recurring", $is_recurring);		
 		$obj->where("deleted", $deleted);										
 		$obj->get_iterated();
@@ -337,10 +354,18 @@ class Dashboards extends REST_Controller {
 			//Sum amount
 			if($value->status==2){
 				$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$paid->select_sum("amount");
+				$paid->where("type", "Cash_Receipt");
 				$paid->where("reference_id", $value->id);
+				$paid->where("is_recurring", 0);		
+				$paid->where("deleted", 0);
 				$paid->get();
-				$arAmount += (floatval($value->amount) - floatval($paid->amount)) / floatval($value->rate);
+				
+				$paidAmount = 0;
+				foreach ($paid as $p) {
+					$paidAmount += ($p->amount + $p->discount);
+				}
+				
+				$arAmount += ($value->amount - $paidAmount) / $value->rate;
 			}else{
 				$arAmount += floatval($value->amount) / floatval($value->rate);
 			}
@@ -895,10 +920,18 @@ class Dashboards extends REST_Controller {
 			//Sum amount
 			if($value->status==2){
 				$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$paid->select_sum("amount");
+				$paid->where("type", "Cash_Payment");
 				$paid->where("reference_id", $value->id);
+				$paid->where("is_recurring", 0);		
+				$paid->where("deleted", 0);
 				$paid->get();
-				$apAmount += (floatval($value->amount) - floatval($paid->amount)) / floatval($value->rate);
+
+				$paidAmount = 0;
+				foreach ($paid as $p) {
+					$paidAmount += ($p->amount + $p->discount);
+				}
+				
+				$apAmount += ($value->amount - $paidAmount) / $value->rate;
 			}else{
 				$apAmount += floatval($value->amount) / floatval($value->rate);
 			}

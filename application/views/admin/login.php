@@ -2,15 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Login</title>
+<title>Login | Free Online Accounting</title>
   <!-- Boostrap-->
   <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
   <style>
+
       html, body {
           background-color: #203864;
           font-size: 16px;
-          font-family: 'Open Sans', sans-serif !important;
+          font-family: 'Roboto Slab', serif !important;
       }
       *{
           margin: 0;
@@ -29,7 +31,7 @@
       }
       .login-image{
           text-align: center;
-          margin-top: -50px; 
+          margin-top: -15px; 
       }
       .login-image p{
         color: #8DB3DA;
@@ -37,14 +39,14 @@
         font-size: 13px;
       }
       .login-form{
-          background: #2F5597;
+          background: #BDD7EE;
           margin-right: 5%;
           padding: 30px 50px;
           color: #000000;            
       }
       .login-form input{
         font-size: 20px;
-        font-family: 'Open Sans', sans-serif !important;
+        font-family: 'Roboto Slab', serif !important;
       }
      
       .login-form .login-email{
@@ -56,42 +58,177 @@
       .btn-login{
         width: 100%;
         background: #222A35;
-        color: #68788E;
+        color: #fff;
         border: none;
         margin: 15px 0 0 0;
         height: 55px;
         cursor: pointer;
         font-size: 30px !important;
       }
+
       
   </style>
+  <style>
+  /* FeedBack */
+a.rightfixed {
+        position: relative;
+    background: #1F4774;
+    padding: 15px 25px;
+    z-index: 99;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 12px;
+    padding-left: 50px;
+    cursor: pointer;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+    text-decoration: none;
+    opacity: 1;
+    margin-bottom: 1px;
+    clear: both;
+    float: none;
+    left: 0;
+}
+a.rightfixed:hover {
+  opacity: 1;
+}
+a.rightfixed i::before {
+    color: #fff;
+    top: 10px;
+    left: 7px;
+    font-size: 20px;
+}
+a.feedback {
+    background: #a22314;
+}
+a.referral {
+  background: #1b8330;
+}
+.popRightBlog {
+    width: 350px;
+    height: 260px;
+    left: 35%;
+    top: 10%;
+}
+.popRightBlog textarea{
+    height: 150px;
+    min-height: 150px;
+    max-height: 150px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+.popRightBlog input[type=email], .popRightBlog input[type=text]{
+    width: 65%;
+    margin-bottom: 2px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+.popRightBlog input[type=text] {
+  width: 34%;
+  margin-right: 2px;
+}
+a.feedback:hover {
+    margin-left: -66px;
+}
+a.enquiries {
+  background: url(//storage.googleapis.com/instapage-user-media/e315080c/8593373-0-s-bg.jpg) no-repeat 15px center #1F4774;
+    background-size: 23px;
+}
+a.enquiries:hover {
+    left: -95px;
+}
+a.referral:hover {
+    margin-left: -56px;
+}
+.cover-rightfixed {
+    position: fixed;
+    top: 40%;
+    right: -95px;
+    z-index: 99999;
+    text-align: left;
+}
+.enquiry-content {
+    background: #fff;
+    border: 1px solid #D7D7D7;
+    padding: 10px 10px 0;
+    position: absolute;
+    width: 142px;
+    right: -120px;
+    font-size: 12px;
+    text-align: center;
+    bottom: -134px;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+    padding-bottom: 10px;
+    color: #444;
+    z-index: -1;
+}
+a.enquiries:hover .enquiry-content, .enquiry-content:hover {
+       right: 0;
+}
+</style>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '387834344756149',
+      xfbml      : true,
+      version    : 'v2.7'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 </head>
 
 <body>
-    <div class="login">
-        <dis class="login-content">
-            <div class="col-sm-6">
-              <div class="login-image">
-                  <img src="<?php echo base_url(); ?>assets/login.png" />
-                  <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
+  <div class="container">
+      <div class="cover-rightfixed">
+        <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 144px;float:left;">
+          Support
+          <div class="enquiry-content">
+            <p style="font-size: 14px;">Call us at<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
+            <div class="fb-messengermessageus" 
+              messenger_app_id="1301847836514973" 
+              page_id="862386433857166"
+              color="blue"
+              width="180"
+              size="standard" ></div>
+          </div>
+        </a>
+      </div>
+      <div class="login">
+          <dis class="login-content">
+              <div class="col-sm-6">
+                <div class="login-image">
+                    <img style="width: 70%;" src="<?php echo base_url(); ?>assets/signup-new.png" />
+                    <p>© 2016 BanhJi PTE Ltd.  All rights reserved. </p>
+                </div>
               </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="login-form">
-                  <form action="" method="">
+              <div class="col-sm-6">
+                <div class="login-form">
+                    <form action="" method="">
 
-                      <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
+                        <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
 
-                      <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
+                        <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
 
-                      <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
-                      <div id="loginInformation"></div>
-                  </form> 
+                        <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
+                        <div id="loginInformation"></div>
+                    </form> 
+                    <a href="<?php echo base_url(); ?>forgetpassword">Forget Password</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
+                </div>
               </div>
-            </div>
-        </div>
+          </div>
+      </div>
     </div>
-
     <!-- cognito -->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>

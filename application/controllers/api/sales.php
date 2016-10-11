@@ -37,8 +37,50 @@ class Sales extends REST_Controller {
 		$totalSale =0;
 		$deposit =0;
 		// checked if the logic is customer or segment
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
 
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters["filters"] as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
 		// Segment
 		if($filters['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -70,12 +112,14 @@ class Sales extends REST_Controller {
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 1)->get();
 
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where('is_recurring', 0);
 			$obj->where_in("type", array("Invoice", "Cash_Sale"));
 			$obj->where_in("status", array(0,2));
 			// $obj->include_related("contact_type", "name");
+
+		
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);
@@ -126,6 +170,51 @@ class Sales extends REST_Controller {
 		$customers = array();
 		$total = 0;
 
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters["filters"] as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
 		// Segment
 		if($filters['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -155,7 +244,7 @@ class Sales extends REST_Controller {
 					foreach($items as $item) {
 						$lines[] = array(
 							'name' 			=> $item->item_name,
-							'quantity' 	=> $item->quantity,
+							'quantity' 		=> $item->quantity,
 							'price' 		=> floatval($item->price)/floatval($t->rate),
 							'amount'		=> floatval($item->amount)/floatval($t->rate)
 						);
@@ -163,6 +252,7 @@ class Sales extends REST_Controller {
 					if(isset($customers["$seg->name"])) {
 						$customers["$seg->name"]['amount']+= $amt;
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -173,6 +263,7 @@ class Sales extends REST_Controller {
 					} else {
 						$customers["$seg->name"]['amount']= $amt;
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -185,7 +276,7 @@ class Sales extends REST_Controller {
 				}
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 1)->get();
@@ -228,6 +319,7 @@ class Sales extends REST_Controller {
 					if(isset($customers["$fullname"])) {
 						$customers["$fullname"]['amount'] += floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -238,6 +330,7 @@ class Sales extends REST_Controller {
 					} else {
 						$customers["$fullname"]['amount'] = floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -274,10 +367,60 @@ class Sales extends REST_Controller {
 		$data["count"] = 0;
 		$is_pattern = 0;
 		$deleted = 0;
+		$customers  = array();
+		$total = 0;
+		$totalCashSale = 0;
+		$totalCashReceipt = 0;
+		$customerBalance = 0;
+		$totalSale = 0;
 
-		if($filters['logic'] == "segment") {
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		
 			$segmentItem->get();
 
 			foreach ($segmentItem as $seg) {
@@ -292,12 +435,12 @@ class Sales extends REST_Controller {
 
 				foreach ($txn as $t) {
 					$amt = floatval($t->amount)/ floatval($t->rate);					
-					$customers  = array();
 					foreach($items as $item) {
 						$customers = array();
 					}
 					if(isset($customers["$seg->name"])) {
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -306,6 +449,7 @@ class Sales extends REST_Controller {
 						);
 					} else {				
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -317,7 +461,6 @@ class Sales extends REST_Controller {
 				}
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 1)->get();
@@ -332,12 +475,8 @@ class Sales extends REST_Controller {
 			//Results
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;
-			$customers = array();
-			$total = 0;
-			$totalCashSale = 0;
-			$totalCashReceipt = 0;
-			$customerBalance = 0;
-			$totalSale = 0;
+			
+			
 				if($obj->result_count()>0){
 					foreach ($obj as $value) {
 						$customer = $value->contact->get();
@@ -346,6 +485,7 @@ class Sales extends REST_Controller {
 
 						if(isset($customers["$fullname"])) {
 							$customers["$fullname"]['transactions'][] = array(
+								'id'  		=> $value->id,
 								'type'  	=> $value->type,
 								'date' 		=> $value->issued_date,
 								'number' 	=> $value->number,
@@ -354,6 +494,7 @@ class Sales extends REST_Controller {
 							);
 						} else {
 							$customers["$fullname"]['transactions'][] = array(
+								'id'  		=> $value->id,
 								'type'  	=> $value->type,
 								'date' 		=> $value->issued_date,
 								'number' 	=> $value->number,
@@ -406,8 +547,54 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
-		if($filters['logic'] == "segment") {
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$segmentItem->get();
 		
 			$segmentItem->get();
 
@@ -440,6 +627,7 @@ class Sales extends REST_Controller {
 					if(isset($customers["$seg->name"])) {
 						$customers["$seg->name"]['amount'] += floatval($t->amount);
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  	=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -452,6 +640,7 @@ class Sales extends REST_Controller {
 					} else {
 						$customers["$seg->name"]['amount'] = floatval($t->amount);
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  	=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -470,7 +659,7 @@ class Sales extends REST_Controller {
 				}
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
@@ -480,6 +669,7 @@ class Sales extends REST_Controller {
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where('is_recurring', 0);
 			$obj->where("type", "Invoice");
+			$obj->where("deleted",0);
 
 			// $obj->include_related("contact_type", "name");
 
@@ -511,6 +701,7 @@ class Sales extends REST_Controller {
 					if(isset($customers["$fullname"])) {
 						$customers["$fullname"]['amount'] += floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  	=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -523,6 +714,7 @@ class Sales extends REST_Controller {
 					} else {
 						$customers["$fullname"]['amount'] = floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  	=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -567,13 +759,61 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$customer->where('deleted <>', 1);
+		$customer->where('is_pattern <>', 1);
 		$customerCount = $customer->where_in('contact_type_id', $type)->count();
 
-		if($filters['logic'] == "segment") {
+
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 			$segmentItem->get();
@@ -623,7 +863,7 @@ class Sales extends REST_Controller {
 			}
 		} else {
 
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 1)->get();
@@ -698,14 +938,65 @@ class Sales extends REST_Controller {
 		$data["count"] = 0;
 		$is_pattern = 0;
 		$deleted = 0;
+		$customers = array();
+		$total = 0;
+		$paid  = 0;
+		$invoiceOpen = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
 
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 1)->get();
 
 		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$customer->where('deleted <>', 1);
+		$customer->where('is_pattern <>', 1);
 		$customerCount = $customer->where_in('contact_type_id', $type)->count();
 
-		if($filters['logic'] == "segment") {
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 			$segmentItem->get();
@@ -726,6 +1017,7 @@ class Sales extends REST_Controller {
 					$items = $t->item_line->include_related('item', array('name'))->get();
 					if(isset($customers["$seg->name"])) {
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -734,6 +1026,7 @@ class Sales extends REST_Controller {
 						);
 					} else {
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -753,7 +1046,7 @@ class Sales extends REST_Controller {
 				}
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 1)->get();
@@ -761,6 +1054,7 @@ class Sales extends REST_Controller {
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where("status <>", 1);
 			$obj->where("type", "Invoice");
+			$obj->where("deleted",0);
 			$obj->where('is_recurring', 0);
 
 			// $obj->include_related("contact_type", "name");
@@ -768,10 +1062,7 @@ class Sales extends REST_Controller {
 			//Results
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;
-			$customers = array();
-			$total = 0;
-			$paid  = 0;
-			$invoiceOpen = 0;
+			
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
 					$ref = $value->transaction->get();
@@ -784,6 +1075,7 @@ class Sales extends REST_Controller {
 					}
 					if(isset($customers["$fullname"])) {
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -792,6 +1084,7 @@ class Sales extends REST_Controller {
 						);
 					} else {
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -839,6 +1132,50 @@ class Sales extends REST_Controller {
 		$deleted = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
 		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 		// $type->where('parent_id', 1)->get();
 
@@ -894,8 +1231,8 @@ class Sales extends REST_Controller {
 			$totalQty += $value['qty'];
 		}
 		$data['total_sale'] = $total;
-		$data['total_avg'] = round(($totalAvg/$totalQty), 2);
-		$data['gpm'] = ($totalAvg - $totalCost) / $totalAvg;
+		$data['total_avg'] = $totalQty > 0? ($totalAvg/$totalQty) : 0;
+		$data['gpm'] = $totalAvg > 0? ($totalAvg - $totalCost) / $totalAvg : 0;
 		$data['count'] = count($items);
 		//Response Data
 		$this->response($data, 200);
@@ -913,6 +1250,48 @@ class Sales extends REST_Controller {
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
 
 
 		// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, `);
@@ -934,6 +1313,7 @@ class Sales extends REST_Controller {
 				$items = $value->item_line->include_related('item', array('name'))->get();
 				foreach($items as $item) {
 					$temp = array(
+						'id'   => $value->id,
 						'type' => $value->type,
 						'date' => $value->issued_date,
 						'memo' => $value->memo2,
@@ -980,8 +1360,55 @@ class Sales extends REST_Controller {
 		$data["count"] = 0;
 		$is_pattern = 0;
 		$deleted = 0;
+		$customers = array();
+		$total = 0;
 
-		if($filters['logic'] == "segment") {
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 			$segmentItem->get();
@@ -989,7 +1416,7 @@ class Sales extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Deposit", "Credit"));
+				$txn->where("type", "Deposit");
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -1012,6 +1439,7 @@ class Sales extends REST_Controller {
 					if(isset($customers["$seg->name"])) {
 						$customers["$seg->name"]['amount']+= $amt;
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -1021,6 +1449,7 @@ class Sales extends REST_Controller {
 					} else {
 						$customers["$seg->name"]['amount']= $amt;
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -1032,21 +1461,21 @@ class Sales extends REST_Controller {
 				}
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 1)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
-			$obj->where_in("type", array("Deposit", "Credit"));
+			$obj->where("type", "Deposit");
 			$obj->where('is_recurring', 0);
+			$obj->where("deleted",0);
 
 			// $obj->include_related("contact_type", "name");
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;
-			$customers = array();
-			$total = 0;
+			
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
 					$customer = $value->contact->get();
@@ -1056,6 +1485,7 @@ class Sales extends REST_Controller {
 					if(isset($customers["$fullname"])) {
 						$customers["$fullname"]['amount'] += floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -1065,6 +1495,7 @@ class Sales extends REST_Controller {
 					} else {
 						$customers["$fullname"]['amount'] = floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -1103,6 +1534,48 @@ class Sales extends REST_Controller {
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
 
 
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1112,6 +1585,7 @@ class Sales extends REST_Controller {
 		$obj->where_in("type", array("Invoice", "Cash_Sale", "Deposit"));
 		$obj->where('job_id <>', 0);
 		$obj->where('is_recurring', 0);
+		$obj->where("deleted",0);
 
 		// $obj->include_related("contact_type", "name");
 
@@ -1140,6 +1614,7 @@ class Sales extends REST_Controller {
 				if(isset($customers["$job->name"])) {
 					$customers["$job->name"]['amount'] += floatval($value->amount);
 					$customers["$job->name"]['transactions'][] = array(
+						'id'  		=> $value->id,
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
 						'number' 	=> $value->number,
@@ -1150,6 +1625,7 @@ class Sales extends REST_Controller {
 				} else {
 					$customers["$job->name"]['amount'] = floatval($value->amount);
 					$customers["$job->name"]['transactions'][] = array(
+						'id'  		=> $value->id,
 						'type'  	=> $value->type,
 						'date' 		=> $value->issued_date,
 						'number' 	=> $value->number,
@@ -1187,8 +1663,60 @@ class Sales extends REST_Controller {
 		$data["count"] = 0;
 		$is_pattern = 0;
 		$deleted = 0;
+		$customers = array();
+		$total = 0;
+		$totalInvoice = 0;
+		$outstanding = 0;
+		$totalDay = 0;
+		$aging = 0;
 
-		if($filters['logic'] == "segment") {
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 			$segmentItem->get();
@@ -1251,7 +1779,7 @@ class Sales extends REST_Controller {
 			}
 		} else {
 
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
@@ -1267,11 +1795,7 @@ class Sales extends REST_Controller {
 			//Results
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;
-			$customers = array();
-			$total = 0;
-			$totalInvoice = 0;
-			$outstanding = 0;
-			$totalDay = 0;
+			
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
 					$ref = $value->transaction->get();
@@ -1360,8 +1884,58 @@ class Sales extends REST_Controller {
 		$data["count"] = 0;
 		$is_pattern = 0;
 		$deleted = 0;
+		$customers = array();
+		$total = 0;
+		$totalInvoice = 0;
+		$totalDay = 0;
+		$aging = 0;
 
-		if($filters['logic'] == "segment") {
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 			$segmentItem->get();
@@ -1402,11 +1976,12 @@ class Sales extends REST_Controller {
 							$outstanding = '>30';
 						}
 						$customers["$seg->name"]['transactions'][] = array(
+							'id' => $t->id,
 							'type' => $t->type,
 							'date' => $t->issued_date,
 							'number' => $t->number,
 							'memo' => $t->memo2,
-							'outstanding' => $outstanding,
+							'outstanding' => $diff,
 							'amount' => floatval($t->amount) / floatval($t->rate)
 						);
 					} else {
@@ -1426,11 +2001,12 @@ class Sales extends REST_Controller {
 							$outstanding = '>30';
 						}
 						$customers["$seg->name"]['transactions'][] = array(
+							'id' => $t->id,
 							'type' => $t->type,
 							'date' => $t->issued_date,
 							'number' => $t->number,
 							'memo' => $t->memo2,
-							'outstanding' => $outstanding,
+							'outstanding' => $diff,
 							'amount' => floatval($t->amount) / floatval($t->rate)
 						);
 				//Results
@@ -1441,7 +2017,7 @@ class Sales extends REST_Controller {
 			}
 		} else {
 
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
@@ -1451,17 +2027,14 @@ class Sales extends REST_Controller {
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Invoice");
 			$obj->where('is_recurring', 0);
+			$obj->where("deleted",0);
 
 			// $obj->include_related("contact_type", "name");
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;
-			$customers = array();
-			$total = 0;
-			$totalInvoice = 0;
-			$totalDay = 0;
-			$aging = 0;
+			
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
 					$ref = $value->transaction->get();
@@ -1486,11 +2059,12 @@ class Sales extends REST_Controller {
 							$outstanding = 0;
 						}
 						$customers["$fullname"]['transactions'][] = array(
+							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
 							'memo' => $value->memo2,
-							'outstanding' => $outstanding,
+							'outstanding' => $diff,
 							'dueDate' => $value->due_date,
 
 							'amount' => floatval($value->amount) / floatval($value->rate)
@@ -1504,12 +2078,13 @@ class Sales extends REST_Controller {
 							$outstanding = 0;
 						}
 						$customers["$fullname"]['transactions'][] = array(
+							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
 							'memo' => $value->memo2,
 							'dueDate' => $value->due_date,
-							'outstanding' => $outstanding,
+							'outstanding' => $diff,
 							'amount' => floatval($value->amount) / floatval($value->rate)- $temp
 						);
 				//Results
@@ -1549,8 +2124,58 @@ class Sales extends REST_Controller {
 		$data["count"] = 0;
 		$is_pattern = 0;
 		$deleted = 0;
+		$customers = array();
+		$total = 0;
+		$totalDay = 0;
+		$aging = 0;
+		$totalInvoice = 0;
 
-		if($filters['logic'] == "segment") {
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 			$segmentItem->get();
@@ -1595,6 +2220,7 @@ class Sales extends REST_Controller {
 						 // days
 
 						$customers["$outstanding"]['transactions'][] = array(
+							'id' => $t->id,
 							'type' => $t->type,
 							'date' => $t->issued_date,
 							'number' => $t->number,
@@ -1604,6 +2230,7 @@ class Sales extends REST_Controller {
 					} else {
 						$customers["$outstanding"]['amount']	= floatval($t->amount) / floatval($t->rate);
 						$customers["$outstanding"]['transactions'][] = array(
+							'id' => $t->id,
 							'type' => $t->type,
 							'date' => $t->issued_date,
 							'number' => $t->number,
@@ -1616,10 +2243,6 @@ class Sales extends REST_Controller {
 				}
 			}
 		} else {
-
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 1)->get();
@@ -1634,11 +2257,7 @@ class Sales extends REST_Controller {
 			//Results
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;
-			$customers = array();
-			$total = 0;
-			$totalDay = 0;
-			$aging = 0;
-			$totalInvoice = 0;
+			
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
 					$ref = $value->transaction->get();
@@ -1677,6 +2296,7 @@ class Sales extends REST_Controller {
 						 // days
 
 						$customers["$outstanding"]['transactions'][] = array(
+							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
@@ -1686,6 +2306,7 @@ class Sales extends REST_Controller {
 					} else {
 						$customers["$outstanding"]['amount']	= floatval($value->amount) / floatval($value->rate)- $temp;
 						$customers["$outstanding"]['transactions'][] = array(
+							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
@@ -1725,9 +2346,56 @@ class Sales extends REST_Controller {
 		$data["count"] = 0;
 		$is_pattern = 0;
 		$deleted = 0;
+		$customers = array();
+		$total = 0;
+		$totalInvoice = 0;
 
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		if($filters['logic'] == "segment") {
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 			$segmentItem->get();
@@ -1753,6 +2421,7 @@ class Sales extends REST_Controller {
 						 // days
 
 						$customers["$paymentMethod->name"]['transactions'][] = array(
+							'id' => $t->id,
 							'type' => $t->type,
 							'date' => $t->issued_date,
 							'number' => $t->number,
@@ -1762,6 +2431,7 @@ class Sales extends REST_Controller {
 					} else {
 						$customers["$paymentMethod->name"]['amount']	= floatval($t->amount) / floatval($value->rate);
 						$customers["$paymentMethod->name"]['transactions'][] = array(
+							'id' => $t->id,
 							'type' => $t->type,
 							'date' => $t->issued_date,
 							'number' => $t->number,
@@ -1775,7 +2445,7 @@ class Sales extends REST_Controller {
 			}
 		} else {
 
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 
 
@@ -1786,15 +2456,14 @@ class Sales extends REST_Controller {
 			$obj->where("type", "Invoice");
 			$obj->where_in('status', array(1, 2));
 			$obj->where('is_recurring', 0);
+			$obj->where("deleted",0);
 
 			// $obj->include_related("contact_type", "name");
 
 			//Results
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;
-			$customers = array();
-			$total = 0;
-			$totalInvoice = 0;
+			
 			if($obj->result_count()>0){
 				foreach ($obj as $value) {
 					$totalInvoice += 1;
@@ -1805,6 +2474,7 @@ class Sales extends REST_Controller {
 						 // days
 
 						$customers["$paymentMethod->name"]['transactions'][] = array(
+							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
@@ -1814,6 +2484,7 @@ class Sales extends REST_Controller {
 					} else {
 						$customers["$paymentMethod->name"]['amount']	= floatval($value->amount) / floatval($value->rate);
 						$customers["$paymentMethod->name"]['transactions'][] = array(
+							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
@@ -1959,6 +2630,51 @@ class Sales extends REST_Controller {
 		$is_pattern = 0;
 		$deleted = 0;
 
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
 		if($filters['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
@@ -1996,7 +2712,7 @@ class Sales extends REST_Controller {
 				}
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
+			// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 
 
 
@@ -2051,6 +2767,144 @@ class Sales extends REST_Controller {
 		$data['order'] = $order;
 		$data['count'] = count($products);
 		//Response Data
+		$this->response($data, 200);
+	}
+
+	function over_view_get() {
+		$filters 	= $this->get("filter");
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$deleted = 0;			
+		$customers = array();
+		$total =0;
+		$totalSale =0;
+		$deposit =0;
+		$order =0;
+		$saleOrder =0;
+		$customerCount =0;
+		$customerBalance =0;
+		$openInvoice =0;
+		$balanceCustomer =0;
+		$overDate =0;
+		$items = 0;
+
+		// checked if the logic is customer or segment
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$type->where('parent_id', 1)->get();
+
+		$customer = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$customer->where('deleted <>', 1);
+		$customer->where('is_pattern <>', 1);
+		$customerCount = $customer->where_in('contact_type_id', $type)->count();
+		// Segment
+		if($filters['logic'] == "segment") {
+			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$segmentItem->get();
+
+			foreach ($segmentItem as $seg) {
+				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+				$txn->where("type", "Invoice");
+				$txn->where_in("status", array(0,2));
+				$txn->like("segments", $seg->id, "both");
+				$txn->where("deleted",0);
+				$txn->where("is_recurring",0);
+				$txn->get_iterated();
+
+				foreach ($txn as $t) {
+					$ref = $t->referece->get();
+					$amt = floatval($t->amount)/ floatval($t->rate);
+
+					if(isset($customers["$seg->name"])) {
+						$customers["$seg->name"]['amount']+= $amt;
+					} else {
+						$customers["$seg->name"]['amount']= $amt;
+					}
+					$total += $amt;
+				}
+			}
+		} else {
+			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$type->where('parent_id', 1)->get();
+
+			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where('is_recurring', 0);
+			$obj->where_in("type", array("Invoice", "Cash_Sale"));
+			$obj->where_in("status", array(0,2));
+			// $obj->include_related("contact_type", "name");
+
+			//Results
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+			
+			if($obj->result_count()>0){	
+				foreach ($obj as $value) {
+					$today = new DateTime();
+					$dueDate = new DateTime($value->due_date);
+					$customer = $value->contact->get();
+					$fullname = $customer->surname.' '.$customer->name;
+					$temp = 0;
+
+					if(isset($customers["$fullname"])) {
+						$customers["$fullname"]['amount']+= (floatval($value->amount)/ floatval($value->rate));
+					} else {
+						$customers["$fullname"]['amount'] = (floatval($value->amount)/ floatval($value->rate));
+					}
+					$totalSale += floatval($value->amount)/ floatval($value->rate);
+					// if($ref->type == "Deposit" ) {
+					// 	$deposit +=  floatval($value->amount)/ floatval($value->rate);
+					// }
+					$total = $totalSale;
+					if($value->type == "Cash_Sale") {
+						if($value->status != 1) {
+							$order += 1;
+						}else{
+							$saleOrder += 1;
+						}						
+					}
+					if($value->type == "Invoice") {
+						if($value->status != 1) {
+							$customerBalance += floatval($value->amount)/ floatval($value->rate);
+						}						
+					}
+					if($value->type == "Invoice") {
+						if($value->status ==2) {
+							$openInvoice += 1;
+						}						
+					}
+					if($value->type == "Invoice") {
+						if($dueDate<$today) {
+							$overDate += 1;
+						}						
+					}
+
+				}
+			}
+		}
+
+				
+
+		foreach ($customers as $key => $value) {
+			$data["results"][] = array(
+				'customer' => $key,
+				'amount'	=> $value['amount']
+			);
+		}
+
+		// Response Data
+		$data['total'] = $total;
+		$data['overDate'] = $overDate;
+		$data['order'] = $order;
+		$data['balanceCustomer'] = count($customers);
+		$data['openInvoice'] = $openInvoice;
+		$data['customerBalance'] = $customerBalance;
+		$data['saleOrder'] = $saleOrder;
+		$data['customerCount'] = $customerCount;
 		$this->response($data, 200);
 	}
 }//End Of Class

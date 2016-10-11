@@ -168,6 +168,7 @@ class Contacts extends REST_Controller {
 					"is_local" 					=> $value->is_local,
 					"is_pattern" 				=> intval($value->is_pattern),
 					"status" 					=> $value->status,
+					"is_system"					=> $value->is_system,
 								
 					"contact_type"				=> $value->contact_type_name
 		 		);
@@ -255,7 +256,8 @@ class Contacts extends REST_Controller {
 			isset($value->is_pattern)				? $obj->is_pattern				= $value->is_pattern : "";
 			isset($value->status)					? $obj->status					= $value->status : "";			
 			isset($value->deleted)					? $obj->deleted					= $value->deleted : "";							
-
+			isset($value->is_system)				? $obj->is_system				= $value->is_system : "";
+			
 			if($obj->save()){
 				$fullname = $obj->surname.' '.$obj->name;
 				if($obj->contact_type_id=="6" || $obj->contact_type_id=="7" || $obj->contact_type_id=="8"){
@@ -329,6 +331,7 @@ class Contacts extends REST_Controller {
 					"is_local" 					=> $obj->is_local,
 					"is_pattern" 				=> intval($obj->is_pattern),
 					"status" 					=> $obj->status,
+					"is_system"					=> $obj->is_system,
 
 					"fullname" 					=> $fullname,					
 					"contact_type"				=> $obj->contact_type->get_raw()->result()
@@ -414,6 +417,7 @@ class Contacts extends REST_Controller {
 			isset($value->is_pattern)				? $obj->is_pattern				= $value->is_pattern : "";
 			isset($value->status)					? $obj->status					= $value->status : "";			
 			isset($value->deleted)					? $obj->deleted					= $value->deleted : "";
+			isset($value->is_system)				? $obj->is_system				= $value->is_system : "";
 
 			if($obj->save()){
 				$fullname = $obj->surname.' '.$obj->name;
@@ -487,6 +491,7 @@ class Contacts extends REST_Controller {
 					"is_local" 					=> $obj->is_local,
 					"is_pattern" 				=> intval($obj->is_pattern),
 					"status" 					=> $obj->status,
+					"is_system"					=> $obj->is_system,
 
 					"fullname" 					=> $fullname,					
 					"contact_type"				=> $obj->contact_type->get_raw()->result()

@@ -1,8 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Send_feedback extends DataMapper {	
+class Prefix extends DataMapper {
+	//public $table = 'prefixes';	
 	protected $created_field = "created_at";
-	protected $updated_field = "updated_at";	
+	protected $updated_field = "updated_at";
+	
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
 		$this->db_params = array(
@@ -23,5 +25,5 @@ class Send_feedback extends DataMapper {
 	}
 }
 
-/* End of file transaction_template.php */
-/* Location: ./application/models/transaction_template.php */
+/* End of file brand.php */
+/* Location: ./application/models/brand.php */

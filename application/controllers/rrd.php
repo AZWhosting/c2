@@ -32,6 +32,20 @@ class Rrd extends MY_Controller {
 		 */
 		$this->_render("choeun_view");	
 	}
+	public function poav() {	
+		
+		/*
+		 *set up title and keywords (if not the default in custom.php config file will be set) 
+		 */
+		$this->_render("poav_view");	
+	}
+	public function pheak() {	
+		
+		/*
+		 *set up title and keywords (if not the default in custom.php config file will be set) 
+		 */
+		$this->_render("pheak_view");	
+	}
 }
 
 /* End of file app.php */
