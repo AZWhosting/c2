@@ -74601,19 +74601,19 @@
 	*   Customer Section   *
 	**************************/
 	banhji.router.route("/customers", function(){	
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-				var allowed = false;
-				if(banhji.accessMod.data().length > 0) {
-					for(var i = 0; i < banhji.accessMod.data().length; i++) {
-						if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-							allowed = true;
-							break;
-						}
-					}
-				} 
-				if(allowed) {
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 		var allowed = false;
+		// 		if(banhji.accessMod.data().length > 0) {
+		// 			for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 				if("customers" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 					allowed = true;
+		// 					break;
+		// 				}
+		// 			}
+		// 		} 
+		// 		if(allowed) {
 					banhji.view.layout.showIn("#content", banhji.view.customerDashboard);
 					banhji.view.layout.showIn('#menu', banhji.view.menu);
 					banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
@@ -74626,11 +74626,11 @@
 					}			
 
 					vm.pageLoad();
-				} else {
-					window.location.replace(baseUrl + "admin");
-				}				
-			}
-		);
+		// 		} else {
+		// 			window.location.replace(baseUrl + "admin");
+		// 		}				
+		// 	}
+		// );
 	});
 	banhji.router.route("/customer_center(/:id)", function(id){		
 		if(!banhji.userManagement.getLogin()){

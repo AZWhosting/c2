@@ -1278,6 +1278,7 @@
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/js/kendo.all.min.js"></script>
 
     <!-- kendoui-->
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
     <script>
       var banhji = banhji || {};
       var baseUrl = "<?php echo base_url(); ?>";
@@ -3067,6 +3068,10 @@
 
       banhji.router.route('userlist', function(id) {
         layout.showIn("#container", mainDash);
+        banhji.userDS.filter([
+          {field:"id", value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
+          {field:"id <> ", operator: 'user', value: JSON.parse(localStorage.getItem('userData/user')).id},
+        ]);
         mainDash.showIn("#placeholder", user);
       });
 
