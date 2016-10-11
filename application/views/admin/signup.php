@@ -89,11 +89,11 @@
             font-size: 30px !important;
         }
         .signup-text-bottom{
-              color: #000;
-    text-align: left;
-    width: 100%;
-    font-size: 11px;
-    margin-top: 5px;
+            color: #000;
+            text-align: left;
+            width: 100%;
+            font-size: 11px;
+            margin-top: 5px;
         }
         .signup-text-bottom a{
             color: #8DB3DA;
@@ -124,119 +124,131 @@
         }
         .footer-list ul li{
             float: right;
-    width: 120px;
-    margin-left: 25px;
-    font-size: 12px;
-    list-style: none;
-    color: #839ABA;
-    border-right: 1px solid #fff;
-}
- .footer-list ul li:first-child{ border-right: 0; }
-.footer-list ul li a,
-.footer-list ul li a:hover{
-  color: #839ABA;
-}
+            width: 120px;
+            margin-left: 25px;
+            font-size: 12px;
+            list-style: none;
+            color: #839ABA;
+            border-right: 1px solid #fff;
+        }
+        .footer-list ul li:first-child{ border-right: 0; }
+        .footer-list ul li a,
+        .footer-list ul li a:hover{
+          color: #839ABA;
+        }
     </style>
     <style>
-  /* FeedBack */
-a.rightfixed {
-        position: relative;
-    background: #1F4774;
-    padding: 15px 25px;
-    z-index: 99;
-    color: #fff;
-    border-radius: 3px;
-    font-size: 12px;
-    padding-left: 50px;
-    cursor: pointer;
-    -webkit-transition: all .5s;
-    transition: all .5s;
-    text-decoration: none;
-    opacity: 1;
-    margin-bottom: 1px;
-    clear: both;
-    float: none;
-    left: 0;
-}
-a.rightfixed:hover {
-  opacity: 1;
-}
-a.rightfixed i::before {
-    color: #fff;
-    top: 10px;
-    left: 7px;
-    font-size: 20px;
-}
-a.feedback {
-    background: #a22314;
-}
-a.referral {
-  background: #1b8330;
-}
-.popRightBlog {
-    width: 350px;
-    height: 260px;
-    left: 35%;
-    top: 10%;
-}
-.popRightBlog textarea{
-    height: 150px;
-    min-height: 150px;
-    max-height: 150px;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-}
-.popRightBlog input[type=email], .popRightBlog input[type=text]{
-    width: 65%;
-    margin-bottom: 2px;
-    padding: 5px;
-    border: 1px solid #ccc;
-}
-.popRightBlog input[type=text] {
-  width: 34%;
-  margin-right: 2px;
-}
-a.feedback:hover {
-    margin-left: -66px;
-}
-a.enquiries {
-  background: url(//storage.googleapis.com/instapage-user-media/e315080c/8593373-0-s-bg.jpg) no-repeat 15px center #1F4774;
-    background-size: 23px;
-}
-a.enquiries:hover {
-    left: -95px;
-}
-a.referral:hover {
-    margin-left: -56px;
-}
-.cover-rightfixed {
-    position: fixed;
-    top: 40%;
-    right: -95px;
-    z-index: 99999;
-    text-align: left;
-}
-.enquiry-content {
-    background: #fff;
-    border: 1px solid #D7D7D7;
-    padding: 10px 10px 0;
-    position: absolute;
-    width: 142px;
-    right: -120px;
-    font-size: 12px;
-    text-align: center;
-    bottom: -134px;
-    -webkit-transition: all .5s;
-    transition: all .5s;
-    padding-bottom: 10px;
-    color: #444;
-    z-index: -1;
-}
-a.enquiries:hover .enquiry-content, .enquiry-content:hover {
-       right: 0;
-}
-</style>
+        /* FeedBack */
+        a.rightfixed {
+                position: relative;
+            background: #1F4774;
+            padding: 15px 25px;
+            z-index: 99;
+            color: #fff;
+            border-radius: 3px;
+            font-size: 12px;
+            padding-left: 50px;
+            cursor: pointer;
+            -webkit-transition: all .5s;
+            transition: all .5s;
+            text-decoration: none;
+            opacity: 1;
+            margin-bottom: 1px;
+            clear: both;
+            float: none;
+            left: 0;
+        }
+        a.rightfixed:hover {
+          opacity: 1;
+        }
+        a.rightfixed i::before {
+            color: #fff;
+            top: 10px;
+            left: 7px;
+            font-size: 20px;
+        }
+        a.feedback {
+            background: #a22314;
+        }
+        a.referral {
+          background: #1b8330;
+        }
+        .popRightBlog {
+            width: 350px;
+            height: 260px;
+            left: 35%;
+            top: 10%;
+        }
+        .popRightBlog textarea{
+            height: 150px;
+            min-height: 150px;
+            max-height: 150px;
+            width: 100%;
+            min-width: 100%;
+            max-width: 100%;
+        }
+        .popRightBlog input[type=email], .popRightBlog input[type=text]{
+            width: 65%;
+            margin-bottom: 2px;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+        .popRightBlog input[type=text] {
+          width: 34%;
+          margin-right: 2px;
+        }
+        a.feedback:hover {
+            margin-left: -66px;
+        }
+        a.enquiries {
+          background: url(//storage.googleapis.com/instapage-user-media/e315080c/8593373-0-s-bg.jpg) no-repeat 15px center #1F4774;
+            background-size: 23px;
+        }
+        a.enquiries:hover {
+            left: -95px;
+        }
+        a.referral:hover {
+            margin-left: -56px;
+        }
+        .cover-rightfixed {
+            position: fixed;
+            top: 40%;
+            right: -95px;
+            z-index: 99999;
+            text-align: left;
+        }
+        .enquiry-content {
+            background: #fff;
+            border: 1px solid #D7D7D7;
+            padding: 10px 10px 0;
+            position: absolute;
+            width: 142px;
+            right: -120px;
+            font-size: 12px;
+            text-align: center;
+            bottom: -134px;
+            -webkit-transition: all .5s;
+            transition: all .5s;
+            padding-bottom: 10px;
+            color: #444;
+            z-index: -1;
+        }
+        a.enquiries:hover .enquiry-content, .enquiry-content:hover {
+               right: 0;
+        }
+        .cover {
+            position: relative;
+            height: 31px;
+            clear: both;
+            margin-bottom: 5px;
+        }
+        .cover img {
+            position: absolute;
+            right: 2px;
+            top: 5px;
+            display: none;
+        }
+    </style>
 <script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -281,20 +293,40 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                         <div class="signup-form">
                             <form action="" method="">
                                 <label>Personal Information</label><br>
-
-                                <input type="email" data-bind="value: email" placeholder="Your email" class="signup-email"><br>
-                                <input type="numbers" data-bind="value: telephone" placeholder="Your Telephone" class="signup-email"><br>
+                                <div class="cover">
+                                    <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
+                                    <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
+                                    <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
+                                    <input type="email" data-bind="value: email, events: {change : emailChange}" required="required" placeholder="Your email" class="signup-email">
+                                </div>
+                                <div class="cover">
+                                    <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
+                                    <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
+                                    <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
+                                    <input required="required" type="numbers" data-bind="value: telephone, events: {change: phoneChange}" id="phoneInput" placeholder="Your Telephone" class="signup-email">
+                                </div>
                                 <p class="signup-noted">We will use this information to communicate with you. We never share your number with third parties without your consent.</p>
-                                <input type="password" data-bind="value: password" placeholder="Password " class="signup-email"><br>
+                                <div class="cover">
+                                    <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
+                                    <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
+                                    <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
+                                    <input required="required" type="password" data-bind="value: password" placeholder="Password " class="signup-email">
+                                </div>
 
                                 <p class="signup-noted">The minimum requirements for password are:  at least 8 characters, letter, and numbers.</p>
-                                
-                                <input type="password" data-bind="value: cPassword" placeholder="Confirm password " class="signup-email"><br>
-                                <br>
+                                <div class="cover">
+                                    <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
+                                    <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
+                                    <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
+                                    <input required="required" type="password" data-bind="value: cPassword, events: {change: pwdChange}" placeholder="Confirm password " class="signup-email"><br>
+                                </div>
 
                                 <label>Company Information</label><br>
-                                <input type="text" data-bind="value: name" placeholder="Company Name " class="signup-email"><br>
-
+                                <div class="cover">
+                                    <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
+                                    <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
+                                    <input required="required" type="text" data-bind="value: name, events: {change: comChange }" placeholder="Company Name " class="signup-email"><br>
+                                </div>
                                 <select class="signup-country" 
                                         data-role="dropdownlist" 
                                         data-bind="source: currencies, value: currency"
@@ -328,7 +360,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                                         data-place-holder="select one" style="text-align: left;">
                                 </select><br>
 
-                                <input style="background: #1F4E78;font-size: 20px !important; " id="signupBtn" type="button" data-bind="click: create" class="btn-signup" value="SINGUP FOR FREE"><br>
+                                <input style="background: #1F4E78;font-size: 20px !important; " id="signupBtn" type="button" data-bind="click: create" class="btn-signup" value="SIGNUP FOR FREE"><br>
                                 <p class="signup-text-bottom">
                                     By clicking on “signup”, you agree to the <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a>  and <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a>.
                                 </p>
@@ -439,6 +471,27 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
     <!-- Boostrap-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script>
+        /*--- Check Phone --*/
+        $("#phoneInput").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                 // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                 // Allow: Ctrl+C
+                (e.keyCode == 67 && e.ctrlKey === true) ||
+                 // Allow: Ctrl+X
+                (e.keyCode == 88 && e.ctrlKey === true) ||
+                 // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                     // let it happen, don't do anything
+                     return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+        /* -- end check phone --- */
         var banhji = banhji || {};
         var baseUrl = "<?php echo base_url(); ?>";
         var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
@@ -651,6 +704,47 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
         });
 
         banhji.index = kendo.observable({
+            userDSCheck : new kendo.data.DataSource({
+                transport: {
+                  read  : {
+                    url: baseUrl + 'api/users',
+                    type: "GET",
+                    dataType: 'json'
+                  },
+                  create  : {
+                    url: baseUrl + 'api/users',
+                    type: "POST",
+                    dataType: 'json'
+                  },
+                  update  : {
+                    url: baseUrl + 'api/users',
+                    type: "PUT",
+                    dataType: 'json'
+                  },
+                  parameterMap: function(options, operation) {
+                    if(operation === 'read') {
+                      return {
+                        limit: options.take,
+                        page: options.page,
+                        filter: options.filter
+                      };
+                    } else {
+                      return {models: kendo.stringify(options.models)};
+                    }
+                  }
+                },
+                schema  : {
+                  model: {
+                    id: 'id'
+                  },
+                  data: 'results',
+                  total: 'count'
+                },
+                batch: true,
+                serverFiltering: true,
+                serverPaging: true,
+                pageSize: 50
+            }),
             email     : null,
             password  : null,
             cPassword : null,
@@ -665,6 +759,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
             types     : banhji.typeDS,
             userDS    : banhji.userDS,
             currencies: banhji.currencies,
+            err       : null,
             createDB  : new kendo.data.DataSource({
                 transport: {
                     create  : {
@@ -696,81 +791,146 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                 serverPaging: true,
                 pageSize: 100
             }),
-            create: function() {
+            emailChange : function(e) {
+                var self = this;
+                $(".cover").eq(0).children(".imgLoad").css("display", "block");
+                $(".cover").eq(0).children(".imgTick, .imgCross").css("display", "none");
                 var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 if(re.test(this.get('email'))) {
-                    if(this.get('password') == this.get('cPassword')) {
-                        if(this.get('name') != '') {
-                            $("#signupBtn").val("Signing up...");
-                            // create user
-                            var attributeList = [];
-
-                            var dataEmail = {
-                                Name : 'email',
-                                Value : this.get('email')
-                            };
-
-                            var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
-
-                            attributeList.push(attributeEmail);
-
-                            userPool.signUp(this.get('email'), this.get('password'), attributeList, null, function(err, result){
-                                if (err) {
-                                    // layout.showIn("#main-container", registerView);
-                                    // $('#regInformation').text(err);
-                                      // console.log(err.Error);  
-                                    // return;
-                                    alert("Please check your password");
-                                } else {
-                                    banhji.index.userDS.add({
-                                        username: result.user.username,
-                                        first_name: null,
-                                        last_name: null,
-                                        email: null,
-                                        mobile: null,
-                                        profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
-                                        company: {id: 0, name:''},
-                                        usertype: 1
-                                    });
-                                    banhji.index.userDS.sync();
-                                    banhji.userDS.bind('requestEnd', function(e){
-                                        var res = e.response, type = e.type;
-                                        if(res.results.length > 0) {
-                                            // create company
-                                            banhji.companyDS.insert(0, {
-                                                name:  banhji.index.get('name'),
-                                                currency: banhji.index.get('currency'),
-                                                country:  banhji.index.get('country'),
-                                                industry:  banhji.index.get('industry'),
-                                                type: banhji.index.get('type'),
-                                                username:result.user.username
-                                            });
-                                            banhji.companyDS.sync();
-                                            banhji.companyDS.bind('requestEnd', function(e){
-                                                banhji.index.set('email', null);
-                                                banhji.index.set('password', null);
-                                                banhji.index.set('cPassword', null);
-                                                banhji.index.set('name', '');
-                                                banhji.index.set('currency', '');
-                                                banhji.index.set('country', null);
-                                                banhji.index.set('industry', null);
-                                                banhji.index.set('type', null);
-                                                // go to confirm
-                                                window.location.replace(baseUrl + "confirm/");
-                                            });
-                                        }
-                                    });
-                                  }                    
-                            });
-                        } else {
-                            console.log('Please provide company name.');
+                    this.userDSCheck.query({
+                        filter: {field: "username", operator: "", value : this.get('email') }
+                    }).then(function(){
+                        if(self.userDSCheck.data().length > 0){
+                            self.set("err", null);
+                            self.set("err", "Your Email is already Register!");
+                            console.log(self.err);
+                            $(".cover").eq(0).children(".imgLoad, .imgTick").css("display", "none");
+                            $(".cover").eq(0).children(".imgCross").css("display", "block");
+                        }else{
+                            $(".cover").eq(0).children(".imgLoad, .imgCross").css("display", "none");
+                            $(".cover").eq(0).children(".imgTick").css("display", "block");
                         }
-                    } else {
-                        alert('passwords do not match.');
-                    }
-                } else {
-                    alert('Please check your email. It must be 8 characters with number and letter.');
+                    });
+                }else{
+                    this.set("err", null);
+                    this.set("err", "Please check your email address!")
+                    console.log(this.err);
+                    $(".cover").eq(0).children(".imgLoad, .imgTick").css("display", "none");
+                    $(".cover").eq(0).children(".imgCross").css("display", "block");
                 }
+            },
+            phoneChange : function(e) {
+
+                $(".cover").eq(1).children(".imgTick").css("display", "block");
+            },
+            pwdChange   : function(e) {
+                
+                if(this.get('password') != this.get('cPassword')) {
+                    this.set("err", null);
+                    this.set("err", "Your Passwrod Not Match!");
+                    console.log(this.err);
+                    $(".cover").eq(2).children(".imgLoad, .imgTick").css("display", "none");
+                    $(".cover").eq(2).children(".imgCross").css("display", "block");
+                    $(".cover").eq(3).children(".imgLoad, .imgTick").css("display", "none");
+                    $(".cover").eq(3).children(".imgCross").css("display", "block");
+                }else{
+                    this.set("err", null);
+                    $(".cover").eq(2).children(".imgLoad, .imgCross").css("display", "none");
+                    $(".cover").eq(2).children(".imgTick").css("display", "block");
+                    $(".cover").eq(3).children(".imgLoad, .imgCross").css("display", "none");
+                    $(".cover").eq(3).children(".imgTick").css("display", "block");
+                }
+            },
+            comChange   : function(e) {
+                if(this.get("name") == ""){
+                    $(".cover").eq(4).children(".imgCross").css("display", "block");
+                    $(".cover").eq(4).children(".imgTick").css("display", "none");
+                }else{
+                    $(".cover").eq(4).children(".imgTick").css("display", "block");
+                    $(".cover").eq(4).children(".imgCross").css("display", "none");
+                }
+            },
+            create: function() {
+                if(this.err == null){
+                    var DataInput = this.get('email') + this.get('password') + this.get('cPassword') + this.get('name') + this.get('currency') + this.get('country') + this.get('industry') + this.get('type');
+                    console.log(DataInput);
+                }else{  
+                    alert(this.err);
+                }
+                // var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                // if(re.test(this.get('email'))) {
+                //     if(this.get('password') == this.get('cPassword')) {
+                //         if(this.get('name') != '') {
+                //             $("#signupBtn").val("Signing up...");
+                //             // create user
+                //             var attributeList = [];
+
+                //             var dataEmail = {
+                //                 Name : 'email',
+                //                 Value : this.get('email')
+                //             };
+
+                //             var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
+
+                //             attributeList.push(attributeEmail);
+
+                            // userPool.signUp(this.get('email'), this.get('password'), attributeList, null, function(err, result){
+                            //     if (err) {
+                            //         // layout.showIn("#main-container", registerView);
+                            //         // $('#regInformation').text(err);
+                            //           // console.log(err.Error);  
+                            //         // return;
+                            //         alert("Please check your password");
+                            //     } else {
+                            //         banhji.index.userDS.add({
+                            //             username: result.user.username,
+                            //             first_name: null,
+                            //             last_name: null,
+                            //             email: null,
+                            //             mobile: null,
+                            //             profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+                            //             company: {id: 0, name:''},
+                            //             usertype: 1
+                            //         });
+                            //         banhji.index.userDS.sync();
+                            //         banhji.userDS.bind('requestEnd', function(e){
+                            //             var res = e.response, type = e.type;
+                            //             if(res.results.length > 0) {
+                            //                 // create company
+                            //                 banhji.companyDS.insert(0, {
+                            //                     name:  banhji.index.get('name'),
+                            //                     currency: banhji.index.get('currency'),
+                            //                     country:  banhji.index.get('country'),
+                            //                     industry:  banhji.index.get('industry'),
+                            //                     type: banhji.index.get('type'),
+                            //                     username:result.user.username
+                            //                 });
+                            //                 banhji.companyDS.sync();
+                            //                 banhji.companyDS.bind('requestEnd', function(e){
+                            //                     banhji.index.set('email', null);
+                            //                     banhji.index.set('password', null);
+                            //                     banhji.index.set('cPassword', null);
+                            //                     banhji.index.set('name', '');
+                            //                     banhji.index.set('currency', '');
+                            //                     banhji.index.set('country', null);
+                            //                     banhji.index.set('industry', null);
+                            //                     banhji.index.set('type', null);
+                            //                     // go to confirm
+                            //                     window.location.replace(baseUrl + "confirm/");
+                            //                 });
+                            //             }
+                            //         });
+                            //       }                    
+                            // });
+                //         } else {
+                //             console.log('Please provide company name.');
+                //         }
+                //     } else {
+                //         alert('passwords do not match.');
+                //     }
+                // } else {
+                //     alert('Please check your email. It must be 8 characters with number and letter.');
+                // }
                 // console.log('kdslfds');
             }
         });  

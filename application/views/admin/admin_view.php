@@ -747,7 +747,7 @@
                     <td><span data-bind="text:current.accounting_standard"></span></td>
                 </tr>
                 <tr>
-                    <td>Fiscal Date</td>
+                    <td>Fiscal Date (Ending Date)</td>
                     <td>:</td>
                     <td><span data-bind="text:current.fiscal_date"></span></td>
                 </tr>
