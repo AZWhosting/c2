@@ -5915,7 +5915,7 @@
 			        <h2 style="padding:0 15px;"">Edit Accounting Prefix</h2>
 				    <br>	
 				    <div class="row span12" style="margin-left:0;margin-bottom: 20px;">			   				
-						<input type="text" placeholder="Name" class="k-textbox k-invalid span4" data-bind="value: obj.name" >
+						
 						<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" >
 						<input type="text" placeholder="Startup Number" class="k-textbox k-invalid span2" data-bind="value: obj.startup_number" >
 					</div>
@@ -70380,7 +70380,7 @@
 
 
     /*************************
-	*	Reports Module Section   *
+	*	Reports Module Section   * 
 	**************************/
     banhji.reportDashboard = kendo.observable({
     	lang 				: langVM,
