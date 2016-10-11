@@ -803,7 +803,7 @@
                         if(self.userDSCheck.data().length > 0){
                             self.set("err", null);
                             self.set("err", "Your Email is already Register!");
-                            console.log(self.err);
+                            alert(self.err);
                             $(".cover").eq(0).children(".imgLoad, .imgTick").css("display", "none");
                             $(".cover").eq(0).children(".imgCross").css("display", "block");
                         }else{
@@ -814,7 +814,7 @@
                 }else{
                     this.set("err", null);
                     this.set("err", "Please check your email address!")
-                    console.log(this.err);
+                    alert(this.err);
                     $(".cover").eq(0).children(".imgLoad, .imgTick").css("display", "none");
                     $(".cover").eq(0).children(".imgCross").css("display", "block");
                 }
@@ -828,7 +828,7 @@
                 if(this.get('password') != this.get('cPassword')) {
                     this.set("err", null);
                     this.set("err", "Your Passwrod Not Match!");
-                    console.log(this.err);
+                    alert(this.err);
                     $(".cover").eq(2).children(".imgLoad, .imgTick").css("display", "none");
                     $(".cover").eq(2).children(".imgCross").css("display", "block");
                     $(".cover").eq(3).children(".imgLoad, .imgTick").css("display", "none");
