@@ -1866,7 +1866,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-					<h2 span data-bind="text: lang.lang.exchange_rate"></h2>			    		   
+					<h2 >Exchange Rate</h2>			    		   
 
 				    <br>
 
@@ -1875,39 +1875,46 @@
 					    <div class="widget-body">
 
 					    	<div class="row-fluid">
-						    	<div class="span6 alert alert-primary"><span data-bind="text: lang.lang.company_currency"></span> <span data-bind="text: baseCode"></span> </div>
-						    	<div class="span6 alert alert-primary"><span data-bind="text: lang.lang.reporting_currency"></span> <span data-bind="text: reportCode"></span> </div>
+						    	<div class="span6 alert alert-primary">Company currency: <span data-bind="text: baseCode"></span> </div>
+						    	<div class="span6 alert alert-primary">Reporting currency: <span data-bind="text: reportCode"></span> </div>
 					    	</div>
 
 							<br>					
 							
+							<button class="btn btn-inverse hidden-print" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> Add New Rate</button>
+							
+							<!-- Item List -->
+							<table style="margin-top: 15px;" class="table table-bordered table-primary table-striped table-vertical-center">
+						        <thead>
+						            <tr>
+						                <th style="width: 15%;">DATE</th>
+						                <th style="width: 6%;">CODE</th>
+						                <th style="width: 25%">COUNTRY</th>
+						                <th style="width: 15%;">RATE</th>
+						                <th style="width: 15%;">SOURCE</th>
+						                <th style="width: 15%;">METHOD</th>
+						                <th style="width: 10%;"></th>			                
+						            </tr> 
+						        </thead>
+						        <tbody data-role="listview"
+						        		data-template="currencyRate-template"
+						        		data-bind="source: dataSource"></tbody>			        
+						    </table>
+							
+				            <div data-role="pager"
+					            data-bind="source: dataSource"></div>
+						   
 
-							<button class="btn btn-inverse hidden-print" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_new_rate"></span></button>
-							&nbsp;
-							<span class="hidden-print"><span data-bind="text: lang.lang.please_click_on_the_column_header_to_sort_based_on_currency"></span>.</span>
-
-							<div data-role="grid"
-								 data-sortable="true"							 
-								 data-row-template="currencyRate-row-template"			                
-				                 data-columns="[
-	                                { 'field': 'date', 'title':'Date', width: 90 },
-	                                { 'field': 'currency_id', 'title':'Code', width: 60 },
-	                                { 'field': 'currency_id', 'title':'Country' },
-	                                { 'field': 'rate', 'title':'Rate', width: 140 },
-	                                { 'field': 'source', 'title':'Source', width: 70 },
-	                                { 'field': 'method', 'title':'Method', width: 70 },
-	                                { 'title':'', width: 130 }
-	                             ]"
-				                 data-bind="source: dataSource"></div>
-
-				            <div data-role="pager" 
-							    	data-auto-bind="false"
-						            data-bind="source: dataSource"></div>
-
-						    <span id="notification"></span>
-
-						    <div id="window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
-								<table class="table table-borderless table-condensed cart_total" style="width: 400px;">
+						    <!-- Window -->
+						    <div data-role="window"
+					                 data-title="Exchange Rate"		                 
+					                 data-width="350"
+					                 data-height="250"
+					                 data-actions="{}"
+					                 data-position="{top: '30%', left: '37%'}"
+					                 data-bind="visible: windowVisible">
+						    	
+						    	<table class="table table-borderless table-condensed cart_total" >
 									<tr>
 										<td>										
 									    	<input data-role="dropdownlist"
