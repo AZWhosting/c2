@@ -838,17 +838,17 @@
 						<a href="#/statement_profit_loss">
 							<table class="performance">
 								<tr>									
-									<td><span data-bind="text: lang.lang.income"></span></td>
+									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: income"></span></td>
 								</tr>
 								<tr> 									
-									<td><span data-bind="text: lang.lang.expense"></span></td>
+									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><span data-bind="text: lang.lang.expense"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: expense"></span></td>
 								</tr>
 								<tr>
-									<td><b><span data-bind="text: lang.lang.net_income"></span></b></td>
+									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><b><span data-bind="text: lang.lang.net_income"></span></b></td>
 									<td></td>
 									<td align="right"><b data-bind="text: net_income"></b></td>
 								</tr>
@@ -859,17 +859,17 @@
 							<table class="position">
 								<tr>
 
-									<td><span data-bind="text: lang.lang.asset"></span></td>
+									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><span data-bind="text: lang.lang.asset"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: asset"></span></td>
 								</tr>
 								<tr>
-									<td><span data-bind="text: lang.lang.liabilities"></span></td>
+									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><span data-bind="text: lang.lang.liabilities"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: liability"></span></td>
 								</tr>
 								<tr>
-									<td><b><span data-bind="text: lang.lang.equity"></span></b></td>
+									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><b><span data-bind="text: lang.lang.equity"></span></b></td>
 									<td></td>
 									<td align="right"><b data-bind="text: equity"></b></td>
 								</tr>
@@ -11919,18 +11919,18 @@
 									<!-- Add New Item -->
 									<ul class="topnav addNew">
 										<li role="presentation" class="dropdown ">
-									  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-									  			<span data-bind="text: lang.lang.add_new_item"></span>
-						    					<span class="caret"></span>
+									  		<a href="#/account" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+									  			<span data-bind="text: lang.lang.add_account"></span>
+						    					<!-- <span class="caret"></span> -->
 									  		</a>
-								  			<ul class="dropdown-menu addNewItem">  				  				
+								  			<!-- <ul class="dropdown-menu addNewItem">  				  				
 								  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 								  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
 								  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 								  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 								  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 								  				 				
-								  			</ul>
+								  			</ul> -->
 									  	</li>				
 									</ul>
 									<!--End Add New Item -->
@@ -17340,7 +17340,7 @@
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_assetss'><span data-bind="text: lang.lang.add_fixed_assets"></span>
+						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span>
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 						  				 				
@@ -29881,7 +29881,7 @@
 					<span data-bind="text: lang.lang.transaction"></span>
 				</p>
 				<div class="total-customer" style="background: #d9edf7; color: #333;"> 
-					<span class="number" data-bind="text:transactionSize"></span>GB
+					<span class="number" data-bind="text:transactionSize" style="font-size: 30px;"></span>GB
 					<p>of <span data-bind="text: transactionNu"></span> <span data-bind="text: lang.lang.transaction"></span></p>
 					
 					
@@ -29891,7 +29891,7 @@
 			<div class="span4">
 				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;"><span data-bind="text: lang.lang.contact_items"></span></p>
 				<div class="total-customer" style="color: #333;">
-					<span class="number" data-bind="text: contactSize"></span>GB
+					<span class="number" data-bind="text: contactSize" style="font-size: 30px;"></span>GB
 					<p>of <span data-bind="text: contactNu"></span> <span data-bind="text: lang.lang.contact_items"></span></p>
 				</div>
 			</div>
@@ -29899,7 +29899,7 @@
 			<div class="span4" style="padding-left: 15px;">
 				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;"><span data-bind="text: lang.lang.total_attachment"></span></p>
 				<div class="total-customer" style="background: #496cad; color: #fff;min-height: 112px;">
-					<span class="number" data-bind="text: totalSize"></span>GB
+					<span class="number" data-bind="text: totalSize" style="font-size: 30px;"></span>GB
 					<p><span data-bind="text: lang.lang.use_of"></span> 2.00 GB</p>
 				</div>
 			</div>
@@ -29984,7 +29984,7 @@
 						       	</a>
 						    </div>
 						    <div class="span4">
-						       	<a href="#/fixed_assetss" class="center">
+						       	<a href="#/fixed_assets" class="center">
 						       		<img title="Add Txn Item"  src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_fixed_assets.ico" />
 						       	</a>
 						    </div>
@@ -38342,7 +38342,7 @@
   				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory"></span></a></li>
   				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
   				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
-  				<li><a href='#/fixed_assetss'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
   				<li><a href="#/txn_item"><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>
   				<li> <span class="li-line"></span></li>			  				
   				<li  style="padding-top: 10px;"><a href='#/purchase_order'><span data-bind="text: lang.lang.make_purchase_order"></span></a></li>
@@ -38467,7 +38467,7 @@
   				<li ><a href="#/txn_item"><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>
   				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.build_assembly"></span></a></li>  
   				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.add_new_catalog"></span></a></li>
-  				<li><a href='#/fixed_assetss'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>  		
+  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>  		
   				<li> <span class="li-line"></span></li> 
   				<li><a href='#/grn'><span data-bind="text: lang.lang.add_received_note"></span></a></li>
   				<li><a href='#/gdn'><span data-bind="text: lang.lang.add_delivery_note"></span></a></li>
@@ -69632,6 +69632,7 @@
         	if(kendo.parseInt(data.item_id)>0){
         		if(data.item_type_id==1){        		        	
 	        		banhji.router.navigate('/item/'+data.item_id+'/1');
+	        	
 	        	}else{
 	        		banhji.router.navigate('/non_inventory_part/'+data.item_id+'/1');
 	        	}   	
@@ -69639,6 +69640,15 @@
         		if(data.item_type_id==1){        		        	
 	        		banhji.router.navigate('/item');
 	        		banhji.item.setPattern(data.id);
+
+	        	}else if(data.item_type_id==3){        		        	
+	        		banhji.router.navigate('/fixed_assets');
+	        		banhji.item.setPattern(data.id);
+
+	        	}else if(data.item_type_id==5){        		        	
+	        		banhji.router.navigate('/item_service');
+	        		banhji.item.setPattern(data.id);
+
 	        	}else{
 	        		banhji.router.navigate('/non_inventory_part');
 	        		banhji.nonInventoryPart.setPattern(data.id);
@@ -74597,7 +74607,7 @@
 				var allowed = false;
 				if(banhji.accessMod.data().length > 0) {
 					for(var i = 0; i < banhji.accessMod.data().length; i++) {
-						if("customers" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
 							allowed = true;
 							break;
 						}
