@@ -1113,23 +1113,30 @@
 		          	</div>
 					
 					<div>
-						<input id="sorter" name="sorter"
-				    	   data-role="dropdownlist"                   
-				           data-value-primitive="true"
-				           data-text-field="text"
-				           data-value-field="value"
-				           data-bind="value: sorter,
-				                      source: sortList" />
-				                                   
-				        <input id="sdate" name="sdate"						           
-					           data-bind="value: sdate"
-					           placeholder="From ..." />
-				        
-				       	<input id="edate" name="edate"						           
-					           data-bind="value: edate"
-					           placeholder="To ..." />
+						<input data-role="dropdownlist"
+							   class="sorter"                  
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList,                              
+					                      events: { change: sorterChanges }" />
 
-			            <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+						<input data-role="datepicker"
+							   class="sdate"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					           			  max: edate"
+					           placeholder="From ..." >
+
+					    <input data-role="datepicker"
+					    	   class="edate"
+					    	   data-format="dd-MM-yyyy"
+					           data-bind="value: edate,
+					                      min: sdate"
+					           placeholder="To ..." >
+
+					  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
 
 					<table class="table table-bordered table-striped table-white">
@@ -1164,11 +1171,19 @@
     	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
     	<td>#=type#</td>
         <td>
-        	#if(type=="Invoice" || type=="Cash_Sale" || type=="Quote" || type=="Sale_Order" || type=="GDN" || type=="Sale_Return" || type=="Journal"){#
-				<a href="\#/#=type.toLowerCase()#/#=transaction_id#"><i></i> #=number#</a>						
-			#}else{#
-				#=number#
-			#}#        	
+        	#if(dr==0 && cr==0){#
+        		#=number#
+        	#}else{#
+	        	#if(type=="Direct_Expense" || type=="Reimbursement" || type=="Advance_Settlement" ){#
+	        		<a href="\#/expense/#=transaction_id#"><i></i> #=number#</a>
+	        	#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer" ){#
+	        		<a href="\#/cash_transaction/#=transaction_id#"><i></i> #=number#</a>
+	        	#}else if(type=="Cash_Purchase" || type=="Credit_Purchase" ){#
+	        		<a href="\#/purchase/#=transaction_id#"><i></i> #=number#</a>
+	        	#}else{#
+					<a href="\#/#=type.toLowerCase()#/#=transaction_id#"><i></i> #=number#</a>
+				#}#
+			#}#
         </td>
         <td>#=description#</td>
     	<td class="right">    		
@@ -1223,16 +1238,13 @@
 	<div id="slide-form">
 		<div class="customer-background ">
 			<div class="container-960">					
-				<div id="example" class="k-content">				
-						
-				    <div class="hidden-print">
-				    	<div class="pull-right">
-				    		<span class="glyphicons no-js remove_2" 
-								data-bind="click: cancel"><i></i></span>						
-						</div>
+				<div id="example" class="k-content">
 
-				        <h2 data-bind="text: lang.lang.account"></h2>				        				        				        	
-				    </div>			   
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+				    <h2 data-bind="text: lang.lang.account"></h2>				    		   
 
 				    <br>
 
@@ -1260,8 +1272,11 @@
 								<label for="txtNumber"><span data-bind="text: lang.lang.account_code"></span><span style="color:red">*</span></label>
 								<input id="txtNumber" name="txtNumber" 
 										class="k-textbox"
-										data-bind="value: obj.number"										
-										required data-required-msg="required" style="width: 100%;">								
+										data-bind="value: obj.number,
+													events:{change: checkExistingNumber}"										
+										required data-required-msg="required" style="width: 100%;">
+								<br>
+								<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>								
 							</div>
 							<!-- // Group END -->
 						</div>
@@ -1380,13 +1395,39 @@
 				    <br>
 
 				    <!-- Form actions -->
-					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
-						<span id="notification"></span>
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
 
-						<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
-						<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>
-						<span class="btn btn-icon btn-default glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-						<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: delete, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
+						<!-- Delete Confirmation -->
+						<div data-role="window"
+			                 data-title="Delete Confirmation"
+			                 data-width="350"
+			                 data-height="200"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'40%',left:'35%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: showConfirm"
+			                 style="text-align:center;">
+			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+			            </div>
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
+							</div>
+						</div>
 					</div>
 					<!-- // Form actions END -->						
 			    	
@@ -9294,23 +9335,30 @@
 		          	</div>
 					
 					<div>
-						<input id="sorter" name="sorter"
-				    	   data-role="dropdownlist"                   
-				           data-value-primitive="true"
-				           data-text-field="text"
-				           data-value-field="value"
-				           data-bind="value: sorter,
-				                      source: sortList" />
-				                                   
-				        <input id="sdate" name="sdate"						           
-					           data-bind="value: sdate"
-					           placeholder="From ..." />
-				        
-				       	<input id="edate" name="edate"						           
-					           data-bind="value: edate"
-					           placeholder="To ..." />
+						<input data-role="dropdownlist"
+							   class="sorter"                  
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList,                              
+					                      events: { change: sorterChanges }" />
 
-			            <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+						<input data-role="datepicker"
+							   class="sdate"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					           			  max: edate"
+					           placeholder="From ..." >
+
+					    <input data-role="datepicker"
+					    	   class="edate"
+					    	   data-format="dd-MM-yyyy"
+					           data-bind="value: edate,
+					                      min: sdate"
+					           placeholder="To ..." >
+
+					  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
 
 					<table class="table table-bordered table-striped table-white">
@@ -9884,10 +9932,16 @@
 								
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_new"></span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_close"></span></span>
-								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->
+
 </script>
 <script id="vendor-contact-person-row-tmpl" type="text/x-kendo-tmpl">
 	<tr>		
@@ -16340,23 +16394,30 @@
 					</div>
 					
 					<div>
-						<input id="sorter" name="sorter"
-				    	   data-role="dropdownlist"                   
-				           data-value-primitive="true"
-				           data-text-field="text"
-				           data-value-field="value"
-				           data-bind="value: sorter,
-				                      source: sortList" />
-				                                   
-				        <input id="sdate" name="sdate"						           
-					           data-bind="value: sdate"
-					           placeholder="From ..." />
-				        
-				       	<input id="edate" name="edate"						           
-					           data-bind="value: edate"
-					           placeholder="To ..." />
+						<input data-role="dropdownlist"
+							   class="sorter"                  
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList,                              
+					                      events: { change: sorterChanges }" />
 
-			            <button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+						<input data-role="datepicker"
+							   class="sdate"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					           			  max: edate"
+					           placeholder="From ..." >
+
+					    <input data-role="datepicker"
+					    	   class="edate"
+					    	   data-format="dd-MM-yyyy"
+					           data-bind="value: edate,
+					                      min: sdate"
+					           placeholder="To ..." >
+
+					  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
 
 					<table class="table table-bordered table-striped table-white">
@@ -30263,6 +30324,7 @@
 		</td>
 	</tr>
 </script>
+
 <script id="itemCenter" type="text/x-kendo-template"> 
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">
 		<div class="widget-body padding-none">			
@@ -30461,23 +30523,30 @@
 		          	</div>
 					
 					<div>
-						<input id="sorter" name="sorter"
-				    	   data-role="dropdownlist"                   
-				           data-value-primitive="true"
-				           data-text-field="text"
-				           data-value-field="value"
-				           data-bind="value: sorter,
-				                      source: sortList" />
-				                                   
-				        <input id="sdate" name="sdate"						           
-					           data-bind="value: sdate"
-					           placeholder="From ..." />
-				        
-				       	<input id="edate" name="edate"						           
-					           data-bind="value: edate"
-					           placeholder="To ..." />
+						<input data-role="dropdownlist"
+							   class="sorter"                  
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList,                              
+					                      events: { change: sorterChanges }" />
 
-			            <button id="search" type="button" data-role="button"><i class="icon-search"></i></button>
+						<input data-role="datepicker"
+							   class="sdate"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					           			  max: edate"
+					           placeholder="From ..." >
+
+					    <input data-role="datepicker"
+					    	   class="edate"
+					    	   data-format="dd-MM-yyyy"
+					           data-bind="value: edate,
+					                      min: sdate"
+					           placeholder="To ..." >
+
+					  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
 
 					<table class="table table-bordered table-striped table-white">
@@ -42265,7 +42334,10 @@
 				data: 'results',
 				total: 'count'
 			},
-			sort:{ field:"number", dir:"asc" },
+			sort:[
+				{ field:"account_type_id", dir:"asc" },
+				{ field:"number", dir:"asc" }
+			],
 			batch: true,
 			serverFiltering: true,
 			serverSorting: true,
@@ -42292,16 +42364,45 @@
 			if(id){
 				this.loadObj(id);
 			}
-
 			//Refresh
 			if(this.dataSource.total()>0){
-				this.dataSource.fetch();
-			}
-			if(this.summaryDS.total()>0){
+				this.searchTransaction();					
 				this.summaryDS.fetch();
-			}
-			if(this.transactionDS.total()>0){
-				this.transactionDS.fetch();
+			}						
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
 			}
 		},
 		loadObj 			: function(id){
@@ -42440,7 +42541,7 @@
             this.transactionDS.query({
             	filter: para,            	
             	page: 1,
-            	pageSize: 100
+            	pageSize: 10
             });            
 		},
 		loadTransaction	 	: function(){
@@ -42470,10 +42571,12 @@
 		}				
 	});
 	banhji.account =  kendo.observable({
-    	lang 				: langVM,
-    	dataSource 			: dataStore(apiUrl + "accounts"),
-    	accountTypeDS 		: banhji.source.accountTypeDS,
-    	subAccountDS		: new kendo.data.DataSource({
+    	lang 					: langVM,
+    	dataSource 				: dataStore(apiUrl + "accounts"),
+    	deleteDS 				: dataStore(apiUrl + "account_lines"),
+    	numberDS 				: dataStore(apiUrl + "accounts"),
+    	accountTypeDS 			: banhji.source.accountTypeDS,
+    	subAccountDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
 					url: apiUrl + "accounts",
@@ -42510,12 +42613,17 @@
 			page:1,
 			pageSize: 1000
 		}),
-    	currencyDS 			: banhji.source.currencyDS,
-    	statusList 			: banhji.source.statusList,
-    	obj 	 			: null,
-    	isEdit 				: false,
-    	showBank 			: false,
-    	pageLoad 			: function(id){
+    	currencyDS 				: banhji.source.currencyDS,
+    	statusList 				: banhji.source.statusList,
+    	confirmMessage 			: banhji.source.confirmMessage,
+    	obj 					: null,
+    	isEdit 		 			: false,
+    	isProtected 			: false,
+        saveClose 				: false,
+		showConfirm 			: false,
+		isDuplicateNumber 		: false,
+    	showBank 				: false,
+    	pageLoad 				: function(id){
 			if(id){
 				this.set("isEdit", true);
 				this.loadObj(id);
@@ -42531,7 +42639,61 @@
 				}
 			}
 		},
-    	loadObj 			: function(id){
+		//Number      	
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");			
+			
+			if(obj.number!==""){
+
+				if(this.get("isEdit")){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"account_type_id", value: obj.account_type_id });
+				
+				this.numberDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.numberDS.view();
+					
+					if(view.length>0){
+				 		self.set("isDuplicateNumber", true);						
+					}else{
+						self.set("isDuplicateNumber", false);
+					}
+				});							
+			}else{
+				this.set("isDuplicateNumber", false);
+			}			
+		},
+		generateNumber 			: function(){
+			var self = this, obj = this.get("obj");
+
+			this.numberDS.query({
+				filter:[
+					{ field:"account_type_id", value:obj.account_type_id }
+				],
+				sort: { field:"number", dir:"desc" },
+				page:1,
+				pageSize:1
+			}).then(function(){
+				var view = self.numberDS.view();
+
+				if(view.length>0){
+					var lastNo = kendo.parseInt(view[0].number);
+					if(lastNo){
+						lastNo++;
+						obj.set("number",kendo.toString(lastNo, "00000"));
+					}
+				}
+			});
+		},
+		//Obj
+    	loadObj 				: function(id){
     		var self = this;
 
     		this.dataSource.query({
@@ -42542,7 +42704,7 @@
 		    	self.set("obj", view[0]);
 			});
     	},
-    	typeChanges 		: function(){    		
+    	typeChanges 			: function(){    		
     		var obj = this.get("obj");
     		this.set("showBank", false);
 
@@ -42551,9 +42713,10 @@
     				this.set("showBank", true);
     			}
     			this.subAccountDS.filter({ field:"account_type_id", value:obj.account_type_id });
+    			this.generateNumber();
     		}
     	},    	 	   	
-      	addEmpty 			: function(){
+      	addEmpty 				: function(){
       		this.dataSource.data([]);
       		this.set("obj", null);
 
@@ -42575,41 +42738,82 @@
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
       	},
-      	objSync 			: function(){
+	    objSync 				: function(){
 	    	var dfd = $.Deferred();	        
 
 	    	this.dataSource.sync();
 		    this.dataSource.bind("requestEnd", function(e){
-				dfd.resolve(e.response.results);
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}				  				
+		    });
+		    this.dataSource.bind("error", function(e){		    		    	
+				dfd.reject(e.errorThrown);    				
 		    });
 
-		    return dfd;
-	    },
-      	cancel 				: function(e){
-      		e.preventDefault();
+		    return dfd;	    		    	
+	    },			
+		save 					: function(){			
+			var self = this, obj = this.get("obj");
+			
+			//Save Obj
+			this.objSync()
+			.then(function(data){ //Success
 
-      		this.dataSource.cancelChanges();
-      		window.history.back();
-      	},      	
-      	save 				: function(){
-      		var self = this;
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){				
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
-      		if(this.get("isEdit")){
-      			this.dataSource.sync();
-      		}else{
-	      		this.objSync().then(function(data){
-	      			self.addEmpty();
-	      		});
-      		}
-      	},
-      	delete 				: function(){
-			if (confirm("Are you sure, you want to delete it?")) {
-		        var obj = this.dataSource.at(0);
-		        this.dataSource.remove(obj);
-		        this.dataSource.sync();
-		        window.history.back();
-	    	}
-	    }
+				if(self.get("saveClose")){
+					//Save Close					
+					self.set("saveClose", false);
+					self.cancel();
+					window.history.back();
+				}else{
+					//Save New
+					self.addEmpty();
+				}
+			});
+		},
+		cancel 					: function(){
+			this.dataSource.cancelChanges();
+			this.dataSource.data([]);
+
+			banhji.userManagement.removeMultiTask("account");
+		},
+		delete 					: function(){
+			var self = this, obj = this.get("obj");
+			this.set("showConfirm",false);
+
+			if(!obj.is_system==1){
+				this.deleteDS.query({
+		        	filter:[
+		        		{ field:"account_id", value:obj.id },
+		        	],
+		        	page:1,
+		        	pageSize:1
+		        }).then(function(){
+		        	var view = self.deleteDS.view();
+
+		        	if(view.length>0){
+		        		alert("Sorry, you can not delete it.");
+		        	}else{
+		        		obj.set("deleted", 1);
+				        self.dataSource.sync();
+
+				        window.history.back();
+		        	}
+		        });
+			}	
+		},
+		openConfirm 			: function(){
+			this.set("showConfirm", true);
+		},
+		closeConfirm 			: function(){
+			this.set("showConfirm", false);
+		}
     });
 	banhji.journal =  kendo.observable({
 		lang 				: langVM,
@@ -46962,6 +47166,41 @@
 				this.searchTransaction();
 				this.loadSummary();
 			}							
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
 		},
 		setCurrencyCode 	: function(){
 			var code = "", obj = this.get("obj");
@@ -53592,6 +53831,41 @@
 				this.contactDS.fetch();
 				this.searchTransaction();
 				this.loadSummary();
+			}
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
 			}
 		},
 		setCurrencyCode 	: function(){
@@ -65977,6 +66251,41 @@
 				this.transactionDS.fetch();
 			}													
 		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
 		setItemType 	 	: function(){
 			var itemType = "", obj = this.get("obj");
 
@@ -70812,116 +71121,8 @@
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
 
 			if(banhji.pageLoaded["accounting_center"]==undefined){
-				banhji.pageLoaded["accounting_center"] = true;		         
-
-		        function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
-
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
-
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function dateChanges(){
-                	var strDate = "";
-
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}					
-                }
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");               
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $("#sorter").val();
-
-					switch(value){
-					case "today":								
-						sdate = today;
-															  					
-					  	break;
-					case "week":			  	
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
-					  	break;
-					case "month":							  	
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":				
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-											  
-					}
-
-					vm.set("sdate", sdate);
-					vm.set("edate", edate);
-					// start.value(sdate);
-					// end.value(edate);
-					
-					start.max(end.value());
-                	end.min(start.value());
-
-                	dateChanges();                	
-                });
-                
-                start.max(end.value());
-                end.min(start.value());       	
+				banhji.pageLoaded["accounting_center"] = true;
+		              	
 			}
 
 			vm.pageLoad(id);			
@@ -70940,36 +71141,27 @@
 			if(banhji.pageLoaded["account"]==undefined){
 				banhji.pageLoaded["account"] = true;		         
 
-		        var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
-				
+		       var validator = $("#example").kendoValidator().data("kendoValidator");
+												
 		        $("#saveNew").click(function(e){				
 					e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            	
-
-		            	notification.success("Save Successful");			  
+					if(validator.validate() && vm.get("isDuplicateNumber")==false){
+		            	vm.save();		            				  
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 			        }		            
 				});
 
 				$("#saveClose").click(function(e){				
 					e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();
-		            	window.history.back();
-
-		            	notification.success("Save Successful");			  
+					if(validator.validate() && vm.get("isDuplicateNumber")==false){
+						vm.set("saveClose", true);
+		            	vm.save();		            	
 			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
 				});				      	
 			}
 
@@ -73561,118 +73753,8 @@
 			banhji.userManagement.addMultiTask("Supplier Center","vendor_center",null);
 
 			if(banhji.pageLoaded["vendor_center"]==undefined){
-				banhji.pageLoaded["vendor_center"] = true;				
-
-				function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
-
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
-
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function dateChanges(){
-                	var strDate = "";
-
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}
-
-					$("#strDate").text(strDate);
-                }
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");               
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $("#sorter").val();
-
-					switch(value){
-					case "today":								
-						sdate = today;
-															  					
-					  	break;
-					case "week":			  	
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
-					  	break;
-					case "month":							  	
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":				
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-											  
-					}
-
-					vm.set("sdate", sdate);
-					vm.set("edate", edate);
-					// start.value(sdate);
-					// end.value(edate);
-					
-					start.max(end.value());
-                	end.min(start.value());
-
-                	dateChanges();                	
-                });
-                
-                start.max(end.value());
-                end.min(start.value());				               
+				banhji.pageLoaded["vendor_center"] = true;
+						               
 			}
 
 			vm.pageLoad(id);				
@@ -74643,100 +74725,8 @@
 			var vm = banhji.customerCenter;
 			banhji.userManagement.addMultiTask("Customer Center","customer_center",null);
 			if(banhji.pageLoaded["customer_center"]==undefined){
-				banhji.pageLoaded["customer_center"] = true;				
-
-				function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
-
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
-
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }                
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");               
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $("#sorter").val();
-
-					switch(value){
-					case "today":								
-						sdate = today;
-															  					
-					  	break;
-					case "week":			  	
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
-					  	break;
-					case "month":							  	
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":				
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-											  
-					}
-
-					vm.set("sdate", sdate);
-					vm.set("edate", edate);
-					// start.value(sdate);
-					// end.value(edate);
-					
-					start.max(end.value());
-                	end.min(start.value());      	
-                });
-                
-                start.max(end.value());
-                end.min(start.value());								               
+				banhji.pageLoaded["customer_center"] = true;
+										               
 			}
 
 			vm.pageLoad(id);				
