@@ -415,6 +415,32 @@ class Users extends REST_Controller {
 		}
 	}
 
+	function access_get() {
+		$requested_data = $this->get("filter");
+		$filters = $requested_data['filters'];
+		$limit = 1;
+
+		$user = new User();
+		if(isset($filters)) {
+			foreach($filters as $filter) {
+				$user->where($filter['field'], $filter['value']);
+			}
+		}
+		$user->get();
+		if($user->exists()) {
+			$modules = $user->module->get();
+			$data = array();
+			foreach($modules as $m) {
+				$data[] = array(
+					'name' => $m->name
+				);
+			}
+			$this->response(array('results' => $data), 200);
+		} else {
+			$this->response(array(), 200);
+		}
+	}
+
 	private function _check_email($email) {
 		$query = $this->login->get_by(array("username"=>$email));
 		if(!empty($query)) {

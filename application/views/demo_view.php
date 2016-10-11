@@ -5914,7 +5914,7 @@
 			        <h2 style="padding:0 15px;"">Edit Accounting Prefix</h2>
 				    <br>	
 				    <div class="row span12" style="margin-left:0;margin-bottom: 20px;">			   				
-						<input type="text" placeholder="Name" class="k-textbox k-invalid span4" data-bind="value: obj.name" >
+						
 						<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" >
 						<input type="text" placeholder="Startup Number" class="k-textbox k-invalid span2" data-bind="value: obj.startup_number" >
 					</div>
@@ -38660,7 +38660,57 @@
 	var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
 	// Initializing AWS S3 Service
 	var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
-	
+	banhji.accessMod = new kendo.data.DataSource({
+      transport: {
+        read  : {
+          url: baseUrl + 'api/users/access',
+          type: "GET",
+          dataType: 'json'
+        },
+        parameterMap: function(options, operation) {
+          if(operation === 'read') {
+            return {
+              limit: options.pageSize,
+              page: options.page,
+              filter: options.filter
+            };
+          } else {
+            return {models: kendo.stringify(options.models)};
+          }
+        }
+      },
+      schema  : {
+        model: {
+          id: 'id'
+        },
+        data: 'results',
+        total: 'count'
+      },
+      batch: true,
+      serverFiltering: true,
+      serverPaging: true,
+      filter: {field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username},
+      pageSize: 1
+    });
+    banhji.allowed;
+	function checkRole(arg) {
+		var dfd = $.Deferred();
+		// var roleName = $(location).attr('hash').substr(2);
+		// loop through roles if this has in the role list
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+				if(banhji.accessMod.data().length > 0) {
+					for(var i = 0; i < banhji.accessMod.data().length; i++) {
+						if(arg == banhji.accessMod.data()[i].name.toLowerCase()) {
+							dfd.resolve(true);
+							break;
+						}
+					}
+				}				
+			}
+		);		
+	}
 	banhji.companyDS = new kendo.data.DataSource({
       transport: {
         read  : {
@@ -70378,7 +70428,7 @@
 
 
     /*************************
-	*	Reports Module Section   *
+	*	Reports Module Section   * 
 	**************************/
     banhji.reportDashboard = kendo.observable({
     	lang 				: langVM,
@@ -74540,23 +74590,37 @@
 	/*************************
 	*   Customer Section   *
 	**************************/
-	banhji.router.route("/customers", function(){		
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.customerDashboard);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
-			
-			var vm = banhji.customerDashboard;
-			banhji.userManagement.addMultiTask("Customer Dashboard","customers",null);
-			if(banhji.pageLoaded["customers"]==undefined){
-				banhji.pageLoaded["customers"] = true;				
-								               
-			}			
+	banhji.router.route("/customers", function(){	
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+				var allowed = false;
+				if(banhji.accessMod.data().length > 0) {
+					for(var i = 0; i < banhji.accessMod.data().length; i++) {
+						if("customers" == banhji.accessMod.data()[i].name.toLowerCase()) {
+							allowed = true;
+							break;
+						}
+					}
+				} 
+				if(allowed) {
+					banhji.view.layout.showIn("#content", banhji.view.customerDashboard);
+					banhji.view.layout.showIn('#menu', banhji.view.menu);
+					banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+					
+					var vm = banhji.customerDashboard;
+					banhji.userManagement.addMultiTask("Customer Dashboard","customers",null);
+					if(banhji.pageLoaded["customers"]==undefined){
+						banhji.pageLoaded["customers"] = true;				
+										               
+					}			
 
-			vm.pageLoad();				
-		}
+					vm.pageLoad();
+				} else {
+					window.location.replace(baseUrl + "admin");
+				}				
+			}
+		);
 	});
 	banhji.router.route("/customer_center(/:id)", function(id){		
 		if(!banhji.userManagement.getLogin()){
@@ -75797,7 +75861,7 @@
 	*   Cashier Section   *
 	**************************/
 	banhji.router.route("/cashier(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
+		if(!checkRole()){
 			banhji.router.navigate('/manage');
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.cashier);				
@@ -76121,29 +76185,62 @@
 	*   Document Section   *
 	**************************/
 	banhji.router.route("/documents", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.documents);
-			//banhji.view.layout.showIn('#menu', banhji.view.menu);
-			//banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+				if(banhji.accessMod.data().length > 0) {
+					for(var i = 0; i < banhji.accessMod.data().length; i++) {
+						if("documents" == banhji.accessMod.data()[i].name.toLowerCase()) {
+							banhji.view.layout.showIn("#content", banhji.view.documents);
+							//banhji.view.layout.showIn('#menu', banhji.view.menu);
+							//banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 
-			var vm = banhji.fileManagement;			
-			banhji.userManagement.addMultiTask("Attached Documents","documents",null);
-			if(banhji.pageLoaded["documents"]==undefined){
-				banhji.pageLoaded["documents"] = true;					
+							var vm = banhji.fileManagement;			
+							banhji.userManagement.addMultiTask("Attached Documents","documents",null);
+							if(banhji.pageLoaded["documents"]==undefined){
+								banhji.pageLoaded["documents"] = true;					
+							}
+							vm.dataSource.read();
+							vm.dataSource.bind('requestEnd', function(e){
+								if(e.type == 'read') {
+									vm.set('contactNu', e.response.contactNumber);
+									vm.set('contactSize', e.response.contactSize);
+									vm.set('transactionNu', e.response.transactionNumber);
+									vm.set('transactionSize', e.response.transactionSize);
+									vm.set('totalSize', e.response.total);
+								}
+							});
+							break;
+						}
+					}
+				} else {
+					window.location.replace(baseUrl + "admin");
+				}				
 			}
-			vm.dataSource.read();
-			vm.dataSource.bind('requestEnd', function(e){
-				if(e.type == 'read') {
-					vm.set('contactNu', e.response.contactNumber);
-					vm.set('contactSize', e.response.contactSize);
-					vm.set('transactionNu', e.response.transactionNumber);
-					vm.set('transactionSize', e.response.transactionSize);
-					vm.set('totalSize', e.response.total);
-				}
-			});			
-		}		
+		);
+		// if(!checkRole("documents")){
+		// 	window.location.replace(baseUrl + "admin");
+		// }else{
+		// 	banhji.view.layout.showIn("#content", banhji.view.documents);
+		// 	//banhji.view.layout.showIn('#menu', banhji.view.menu);
+		// 	//banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+
+		// 	var vm = banhji.fileManagement;			
+		// 	banhji.userManagement.addMultiTask("Attached Documents","documents",null);
+		// 	if(banhji.pageLoaded["documents"]==undefined){
+		// 		banhji.pageLoaded["documents"] = true;					
+		// 	}
+		// 	vm.dataSource.read();
+		// 	vm.dataSource.bind('requestEnd', function(e){
+		// 		if(e.type == 'read') {
+		// 			vm.set('contactNu', e.response.contactNumber);
+		// 			vm.set('contactSize', e.response.contactSize);
+		// 			vm.set('transactionNu', e.response.transactionNumber);
+		// 			vm.set('transactionSize', e.response.transactionSize);
+		// 			vm.set('totalSize', e.response.total);
+		// 		}
+		// 	});			
+		// }		
 	});
 
 
@@ -77319,5 +77416,6 @@
 	$(function() {	
 		banhji.router.start();
 		banhji.source.loadData();
+		console.log($(location).attr('hash').substr(2));
 	});
 </script>
