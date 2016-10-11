@@ -716,12 +716,12 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
 
                             userPool.signUp(this.get('email'), this.get('password'), attributeList, null, function(err, result){
                                 if (err) {
-                                    layout.showIn("#main-container", registerView);
-                                    $('#regInformation').text(err);
-                                    // alert(err)
-                                    return;
+                                    // layout.showIn("#main-container", registerView);
+                                    // $('#regInformation').text(err);
+                                      // console.log(err.Error);  
+                                    // return;
+                                    alert("Please check your password");
                                 } else {
-                                    console.log(result.user.username);
                                     banhji.index.userDS.add({
                                         username: result.user.username,
                                         first_name: null,
@@ -763,13 +763,13 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                                   }                    
                             });
                         } else {
-                            console.log('no name');
+                            console.log('Please provide company name.');
                         }
                     } else {
-                        console.log('passwords do not match.');
+                        alert('passwords do not match.');
                     }
                 } else {
-                    console.log('bad email');
+                    alert('Please check your email. It must be 8 characters with number and letter.');
                 }
                 // console.log('kdslfds');
             }

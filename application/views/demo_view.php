@@ -1951,12 +1951,12 @@
 				                </table>
 
 				                <p>
-				                	Note: The exchange rate here is equivalent to 1 unit of base currency.
+				                	<span data-bind="text: lang.lang.note_the_exchange_rate_here"></span>
 				                </p>			               
 					            
 					            <div align="center">
-									<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
-									<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>
+									<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i><span data-bind="text: lang.lang.save"></span></span>
+									<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>
 								</div>
 
 							</div>
@@ -1980,7 +1980,7 @@
 		<td>#=source#</td>
 		<td>#=method#</td>				
 		<td>			
-			<span data-bind="click: edit"><i class="icon-edit"></i> Edit</span>					
+			<span data-bind="click: edit"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>	
 		</td>		
     </tr>   
 </script>
@@ -1993,7 +1993,7 @@
 		    	<span class="glyphicons no-js remove_2 pull-right" 
 						onclick="javascript: window.history.back()"><i></i></span>
 
-		        <h2>TAX</h2>
+		        <h2 span data-bind="text: lang.lang.tax"></h2>
 
 			    <div class="row">
 			        <div class="span6">
