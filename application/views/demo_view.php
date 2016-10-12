@@ -42929,12 +42929,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -45290,12 +45292,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -46068,12 +46072,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -47265,12 +47271,14 @@
 		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 		            	self.attachmentDS.add({
+		            		user_id 		: self.get("user_id"),
 		            		contact_id 		: obj.id,
 		            		type 			: "Contact",
 		            		name 			: value.name,
 		            		description 	: "",
 		            		key 			: key,
 		            		url 			: banhji.s3 + key,
+		            		size 			: value.size,
 		            		created_at 		: new Date(),
 
 		            		file 			: value.rawFile
@@ -48132,12 +48140,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -48963,12 +48973,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -49748,12 +49760,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -50596,12 +50610,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -52162,12 +52178,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -53931,12 +53949,14 @@
 		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 		            	self.attachmentDS.add({
+		            		user_id 		: self.get("user_id"),
 		            		contact_id 		: obj.id,
 		            		type 			: "Contact",
 		            		name 			: value.name,
 		            		description 	: "",
 		            		key 			: key,
 		            		url 			: banhji.s3 + key,
+		            		size 			: value.size,
 		            		created_at 		: new Date(),
 
 		            		file 			: value.rawFile
@@ -54818,12 +54838,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -55712,12 +55734,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -56645,12 +56669,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -57472,12 +57498,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -58785,12 +58813,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -60069,12 +60099,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -60906,12 +60938,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -64097,12 +64131,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -66343,12 +66379,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Item",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -68875,12 +68913,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -69376,12 +69416,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile

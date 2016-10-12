@@ -238,14 +238,20 @@
         }
         .cover {
             position: relative;
-            height: 31px;
             clear: both;
             margin-bottom: 5px;
         }
         .cover img {
             position: absolute;
             right: 2px;
-            top: 5px;
+            top: 3px;
+            display: none;
+        }
+        .cover p.msg {
+            width: 100%;
+            color: #fff;
+            padding: 5px 10px;
+            background: #a22314;
             display: none;
         }
     </style>
@@ -298,12 +304,14 @@
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
                                     <input type="email" data-bind="value: email, events: {change : emailChange}" required="required" placeholder="Your email" class="signup-email">
+                                    <p class="msg"></p>
                                 </div>
                                 <div class="cover">
                                     <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
                                     <input required="required" type="numbers" data-bind="value: telephone, events: {change: phoneChange}" id="phoneInput" placeholder="Your Telephone" class="signup-email">
+                                    <p class="msg"></p>
                                 </div>
                                 <p class="signup-noted">We will use this information to communicate with you. We never share your number with third parties without your consent.</p>
                                 <div class="cover">
@@ -311,6 +319,7 @@
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
                                     <input required="required" type="password" data-bind="value: password, events : {change: pwdCheck}" placeholder="Password " class="signup-email">
+                                    <p class="msg"></p>
                                 </div>
 
                                 <p class="signup-noted">The minimum requirements for password are:  at least 8 characters, letter, and numbers.</p>
@@ -318,14 +327,16 @@
                                     <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input required="required" type="password" data-bind="value: cPassword, events: {change: pwdChange}" placeholder="Confirm password " class="signup-email"><br>
+                                    <input required="required" type="password" data-bind="value: cPassword, events: {change: pwdChange}" placeholder="Confirm password " class="signup-email">
+                                    <p class="msg"></p>
                                 </div>
 
                                 <label>Company Information</label><br>
                                 <div class="cover">
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input required="required" type="text" data-bind="value: name, events: {change: comChange }" placeholder="Company Name " class="signup-email"><br>
+                                    <input required="required" type="text" data-bind="value: name, events: {change: comChange }" placeholder="Company Name " class="signup-email">
+                                    <p class="msg">Company Name Required!</p>
                                 </div>
                                 <select class="signup-country" 
                                         data-role="dropdownlist" 
@@ -803,27 +814,38 @@
                         if(self.userDSCheck.data().length > 0){
                             self.set("err", null);
                             self.set("err", "Your Email is already Register!");
-                            alert(self.err);
                             $(".cover").eq(0).children(".imgLoad, .imgTick").css("display", "none");
                             $(".cover").eq(0).children(".imgCross").css("display", "block");
+                            $(".cover").eq(0).children(".msg").text("Email is already registered!");
+                            $(".cover").eq(0).children(".msg").css("display", "block");
+                            $(".cover").eq(0).children("input").css("border", "1px solid #a22314");
+                            $(".cover").eq(0).children("input").focus();
+
+                            
                         }else{
                             $(".cover").eq(0).children(".imgLoad, .imgCross").css("display", "none");
                             $(".cover").eq(0).children(".imgTick").css("display", "block");
+                            $(".cover").eq(0).children(".msg").removeAttr("style");
+                            $(".cover").eq(0).children("input").removeAttr("style");
+
                         }
                     });
                 }else{
                     this.set("err", null);
-                    this.set("err", "Please check your email address!")
-                    alert(this.err);
+                    this.set("err", "Email incorrect!")
+                    $(".cover").eq(0).children(".msg").text("Incorrect email address!");
                     $(".cover").eq(0).children(".imgLoad, .imgTick").css("display", "none");
                     $(".cover").eq(0).children(".imgCross").css("display", "block");
+                    $(".cover").eq(0).children(".msg").css("display", "block");
+                    $(".cover").eq(0).children("input").css("border", "1px solid #a22314");
+                    $(".cover").eq(0).children("input").focus();
                 }
             },
             allLetter   : function(inputtxt) {  
                     var letters = /^[a-zA-Z]+$/;
                     if (letters.test(inputtxt)) {
                         this.set("err", null);
-                        this.set("err", "Password Invalid!");
+                        this.set("err", "Password is invalid!");
                     }else{
                         this.set("err", null);
                     }
@@ -832,7 +854,7 @@
                     var letters = /^[0-9]+$/;
                     if (letters.test(inputtxt)) {
                         this.set("err", null);
-                        this.set("err", "Password Invalid!");
+                        this.set("err", "Password is invalid!");
                     }else{
                         this.set("err", null);
                     }
@@ -887,48 +909,49 @@
                     var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
 
                     attributeList.push(attributeEmail);
-
+                    if(this.get("name") == "")
                     userPool.signUp(this.get('email'), this.get('password'), attributeList, null, function(err, result){
                         if (err) {
                         } else {
-                            banhji.index.userDS.add({
-                                username: result.user.username,
-                                first_name: null,
-                                last_name: null,
-                                email: null,
-                                mobile: null,
-                                profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
-                                company: {id: 0, name:''},
-                                usertype: 1
-                            });
-                            banhji.index.userDS.sync();
-                            banhji.userDS.bind('requestEnd', function(e){
-                                var res = e.response, type = e.type;
-                                if(res.results.length > 0) {
-                                    // create company
-                                    banhji.companyDS.insert(0, {
-                                        name:  banhji.index.get('name'),
-                                        currency: banhji.index.get('currency'),
-                                        country:  banhji.index.get('country'),
-                                        industry:  banhji.index.get('industry'),
-                                        type: banhji.index.get('type'),
-                                        username:result.user.username
-                                    });
-                                    banhji.companyDS.sync();
-                                    banhji.companyDS.bind('requestEnd', function(e){
-                                        banhji.index.set('email', null);
-                                        banhji.index.set('password', null);
-                                        banhji.index.set('cPassword', null);
-                                        banhji.index.set('name', '');
-                                        banhji.index.set('currency', '');
-                                        banhji.index.set('country', null);
-                                        banhji.index.set('industry', null);
-                                        banhji.index.set('type', null);
-                                        // go to confirm
-                                        window.location.replace(baseUrl + "confirm/");
-                                    });
-                                }
-                            });
+                            this.comChange();
+                            // banhji.index.userDS.add({
+                            //     username: result.user.username,
+                            //     first_name: null,
+                            //     last_name: null,
+                            //     email: null,
+                            //     mobile: null,
+                            //     profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+                            //     company: {id: 0, name:''},
+                            //     usertype: 1
+                            // });
+                            // banhji.index.userDS.sync();
+                            // banhji.userDS.bind('requestEnd', function(e){
+                            //     var res = e.response, type = e.type;
+                            //     if(res.results.length > 0) {
+                            //         // create company
+                            //         banhji.companyDS.insert(0, {
+                            //             name:  banhji.index.get('name'),
+                            //             currency: banhji.index.get('currency'),
+                            //             country:  banhji.index.get('country'),
+                            //             industry:  banhji.index.get('industry'),
+                            //             type: banhji.index.get('type'),
+                            //             username:result.user.username
+                            //         });
+                            //         banhji.companyDS.sync();
+                            //         banhji.companyDS.bind('requestEnd', function(e){
+                            //             banhji.index.set('email', null);
+                            //             banhji.index.set('password', null);
+                            //             banhji.index.set('cPassword', null);
+                            //             banhji.index.set('name', '');
+                            //             banhji.index.set('currency', '');
+                            //             banhji.index.set('country', null);
+                            //             banhji.index.set('industry', null);
+                            //             banhji.index.set('type', null);
+                            //             // go to confirm
+                            //             window.location.replace(baseUrl + "confirm/");
+                            //         });
+                            //     }
+                            // });
                           }                    
                     });
                 }else{  
