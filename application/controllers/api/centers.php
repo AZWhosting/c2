@@ -36,6 +36,7 @@ class Centers extends REST_Controller {
 
 	
 	//GET ACCOUNTING SUMMARY
+	
 	function accounting_summary_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
@@ -152,7 +153,6 @@ class Centers extends REST_Controller {
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = [];
 		$data["count"] = 0;
-		$deleted = 0;
 
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -207,7 +207,9 @@ class Centers extends REST_Controller {
 		}
 
 		$obj->include_related("transaction", array("number","type","issued_date"));
-		$obj->where("deleted", $deleted);
+		$obj->where_related("transaction", "is_recurring", 0);
+		$obj->where_related("transaction", "deleted", 0);
+		$obj->where("deleted", 0);
 		$obj->order_by_related("transaction", "issued_date", "desc");		
 		
 		//Results

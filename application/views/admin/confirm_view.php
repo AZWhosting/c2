@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Banhji | </title>
-
+    <title>Banhji | Confirm</title>
+    <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
     <!-- Bootstrap -->
     <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -20,25 +20,110 @@
     <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/gentelella/css/custom.css" rel="stylesheet">
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/styles/kendo.common.min.css">
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/kendoui/styles/kendo.material.min.css">
+
+    <!-- Customize CSS-->
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" >
   </head>
 
   <body>
     <div id="layout">
-      <div id="main-container"></div>
+      <div id="main-container">
+      </div>
     </div>
+ 
     <script type="text/x-kendo-template" id="template-waiting-page">
-      <div class="nav-md">
-        <a class="hiddenanchor" id="toregister"></a>
-        <a class="hiddenanchor" id="tologin"></a>
+      <div id="conFirm-cover" class="container-fluid">
+          <div class="conFirm">
+              <div class="flip-container" >
+                <div class="flipper">
+                  <div class="front">
+                    <img src="<?php echo base_url(); ?>assets/img/confirm/l1.jpg" class="logo-animate" />
+                  </div>
+                  <div class="back">
+                    <img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
+                  </div>
+                </div>
+              </div>
 
-        <div id="wrapper">
-          <div id="waiting" class=" form">
-            <section class="login_content">
-              <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="150"><br>
-              <span id="proccessMsg">Please wait...</span>
-            </section>
+              <div class="flip-container" >
+                <div class="flipper">
+                  <div class="front">
+                    <img src="<?php echo base_url(); ?>assets/img/confirm/l2.jpg" class="logo-animate" />
+                  </div>
+                  <div class="back">
+                    <img title="Supplier Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg" alt="Vendor">
+                  </div>
+                </div>
+              </div>
+
+              <div class="flip-container" >
+                <div class="flipper">
+                  <div class="front">
+                    <img src="<?php echo base_url(); ?>assets/img/confirm/l3.jpg" class="logo-animate" />
+                  </div>
+                  <div class="back">
+                    <img title="Products/Sercies Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg" alt="Inventory">
+                  </div>
+                </div>
+              </div>
+
+              <div class="flip-container" >
+                <div class="flipper">
+                  <div class="front">
+                    <img src="<?php echo base_url(); ?>assets/img/confirm/l4.jpg" class="logo-animate" />
+                  </div>
+                  <div class="back">
+                    <img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.jpg" alt="Attachment">
+                  </div>
+                </div>
+              </div>
+
+              <div class="flip-container" >
+                <div class="flipper">
+                  <div class="front">
+                    <img src="<?php echo base_url(); ?>assets/img/confirm/l5.jpg" class="logo-animate" />
+                  </div>
+                  <div class="back">
+                    <img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">  
+                  </div>
+                </div>
+              </div>
+
+              <div class="flip-container" >
+                <div class="flipper">
+                  <div class="front">
+                    <img src="<?php echo base_url(); ?>assets/img/confirm/l6.jpg" class="logo-animate" />
+                  </div>
+                  <div class="back">
+                    <img title="Reports Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.jpg" alt="Reports">
+                  </div>
+                </div>
+              </div>
+
+              <div class="flip-container" >
+                <div class="flipper">
+                  <div class="front">
+                    <img src="<?php echo base_url(); ?>assets/img/confirm/l7.jpg" class="logo-animate" />
+                  </div>
+                  <div class="back">
+                    <img title="Tax Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
+                  </div>
+                </div>
+              </div>
+
+              <div class="flip-container" >
+                <div class="flipper">
+                  <div class="front">
+                    <img src="<?php echo base_url(); ?>assets/img/confirm/l8.jpg" class="logo-animate" />
+                  </div>
+                  <div class="back">
+                    <img title="Admin Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
+                  </div>
+                </div>
+              </div>
+
+              <h3 style="text-align: center;font-size: 40px;color: #8497b0;margin-top: 20px;font-weight: lighter;" id="proccessMsg"></h3>
           </div>
-        </div>
       </div>
     </script>
     <script type="text/x-kendo-template" id="template-confirm-page">
@@ -60,7 +145,7 @@
                 </div>
                 <div>
                   <a class="btn btn-default submit" href="#" data-bind="click: comfirmCode">Confirm Now</a>
-                  <a class="btn btn-invert submit" href="#" data-bind="click: resendCode">Resend Code</a>
+                  <!--a class="btn btn-invert submit" href="#" data-bind="click: resendCode">Resend Code</a-->
                 </div>
                 </div>
               </form>
@@ -104,7 +189,36 @@
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
     <!-- kendoui-->
     <!-- cognito -->
+    <script type="text/javascript">
+     
+
+    </script>
     <script>
+        function AnimateSlide() {
+          jQuery(".flip-container").eq(0).addClass("hover");
+          var Duration = 400;
+          setTimeout(function(){
+            jQuery(".flip-container").eq(1).addClass("hover");
+            setTimeout(function(){
+              jQuery(".flip-container").eq(2).addClass("hover");
+              setTimeout(function(){
+                jQuery(".flip-container").eq(3).addClass("hover");
+                setTimeout(function(){
+                  jQuery(".flip-container").eq(4).addClass("hover");
+                  setTimeout(function(){
+                    jQuery(".flip-container").eq(5).addClass("hover");
+                    setTimeout(function(){
+                      jQuery(".flip-container").eq(6).addClass("hover");
+                      setTimeout(function(){
+                        jQuery(".flip-container").eq(7).addClass("hover");
+                      },Duration);
+                    },Duration);
+                  },Duration);
+                },Duration);
+              },Duration);
+            },Duration);
+          },Duration);
+        }
         var banhji = banhji || {};
         localforage.config({
           driver: localforage.LOCALSTORAGE,
@@ -317,6 +431,7 @@
              e.preventDefault();
               // confirm user verification code after signed up
               layout.showIn("#main-container", watingView);
+              AnimateSlide();
               var userData = {
                   Username : this.get('email'),
                   Pool : userPool
@@ -327,30 +442,29 @@
                       layout.showIn("#main-container", confirmView);
                       return;
                   }
-
-                  // OK create Database base on country
-                  // 1 search for institute with username
-                    banhji.companyDS.filter({
-                      field: 'username', value: banhji.aws.get('email')
-                    });
-                    banhji.companyDS.bind('requestEnd', function(e){
-                      banhji.aws.createDB.add({institute: e.response.results[0].id});
-                      $('#proccessMsg').text("Creating Company");
-                      banhji.aws.createDB.sync();
-                      banhji.aws.createDB.bind('requestEnd', function(e){
-                        $('#proccessMsg').text("Finalizing...");
-                        if(e.response.results.institute) {
-                          banhji.userDS.filter({field: 'username', value: banhji.aws.get('email')});
-                          banhji.userDS.bind('requestEnd', function(e) {
-                            var data = banhji.userDS.at(0);
-                            data.set('is_confirmed', true);
-                            banhji.userDS.sync();
-                          });
-                          $('#proccessMsg').text("Redirecting...");
+                  banhji.companyDS.filter({
+                    field: 'username', value: banhji.aws.get('email')
+                  });
+                  banhji.companyDS.bind('requestEnd', function(e){
+                    banhji.aws.createDB.add({institute: e.response.results[0].id});
+                    $('#proccessMsg').text("Creating Company");
+                    banhji.aws.createDB.sync();
+                    banhji.aws.createDB.bind('requestEnd', function(e){
+                    $('#proccessMsg').text("Finalizing...");
+                      if(e.response.results.institute) {
+                        banhji.userDS.filter({field: 'username', value: banhji.aws.get('email')});
+                        banhji.userDS.bind('requestEnd', function(e) {
+                          var data = banhji.userDS.at(0);
+                          data.set('is_confirmed', true);
+                          banhji.userDS.sync();
+                        });
+                        $('#proccessMsg').text("Redirecting...");
+                        setTimeout(function(){
                           window.location.replace(baseUrl + "login/");
-                        }
-                      });
+                        },2000);
+                      }
                     });
+                  });
               });
           },
           resendCode: function(e) {
@@ -472,7 +586,10 @@
                       var verificationCode = prompt('Please input verification code ' ,'');
                       var newPassword = prompt('Enter new password ' ,'');
                       cognitoUser.confirmPassword(verificationCode, newPassword, this);
-                  }
+                      setTimeout(function(){
+                        window.location.replace(baseUrl + "login/");
+                      },2000);
+                }
               });
           },
           getCurrentUser: function() {

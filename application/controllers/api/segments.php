@@ -87,7 +87,7 @@ class Segments extends REST_Controller {
 					"id" 			=> $value->id,					
 					"code_length" 	=> $value->code_length,					
 					"name" 	 		=> $value->name,
-					"status" 		=> $value->status
+					"is_system" 	=> $value->is_system
 				);
 			}
 		}
@@ -113,7 +113,7 @@ class Segments extends REST_Controller {
 					"id" 			=> $obj->id,					
 					"code_length" 	=> $obj->code_length,					
 					"name" 	 		=> $obj->name,
-					"status" 		=> $obj->status
+					"is_system" 	=> $obj->is_system
 				);
 			}
 		}
@@ -141,7 +141,7 @@ class Segments extends REST_Controller {
 					"id" 			=> $obj->id,					
 					"code_length" 	=> $obj->code_length,					
 					"name" 	 		=> $obj->name,
-					"status" 		=> $obj->status	
+					"is_system" 	=> $obj->is_system	
 				);		
 			}
 		}
@@ -235,7 +235,7 @@ class Segments extends REST_Controller {
 					"segment_id" 	=> $value->segment_id,					
 					"code" 			=> $value->code,					
 					"name" 	 		=> $value->name,
-					"status" 		=> $value->status,
+					"is_system" 	=> $value->is_system,
 
 					"segment" 		=> $value->segment->get_raw()->result()
 				);
@@ -264,7 +264,7 @@ class Segments extends REST_Controller {
 					"segment_id" 	=> $obj->segment_id,					
 					"code" 			=> $obj->code,					
 					"name" 	 		=> $obj->name,
-					"status" 		=> $obj->status,
+					"is_system" 	=> $obj->is_system,
 
 					"segment" 		=> $obj->segment->get_raw()->result()
 				);
@@ -296,7 +296,7 @@ class Segments extends REST_Controller {
 					"segment_id" 	=> $obj->segment_id,					
 					"code" 			=> $obj->code,					
 					"name" 	 		=> $obj->name,
-					"status" 		=> $obj->status,
+					"is_system" 	=> $obj->is_system,
 
 					"segment" 		=> $obj->segment->get_raw()->result()
 				);		

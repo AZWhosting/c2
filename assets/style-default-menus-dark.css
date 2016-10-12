@@ -1539,6 +1539,7 @@ html.top-full .navbar.main .topnav > li > a {
   height: 43px;
   line-height: 43px;
   font-weight: 600;
+  text-transform: uppercase;
 }
 html.top-full .navbar.main .topnav > li > a > img {
   margin: 0 0 3px;
