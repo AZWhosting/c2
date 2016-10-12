@@ -897,7 +897,7 @@ class Accounting_reports extends REST_Controller {
 		$balanceSheet->where("deleted", $deleted);		
 		$balanceSheet->get_iterated();
 		
-		//Sum dr and cr					
+		//Sum Dr and Cr					
 		$accountList = [];
 		foreach ($balanceSheet as $value) {
 			$dr = 0;
@@ -1082,6 +1082,77 @@ class Accounting_reports extends REST_Controller {
 		   	"dr" 			=> 0,
 		   	"cr" 			=> $totalRetainEarning
 		);
+		
+				
+		$data["count"] = count($data["results"]);
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET BALANCE SHEET
+	function balance_sheet_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
+		$deleted = 0;
+		
+		$asOf = date("Y-m-d");
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		$asOf = $value["value"];
+			}									 			
+		}				
+
+		//Fiscal Date
+		//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate		
+		$asOfYear = date("Y",strtotime($asOf));
+		$fdate = $asOfYear ."-". $this->fiscalDate;
+		if($asOf > $fdate){
+			$startDate 	= $asOfYear ."-". $this->fiscalDate;
+			$endDate 	= intval($asOfYear)+1 ."-". $this->fiscalDate;
+		}else{
+			$startDate 	= intval($asOfYear)-1 ."-". $this->fiscalDate;
+			$endDate 	= $asOfYear ."-". $this->fiscalDate;
+		}
+		
+		//ASSET (As Of)
+		$asset = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$asset->include_related("account", array("number","name"));
+		$asset->include_related("account/account_type", array("name","nature"));
+		$asset->where_in_related("account/account_type", "id", array(10,11,12,13,14,15,16,17,18,19,20,21,22));
+		$asset->where_related("transaction", "issued_date <=", $today);
+		$asset->where_related("transaction", "is_recurring", 0);
+		$asset->where_related("transaction", "deleted", 0);
+		$asset->where("deleted", 0);		
+		$asset->get_iterated();
+		
+		//Sum Dr and Cr					
+		$assetList = [];
+		foreach ($asset as $value) {
+			$amount = 0;
+			if($value->account_account_type_nature=="Dr"){
+				$amount = (floatval($value->dr) / floatval($value->rate)) - (floatval($value->cr) / floatval($value->rate));
+			}else{
+				$amount = (floatval($value->cr) / floatval($value->rate)) - (floatval($value->dr) / floatval($value->rate));					
+			}
+
+			if(isset($assetList[$value->account_id])){
+				$assetList[$value->account_id]["amount"] 	+= $amount;
+			}else{
+				$assetList[$value->account_id]["id"] 		= $value->account_id;
+				$assetList[$value->account_id]["number"] 	= $value->account_number;
+				$assetList[$value->account_id]["name"] 		= $value->account_name;
+				$assetList[$value->account_id]["amount"] 	= $amount;						
+			}
+		}
+		
+		$totalAsset = $assetDr - $assetCr;
+		//END ASSET
 		
 				
 		$data["count"] = count($data["results"]);

@@ -12922,7 +12922,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2><span data-bind="text: lang.lang.general_supplier_setting"></span></h2>
+	<h2 data-bind="text: lang.lang.general_supplier_setting"></h2>
 
 	<br>
 
@@ -20988,7 +20988,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2><span data-bind="text: lang.lang.general_customer_setting"></span></h2>
+	<h2 data-bind="text: lang.lang.general_customer_setting"></h2>
 
 	<br>
 
@@ -71132,145 +71132,401 @@
 	* Accounting Section   *
 	**************************/
 	banhji.router.route("/accounting", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{		
-			banhji.view.layout.showIn("#content", banhji.view.accountingDashboard);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {	
+				banhji.view.layout.showIn("#content", banhji.view.accountingDashboard);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
 
-			var vm = banhji.accountingDashboard;
-			banhji.userManagement.addMultiTask("Accounting Dashboard","accounting",null);
+				var vm = banhji.accountingDashboard;
+				banhji.userManagement.addMultiTask("Accounting Dashboard","accounting",null);
 
-			if(banhji.pageLoaded["accounting"]==undefined){
-				banhji.pageLoaded["accounting"] = true;
-		          	
-			}
+				if(banhji.pageLoaded["accounting"]==undefined){
+					banhji.pageLoaded["accounting"] = true;
+			          	
+				}
 
-			vm.pageLoad();			
-		}				
+				vm.pageLoad();			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});				
 	});
 	banhji.router.route("/accounting_center(/:id)", function(id){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {			
+				var vm = banhji.accountingCenter;
+				banhji.userManagement.addMultiTask("Account Center","accounting_center",null);
+							
+				banhji.view.layout.showIn("#content", banhji.view.accountingCenter);			
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
+				if(banhji.pageLoaded["accounting_center"]==undefined){
+					banhji.pageLoaded["accounting_center"] = true;
+			              	
+				}
+
+				vm.pageLoad(id);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});					
+	});
+	banhji.router.route("/cash_advance(/:id)(/:is_recurring)", function(id,is_recurring){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.cashAdvance);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.cashAdvance;
+
+				banhji.userManagement.addMultiTask("Cash Advance","cash_advance",vm);
+				
+				if(banhji.pageLoaded["cash_advance"]==undefined){
+					banhji.pageLoaded["cash_advance"] = true;												
+	   
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});				
+				}
+
+				vm.pageLoad(id,is_recurring);
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});			
+	});
+	banhji.router.route("/expense(/:id)(/:is_recurring)", function(id,is_recurring){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {							
+				banhji.view.layout.showIn("#content", banhji.view.expense);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.expense;
+
+				banhji.userManagement.addMultiTask("Expense","expense",vm);
+				
+				if(banhji.pageLoaded["expense"]==undefined){
+					banhji.pageLoaded["expense"] = true;						
+	   
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});				
+				}
+
+				vm.pageLoad(id,is_recurring);
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
+	});
+	banhji.router.route("/account(/:id)", function(id){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {				
+				var vm = banhji.account;
+				banhji.userManagement.addMultiTask("Account","account",vm);
+							
+				banhji.view.layout.showIn("#content", banhji.view.account);			
+				// kendo.fx($("#slide-form")).slideIn("down").play();
+
+				if(banhji.pageLoaded["account"]==undefined){
+					banhji.pageLoaded["account"] = true;		         
+
+			       var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});				      	
+				}
+
+				vm.pageLoad(id);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});				
+	});
+	banhji.router.route("/journal(/:id)(/:is_recurring)", function(id,is_recurring){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {							
+				banhji.view.layout.showIn("#content", banhji.view.journal);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.journal;
+				banhji.userManagement.addMultiTask("Journal Entry","journal",vm);
+				
+				if(banhji.pageLoaded["journal"]==undefined){
+					banhji.pageLoaded["journal"] = true;
+	   
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("isValid")){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("isValid")){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate() && vm.get("isValid")){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("isValid") && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});				
+				}
+
+				vm.pageLoad(id,is_recurring);
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});			
+	});
+	banhji.router.route("/accounting_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
-		}else{			
-			var vm = banhji.accountingCenter;
-			banhji.userManagement.addMultiTask("Account Center","accounting_center",null);
-						
-			banhji.view.layout.showIn("#content", banhji.view.accountingCenter);			
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.accountingReportCenter);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
 
-			if(banhji.pageLoaded["accounting_center"]==undefined){
-				banhji.pageLoaded["accounting_center"] = true;
-		              	
+			var vm = banhji.accountingReportCenter;			
+			banhji.userManagement.addMultiTask("Accounting Report Center","accounting_report_center",null);
+			if(banhji.pageLoaded["accounting_report_center"]==undefined){
+				banhji.pageLoaded["accounting_report_center"] = true;				
+								
 			}
 
-			vm.pageLoad(id);			
-		}				
-	});
-	banhji.router.route("/account(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{			
-			var vm = banhji.account;
-			banhji.userManagement.addMultiTask("Account","account",vm);
-						
-			banhji.view.layout.showIn("#content", banhji.view.account);			
-			// kendo.fx($("#slide-form")).slideIn("down").play();
-
-			if(banhji.pageLoaded["account"]==undefined){
-				banhji.pageLoaded["account"] = true;		         
-
-		       var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});				      	
-			}
-
-			vm.pageLoad(id);			
-		}				
-	});
-	banhji.router.route("/journal(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.journal);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.journal;
-			banhji.userManagement.addMultiTask("Journal Entry","journal",vm);
-			
-			if(banhji.pageLoaded["journal"]==undefined){
-				banhji.pageLoaded["journal"] = true;
-   
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.get("isValid")){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.get("isValid")){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate() && vm.get("isValid")){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.get("isValid") && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});				
-			}
-
-			vm.pageLoad(id,is_recurring);
+			vm.pageLoad();
 		}		
 	});
+	banhji.router.route("/accounting_setting", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {	
+				banhji.view.layout.showIn("#content", banhji.view.accountingSetting);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
+				var vm = banhji.vendorSetting;
+				banhji.userManagement.addMultiTask("General Accounting Setting","accounting_setting",null);
+				
+				if(banhji.pageLoaded["accounting_setting"]==undefined){
+					banhji.pageLoaded["accounting_setting"] = true;
+
+					vm.contactTypeDS.filter({ field:"parent_id", value: 2 });
+				}
+
+				vm.pageLoad();			     		
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
+	});
+
 	banhji.router.route("/currency_rate", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -71473,45 +71729,6 @@
 			}
 		}		
 	});
-	banhji.router.route("/accounting_report_center", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.accountingReportCenter);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
-
-			var vm = banhji.accountingReportCenter;			
-			banhji.userManagement.addMultiTask("Accounting Report Center","accounting_report_center",null);
-			if(banhji.pageLoaded["accounting_report_center"]==undefined){
-				banhji.pageLoaded["accounting_report_center"] = true;				
-								
-			}
-
-			vm.pageLoad();
-		}		
-	});
-	banhji.router.route("/accounting_setting", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.accountingSetting);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
-
-			var vm = banhji.vendorSetting;
-			banhji.userManagement.addMultiTask("General Accounting Setting","accounting_setting",null);
-			
-			if(banhji.pageLoaded["accounting_setting"]==undefined){
-				banhji.pageLoaded["accounting_setting"] = true;
-
-				vm.contactTypeDS.filter({ field:"parent_id", value: 2 });
-			}
-
-			vm.pageLoad();			     		
-		}
-	});
-
 	banhji.router.route("/add_accountingprefix(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -71559,8 +71776,7 @@
 			
 			vm.pageLoad(id);		
 		};
-	});
-	
+	});	
 	banhji.router.route("/segment", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -73614,133 +73830,7 @@
 				});	        	
 			}			
 		}				
-	});
-	banhji.router.route("/cash_advance(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.cashAdvance);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.cashAdvance;
-
-			banhji.userManagement.addMultiTask("Cash Advance","cash_advance",vm);
-			
-			if(banhji.pageLoaded["cash_advance"]==undefined){
-				banhji.pageLoaded["cash_advance"] = true;												
-   
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});				
-			}
-
-			vm.pageLoad(id,is_recurring);
-		}		
-	});
-	banhji.router.route("/expense(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.expense);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.expense;
-
-			banhji.userManagement.addMultiTask("Expense","expense",vm);
-			
-			if(banhji.pageLoaded["expense"]==undefined){
-				banhji.pageLoaded["expense"] = true;						
-   
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});				
-			}
-
-			vm.pageLoad(id,is_recurring);
-		}		
-	});
+	});	
 	banhji.router.route("/employee_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -73765,143 +73855,195 @@
 	*   Vendor Section   *
 	**************************/
 	banhji.router.route("/vendors", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.vendorDashboard);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
-			
-			var vm = banhji.vendorDashboard;
-			banhji.userManagement.addMultiTask("Supplier Dashboard","vendors",null);
-			if(banhji.pageLoaded["vendors"]==undefined){
-				banhji.pageLoaded["vendors"] = true;				
-								               
-			}
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.vendorDashboard);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
+				
+				var vm = banhji.vendorDashboard;
+				banhji.userManagement.addMultiTask("Supplier Dashboard","vendors",null);
+				if(banhji.pageLoaded["vendors"]==undefined){
+					banhji.pageLoaded["vendors"] = true;				
+									               
+				}
 
-			vm.pageLoad();				
-		}
+				vm.pageLoad();				
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/vendor_center(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.vendorCenter);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
-			
-			var vm = banhji.vendorCenter;
-			banhji.userManagement.addMultiTask("Supplier Center","vendor_center",null);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.vendorCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
+				
+				var vm = banhji.vendorCenter;
+				banhji.userManagement.addMultiTask("Supplier Center","vendor_center",null);
 
-			if(banhji.pageLoaded["vendor_center"]==undefined){
-				banhji.pageLoaded["vendor_center"] = true;
-						               
-			}
+				if(banhji.pageLoaded["vendor_center"]==undefined){
+					banhji.pageLoaded["vendor_center"] = true;
+							               
+				}
 
-			vm.pageLoad(id);				
-		}
+				vm.pageLoad(id);				
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/vendor(/:id)(/:is_pattern)", function(id, is_pattern){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{			
-			var vm = banhji.vendor;
-			banhji.userManagement.addMultiTask("Supplier","vendor",vm);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {			
+				var vm = banhji.vendor;
+				banhji.userManagement.addMultiTask("Supplier","vendor",vm);
 
-			banhji.view.layout.showIn("#content", banhji.view.vendor);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+				banhji.view.layout.showIn("#content", banhji.view.vendor);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			if(banhji.pageLoaded["vendor"]==undefined){
-				banhji.pageLoaded["vendor"] = true;		             		        	       		         
+				if(banhji.pageLoaded["vendor"]==undefined){
+					banhji.pageLoaded["vendor"] = true;		             		        	       		         
 
-		        var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+			        var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});	        	
-			}
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});	        	
+				}
 
-			vm.pageLoad(id, is_pattern);			
-		}				
+				vm.pageLoad(id, is_pattern);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});				
 	});
 	banhji.router.route("/purchase_order(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.purchaseOrder);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.purchaseOrder);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.purchaseOrder;
-			banhji.userManagement.addMultiTask("Purchase Order","purchase_order",vm);
+				var vm = banhji.purchaseOrder;
+				banhji.userManagement.addMultiTask("Purchase Order","purchase_order",vm);
 
-			if(banhji.pageLoaded["purchase_order"]==undefined){
-				banhji.pageLoaded["purchase_order"] = true;				        
+				if(banhji.pageLoaded["purchase_order"]==undefined){
+					banhji.pageLoaded["purchase_order"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
 	});
 	banhji.router.route("/grn(/:id)(/:is_recurring)", function(id,is_recurring){
 		if(!banhji.userManagement.getLogin()){
@@ -73966,199 +74108,252 @@
 		}		
 	});	
 	banhji.router.route("/vendor_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.vendorDeposit);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.vendorDeposit);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.vendorDeposit;
-			banhji.userManagement.addMultiTask("Supplier Deposit","vendor_deposit",vm);
-			
-			if(banhji.pageLoaded["vendor_deposit"]==undefined){
-				banhji.pageLoaded["vendor_deposit"] = true;				        
+				var vm = banhji.vendorDeposit;
+				banhji.userManagement.addMultiTask("Supplier Deposit","vendor_deposit",vm);
+				
+				if(banhji.pageLoaded["vendor_deposit"]==undefined){
+					banhji.pageLoaded["vendor_deposit"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});				
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});				
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
 	});	
 	banhji.router.route("/purchase(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.purchase);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {					
+				banhji.view.layout.showIn("#content", banhji.view.purchase);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.purchase;
-			banhji.userManagement.addMultiTask("Purchase","purchase",vm);
+				var vm = banhji.purchase;
+				banhji.userManagement.addMultiTask("Purchase","purchase",vm);
 
-			if(banhji.pageLoaded["purchase"]==undefined){
-				banhji.pageLoaded["purchase"] = true;								        
+				if(banhji.pageLoaded["purchase"]==undefined){
+					banhji.pageLoaded["purchase"] = true;								        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
 	});
 	banhji.router.route("/purchase_return(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.purchaseReturn);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {							
+				banhji.view.layout.showIn("#content", banhji.view.purchaseReturn);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.purchaseReturn;
-			banhji.userManagement.addMultiTask("Purchase Return","purchase_return",vm);
-			
-			if(banhji.pageLoaded["purchase_return"]==undefined){
-				banhji.pageLoaded["purchase_return"] = true;				        
+				var vm = banhji.purchaseReturn;
+				banhji.userManagement.addMultiTask("Purchase Return","purchase_return",vm);
+				
+				if(banhji.pageLoaded["purchase_return"]==undefined){
+					banhji.pageLoaded["purchase_return"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate() && vm.get("obj").remaining===0){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate() && vm.get("obj").remaining===0){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.get("obj").remaining===0){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate() && vm.get("obj").remaining===0){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate() && vm.get("obj").remaining===0){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-			}
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate() && vm.get("obj").remaining===0){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+				}
 
-			vm.pageLoad(id);			
-		}		
+				vm.pageLoad(id);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
 	});	
 	banhji.router.route("/vendor_setting", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.vendorSetting);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.vendorSetting);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
 
-			var vm = banhji.vendorSetting;
-			banhji.userManagement.addMultiTask("Supplier Setting","vendor_setting",null);
-			
-			if(banhji.pageLoaded["vendor_setting"]==undefined){
-				banhji.pageLoaded["vendor_setting"] = true;
+				var vm = banhji.vendorSetting;
+				banhji.userManagement.addMultiTask("Supplier Setting","vendor_setting",null);
+				
+				if(banhji.pageLoaded["vendor_setting"]==undefined){
+					banhji.pageLoaded["vendor_setting"] = true;
 
-			}
+				}
 
-			vm.pageLoad();			     		
-		}
+				vm.pageLoad();			     		
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
+
 	banhji.router.route("/vendor_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -74724,400 +74919,491 @@
 	*   Customer Section   *
 	**************************/
 	banhji.router.route("/customers", function(){	
-		// banhji.accessMod.query({
-		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		// }).then(function(e){
-		// 		var allowed = false;
-		// 		if(banhji.accessMod.data().length > 0) {
-		// 			for(var i = 0; i < banhji.accessMod.data().length; i++) {
-		// 				if("customers" == banhji.accessMod.data()[i].name.toLowerCase()) {
-		// 					allowed = true;
-		// 					break;
-		// 				}
-		// 			}
-		// 		} 
-		// 		if(allowed) {
-					banhji.view.layout.showIn("#content", banhji.view.customerDashboard);
-					banhji.view.layout.showIn('#menu', banhji.view.menu);
-					banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
-					
-					var vm = banhji.customerDashboard;
-					banhji.userManagement.addMultiTask("Customer Dashboard","customers",null);
-					if(banhji.pageLoaded["customers"]==undefined){
-						banhji.pageLoaded["customers"] = true;				
-										               
-					}			
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.customerDashboard);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+				
+				var vm = banhji.customerDashboard;
+				banhji.userManagement.addMultiTask("Customer Dashboard","customers",null);
+				if(banhji.pageLoaded["customers"]==undefined){
+					banhji.pageLoaded["customers"] = true;				
+									               
+				}			
 
-					vm.pageLoad();
-		// 		} else {
-		// 			window.location.replace(baseUrl + "admin");
-		// 		}				
-		// 	}
-		// );
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/customer_center(/:id)", function(id){		
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.customerCenter);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
-			
-			var vm = banhji.customerCenter;
-			banhji.userManagement.addMultiTask("Customer Center","customer_center",null);
-			if(banhji.pageLoaded["customer_center"]==undefined){
-				banhji.pageLoaded["customer_center"] = true;
-										               
-			}
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.customerCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+				
+				var vm = banhji.customerCenter;
+				banhji.userManagement.addMultiTask("Customer Center","customer_center",null);
+				if(banhji.pageLoaded["customer_center"]==undefined){
+					banhji.pageLoaded["customer_center"] = true;
+											               
+				}
 
-			vm.pageLoad(id);				
-		}
+				vm.pageLoad(id);				
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/customer(/:id)(/:is_pattern)", function(id,is_pattern){		
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.customer);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.customer);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.customer;
-			banhji.userManagement.addMultiTask("Customer","customer",vm);
-			if(banhji.pageLoaded["customer"]==undefined){
-				banhji.pageLoaded["customer"] = true;		         
+				var vm = banhji.customer;
+				banhji.userManagement.addMultiTask("Customer","customer",vm);
+				if(banhji.pageLoaded["customer"]==undefined){
+					banhji.pageLoaded["customer"] = true;		         
 
-		        var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					//e.preventDefault();
+			        var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						//e.preventDefault();
 
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});	        	
-			}
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});	        	
+				}
 
-			vm.pageLoad(id, is_pattern);			
-		}				
+				vm.pageLoad(id, is_pattern);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});				
 	});
 	banhji.router.route("/quote(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.quote);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.quote);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.quote;
-			banhji.userManagement.addMultiTask("Quote","quote",vm);
+				var vm = banhji.quote;
+				banhji.userManagement.addMultiTask("Quote","quote",vm);
 
-			if(banhji.pageLoaded["quote"]==undefined){
-				banhji.pageLoaded["quote"] = true;				        
+				if(banhji.pageLoaded["quote"]==undefined){
+					banhji.pageLoaded["quote"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
 	});
 	banhji.router.route("/sale_order(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.saleOrder);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleOrder);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.saleOrder;
-			banhji.userManagement.addMultiTask("Sale Order","sale_order",vm);
-			if(banhji.pageLoaded["sale_order"]==undefined){
-				banhji.pageLoaded["sale_order"] = true;				        
+				var vm = banhji.saleOrder;
+				banhji.userManagement.addMultiTask("Sale Order","sale_order",vm);
+				if(banhji.pageLoaded["sale_order"]==undefined){
+					banhji.pageLoaded["sale_order"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
 	});
 	banhji.router.route("/customer_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.customerDeposit);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.customerDeposit);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.customerDeposit;
-			banhji.userManagement.addMultiTask("Customer Deposit","customer_deposit",vm);
+				var vm = banhji.customerDeposit;
+				banhji.userManagement.addMultiTask("Customer Deposit","customer_deposit",vm);
 
-			if(banhji.pageLoaded["customer_deposit"]==undefined){
-				banhji.pageLoaded["customer_deposit"] = true;
+				if(banhji.pageLoaded["customer_deposit"]==undefined){
+					banhji.pageLoaded["customer_deposit"] = true;
 
-		        var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+			        var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});				
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});				
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
 	});
 	banhji.router.route("/cash_sale(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.cashSale);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.cashSale);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.cashSale;
-			banhji.userManagement.addMultiTask("Cash Sale","cash_sale",vm);
-			if(banhji.pageLoaded["cash_sale"]==undefined){
-				banhji.pageLoaded["cash_sale"] = true;				        
+				var vm = banhji.cashSale;
+				banhji.userManagement.addMultiTask("Cash Sale","cash_sale",vm);
+				if(banhji.pageLoaded["cash_sale"]==undefined){
+					banhji.pageLoaded["cash_sale"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);
+
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});			
 	});
 	banhji.router.route("/invoice(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.invoice);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.invoice);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.invoice;
-			banhji.userManagement.addMultiTask("Invoice","invoice",vm);
-			if(banhji.pageLoaded["invoice"]==undefined){
-				banhji.pageLoaded["invoice"] = true;				        
+				var vm = banhji.invoice;
+				banhji.userManagement.addMultiTask("Invoice","invoice",vm);
+				if(banhji.pageLoaded["invoice"]==undefined){
+					banhji.pageLoaded["invoice"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});	
 	});
 	banhji.router.route("/gdn(/:id)(/:is_recurring)", function(id,is_recurring){
 		if(!banhji.userManagement.getLogin()){
@@ -75181,72 +75467,131 @@
 		}		
 	});
 	banhji.router.route("/sale_return(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.saleReturn);					
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleReturn);					
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.saleReturn;
-			banhji.userManagement.addMultiTask("Sale Return","sale_return",vm);
-			if(banhji.pageLoaded["sale_return"]==undefined){
-				banhji.pageLoaded["sale_return"] = true;
-				
-		        var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+				var vm = banhji.saleReturn;
+				banhji.userManagement.addMultiTask("Sale Return","sale_return",vm);
+				if(banhji.pageLoaded["sale_return"]==undefined){
+					banhji.pageLoaded["sale_return"] = true;
 					
-					if(validator.validate() && vm.get("obj").remaining===0){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+			        var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate() && vm.get("obj").remaining===0){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.get("obj").remaining===0){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate() && vm.get("obj").remaining===0){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate() && vm.get("obj").remaining===0){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-			}
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate() && vm.get("obj").remaining===0){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+				}
 
-			vm.pageLoad(id);			
-		}		
+				vm.pageLoad(id);			
+				} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
 	});
 	banhji.router.route("/statement(/:id)", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.statement);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.statement);
 
-			var vm = banhji.statement;
-			banhji.userManagement.addMultiTask("Statement","statement",null);
+				var vm = banhji.statement;
+				banhji.userManagement.addMultiTask("Statement","statement",null);
 
-			if(banhji.pageLoaded["statement"]==undefined){
-				banhji.pageLoaded["statement"] = true;
-				
-			}
+				if(banhji.pageLoaded["statement"]==undefined){
+					banhji.pageLoaded["statement"] = true;
+					
+				}
 
-			vm.pageLoad();
-		}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
+	banhji.router.route("/customer_setting", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.customerSetting);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+
+				var vm = banhji.customerSetting;
+				banhji.userManagement.addMultiTask("Customer Setting","customer_setting",null);
+				if(banhji.pageLoaded["customer_setting"]==undefined){
+					banhji.pageLoaded["customer_setting"] = true;
+					
+					vm.contactTypeDS.filter({ field:"parent_id", value:1 });
+				}
+
+				vm.pageLoad();			     		
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
+	});
+
 	banhji.router.route("/customer_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -75297,26 +75642,7 @@
 				vm.search();
 			}			
 		}		
-	});
-	banhji.router.route("/customer_setting", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.customerSetting);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
-
-			var vm = banhji.customerSetting;
-			banhji.userManagement.addMultiTask("Customer Setting","customer_setting",null);
-			if(banhji.pageLoaded["customer_setting"]==undefined){
-				banhji.pageLoaded["customer_setting"] = true;
-				
-				vm.contactTypeDS.filter({ field:"parent_id", value:1 });
-			}
-
-			vm.pageLoad();			     		
-		}
-	});
+	});	
 	banhji.router.route("/job", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -76289,477 +76615,645 @@
 	*   Inventory Section   *
 	**************************/
 	banhji.router.route("/inventories", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.itemDashBoard);			
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
-			
-			var vm = banhji.itemDashBoard;
-			banhji.userManagement.addMultiTask("Products/Services Dashboard","inventories",null);
-
-			if(banhji.pageLoaded["inventories"]==undefined){							
-				banhji.pageLoaded["inventories"] = true;												
-			}
-
-			banhji.itemDashBoard.positionSummary.read();
-			banhji.itemDashBoard.positionSummary.bind('requestEnd', function(e){
-				if(e.response) {
-					banhji.itemDashBoard.set('count', e.response.count);
-					kendo.culture(banhji.locale);
-					banhji.itemDashBoard.set('onHand', kendo.toString(e.response.onHand, 'n0'));
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
 				}
-			});
-			vm.pageLoad();
-		}				
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.itemDashBoard);			
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+				
+				var vm = banhji.itemDashBoard;
+				banhji.userManagement.addMultiTask("Products/Services Dashboard","inventories",null);
+
+				if(banhji.pageLoaded["inventories"]==undefined){							
+					banhji.pageLoaded["inventories"] = true;												
+				}
+
+				banhji.itemDashBoard.positionSummary.read();
+				banhji.itemDashBoard.positionSummary.bind('requestEnd', function(e){
+					if(e.response) {
+						banhji.itemDashBoard.set('count', e.response.count);
+						kendo.culture(banhji.locale);
+						banhji.itemDashBoard.set('onHand', kendo.toString(e.response.onHand, 'n0'));
+					}
+				});
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});				
 	});	
 	banhji.router.route("/item_center(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.itemCenter);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
-			
-			var vm = banhji.itemCenter;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.itemCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+				
+				var vm = banhji.itemCenter;
 
-			banhji.userManagement.addMultiTask("Inventory Center","item_center",null);
+				banhji.userManagement.addMultiTask("Inventory Center","item_center",null);
 
-			if(banhji.pageLoaded["item_center"]==undefined){
-				banhji.pageLoaded["item_center"] = true;						
-								
-			}
+				if(banhji.pageLoaded["item_center"]==undefined){
+					banhji.pageLoaded["item_center"] = true;						
+									
+				}
 
-			vm.pageLoad(id);				
-		}
+				vm.pageLoad(id);				
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/item(/:id)(/:is_pattern)", function(id, is_pattern){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.item;
-						
-			banhji.view.layout.showIn("#content", banhji.view.item);						
-			banhji.userManagement.addMultiTask("Inventory For Sale","item",null);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				var vm = banhji.item;
+							
+				banhji.view.layout.showIn("#content", banhji.view.item);						
+				banhji.userManagement.addMultiTask("Inventory For Sale","item",null);
 
-			if(banhji.pageLoaded["item"]==undefined){
-				banhji.pageLoaded["item"] = true;
-				
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+				if(banhji.pageLoaded["item"]==undefined){
+					banhji.pageLoaded["item"] = true;
+					
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_pattern);	
-		}
+				vm.pageLoad(id, is_pattern);	
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/item_prices/:id", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{			
-			var vm = banhji.itemPrice;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {			
+				var vm = banhji.itemPrice;
 
-			banhji.userManagement.addMultiTask("Inventory Price","item_prices",null);
-			
-			banhji.view.layout.showIn("#content", banhji.view.itemPrice);
-			
-			if(banhji.pageLoaded["item_prices"]==undefined){
-				banhji.pageLoaded["item_prices"] = true;
+				banhji.userManagement.addMultiTask("Inventory Price","item_prices",null);
 				
-			}
+				banhji.view.layout.showIn("#content", banhji.view.itemPrice);
+				
+				if(banhji.pageLoaded["item_prices"]==undefined){
+					banhji.pageLoaded["item_prices"] = true;
+					
+				}
 
-			vm.pageLoad(id);				
-		}
+				vm.pageLoad(id);				
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/item_catalog(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.itemCatalog;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				var vm = banhji.itemCatalog;
 
-			banhji.userManagement.addMultiTask("Inventory Catalog","item_catalog",vm);
-			
-			banhji.view.layout.showIn("#content", banhji.view.itemCatalog);						
-			
-			if(banhji.pageLoaded["item_catalog"]==undefined){
-				banhji.pageLoaded["item_catalog"] = true;
+				banhji.userManagement.addMultiTask("Inventory Catalog","item_catalog",vm);
+				
+				banhji.view.layout.showIn("#content", banhji.view.itemCatalog);						
+				
+				if(banhji.pageLoaded["item_catalog"]==undefined){
+					banhji.pageLoaded["item_catalog"] = true;
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id);	
-		}
+				vm.pageLoad(id);	
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/item_assembly(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.itemAssembly;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				var vm = banhji.itemAssembly;
 
-			banhji.userManagement.addMultiTask("Inventory Assembly","item_assembly",vm);
-			
-			banhji.view.layout.showIn("#content", banhji.view.itemAssembly);						
-			
-			if(banhji.pageLoaded["item_assembly"]==undefined){
-				banhji.pageLoaded["item_assembly"] = true;
+				banhji.userManagement.addMultiTask("Inventory Assembly","item_assembly",vm);
+				
+				banhji.view.layout.showIn("#content", banhji.view.itemAssembly);						
+				
+				if(banhji.pageLoaded["item_assembly"]==undefined){
+					banhji.pageLoaded["item_assembly"] = true;
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id);	
-		}
+				vm.pageLoad(id);	
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/item_service(/:id)(/:is_pattern)", function(id, is_pattern){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.itemService;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				var vm = banhji.itemService;
 
-			banhji.userManagement.addMultiTask("Service","item_service",vm);
-			
-			banhji.view.layout.showIn("#content", banhji.view.itemService);						
-			
-			if(banhji.pageLoaded["item_service"]==undefined){
-				banhji.pageLoaded["item_service"] = true;				
+				banhji.userManagement.addMultiTask("Service","item_service",vm);
+				
+				banhji.view.layout.showIn("#content", banhji.view.itemService);						
+				
+				if(banhji.pageLoaded["item_service"]==undefined){
+					banhji.pageLoaded["item_service"] = true;				
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_pattern);	
-		}
+				vm.pageLoad(id, is_pattern);	
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/non_inventory_part(/:id)(/:is_pattern)", function(id, is_pattern){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.nonInventoryPart;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				var vm = banhji.nonInventoryPart;
 
-			banhji.userManagement.addMultiTask("Other Inventory","non_inventory_part",vm);
-			
-			banhji.view.layout.showIn("#content", banhji.view.nonInventoryPart);						
-			
-			if(banhji.pageLoaded["non_inventory_part"]==undefined){
-				banhji.pageLoaded["non_inventory_part"] = true;				
+				banhji.userManagement.addMultiTask("Other Inventory","non_inventory_part",vm);
+				
+				banhji.view.layout.showIn("#content", banhji.view.nonInventoryPart);						
+				
+				if(banhji.pageLoaded["non_inventory_part"]==undefined){
+					banhji.pageLoaded["non_inventory_part"] = true;				
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_pattern);	
-		}
+				vm.pageLoad(id, is_pattern);	
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/fixed_assets(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.fixedAssets);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.fixedAssets);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
 
-			var vm = banhji.fixedAssets;
+				var vm = banhji.fixedAssets;
 
-			banhji.userManagement.addMultiTask("Fixed Assets","fixed_assets",vm);
+				banhji.userManagement.addMultiTask("Fixed Assets","fixed_assets",vm);
 
-			if(banhji.pageLoaded["fixed_assets"]==undefined){
-				banhji.pageLoaded["fixed_assets"] = true;
-								
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+				if(banhji.pageLoaded["fixed_assets"]==undefined){
+					banhji.pageLoaded["fixed_assets"] = true;
+									
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id);
-		}		
+				vm.pageLoad(id);
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
 	});
 	banhji.router.route("/txn_item(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.txnItem;
-			banhji.userManagement.addMultiTask("Transaction Item","txn_item",vm);
-			
-			banhji.view.layout.showIn("#content", banhji.view.txnItem);						
-			
-			if(banhji.pageLoaded["txn_item"]==undefined){
-				banhji.pageLoaded["txn_item"] = true;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				var vm = banhji.txnItem;
+				banhji.userManagement.addMultiTask("Transaction Item","txn_item",vm);
+				
+				banhji.view.layout.showIn("#content", banhji.view.txnItem);						
+				
+				if(banhji.pageLoaded["txn_item"]==undefined){
+					banhji.pageLoaded["txn_item"] = true;
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id);	
-		}
+				vm.pageLoad(id);	
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/item_adjustment(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.itemAdjustment);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.itemAdjustment);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
 
-			var vm = banhji.itemAdjustment;
+				var vm = banhji.itemAdjustment;
 
-			banhji.userManagement.addMultiTask("Inventory Adjustment","item_adjustment",vm);
+				banhji.userManagement.addMultiTask("Inventory Adjustment","item_adjustment",vm);
 
-			if(banhji.pageLoaded["item_adjustment"]==undefined){
-				banhji.pageLoaded["item_adjustment"] = true;
-								
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+				if(banhji.pageLoaded["item_adjustment"]==undefined){
+					banhji.pageLoaded["item_adjustment"] = true;
+									
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-			}
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+				}
 
-			vm.pageLoad(id);
-		}		
-	});
-	
-	
-	banhji.router.route("/item_setting", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.itemSetting);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
-
-			var vm = banhji.itemSetting;
-
-			banhji.userManagement.addMultiTask("General Products/ Services Setting","item_setting",null);
-			
-			if(banhji.pageLoaded["item_setting"]==undefined){
-				banhji.pageLoaded["item_setting"] = true;
-				
-			}
-
-			vm.pageLoad();			     		
-		}
+				vm.pageLoad(id);
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
 	});
 	banhji.router.route("/internal_usage(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.internalUsage);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.internalUsage);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
 
-			var vm = banhji.internalUsage;
+				var vm = banhji.internalUsage;
 
-			banhji.userManagement.addMultiTask("Internal Usage","internal_usage",null);
-			
-			if(banhji.pageLoaded["internal_usage"]==undefined){
-				banhji.pageLoaded["internal_usage"] = true;
+				banhji.userManagement.addMultiTask("Internal Usage","internal_usage",null);
 				
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
+				if(banhji.pageLoaded["internal_usage"]==undefined){
+					banhji.pageLoaded["internal_usage"] = true;
 					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-			}
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-			vm.pageLoad(id);			     		
-		}
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+				}
+
+				vm.pageLoad(id);			     		
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});	
 	});
+	banhji.router.route("/item_setting", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.itemSetting);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+
+				var vm = banhji.itemSetting;
+
+				banhji.userManagement.addMultiTask("General Products/ Services Setting","item_setting",null);
+				
+				if(banhji.pageLoaded["item_setting"]==undefined){
+					banhji.pageLoaded["item_setting"] = true;
+					
+				}
+
+				vm.pageLoad();			     		
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
+	});	
+
 	banhji.router.route("/service_setting", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');

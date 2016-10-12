@@ -244,7 +244,7 @@
         .cover img {
             position: absolute;
             right: 2px;
-            top: 3px;
+            top: 5px;
             display: none;
         }
         .cover p.msg {
@@ -327,7 +327,7 @@
                                     <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input required="required" type="password" data-bind="value: cPassword, events: {change: pwdChange}" placeholder="Confirm password " class="signup-email">
+                                    <input required="required" minlength="8" type="password" data-bind="value: cPassword, events: {change: pwdChange}" placeholder="Confirm password " class="signup-email">
                                     <p class="msg"></p>
                                 </div>
 
@@ -371,7 +371,7 @@
                                         data-place-holder="select one" style="text-align: left;">
                                 </select><br>
 
-                                <input style="background: #1F4E78;font-size: 20px !important; " id="signupBtn" type="button" data-bind="click: create" class="btn-signup" value="SIGNUP FOR FREE"><br>
+                                <input style="background: #1F4E78;font-size: 20px !important; " id="signupBtn" type="button" data-bind="enabled: signupEnable, click: create" class="btn-signup" value="SIGNUP FOR FREE"><br>
                                 <p class="signup-text-bottom">
                                     By clicking on “signup”, you agree to the <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a>  and <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a>.
                                 </p>
@@ -771,6 +771,7 @@
             userDS    : banhji.userDS,
             currencies: banhji.currencies,
             err       : null,
+            signupEnable : true,
             createDB  : new kendo.data.DataSource({
                 transport: {
                     create  : {
@@ -820,8 +821,6 @@
                             $(".cover").eq(0).children(".msg").css("display", "block");
                             $(".cover").eq(0).children("input").css("border", "1px solid #a22314");
                             $(".cover").eq(0).children("input").focus();
-
-                            
                         }else{
                             $(".cover").eq(0).children(".imgLoad, .imgCross").css("display", "none");
                             $(".cover").eq(0).children(".imgTick").css("display", "block");
@@ -841,58 +840,74 @@
                     $(".cover").eq(0).children("input").focus();
                 }
             },
-            allLetter   : function(inputtxt) {  
-                    var letters = /^[a-zA-Z]+$/;
-                    if (letters.test(inputtxt)) {
-                        this.set("err", null);
-                        this.set("err", "Password is invalid!");
-                    }else{
-                        this.set("err", null);
-                    }
-            },  
-            allNumber   : function(inputtxt) {  
-                    var letters = /^[0-9]+$/;
-                    if (letters.test(inputtxt)) {
-                        this.set("err", null);
-                        this.set("err", "Password is invalid!");
-                    }else{
-                        this.set("err", null);
-                    }
-            },  
             phoneChange : function(e) {
                 $(".cover").eq(1).children(".imgTick").css("display", "block");
             },
-            pwdCheck    : function(e) {
-                this.allLetter(this.get('password'));
-                this.allNumber(this.get('password'));
+            checkLetter   : function(inputtxt) {  
+                    var letters = /^[a-zA-Z]+$/,Num = /^[0-9]+$/, Result;
+                    if (letters.test(inputtxt)) {
+                        Result = false;
+                        return Result;
+                    }
+                    if (Num.test(inputtxt)) {
+                        Result = false;
+                        return Result;
+                    }
             },
             pwdChange   : function(e) {
                 
                 if(this.get('password') != this.get('cPassword')) {
                     this.set("err", null);
-                    this.set("err", "Your Passwrod Not Match!");
-                    alert(this.err);
-                    $(".cover").eq(2).children(".imgLoad, .imgTick").css("display", "none");
-                    $(".cover").eq(2).children(".imgCross").css("display", "block");
+                    this.set("err", "Your password does not match!");
                     $(".cover").eq(3).children(".imgLoad, .imgTick").css("display", "none");
                     $(".cover").eq(3).children(".imgCross").css("display", "block");
+                    $(".cover").eq(3).children(".msg").text("Your password does not match!");
+                    $(".cover").eq(3).children(".msg").css("display", "block");
+                    $(".cover").eq(3).children("input").css("border", "1px solid #a22314");
+                    $(".cover").eq(3).children("input").focus();
                 }else{
                     this.set("err", null);
-                    $(".cover").eq(2).children(".imgLoad, .imgCross").css("display", "none");
-                    $(".cover").eq(2).children(".imgTick").css("display", "block");
                     $(".cover").eq(3).children(".imgLoad, .imgCross").css("display", "none");
                     $(".cover").eq(3).children(".imgTick").css("display", "block");
+                    $(".cover").eq(3).children(".msg").removeAttr("style");
+                    $(".cover").eq(3).children("input").removeAttr("style");
                 }
+            },
+            pwdCheck    : function(e) {
+                var checkL = this.checkLetter(this.get('password'));
+                if(checkL == false || this.get('password').length < 8) {
+                    this.set("err", null);
+                    this.set("err", "Password does not match requirements!");
+                    $(".cover").eq(2).children(".imgLoad, .imgTick").css("display", "none");
+                    $(".cover").eq(2).children(".imgCross").css("display", "block");
+                    $(".cover").eq(2).children(".msg").text("Password does not match requirements");
+                    $(".cover").eq(2).children(".msg").css("display", "block");
+                    $(".cover").eq(2).children("input").css("border", "1px solid #a22314");
+                    $(".cover").eq(2).children("input").focus();
+                }else{
+                    $(".cover").eq(2).children(".imgLoad, .imgCross").css("display", "none");
+                    $(".cover").eq(2).children(".imgTick").css("display", "block");
+                    $(".cover").eq(2).children(".msg").removeAttr("style");
+                    $(".cover").eq(2).children("input").removeAttr("style");
+                }
+                this.pwdChange();
             },
             comChange   : function(e) {
                 if(this.get("name") == ""){
                     this.set("err", null);
-                    this.set("err", "Please fill Company Name!");
+                    this.set("err", "Please fill company name!");
+                    $(".cover").eq(4).children(".imgLoad, .imgTick").css("display", "none");
                     $(".cover").eq(4).children(".imgCross").css("display", "block");
-                    $(".cover").eq(4).children(".imgTick").css("display", "none");
+                    $(".cover").eq(4).children(".msg").text("Please fill company name!");
+                    $(".cover").eq(4).children(".msg").css("display", "block");
+                    $(".cover").eq(4).children("input").css("border", "1px solid #a22314");
+                    $(".cover").eq(4).children("input").focus();
                 }else{
+                    this.set("err", null);
+                    $(".cover").eq(4).children(".imgLoad, .imgCross").css("display", "none");
                     $(".cover").eq(4).children(".imgTick").css("display", "block");
-                    $(".cover").eq(4).children(".imgCross").css("display", "none");
+                    $(".cover").eq(4).children(".msg").removeAttr("style");
+                    $(".cover").eq(4).children("input").removeAttr("style");
                 }
             },
             create: function() {
@@ -905,53 +920,54 @@
                         Name : 'email',
                         Value : this.get('email')
                     };
-
+                    if(this.err == null){
+                        this.set("signupEnable", true);
+                    }
                     var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
 
                     attributeList.push(attributeEmail);
-                    if(this.get("name") == "")
+                    this.comChange();
                     userPool.signUp(this.get('email'), this.get('password'), attributeList, null, function(err, result){
                         if (err) {
                         } else {
-                            this.comChange();
-                            // banhji.index.userDS.add({
-                            //     username: result.user.username,
-                            //     first_name: null,
-                            //     last_name: null,
-                            //     email: null,
-                            //     mobile: null,
-                            //     profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
-                            //     company: {id: 0, name:''},
-                            //     usertype: 1
-                            // });
-                            // banhji.index.userDS.sync();
-                            // banhji.userDS.bind('requestEnd', function(e){
-                            //     var res = e.response, type = e.type;
-                            //     if(res.results.length > 0) {
-                            //         // create company
-                            //         banhji.companyDS.insert(0, {
-                            //             name:  banhji.index.get('name'),
-                            //             currency: banhji.index.get('currency'),
-                            //             country:  banhji.index.get('country'),
-                            //             industry:  banhji.index.get('industry'),
-                            //             type: banhji.index.get('type'),
-                            //             username:result.user.username
-                            //         });
-                            //         banhji.companyDS.sync();
-                            //         banhji.companyDS.bind('requestEnd', function(e){
-                            //             banhji.index.set('email', null);
-                            //             banhji.index.set('password', null);
-                            //             banhji.index.set('cPassword', null);
-                            //             banhji.index.set('name', '');
-                            //             banhji.index.set('currency', '');
-                            //             banhji.index.set('country', null);
-                            //             banhji.index.set('industry', null);
-                            //             banhji.index.set('type', null);
-                            //             // go to confirm
-                            //             window.location.replace(baseUrl + "confirm/");
-                            //         });
-                            //     }
-                            // });
+                            banhji.index.userDS.add({
+                                username: result.user.username,
+                                first_name: null,
+                                last_name: null,
+                                email: null,
+                                mobile: null,
+                                profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
+                                company: {id: 0, name:''},
+                                usertype: 1
+                            });
+                            banhji.index.userDS.sync();
+                            banhji.userDS.bind('requestEnd', function(e){
+                                var res = e.response, type = e.type;
+                                if(res.results.length > 0) {
+                                    // create company
+                                    banhji.companyDS.insert(0, {
+                                        name:  banhji.index.get('name'),
+                                        currency: banhji.index.get('currency'),
+                                        country:  banhji.index.get('country'),
+                                        industry:  banhji.index.get('industry'),
+                                        type: banhji.index.get('type'),
+                                        username:result.user.username
+                                    });
+                                    banhji.companyDS.sync();
+                                    banhji.companyDS.bind('requestEnd', function(e){
+                                        banhji.index.set('email', null);
+                                        banhji.index.set('password', null);
+                                        banhji.index.set('cPassword', null);
+                                        banhji.index.set('name', '');
+                                        banhji.index.set('currency', '');
+                                        banhji.index.set('country', null);
+                                        banhji.index.set('industry', null);
+                                        banhji.index.set('type', null);
+                                        // go to confirm
+                                        window.location.replace(baseUrl + "confirm/");
+                                    });
+                                }
+                            });
                           }                    
                     });
                 }else{  

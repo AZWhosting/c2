@@ -19,7 +19,9 @@ class Welcome extends MY_Controller {
 	 */
 	public function index()
 	{
-		$this->_render('showcase_view');
+		//$this->_render('showcase_view');
+		header("Location: http://www.banhji.com/");
+		die();
 	}
 	public function report() {
 		$this->_render('report');
