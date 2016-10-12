@@ -310,7 +310,7 @@
                                     <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input required="required" type="password" data-bind="value: password" placeholder="Password " class="signup-email">
+                                    <input required="required" type="password" data-bind="value: password, events : {change: pwdCheck}" placeholder="Password " class="signup-email">
                                 </div>
 
                                 <p class="signup-noted">The minimum requirements for password are:  at least 8 characters, letter, and numbers.</p>
@@ -819,9 +819,30 @@
                     $(".cover").eq(0).children(".imgCross").css("display", "block");
                 }
             },
+            allLetter   : function(inputtxt) {  
+                    var letters = /^[a-zA-Z]+$/;
+                    if (letters.test(inputtxt)) {
+                        this.set("err", null);
+                        this.set("err", "Password Invalid!");
+                    }else{
+                        this.set("err", null);
+                    }
+            },  
+            allNumber   : function(inputtxt) {  
+                    var letters = /^[0-9]+$/;
+                    if (letters.test(inputtxt)) {
+                        this.set("err", null);
+                        this.set("err", "Password Invalid!");
+                    }else{
+                        this.set("err", null);
+                    }
+            },  
             phoneChange : function(e) {
-
                 $(".cover").eq(1).children(".imgTick").css("display", "block");
+            },
+            pwdCheck    : function(e) {
+                this.allLetter(this.get('password'));
+                this.allNumber(this.get('password'));
             },
             pwdChange   : function(e) {
                 

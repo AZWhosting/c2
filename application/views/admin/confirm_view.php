@@ -586,7 +586,10 @@
                       var verificationCode = prompt('Please input verification code ' ,'');
                       var newPassword = prompt('Enter new password ' ,'');
                       cognitoUser.confirmPassword(verificationCode, newPassword, this);
-                  }
+                      setTimeout(function(){
+                        window.location.replace(baseUrl + "login/");
+                      },2000);
+                }
               });
           },
           getCurrentUser: function() {
