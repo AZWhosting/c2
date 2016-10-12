@@ -1875,24 +1875,24 @@
 					    <div class="widget-body">
 
 					    	<div class="row-fluid">
-						    	<div class="span6 alert alert-primary">Company currency: <span data-bind="text: baseCode"></span> </div>
-						    	<div class="span6 alert alert-primary">Reporting currency: <span data-bind="text: reportCode"></span> </div>
+						    	<div class="span6 alert alert-primary"><span data-bind="text: lang.lang.company_currency"></span> <span data-bind="text: baseCode"></span> </div>
+						    	<div class="span6 alert alert-primary"><span data-bind="text: lang.lang.reporting_currency"></span> <span data-bind="text: reportCode"></span> </div>
 					    	</div>
 
 							<br>					
 							
-							<button class="btn btn-inverse hidden-print" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> Add New Rate</button>
+							<button class="btn btn-inverse hidden-print" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_new_rate"></span></button>
 							
 							<!-- Item List -->
 							<table style="margin-top: 15px;" class="table table-bordered table-primary table-striped table-vertical-center">
 						        <thead>
 						            <tr>
-						                <th style="width: 15%;">DATE</th>
-						                <th style="width: 6%;">CODE</th>
-						                <th style="width: 25%">COUNTRY</th>
-						                <th style="width: 15%;">RATE</th>
-						                <th style="width: 15%;">SOURCE</th>
-						                <th style="width: 15%;">METHOD</th>
+						                <th style="width: 15%;"><span data-bind="text: lang.lang.date"></span></th>
+						                <th style="width: 6%;"><span data-bind="text: lang.lang.code"></span></th>
+						                <th style="width: 25%"><span data-bind="text: lang.lang.country"></span></th>
+						                <th style="width: 15%;"><span data-bind="text: lang.lang.rate"></span></th>
+						                <th style="width: 15%;"><span data-bind="text: lang.lang.source"></span></th>
+						                <th style="width: 15%;"><span data-bind="text: lang.lang.method"></span></th>
 						                <th style="width: 10%;"></th>			                
 						            </tr> 
 						        </thead>
@@ -1932,7 +1932,7 @@
 										<td>
 							                <input id="date" name="date" 
 							            		data-role="datepicker"			            		
-					        					data-bind="value: obj.date" 
+					        					data-bind="value: obj.date" CASH ADVANCE
 					        					data-format="dd-MM-yyyy"
 					        					data-parse-formats="yyyy-MM-dd" 
 					        					placeholder="dd-MM-yyyy" 
@@ -2002,7 +2002,7 @@
 				        </p>
 			        </div>
 			        <div class="span6">
-			         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbspAdd <span data-bind="text: lang.lang.add_tax_type"></span></button>
+			         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp <span data-bind="text: lang.lang.add_tax_type"></span></button>
 						
 			        </div>		        				        				        	
 			    </div>			   
@@ -2194,7 +2194,7 @@
     		|
     		<span data-bind="click: view"><i class="icon-view"></i> <span data-bind="text: lang.lang.view_item"></span></span>
     		|
-    		<span data-bind="click: addItem"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_item"></span>
+    		<span data-bind="click: addItem"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_tax_item"></span>
     	</td>
    	</tr>
 </script>
@@ -6072,17 +6072,18 @@
 					<span class="glyphicons no-js remove_2 pull-right" 
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>
-
-			        <h2>Segment</h2>
+					<br>
+					<br>
+			        <h2 span data-bind="text: lang.lang.segment"></h2>
 
 			        <div class="row">
 				        <div class="span6">
 				        	<p>
-					        	Segment is important for monitoring or in-depth analysis of your company performance. There are two default segments created. You can edit or add more segment and its items.
+					        	<span data-bind="text: lang.lang.segment_is_important"></span>
 					        </p>
 				        </div>
 				         <div class="span6">
-				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbspAdd New Segment</button>
+				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp<span data-bind="text: lang.lang.add_new_segment"></span></button>
 							
 				        </div>
 			        </div>				    			   
@@ -6100,7 +6101,7 @@
 				    	
 				    	<table>							
 							<tr style="border-bottom: 8px solid #fff;">
-								<td width="40%">NAME</td>
+								<td width="40%"><span data-bind="text: lang.lang.name"></span></td>
 								<td>
 									<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
 								</td>
@@ -6110,8 +6111,8 @@
 						<br>
 
 						<div style="text-align: center;">
-							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
-							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>  
 						</div>
 					</div>
 							
@@ -6120,7 +6121,7 @@
 			            	<table class="table table-condensed">
 			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
 			            			<tr>
-			            				<th>NAME</th>            					            				
+			            				<th data-bind="text: lang.lang.name"></th>            					            	
 			            				<th></th>
 			            			</tr>
 			            		</thead>
@@ -6140,13 +6141,13 @@
 			                 data-bind="visible: windowItemVisible">
 	            		<table>
 							<tr style="border-bottom: 8px solid #fff;">
-								<td width="35%">CODE</td>
+								<td width="35%"><span data-bind="text: lang.lang.code"></span></td>
 								<td>
 									<input class="k-textbox" placeholder="type code ..." data-bind="value: item.code" style="width: 100%;">
 								</td>
 							</tr>
 							<tr style="border-bottom: 8px solid #fff;">
-								<td>NAME</td>
+								<td><span data-bind="text: lang.lang.name"></span></td>
 								<td>
 									<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
 								</td>
@@ -6155,8 +6156,8 @@
 
 						<br>
 						<div style="text-align: center;">
-							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i>Save</span>
-							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i>Close</span>  
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>  
 						</div>
 					</div>
 
@@ -6167,9 +6168,9 @@
 						    <table class="table table-bordered table-white">
 			            		<thead>
 			            			<tr>
-			            				<th>CODE</th>
-			            				<th>NAME</th>
-			            				<th>SEGMENT</th>   					            				
+			            				<th data-bind="text: lang.lang.code"></th>
+			            				<th data-bind="text: lang.lang.name"></th>
+			            				<th data-bind="text: lang.lang.segment"></th>   					            		
 			            				<th></th>
 			            			</tr>
 			            		</thead>
@@ -7639,7 +7640,7 @@
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>
 
-		        <h2>CASH ADVANCE</h2>			    		   
+		        <h4 span data-bind="text: lang.lang.cash_advance"></h4>			    		   
 
 			    <br>				   				
 					
@@ -7649,11 +7650,11 @@
 						<div class="box-generic well" style="height: 150px;">				
 							<table class="table table-borderless table-condensed cart_total">									
 								<tr data-bind="visible: isEdit">				
-									<td>No.</td>
+									<td><span data-bind="text: lang.lang.no_"></span></td>
 									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 								</tr>
 								<tr>
-									<td>Date</td>
+									<td><span data-bind="text: lang.lang.date"></span></td>
 									<td class="right">
 										<input id="issuedDate" name="issuedDate" 
 												data-role="datepicker"
@@ -7666,7 +7667,7 @@
 									</td>
 								</tr>								
 								<tr>
-									<td>Currency</td>
+									<td><span data-bind="text: lang.lang.currency"></span></td>
 									<td>
 										<input id="cbbCurrency" name="cbbCurrency"
 													   data-role="combobox"				                
@@ -7682,7 +7683,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td>Employee</td>
+									<td><span data-bind="text: lang.lang.employee"></span></td>
 									<td>
 										<input id="cbbContact" name="cbbContact"
 											   data-role="combobox"
@@ -7702,7 +7703,7 @@
 
 							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 								data-bind="style: { backgroundColor: amtDueColor}">
-								<div align="left">TOTAL AMOUNT</div>
+								<div align="left"><span data-bind="text: lang.lang.total_amount"></span></div>
 								<h2 data-bind="text: total" align="right"></h2>
 							</div>
 
@@ -7735,7 +7736,7 @@
 						        	
 						        	<table class="table table-borderless table-condensed cart_total">
 										<tr>										
-											<td>Expected Date</td>
+											<td><span data-bind="text: lang.lang.expected_date"></span></td>
 											<td>
 												<input id="txtExpectedDate" name="txtExpectedDate" 
 														data-role="datepicker"
@@ -7747,7 +7748,7 @@
 											</td>
 										</tr>
 										<tr>										
-											<td>Method</td>
+											<td><span data-bind="text: lang.lang.method"></span></td>
 											<td>
 												<input id="ddlPaymentMethod" name="ddlPaymentMethod"
 													   data-role="dropdownlist"								                   
@@ -7763,7 +7764,7 @@
 									        </td>
 										</tr>
 										<tr>									
-											<td>Cash Account</td>
+											<td><span data-bind="text: lang.lang.cash_account"></span></td>
 											<td>
 												<input id="cbbAccount" name="cbbAccount"
 													   data-role="combobox"                   
@@ -7779,7 +7780,7 @@
 											</td>
 										</tr>
 										<tr>										
-											<td>Segment</td>
+											<td><span data-bind="text: lang.lang.segment"></span></td>
 											<td>
 												<select data-role="multiselect"
 													   data-value-primitive="true"
@@ -7809,8 +7810,7 @@
 
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab3-4">
-						         	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
-						            
+						         	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							       
 						            <input id="files" name="files"
 					                   type="file"
 					                   data-role="upload"
@@ -7822,9 +7822,9 @@
 						            <table class="table table-bordered">
 								        <thead>
 								            <tr>			                
-								                <th>File Name</th>
-								                <th>Description</th>
-								                <th>Date</th>
+								                <th data-bind="text: lang.lang.file_name"></th>
+								                <th data-bind="text: lang.lang.description"></th>
+								                <th data-bind="text: lang.lang.date"></th>
 								                <th style="width: 13%;"></th>                			                
 								            </tr> 
 								        </thead>
@@ -7856,7 +7856,7 @@
 						                <br><br>
 
 						                <div align="right">
-							                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
+							                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>						                
 							            </div>
 
 						            </div>
@@ -7866,13 +7866,13 @@
 							            <table style="width: 100%">
 							            	<tr align="right">
 							            		<td>
-							            			Name
+							            			<span data-bind="text: lang.lang.name"></span>
 							            		</td>
 							            		<td>
 							            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
 							            					placeholder="Recurring name.." 
 							            					style="width: 40%;" />
-							            			Start
+							            			<span data-bind="text: lang.lang.start"></span>
 									                <input data-role="datepicker"
 															data-format="dd-MM-yyyy"
 															data-parse-formats="yyyy-MM-dd"
@@ -7882,7 +7882,7 @@
 							            	</tr>
 							            	<tr align="right">
 							            		<td>
-								            		Every
+								            		<span data-bind="text: lang.lang.every"></span>
 								            	</td>
 							            		<td>
 								            		<input data-role="numerictextbox"
@@ -7903,7 +7903,7 @@
 							            	</tr>
 								            <tr align="right">
 								            	<td>
-								            		On
+								            		<span data-bind="text: lang.lang.on"></span>
 								            	</td>							            	
 								            	<td>
 
@@ -7963,12 +7963,12 @@
 				<table class="table table-bordered table-primary table-striped table-vertical-center">
 			        <thead>
 			            <tr>
-			                <th style="width: 1%;">No.</th>			                
-			                <th style="width: 20%;">ACCOUNT</th>
-			                <th>DESCRIPTION</th>
-			                <th data-bind="visible: showRef" style="width: 7%;">REF</th>			                
-			                <th data-bind="visible: showSegment" style="width: 15%;">SEGMENT</th>
-			                <th style="width: 15%;">AMOUNT</th>			                			                
+			                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+			                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
+			                <th data-bind="text: lang.lang.description"></th>
+			                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.reference"></span></th>
+			                <th data-bind="visible: showSegment" style="width: 15%;"><span data-bind="text: lang.lang.segment"></span></th>
+			                <th style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>			                			  
 			            </tr> 
 			        </thead>
 			        <tbody data-role="listview" 
@@ -7992,10 +7992,10 @@
 							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
 							<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
 								<li>
-									<input type="checkbox" data-bind="checked: showRef" /> REF
+									<input type="checkbox" data-bind="checked: showRef" /> <span data-bind="text: lang.lang.reference"></span>
 								</li>
 								<li>
-									<input type="checkbox" data-bind="checked: showSegment" /> SEGMENT
+									<input type="checkbox" data-bind="checked: showSegment" /> <span data-bind="text: lang.lang.segment"></span>
 								</li>								
 							</ul>
 						</div>
@@ -8010,7 +8010,7 @@
 						<table class="table table-borderless table-condensed cart_total">
 							<tbody>								
 								<tr>
-									<td class="right">Total:</td>
+									<td class="right"><span data-bind="text: lang.lang.total"></span></td>
 									<td class="right strong"><span data-bind="text: total"></span></td>
 								</tr>								
 							</tbody>
@@ -8040,8 +8040,8 @@
 		                 data-bind="visible: showConfirm"
 		                 style="text-align:center;">
 		                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
-					    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
-					    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+					    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete"><span data-bind="text: lang.lang.yes"></span></button> 
+					    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm"><span data-bind="text: lang.lang.no"></span></button>
 		            </div>
 		            <!-- // Delete Confirmation -->
 
@@ -8056,11 +8056,11 @@
 				                   data-option-label="Select Template..." />
 						</div>
 						<div class="span9" align="right">
-							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
-							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>																	
-							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> Save Print</span>
-							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>																	
+							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
+							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
 						</div>
 					</div>
 				</div>
@@ -8135,7 +8135,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-		        <h2>EXPENSE</h2>			    		   
+		        <h2 span data-bind="text: lang.lang.c_expense"></h2>			    		   
 
 			    <br>				   				
 					
@@ -8145,11 +8145,11 @@
 						<div class="box-generic well" style="height: 190px;">				
 							<table class="table table-borderless table-condensed cart_total">									
 								<tr data-bind="visible: isEdit">				
-									<td>No.</td>
+									<td><span data-bind="text: lang.lang.no_"></span></td>
 									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 								</tr>
 								<tr>
-									<td>Date</td>
+									<td><span data-bind="text: lang.lang.date"></span></td>
 									<td class="right">
 										<input id="issuedDate" name="issuedDate" 
 												data-role="datepicker"
@@ -8162,7 +8162,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td>Currency</td>
+									<td><span data-bind="text: lang.lang.currency"></span></td>
 									<td>
 										<input id="cbbCurrency" name="cbbCurrency"
 											   data-role="combobox"											                    
@@ -8178,7 +8178,7 @@
 									</td>
 								</tr>								
 								<tr>
-									<td>Employee</td>
+									<td><span data-bind="text: lang.lang.employee"></span></td>
 									<td>
 										<input id="cbbContact" name="cbbContact"
 											   data-role="combobox"
@@ -8199,7 +8199,7 @@
 
 							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
-									<div align="left">AMOUNT PAID</div>
+									<div align="left"><span data-bind="text: lang.lang.c_amount_paid"></span></div>
 									<h2 data-bind="text: total" align="right"></h2>
 								</div>
 						</div>
@@ -8236,28 +8236,28 @@
 									            					name="payOption" id="payOption1"
 									            					data-bind="checked: obj.type, 
 									            								events:{ change: typeChanges }"> 
-									            			<label class="k-radio-label" for="payOption1">DIRECT EXPENSE</label>
+									            			<label class="k-radio-label" for="payOption1"><span data-bind="text: lang.lang.c_direct_expense"></span></label>
 									            		</td>
 									            		<td>
 												            <input type="radio" value="Reimbursement" class="k-radio"
 												            		name="payOption" id="payOption2"
 												            		data-bind="checked: obj.type, 
 												            					events:{ change: typeChanges }"> 
-												            <label class="k-radio-label" for="payOption2">REIMBURSEMENT</label>
+												            <label class="k-radio-label" for="payOption2"><span data-bind="text: lang.lang.c_reimbursement"></span></label>
 										            	</td>
 										            	<td>
 												            <input type="radio" value="Advance_Settlement" class="k-radio"
 												            		name="payOption" id="payOption3"
 												            		data-bind="checked: obj.type, 
 												            					events:{ change: typeChanges }"> 
-												            <label class="k-radio-label" for="payOption3">ADVANCE SETTLEMENT</label>
+												            <label class="k-radio-label" for="payOption3"><span data-bind="text: lang.lang.c_advance_settlement"></span></label>
 										            	</td>
 										            </tr>
 									            </table>
 							        		</td>
 						        		</tr>
 							        	<tr>
-							        		<td>Cash Account</td>
+							        		<td><span data-bind="text: lang.lang.cash_account"></span></td>
 							        		<td>
 							        			<input id="cbbAccount" name="cbbAccount"
 													   data-role="combobox"                   
@@ -8273,7 +8273,7 @@
 							        		</td>
 							        	</tr>
 							        	<tr data-bind="visible: showCashAdvance">
-							        		<td>Cash Advance</td>
+							        		<td><span data-bind="text: lang.lang.cash_advance"></span></td>
 							        		<td>
 							        			<input data-role="combobox"                   
 									                   data-value-primitive="true"
@@ -8288,7 +8288,7 @@
 							        		</td>
 							        	</tr>
 							        	<tr>
-											<td>Segments</td>
+											<td><span data-bind="text: lang.lang.segment"></span></td>
 											<td>
 												<select data-role="multiselect"
 													   data-value-primitive="true"
@@ -8326,8 +8326,7 @@
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab2-3">
 
-						        	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>					            	
-						            
+						        	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>					       
 						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
@@ -8339,9 +8338,9 @@
 						            <table class="table table-bordered" style="margin-bottom: 0;">
 								        <thead>
 								            <tr>			                
-								                <th>File Name</th>
-								                <th>Description</th>
-								                <th>Date</th>
+								                <th data-bind="text: lang.lang.file_name"></th>
+								                <th data-bind="text: lang.lang.description"></th>
+								                <th data-bind="text: lang.lang.date"></th>
 								                <th style="width: 13%;"></th>                			                
 								            </tr> 
 								        </thead>
@@ -8373,7 +8372,7 @@
 						                <br><br>
 
 						                <div align="right">
-							                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
+							                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>						                
 							            </div>
 
 						            </div>
@@ -8383,13 +8382,13 @@
 							            <table style="width: 100%">
 							            	<tr align="right">
 							            		<td>
-							            			Name
+							            			<span data-bind="text: lang.lang.name"></span>
 							            		</td>
 							            		<td>
 							            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
 							            					placeholder="Recurring name.." 
 							            					style="width: 40%;" />
-							            			Start
+							            			<span data-bind="text: lang.lang.start"></span>
 									                <input data-role="datepicker"
 															data-format="dd-MM-yyyy"
 															data-parse-formats="yyyy-MM-dd"
@@ -8399,7 +8398,7 @@
 							            	</tr>
 							            	<tr align="right">
 							            		<td>
-								            		Every
+								            		<span data-bind="text: lang.lang.every"></span>
 								            	</td>
 							            		<td>
 								            		<input data-role="numerictextbox"
@@ -8420,7 +8419,7 @@
 							            	</tr>
 								            <tr align="right">
 								            	<td>
-								            		On
+								            		<span data-bind="text: lang.lang.on"></span>
 								            	</td>							            	
 								            	<td>
 
@@ -8480,16 +8479,16 @@
 				<table class="table table-bordered table-primary table-striped table-vertical-center">
 			        <thead>
 			            <tr>
-			                <th style="width: 1%;">No.</th>			                
-			                <th style="width: 20%;">ACCOUNT</th>
-			                <th>DESCRIPTION</th>
-			                <th style="width: 15%;">SUPPLIER</th>
-			                <th style="width: 8%;">INVOICE#</th>
-			                <th style="width: 13%;">DATE</th>			                			                
+			                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+			                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
+			                <th data-bind="text: lang.lang.description"></th>
+			                <th style="width: 15%;"><span data-bind="text: lang.lang.supplier"></span></th>
+			                <th style="width: 8%;"><span data-bind="text: lang.lang.inv_"></span></th>
+			                <th style="width: 13%;"><span data-bind="text: lang.lang.date"></span></th>			                			  
 			                <th data-bind="visible: showJob" style="width: 10%;">JOB</th>
-			                <th data-bind="visible: showSegment" style="width: 10%;">SEGMENT</th>			                
-			                <th style="width: 15%;">AMOUNT</th>
-			                <th style="width: 11%;">TAX</th>			                			                
+			                <th data-bind="visible: showSegment" style="width: 10%;"><span data-bind="text: lang.lang.segment"></span></th>	
+			                <th style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
+			                <th style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			  
 			            </tr> 
 			        </thead>
 			        <tbody data-role="listview" 
@@ -8514,11 +8513,11 @@
 							<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
 								<li>
 									<input type="checkbox" id="chbJob" class="k-checkbox" data-bind="checked: showJob" />												
-									<label class="k-checkbox-label" for="chbJob">JOB</label>
+									<label class="k-checkbox-label" for="chbJob"><span data-bind="text: lang.lang.job"></span></label>
 								</li>
 								<li>
 									<input type="checkbox" id="chbSegment" class="k-checkbox" data-bind="checked: showSegment" />												
-									<label class="k-checkbox-label" for="chbSegment">SEGMENT</label>
+									<label class="k-checkbox-label" for="chbSegment"><span data-bind="text: lang.lang.segment"></span></label>
 								</li>								
 							</ul>
 						</div>
@@ -8536,11 +8535,11 @@
 						<table class="table table-condensed table-striped table-white" data-bind="visible: showCashAdvance">
 							<tbody>								
 								<tr>
-									<td class="right">Total Cash Advanced:</td>
+									<td class="right"><span data-bind="text: lang.lang.total_cash_advanced"></span></td>
 									<td class="right strong"><span data-bind="text: credit"></span></td>
 								</tr>
 								<tr>
-									<td class="right">Amount Due:</td>
+									<td class="right"><span data-bind="text: lang.lang.amount_due"></span></td>
 									<td class="right strong"><span data-bind="text: remain"></span></td>
 								</tr>								
 							</tbody>
@@ -8552,15 +8551,15 @@
 						<table class="table table-condensed table-striped table-white">
 							<tbody>
 								<tr>
-									<td class="right">Sub Total:</td>
+									<td class="right"><span data-bind="text: lang.lang.sub_total"></span></td>
 									<td class="right strong" width="40%"><span data-bind="text: sub_total"></span></td>
 								</tr>								
 								<tr>
-									<td class="right">Total Tax:</td>
+									<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
 									<td class="right strong"><span data-bind="text: tax"></span></td>
 								</tr>																
 								<tr>
-									<td class="right"><h4>Total:</h4></td>
+									<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
 									<td class="right strong"><h4 data-bind="text: total"></h4></td>
 								</tr>																
 							</tbody>
@@ -8606,11 +8605,11 @@
 				                   data-option-label="Select Template..." />
 						</div>
 						<div class="span9" align="right">
-							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
-							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>																	
-							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> Save Print</span>
-							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>																	
+							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
+							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
 						</div>
 					</div>
 				</div>
@@ -11949,7 +11948,7 @@
 							                <th><span data-bind="text: lang.lang.type"></span></th>
 							                <th><span data-bind="text: lang.lang.account"></span></th>
 							                <th><span data-bind="text: lang.lang.supplier"></span></th>
-							                <th>INV.#</th>
+							                <th data-bind="text: lang.lang.inv_"></th>
 							                <th><span data-bind="text: lang.lang.date"></span></th>
 							                <th data-bind="visible: showDueDateColumn"><span data-bind="text: lang.lang.due_date"></span></th>
 							                <th data-bind="visible: showDescriptionColumn"><span data-bind="text: lang.lang.description"></span></th>						                						                			                
@@ -16661,9 +16660,9 @@
 							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" style="width: 100%;" />							            	
 							            </tr>
 							            <tr>
-							            	<td>City</td>
+							            	<td><span data-bind="text: lang.lang.city"></span></td>
 							              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." style="width: 100%;" />							              	
-							            	<td>Post Code</td>
+							            	<td><span data-bind="text: lang.lang.post_code"></span></td>
 							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" style="width: 100%;" />
 							            </tr>							            
 							            <tr>
@@ -17233,7 +17232,7 @@
 								            	</tr>
 									            <tr align="right">
 									            	<td>
-									            		On
+									            		<span data-bind="text: lang.lang.on"></span>
 									            	</td>							            	
 									            	<td>
 
@@ -17383,7 +17382,7 @@
 										<td class="right strong"><span data-bind="text: tax"></span></td>
 									</tr>															
 									<tr>
-										<td class="right"><h4><span data-bind="text: lang.lang.total"></span>:</h4></td>
+										<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
 										<td class="right strong"><h4 data-bind="text: total"></h4></td>
 									</tr>								
 								</tbody>
@@ -19762,8 +19761,8 @@
 			                 data-bind="visible: showConfirm"
 			                 style="text-align:center;">
 			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
-						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
-						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete"><span data-bind="text: lang.lang.yes"></span></button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm"><span data-bind="text: lang.lang.no"></span></button>
 			            </div>
 			            <!-- // Delete Confirmation -->
 
@@ -19781,7 +19780,7 @@
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>															
 								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
-								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
 							</div>
 						</div>
@@ -30159,7 +30158,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>
 				            <tr>
-				                <th colspan="2" class="center">Top 5 Best Purchase Products</th>				                			                
+				                <th colspan="2" class="center"><span data-bind="text: lang.lang.top_5_purchased_products"></span></th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
