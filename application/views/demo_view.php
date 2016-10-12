@@ -203,7 +203,7 @@
 						<div class="span12">
 							<div class="span6">
 								<p><span data-bind="text: lang.lang.performance"></span></p>
-								<a href="#/statement_profit_loss">
+								<a >
 									<table class="performance">
 										<tr>
 											<td><span data-bind="text: lang.lang.income"></span></td>
@@ -225,7 +225,7 @@
 							</div>
 							<div class="span6">
 								<p><span data-bind="text: lang.lang.position"></span></p>
-								<a href="#/statement_financial_position">
+								<a >
 									<table class="position" style="width: 100%;">
 										<tr>
 											<td><span data-bind="text: lang.lang.asset"></span></td>
@@ -2399,7 +2399,7 @@
 								<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a >General Ledger(Comming on 12/10/2016)</a></h3>								
+								<h3><a >General Ledger(Comming on 13/10/2016)</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -2484,10 +2484,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td >
-								<h3><a >Statement of Profit or Loss(Comming on 12/10/2016)</a></h3>
+								<h3><a >Statement of Profit or Loss(Comming on 13/10/2016)</a></h3>
 							</td>
 							<td >
-								<h3><a >Statement of Financial Position(Comming on 12/10/2016)</a></h3>								
+								<h3><a >Statement of Financial Position(Comming on 13/10/2016)</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -3802,7 +3802,7 @@
 			    	
 					<table class="table table-borderless table-condensed">
 						<tbody data-template="statementFinancialPosition-template"
-							data-bind="source: assetDS"></tbody>
+							data-bind="source: dataSource"></tbody>
 					</table>
 
 		        </div>		        
@@ -3821,10 +3821,10 @@
 		#total += line[i].amount;#
 	    <tr>
 	        <td>
-	        	#: number # #: name #
+	        	#: line[i].number # #: line[i].name #
 	        </td>
 	        <td align="right">
-	            #: kendo.toString(amount, "c", banhji.locale) #
+	            #: kendo.toString(line[i].amount, "c", banhji.locale) #
 	        </td>
 	    </tr>
 	#}#
@@ -37192,7 +37192,7 @@
 														<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 													</td>
 													<td class="span4">
-														<h3><a >General Ledger(Comming on 12/10/2016)</a></h3>
+														<h3><a >General Ledger(Comming on 13/10/2016)</a></h3>
 													</td>
 													<td class="span4">
 														<h3><a href="#/trial_balance">Trial Balance</a></h3>
@@ -37292,10 +37292,10 @@
 											<table class="span12">
 												<tr>
 													<td class="span4">
-														<h3><a >Statement of Profit or Loss(Comming on 12/10/2016)</a></h3>
+														<h3><a >Statement of Profit or Loss(Comming on 13/10/2016)</a></h3>
 													</td>
 													<td class="span4">
-														<h3><a >Statement of Financial Position(Comming on 12/10/2016)</a></h3>								
+														<h3><a >Statement of Financial Position(Comming on 13/10/2016)</a></h3>								
 													</td>
 													<td class="span4">
 														<!-- <h3><a href="#/statement_profit_loss_comparison">Statement of Profit or Loss Comparison</a></h3> -->

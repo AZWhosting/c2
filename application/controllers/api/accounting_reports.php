@@ -1187,28 +1187,31 @@ class Accounting_reports extends REST_Controller {
 		$groupAssetList = [];
 		foreach ($assetList as $value) {
 			//Group by account_type_id
-			if(isset($groupAssetList[$value->account_id])){
-				if($value->dr>0){
-					$groupAssetList[$value->account_id]["amount"] += floatval($value->dr) / floatval($value->rate);
-				}
-
-				if($value->cr>0){
-					$groupAssetList[$value->account_id]["amount"] -= floatval($value->cr) / floatval($value->rate);
-				}
+			if(isset($groupAssetList[$value["account_type_id"]])){
+				$groupAssetList[$value["account_type_id"]]["line"][] = array(
+					"id" 		=> $value["id"],
+					"number" 	=> $value["number"],
+					"name" 		=> $value["name"],
+					"amount" 	=> $value["amount"]
+				);
 			} else {
-				$groupAssetList[$value->account_id]["id"] 				= $value->account_id;
-				$groupAssetList[$value->account_id]["account_type_id"] 	= $value->account_account_type_id;
-				$groupAssetList[$value->account_id]["type"] 				= $value->account_account_type_name;
-				$groupAssetList[$value->account_id]["parents"] 			= "";
-				$groupAssetList[$value->account_id]["number"] 			= $value->account_number;
-				$groupAssetList[$value->account_id]["name"] 				= $value->account_name;
-				$groupAssetList[$value->account_id]["amount"] 			= floatval($value->dr) - floatval($value->cr);
+				// $typeParent = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $typeParent->get
+				$groupAssetList[$value["account_type_id"]]["id"] 		= $value["account_type_id"];
+				$groupAssetList[$value["account_type_id"]]["type"] 	= $value["type"];
+				$groupAssetList[$value["account_type_id"]]["parents"] = "";
+				$groupAssetList[$value["account_type_id"]]["line"][] 	= array(
+					"id" 		=> $value["id"],
+					"number" 	=> $value["number"],
+					"name" 		=> $value["name"],
+					"amount" 	=> $value["amount"]
+				);
 				
 			}			
 		}
 		
 		//Add to reuslts
-		foreach ($assetList as $value) {
+		foreach ($groupAssetList as $value) {
 			$data["results"][] = $value;
 		}
 		//END BALANCE SHEET
