@@ -575,18 +575,45 @@ class Accounting_reports extends REST_Controller {
 		$totalTxnRecorded = $txnRecorded->count();
 		//END TRANSACTION RECORDED
 
-
-		$returnOnAsset = $totalSale / ($totalAsset - $totalCurrentLiability);
-		$ebit = ($totalIncome - $totalExpenseEBIT) / $totalSale;
+		$quickRatio = 0;
+		$returnOnAsset = 0;
+		$currentRatio = 0;
+		$cashRatio = 0;
+		if($totalCurrentLiability>0){
+			$quickRatio = $totalQuickCurrentAsset / $totalCurrentLiability;
+			$returnOnAsset = $totalSale / ($totalAsset - $totalCurrentLiability);
+			$currentRatio = $totalCurrentAsset / $totalCurrentLiability;				
+		   	$cashRatio = $totalCashRatio / $totalCurrentLiability;
+		}		
+		
+		$wcSale = 0;
+		$grossProfitMargin = 0;
+		$ebit = 0;
+		if($totalSale>0){			
+			$wcSale = ($totalCurrentAsset - $totalCurrentLiability) / $totalSale;
+			$grossProfitMargin = ($totalSale - $totalCOGS) / $totalSale;
+			$ebit = ($totalIncome - $totalExpenseEBIT) / $totalSale;
+		}
 
 		//Days
 		$date1 = new DateTime($this->startFiscalDate);
 		$date2 = new DateTime($today);
 		$days = $date2->diff($date1)->format("%a")-1;
 
-		$arCollectionPeriod = ($totalAR / $totalCreditSale) * $days;
-		$apPaymentPeriod = ($totalAP / $totalCreditPurchase) * $days;
-		$inventoryTurnOver = ($totalInventory / $totalCOGS) * $days;
+		$arCollectionPeriod = 0;
+		if($totalCreditSale>0){
+			$arCollectionPeriod = ($totalAR / $totalCreditSale) * $days;
+		}
+
+		$apPaymentPeriod = 0;
+		if($totalCreditPurchase>0){
+			$apPaymentPeriod = ($totalAP / $totalCreditPurchase) * $days;
+		}
+
+		$inventoryTurnOver = 0;
+		if($totalCOGS>0){
+			$inventoryTurnOver = ($totalInventory / $totalCOGS) * $days;
+		}
 		
 		$data["results"][] = array(
 			"id" 					=> 0,
@@ -598,12 +625,12 @@ class Accounting_reports extends REST_Controller {
 		   	"liability" 			=> $totalLiability,
 		   	"equity" 				=> $totalAsset - $totalLiability,
 
-			"quickRatio" 			=> $totalQuickCurrentAsset / $totalCurrentLiability,
-			"currentRatio" 			=> $totalCurrentAsset / $totalCurrentLiability,				
-		   	"cashRatio" 			=> $totalCashRatio / $totalCurrentLiability,
+			"quickRatio" 			=> $quickRatio,
+			"currentRatio" 			=> $currentRatio,				
+		   	"cashRatio" 			=> $cashRatio,
 
-		   	"wcSale"				=> ($totalCurrentAsset - $totalCurrentLiability) / $totalSale,
-		   	"grossProfitMargin"		=> ($totalSale - $totalCOGS) / $totalSale,
+		   	"wcSale"				=> $wcSale,
+		   	"grossProfitMargin"		=> $grossProfitMargin,
 		   	"profitMargin" 			=> $ebit,
 		   	"returnOnAsset" 		=> $returnOnAsset,
 		   	"roce" 					=> $ebit * $returnOnAsset,
@@ -1120,39 +1147,71 @@ class Accounting_reports extends REST_Controller {
 			$endDate 	= $asOfYear ."-". $this->fiscalDate;
 		}
 		
-		//ASSET (As Of)
+		//BALANCE SHEET (As Of)
 		$asset = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$asset->include_related("account", array("number","name"));
-		$asset->include_related("account/account_type", array("name","nature"));
-		$asset->where_in_related("account/account_type", "id", array(10,11,12,13,14,15,16,17,18,19,20,21,22));
-		$asset->where_related("transaction", "issued_date <=", $today);
+		$asset->include_related("account", array("account_type_id","number","name"));
+		$asset->include_related("account/account_type", array("name","nature"));		
+		$asset->where_related("account", "account_type_id >=", 10);
+		$asset->where_related("account", "account_type_id <=", 22);
+		$asset->where_related("transaction", "issued_date <=", $asOf);
 		$asset->where_related("transaction", "is_recurring", 0);
 		$asset->where_related("transaction", "deleted", 0);
-		$asset->where("deleted", 0);		
+		$asset->where("deleted", 0);
+		$asset->order_by_related("account", "number", "asc");		
 		$asset->get_iterated();
 		
 		//Sum Dr and Cr					
 		$assetList = [];
 		foreach ($asset as $value) {
-			$amount = 0;
-			if($value->account_account_type_nature=="Dr"){
-				$amount = (floatval($value->dr) / floatval($value->rate)) - (floatval($value->cr) / floatval($value->rate));
-			}else{
-				$amount = (floatval($value->cr) / floatval($value->rate)) - (floatval($value->dr) / floatval($value->rate));					
-			}
-
+			//Group by account_id
 			if(isset($assetList[$value->account_id])){
-				$assetList[$value->account_id]["amount"] 	+= $amount;
-			}else{
-				$assetList[$value->account_id]["id"] 		= $value->account_id;
-				$assetList[$value->account_id]["number"] 	= $value->account_number;
-				$assetList[$value->account_id]["name"] 		= $value->account_name;
-				$assetList[$value->account_id]["amount"] 	= $amount;						
-			}
+				if($value->dr>0){
+					$assetList[$value->account_id]["amount"] += floatval($value->dr) / floatval($value->rate);
+				}
+
+				if($value->cr>0){
+					$assetList[$value->account_id]["amount"] -= floatval($value->cr) / floatval($value->rate);
+				}
+			} else {
+				$assetList[$value->account_id]["id"] 				= $value->account_id;
+				$assetList[$value->account_id]["account_type_id"] 	= $value->account_account_type_id;
+				$assetList[$value->account_id]["type"] 				= $value->account_account_type_name;
+				$assetList[$value->account_id]["parents"] 			= "";
+				$assetList[$value->account_id]["number"] 			= $value->account_number;
+				$assetList[$value->account_id]["name"] 				= $value->account_name;
+				$assetList[$value->account_id]["amount"] 			= floatval($value->dr) - floatval($value->cr);
+				
+			}			
+		}
+
+		$groupAssetList = [];
+		foreach ($assetList as $value) {
+			//Group by account_type_id
+			if(isset($groupAssetList[$value->account_id])){
+				if($value->dr>0){
+					$groupAssetList[$value->account_id]["amount"] += floatval($value->dr) / floatval($value->rate);
+				}
+
+				if($value->cr>0){
+					$groupAssetList[$value->account_id]["amount"] -= floatval($value->cr) / floatval($value->rate);
+				}
+			} else {
+				$groupAssetList[$value->account_id]["id"] 				= $value->account_id;
+				$groupAssetList[$value->account_id]["account_type_id"] 	= $value->account_account_type_id;
+				$groupAssetList[$value->account_id]["type"] 				= $value->account_account_type_name;
+				$groupAssetList[$value->account_id]["parents"] 			= "";
+				$groupAssetList[$value->account_id]["number"] 			= $value->account_number;
+				$groupAssetList[$value->account_id]["name"] 				= $value->account_name;
+				$groupAssetList[$value->account_id]["amount"] 			= floatval($value->dr) - floatval($value->cr);
+				
+			}			
 		}
 		
-		$totalAsset = $assetDr - $assetCr;
-		//END ASSET
+		//Add to reuslts
+		foreach ($assetList as $value) {
+			$data["results"][] = $value;
+		}
+		//END BALANCE SHEET
 		
 				
 		$data["count"] = count($data["results"]);

@@ -2680,17 +2680,17 @@
 						<h2 style="color: #496cad; font-size: 20px;">Statement of Profit or Loss</h2>
 						<table class="performance" style="width:100%; background: #fff; color: #000; padding: 0; margin-bottom: 20px;">
 							<tr>
-								<td>Income</td>
+								<td style="padding-left: 0;">Income</td>
 								<td></td>
 								<td align="right"><span data-bind="text: income"></span></td>
 							</tr>
 							<tr>
-								<td>Expense</td>
+								<td style="padding-left: 0;">Expense</td>
 								<td></td>
 								<td align="right"><span data-bind="text: expense"></span></td>
 							</tr>
 							<tr>
-								<td><b>Net Income</b></td>
+								<td style="padding-left: 0;"><b>Net Income</b></td>
 								<td></td>
 								<td align="right"><b data-bind="text: net_income"></b></td>
 							</tr>
@@ -2699,17 +2699,17 @@
 						<h2 style="color: #496cad; font-size: 20px;">Statement of Financial Position</h2>
 						<table class="position" style="width:100%; background: #fff; color: #000; padding: 0;">
 							<tr>
-								<td>Assets</td>
+								<td style="padding-left: 0;">Assets</td>
 								<td></td>
 								<td align="right"><span data-bind="text: asset"></span></td>
 							</tr>
 							<tr>
-								<td>Liabilities</td>
+								<td style="padding-left: 0;">Liabilities</td>
 								<td></td>
 								<td align="right"><span data-bind="text: liability"></span></td>
 							</tr>
 							<tr>
-								<td><b>Equity</b></td>
+								<td style="padding-left: 0;"><b>Equity</b></td>
 								<td></td>
 								<td align="right"><b data-bind="text: equity"></b></td>
 							</tr>
@@ -2848,50 +2848,50 @@
 <script id="journalReport-template" type="text/x-kendo-tmpl">
 	#var sumDr =0, sumCr = 0;#
 	#for(var i=0; i<line.length; i++){#
-	#sumDr += line[i].dr / line[i].rate;#
-	#sumCr += line[i].cr / line[i].rate;#
-	<tr>
-		<td style="color: black;">
-			#if(i==0){#
-				#=type#
-			#}#
-		</td>		
-		<td style="color: black;">
-			#if(i==0){#
-				#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy")#
-			#}#
-		</td>
-		<td style="color: black;">
-			#if(i==0){#
-				#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
-					<a href="\#/purchase/#=id#"><i></i> #=number#</a>
-				#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
-					<a href="\#/cash_transaction/#=id#"><i></i> #=number#</a>				
-				#}else{#
-					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+		#sumDr += line[i].dr / line[i].rate;#
+		#sumCr += line[i].cr / line[i].rate;#
+		<tr>
+			<td style="color: black;">
+				#if(i==0){#
+					#=type#
 				#}#
-			#}#
-		</td>		
-		<td style="color: black;">
-			#if(i==0){#
-				#=memo#
-			#}#
-		</td>
-		<td style="color: black;">
-			#=line[i].account#
-		</td>			
-		<td class="right" style="color: black;">
-			#if(line[i].dr>0){#
-				#=kendo.toString(line[i].dr / line[i].rate, "c0", banhji.locale)#
-			#}#
-		</td>
-		<td class="right" style="color: black;">
-			#if(line[i].cr>0){#
-				#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.locale)#
-			#}#
-		</td>
-		<td></td>  			
-    </tr>    
+			</td>		
+			<td style="color: black;">
+				#if(i==0){#
+					#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy")#
+				#}#
+			</td>
+			<td style="color: black;">
+				#if(i==0){#
+					#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
+						<a href="\#/purchase/#=id#"><i></i> #=number#</a>
+					#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
+						<a href="\#/cash_transaction/#=id#"><i></i> #=number#</a>				
+					#}else{#
+						<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+					#}#
+				#}#
+			</td>		
+			<td style="color: black;">
+				#if(i==0){#
+					#=memo#
+				#}#
+			</td>
+			<td style="color: black;">
+				#=line[i].account#
+			</td>			
+			<td class="right" style="color: black;">
+				#if(line[i].dr>0){#
+					#=kendo.toString(line[i].dr / line[i].rate, "c0", banhji.locale)#
+				#}#
+			</td>
+			<td class="right" style="color: black;">
+				#if(line[i].cr>0){#
+					#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.locale)#
+				#}#
+			</td>
+			<td></td>  			
+	    </tr>    
     #}# 
     <tr>
     	<td style="color: black;">Total:</td>
@@ -3463,7 +3463,7 @@
 								    <div class="tab-content">
 
 								    	<!-- //GENERAL INFO -->
-								          <div class="tab-pane active" id="tab-1">									
+								        <div class="tab-pane active" id="tab-1">									
 									        As of:
 									        <input data-role="datepicker"
 													data-format="dd-MM-yyyy"
@@ -3504,20 +3504,20 @@
 						<p data-bind="text: displayDate"></p>
 					</div>
 
-					<div class="row-fluid journal_block">
-						<div class="span4">
+					<div class="row-fluid journal_block1">
+						<div class="span2">
 							<p>
 								Account
 							</p>
 							<span data-bind="text: dataSource.total"></span>
 						</div>
-						<div class="span4">
+						<div class="span5">
 							<p>
 								Total Dr. Balance
 							</p>
 							<span data-bind="text: dr"></span>
 						</div>
-						<div class="span4">
+						<div class="span5">
 							<p>
 								Total Cr. Balance
 							</p>
@@ -3683,482 +3683,6 @@
 		</td>				
     </tr>    
 </script>
-<!-- <script id="statementProfitLoss" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">	
-				<div id="example" class="k-content saleSummaryStatement">
-					<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
-					<div class="block-title">
-						<h3>Company is Name</h3>
-						<h2>Statement of Profit or Loss</h2>
-						<p>for the year ended 31 December 2016</p>
-					</div>
-			    
-					<table width="100%">
-						<tr>
-							<th></th>
-							<th>Note</th>
-							<th class="right">2016</th>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td class="right">KHR</td>
-						</tr>
-						<tr>
-							<td>Revenue</td>
-							<td><a href="">10</a></td>
-							<td class="right">680,000</td>
-						</tr>
-						<tr>
-							<td>Cost</td>
-							<td></td>
-							<td class="right">(400,000)</td>
-						</tr>
-						<tr>
-							<td class="bold">Gross Profit</td>
-							<td></td>
-							<td class="right bold-border">280,000</td>
-						</tr>
-						<tr>
-							<td>Distribution costs</td>
-							<td></td>
-							<td class="right">(8,580)</td>
-						</tr>
-						<tr>
-							<td>Administrative Expense</td>
-							<td></td>
-							<td class="right">(50,000)</td>
-						</tr>
-						<tr>
-							<td>Finance Costs</td>
-							<td><a href="">10</a></td>
-							<td class="right">(22,300)</td>
-						</tr>
-						<tr>
-							<td>Share of profit of associate</td>
-							<td><a href="">10</a></td>
-							<td class="right">42,100</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit before Tax</td>
-							<td><a href="">10</a></td>
-							<td class="right bold-border">241,220</td>
-						</tr>
-						<tr>
-							<td>Income tax expense</td>
-							<td><a href="">10</a></td>
-							<td class="right">(60,305)</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit for the year from continuing operations</td>
-							<td></td>
-							<td class="right bold-border">180,915</td>
-						</tr>
-						<tr>
-							<td>Loss for the year discoutinued operations</td>
-							<td><a href="">10</a></td>
-							<td class="right">(24,780)</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit for the year</td>
-							<td></td>
-							<td class="right bold-border border-bottom">156,135</td>
-						</tr>
-					</table>
-
-		        </div>		        
-			</div>							
-		</div>
-	</div>
-</script>
-<script id="statementFinancialPosition" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">	
-				<div id="example" class="k-content saleSummaryStatement">
-					<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
-					<div class="block-title">
-						<h3>Company is Name</h3>
-						<h2>Statement of Financial Position</h2>
-						<p>for the year ended 31 December 2016</p>
-					</div>
-			    	
-					<table width="100%">
-						<tr>
-							<th></th>
-							<th>Note</th>
-							<th class="right">2016</th>
-						</tr>
-						<tr>
-							<td class="bold">ASSET</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="bold">Non-Current Asset</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Properties, Plants, & Equipment</td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">138,923,361</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Freehold Land</td>
-							<td><a href="">1</a></td>
-							<td class="right">123,670,644</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Building & Structure</td>
-							<td><a href="">1</a></td>
-							<td class="right">9,848,345</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Electrical Systems, Machineries and Improvement</td>
-							<td><a href="">1</a></td>
-							<td class="right">838,559</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Automobiles & Vehicles</td>
-							<td><a href="">1</a></td>
-							<td class="right">123,670,644</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Furniture, Fixtures & Fittings</td>
-							<td><a href="">1</a></td>
-							<td class="right">663,429</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Computer and Related Equipment</td>
-							<td><a href="">1</a></td>
-							<td class="right">286,688</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Equipments, Electricles Device & Tools</td>
-							<td>1</td>
-							<td class="right">779,835</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Heavy Machinaries</td>
-							<td><a href="">1</a></td>
-							<td class="right">341505</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Completed Investment Properties</td>
-							<td><a href="">1</a></td>
-							<td class="right">3,701,848</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">I​nvestment Properties under-construction</td>
-							<td><a href="">1</a></td>
-							<td class="right">10,087,257</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Investment in Subsidiaries</td>
-							<td><a href="">1</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Non-Current Asset</i></td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">152,712,466</td>
-						</tr>
-						<tr>
-							<td class="bold">Current Assets</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Inventory</td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">389,142,635</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Raw Material</td>
-							<td><a href="">1</a></td>
-							<td class="right">175,561,951</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Working-in-progress</td>
-							<td><a href="">1</a></td>
-							<td class="right">80,575,454</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Finished goods</td>
-							<td><a href="">1</a></td>
-							<td class="right">205,523,139</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Operating Equipment</td>
-							<td><a href="">1</a></td>
-							<td class="right">142,635</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Trade Receivables</td>
-							<td><a href="">1</a></td>
-							<td class="right">142,635</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Properties Sale Receivable</td>
-							<td><a href="">1</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Installment Payment Scheme</td>
-							<td><a href="">1</a></td>
-							<td class="right">205,523,139</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Mortgage Payment Scheme</td>
-							<td><a href="">1</a></td>
-							<td class="right">9,003,967</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">AR from Related Parties</td>
-							<td><a href="">1</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Other receivables</td>
-							<td><a href="">1</a></td>
-							<td class="right">34,859</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Interest Receivable</td>
-							<td><a href="">1</a></td>
-							<td class="right">138,835</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Prepayment & Deposit</td>
-							<td><a href="">1</a></td>
-							<td class="right">3,741,185</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Cash and Cash Equivalent</td>
-							<td><a href="">1</a></td>
-							<td class="right">7,359,195</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Current Assets</i></td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">419,215,778</td>
-						</tr>
-						<tr>
-							<td class="bold">TOTAL ASSETS</td>
-							<td><a href="">1</a></td>
-							<td class="right bold under-bottom">571,928,244</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="bold">EQUITY & LIABILITIES</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Shareholders Equity</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Share Capital</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Retained Earning</td>
-							<td></td>
-							<td ></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Shareholders Equity</i></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Non-Current Liabilities</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Interest Bearing Loans and Borrowing</td>
-							<td><a href="">10</a></td>
-							<td class="right">36,445,536</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Long term Loan based on Customer Portfolio</td>
-							<td><a href="">10</a></td>
-							<td class="right">60,334,222</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Long term loan from Related Parties</td>
-							<td><a href="">11</a></td>
-							<td class="right">9,429,028</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Land Purchase Payable</td>
-							<td><a href="">12</a></td>
-							<td class="right">150,595,772</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Deposit for Sale of Properties inventory</td>
-							<td><a href="">13</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Installment Payment Scheme</td>
-							<td><a href=""></a></td>
-							<td class="right">95,979,147</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Mortgage Payment Scheme</td>
-							<td><a href=""></a></td>
-							<td class="right">76,736,253</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Other Deposit</td>
-							<td><a href=""></a></td>
-							<td class="right"></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Non-Current Liabilities</i></td>
-							<td><a href=""></a></td>
-							<td class="right bold">429,519,958</td>
-						</tr>
-						<tr>
-							<td>Current Liabilities</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Trade Payable</td>
-							<td><a href="">14</a></td>
-							<td class="right">5,720,691</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Short term Bank Borrowing (OD)</td>
-							<td><a href="">9</a></td>
-							<td class="right">7,645,991</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Current Customer Deposit & Prepayment</td>
-							<td><a href="">13</a></td>
-							<td class="right">11,837,636</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Accrued Expenses (including bonus)</td>
-							<td><a href="">15</a></td>
-							<td class="right">280,607</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Salary Payable</td>
-							<td><a href="">16</a></td>
-							<td class="right">1,074,153</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Interest Payable</td>
-							<td><a href=""></a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">General Provision</td>
-							<td><a href=""></a></td>
-							<td class="right"></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Current Tax Payable</td>
-							<td><a href=""></a></td>
-							<td class="right"></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Current Liabilities</i></td>
-							<td><a href=""></a></td>
-							<td class="right bold-border border-bottom">126,558,805</td>
-						</tr>
-						<tr>
-							<td class="bold">Total Liabilities</td>
-							<td><a href=""></a></td>
-							<td class="right bold border-bottom">556,078,762</td>
-						</tr>
-						<tr>
-							<td class="bold fontBig">Total Liabilities</td>
-							<td><a href=""></a></td>
-							<td class="right bold under-bottom">556,078,762</td>
-						</tr>
-					</table>
-		        </div>		        
-			</div>							
-		</div>
-	</div>
-</script> -->
 <script id="statementProfitLoss" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">
@@ -4255,320 +3779,63 @@
 		<div class="customer-background ">
 			<div class="container-960">	
 				<div id="example" class="k-content saleSummaryCustomer">
+					
 					<span class="glyphicons no-js remove_2 pull-right" 
 							onclick="javascript: window.history.back()"><i></i></span>
+
+					<div>
+						As of:
+				        <input data-role="datepicker"
+								data-format="dd-MM-yyyy"
+								data-parse-formats="yyyy-MM-dd" 
+								data-bind="value: as_of" />
+
+			            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+					</div>
+
 					<div class="block-title">
-						<h3>Company is Name</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Statement of Financial Position</h2>
-						<p>for the year ended 31 December 2016</p>
+						<p data-bind="text: displayDate"></p>
 					</div>
 			    	
-					<table width="100%"  class="table table-borderless table-condensed">
-						<tr>
-							<th></th>
-							<th>Note</th>
-							<th class="right">2016</th>
-						</tr>
-						<tr>
-							<td class="bold">ASSET</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="bold">Non-Current Asset</td>
-							<td></td>
-							<td></td>
-						</tr>						
-						<tr>
-							<td class="paddingLeft20">Properties, Plants, & Equipment</td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">138,923,361</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Freehold Land</td>
-							<td><a href="">1</a></td>
-							<td class="right">123,670,644</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Building & Structure</td>
-							<td><a href="">1</a></td>
-							<td class="right">9,848,345</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Electrical Systems, Machineries and Improvement</td>
-							<td><a href="">1</a></td>
-							<td class="right">838,559</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Automobiles & Vehicles</td>
-							<td><a href="">1</a></td>
-							<td class="right">123,670,644</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Furniture, Fixtures & Fittings</td>
-							<td><a href="">1</a></td>
-							<td class="right">663,429</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Computer and Related Equipment</td>
-							<td><a href="">1</a></td>
-							<td class="right">286,688</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Equipments, Electricles Device & Tools</td>
-							<td>1</td>
-							<td class="right">779,835</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Heavy Machinaries</td>
-							<td><a href="">1</a></td>
-							<td class="right">341505</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Completed Investment Properties</td>
-							<td><a href="">1</a></td>
-							<td class="right">3,701,848</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">I​nvestment Properties under-construction</td>
-							<td><a href="">1</a></td>
-							<td class="right">10,087,257</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Investment in Subsidiaries</td>
-							<td><a href="">1</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Non-Current Asset</i></td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">152,712,466</td>
-						</tr>
-						<tr>
-							<td class="bold">Current Assets</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Inventory</td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">389,142,635</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Raw Material</td>
-							<td><a href="">1</a></td>
-							<td class="right">175,561,951</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Working-in-progress</td>
-							<td><a href="">1</a></td>
-							<td class="right">80,575,454</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Finished goods</td>
-							<td><a href="">1</a></td>
-							<td class="right">205,523,139</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Operating Equipment</td>
-							<td><a href="">1</a></td>
-							<td class="right">142,635</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Trade Receivables</td>
-							<td><a href="">1</a></td>
-							<td class="right">142,635</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Properties Sale Receivable</td>
-							<td><a href="">1</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Installment Payment Scheme</td>
-							<td><a href="">1</a></td>
-							<td class="right">205,523,139</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Mortgage Payment Scheme</td>
-							<td><a href="">1</a></td>
-							<td class="right">9,003,967</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">AR from Related Parties</td>
-							<td><a href="">1</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Other receivables</td>
-							<td><a href="">1</a></td>
-							<td class="right">34,859</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Interest Receivable</td>
-							<td><a href="">1</a></td>
-							<td class="right">138,835</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Prepayment & Deposit</td>
-							<td><a href="">1</a></td>
-							<td class="right">3,741,185</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Cash and Cash Equivalent</td>
-							<td><a href="">1</a></td>
-							<td class="right">7,359,195</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Current Assets</i></td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">419,215,778</td>
-						</tr>
-						<tr>
-							<td class="bold">TOTAL ASSETS</td>
-							<td><a href="">1</a></td>
-							<td class="right bold under-bottom">571,928,244</td>
-						</tr>
-						<tr>
-							<td class="bold">EQUITY & LIABILITIES</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Shareholders Equity</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Share Capital</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Retained Earning</td>
-							<td></td>
-							<td ></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Shareholders Equity</i></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Non-Current Liabilities</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Interest Bearing Loans and Borrowing</td>
-							<td><a href="">10</a></td>
-							<td class="right">36,445,536</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Long term Loan based on Customer Portfolio</td>
-							<td><a href="">10</a></td>
-							<td class="right">60,334,222</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Long term loan from Related Parties</td>
-							<td><a href="">11</a></td>
-							<td class="right">9,429,028</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Land Purchase Payable</td>
-							<td><a href="">12</a></td>
-							<td class="right">150,595,772</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Deposit for Sale of Properties inventory</td>
-							<td><a href="">13</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Installment Payment Scheme</td>
-							<td><a href=""></a></td>
-							<td class="right">95,979,147</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Mortgage Payment Scheme</td>
-							<td><a href=""></a></td>
-							<td class="right">76,736,253</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Other Deposit</td>
-							<td><a href=""></a></td>
-							<td class="right"></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Non-Current Liabilities</i></td>
-							<td><a href=""></a></td>
-							<td class="right bold">429,519,958</td>
-						</tr>
-						<tr>
-							<td>Current Liabilities</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Trade Payable</td>
-							<td><a href="">14</a></td>
-							<td class="right">5,720,691</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Short term Bank Borrowing (OD)</td>
-							<td><a href="">9</a></td>
-							<td class="right">7,645,991</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Current Customer Deposit & Prepayment</td>
-							<td><a href="">13</a></td>
-							<td class="right">11,837,636</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Accrued Expenses (including bonus)</td>
-							<td><a href="">15</a></td>
-							<td class="right">280,607</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Salary Payable</td>
-							<td><a href="">16</a></td>
-							<td class="right">1,074,153</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Interest Payable</td>
-							<td><a href=""></a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">General Provision</td>
-							<td><a href=""></a></td>
-							<td class="right"></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Current Tax Payable</td>
-							<td><a href=""></a></td>
-							<td class="right"></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Current Liabilities</i></td>
-							<td><a href=""></a></td>
-							<td class="right bold-border border-bottom">126,558,805</td>
-						</tr>
-						<tr>
-							<td class="bold">Total Liabilities</td>
-							<td><a href=""></a></td>
-							<td class="right bold border-bottom">556,078,762</td>
-						</tr>
-						<tr>
-							<td class="bold fontBig">Total Liabilities</td>
-							<td><a href=""></a></td>
-							<td class="right bold under-bottom">556,078,762</td>
-						</tr>
+			    	
+					<table class="table table-borderless table-condensed">
+						<tbody data-template="statementFinancialPosition-template"
+							data-bind="source: assetDS"></tbody>
 					</table>
+
 		        </div>		        
 			</div>							
 		</div>
 	</div>
+</script>
+<script id="statementFinancialPosition-template" type="text/x-kendo-template">
+    <tr>
+        <td colspan="2" style="font-weight: bold;">
+            #:type#
+        </td>
+    </tr>    
+    #var total = 0;#
+	#for(var i=0; i<line.length; i++){#
+		#total += line[i].amount;#
+	    <tr>
+	        <td>
+	        	#: number # #: name #
+	        </td>
+	        <td align="right">
+	            #: kendo.toString(amount, "c", banhji.locale) #
+	        </td>
+	    </tr>
+	#}#
+	<tr>
+        <td style="font-weight: bold;">
+            Total #:type#
+        </td>
+        <td style="font-weight: bold;" align="right">
+            #=kendo.toString(total, "c", banhji.locale)#
+        </td>
+    </tr>
 </script>
 <script id="statementProfitLossComparison" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -30553,10 +29820,10 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.date"></span></th>
 								<th><span data-bind="text: lang.lang.type2"></span></th>								
-								<th><span data-bind="text: lang.lang.reference_no"></span></th>
-								<th><span data-bind="text: lang.lang.qty"></span></th>
-								<th><span data-bind="text: lang.lang.cost"></span></th>
-								<th><span data-bind="text: lang.lang.price"></span></th>
+								<th style="text-align: center;" ><span data-bind="text: lang.lang.reference_no"></span></th>
+								<th style="text-align: center;" ><span data-bind="text: lang.lang.qty"></span></th>
+								<th style="text-align: right;" ><span data-bind="text: lang.lang.cost"></span></th>
+								<th style="text-align: right;" ><span data-bind="text: lang.lang.price"></span></th>
 							</tr>
 						</thead>	            		
 	            		<tbody data-role="listview"
@@ -30589,20 +29856,20 @@
     <tr>    	  	
     	<td>#=kendo.toString(new Date(invoice[0].issued_date), "dd-MM-yyyy")#</td>
     	<td>#=invoice[0].type#</td>
-        <td>		
+        <td align="center">		
 			#if(invoice[0].type=="Cash_Purchase" || invoice[0].type=="Credit_Purchase"){#
 				<a href="\#/purchase/#=id#">#=invoice[0].number#</a>
 			#}else{#
 				<a href="\#/#=invoice[0].type.toLowerCase()#/#=id#">#=invoice[0].number#</a>
 			#}#
         </td>
-    	<td>#=kendo.toString(quantity, "n0")#</td>
-    	<td>
+    	<td align="center">#=kendo.toString(quantity, "n0")#</td>
+    	<td align="right">
     		#if(cost>0){#
     			#=kendo.toString(cost, "c", locale)#
     		#}#
     	</td>
-    	<td>
+    	<td align="right">
     		#if(price>0){#
     			#=kendo.toString(price, "c", locale)#
     		#}#
@@ -42245,7 +41512,6 @@
 		lang 				: langVM,
 		dataSource			: dataStore(apiUrl+"accounting_reports/ratio_analysis"),
 		reportCurrency 		: banhji.institute.reportCurrency.code,
-		fiscalDate 			: kendo.toString(new Date(banhji.institute.fiscal_date), "m"),
 		income 				: 0,
 		expense 			: 0,
 		net_income 			: 0,
@@ -43841,7 +43107,6 @@
 			page:1,
 			pageSize: 100
 		}),
-		sortList			: banhji.source.sortList,
 		as_of 				: new Date(),		
 		displayDate 		: "",
 		company 			: banhji.institute,
@@ -43908,6 +43173,26 @@
 
 	        return kendo.toString(sum, "c", banhji.locale);
 	    }		      		
+	});
+	banhji.statementFinancialPosition =  kendo.observable({
+		lang 				: langVM,		
+		dataSource			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
+		as_of 				: new Date(),		
+		displayDate 		: "",
+		company 			: banhji.institute,			
+		pageLoad 			: function(){
+			// this.search();
+		},
+		search 				: function(){
+			var as_of = this.get("as_of");
+
+			if(as_of){
+				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
+				this.set("displayDate", displayDate);
+
+				this.dataSource.filter({ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") });
+			}
+		}      		
 	});
 	banhji.chartOfAccount =  kendo.observable({
 		lang 				: langVM,
@@ -72566,145 +71851,15 @@
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
 			
-			var vm = banhji.journalReport;
-
+			var vm = banhji.statementFinancialPosition;
 			banhji.userManagement.addMultiTask("Statement of Financial Position","statement_financial_position",null);
 
 			if(banhji.pageLoaded["statement_financial_position"]==undefined){
 				banhji.pageLoaded["statement_financial_position"] = true;
-
-				function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
-
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
-
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function dateChanges(){
-                	var strDate = "";
-
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}
-
-					$("#strDate").text(strDate);
-                }
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");               
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $("#sorter").val();
-
-					switch(value){
-					case "today":								
-						sdate = today;
-															  					
-					  	break;
-					case "week":			  	
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
-					  	break;
-					case "month":							  	
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":				
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-											  
-					}
-
-					start.value(sdate);
-					end.value(edate);
-					
-					start.max(end.value());
-                	end.min(start.value());
-
-                	dateChanges();                	
-                });
-                
-                start.max(end.value());
-                end.min(start.value());				
-
-				$("#search").click(function(e){
-		        	e.preventDefault();
-
-		        	var para = [],		        	
-					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
-					edate = kendo.toString(end.value(), "yyyy-MM-dd");
-					
-		        	//Dates
-		        	if(start.value() && end.value()){        		
-		            	para.push({ field:"issued_date >=", value: sdate });
-		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
-		            }else if(start.value()){
-		            	para.push({ field:"issued_date", value: sdate });
-		            }else if(end.value()){
-		            	para.push({ field:"issued_date <=", value: edate });
-		            }else{
-		            	
-		            }
-
-		            vm.dataSource.filter(para);		            
-		        });								
 						
 			}
+
+			vm.pageLoad();
 		}		
 	});
 	banhji.router.route("/statement_profit_loss_comparison", function(){

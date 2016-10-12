@@ -75007,7 +75007,7 @@
 			banhji.view.layout.showIn("#content", banhji.view.customerDashboard);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
-			
+			$("a.aCustomer").click();
 			var vm = banhji.customerDashboard;
 			banhji.userManagement.addMultiTask("Customer Dashboard","customers",null);
 			if(banhji.pageLoaded["customers"]==undefined){

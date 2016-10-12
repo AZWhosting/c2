@@ -232,6 +232,44 @@ var themerPrimaryColor = primaryColor;
 			</div>
 		</div>
 	</div>
+	<a class="aCustomer" href="#customerPopUp" data-toggle="modal"></a>
+	<div class="modal fade popRightBlog" id="customerPopUp">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<div class="span12 welcome">
+			<div class="span4" style="text-align: center;">
+				<img src="<?php echo base_url(); ?>assets/img/welcome/wcustomer.png" style="margin-top: 10px;" />
+				
+			</div>
+			<div class="span8" style="float:right;margin-top: 46px;">
+				<h2 style="font-size: 16px; color: #bdd7ee;">ដើម្បីចាប់ផ្តើមប្រើទំព័រនេះ អ្នកគួរមានលក្ខខណ្ឌខាងក្រោម</h2>
+				<div class="span12 cover-welcome-four-blog">
+					<div class="cover-blog-welcome span3">
+						<a href="#/customer">
+						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតអតិថិជនរបស់អ្នកដើម្បីចេញវិក័យបត្រ</p>
+						<img src="<?php echo base_url(); ?>assets/img/welcome/1.png">
+						</a>
+					</div>
+					<div class="cover-blog-welcome span5">
+						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតផលិតផលដែលដែលអ្នកលក់​ និងទិញ ឬសេវាកម្មដែលអ្នកផ្តល់</p>
+						<div class="row">
+							<a href="#/item"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/2.png"></a>
+							<a href="#/item_service"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/3.png"></a>
+						</div>
+					</div>
+					<div class="cover-blog-welcome span4" style="text-align: center;">
+						<a href="#/purchase">
+							<p style="color: #fff;font-size:10px;text-align: left;">បើអ្នកលក់ផលិតផល អ្នកត្រូវទិញផលិតផលទាំងនោះ</p>
+							<img style="width: 66%;" src="<?php echo base_url(); ?>assets/img/welcome/5.png">
+						</a>
+					</div>
+				</div>
+				<p style="color: #8497b0;font-size:14px;">មានទាំងអស់នេះហើយ អ្នកអាចរៀបចំសម្រង់តម្លៃ បញ្ជាលក់ ទទួលប្រាក់កក់ លក់ជាសាច់ប្រាក់ និងចេញវិក័យបត្របាន</p>
+			</div>
+		</div>
+		<div class="bottom-cover">
+			<a href="https://www.facebook.com/BanhjiApp/" target="_blank" style="float:left;"><img src="<?php echo base_url(); ?>assets/img/welcome/facebook-icon.png"></a><a href="https://m.me/862386433857166" target="_blank" style="float:left;"><img src="<?php echo base_url(); ?>assets/img/welcome/chart-icon.png"></a><p style="background: #5a9bd5; padding: 5px 15px; color: #000;float:left;">សួស្តីខ្ញុំជាជំនួយការអ្នក មានចំងល់សូមទំនាក់ទំនងមកខ្ញុំលេខ ០១០​ ៤១៣ ៧៧៧</p>
+		</div>
+	</div>
 	<div class="modal fade popRightBlog" id="feedbackContent">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
