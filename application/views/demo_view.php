@@ -843,12 +843,12 @@
 									<td align="right"><span data-bind="text: income"></span></td>
 								</tr>
 								<tr> 									
-									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><span data-bind="text: lang.lang.expense"></span></td>
+									<td style="padding-left: 0;"><span data-bind="text: lang.lang.expense"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: expense"></span></td>
 								</tr>
 								<tr>
-									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><b><span data-bind="text: lang.lang.net_income"></span></b></td>
+									<td style="padding-left: 0;"><b><span data-bind="text: lang.lang.net_income"></span></b></td>
 									<td></td>
 									<td align="right"><b data-bind="text: net_income"></b></td>
 								</tr>
@@ -859,17 +859,17 @@
 							<table class="position">
 								<tr>
 
-									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><span data-bind="text: lang.lang.asset"></span></td>
+									<td style="padding-left: 0;"><span data-bind="text: lang.lang.asset"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: asset"></span></td>
 								</tr>
 								<tr>
-									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><span data-bind="text: lang.lang.liabilities"></span></td>
+									<td style="padding-left: 0;"><span data-bind="text: lang.lang.liabilities"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: liability"></span></td>
 								</tr>
 								<tr>
-									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><b><span data-bind="text: lang.lang.equity"></span></b></td>
+									<td style="padding-left: 0;"><b><span data-bind="text: lang.lang.equity"></span></b></td>
 									<td></td>
 									<td align="right"><b data-bind="text: equity"></b></td>
 								</tr>
@@ -3801,8 +3801,14 @@
 			    	
 			    	
 					<table class="table table-borderless table-condensed">
+						<thead>
+				            <tr>
+				                <th colspan="2">ASSETS</th>
+				            </tr>
+				        </thead>
 						<tbody data-template="statementFinancialPosition-template"
 							data-bind="source: dataSource"></tbody>
+						<tfoot data-template="statementFinancialPosition-footer-template" data-bind="source: this"></tfoot>
 					</table>
 
 		        </div>		        
@@ -3832,8 +3838,18 @@
         <td style="font-weight: bold;">
             Total #:type#
         </td>
-        <td style="font-weight: bold;" align="right">
+        <td style="font-weight: bold; border-top: 1px solid black;" align="right">
             #=kendo.toString(total, "c", banhji.locale)#
+        </td>
+    </tr>
+    <tr>
+    	<td colspan="2">&nbsp;</td>
+    </tr>
+</script>
+<script id="statementFinancialPosition-footer-template" type="text/x-kendo-template">
+    <tr>
+        <td colspan="2">
+            TOTAL ASSETS
         </td>
     </tr>
 </script>

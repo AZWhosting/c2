@@ -1150,7 +1150,7 @@ class Accounting_reports extends REST_Controller {
 		//BALANCE SHEET (As Of)
 		$asset = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$asset->include_related("account", array("account_type_id","number","name"));
-		$asset->include_related("account/account_type", array("name","nature"));		
+		$asset->include_related("account/account_type", array("parent_id","name","nature"));		
 		$asset->where_related("account", "account_type_id >=", 10);
 		$asset->where_related("account", "account_type_id <=", 22);
 		$asset->where_related("transaction", "issued_date <=", $asOf);
@@ -1174,9 +1174,9 @@ class Accounting_reports extends REST_Controller {
 				}
 			} else {
 				$assetList[$value->account_id]["id"] 				= $value->account_id;
-				$assetList[$value->account_id]["account_type_id"] 	= $value->account_account_type_id;
+				$assetList[$value->account_id]["account_type_id"] 	= $value->account_account_type_id;				
+				$assetList[$value->account_id]["parent_id"] 		= $value->account_account_type_parent_id;
 				$assetList[$value->account_id]["type"] 				= $value->account_account_type_name;
-				$assetList[$value->account_id]["parents"] 			= "";
 				$assetList[$value->account_id]["number"] 			= $value->account_number;
 				$assetList[$value->account_id]["name"] 				= $value->account_name;
 				$assetList[$value->account_id]["amount"] 			= floatval($value->dr) - floatval($value->cr);
@@ -1195,11 +1195,9 @@ class Accounting_reports extends REST_Controller {
 					"amount" 	=> $value["amount"]
 				);
 			} else {
-				// $typeParent = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				// $typeParent->get
 				$groupAssetList[$value["account_type_id"]]["id"] 		= $value["account_type_id"];
-				$groupAssetList[$value["account_type_id"]]["type"] 	= $value["type"];
-				$groupAssetList[$value["account_type_id"]]["parents"] = "";
+				$groupAssetList[$value["account_type_id"]]["parent_id"] = $value["parent_id"];
+				$groupAssetList[$value["account_type_id"]]["type"] 		= $value["type"];				
 				$groupAssetList[$value["account_type_id"]]["line"][] 	= array(
 					"id" 		=> $value["id"],
 					"number" 	=> $value["number"],
