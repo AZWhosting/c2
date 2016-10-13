@@ -364,25 +364,18 @@ var themerPrimaryColor = primaryColor;
 			<div class="span8" style="float:right;margin-top: 46px;">
 				<h2 style="font-size: 16px; color: #bdd7ee;">ដើម្បីចាប់ផ្តើមប្រើទំព័រនេះ អ្នកគួរមានលក្ខខណ្ឌខាងក្រោម</h2>
 				<div class="span12 cover-welcome-four-blog">
-					<div class="cover-blog-welcome span4">
+					<div class="cover-blog-welcome span8">
 						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតផលិតផលដែលអ្នកលក់​ និងទិញ ឬសេវាកម្មដែលអ្នកផ្តល់</p>
 						<div class="row">
-							<a href="#/item"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/3.png"></a>
-							<a href="#/item_service"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/4.png"></a>
+							<a href="#/txn_item"><img style="width: 32%;float:left;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_txn_item.ico"></a>
+							<a href="#/account"><img style="width: 32%;float:left;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/journal.ico"></a>
+							<a href="#/segment"><img style="width: 32%;float:left;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/segment.ico"></a>
 						</div>
 					</div>
 					<div class="cover-blog-welcome span4">
 						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតអ្នកផ្គត់ផ្គង់ និងអតិថិជនរបស់អ្នកដើម្បីបញ្ជាទិញ និងលក់</p>
 						<div class="row">
 							<a href="#/vendor"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/2.png"></a>
-							<a href="#/customer"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/1.png"></a>
-						</div>
-					</div>
-					<div class="cover-blog-welcome span4">
-						<p style="color: #fff;font-size:10px;text-align: left;">អ្នកអាចចាប់ផ្តើម ទិញ និងលក់ផលិតផល</p>
-						<div class="row">
-							<a href="#/purchase"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/5.png"></a>
-							<a href="#/invoice"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/invoice.png"></a>
 						</div>
 					</div>
 					

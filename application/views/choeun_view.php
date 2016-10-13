@@ -70797,12 +70797,12 @@
 			banhji.userManagement.addMultiTask("Accounting Dashboard","accounting",null);
 
 			//eraseCookie("isshow");
-			//var isshow = readCookie("accountVisit");
+			var isshow = readCookie("accountVisit");
 			
-		    //if (isshow != 1) {
-		        //createCookie("accountVisit", 1);
+		    if (isshow != 1) {
+		        createCookie("accountVisit", 1);
 				$("a.aAccount").click();
-			//}
+			}
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			

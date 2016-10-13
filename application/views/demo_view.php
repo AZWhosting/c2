@@ -2399,7 +2399,7 @@
 								<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a >General Ledger(Comming on 13/10/2016)</a></h3>								
+								<h3><a >General Ledger(Coming on 14/10/2016)</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -2484,10 +2484,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td >
-								<h3><a >Statement of Profit or Loss(Comming on 13/10/2016)</a></h3>
+								<h3><a >Statement of Profit or Loss(Coming on 14/10/2016)</a></h3>
 							</td>
 							<td >
-								<h3><a >Statement of Financial Position(Comming on 13/10/2016)</a></h3>								
+								<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -3799,6 +3799,20 @@
 						<p data-bind="text: displayDate"></p>
 					</div>
 			    	
+			    	<div class="row-fluid journal_block1">
+						<div class="span2">
+							<p>&nbsp;</p>
+							<span>&nbsp;</span>
+						</div>
+						<div class="span5">
+							<p>Assets</p>
+							<span data-bind="text: totalAsset"></span>
+						</div>
+						<div class="span5">
+							<p>Liabilities + Equity</p>
+							<span data-format="n" data-bind="text: totalLiabilityEquity"></span>
+						</div>
+					</div>
 			    	
 					<table class="table table-borderless table-condensed">
 						<thead>
@@ -3808,8 +3822,9 @@
 								<th width="15%"></th>
 							</tr>
 						</thead>
-						<tbody data-template="statementFinancialPosition-template"
-							data-auto-bind="fasle"
+						<tbody data-role="listview" 
+							data-template="statementFinancialPosition-template"
+							data-auto-bind="false"
 							data-bind="source: dataSource"></tbody>
 						<tfoot>
 							<tr>
@@ -3817,6 +3832,52 @@
 								<td width="15%"></td>
 								<td width="15%" style="font-weight: bold; font-size: large;" align="right">
 									<span data-bind="text: totalAsset"></span>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+
+					<table class="table table-borderless table-condensed">
+						<thead>
+							<tr>
+								<th>LIABILITIES</th>
+								<th width="15%"></th>
+								<th width="15%"></th>
+							</tr>
+						</thead>
+						<tbody data-role="listview"
+							data-template="statementFinancialPosition-template"
+							data-auto-bind="false"
+							data-bind="source: liabilityDS"></tbody>
+						<tfoot>
+							<tr>
+								<td style="font-weight: bold; font-size: large;">TOTAL LIABILITIES</td>
+								<td width="15%"></td>
+								<td width="15%" style="font-weight: bold; font-size: large;" align="right">
+									<span data-bind="text: totalLiability"></span>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+
+					<table class="table table-borderless table-condensed">
+						<thead>
+							<tr>
+								<th>EQUITY</th>
+								<th width="15%"></th>
+								<th width="15%"></th>
+							</tr>
+						</thead>
+						<tbody data-role="listview"
+							data-template="statementFinancialPosition-template"
+							data-auto-bind="false"
+							data-bind="source: equityDS"></tbody>
+						<tfoot>
+							<tr>
+								<td style="font-weight: bold; font-size: large;">TOTAL EQUITY</td>
+								<td width="15%"></td>
+								<td width="15%" style="font-weight: bold; font-size: large;" align="right">
+									<span data-bind="text: totalEquity"></span>
 								</td>
 							</tr>
 						</tfoot>
@@ -37236,7 +37297,7 @@
 														<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 													</td>
 													<td class="span4">
-														<h3><a >General Ledger(Comming on 13/10/2016)</a></h3>
+														<h3><a >General Ledger(Coming on 14/10/2016)</a></h3>
 													</td>
 													<td class="span4">
 														<h3><a href="#/trial_balance">Trial Balance</a></h3>
@@ -37336,10 +37397,10 @@
 											<table class="span12">
 												<tr>
 													<td class="span4">
-														<h3><a >Statement of Profit or Loss(Comming on 13/10/2016)</a></h3>
+														<h3><a >Statement of Profit or Loss(Coming on 14/10/2016)</a></h3>
 													</td>
 													<td class="span4">
-														<h3><a >Statement of Financial Position(Comming on 13/10/2016)</a></h3>								
+														<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
 													</td>
 													<td class="span4">
 														<!-- <h3><a href="#/statement_profit_loss_comparison">Statement of Profit or Loss Comparison</a></h3> -->
@@ -43221,10 +43282,15 @@
 	banhji.statementFinancialPosition =  kendo.observable({
 		lang 				: langVM,		
 		dataSource			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
+		liabilityDS			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
+		equityDS			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
 		as_of 				: new Date(),		
 		displayDate 		: "",
 		company 			: banhji.institute,
-		totalAsset 			: 0,			
+		totalAsset 			: 0,
+		totalLiability 		: 0,
+		totalEquity 		: 0,
+		totalLiabilityEquity: 0,			
 		pageLoad 			: function(){
 			this.search();
 		},
@@ -43235,11 +43301,51 @@
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
 
-				this.dataSource.filter({ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") });
-				this.dataSource.bind("requestEnd", function(e){
-					if(e.type=="read"){
-						// var response = e.response.totalAmount;
-						// self.set("totalAsset", kendo.toString(response, "c", banhji.locale));
+				this.dataSource.filter([
+					{ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") },
+					{ field:"account_type_id", value:[10,11,12,13,14,15,16,17,18,19,20,21,22] }
+				]);
+				var unReadAsset = true;
+				this.dataSource.bind("requestEnd", function(e){				
+					if(e.type=="read" && unReadAsset){
+						unReadAsset = false;
+						var response = e.response.totalAmount;
+
+						self.set("totalAsset", kendo.toString(response, "c", banhji.locale));
+					}
+				});
+
+				//Liability
+				this.liabilityDS.filter([
+					{ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") },
+					{ field:"account_type_id", value:[23,24,25,26,27,28,29,30,31] }
+				]);
+				var unReadLiability = true;
+				this.liabilityDS.bind("requestEnd", function(e){
+					if(e.type=="read" && unReadLiability){
+						unReadLiability = false;
+						var response = e.response.totalAmount;
+						var total = self.get("totalLiabilityEquity");
+						total += response;
+						self.set("totalLiabilityEquity", total);
+						self.set("totalLiability", kendo.toString(response, "c", banhji.locale));
+					}
+				});
+
+				//Equity
+				this.equityDS.filter([
+					{ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") },
+					{ field:"account_type_id", value:[32,33,34] }
+				]);
+				var unReadEquity = true;
+				this.equityDS.bind("requestEnd", function(e){
+					if(e.type=="read" && unReadEquity){
+						unReadEquity = false;
+						var response = e.response.totalAmount;
+						var total = self.get("totalLiabilityEquity");
+						total += response;
+						self.set("totalLiabilityEquity", total);
+						self.set("totalEquity", kendo.toString(response, "c", banhji.locale));
 					}
 				});
 			}

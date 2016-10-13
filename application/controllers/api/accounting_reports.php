@@ -1127,13 +1127,15 @@ class Accounting_reports extends REST_Controller {
 		$data["count"] = 0;
 		$is_recurring = 0;
 		$deleted = 0;
+
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 		$asOf = date("Y-m-d");
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		$asOf = $value["value"];
-			}									 			
-		}				
+		$typeID = [];
+		if(!empty($filters) && isset($filters)){
+	    	$asOf = $filters[0]["value"];
+	    	$obj->where_in_related("account", "account_type_id", $filters[1]["value"]);		 			
+		}		
 
 		//Fiscal Date
 		//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate		
@@ -1148,11 +1150,8 @@ class Accounting_reports extends REST_Controller {
 		}
 		
 		//OBJ (As Of)
-		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$obj->include_related("account", array("account_type_id","number","name"));
 		$obj->include_related("account/account_type", array("sub_of_id","name","nature"));		
-		$obj->where_related("account", "account_type_id >=", 10);
-		$obj->where_related("account", "account_type_id <=", 34);
 		$obj->where_related("transaction", "issued_date <=", $asOf);
 		$obj->where_related("transaction", "is_recurring", 0);
 		$obj->where_related("transaction", "deleted", 0);
@@ -1227,6 +1226,8 @@ class Accounting_reports extends REST_Controller {
 				$parentList[$value["sub_of_id"]]["typeLine"][] 	= $value;
 			}
 		}
+
+		$data["totalAmount"] = $totalAmount;
 
 		//Add to results
 		foreach ($parentList as $value) {
