@@ -1147,58 +1147,63 @@ class Accounting_reports extends REST_Controller {
 			$endDate 	= $asOfYear ."-". $this->fiscalDate;
 		}
 		
-		//BALANCE SHEET (As Of)
-		$asset = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$asset->include_related("account", array("account_type_id","number","name"));
-		$asset->include_related("account/account_type", array("parent_id","name","nature"));		
-		$asset->where_related("account", "account_type_id >=", 10);
-		$asset->where_related("account", "account_type_id <=", 22);
-		$asset->where_related("transaction", "issued_date <=", $asOf);
-		$asset->where_related("transaction", "is_recurring", 0);
-		$asset->where_related("transaction", "deleted", 0);
-		$asset->where("deleted", 0);
-		$asset->order_by_related("account", "number", "asc");		
-		$asset->get_iterated();
+		//OBJ (As Of)
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->include_related("account", array("account_type_id","number","name"));
+		$obj->include_related("account/account_type", array("sub_of_id","name","nature"));		
+		$obj->where_related("account", "account_type_id >=", 10);
+		$obj->where_related("account", "account_type_id <=", 34);
+		$obj->where_related("transaction", "issued_date <=", $asOf);
+		$obj->where_related("transaction", "is_recurring", 0);
+		$obj->where_related("transaction", "deleted", 0);
+		$obj->where("deleted", 0);
+		$obj->order_by_related("account", "account_type_id", "desc");
+		$obj->order_by_related("account", "number", "asc");		
+		$obj->get_iterated();
 		
 		//Sum Dr and Cr					
-		$assetList = [];
-		foreach ($asset as $value) {
+		$objList = [];
+		foreach ($obj as $value) {
+			$amount = 0;
+			if($value->account_account_type_nature=="Dr"){
+				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->rate);				
+			}else{
+				$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->rate);					
+			}
+
 			//Group by account_id
-			if(isset($assetList[$value->account_id])){
-				if($value->dr>0){
-					$assetList[$value->account_id]["amount"] += floatval($value->dr) / floatval($value->rate);
-				}
-
-				if($value->cr>0){
-					$assetList[$value->account_id]["amount"] -= floatval($value->cr) / floatval($value->rate);
-				}
+			if(isset($objList[$value->account_id])){
+				$objList[$value->account_id]["amount"] += $amount;
 			} else {
-				$assetList[$value->account_id]["id"] 				= $value->account_id;
-				$assetList[$value->account_id]["account_type_id"] 	= $value->account_account_type_id;				
-				$assetList[$value->account_id]["parent_id"] 		= $value->account_account_type_parent_id;
-				$assetList[$value->account_id]["type"] 				= $value->account_account_type_name;
-				$assetList[$value->account_id]["number"] 			= $value->account_number;
-				$assetList[$value->account_id]["name"] 				= $value->account_name;
-				$assetList[$value->account_id]["amount"] 			= floatval($value->dr) - floatval($value->cr);
-				
+				$objList[$value->account_id]["id"] 				= $value->account_id;
+				$objList[$value->account_id]["account_type_id"] = $value->account_account_type_id;				
+				$objList[$value->account_id]["sub_of_id"] 		= $value->account_account_type_sub_of_id;
+				$objList[$value->account_id]["type"] 			= $value->account_account_type_name;
+				$objList[$value->account_id]["number"] 			= $value->account_number;
+				$objList[$value->account_id]["name"] 			= $value->account_name;
+				$objList[$value->account_id]["amount"] 			= $amount;				
 			}			
 		}
 
-		$groupAssetList = [];
-		foreach ($assetList as $value) {
+		//Group by account type id
+		$typeList = [];
+		$totalAmount = 0;
+		foreach ($objList as $value) {			
+			$totalAmount += $value["amount"];			
+
 			//Group by account_type_id
-			if(isset($groupAssetList[$value["account_type_id"]])){
-				$groupAssetList[$value["account_type_id"]]["line"][] = array(
+			if(isset($typeList[$value["account_type_id"]])){
+				$typeList[$value["account_type_id"]]["line"][] = array(
 					"id" 		=> $value["id"],
 					"number" 	=> $value["number"],
 					"name" 		=> $value["name"],
 					"amount" 	=> $value["amount"]
 				);
 			} else {
-				$groupAssetList[$value["account_type_id"]]["id"] 		= $value["account_type_id"];
-				$groupAssetList[$value["account_type_id"]]["parent_id"] = $value["parent_id"];
-				$groupAssetList[$value["account_type_id"]]["type"] 		= $value["type"];				
-				$groupAssetList[$value["account_type_id"]]["line"][] 	= array(
+				$typeList[$value["account_type_id"]]["id"] 			= $value["account_type_id"];
+				$typeList[$value["account_type_id"]]["sub_of_id"] 	= $value["sub_of_id"];
+				$typeList[$value["account_type_id"]]["type"] 		= $value["type"];				
+				$typeList[$value["account_type_id"]]["line"][] 		= array(
 					"id" 		=> $value["id"],
 					"number" 	=> $value["number"],
 					"name" 		=> $value["name"],
@@ -1206,15 +1211,28 @@ class Accounting_reports extends REST_Controller {
 				);
 				
 			}			
-		}
+		}		
 		
-		//Add to reuslts
-		foreach ($groupAssetList as $value) {
+		//Group by sub_of_id
+		$parentList = [];
+		foreach ($typeList as $value) {
+			if(isset($parentList[$value["sub_of_id"]])){
+				$parentList[$value["sub_of_id"]]["typeLine"][] 	= $value;
+			} else {
+				$subOf = new Account_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$subOf->get_by_id($value["sub_of_id"]);				
+
+				$parentList[$value["sub_of_id"]]["id"] 			= $subOf->sub_of_id;
+				$parentList[$value["sub_of_id"]]["name"] 		= $subOf->name;				
+				$parentList[$value["sub_of_id"]]["typeLine"][] 	= $value;
+			}
+		}
+
+		//Add to results
+		foreach ($parentList as $value) {
 			$data["results"][] = $value;
 		}
-		//END BALANCE SHEET
 		
-				
 		$data["count"] = count($data["results"]);
 
 		//Response Data		

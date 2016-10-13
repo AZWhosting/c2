@@ -3802,13 +3802,24 @@
 			    	
 					<table class="table table-borderless table-condensed">
 						<thead>
-				            <tr>
-				                <th colspan="2">ASSETS</th>
-				            </tr>
-				        </thead>
+							<tr>
+								<th>ASSETS</th>
+								<th width="15%"></th>
+								<th width="15%"></th>
+							</tr>
+						</thead>
 						<tbody data-template="statementFinancialPosition-template"
+							data-auto-bind="fasle"
 							data-bind="source: dataSource"></tbody>
-						<tfoot data-template="statementFinancialPosition-footer-template" data-bind="source: this"></tfoot>
+						<tfoot>
+							<tr>
+								<td style="font-weight: bold; font-size: large;">TOTAL ASSETS</td>
+								<td width="15%"></td>
+								<td width="15%" style="font-weight: bold; font-size: large;" align="right">
+									<span data-bind="text: totalAsset"></span>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 
 		        </div>		        
@@ -3818,38 +3829,55 @@
 </script>
 <script id="statementFinancialPosition-template" type="text/x-kendo-template">
     <tr>
-        <td colspan="2" style="font-weight: bold;">
-            #:type#
-        </td>
-    </tr>    
+        <td style="font-weight: bold; font-style: italic;">
+            #: name #
+        </td> 
+        <td></td>
+        <td></td>    
+    </tr>
     #var total = 0;#
-	#for(var i=0; i<line.length; i++){#
-		#total += line[i].amount;#
+	#for(var i=0; i<typeLine.length; i++){#
 	    <tr>
-	        <td>
-	        	#: line[i].number # #: line[i].name #
+	        <td style="font-weight: bold;">
+	            &nbsp;&nbsp; #:typeLine[i].type#
+	        </td> 
+	        <td></td>
+	        <td></td>    
+	    </tr>    
+	    #var totalType = 0;#
+		#for(var j=0; j<typeLine[i].line.length; j++){#
+			#total += typeLine[i].line[j].amount;#
+			#totalType += typeLine[i].line[j].amount;#
+		    <tr>
+		        <td>
+		        	&nbsp;&nbsp;&nbsp;&nbsp; #: typeLine[i].line[j].number # #: typeLine[i].line[j].name #
+		        </td>
+		        <td align="right">
+		            &nbsp;&nbsp;&nbsp;&nbsp; #: kendo.toString(typeLine[i].line[j].amount, "c", banhji.locale) #
+		        </td>
+		        <td></td>
+		    </tr>
+		#}#
+		<tr>
+	        <td style="font-weight: bold;">
+	            &nbsp;&nbsp; Total #:typeLine[i].type#
 	        </td>
-	        <td align="right">
-	            #: kendo.toString(line[i].amount, "c", banhji.locale) #
+	        <td style="font-weight: bold; border-top: 1px solid black !important;" align="right">
+	            #=kendo.toString(totalType, "c", banhji.locale)#
 	        </td>
+	        <td></td>
+	    </tr>
+	    <tr>
+	    	<td colspan="3">&nbsp;</td>
 	    </tr>
 	#}#
 	<tr>
-        <td style="font-weight: bold;">
-            Total #:type#
+        <td style="font-weight: bold; font-style: italic;">
+            Total #: name #
         </td>
-        <td style="font-weight: bold; border-top: 1px solid black;" align="right">
+        <td></td>
+        <td style="font-weight: bold; border-top: 1px solid black !important;" align="right">
             #=kendo.toString(total, "c", banhji.locale)#
-        </td>
-    </tr>
-    <tr>
-    	<td colspan="2">&nbsp;</td>
-    </tr>
-</script>
-<script id="statementFinancialPosition-footer-template" type="text/x-kendo-template">
-    <tr>
-        <td colspan="2">
-            TOTAL ASSETS
         </td>
     </tr>
 </script>
@@ -29243,7 +29271,7 @@
 				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;"><span data-bind="text: lang.lang.total_attachment"></span></p>
 				<div class="total-customer" style="background: #496cad; color: #fff;min-height: 112px;">
 					<span class="number" data-bind="text: totalSize" style="font-size: 30px;"></span>GB
-					<p><span data-bind="text: lang.lang.use_of"></span> 2.00 GB</p>
+					<p><span data-bind="text: lang.lang.use_of"></span> 1GB</p>
 				</div>
 			</div>
 		</div>
@@ -29271,7 +29299,7 @@
 <script id="document-list-template" type="text/x-kendo-template"> <tr>
 		<td><a href="#=url#">#=name#</a></td>
 		<td>#=description#</td>
-		<td>#=size#</td>
+		<td>#=kendo.toString(size, 'n4')# mb</td>
 		<td>
 			# if(attachedTo.type == "contact") {#
 				<a href="\#/customer_center/#=attachedTo.id#">#=attachedTo.name#</a>
@@ -43195,20 +43223,27 @@
 		dataSource			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
 		as_of 				: new Date(),		
 		displayDate 		: "",
-		company 			: banhji.institute,			
+		company 			: banhji.institute,
+		totalAsset 			: 0,			
 		pageLoad 			: function(){
-			// this.search();
+			this.search();
 		},
 		search 				: function(){
-			var as_of = this.get("as_of");
+			var self = this, as_of = this.get("as_of");
 
 			if(as_of){
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
 
 				this.dataSource.filter({ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") });
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type=="read"){
+						// var response = e.response.totalAmount;
+						// self.set("totalAsset", kendo.toString(response, "c", banhji.locale));
+					}
+				});
 			}
-		}      		
+		}   		
 	});
 	banhji.chartOfAccount =  kendo.observable({
 		lang 				: langVM,
@@ -66194,18 +66229,16 @@
 			});
 		},
 		//Item Price
-		addItemPrice 			: function (id) {
+		addItemPrice 			: function () {
 			var obj = this.get("obj");
 
       		this.itemPriceDS.add({      			      			
-      			item_id			: id,
+      			item_id			: obj.id,
       			measurement_id 	: obj.measurement_id,
       			price 			: obj.price,
       			unit_value		: 0,
       			locale 			: obj.locale
 			});
-
-			this.itemPriceDS.sync();
       	},
       	//Number      	
 		checkExistingNumber 	: function(){
@@ -66435,6 +66468,10 @@
 		    	if(this.itemVendorDS.hasChanges() || this.itemCustomerDS.hasChanges()){
 		    		obj.set("dirty", true);
 		    	}
+	    	}else{
+	    		this.addItemPrice();
+	    		obj.set("cost", 0);
+	    		obj.set("price", 0);
 	    	}
 
 			//Save Obj
@@ -66449,11 +66486,15 @@
 	      				value.set("item_id", data[0].id);
 	      			});
 
+	      			$.each(self.itemPriceDS.data(), function(index, value){
+	      				value.set("item_id", data[0].id);
+	      			});
+
 	      			if(data[0].is_pattern){
 						self.savePattern(data[0].category_id, data[0].id);
 					}
 
-					self.addItemPrice(data[0].id);
+					self.itemPriceDS.sync();
 				}
 				
       			self.itemVendorDS.sync();
@@ -68044,7 +68085,7 @@
       		this.dataSource.insert(0, {
       			account_id 				: 0,
       			item_type_id 			: 5,//Transaction type
-      			category_id 			: 0,
+      			category_id 			: 4,
       			name 					: "",
       			purchase_description	: "",
       			sale_description		: "",
@@ -74107,6 +74148,14 @@
 				banhji.view.layout.showIn('#menu', banhji.view.menu);
 				banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
 				
+				//eraseCookie("isshow");
+				var isshow = readCookie("cusVisit");
+				
+			    if (isshow != 1) {
+			        createCookie("cusVisit", 1);
+					$("a.aCustomer").click();
+				}
+
 				var vm = banhji.customerDashboard;
 				banhji.userManagement.addMultiTask("Customer Dashboard","customers",null);
 				if(banhji.pageLoaded["customers"]==undefined){
@@ -75742,10 +75791,10 @@
 							vm.dataSource.bind('requestEnd', function(e){
 								if(e.type == 'read') {
 									vm.set('contactNu', e.response.contactNumber);
-									vm.set('contactSize', e.response.contactSize);
+									vm.set('contactSize', kendo.toString(e.response.contactSize, "n2"));
 									vm.set('transactionNu', e.response.transactionNumber);
-									vm.set('transactionSize', e.response.transactionSize);
-									vm.set('totalSize', e.response.total);
+									vm.set('transactionSize', kendo.toString(e.response.transactionSize, "n2"));
+									vm.set('totalSize', kendo.toString(e.response.total, 'n2'));
 								}
 							});
 							break;
@@ -77123,5 +77172,28 @@
 		banhji.router.start();
 		banhji.source.loadData();
 		console.log($(location).attr('hash').substr(2));
+
+		function createCookie(name,value,days) {
+		    if (days) {
+		        var date = new Date();
+		        date.setTime(date.getTime()+(days*24*60*60*1000));
+		        var expires = "; expires="+date.toGMTString();
+		    }
+		    else var expires = "";
+		    document.cookie = name+"="+value+expires+"; path=/";
+		}
+		function readCookie(name) {
+		    var nameEQ = name + "=";
+		    var ca = document.cookie.split(';');
+		    for(var i=0;i < ca.length;i++) {
+		        var c = ca[i];
+		        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+		    }
+		    return null;
+		}
+		function eraseCookie(name) {
+		    createCookie(name,"");
+		}
 	});
 </script>

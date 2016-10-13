@@ -26,7 +26,7 @@ class Attachments extends REST_Controller {
 	function index_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;							
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = array();
 		$data["count"] = 0;
@@ -35,6 +35,7 @@ class Attachments extends REST_Controller {
 		$traSize = 0;
 		$conSize = 0;
 		$total 	   = 0;
+		$gb = 3072;
 
 		$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -92,17 +93,17 @@ class Attachments extends REST_Controller {
 				if($value->contact_id) {
 					$c = $value->contact->get();
 					$conNumber++;
-					$conSize += $value->size;
+					$conSize += ceil((($value->size) / 1024) /1024);
 					$attachedTo = array('id' => $c->id, 'name' => $c->name, 'type' => 'contact');
 				} elseif($value->transaction_id) {
 					$t = $value->transaction->get();
 					$traNumber++;
-					$traSize += $value->size;
+					$traSize += ceil((($value->size) / 1024) /1024);
 					$attachedTo = array('id' => $t->id, 'name' => $t->number, 'type' => 'transaction', 'go' => $t->type);
 				} else {
 					$item = $value->item->get();
 					$conNumber++;
-					$conSize += $value->size;
+					$conSize += ceil((($value->size) / 1024) /1024);
 					$attachedTo = array('id' => $item->id, 'name' => $item->name, 'type' => 'item');
 				}
 				$user = $value->user->get();
@@ -116,7 +117,7 @@ class Attachments extends REST_Controller {
 					"description" 		=> $value->description,
 					"key" 				=> $value->key,					
 					"url" 				=> $value->url,
-					"size"				=> $value->size,
+					"size"				=> (($value->size) / 1024) /1024,
 					"user" 				=> $user->exists() ? array('id' => $user->id, 'name' => $user->name):array(),
 					'attachedTo'		=> $attachedTo,
 					"deleted"			=> $value->deleted,
@@ -127,9 +128,9 @@ class Attachments extends REST_Controller {
 		}
 		$data['transactionNumber'] = $traNumber;
 		$data['contactNumber'] = $conNumber;
-		$data['transactionSize'] = $traSize;
-		$data['contactSize'] = $conSize;
-		$data['total'] = $traSize + $conSize;
+		$data['transactionSize'] = $traSize / 1024;
+		$data['contactSize'] = $conSize / 1024;
+		$data['total'] = ($traSize + $conSize) / 1024;
 
 		//Response Data		
 		$this->response($data, 200);		

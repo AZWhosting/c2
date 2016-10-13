@@ -70792,9 +70792,17 @@
 			banhji.router.navigate('/manage');
 		}else{			
 			// var vm = banhji.accountingDashboard;
-						
+				
 			banhji.view.layout.showIn("#content", banhji.view.accountingDashboard);
 			banhji.userManagement.addMultiTask("Accounting Dashboard","accounting",null);
+
+			//eraseCookie("isshow");
+			//var isshow = readCookie("accountVisit");
+			
+		    //if (isshow != 1) {
+		        //createCookie("accountVisit", 1);
+				$("a.aAccount").click();
+			//}
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
@@ -73939,6 +73947,14 @@
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
 			
+			//eraseCookie("isshow");
+			var isshow = readCookie("venVisit");
+			
+		    if (isshow != 1) {
+		        createCookie("venVisit", 1);
+				$("a.aSupplier").click();
+			}
+
 			var vm = banhji.vendorDashboard;
 			banhji.userManagement.addMultiTask("Supplier Dashboard","vendors",null);
 			if(banhji.pageLoaded["vendors"]==undefined){
@@ -74996,7 +75012,7 @@
 		}		
 	});
 	
-
+	
 	/*************************
 	*   Customer Section   *
 	**************************/
@@ -75007,7 +75023,15 @@
 			banhji.view.layout.showIn("#content", banhji.view.customerDashboard);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
-			$("a.aCustomer").click();
+
+			//eraseCookie("isshow");
+			var isshow = readCookie("cusVisit");
+			
+		    if (isshow != 1) {
+		        createCookie("cusVisit", 1);
+				$("a.aCustomer").click();
+			}
+				
 			var vm = banhji.customerDashboard;
 			banhji.userManagement.addMultiTask("Customer Dashboard","customers",null);
 			if(banhji.pageLoaded["customers"]==undefined){
@@ -76516,6 +76540,14 @@
 			banhji.view.layout.showIn("#content", banhji.view.itemDashBoard);			
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+
+			//eraseCookie("isshow");
+			var isshow = readCookie("invenVisit");
+			
+		    if (isshow != 1) {
+		        createCookie("invenVisit", 1);
+				$("a.aInventory").click();
+			}
 			
 			var vm = banhji.itemDashBoard;
 			banhji.userManagement.addMultiTask("Products/Services Dashboard","inventories",null);
@@ -77670,5 +77702,28 @@
 	$(function() {	
 		banhji.router.start();
 		banhji.source.loadData();
+
+		function createCookie(name,value,days) {
+		    if (days) {
+		        var date = new Date();
+		        date.setTime(date.getTime()+(days*24*60*60*1000));
+		        var expires = "; expires="+date.toGMTString();
+		    }
+		    else var expires = "";
+		    document.cookie = name+"="+value+expires+"; path=/";
+		}
+		function readCookie(name) {
+		    var nameEQ = name + "=";
+		    var ca = document.cookie.split(';');
+		    for(var i=0;i < ca.length;i++) {
+		        var c = ca[i];
+		        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+		    }
+		    return null;
+		}
+		function eraseCookie(name) {
+		    createCookie(name,"");
+		}
 	});
 </script>

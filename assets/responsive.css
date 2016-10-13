@@ -2004,7 +2004,7 @@ a.enquiries:hover .enquiry-content,
     right: 0px
 }
 /* --- Welcome ---*/
-#firstPopUp, #customerPopUp {
+#firstPopUp, #customerPopUp, #supplierPopUp, #inventoryPopUp, #accountPopUp {
     width: 850px;
     margin: 0 auto;
     height: 375px;
@@ -2024,13 +2024,13 @@ a.enquiries:hover .enquiry-content,
     border:1px solid #2c74b5;
     margin-bottom: 10px;
 }
-#firstPopUp .close, #customerPopUp .close {
+#firstPopUp .close, #customerPopUp .close , #supplierPopUp .close, #inventoryPopUp .close, #accountPopUp .close{
     position: absolute;
     color: #fff;
     right: 10px;
     top: 10px;
 }
-a.aWelcome, a.aCustomer {
+a.aWelcome, a.aCustomer, a.aSupplier, a.aInventory, a.aAccount {
     display: none;
 }
 #conFirm-cover {
