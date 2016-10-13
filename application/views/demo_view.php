@@ -70538,19 +70538,19 @@
 		});					
 	});
 	banhji.router.route("/cash_advance(/:id)(/:is_recurring)", function(id,is_recurring){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {						
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
 				banhji.view.layout.showIn("#content", banhji.view.cashAdvance);			
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -70608,25 +70608,25 @@
 				}
 
 				vm.pageLoad(id,is_recurring);
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});			
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });			
 	});
 	banhji.router.route("/expense(/:id)(/:is_recurring)", function(id,is_recurring){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {							
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {							
 				banhji.view.layout.showIn("#content", banhji.view.expense);			
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -70683,11 +70683,11 @@
 					});				
 				}
 
-				vm.pageLoad(id,is_recurring);
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});		
+		// 		vm.pageLoad(id,is_recurring);
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/account(/:id)", function(id){
 		banhji.accessMod.query({
@@ -70743,19 +70743,19 @@
 		});				
 	});
 	banhji.router.route("/journal(/:id)(/:is_recurring)", function(id,is_recurring){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {							
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {							
 				banhji.view.layout.showIn("#content", banhji.view.journal);			
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -70812,10 +70812,10 @@
 				}
 
 				vm.pageLoad(id,is_recurring);
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});			
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });			
 	});
 	banhji.router.route("/accounting_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -73183,19 +73183,19 @@
 		});				
 	});
 	banhji.router.route("/purchase_order(/:id)(/:is_recurring)", function(id,is_recurring){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {						
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
 				banhji.view.layout.showIn("#content", banhji.view.purchaseOrder);			
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -73252,10 +73252,10 @@
 				}
 
 				vm.pageLoad(id, is_recurring);			
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});		
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/grn(/:id)(/:is_recurring)", function(id,is_recurring){
 		if(!banhji.userManagement.getLogin()){
@@ -73320,19 +73320,19 @@
 		}		
 	});	
 	banhji.router.route("/vendor_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {						
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
 				banhji.view.layout.showIn("#content", banhji.view.vendorDeposit);			
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -73389,25 +73389,25 @@
 				}
 
 				vm.pageLoad(id, is_recurring);			
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});		
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});	
 	banhji.router.route("/purchase(/:id)(/:is_recurring)", function(id,is_recurring){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {					
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {					
 				banhji.view.layout.showIn("#content", banhji.view.purchase);			
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -73464,25 +73464,25 @@
 				}
 
 				vm.pageLoad(id, is_recurring);			
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});		
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/purchase_return(/:id)", function(id){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {							
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {							
 				banhji.view.layout.showIn("#content", banhji.view.purchaseReturn);			
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -73528,10 +73528,10 @@
 				}
 
 				vm.pageLoad(id);			
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});		
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});	
 	banhji.router.route("/vendor_setting", function(){
 		banhji.accessMod.query({
@@ -74253,19 +74253,19 @@
 		});				
 	});
 	banhji.router.route("/quote(/:id)(/:is_recurring)", function(id,is_recurring){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {						
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
 				banhji.view.layout.showIn("#content", banhji.view.quote);			
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -74322,25 +74322,25 @@
 				}
 
 				vm.pageLoad(id, is_recurring);			
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});		
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/sale_order(/:id)(/:is_recurring)", function(id,is_recurring){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
 				banhji.view.layout.showIn("#content", banhji.view.saleOrder);			
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -74396,25 +74396,25 @@
 				}
 
 				vm.pageLoad(id, is_recurring);			
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});		
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/customer_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {						
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
 				banhji.view.layout.showIn("#content", banhji.view.customerDeposit);			
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -74471,25 +74471,25 @@
 				}
 
 				vm.pageLoad(id, is_recurring);			
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});		
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/cash_sale(/:id)(/:is_recurring)", function(id,is_recurring){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {						
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
 				banhji.view.layout.showIn("#content", banhji.view.cashSale);			
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -74546,25 +74546,25 @@
 
 				vm.pageLoad(id, is_recurring);
 
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});			
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });			
 	});
 	banhji.router.route("/invoice(/:id)(/:is_recurring)", function(id,is_recurring){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {						
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
 				banhji.view.layout.showIn("#content", banhji.view.invoice);			
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -74620,10 +74620,10 @@
 				}
 
 				vm.pageLoad(id, is_recurring);			
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});	
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });	
 	});
 	banhji.router.route("/gdn(/:id)(/:is_recurring)", function(id,is_recurring){
 		if(!banhji.userManagement.getLogin()){
@@ -74687,19 +74687,19 @@
 		}		
 	});
 	banhji.router.route("/sale_return(/:id)", function(id){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
 				banhji.view.layout.showIn("#content", banhji.view.saleReturn);					
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -74744,25 +74744,25 @@
 				}
 
 				vm.pageLoad(id);			
-				} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});		
+		// 		} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/statement(/:id)", function(){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
 				banhji.view.layout.showIn("#content", banhji.view.statement);
 
 				var vm = banhji.statement;
@@ -74774,10 +74774,10 @@
 				}
 
 				vm.pageLoad();
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}				
-		});
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });
 	});
 	banhji.router.route("/customer_setting", function(){
 		banhji.accessMod.query({
@@ -75448,90 +75448,86 @@
 	*   Cashier Section   *
 	**************************/
 	banhji.router.route("/cashier(/:id)", function(id){
-		if(!checkRole()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.cashier);				
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.view.layout.showIn("#content", banhji.view.cashier);				
+		kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.cashier;
-			banhji.userManagement.addMultiTask("Cashier Dashboard","cashier",null);
-						
-			if(banhji.pageLoaded["cashier"]==undefined){
-				banhji.pageLoaded["cashier"] = true;
-				
-				$("#ddlContact").kendoComboBox({
-					placeholder: "លេខកូដ...",
-					valuePrimitive: true,
-	                dataTextField: "fullname",
-	                dataValueField: "id",
-	                filter: "search",
-	                autoBind: false,
-	                minLength: 3,
-	                height: 400,
-	                dataSource: vm.contactDS,
-	                change: function(e) {
-					    var value = this.value(),					    
-					    data = this.dataSource.get(value);
+		var vm = banhji.cashier;
+		banhji.userManagement.addMultiTask("Cashier Dashboard","cashier",null);
+					
+		if(banhji.pageLoaded["cashier"]==undefined){
+			banhji.pageLoaded["cashier"] = true;
+			
+			$("#ddlContact").kendoComboBox({
+				placeholder: "លេខកូដ...",
+				valuePrimitive: true,
+                dataTextField: "fullname",
+                dataValueField: "id",
+                filter: "search",
+                autoBind: false,
+                minLength: 3,
+                height: 400,
+                dataSource: vm.contactDS,
+                change: function(e) {
+				    var value = this.value(),					    
+				    data = this.dataSource.get(value);
 
-					    vm.set("customer", data);
-					    vm.transactionDS.filter({ field:"contact_id", value: value });
-					    vm.loadInvoice(value, data.fullname, data.account_id);					    				    	
-					},
-					template:'#=number# #=fullname#'
-	            });	           
+				    vm.set("customer", data);
+				    vm.transactionDS.filter({ field:"contact_id", value: value });
+				    vm.loadInvoice(value, data.fullname, data.account_id);					    				    	
+				},
+				template:'#=number# #=fullname#'
+            });	           
 
-		        $("#ddlCashAccount").kendoDropDownList({
-		            optionLabel: "(--- Select ---)",
-		            valuePrimitive: true,
-		            dataTextField: "name",
-		            dataValueField: "id",
-		            dataSource: {
-		                transport: {
-							read: {
-								url: apiUrl + "accounts",
-								headers: {
-									"Entity": getDB()
-								},
-								type: "GET",
-								dataType: "json"
-							}
-						},
-						schema 	: {
-							model: {
-								id: 'id'
+	        $("#ddlCashAccount").kendoDropDownList({
+	            optionLabel: "(--- Select ---)",
+	            valuePrimitive: true,
+	            dataTextField: "name",
+	            dataValueField: "id",
+	            dataSource: {
+	                transport: {
+						read: {
+							url: apiUrl + "accounts",
+							headers: {
+								"Entity": getDB()
 							},
-							data: 'results',
-							total: 'count'
-						},
-						serverFiltering: true,
-						filter: { field:"account_type_id", value: 6 }
+							type: "GET",
+							dataType: "json"
+						}
 					},
-					template: '#=number# #=name#'             
-		        }).data("kendoDropDownList");
+					schema 	: {
+						model: {
+							id: 'id'
+						},
+						data: 'results',
+						total: 'count'
+					},
+					serverFiltering: true,
+					filter: { field:"account_type_id", value: 6 }
+				},
+				template: '#=number# #=name#'             
+	        }).data("kendoDropDownList");
 
-		        var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
+	        var validator = $("#example").kendoValidator().data("kendoValidator");
+			var notification = $("#notification").kendoNotification({				    
+			    autoHideAfter: 5000,
+			    width: 300,				    
+			    height: 50
+			}).data('kendoNotification');
 
-		        $("#save").click(function(e){				
-					e.preventDefault();
+	        $("#save").click(function(e){				
+				e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();
+				if(validator.validate()){
+	            	vm.save();
 
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});        		
-			}
+	            	notification.success("Save Successful");			  
+		        }else{
+		        	notification.error("Warning, please review it again!");			           
+		        }		            
+			});        		
+		}
 
-			vm.pageLoad(id);
-		}							
+		vm.pageLoad(id);							
 	});
 	banhji.router.route("/reconcile(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
