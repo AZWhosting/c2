@@ -3799,7 +3799,7 @@
 						<p data-bind="text: displayDate"></p>
 					</div>
 			    	
-			    	<div class="row-fluid journal_block1">
+			    	<!-- <div class="row-fluid journal_block1">
 						<div class="span2">
 							<p>&nbsp;</p>
 							<span>&nbsp;</span>
@@ -3812,7 +3812,7 @@
 							<p>Liabilities + Equity</p>
 							<span data-format="n" data-bind="text: totalLiabilityEquity"></span>
 						</div>
-					</div>
+					</div> -->
 			    	
 					<table class="table table-borderless table-condensed">
 						<thead>
