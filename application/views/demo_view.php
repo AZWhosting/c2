@@ -3837,6 +3837,8 @@
 						</tfoot>
 					</table>
 
+					<br>
+
 					<table class="table table-borderless table-condensed">
 						<thead>
 							<tr>
@@ -3859,6 +3861,8 @@
 							</tr>
 						</tfoot>
 					</table>
+
+					<br>
 
 					<table class="table table-borderless table-condensed">
 						<thead>
@@ -29313,7 +29317,7 @@
 					<span data-bind="text: lang.lang.transaction"></span>
 				</p>
 				<div class="total-customer" style="background: #d9edf7; color: #333;"> 
-					<span class="number" data-bind="text:transactionSize" style="font-size: 30px;"></span>GB
+					<span class="number" data-bind="text:transactionSize" style="font-size: 30px; font-weight: 600;"></span>GB
 					<p>of <span data-bind="text: transactionNu"></span> <span data-bind="text: lang.lang.transaction"></span></p>
 					
 					
@@ -29323,7 +29327,7 @@
 			<div class="span4">
 				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;"><span data-bind="text: lang.lang.contact_items"></span></p>
 				<div class="total-customer" style="color: #333;">
-					<span class="number" data-bind="text: contactSize" style="font-size: 30px;"></span>GB
+					<span class="number" data-bind="text: contactSize" style="font-size: 30px; font-weight: 600;"></span>GB
 					<p>of <span data-bind="text: contactNu"></span> <span data-bind="text: lang.lang.contact_items"></span></p>
 				</div>
 			</div>
@@ -29331,7 +29335,7 @@
 			<div class="span4" style="padding-left: 15px;">
 				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;"><span data-bind="text: lang.lang.total_attachment"></span></p>
 				<div class="total-customer" style="background: #496cad; color: #fff;min-height: 112px;">
-					<span class="number" data-bind="text: totalSize" style="font-size: 30px;"></span>GB
+					<span class="number" data-bind="text: totalSize" style="font-size: 30px; font-weight: 600;"></span>GB
 					<p><span data-bind="text: lang.lang.use_of"></span> 1GB</p>
 				</div>
 			</div>
