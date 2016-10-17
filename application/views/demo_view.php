@@ -2964,17 +2964,17 @@
 							
 							        	</div>
 
-							        	<!-- PRINT / EXPORT								         -->
+							        	<!-- PRINT / EXPORT	-->
 								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" onclick="javascript: window.print();" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
 								        	</span>
 								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
+								        	</span> -->
 							        	</div>
 
 								    </div>
@@ -3735,17 +3735,17 @@
 							
 							        	</div>
 
-							        	<!-- PRINT / EXPORT								         -->
+							        	<!-- PRINT / EXPORT -->
 								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" onclick="javascript: window.print();" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
 								        	</span>
 								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
+								        	</span> -->
 							        	</div>
 
 								    </div>
