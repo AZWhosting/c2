@@ -575,18 +575,45 @@ class Accounting_reports extends REST_Controller {
 		$totalTxnRecorded = $txnRecorded->count();
 		//END TRANSACTION RECORDED
 
-
-		$returnOnAsset = $totalSale / ($totalAsset - $totalCurrentLiability);
-		$ebit = ($totalIncome - $totalExpenseEBIT) / $totalSale;
+		$quickRatio = 0;
+		$returnOnAsset = 0;
+		$currentRatio = 0;
+		$cashRatio = 0;
+		if($totalCurrentLiability>0){
+			$quickRatio = $totalQuickCurrentAsset / $totalCurrentLiability;
+			$returnOnAsset = $totalSale / ($totalAsset - $totalCurrentLiability);
+			$currentRatio = $totalCurrentAsset / $totalCurrentLiability;				
+		   	$cashRatio = $totalCashRatio / $totalCurrentLiability;
+		}		
+		
+		$wcSale = 0;
+		$grossProfitMargin = 0;
+		$ebit = 0;
+		if($totalSale>0){			
+			$wcSale = ($totalCurrentAsset - $totalCurrentLiability) / $totalSale;
+			$grossProfitMargin = ($totalSale - $totalCOGS) / $totalSale;
+			$ebit = ($totalIncome - $totalExpenseEBIT) / $totalSale;
+		}
 
 		//Days
 		$date1 = new DateTime($this->startFiscalDate);
 		$date2 = new DateTime($today);
 		$days = $date2->diff($date1)->format("%a")-1;
 
-		$arCollectionPeriod = ($totalAR / $totalCreditSale) * $days;
-		$apPaymentPeriod = ($totalAP / $totalCreditPurchase) * $days;
-		$inventoryTurnOver = ($totalInventory / $totalCOGS) * $days;
+		$arCollectionPeriod = 0;
+		if($totalCreditSale>0){
+			$arCollectionPeriod = ($totalAR / $totalCreditSale) * $days;
+		}
+
+		$apPaymentPeriod = 0;
+		if($totalCreditPurchase>0){
+			$apPaymentPeriod = ($totalAP / $totalCreditPurchase) * $days;
+		}
+
+		$inventoryTurnOver = 0;
+		if($totalCOGS>0){
+			$inventoryTurnOver = ($totalInventory / $totalCOGS) * $days;
+		}
 		
 		$data["results"][] = array(
 			"id" 					=> 0,
@@ -598,12 +625,12 @@ class Accounting_reports extends REST_Controller {
 		   	"liability" 			=> $totalLiability,
 		   	"equity" 				=> $totalAsset - $totalLiability,
 
-			"quickRatio" 			=> $totalQuickCurrentAsset / $totalCurrentLiability,
-			"currentRatio" 			=> $totalCurrentAsset / $totalCurrentLiability,				
-		   	"cashRatio" 			=> $totalCashRatio / $totalCurrentLiability,
+			"quickRatio" 			=> $quickRatio,
+			"currentRatio" 			=> $currentRatio,				
+		   	"cashRatio" 			=> $cashRatio,
 
-		   	"wcSale"				=> ($totalCurrentAsset - $totalCurrentLiability) / $totalSale,
-		   	"grossProfitMargin"		=> ($totalSale - $totalCOGS) / $totalSale,
+		   	"wcSale"				=> $wcSale,
+		   	"grossProfitMargin"		=> $grossProfitMargin,
 		   	"profitMargin" 			=> $ebit,
 		   	"returnOnAsset" 		=> $returnOnAsset,
 		   	"roce" 					=> $ebit * $returnOnAsset,
@@ -897,7 +924,7 @@ class Accounting_reports extends REST_Controller {
 		$balanceSheet->where("deleted", $deleted);		
 		$balanceSheet->get_iterated();
 		
-		//Sum dr and cr					
+		//Sum Dr and Cr					
 		$accountList = [];
 		foreach ($balanceSheet as $value) {
 			$dr = 0;
@@ -1084,6 +1111,129 @@ class Accounting_reports extends REST_Controller {
 		);
 		
 				
+		$data["count"] = count($data["results"]);
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET BALANCE SHEET
+	function balance_sheet_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
+		$deleted = 0;
+
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		$asOf = date("Y-m-d");
+		$typeID = [];
+		if(!empty($filters) && isset($filters)){
+	    	$asOf = $filters[0]["value"];
+	    	$obj->where_in_related("account", "account_type_id", $filters[1]["value"]);		 			
+		}		
+
+		//Fiscal Date
+		//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate		
+		$asOfYear = date("Y",strtotime($asOf));
+		$fdate = $asOfYear ."-". $this->fiscalDate;
+		if($asOf > $fdate){
+			$startDate 	= $asOfYear ."-". $this->fiscalDate;
+			$endDate 	= intval($asOfYear)+1 ."-". $this->fiscalDate;
+		}else{
+			$startDate 	= intval($asOfYear)-1 ."-". $this->fiscalDate;
+			$endDate 	= $asOfYear ."-". $this->fiscalDate;
+		}
+		
+		//OBJ (As Of)
+		$obj->include_related("account", array("account_type_id","number","name"));
+		$obj->include_related("account/account_type", array("sub_of_id","name","nature"));		
+		$obj->where_related("transaction", "issued_date <=", $asOf);
+		$obj->where_related("transaction", "is_recurring", 0);
+		$obj->where_related("transaction", "deleted", 0);
+		$obj->where("deleted", 0);
+		$obj->order_by_related("account", "account_type_id", "desc");
+		$obj->order_by_related("account", "number", "asc");		
+		$obj->get_iterated();
+		
+		//Sum Dr and Cr					
+		$objList = [];
+		foreach ($obj as $value) {
+			$amount = 0;
+			if($value->account_account_type_nature=="Dr"){
+				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->rate);				
+			}else{
+				$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->rate);					
+			}
+
+			//Group by account_id
+			if(isset($objList[$value->account_id])){
+				$objList[$value->account_id]["amount"] += $amount;
+			} else {
+				$objList[$value->account_id]["id"] 				= $value->account_id;
+				$objList[$value->account_id]["account_type_id"] = $value->account_account_type_id;				
+				$objList[$value->account_id]["sub_of_id"] 		= $value->account_account_type_sub_of_id;
+				$objList[$value->account_id]["type"] 			= $value->account_account_type_name;
+				$objList[$value->account_id]["number"] 			= $value->account_number;
+				$objList[$value->account_id]["name"] 			= $value->account_name;
+				$objList[$value->account_id]["amount"] 			= $amount;				
+			}			
+		}
+
+		//Group by account type id
+		$typeList = [];
+		$totalAmount = 0;
+		foreach ($objList as $value) {			
+			$totalAmount += $value["amount"];			
+
+			//Group by account_type_id
+			if(isset($typeList[$value["account_type_id"]])){
+				$typeList[$value["account_type_id"]]["line"][] = array(
+					"id" 		=> $value["id"],
+					"number" 	=> $value["number"],
+					"name" 		=> $value["name"],
+					"amount" 	=> $value["amount"]
+				);
+			} else {
+				$typeList[$value["account_type_id"]]["id"] 			= $value["account_type_id"];
+				$typeList[$value["account_type_id"]]["sub_of_id"] 	= $value["sub_of_id"];
+				$typeList[$value["account_type_id"]]["type"] 		= $value["type"];				
+				$typeList[$value["account_type_id"]]["line"][] 		= array(
+					"id" 		=> $value["id"],
+					"number" 	=> $value["number"],
+					"name" 		=> $value["name"],
+					"amount" 	=> $value["amount"]
+				);
+				
+			}			
+		}		
+		
+		//Group by sub_of_id
+		$parentList = [];
+		foreach ($typeList as $value) {
+			if(isset($parentList[$value["sub_of_id"]])){
+				$parentList[$value["sub_of_id"]]["typeLine"][] 	= $value;
+			} else {
+				$subOf = new Account_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$subOf->get_by_id($value["sub_of_id"]);				
+
+				$parentList[$value["sub_of_id"]]["id"] 			= $subOf->sub_of_id;
+				$parentList[$value["sub_of_id"]]["name"] 		= $subOf->name;				
+				$parentList[$value["sub_of_id"]]["typeLine"][] 	= $value;
+			}
+		}
+
+		$data["totalAmount"] = $totalAmount;
+
+		//Add to results
+		foreach ($parentList as $value) {
+			$data["results"][] = $value;
+		}
+		
 		$data["count"] = count($data["results"]);
 
 		//Response Data		

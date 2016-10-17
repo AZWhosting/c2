@@ -203,7 +203,7 @@
 						<div class="span12">
 							<div class="span6">
 								<p><span data-bind="text: lang.lang.performance"></span></p>
-								<a href="#/statement_profit_loss">
+								<a >
 									<table class="performance">
 										<tr>
 											<td><span data-bind="text: lang.lang.income"></span></td>
@@ -225,7 +225,7 @@
 							</div>
 							<div class="span6">
 								<p><span data-bind="text: lang.lang.position"></span></p>
-								<a href="#/statement_financial_position">
+								<a >
 									<table class="position" style="width: 100%;">
 										<tr>
 											<td><span data-bind="text: lang.lang.asset"></span></td>
@@ -843,12 +843,12 @@
 									<td align="right"><span data-bind="text: income"></span></td>
 								</tr>
 								<tr> 									
-									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><span data-bind="text: lang.lang.expense"></span></td>
+									<td style="padding-left: 0;"><span data-bind="text: lang.lang.expense"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: expense"></span></td>
 								</tr>
 								<tr>
-									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><b><span data-bind="text: lang.lang.net_income"></span></b></td>
+									<td style="padding-left: 0;"><b><span data-bind="text: lang.lang.net_income"></span></b></td>
 									<td></td>
 									<td align="right"><b data-bind="text: net_income"></b></td>
 								</tr>
@@ -859,17 +859,17 @@
 							<table class="position">
 								<tr>
 
-									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><span data-bind="text: lang.lang.asset"></span></td>
+									<td style="padding-left: 0;"><span data-bind="text: lang.lang.asset"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: asset"></span></td>
 								</tr>
 								<tr>
-									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><span data-bind="text: lang.lang.liabilities"></span></td>
+									<td style="padding-left: 0;"><span data-bind="text: lang.lang.liabilities"></span></td>
 									<td></td>
 									<td align="right"><span data-bind="text: liability"></span></td>
 								</tr>
 								<tr>
-									<td style="padding-left: 0;"><span data-bind="text: lang.lang.income"><b><span data-bind="text: lang.lang.equity"></span></b></td>
+									<td style="padding-left: 0;"><b><span data-bind="text: lang.lang.equity"></span></b></td>
 									<td></td>
 									<td align="right"><b data-bind="text: equity"></b></td>
 								</tr>
@@ -1916,24 +1916,24 @@
 					    <div class="widget-body">
 
 					    	<div class="row-fluid">
-						    	<div class="span6 alert alert-primary">Company currency: <span data-bind="text: baseCode"></span> </div>
-						    	<div class="span6 alert alert-primary">Reporting currency: <span data-bind="text: reportCode"></span> </div>
+						    	<div class="span6 alert alert-primary"><span data-bind="text: lang.lang.company_currency"></span> <span data-bind="text: baseCode"></span> </div>
+						    	<div class="span6 alert alert-primary"><span data-bind="text: lang.lang.reporting_currency"></span> <span data-bind="text: reportCode"></span> </div>
 					    	</div>
 
 							<br>					
 							
-							<button class="btn btn-inverse hidden-print" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> Add New Rate</button>
+							<button class="btn btn-inverse hidden-print" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_new_rate"></span></button>
 							
 							<!-- Item List -->
 							<table style="margin-top: 15px;" class="table table-bordered table-primary table-striped table-vertical-center">
 						        <thead>
 						            <tr>
-						                <th style="width: 15%;">DATE</th>
-						                <th style="width: 6%;">CODE</th>
-						                <th style="width: 25%">COUNTRY</th>
-						                <th style="width: 15%;">RATE</th>
-						                <th style="width: 15%;">SOURCE</th>
-						                <th style="width: 15%;">METHOD</th>
+						                <th style="width: 15%;"><span data-bind="text: lang.lang.date"></span></th>
+						                <th style="width: 6%;"><span data-bind="text: lang.lang.code"></span></th>
+						                <th style="width: 25%"><span data-bind="text: lang.lang.country"></span></th>
+						                <th style="width: 15%;"><span data-bind="text: lang.lang.rate"></span></th>
+						                <th style="width: 15%;"><span data-bind="text: lang.lang.source"></span></th>
+						                <th style="width: 15%;"><span data-bind="text: lang.lang.method"></span></th>
 						                <th style="width: 10%;"></th>			                
 						            </tr> 
 						        </thead>
@@ -1973,7 +1973,7 @@
 										<td>
 							                <input id="date" name="date" 
 							            		data-role="datepicker"			            		
-					        					data-bind="value: obj.date" 
+					        					data-bind="value: obj.date" CASH ADVANCE
 					        					data-format="dd-MM-yyyy"
 					        					data-parse-formats="yyyy-MM-dd" 
 					        					placeholder="dd-MM-yyyy" 
@@ -2043,7 +2043,7 @@
 				        </p>
 			        </div>
 			        <div class="span6">
-			         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbspAdd <span data-bind="text: lang.lang.add_tax_type"></span></button>
+			         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp <span data-bind="text: lang.lang.add_tax_type"></span></button>
 						
 			        </div>		        				        				        	
 			    </div>			   
@@ -2235,7 +2235,7 @@
     		|
     		<span data-bind="click: view"><i class="icon-view"></i> <span data-bind="text: lang.lang.view_item"></span></span>
     		|
-    		<span data-bind="click: addItem"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_item"></span>
+    		<span data-bind="click: addItem"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_tax_item"></span>
     	</td>
    	</tr>
 </script>
@@ -2399,7 +2399,7 @@
 								<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a >General Ledger(Comming on 12/10/2016)</a></h3>								
+								<h3><a >General Ledger(Coming on 14/10/2016)</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -2484,10 +2484,10 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td >
-								<h3><a >Statement of Profit or Loss(Comming on 12/10/2016)</a></h3>
+								<h3><a >Statement of Profit or Loss(Coming on 14/10/2016)</a></h3>
 							</td>
 							<td >
-								<h3><a >Statement of Financial Position(Comming on 12/10/2016)</a></h3>								
+								<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -2680,17 +2680,17 @@
 						<h2 style="color: #496cad; font-size: 20px;">Statement of Profit or Loss</h2>
 						<table class="performance" style="width:100%; background: #fff; color: #000; padding: 0; margin-bottom: 20px;">
 							<tr>
-								<td>Income</td>
+								<td style="padding-left: 0;">Income</td>
 								<td></td>
 								<td align="right"><span data-bind="text: income"></span></td>
 							</tr>
 							<tr>
-								<td>Expense</td>
+								<td style="padding-left: 0;">Expense</td>
 								<td></td>
 								<td align="right"><span data-bind="text: expense"></span></td>
 							</tr>
 							<tr>
-								<td><b>Net Income</b></td>
+								<td style="padding-left: 0;"><b>Net Income</b></td>
 								<td></td>
 								<td align="right"><b data-bind="text: net_income"></b></td>
 							</tr>
@@ -2699,17 +2699,17 @@
 						<h2 style="color: #496cad; font-size: 20px;">Statement of Financial Position</h2>
 						<table class="position" style="width:100%; background: #fff; color: #000; padding: 0;">
 							<tr>
-								<td>Assets</td>
+								<td style="padding-left: 0;">Assets</td>
 								<td></td>
 								<td align="right"><span data-bind="text: asset"></span></td>
 							</tr>
 							<tr>
-								<td>Liabilities</td>
+								<td style="padding-left: 0;">Liabilities</td>
 								<td></td>
 								<td align="right"><span data-bind="text: liability"></span></td>
 							</tr>
 							<tr>
-								<td><b>Equity</b></td>
+								<td style="padding-left: 0;"><b>Equity</b></td>
 								<td></td>
 								<td align="right"><b data-bind="text: equity"></b></td>
 							</tr>
@@ -2848,50 +2848,50 @@
 <script id="journalReport-template" type="text/x-kendo-tmpl">
 	#var sumDr =0, sumCr = 0;#
 	#for(var i=0; i<line.length; i++){#
-	#sumDr += line[i].dr / line[i].rate;#
-	#sumCr += line[i].cr / line[i].rate;#
-	<tr>
-		<td style="color: black;">
-			#if(i==0){#
-				#=type#
-			#}#
-		</td>		
-		<td style="color: black;">
-			#if(i==0){#
-				#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy")#
-			#}#
-		</td>
-		<td style="color: black;">
-			#if(i==0){#
-				#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
-					<a href="\#/purchase/#=id#"><i></i> #=number#</a>
-				#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
-					<a href="\#/cash_transaction/#=id#"><i></i> #=number#</a>				
-				#}else{#
-					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+		#sumDr += line[i].dr / line[i].rate;#
+		#sumCr += line[i].cr / line[i].rate;#
+		<tr>
+			<td style="color: black;">
+				#if(i==0){#
+					#=type#
 				#}#
-			#}#
-		</td>		
-		<td style="color: black;">
-			#if(i==0){#
-				#=memo#
-			#}#
-		</td>
-		<td style="color: black;">
-			#=line[i].account#
-		</td>			
-		<td class="right" style="color: black;">
-			#if(line[i].dr>0){#
-				#=kendo.toString(line[i].dr / line[i].rate, "c0", banhji.locale)#
-			#}#
-		</td>
-		<td class="right" style="color: black;">
-			#if(line[i].cr>0){#
-				#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.locale)#
-			#}#
-		</td>
-		<td></td>  			
-    </tr>    
+			</td>		
+			<td style="color: black;">
+				#if(i==0){#
+					#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy")#
+				#}#
+			</td>
+			<td style="color: black;">
+				#if(i==0){#
+					#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
+						<a href="\#/purchase/#=id#"><i></i> #=number#</a>
+					#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
+						<a href="\#/cash_transaction/#=id#"><i></i> #=number#</a>				
+					#}else{#
+						<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+					#}#
+				#}#
+			</td>		
+			<td style="color: black;">
+				#if(i==0){#
+					#=memo#
+				#}#
+			</td>
+			<td style="color: black;">
+				#=line[i].account#
+			</td>			
+			<td class="right" style="color: black;">
+				#if(line[i].dr>0){#
+					#=kendo.toString(line[i].dr / line[i].rate, "c0", banhji.locale)#
+				#}#
+			</td>
+			<td class="right" style="color: black;">
+				#if(line[i].cr>0){#
+					#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.locale)#
+				#}#
+			</td>
+			<td></td>  			
+	    </tr>    
     #}# 
     <tr>
     	<td style="color: black;">Total:</td>
@@ -3463,7 +3463,7 @@
 								    <div class="tab-content">
 
 								    	<!-- //GENERAL INFO -->
-								          <div class="tab-pane active" id="tab-1">									
+								        <div class="tab-pane active" id="tab-1">									
 									        As of:
 									        <input data-role="datepicker"
 													data-format="dd-MM-yyyy"
@@ -3504,20 +3504,20 @@
 						<p data-bind="text: displayDate"></p>
 					</div>
 
-					<div class="row-fluid journal_block">
-						<div class="span4">
+					<div class="row-fluid journal_block1">
+						<div class="span2">
 							<p>
 								Account
 							</p>
 							<span data-bind="text: dataSource.total"></span>
 						</div>
-						<div class="span4">
+						<div class="span5">
 							<p>
 								Total Dr. Balance
 							</p>
 							<span data-bind="text: dr"></span>
 						</div>
-						<div class="span4">
+						<div class="span5">
 							<p>
 								Total Cr. Balance
 							</p>
@@ -3683,482 +3683,6 @@
 		</td>				
     </tr>    
 </script>
-<!-- <script id="statementProfitLoss" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">	
-				<div id="example" class="k-content saleSummaryStatement">
-					<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
-					<div class="block-title">
-						<h3>Company is Name</h3>
-						<h2>Statement of Profit or Loss</h2>
-						<p>for the year ended 31 December 2016</p>
-					</div>
-			    
-					<table width="100%">
-						<tr>
-							<th></th>
-							<th>Note</th>
-							<th class="right">2016</th>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td class="right">KHR</td>
-						</tr>
-						<tr>
-							<td>Revenue</td>
-							<td><a href="">10</a></td>
-							<td class="right">680,000</td>
-						</tr>
-						<tr>
-							<td>Cost</td>
-							<td></td>
-							<td class="right">(400,000)</td>
-						</tr>
-						<tr>
-							<td class="bold">Gross Profit</td>
-							<td></td>
-							<td class="right bold-border">280,000</td>
-						</tr>
-						<tr>
-							<td>Distribution costs</td>
-							<td></td>
-							<td class="right">(8,580)</td>
-						</tr>
-						<tr>
-							<td>Administrative Expense</td>
-							<td></td>
-							<td class="right">(50,000)</td>
-						</tr>
-						<tr>
-							<td>Finance Costs</td>
-							<td><a href="">10</a></td>
-							<td class="right">(22,300)</td>
-						</tr>
-						<tr>
-							<td>Share of profit of associate</td>
-							<td><a href="">10</a></td>
-							<td class="right">42,100</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit before Tax</td>
-							<td><a href="">10</a></td>
-							<td class="right bold-border">241,220</td>
-						</tr>
-						<tr>
-							<td>Income tax expense</td>
-							<td><a href="">10</a></td>
-							<td class="right">(60,305)</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit for the year from continuing operations</td>
-							<td></td>
-							<td class="right bold-border">180,915</td>
-						</tr>
-						<tr>
-							<td>Loss for the year discoutinued operations</td>
-							<td><a href="">10</a></td>
-							<td class="right">(24,780)</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit for the year</td>
-							<td></td>
-							<td class="right bold-border border-bottom">156,135</td>
-						</tr>
-					</table>
-
-		        </div>		        
-			</div>							
-		</div>
-	</div>
-</script>
-<script id="statementFinancialPosition" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">	
-				<div id="example" class="k-content saleSummaryStatement">
-					<span class="glyphicons no-js remove_2 pull-right" 
-							onclick="javascript: window.history.back()"><i></i></span>
-					<div class="block-title">
-						<h3>Company is Name</h3>
-						<h2>Statement of Financial Position</h2>
-						<p>for the year ended 31 December 2016</p>
-					</div>
-			    	
-					<table width="100%">
-						<tr>
-							<th></th>
-							<th>Note</th>
-							<th class="right">2016</th>
-						</tr>
-						<tr>
-							<td class="bold">ASSET</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="bold">Non-Current Asset</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Properties, Plants, & Equipment</td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">138,923,361</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Freehold Land</td>
-							<td><a href="">1</a></td>
-							<td class="right">123,670,644</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Building & Structure</td>
-							<td><a href="">1</a></td>
-							<td class="right">9,848,345</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Electrical Systems, Machineries and Improvement</td>
-							<td><a href="">1</a></td>
-							<td class="right">838,559</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Automobiles & Vehicles</td>
-							<td><a href="">1</a></td>
-							<td class="right">123,670,644</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Furniture, Fixtures & Fittings</td>
-							<td><a href="">1</a></td>
-							<td class="right">663,429</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Computer and Related Equipment</td>
-							<td><a href="">1</a></td>
-							<td class="right">286,688</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Equipments, Electricles Device & Tools</td>
-							<td>1</td>
-							<td class="right">779,835</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Heavy Machinaries</td>
-							<td><a href="">1</a></td>
-							<td class="right">341505</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Completed Investment Properties</td>
-							<td><a href="">1</a></td>
-							<td class="right">3,701,848</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">I​nvestment Properties under-construction</td>
-							<td><a href="">1</a></td>
-							<td class="right">10,087,257</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Investment in Subsidiaries</td>
-							<td><a href="">1</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Non-Current Asset</i></td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">152,712,466</td>
-						</tr>
-						<tr>
-							<td class="bold">Current Assets</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Inventory</td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">389,142,635</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Raw Material</td>
-							<td><a href="">1</a></td>
-							<td class="right">175,561,951</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Working-in-progress</td>
-							<td><a href="">1</a></td>
-							<td class="right">80,575,454</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Finished goods</td>
-							<td><a href="">1</a></td>
-							<td class="right">205,523,139</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Operating Equipment</td>
-							<td><a href="">1</a></td>
-							<td class="right">142,635</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Trade Receivables</td>
-							<td><a href="">1</a></td>
-							<td class="right">142,635</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Properties Sale Receivable</td>
-							<td><a href="">1</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Installment Payment Scheme</td>
-							<td><a href="">1</a></td>
-							<td class="right">205,523,139</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Mortgage Payment Scheme</td>
-							<td><a href="">1</a></td>
-							<td class="right">9,003,967</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">AR from Related Parties</td>
-							<td><a href="">1</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Other receivables</td>
-							<td><a href="">1</a></td>
-							<td class="right">34,859</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Interest Receivable</td>
-							<td><a href="">1</a></td>
-							<td class="right">138,835</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Prepayment & Deposit</td>
-							<td><a href="">1</a></td>
-							<td class="right">3,741,185</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Cash and Cash Equivalent</td>
-							<td><a href="">1</a></td>
-							<td class="right">7,359,195</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Current Assets</i></td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">419,215,778</td>
-						</tr>
-						<tr>
-							<td class="bold">TOTAL ASSETS</td>
-							<td><a href="">1</a></td>
-							<td class="right bold under-bottom">571,928,244</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="bold">EQUITY & LIABILITIES</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Shareholders Equity</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Share Capital</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Retained Earning</td>
-							<td></td>
-							<td ></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Shareholders Equity</i></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Non-Current Liabilities</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Interest Bearing Loans and Borrowing</td>
-							<td><a href="">10</a></td>
-							<td class="right">36,445,536</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Long term Loan based on Customer Portfolio</td>
-							<td><a href="">10</a></td>
-							<td class="right">60,334,222</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Long term loan from Related Parties</td>
-							<td><a href="">11</a></td>
-							<td class="right">9,429,028</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Land Purchase Payable</td>
-							<td><a href="">12</a></td>
-							<td class="right">150,595,772</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Deposit for Sale of Properties inventory</td>
-							<td><a href="">13</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Installment Payment Scheme</td>
-							<td><a href=""></a></td>
-							<td class="right">95,979,147</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Mortgage Payment Scheme</td>
-							<td><a href=""></a></td>
-							<td class="right">76,736,253</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Other Deposit</td>
-							<td><a href=""></a></td>
-							<td class="right"></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Non-Current Liabilities</i></td>
-							<td><a href=""></a></td>
-							<td class="right bold">429,519,958</td>
-						</tr>
-						<tr>
-							<td>Current Liabilities</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Trade Payable</td>
-							<td><a href="">14</a></td>
-							<td class="right">5,720,691</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Short term Bank Borrowing (OD)</td>
-							<td><a href="">9</a></td>
-							<td class="right">7,645,991</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Current Customer Deposit & Prepayment</td>
-							<td><a href="">13</a></td>
-							<td class="right">11,837,636</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Accrued Expenses (including bonus)</td>
-							<td><a href="">15</a></td>
-							<td class="right">280,607</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Salary Payable</td>
-							<td><a href="">16</a></td>
-							<td class="right">1,074,153</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Interest Payable</td>
-							<td><a href=""></a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">General Provision</td>
-							<td><a href=""></a></td>
-							<td class="right"></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Current Tax Payable</td>
-							<td><a href=""></a></td>
-							<td class="right"></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Current Liabilities</i></td>
-							<td><a href=""></a></td>
-							<td class="right bold-border border-bottom">126,558,805</td>
-						</tr>
-						<tr>
-							<td class="bold">Total Liabilities</td>
-							<td><a href=""></a></td>
-							<td class="right bold border-bottom">556,078,762</td>
-						</tr>
-						<tr>
-							<td class="bold fontBig">Total Liabilities</td>
-							<td><a href=""></a></td>
-							<td class="right bold under-bottom">556,078,762</td>
-						</tr>
-					</table>
-		        </div>		        
-			</div>							
-		</div>
-	</div>
-</script> -->
 <script id="statementProfitLoss" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">
@@ -4255,320 +3779,172 @@
 		<div class="customer-background ">
 			<div class="container-960">	
 				<div id="example" class="k-content saleSummaryCustomer">
+					
 					<span class="glyphicons no-js remove_2 pull-right" 
 							onclick="javascript: window.history.back()"><i></i></span>
+
+					<div>
+						As of:
+				        <input data-role="datepicker"
+								data-format="dd-MM-yyyy"
+								data-parse-formats="yyyy-MM-dd" 
+								data-bind="value: as_of" />
+
+			            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+					</div>
+
 					<div class="block-title">
-						<h3>Company is Name</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Statement of Financial Position</h2>
-						<p>for the year ended 31 December 2016</p>
+						<p data-bind="text: displayDate"></p>
 					</div>
 			    	
-					<table width="100%"  class="table table-borderless table-condensed">
-						<tr>
-							<th></th>
-							<th>Note</th>
-							<th class="right">2016</th>
-						</tr>
-						<tr>
-							<td class="bold">ASSET</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="bold">Non-Current Asset</td>
-							<td></td>
-							<td></td>
-						</tr>						
-						<tr>
-							<td class="paddingLeft20">Properties, Plants, & Equipment</td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">138,923,361</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Freehold Land</td>
-							<td><a href="">1</a></td>
-							<td class="right">123,670,644</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Building & Structure</td>
-							<td><a href="">1</a></td>
-							<td class="right">9,848,345</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Electrical Systems, Machineries and Improvement</td>
-							<td><a href="">1</a></td>
-							<td class="right">838,559</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Automobiles & Vehicles</td>
-							<td><a href="">1</a></td>
-							<td class="right">123,670,644</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Furniture, Fixtures & Fittings</td>
-							<td><a href="">1</a></td>
-							<td class="right">663,429</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Computer and Related Equipment</td>
-							<td><a href="">1</a></td>
-							<td class="right">286,688</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Equipments, Electricles Device & Tools</td>
-							<td>1</td>
-							<td class="right">779,835</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Heavy Machinaries</td>
-							<td><a href="">1</a></td>
-							<td class="right">341505</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Completed Investment Properties</td>
-							<td><a href="">1</a></td>
-							<td class="right">3,701,848</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">I​nvestment Properties under-construction</td>
-							<td><a href="">1</a></td>
-							<td class="right">10,087,257</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Investment in Subsidiaries</td>
-							<td><a href="">1</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Non-Current Asset</i></td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">152,712,466</td>
-						</tr>
-						<tr>
-							<td class="bold">Current Assets</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Inventory</td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">389,142,635</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Raw Material</td>
-							<td><a href="">1</a></td>
-							<td class="right">175,561,951</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Working-in-progress</td>
-							<td><a href="">1</a></td>
-							<td class="right">80,575,454</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Finished goods</td>
-							<td><a href="">1</a></td>
-							<td class="right">205,523,139</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Operating Equipment</td>
-							<td><a href="">1</a></td>
-							<td class="right">142,635</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Trade Receivables</td>
-							<td><a href="">1</a></td>
-							<td class="right">142,635</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Properties Sale Receivable</td>
-							<td><a href="">1</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Installment Payment Scheme</td>
-							<td><a href="">1</a></td>
-							<td class="right">205,523,139</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft40">Mortgage Payment Scheme</td>
-							<td><a href="">1</a></td>
-							<td class="right">9,003,967</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">AR from Related Parties</td>
-							<td><a href="">1</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Other receivables</td>
-							<td><a href="">1</a></td>
-							<td class="right">34,859</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Interest Receivable</td>
-							<td><a href="">1</a></td>
-							<td class="right">138,835</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Prepayment & Deposit</td>
-							<td><a href="">1</a></td>
-							<td class="right">3,741,185</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 ">Cash and Cash Equivalent</td>
-							<td><a href="">1</a></td>
-							<td class="right">7,359,195</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Current Assets</i></td>
-							<td><a href="">1</a></td>
-							<td class="right bold-border border-bottom">419,215,778</td>
-						</tr>
-						<tr>
-							<td class="bold">TOTAL ASSETS</td>
-							<td><a href="">1</a></td>
-							<td class="right bold under-bottom">571,928,244</td>
-						</tr>
-						<tr>
-							<td class="bold">EQUITY & LIABILITIES</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Shareholders Equity</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Share Capital</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Retained Earning</td>
-							<td></td>
-							<td ></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Shareholders Equity</i></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Non-Current Liabilities</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Interest Bearing Loans and Borrowing</td>
-							<td><a href="">10</a></td>
-							<td class="right">36,445,536</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Long term Loan based on Customer Portfolio</td>
-							<td><a href="">10</a></td>
-							<td class="right">60,334,222</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Long term loan from Related Parties</td>
-							<td><a href="">11</a></td>
-							<td class="right">9,429,028</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Land Purchase Payable</td>
-							<td><a href="">12</a></td>
-							<td class="right">150,595,772</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Deposit for Sale of Properties inventory</td>
-							<td><a href="">13</a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Installment Payment Scheme</td>
-							<td><a href=""></a></td>
-							<td class="right">95,979,147</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Mortgage Payment Scheme</td>
-							<td><a href=""></a></td>
-							<td class="right">76,736,253</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Other Deposit</td>
-							<td><a href=""></a></td>
-							<td class="right"></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Non-Current Liabilities</i></td>
-							<td><a href=""></a></td>
-							<td class="right bold">429,519,958</td>
-						</tr>
-						<tr>
-							<td>Current Liabilities</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Trade Payable</td>
-							<td><a href="">14</a></td>
-							<td class="right">5,720,691</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Short term Bank Borrowing (OD)</td>
-							<td><a href="">9</a></td>
-							<td class="right">7,645,991</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Current Customer Deposit & Prepayment</td>
-							<td><a href="">13</a></td>
-							<td class="right">11,837,636</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Accrued Expenses (including bonus)</td>
-							<td><a href="">15</a></td>
-							<td class="right">280,607</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Salary Payable</td>
-							<td><a href="">16</a></td>
-							<td class="right">1,074,153</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Interest Payable</td>
-							<td><a href=""></a></td>
-							<td class="right">-</td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">General Provision</td>
-							<td><a href=""></a></td>
-							<td class="right"></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20">Current Tax Payable</td>
-							<td><a href=""></a></td>
-							<td class="right"></td>
-						</tr>
-						<tr>
-							<td class="paddingLeft20 bold"><i>Total Current Liabilities</i></td>
-							<td><a href=""></a></td>
-							<td class="right bold-border border-bottom">126,558,805</td>
-						</tr>
-						<tr>
-							<td class="bold">Total Liabilities</td>
-							<td><a href=""></a></td>
-							<td class="right bold border-bottom">556,078,762</td>
-						</tr>
-						<tr>
-							<td class="bold fontBig">Total Liabilities</td>
-							<td><a href=""></a></td>
-							<td class="right bold under-bottom">556,078,762</td>
-						</tr>
+			    	<!-- <div class="row-fluid journal_block1">
+						<div class="span2">
+							<p>&nbsp;</p>
+							<span>&nbsp;</span>
+						</div>
+						<div class="span5">
+							<p>Assets</p>
+							<span data-bind="text: totalAsset"></span>
+						</div>
+						<div class="span5">
+							<p>Liabilities + Equity</p>
+							<span data-format="n" data-bind="text: totalLiabilityEquity"></span>
+						</div>
+					</div> -->
+			    	
+					<table class="table table-borderless table-condensed">
+						<thead>
+							<tr>
+								<th>ASSETS</th>
+								<th width="15%"></th>
+								<th width="15%"></th>
+							</tr>
+						</thead>
+						<tbody data-role="listview" 
+							data-template="statementFinancialPosition-template"
+							data-auto-bind="false"
+							data-bind="source: dataSource"></tbody>
+						<tfoot>
+							<tr>
+								<td style="font-weight: bold; font-size: large;">TOTAL ASSETS</td>
+								<td width="15%"></td>
+								<td width="15%" style="font-weight: bold; font-size: large;" align="right">
+									<span data-bind="text: totalAsset"></span>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
+
+					<br>
+
+					<table class="table table-borderless table-condensed">
+						<thead>
+							<tr>
+								<th>LIABILITIES</th>
+								<th width="15%"></th>
+								<th width="15%"></th>
+							</tr>
+						</thead>
+						<tbody data-role="listview"
+							data-template="statementFinancialPosition-template"
+							data-auto-bind="false"
+							data-bind="source: liabilityDS"></tbody>
+						<tfoot>
+							<tr>
+								<td style="font-weight: bold; font-size: large;">TOTAL LIABILITIES</td>
+								<td width="15%"></td>
+								<td width="15%" style="font-weight: bold; font-size: large;" align="right">
+									<span data-bind="text: totalLiability"></span>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+
+					<br>
+
+					<table class="table table-borderless table-condensed">
+						<thead>
+							<tr>
+								<th>EQUITY</th>
+								<th width="15%"></th>
+								<th width="15%"></th>
+							</tr>
+						</thead>
+						<tbody data-role="listview"
+							data-template="statementFinancialPosition-template"
+							data-auto-bind="false"
+							data-bind="source: equityDS"></tbody>
+						<tfoot>
+							<tr>
+								<td style="font-weight: bold; font-size: large;">TOTAL EQUITY</td>
+								<td width="15%"></td>
+								<td width="15%" style="font-weight: bold; font-size: large;" align="right">
+									<span data-bind="text: totalEquity"></span>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+
 		        </div>		        
 			</div>							
 		</div>
 	</div>
+</script>
+<script id="statementFinancialPosition-template" type="text/x-kendo-template">
+    <tr>
+        <td style="font-weight: bold; font-style: italic;">
+            #: name #
+        </td> 
+        <td></td>
+        <td></td>    
+    </tr>
+    #var total = 0;#
+	#for(var i=0; i<typeLine.length; i++){#
+	    <tr>
+	        <td style="font-weight: bold;">
+	            &nbsp;&nbsp; #:typeLine[i].type#
+	        </td> 
+	        <td></td>
+	        <td></td>    
+	    </tr>    
+	    #var totalType = 0;#
+		#for(var j=0; j<typeLine[i].line.length; j++){#
+			#total += typeLine[i].line[j].amount;#
+			#totalType += typeLine[i].line[j].amount;#
+		    <tr>
+		        <td>
+		        	&nbsp;&nbsp;&nbsp;&nbsp; #: typeLine[i].line[j].number # #: typeLine[i].line[j].name #
+		        </td>
+		        <td align="right">
+		            &nbsp;&nbsp;&nbsp;&nbsp; #: kendo.toString(typeLine[i].line[j].amount, "c", banhji.locale) #
+		        </td>
+		        <td></td>
+		    </tr>
+		#}#
+		<tr>
+	        <td style="font-weight: bold;">
+	            &nbsp;&nbsp; Total #:typeLine[i].type#
+	        </td>
+	        <td style="font-weight: bold; border-top: 1px solid black !important;" align="right">
+	            #=kendo.toString(totalType, "c", banhji.locale)#
+	        </td>
+	        <td></td>
+	    </tr>
+	    <tr>
+	    	<td colspan="3">&nbsp;</td>
+	    </tr>
+	#}#
+	<tr>
+        <td style="font-weight: bold; font-style: italic;">
+            Total #: name #
+        </td>
+        <td></td>
+        <td style="font-weight: bold; border-top: 1px solid black !important;" align="right">
+            #=kendo.toString(total, "c", banhji.locale)#
+        </td>
+    </tr>
 </script>
 <script id="statementProfitLossComparison" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -6113,17 +5489,18 @@
 					<span class="glyphicons no-js remove_2 pull-right" 
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>
-
-			        <h2>Segment</h2>
+					<br>
+					<br>
+			        <h2 span data-bind="text: lang.lang.segment"></h2>
 
 			        <div class="row">
 				        <div class="span6">
 				        	<p>
-					        	Segment is important for monitoring or in-depth analysis of your company performance. There are two default segments created. You can edit or add more segment and its items.
+					        	<span data-bind="text: lang.lang.segment_is_important"></span>
 					        </p>
 				        </div>
 				         <div class="span6">
-				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbspAdd New Segment</button>
+				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp<span data-bind="text: lang.lang.add_new_segment"></span></button>
 							
 				        </div>
 			        </div>				    			   
@@ -6141,7 +5518,7 @@
 				    	
 				    	<table>							
 							<tr style="border-bottom: 8px solid #fff;">
-								<td width="40%">NAME</td>
+								<td width="40%"><span data-bind="text: lang.lang.name"></span></td>
 								<td>
 									<input class="k-textbox" placeholder="name..." data-bind="value: obj.name" style="width: 100%;">
 								</td>
@@ -6151,8 +5528,8 @@
 						<br>
 
 						<div style="text-align: center;">
-							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i>Save</span>
-							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span>  
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>  
 						</div>
 					</div>
 							
@@ -6161,7 +5538,7 @@
 			            	<table class="table table-condensed">
 			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
 			            			<tr>
-			            				<th>NAME</th>            					            				
+			            				<th data-bind="text: lang.lang.name"></th>            					            	
 			            				<th></th>
 			            			</tr>
 			            		</thead>
@@ -6181,13 +5558,13 @@
 			                 data-bind="visible: windowItemVisible">
 	            		<table>
 							<tr style="border-bottom: 8px solid #fff;">
-								<td width="35%">CODE</td>
+								<td width="35%"><span data-bind="text: lang.lang.code"></span></td>
 								<td>
 									<input class="k-textbox" placeholder="type code ..." data-bind="value: item.code" style="width: 100%;">
 								</td>
 							</tr>
 							<tr style="border-bottom: 8px solid #fff;">
-								<td>NAME</td>
+								<td><span data-bind="text: lang.lang.name"></span></td>
 								<td>
 									<input class="k-textbox" placeholder="type name ..." data-bind="value: item.name" style="width: 100%;">
 								</td>
@@ -6196,8 +5573,8 @@
 
 						<br>
 						<div style="text-align: center;">
-							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i>Save</span>
-							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i>Close</span>  
+							<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveItem"><i></i><span data-bind="text: lang.lang.save"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindowItem"><i></i><span data-bind="text: lang.lang.close"></span></span>  
 						</div>
 					</div>
 
@@ -6208,9 +5585,9 @@
 						    <table class="table table-bordered table-white">
 			            		<thead>
 			            			<tr>
-			            				<th>CODE</th>
-			            				<th>NAME</th>
-			            				<th>SEGMENT</th>   					            				
+			            				<th data-bind="text: lang.lang.code"></th>
+			            				<th data-bind="text: lang.lang.name"></th>
+			            				<th data-bind="text: lang.lang.segment"></th>   					            		
 			            				<th></th>
 			            			</tr>
 			            		</thead>
@@ -7680,7 +7057,7 @@
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>
 
-		        <h2>CASH ADVANCE</h2>			    		   
+		        <h4 span data-bind="text: lang.lang.cash_advance"></h4>			    		   
 
 			    <br>				   				
 					
@@ -7690,11 +7067,11 @@
 						<div class="box-generic well" style="height: 150px;">				
 							<table class="table table-borderless table-condensed cart_total">									
 								<tr data-bind="visible: isEdit">				
-									<td>No.</td>
+									<td><span data-bind="text: lang.lang.no_"></span></td>
 									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 								</tr>
 								<tr>
-									<td>Date</td>
+									<td><span data-bind="text: lang.lang.date"></span></td>
 									<td class="right">
 										<input id="issuedDate" name="issuedDate" 
 												data-role="datepicker"
@@ -7707,7 +7084,7 @@
 									</td>
 								</tr>								
 								<tr>
-									<td>Currency</td>
+									<td><span data-bind="text: lang.lang.currency"></span></td>
 									<td>
 										<input id="cbbCurrency" name="cbbCurrency"
 													   data-role="combobox"				                
@@ -7723,7 +7100,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td>Employee</td>
+									<td><span data-bind="text: lang.lang.employee"></span></td>
 									<td>
 										<input id="cbbContact" name="cbbContact"
 											   data-role="combobox"
@@ -7743,7 +7120,7 @@
 
 							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 								data-bind="style: { backgroundColor: amtDueColor}">
-								<div align="left">TOTAL AMOUNT</div>
+								<div align="left"><span data-bind="text: lang.lang.total_amount"></span></div>
 								<h2 data-bind="text: total" align="right"></h2>
 							</div>
 
@@ -7776,7 +7153,7 @@
 						        	
 						        	<table class="table table-borderless table-condensed cart_total">
 										<tr>										
-											<td>Expected Date</td>
+											<td><span data-bind="text: lang.lang.expected_date"></span></td>
 											<td>
 												<input id="txtExpectedDate" name="txtExpectedDate" 
 														data-role="datepicker"
@@ -7788,7 +7165,7 @@
 											</td>
 										</tr>
 										<tr>										
-											<td>Method</td>
+											<td><span data-bind="text: lang.lang.method"></span></td>
 											<td>
 												<input id="ddlPaymentMethod" name="ddlPaymentMethod"
 													   data-role="dropdownlist"								                   
@@ -7804,7 +7181,7 @@
 									        </td>
 										</tr>
 										<tr>									
-											<td>Cash Account</td>
+											<td><span data-bind="text: lang.lang.cash_account"></span></td>
 											<td>
 												<input id="cbbAccount" name="cbbAccount"
 													   data-role="combobox"                   
@@ -7820,7 +7197,7 @@
 											</td>
 										</tr>
 										<tr>										
-											<td>Segment</td>
+											<td><span data-bind="text: lang.lang.segment"></span></td>
 											<td>
 												<select data-role="multiselect"
 													   data-value-primitive="true"
@@ -7850,8 +7227,7 @@
 
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab3-4">
-						         	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
-						            
+						         	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							       
 						            <input id="files" name="files"
 					                   type="file"
 					                   data-role="upload"
@@ -7863,9 +7239,9 @@
 						            <table class="table table-bordered">
 								        <thead>
 								            <tr>			                
-								                <th>File Name</th>
-								                <th>Description</th>
-								                <th>Date</th>
+								                <th data-bind="text: lang.lang.file_name"></th>
+								                <th data-bind="text: lang.lang.description"></th>
+								                <th data-bind="text: lang.lang.date"></th>
 								                <th style="width: 13%;"></th>                			                
 								            </tr> 
 								        </thead>
@@ -7897,7 +7273,7 @@
 						                <br><br>
 
 						                <div align="right">
-							                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
+							                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>						                
 							            </div>
 
 						            </div>
@@ -7907,13 +7283,13 @@
 							            <table style="width: 100%">
 							            	<tr align="right">
 							            		<td>
-							            			Name
+							            			<span data-bind="text: lang.lang.name"></span>
 							            		</td>
 							            		<td>
 							            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
 							            					placeholder="Recurring name.." 
 							            					style="width: 40%;" />
-							            			Start
+							            			<span data-bind="text: lang.lang.start"></span>
 									                <input data-role="datepicker"
 															data-format="dd-MM-yyyy"
 															data-parse-formats="yyyy-MM-dd"
@@ -7923,7 +7299,7 @@
 							            	</tr>
 							            	<tr align="right">
 							            		<td>
-								            		Every
+								            		<span data-bind="text: lang.lang.every"></span>
 								            	</td>
 							            		<td>
 								            		<input data-role="numerictextbox"
@@ -7944,7 +7320,7 @@
 							            	</tr>
 								            <tr align="right">
 								            	<td>
-								            		On
+								            		<span data-bind="text: lang.lang.on"></span>
 								            	</td>							            	
 								            	<td>
 
@@ -8004,12 +7380,12 @@
 				<table class="table table-bordered table-primary table-striped table-vertical-center">
 			        <thead>
 			            <tr>
-			                <th style="width: 1%;">No.</th>			                
-			                <th style="width: 20%;">ACCOUNT</th>
-			                <th>DESCRIPTION</th>
-			                <th data-bind="visible: showRef" style="width: 7%;">REF</th>			                
-			                <th data-bind="visible: showSegment" style="width: 15%;">SEGMENT</th>
-			                <th style="width: 15%;">AMOUNT</th>			                			                
+			                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+			                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
+			                <th data-bind="text: lang.lang.description"></th>
+			                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.reference"></span></th>
+			                <th data-bind="visible: showSegment" style="width: 15%;"><span data-bind="text: lang.lang.segment"></span></th>
+			                <th style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>			                			  
 			            </tr> 
 			        </thead>
 			        <tbody data-role="listview" 
@@ -8033,10 +7409,10 @@
 							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
 							<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
 								<li>
-									<input type="checkbox" data-bind="checked: showRef" /> REF
+									<input type="checkbox" data-bind="checked: showRef" /> <span data-bind="text: lang.lang.reference"></span>
 								</li>
 								<li>
-									<input type="checkbox" data-bind="checked: showSegment" /> SEGMENT
+									<input type="checkbox" data-bind="checked: showSegment" /> <span data-bind="text: lang.lang.segment"></span>
 								</li>								
 							</ul>
 						</div>
@@ -8051,7 +7427,7 @@
 						<table class="table table-borderless table-condensed cart_total">
 							<tbody>								
 								<tr>
-									<td class="right">Total:</td>
+									<td class="right"><span data-bind="text: lang.lang.total"></span></td>
 									<td class="right strong"><span data-bind="text: total"></span></td>
 								</tr>								
 							</tbody>
@@ -8081,8 +7457,8 @@
 		                 data-bind="visible: showConfirm"
 		                 style="text-align:center;">
 		                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
-					    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
-					    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+					    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete"><span data-bind="text: lang.lang.yes"></span></button> 
+					    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm"><span data-bind="text: lang.lang.no"></span></button>
 		            </div>
 		            <!-- // Delete Confirmation -->
 
@@ -8097,11 +7473,11 @@
 				                   data-option-label="Select Template..." />
 						</div>
 						<div class="span9" align="right">
-							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
-							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>																	
-							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> Save Print</span>
-							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>																	
+							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
+							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
 						</div>
 					</div>
 				</div>
@@ -8176,7 +7552,7 @@
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-		        <h2>EXPENSE</h2>			    		   
+		        <h2 span data-bind="text: lang.lang.c_expense"></h2>			    		   
 
 			    <br>				   				
 					
@@ -8186,11 +7562,11 @@
 						<div class="box-generic well" style="height: 190px;">				
 							<table class="table table-borderless table-condensed cart_total">									
 								<tr data-bind="visible: isEdit">				
-									<td>No.</td>
+									<td><span data-bind="text: lang.lang.no_"></span></td>
 									<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
 								</tr>
 								<tr>
-									<td>Date</td>
+									<td><span data-bind="text: lang.lang.date"></span></td>
 									<td class="right">
 										<input id="issuedDate" name="issuedDate" 
 												data-role="datepicker"
@@ -8203,7 +7579,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td>Currency</td>
+									<td><span data-bind="text: lang.lang.currency"></span></td>
 									<td>
 										<input id="cbbCurrency" name="cbbCurrency"
 											   data-role="combobox"											                    
@@ -8219,7 +7595,7 @@
 									</td>
 								</tr>								
 								<tr>
-									<td>Employee</td>
+									<td><span data-bind="text: lang.lang.employee"></span></td>
 									<td>
 										<input id="cbbContact" name="cbbContact"
 											   data-role="combobox"
@@ -8240,7 +7616,7 @@
 
 							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
-									<div align="left">AMOUNT PAID</div>
+									<div align="left"><span data-bind="text: lang.lang.c_amount_paid"></span></div>
 									<h2 data-bind="text: total" align="right"></h2>
 								</div>
 						</div>
@@ -8277,28 +7653,28 @@
 									            					name="payOption" id="payOption1"
 									            					data-bind="checked: obj.type, 
 									            								events:{ change: typeChanges }"> 
-									            			<label class="k-radio-label" for="payOption1">DIRECT EXPENSE</label>
+									            			<label class="k-radio-label" for="payOption1"><span data-bind="text: lang.lang.c_direct_expense"></span></label>
 									            		</td>
 									            		<td>
 												            <input type="radio" value="Reimbursement" class="k-radio"
 												            		name="payOption" id="payOption2"
 												            		data-bind="checked: obj.type, 
 												            					events:{ change: typeChanges }"> 
-												            <label class="k-radio-label" for="payOption2">REIMBURSEMENT</label>
+												            <label class="k-radio-label" for="payOption2"><span data-bind="text: lang.lang.c_reimbursement"></span></label>
 										            	</td>
 										            	<td>
 												            <input type="radio" value="Advance_Settlement" class="k-radio"
 												            		name="payOption" id="payOption3"
 												            		data-bind="checked: obj.type, 
 												            					events:{ change: typeChanges }"> 
-												            <label class="k-radio-label" for="payOption3">ADVANCE SETTLEMENT</label>
+												            <label class="k-radio-label" for="payOption3"><span data-bind="text: lang.lang.c_advance_settlement"></span></label>
 										            	</td>
 										            </tr>
 									            </table>
 							        		</td>
 						        		</tr>
 							        	<tr>
-							        		<td>Cash Account</td>
+							        		<td><span data-bind="text: lang.lang.cash_account"></span></td>
 							        		<td>
 							        			<input id="cbbAccount" name="cbbAccount"
 													   data-role="combobox"                   
@@ -8314,7 +7690,7 @@
 							        		</td>
 							        	</tr>
 							        	<tr data-bind="visible: showCashAdvance">
-							        		<td>Cash Advance</td>
+							        		<td><span data-bind="text: lang.lang.cash_advance"></span></td>
 							        		<td>
 							        			<input data-role="combobox"                   
 									                   data-value-primitive="true"
@@ -8329,7 +7705,7 @@
 							        		</td>
 							        	</tr>
 							        	<tr>
-											<td>Segments</td>
+											<td><span data-bind="text: lang.lang.segment"></span></td>
 											<td>
 												<select data-role="multiselect"
 													   data-value-primitive="true"
@@ -8367,8 +7743,7 @@
 						        <!-- Attach Tab content -->
 						        <div class="tab-pane" id="tab2-3">
 
-						        	<p>File Type: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>					            	
-						            
+						        	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>					       
 						            <input id="files" name="files"
 						                   type="file"
 						                   data-role="upload"
@@ -8380,9 +7755,9 @@
 						            <table class="table table-bordered" style="margin-bottom: 0;">
 								        <thead>
 								            <tr>			                
-								                <th>File Name</th>
-								                <th>Description</th>
-								                <th>Date</th>
+								                <th data-bind="text: lang.lang.file_name"></th>
+								                <th data-bind="text: lang.lang.description"></th>
+								                <th data-bind="text: lang.lang.date"></th>
 								                <th style="width: 13%;"></th>                			                
 								            </tr> 
 								        </thead>
@@ -8414,7 +7789,7 @@
 						                <br><br>
 
 						                <div align="right">
-							                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> Save Recurring</span>						                
+							                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>						                
 							            </div>
 
 						            </div>
@@ -8424,13 +7799,13 @@
 							            <table style="width: 100%">
 							            	<tr align="right">
 							            		<td>
-							            			Name
+							            			<span data-bind="text: lang.lang.name"></span>
 							            		</td>
 							            		<td>
 							            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
 							            					placeholder="Recurring name.." 
 							            					style="width: 40%;" />
-							            			Start
+							            			<span data-bind="text: lang.lang.start"></span>
 									                <input data-role="datepicker"
 															data-format="dd-MM-yyyy"
 															data-parse-formats="yyyy-MM-dd"
@@ -8440,7 +7815,7 @@
 							            	</tr>
 							            	<tr align="right">
 							            		<td>
-								            		Every
+								            		<span data-bind="text: lang.lang.every"></span>
 								            	</td>
 							            		<td>
 								            		<input data-role="numerictextbox"
@@ -8461,7 +7836,7 @@
 							            	</tr>
 								            <tr align="right">
 								            	<td>
-								            		On
+								            		<span data-bind="text: lang.lang.on"></span>
 								            	</td>							            	
 								            	<td>
 
@@ -8521,16 +7896,16 @@
 				<table class="table table-bordered table-primary table-striped table-vertical-center">
 			        <thead>
 			            <tr>
-			                <th style="width: 1%;">No.</th>			                
-			                <th style="width: 20%;">ACCOUNT</th>
-			                <th>DESCRIPTION</th>
-			                <th style="width: 15%;">SUPPLIER</th>
-			                <th style="width: 8%;">INVOICE#</th>
-			                <th style="width: 13%;">DATE</th>			                			                
+			                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+			                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
+			                <th data-bind="text: lang.lang.description"></th>
+			                <th style="width: 15%;"><span data-bind="text: lang.lang.supplier"></span></th>
+			                <th style="width: 8%;"><span data-bind="text: lang.lang.inv_"></span></th>
+			                <th style="width: 13%;"><span data-bind="text: lang.lang.date"></span></th>			                			  
 			                <th data-bind="visible: showJob" style="width: 10%;">JOB</th>
-			                <th data-bind="visible: showSegment" style="width: 10%;">SEGMENT</th>			                
-			                <th style="width: 15%;">AMOUNT</th>
-			                <th style="width: 11%;">TAX</th>			                			                
+			                <th data-bind="visible: showSegment" style="width: 10%;"><span data-bind="text: lang.lang.segment"></span></th>	
+			                <th style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>
+			                <th style="width: 11%;"><span data-bind="text: lang.lang.tax"></span></th>			                			  
 			            </tr> 
 			        </thead>
 			        <tbody data-role="listview" 
@@ -8555,11 +7930,11 @@
 							<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
 								<li>
 									<input type="checkbox" id="chbJob" class="k-checkbox" data-bind="checked: showJob" />												
-									<label class="k-checkbox-label" for="chbJob">JOB</label>
+									<label class="k-checkbox-label" for="chbJob"><span data-bind="text: lang.lang.job"></span></label>
 								</li>
 								<li>
 									<input type="checkbox" id="chbSegment" class="k-checkbox" data-bind="checked: showSegment" />												
-									<label class="k-checkbox-label" for="chbSegment">SEGMENT</label>
+									<label class="k-checkbox-label" for="chbSegment"><span data-bind="text: lang.lang.segment"></span></label>
 								</li>								
 							</ul>
 						</div>
@@ -8577,11 +7952,11 @@
 						<table class="table table-condensed table-striped table-white" data-bind="visible: showCashAdvance">
 							<tbody>								
 								<tr>
-									<td class="right">Total Cash Advanced:</td>
+									<td class="right"><span data-bind="text: lang.lang.total_cash_advanced"></span></td>
 									<td class="right strong"><span data-bind="text: credit"></span></td>
 								</tr>
 								<tr>
-									<td class="right">Amount Due:</td>
+									<td class="right"><span data-bind="text: lang.lang.amount_due"></span></td>
 									<td class="right strong"><span data-bind="text: remain"></span></td>
 								</tr>								
 							</tbody>
@@ -8593,15 +7968,15 @@
 						<table class="table table-condensed table-striped table-white">
 							<tbody>
 								<tr>
-									<td class="right">Sub Total:</td>
+									<td class="right"><span data-bind="text: lang.lang.sub_total"></span></td>
 									<td class="right strong" width="40%"><span data-bind="text: sub_total"></span></td>
 								</tr>								
 								<tr>
-									<td class="right">Total Tax:</td>
+									<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
 									<td class="right strong"><span data-bind="text: tax"></span></td>
 								</tr>																
 								<tr>
-									<td class="right"><h4>Total:</h4></td>
+									<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
 									<td class="right strong"><h4 data-bind="text: total"></h4></td>
 								</tr>																
 							</tbody>
@@ -8647,11 +8022,11 @@
 				                   data-option-label="Select Template..." />
 						</div>
 						<div class="span9" align="right">
-							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
-							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> Save Close</span>																	
-							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> Save Print</span>
-							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
-							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>																	
+							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
+							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+							<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
 						</div>
 					</div>
 				</div>
@@ -12003,7 +11378,7 @@
 							                <th><span data-bind="text: lang.lang.type"></span></th>
 							                <th><span data-bind="text: lang.lang.account"></span></th>
 							                <th><span data-bind="text: lang.lang.supplier"></span></th>
-							                <th>INV.#</th>
+							                <th data-bind="text: lang.lang.inv_"></th>
 							                <th><span data-bind="text: lang.lang.date"></span></th>
 							                <th data-bind="visible: showDueDateColumn"><span data-bind="text: lang.lang.due_date"></span></th>
 							                <th data-bind="visible: showDescriptionColumn"><span data-bind="text: lang.lang.description"></span></th>						                						                			                
@@ -12923,7 +12298,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2><span data-bind="text: lang.lang.general_supplier_setting"></span></h2>
+	<h2 data-bind="text: lang.lang.general_supplier_setting"></h2>
 
 	<br>
 
@@ -16722,9 +16097,9 @@
 							              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" style="width: 100%;" />							            	
 							            </tr>
 							            <tr>
-							            	<td>City</td>
+							            	<td><span data-bind="text: lang.lang.city"></span></td>
 							              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." style="width: 100%;" />							              	
-							            	<td>Post Code</td>
+							            	<td><span data-bind="text: lang.lang.post_code"></span></td>
 							              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" style="width: 100%;" />
 							            </tr>							            
 							            <tr>
@@ -17294,7 +16669,7 @@
 								            	</tr>
 									            <tr align="right">
 									            	<td>
-									            		On
+									            		<span data-bind="text: lang.lang.on"></span>
 									            	</td>							            	
 									            	<td>
 
@@ -17444,7 +16819,7 @@
 										<td class="right strong"><span data-bind="text: tax"></span></td>
 									</tr>															
 									<tr>
-										<td class="right"><h4><span data-bind="text: lang.lang.total"></span>:</h4></td>
+										<td class="right"><h4 span data-bind="text: lang.lang.total"></h4></td>
 										<td class="right strong"><h4 data-bind="text: total"></h4></td>
 									</tr>								
 								</tbody>
@@ -19823,8 +19198,8 @@
 			                 data-bind="visible: showConfirm"
 			                 style="text-align:center;">
 			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
-						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
-						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete"><span data-bind="text: lang.lang.yes"></span></button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm"><span data-bind="text: lang.lang.no"></span></button>
 			            </div>
 			            <!-- // Delete Confirmation -->
 
@@ -19842,7 +19217,7 @@
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>															
 								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
-								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> Cancel</span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
 							</div>
 						</div>
@@ -20989,7 +20364,7 @@
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2><span data-bind="text: lang.lang.general_customer_setting"></span></h2>
+	<h2 data-bind="text: lang.lang.general_customer_setting"></h2>
 
 	<br>
 
@@ -29942,7 +29317,7 @@
 					<span data-bind="text: lang.lang.transaction"></span>
 				</p>
 				<div class="total-customer" style="background: #d9edf7; color: #333;"> 
-					<span class="number" data-bind="text:transactionSize" style="font-size: 30px;"></span>GB
+					<span class="number" data-bind="text:transactionSize" style="font-size: 30px; font-weight: 600;"></span>GB
 					<p>of <span data-bind="text: transactionNu"></span> <span data-bind="text: lang.lang.transaction"></span></p>
 					
 					
@@ -29952,7 +29327,7 @@
 			<div class="span4">
 				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;"><span data-bind="text: lang.lang.contact_items"></span></p>
 				<div class="total-customer" style="color: #333;">
-					<span class="number" data-bind="text: contactSize" style="font-size: 30px;"></span>GB
+					<span class="number" data-bind="text: contactSize" style="font-size: 30px; font-weight: 600;"></span>GB
 					<p>of <span data-bind="text: contactNu"></span> <span data-bind="text: lang.lang.contact_items"></span></p>
 				</div>
 			</div>
@@ -29960,8 +29335,8 @@
 			<div class="span4" style="padding-left: 15px;">
 				<p style="text-align: center; text-transform: uppercase;font-size:17px;font-weight: 600;"><span data-bind="text: lang.lang.total_attachment"></span></p>
 				<div class="total-customer" style="background: #496cad; color: #fff;min-height: 112px;">
-					<span class="number" data-bind="text: totalSize" style="font-size: 30px;"></span>GB
-					<p><span data-bind="text: lang.lang.use_of"></span> 2.00 GB</p>
+					<span class="number" data-bind="text: totalSize" style="font-size: 30px; font-weight: 600;"></span>GB
+					<p><span data-bind="text: lang.lang.use_of"></span> 1GB</p>
 				</div>
 			</div>
 		</div>
@@ -29989,7 +29364,7 @@
 <script id="document-list-template" type="text/x-kendo-template"> <tr>
 		<td><a href="#=url#">#=name#</a></td>
 		<td>#=description#</td>
-		<td>#=size#</td>
+		<td>#=kendo.toString(size, 'n4')# mb</td>
 		<td>
 			# if(attachedTo.type == "contact") {#
 				<a href="\#/customer_center/#=attachedTo.id#">#=attachedTo.name#</a>
@@ -30220,7 +29595,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>
 				            <tr>
-				                <th colspan="2" class="center">Top 5 Best Purchase Products</th>				                			                
+				                <th colspan="2" class="center"><span data-bind="text: lang.lang.top_5_purchased_products"></span></th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -30554,10 +29929,10 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.date"></span></th>
 								<th><span data-bind="text: lang.lang.type2"></span></th>								
-								<th><span data-bind="text: lang.lang.reference_no"></span></th>
-								<th><span data-bind="text: lang.lang.qty"></span></th>
-								<th><span data-bind="text: lang.lang.cost"></span></th>
-								<th><span data-bind="text: lang.lang.price"></span></th>
+								<th style="text-align: center;" ><span data-bind="text: lang.lang.reference_no"></span></th>
+								<th style="text-align: center;" ><span data-bind="text: lang.lang.qty"></span></th>
+								<th style="text-align: right;" ><span data-bind="text: lang.lang.cost"></span></th>
+								<th style="text-align: right;" ><span data-bind="text: lang.lang.price"></span></th>
 							</tr>
 						</thead>	            		
 	            		<tbody data-role="listview"
@@ -30590,20 +29965,20 @@
     <tr>    	  	
     	<td>#=kendo.toString(new Date(invoice[0].issued_date), "dd-MM-yyyy")#</td>
     	<td>#=invoice[0].type#</td>
-        <td>		
+        <td align="center">		
 			#if(invoice[0].type=="Cash_Purchase" || invoice[0].type=="Credit_Purchase"){#
 				<a href="\#/purchase/#=id#">#=invoice[0].number#</a>
 			#}else{#
 				<a href="\#/#=invoice[0].type.toLowerCase()#/#=id#">#=invoice[0].number#</a>
 			#}#
         </td>
-    	<td>#=kendo.toString(quantity, "n0")#</td>
-    	<td>
+    	<td align="center">#=kendo.toString(quantity, "n0")#</td>
+    	<td align="right">
     		#if(cost>0){#
     			#=kendo.toString(cost, "c", locale)#
     		#}#
     	</td>
-    	<td>
+    	<td align="right">
     		#if(price>0){#
     			#=kendo.toString(price, "c", locale)#
     		#}#
@@ -37926,7 +37301,7 @@
 														<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 													</td>
 													<td class="span4">
-														<h3><a >General Ledger(Comming on 12/10/2016)</a></h3>
+														<h3><a >General Ledger(Coming on 14/10/2016)</a></h3>
 													</td>
 													<td class="span4">
 														<h3><a href="#/trial_balance">Trial Balance</a></h3>
@@ -38026,10 +37401,10 @@
 											<table class="span12">
 												<tr>
 													<td class="span4">
-														<h3><a >Statement of Profit or Loss(Comming on 12/10/2016)</a></h3>
+														<h3><a >Statement of Profit or Loss(Coming on 14/10/2016)</a></h3>
 													</td>
 													<td class="span4">
-														<h3><a >Statement of Financial Position(Comming on 12/10/2016)</a></h3>								
+														<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
 													</td>
 													<td class="span4">
 														<!-- <h3><a href="#/statement_profit_loss_comparison">Statement of Profit or Loss Comparison</a></h3> -->
@@ -42246,7 +41621,6 @@
 		lang 				: langVM,
 		dataSource			: dataStore(apiUrl+"accounting_reports/ratio_analysis"),
 		reportCurrency 		: banhji.institute.reportCurrency.code,
-		fiscalDate 			: kendo.toString(new Date(banhji.institute.fiscal_date), "m"),
 		income 				: 0,
 		expense 			: 0,
 		net_income 			: 0,
@@ -42930,12 +42304,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -43840,7 +43216,6 @@
 			page:1,
 			pageSize: 100
 		}),
-		sortList			: banhji.source.sortList,
 		as_of 				: new Date(),		
 		displayDate 		: "",
 		company 			: banhji.institute,
@@ -43907,6 +43282,78 @@
 
 	        return kendo.toString(sum, "c", banhji.locale);
 	    }		      		
+	});
+	banhji.statementFinancialPosition =  kendo.observable({
+		lang 				: langVM,		
+		dataSource			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
+		liabilityDS			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
+		equityDS			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
+		as_of 				: new Date(),		
+		displayDate 		: "",
+		company 			: banhji.institute,
+		totalAsset 			: 0,
+		totalLiability 		: 0,
+		totalEquity 		: 0,
+		totalLiabilityEquity: 0,			
+		pageLoad 			: function(){
+			this.search();
+		},
+		search 				: function(){
+			var self = this, as_of = this.get("as_of");
+
+			if(as_of){
+				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
+				this.set("displayDate", displayDate);
+
+				this.dataSource.filter([
+					{ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") },
+					{ field:"account_type_id", value:[10,11,12,13,14,15,16,17,18,19,20,21,22] }
+				]);
+				var unReadAsset = true;
+				this.dataSource.bind("requestEnd", function(e){				
+					if(e.type=="read" && unReadAsset){
+						unReadAsset = false;
+						var response = e.response.totalAmount;
+
+						self.set("totalAsset", kendo.toString(response, "c", banhji.locale));
+					}
+				});
+
+				//Liability
+				this.liabilityDS.filter([
+					{ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") },
+					{ field:"account_type_id", value:[23,24,25,26,27,28,29,30,31] }
+				]);
+				var unReadLiability = true;
+				this.liabilityDS.bind("requestEnd", function(e){
+					if(e.type=="read" && unReadLiability){
+						unReadLiability = false;
+						var response = e.response.totalAmount;
+						var total = self.get("totalLiabilityEquity");
+						total += response;
+						self.set("totalLiabilityEquity", total);
+						self.set("totalLiability", kendo.toString(response, "c", banhji.locale));
+					}
+				});
+
+				//Equity
+				this.equityDS.filter([
+					{ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") },
+					{ field:"account_type_id", value:[32,33,34] }
+				]);
+				var unReadEquity = true;
+				this.equityDS.bind("requestEnd", function(e){
+					if(e.type=="read" && unReadEquity){
+						unReadEquity = false;
+						var response = e.response.totalAmount;
+						var total = self.get("totalLiabilityEquity");
+						total += response;
+						self.set("totalLiabilityEquity", total);
+						self.set("totalEquity", kendo.toString(response, "c", banhji.locale));
+					}
+				});
+			}
+		}   		
 	});
 	banhji.chartOfAccount =  kendo.observable({
 		lang 				: langVM,
@@ -45291,12 +44738,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -46069,12 +45518,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -47266,12 +46717,14 @@
 		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 		            	self.attachmentDS.add({
+		            		user_id 		: self.get("user_id"),
 		            		contact_id 		: obj.id,
 		            		type 			: "Contact",
 		            		name 			: value.name,
 		            		description 	: "",
 		            		key 			: key,
 		            		url 			: banhji.s3 + key,
+		            		size 			: value.size,
 		            		created_at 		: new Date(),
 
 		            		file 			: value.rawFile
@@ -48133,12 +47586,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -48964,12 +48419,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -49749,12 +49206,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -50597,12 +50056,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -52163,12 +51624,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -53932,12 +53395,14 @@
 		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 		            	self.attachmentDS.add({
+		            		user_id 		: self.get("user_id"),
 		            		contact_id 		: obj.id,
 		            		type 			: "Contact",
 		            		name 			: value.name,
 		            		description 	: "",
 		            		key 			: key,
 		            		url 			: banhji.s3 + key,
+		            		size 			: value.size,
 		            		created_at 		: new Date(),
 
 		            		file 			: value.rawFile
@@ -54819,12 +54284,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -55713,12 +55180,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -56646,12 +56115,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -57473,12 +56944,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -58786,12 +58259,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -60070,12 +59545,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -60907,12 +60384,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -64098,12 +63577,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -66344,12 +65825,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Item",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -66856,18 +66339,16 @@
 			});
 		},
 		//Item Price
-		addItemPrice 			: function (id) {
+		addItemPrice 			: function () {
 			var obj = this.get("obj");
 
       		this.itemPriceDS.add({      			      			
-      			item_id			: id,
+      			item_id			: obj.id,
       			measurement_id 	: obj.measurement_id,
       			price 			: obj.price,
       			unit_value		: 0,
       			locale 			: obj.locale
 			});
-
-			this.itemPriceDS.sync();
       	},
       	//Number      	
 		checkExistingNumber 	: function(){
@@ -67097,6 +66578,10 @@
 		    	if(this.itemVendorDS.hasChanges() || this.itemCustomerDS.hasChanges()){
 		    		obj.set("dirty", true);
 		    	}
+	    	}else{
+	    		this.addItemPrice();
+	    		obj.set("cost", 0);
+	    		obj.set("price", 0);
 	    	}
 
 			//Save Obj
@@ -67111,11 +66596,15 @@
 	      				value.set("item_id", data[0].id);
 	      			});
 
+	      			$.each(self.itemPriceDS.data(), function(index, value){
+	      				value.set("item_id", data[0].id);
+	      			});
+
 	      			if(data[0].is_pattern){
 						self.savePattern(data[0].category_id, data[0].id);
 					}
 
-					self.addItemPrice(data[0].id);
+					self.itemPriceDS.sync();
 				}
 				
       			self.itemVendorDS.sync();
@@ -68706,7 +68195,7 @@
       		this.dataSource.insert(0, {
       			account_id 				: 0,
       			item_type_id 			: 5,//Transaction type
-      			category_id 			: 0,
+      			category_id 			: 4,
       			name 					: "",
       			purchase_description	: "",
       			sale_description		: "",
@@ -68876,12 +68365,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -69377,12 +68868,14 @@
 	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
 	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
 	            		transaction_id 	: obj.id,
 	            		type 			: "Transaction",
 	            		name 			: value.name,
 	            		description 	: "",
 	            		key 			: key,
 	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
 	            		created_at 		: new Date(),
 
 	            		file 			: value.rawFile
@@ -71091,145 +70584,401 @@
 	* Accounting Section   *
 	**************************/
 	banhji.router.route("/accounting", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{		
-			banhji.view.layout.showIn("#content", banhji.view.accountingDashboard);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {	
+				banhji.view.layout.showIn("#content", banhji.view.accountingDashboard);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
 
-			var vm = banhji.accountingDashboard;
-			banhji.userManagement.addMultiTask("Accounting Dashboard","accounting",null);
+				var vm = banhji.accountingDashboard;
+				banhji.userManagement.addMultiTask("Accounting Dashboard","accounting",null);
 
-			if(banhji.pageLoaded["accounting"]==undefined){
-				banhji.pageLoaded["accounting"] = true;
-		          	
-			}
+				if(banhji.pageLoaded["accounting"]==undefined){
+					banhji.pageLoaded["accounting"] = true;
+			          	
+				}
 
-			vm.pageLoad();			
-		}				
+				vm.pageLoad();			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});				
 	});
 	banhji.router.route("/accounting_center(/:id)", function(id){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {			
+				var vm = banhji.accountingCenter;
+				banhji.userManagement.addMultiTask("Account Center","accounting_center",null);
+							
+				banhji.view.layout.showIn("#content", banhji.view.accountingCenter);			
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
+				if(banhji.pageLoaded["accounting_center"]==undefined){
+					banhji.pageLoaded["accounting_center"] = true;
+			              	
+				}
+
+				vm.pageLoad(id);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});					
+	});
+	banhji.router.route("/cash_advance(/:id)(/:is_recurring)", function(id,is_recurring){
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.cashAdvance);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.cashAdvance;
+
+				banhji.userManagement.addMultiTask("Cash Advance","cash_advance",vm);
+				
+				if(banhji.pageLoaded["cash_advance"]==undefined){
+					banhji.pageLoaded["cash_advance"] = true;												
+	   
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});				
+				}
+
+				vm.pageLoad(id,is_recurring);
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });			
+	});
+	banhji.router.route("/expense(/:id)(/:is_recurring)", function(id,is_recurring){
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {							
+				banhji.view.layout.showIn("#content", banhji.view.expense);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.expense;
+
+				banhji.userManagement.addMultiTask("Expense","expense",vm);
+				
+				if(banhji.pageLoaded["expense"]==undefined){
+					banhji.pageLoaded["expense"] = true;						
+	   
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});				
+				}
+
+		// 		vm.pageLoad(id,is_recurring);
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
+	});
+	banhji.router.route("/account(/:id)", function(id){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {				
+				var vm = banhji.account;
+				banhji.userManagement.addMultiTask("Account","account",vm);
+							
+				banhji.view.layout.showIn("#content", banhji.view.account);			
+				// kendo.fx($("#slide-form")).slideIn("down").play();
+
+				if(banhji.pageLoaded["account"]==undefined){
+					banhji.pageLoaded["account"] = true;		         
+
+			       var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});				      	
+				}
+
+				vm.pageLoad(id);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});				
+	});
+	banhji.router.route("/journal(/:id)(/:is_recurring)", function(id,is_recurring){
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {							
+				banhji.view.layout.showIn("#content", banhji.view.journal);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.journal;
+				banhji.userManagement.addMultiTask("Journal Entry","journal",vm);
+				
+				if(banhji.pageLoaded["journal"]==undefined){
+					banhji.pageLoaded["journal"] = true;
+	   
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("isValid")){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("isValid")){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate() && vm.get("isValid")){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("isValid") && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});				
+				}
+
+				vm.pageLoad(id,is_recurring);
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });			
+	});
+	banhji.router.route("/accounting_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
-		}else{			
-			var vm = banhji.accountingCenter;
-			banhji.userManagement.addMultiTask("Account Center","accounting_center",null);
-						
-			banhji.view.layout.showIn("#content", banhji.view.accountingCenter);			
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.accountingReportCenter);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
 
-			if(banhji.pageLoaded["accounting_center"]==undefined){
-				banhji.pageLoaded["accounting_center"] = true;
-		              	
+			var vm = banhji.accountingReportCenter;			
+			banhji.userManagement.addMultiTask("Accounting Report Center","accounting_report_center",null);
+			if(banhji.pageLoaded["accounting_report_center"]==undefined){
+				banhji.pageLoaded["accounting_report_center"] = true;				
+								
 			}
 
-			vm.pageLoad(id);			
-		}				
-	});
-	banhji.router.route("/account(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{			
-			var vm = banhji.account;
-			banhji.userManagement.addMultiTask("Account","account",vm);
-						
-			banhji.view.layout.showIn("#content", banhji.view.account);			
-			// kendo.fx($("#slide-form")).slideIn("down").play();
-
-			if(banhji.pageLoaded["account"]==undefined){
-				banhji.pageLoaded["account"] = true;		         
-
-		       var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});				      	
-			}
-
-			vm.pageLoad(id);			
-		}				
-	});
-	banhji.router.route("/journal(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.journal);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.journal;
-			banhji.userManagement.addMultiTask("Journal Entry","journal",vm);
-			
-			if(banhji.pageLoaded["journal"]==undefined){
-				banhji.pageLoaded["journal"] = true;
-   
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.get("isValid")){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.get("isValid")){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate() && vm.get("isValid")){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.get("isValid") && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});				
-			}
-
-			vm.pageLoad(id,is_recurring);
+			vm.pageLoad();
 		}		
 	});
+	banhji.router.route("/accounting_setting", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {	
+				banhji.view.layout.showIn("#content", banhji.view.accountingSetting);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
+
+				var vm = banhji.vendorSetting;
+				banhji.userManagement.addMultiTask("General Accounting Setting","accounting_setting",null);
+				
+				if(banhji.pageLoaded["accounting_setting"]==undefined){
+					banhji.pageLoaded["accounting_setting"] = true;
+
+					vm.contactTypeDS.filter({ field:"parent_id", value: 2 });
+				}
+
+				vm.pageLoad();			     		
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
+	});
+
 	banhji.router.route("/currency_rate", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -71432,45 +71181,6 @@
 			}
 		}		
 	});
-	banhji.router.route("/accounting_report_center", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.accountingReportCenter);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
-
-			var vm = banhji.accountingReportCenter;			
-			banhji.userManagement.addMultiTask("Accounting Report Center","accounting_report_center",null);
-			if(banhji.pageLoaded["accounting_report_center"]==undefined){
-				banhji.pageLoaded["accounting_report_center"] = true;				
-								
-			}
-
-			vm.pageLoad();
-		}		
-	});
-	banhji.router.route("/accounting_setting", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.accountingSetting);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);
-
-			var vm = banhji.vendorSetting;
-			banhji.userManagement.addMultiTask("General Accounting Setting","accounting_setting",null);
-			
-			if(banhji.pageLoaded["accounting_setting"]==undefined){
-				banhji.pageLoaded["accounting_setting"] = true;
-
-				vm.contactTypeDS.filter({ field:"parent_id", value: 2 });
-			}
-
-			vm.pageLoad();			     		
-		}
-	});
-
 	banhji.router.route("/add_accountingprefix(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -71518,8 +71228,7 @@
 			
 			vm.pageLoad(id);		
 		};
-	});
-	
+	});	
 	banhji.router.route("/segment", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -72309,145 +72018,15 @@
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
 			
-			var vm = banhji.journalReport;
-
+			var vm = banhji.statementFinancialPosition;
 			banhji.userManagement.addMultiTask("Statement of Financial Position","statement_financial_position",null);
 
 			if(banhji.pageLoaded["statement_financial_position"]==undefined){
 				banhji.pageLoaded["statement_financial_position"] = true;
-
-				function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
-
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
-
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function dateChanges(){
-                	var strDate = "";
-
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}
-
-					$("#strDate").text(strDate);
-                }
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");               
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $("#sorter").val();
-
-					switch(value){
-					case "today":								
-						sdate = today;
-															  					
-					  	break;
-					case "week":			  	
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
-					  	break;
-					case "month":							  	
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":				
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-											  
-					}
-
-					start.value(sdate);
-					end.value(edate);
-					
-					start.max(end.value());
-                	end.min(start.value());
-
-                	dateChanges();                	
-                });
-                
-                start.max(end.value());
-                end.min(start.value());				
-
-				$("#search").click(function(e){
-		        	e.preventDefault();
-
-		        	var para = [],		        	
-					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
-					edate = kendo.toString(end.value(), "yyyy-MM-dd");
-					
-		        	//Dates
-		        	if(start.value() && end.value()){        		
-		            	para.push({ field:"issued_date >=", value: sdate });
-		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
-		            }else if(start.value()){
-		            	para.push({ field:"issued_date", value: sdate });
-		            }else if(end.value()){
-		            	para.push({ field:"issued_date <=", value: edate });
-		            }else{
-		            	
-		            }
-
-		            vm.dataSource.filter(para);		            
-		        });								
 						
 			}
+
+			vm.pageLoad();
 		}		
 	});
 	banhji.router.route("/statement_profit_loss_comparison", function(){
@@ -73573,133 +73152,7 @@
 				});	        	
 			}			
 		}				
-	});
-	banhji.router.route("/cash_advance(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.cashAdvance);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.cashAdvance;
-
-			banhji.userManagement.addMultiTask("Cash Advance","cash_advance",vm);
-			
-			if(banhji.pageLoaded["cash_advance"]==undefined){
-				banhji.pageLoaded["cash_advance"] = true;												
-   
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});				
-			}
-
-			vm.pageLoad(id,is_recurring);
-		}		
-	});
-	banhji.router.route("/expense(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.expense);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.expense;
-
-			banhji.userManagement.addMultiTask("Expense","expense",vm);
-			
-			if(banhji.pageLoaded["expense"]==undefined){
-				banhji.pageLoaded["expense"] = true;						
-   
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});				
-			}
-
-			vm.pageLoad(id,is_recurring);
-		}		
-	});
+	});	
 	banhji.router.route("/employee_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -73724,143 +73177,195 @@
 	*   Vendor Section   *
 	**************************/
 	banhji.router.route("/vendors", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.vendorDashboard);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
-			
-			var vm = banhji.vendorDashboard;
-			banhji.userManagement.addMultiTask("Supplier Dashboard","vendors",null);
-			if(banhji.pageLoaded["vendors"]==undefined){
-				banhji.pageLoaded["vendors"] = true;				
-								               
-			}
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.vendorDashboard);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
+				
+				var vm = banhji.vendorDashboard;
+				banhji.userManagement.addMultiTask("Supplier Dashboard","vendors",null);
+				if(banhji.pageLoaded["vendors"]==undefined){
+					banhji.pageLoaded["vendors"] = true;				
+									               
+				}
 
-			vm.pageLoad();				
-		}
+				vm.pageLoad();				
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/vendor_center(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.vendorCenter);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
-			
-			var vm = banhji.vendorCenter;
-			banhji.userManagement.addMultiTask("Supplier Center","vendor_center",null);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.vendorCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
+				
+				var vm = banhji.vendorCenter;
+				banhji.userManagement.addMultiTask("Supplier Center","vendor_center",null);
 
-			if(banhji.pageLoaded["vendor_center"]==undefined){
-				banhji.pageLoaded["vendor_center"] = true;
-						               
-			}
+				if(banhji.pageLoaded["vendor_center"]==undefined){
+					banhji.pageLoaded["vendor_center"] = true;
+							               
+				}
 
-			vm.pageLoad(id);				
-		}
+				vm.pageLoad(id);				
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/vendor(/:id)(/:is_pattern)", function(id, is_pattern){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{			
-			var vm = banhji.vendor;
-			banhji.userManagement.addMultiTask("Supplier","vendor",vm);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {			
+				var vm = banhji.vendor;
+				banhji.userManagement.addMultiTask("Supplier","vendor",vm);
 
-			banhji.view.layout.showIn("#content", banhji.view.vendor);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+				banhji.view.layout.showIn("#content", banhji.view.vendor);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			if(banhji.pageLoaded["vendor"]==undefined){
-				banhji.pageLoaded["vendor"] = true;		             		        	       		         
+				if(banhji.pageLoaded["vendor"]==undefined){
+					banhji.pageLoaded["vendor"] = true;		             		        	       		         
 
-		        var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+			        var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});	        	
-			}
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});	        	
+				}
 
-			vm.pageLoad(id, is_pattern);			
-		}				
+				vm.pageLoad(id, is_pattern);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});				
 	});
 	banhji.router.route("/purchase_order(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.purchaseOrder);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.purchaseOrder);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.purchaseOrder;
-			banhji.userManagement.addMultiTask("Purchase Order","purchase_order",vm);
+				var vm = banhji.purchaseOrder;
+				banhji.userManagement.addMultiTask("Purchase Order","purchase_order",vm);
 
-			if(banhji.pageLoaded["purchase_order"]==undefined){
-				banhji.pageLoaded["purchase_order"] = true;				        
+				if(banhji.pageLoaded["purchase_order"]==undefined){
+					banhji.pageLoaded["purchase_order"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/grn(/:id)(/:is_recurring)", function(id,is_recurring){
 		if(!banhji.userManagement.getLogin()){
@@ -73925,199 +73430,252 @@
 		}		
 	});	
 	banhji.router.route("/vendor_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.vendorDeposit);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.vendorDeposit);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.vendorDeposit;
-			banhji.userManagement.addMultiTask("Supplier Deposit","vendor_deposit",vm);
-			
-			if(banhji.pageLoaded["vendor_deposit"]==undefined){
-				banhji.pageLoaded["vendor_deposit"] = true;				        
+				var vm = banhji.vendorDeposit;
+				banhji.userManagement.addMultiTask("Supplier Deposit","vendor_deposit",vm);
+				
+				if(banhji.pageLoaded["vendor_deposit"]==undefined){
+					banhji.pageLoaded["vendor_deposit"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});				
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});				
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});	
 	banhji.router.route("/purchase(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.purchase);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {					
+				banhji.view.layout.showIn("#content", banhji.view.purchase);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.purchase;
-			banhji.userManagement.addMultiTask("Purchase","purchase",vm);
+				var vm = banhji.purchase;
+				banhji.userManagement.addMultiTask("Purchase","purchase",vm);
 
-			if(banhji.pageLoaded["purchase"]==undefined){
-				banhji.pageLoaded["purchase"] = true;								        
+				if(banhji.pageLoaded["purchase"]==undefined){
+					banhji.pageLoaded["purchase"] = true;								        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/purchase_return(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.purchaseReturn);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {							
+				banhji.view.layout.showIn("#content", banhji.view.purchaseReturn);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.purchaseReturn;
-			banhji.userManagement.addMultiTask("Purchase Return","purchase_return",vm);
-			
-			if(banhji.pageLoaded["purchase_return"]==undefined){
-				banhji.pageLoaded["purchase_return"] = true;				        
+				var vm = banhji.purchaseReturn;
+				banhji.userManagement.addMultiTask("Purchase Return","purchase_return",vm);
+				
+				if(banhji.pageLoaded["purchase_return"]==undefined){
+					banhji.pageLoaded["purchase_return"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate() && vm.get("obj").remaining===0){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate() && vm.get("obj").remaining===0){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.get("obj").remaining===0){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate() && vm.get("obj").remaining===0){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate() && vm.get("obj").remaining===0){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-			}
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate() && vm.get("obj").remaining===0){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+				}
 
-			vm.pageLoad(id);			
-		}		
+				vm.pageLoad(id);			
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});	
 	banhji.router.route("/vendor_setting", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.vendorSetting);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.vendorSetting);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.vendorMenu);
 
-			var vm = banhji.vendorSetting;
-			banhji.userManagement.addMultiTask("Supplier Setting","vendor_setting",null);
-			
-			if(banhji.pageLoaded["vendor_setting"]==undefined){
-				banhji.pageLoaded["vendor_setting"] = true;
+				var vm = banhji.vendorSetting;
+				banhji.userManagement.addMultiTask("Supplier Setting","vendor_setting",null);
+				
+				if(banhji.pageLoaded["vendor_setting"]==undefined){
+					banhji.pageLoaded["vendor_setting"] = true;
 
-			}
+				}
 
-			vm.pageLoad();			     		
-		}
+				vm.pageLoad();			     		
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
+
 	banhji.router.route("/vendor_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -74683,400 +74241,499 @@
 	*   Customer Section   *
 	**************************/
 	banhji.router.route("/customers", function(){	
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.customerDashboard);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+				
+				//eraseCookie("isshow");
+				var isshow = readCookie("cusVisit");
+				
+			    if (isshow != 1) {
+			        createCookie("cusVisit", 1);
+					$("a.aCustomer").click();
+				}
+
+				var vm = banhji.customerDashboard;
+				banhji.userManagement.addMultiTask("Customer Dashboard","customers",null);
+				if(banhji.pageLoaded["customers"]==undefined){
+					banhji.pageLoaded["customers"] = true;				
+									               
+				}			
+
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
+	});
+	banhji.router.route("/customer_center(/:id)", function(id){		
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.customerCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+				
+				var vm = banhji.customerCenter;
+				banhji.userManagement.addMultiTask("Customer Center","customer_center",null);
+				if(banhji.pageLoaded["customer_center"]==undefined){
+					banhji.pageLoaded["customer_center"] = true;
+											               
+				}
+
+				vm.pageLoad(id);				
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
+	});
+	banhji.router.route("/customer(/:id)(/:is_pattern)", function(id,is_pattern){		
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.customer);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.customer;
+				banhji.userManagement.addMultiTask("Customer","customer",vm);
+				if(banhji.pageLoaded["customer"]==undefined){
+					banhji.pageLoaded["customer"] = true;		         
+
+			        var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						//e.preventDefault();
+
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});	        	
+				}
+
+				vm.pageLoad(id, is_pattern);			
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});				
+	});
+	banhji.router.route("/quote(/:id)(/:is_recurring)", function(id,is_recurring){
 		// banhji.accessMod.query({
 		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
 		// }).then(function(e){
-		// 		var allowed = false;
-		// 		if(banhji.accessMod.data().length > 0) {
-		// 			for(var i = 0; i < banhji.accessMod.data().length; i++) {
-		// 				if("customers" == banhji.accessMod.data()[i].name.toLowerCase()) {
-		// 					allowed = true;
-		// 					break;
-		// 				}
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
 		// 			}
-		// 		} 
-		// 		if(allowed) {
-					banhji.view.layout.showIn("#content", banhji.view.customerDashboard);
-					banhji.view.layout.showIn('#menu', banhji.view.menu);
-					banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
-					
-					var vm = banhji.customerDashboard;
-					banhji.userManagement.addMultiTask("Customer Dashboard","customers",null);
-					if(banhji.pageLoaded["customers"]==undefined){
-						banhji.pageLoaded["customers"] = true;				
-										               
-					}			
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.quote);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-					vm.pageLoad();
-		// 		} else {
-		// 			window.location.replace(baseUrl + "admin");
-		// 		}				
-		// 	}
-		// );
-	});
-	banhji.router.route("/customer_center(/:id)", function(id){		
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.customerCenter);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
-			
-			var vm = banhji.customerCenter;
-			banhji.userManagement.addMultiTask("Customer Center","customer_center",null);
-			if(banhji.pageLoaded["customer_center"]==undefined){
-				banhji.pageLoaded["customer_center"] = true;
-										               
-			}
+				var vm = banhji.quote;
+				banhji.userManagement.addMultiTask("Quote","quote",vm);
 
-			vm.pageLoad(id);				
-		}
-	});
-	banhji.router.route("/customer(/:id)(/:is_pattern)", function(id,is_pattern){		
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.customer);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+				if(banhji.pageLoaded["quote"]==undefined){
+					banhji.pageLoaded["quote"] = true;				        
 
-			var vm = banhji.customer;
-			banhji.userManagement.addMultiTask("Customer","customer",vm);
-			if(banhji.pageLoaded["customer"]==undefined){
-				banhji.pageLoaded["customer"] = true;		         
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-		        var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					//e.preventDefault();
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-					if(validator.validate() && vm.get("isDuplicateNumber")==false){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});	        	
-			}
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-			vm.pageLoad(id, is_pattern);			
-		}				
-	});
-	banhji.router.route("/quote(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.quote);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-			var vm = banhji.quote;
-			banhji.userManagement.addMultiTask("Quote","quote",vm);
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			if(banhji.pageLoaded["quote"]==undefined){
-				banhji.pageLoaded["quote"] = true;				        
-
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
-
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/sale_order(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.saleOrder);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleOrder);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.saleOrder;
-			banhji.userManagement.addMultiTask("Sale Order","sale_order",vm);
-			if(banhji.pageLoaded["sale_order"]==undefined){
-				banhji.pageLoaded["sale_order"] = true;				        
+				var vm = banhji.saleOrder;
+				banhji.userManagement.addMultiTask("Sale Order","sale_order",vm);
+				if(banhji.pageLoaded["sale_order"]==undefined){
+					banhji.pageLoaded["sale_order"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/customer_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.customerDeposit);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.customerDeposit);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.customerDeposit;
-			banhji.userManagement.addMultiTask("Customer Deposit","customer_deposit",vm);
+				var vm = banhji.customerDeposit;
+				banhji.userManagement.addMultiTask("Customer Deposit","customer_deposit",vm);
 
-			if(banhji.pageLoaded["customer_deposit"]==undefined){
-				banhji.pageLoaded["customer_deposit"] = true;
+				if(banhji.pageLoaded["customer_deposit"]==undefined){
+					banhji.pageLoaded["customer_deposit"] = true;
 
-		        var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+			        var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});				
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});				
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/cash_sale(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.cashSale);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.cashSale);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.cashSale;
-			banhji.userManagement.addMultiTask("Cash Sale","cash_sale",vm);
-			if(banhji.pageLoaded["cash_sale"]==undefined){
-				banhji.pageLoaded["cash_sale"] = true;				        
+				var vm = banhji.cashSale;
+				banhji.userManagement.addMultiTask("Cash Sale","cash_sale",vm);
+				if(banhji.pageLoaded["cash_sale"]==undefined){
+					banhji.pageLoaded["cash_sale"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);
+
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });			
 	});
 	banhji.router.route("/invoice(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{						
-			banhji.view.layout.showIn("#content", banhji.view.invoice);			
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {						
+				banhji.view.layout.showIn("#content", banhji.view.invoice);			
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.invoice;
-			banhji.userManagement.addMultiTask("Invoice","invoice",vm);
-			if(banhji.pageLoaded["invoice"]==undefined){
-				banhji.pageLoaded["invoice"] = true;				        
+				var vm = banhji.invoice;
+				banhji.userManagement.addMultiTask("Invoice","invoice",vm);
+				if(banhji.pageLoaded["invoice"]==undefined){
+					banhji.pageLoaded["invoice"] = true;				        
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveRecurring").click(function(e){				
-					e.preventDefault();
+					$("#saveRecurring").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_recurring);			
-		}		
+				vm.pageLoad(id, is_recurring);			
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });	
 	});
 	banhji.router.route("/gdn(/:id)(/:is_recurring)", function(id,is_recurring){
 		if(!banhji.userManagement.getLogin()){
@@ -75140,72 +74797,131 @@
 		}		
 	});
 	banhji.router.route("/sale_return(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.saleReturn);					
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleReturn);					
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.saleReturn;
-			banhji.userManagement.addMultiTask("Sale Return","sale_return",vm);
-			if(banhji.pageLoaded["sale_return"]==undefined){
-				banhji.pageLoaded["sale_return"] = true;
-				
-		        var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+				var vm = banhji.saleReturn;
+				banhji.userManagement.addMultiTask("Sale Return","sale_return",vm);
+				if(banhji.pageLoaded["sale_return"]==undefined){
+					banhji.pageLoaded["sale_return"] = true;
 					
-					if(validator.validate() && vm.get("obj").remaining===0){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+			        var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate() && vm.get("obj").remaining===0){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate() && vm.get("obj").remaining===0){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate() && vm.get("obj").remaining===0){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate() && vm.get("obj").remaining===0){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-			}
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate() && vm.get("obj").remaining===0){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+				}
 
-			vm.pageLoad(id);			
-		}		
+				vm.pageLoad(id);			
+		// 		} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
 	});
 	banhji.router.route("/statement(/:id)", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.statement);
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.statement);
 
-			var vm = banhji.statement;
-			banhji.userManagement.addMultiTask("Statement","statement",null);
+				var vm = banhji.statement;
+				banhji.userManagement.addMultiTask("Statement","statement",null);
 
-			if(banhji.pageLoaded["statement"]==undefined){
-				banhji.pageLoaded["statement"] = true;
-				
-			}
+				if(banhji.pageLoaded["statement"]==undefined){
+					banhji.pageLoaded["statement"] = true;
+					
+				}
 
-			vm.pageLoad();
-		}
+				vm.pageLoad();
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });
 	});
+	banhji.router.route("/customer_setting", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.customerSetting);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+
+				var vm = banhji.customerSetting;
+				banhji.userManagement.addMultiTask("Customer Setting","customer_setting",null);
+				if(banhji.pageLoaded["customer_setting"]==undefined){
+					banhji.pageLoaded["customer_setting"] = true;
+					
+					vm.contactTypeDS.filter({ field:"parent_id", value:1 });
+				}
+
+				vm.pageLoad();			     		
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
+	});
+
 	banhji.router.route("/customer_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -75256,26 +74972,7 @@
 				vm.search();
 			}			
 		}		
-	});
-	banhji.router.route("/customer_setting", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.customerSetting);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
-
-			var vm = banhji.customerSetting;
-			banhji.userManagement.addMultiTask("Customer Setting","customer_setting",null);
-			if(banhji.pageLoaded["customer_setting"]==undefined){
-				banhji.pageLoaded["customer_setting"] = true;
-				
-				vm.contactTypeDS.filter({ field:"parent_id", value:1 });
-			}
-
-			vm.pageLoad();			     		
-		}
-	});
+	});	
 	banhji.router.route("/job", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -75861,90 +75558,86 @@
 	*   Cashier Section   *
 	**************************/
 	banhji.router.route("/cashier(/:id)", function(id){
-		if(!checkRole()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.cashier);				
-			kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.view.layout.showIn("#content", banhji.view.cashier);				
+		kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.cashier;
-			banhji.userManagement.addMultiTask("Cashier Dashboard","cashier",null);
-						
-			if(banhji.pageLoaded["cashier"]==undefined){
-				banhji.pageLoaded["cashier"] = true;
-				
-				$("#ddlContact").kendoComboBox({
-					placeholder: "លេខកូដ...",
-					valuePrimitive: true,
-	                dataTextField: "fullname",
-	                dataValueField: "id",
-	                filter: "search",
-	                autoBind: false,
-	                minLength: 3,
-	                height: 400,
-	                dataSource: vm.contactDS,
-	                change: function(e) {
-					    var value = this.value(),					    
-					    data = this.dataSource.get(value);
+		var vm = banhji.cashier;
+		banhji.userManagement.addMultiTask("Cashier Dashboard","cashier",null);
+					
+		if(banhji.pageLoaded["cashier"]==undefined){
+			banhji.pageLoaded["cashier"] = true;
+			
+			$("#ddlContact").kendoComboBox({
+				placeholder: "លេខកូដ...",
+				valuePrimitive: true,
+                dataTextField: "fullname",
+                dataValueField: "id",
+                filter: "search",
+                autoBind: false,
+                minLength: 3,
+                height: 400,
+                dataSource: vm.contactDS,
+                change: function(e) {
+				    var value = this.value(),					    
+				    data = this.dataSource.get(value);
 
-					    vm.set("customer", data);
-					    vm.transactionDS.filter({ field:"contact_id", value: value });
-					    vm.loadInvoice(value, data.fullname, data.account_id);					    				    	
-					},
-					template:'#=number# #=fullname#'
-	            });	           
+				    vm.set("customer", data);
+				    vm.transactionDS.filter({ field:"contact_id", value: value });
+				    vm.loadInvoice(value, data.fullname, data.account_id);					    				    	
+				},
+				template:'#=number# #=fullname#'
+            });	           
 
-		        $("#ddlCashAccount").kendoDropDownList({
-		            optionLabel: "(--- Select ---)",
-		            valuePrimitive: true,
-		            dataTextField: "name",
-		            dataValueField: "id",
-		            dataSource: {
-		                transport: {
-							read: {
-								url: apiUrl + "accounts",
-								headers: {
-									"Entity": getDB()
-								},
-								type: "GET",
-								dataType: "json"
-							}
-						},
-						schema 	: {
-							model: {
-								id: 'id'
+	        $("#ddlCashAccount").kendoDropDownList({
+	            optionLabel: "(--- Select ---)",
+	            valuePrimitive: true,
+	            dataTextField: "name",
+	            dataValueField: "id",
+	            dataSource: {
+	                transport: {
+						read: {
+							url: apiUrl + "accounts",
+							headers: {
+								"Entity": getDB()
 							},
-							data: 'results',
-							total: 'count'
-						},
-						serverFiltering: true,
-						filter: { field:"account_type_id", value: 6 }
+							type: "GET",
+							dataType: "json"
+						}
 					},
-					template: '#=number# #=name#'             
-		        }).data("kendoDropDownList");
+					schema 	: {
+						model: {
+							id: 'id'
+						},
+						data: 'results',
+						total: 'count'
+					},
+					serverFiltering: true,
+					filter: { field:"account_type_id", value: 6 }
+				},
+				template: '#=number# #=name#'             
+	        }).data("kendoDropDownList");
 
-		        var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({				    
-				    autoHideAfter: 5000,
-				    width: 300,				    
-				    height: 50
-				}).data('kendoNotification');
+	        var validator = $("#example").kendoValidator().data("kendoValidator");
+			var notification = $("#notification").kendoNotification({				    
+			    autoHideAfter: 5000,
+			    width: 300,				    
+			    height: 50
+			}).data('kendoNotification');
 
-		        $("#save").click(function(e){				
-					e.preventDefault();
+	        $("#save").click(function(e){				
+				e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();
+				if(validator.validate()){
+	            	vm.save();
 
-		            	notification.success("Save Successful");			  
-			        }else{
-			        	notification.error("Warning, please review it again!");			           
-			        }		            
-				});        		
-			}
+	            	notification.success("Save Successful");			  
+		        }else{
+		        	notification.error("Warning, please review it again!");			           
+		        }		            
+			});        		
+		}
 
-			vm.pageLoad(id);
-		}							
+		vm.pageLoad(id);							
 	});
 	banhji.router.route("/reconcile(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
@@ -76204,10 +75897,10 @@
 							vm.dataSource.bind('requestEnd', function(e){
 								if(e.type == 'read') {
 									vm.set('contactNu', e.response.contactNumber);
-									vm.set('contactSize', e.response.contactSize);
+									vm.set('contactSize', kendo.toString(e.response.contactSize, "n2"));
 									vm.set('transactionNu', e.response.transactionNumber);
-									vm.set('transactionSize', e.response.transactionSize);
-									vm.set('totalSize', e.response.total);
+									vm.set('transactionSize', kendo.toString(e.response.transactionSize, "n2"));
+									vm.set('totalSize', kendo.toString(e.response.total, 'n2'));
 								}
 							});
 							break;
@@ -76248,477 +75941,645 @@
 	*   Inventory Section   *
 	**************************/
 	banhji.router.route("/inventories", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.itemDashBoard);			
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
-			
-			var vm = banhji.itemDashBoard;
-			banhji.userManagement.addMultiTask("Products/Services Dashboard","inventories",null);
-
-			if(banhji.pageLoaded["inventories"]==undefined){							
-				banhji.pageLoaded["inventories"] = true;												
-			}
-
-			banhji.itemDashBoard.positionSummary.read();
-			banhji.itemDashBoard.positionSummary.bind('requestEnd', function(e){
-				if(e.response) {
-					banhji.itemDashBoard.set('count', e.response.count);
-					kendo.culture(banhji.locale);
-					banhji.itemDashBoard.set('onHand', kendo.toString(e.response.onHand, 'n0'));
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
 				}
-			});
-			vm.pageLoad();
-		}				
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.itemDashBoard);			
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+				
+				var vm = banhji.itemDashBoard;
+				banhji.userManagement.addMultiTask("Products/Services Dashboard","inventories",null);
+
+				if(banhji.pageLoaded["inventories"]==undefined){							
+					banhji.pageLoaded["inventories"] = true;												
+				}
+
+				banhji.itemDashBoard.positionSummary.read();
+				banhji.itemDashBoard.positionSummary.bind('requestEnd', function(e){
+					if(e.response) {
+						banhji.itemDashBoard.set('count', e.response.count);
+						kendo.culture(banhji.locale);
+						banhji.itemDashBoard.set('onHand', kendo.toString(e.response.onHand, 'n0'));
+					}
+				});
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});				
 	});	
 	banhji.router.route("/item_center(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.itemCenter);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
-			
-			var vm = banhji.itemCenter;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.itemCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+				
+				var vm = banhji.itemCenter;
 
-			banhji.userManagement.addMultiTask("Inventory Center","item_center",null);
+				banhji.userManagement.addMultiTask("Inventory Center","item_center",null);
 
-			if(banhji.pageLoaded["item_center"]==undefined){
-				banhji.pageLoaded["item_center"] = true;						
-								
-			}
+				if(banhji.pageLoaded["item_center"]==undefined){
+					banhji.pageLoaded["item_center"] = true;						
+									
+				}
 
-			vm.pageLoad(id);				
-		}
+				vm.pageLoad(id);				
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/item(/:id)(/:is_pattern)", function(id, is_pattern){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.item;
-						
-			banhji.view.layout.showIn("#content", banhji.view.item);						
-			banhji.userManagement.addMultiTask("Inventory For Sale","item",null);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				var vm = banhji.item;
+							
+				banhji.view.layout.showIn("#content", banhji.view.item);						
+				banhji.userManagement.addMultiTask("Inventory For Sale","item",null);
 
-			if(banhji.pageLoaded["item"]==undefined){
-				banhji.pageLoaded["item"] = true;
-				
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+				if(banhji.pageLoaded["item"]==undefined){
+					banhji.pageLoaded["item"] = true;
+					
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_pattern);	
-		}
+				vm.pageLoad(id, is_pattern);	
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/item_prices/:id", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{			
-			var vm = banhji.itemPrice;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {			
+				var vm = banhji.itemPrice;
 
-			banhji.userManagement.addMultiTask("Inventory Price","item_prices",null);
-			
-			banhji.view.layout.showIn("#content", banhji.view.itemPrice);
-			
-			if(banhji.pageLoaded["item_prices"]==undefined){
-				banhji.pageLoaded["item_prices"] = true;
+				banhji.userManagement.addMultiTask("Inventory Price","item_prices",null);
 				
-			}
+				banhji.view.layout.showIn("#content", banhji.view.itemPrice);
+				
+				if(banhji.pageLoaded["item_prices"]==undefined){
+					banhji.pageLoaded["item_prices"] = true;
+					
+				}
 
-			vm.pageLoad(id);				
-		}
+				vm.pageLoad(id);				
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/item_catalog(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.itemCatalog;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				var vm = banhji.itemCatalog;
 
-			banhji.userManagement.addMultiTask("Inventory Catalog","item_catalog",vm);
-			
-			banhji.view.layout.showIn("#content", banhji.view.itemCatalog);						
-			
-			if(banhji.pageLoaded["item_catalog"]==undefined){
-				banhji.pageLoaded["item_catalog"] = true;
+				banhji.userManagement.addMultiTask("Inventory Catalog","item_catalog",vm);
+				
+				banhji.view.layout.showIn("#content", banhji.view.itemCatalog);						
+				
+				if(banhji.pageLoaded["item_catalog"]==undefined){
+					banhji.pageLoaded["item_catalog"] = true;
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id);	
-		}
+				vm.pageLoad(id);	
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/item_assembly(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.itemAssembly;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				var vm = banhji.itemAssembly;
 
-			banhji.userManagement.addMultiTask("Inventory Assembly","item_assembly",vm);
-			
-			banhji.view.layout.showIn("#content", banhji.view.itemAssembly);						
-			
-			if(banhji.pageLoaded["item_assembly"]==undefined){
-				banhji.pageLoaded["item_assembly"] = true;
+				banhji.userManagement.addMultiTask("Inventory Assembly","item_assembly",vm);
+				
+				banhji.view.layout.showIn("#content", banhji.view.itemAssembly);						
+				
+				if(banhji.pageLoaded["item_assembly"]==undefined){
+					banhji.pageLoaded["item_assembly"] = true;
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id);	
-		}
+				vm.pageLoad(id);	
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/item_service(/:id)(/:is_pattern)", function(id, is_pattern){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.itemService;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				var vm = banhji.itemService;
 
-			banhji.userManagement.addMultiTask("Service","item_service",vm);
-			
-			banhji.view.layout.showIn("#content", banhji.view.itemService);						
-			
-			if(banhji.pageLoaded["item_service"]==undefined){
-				banhji.pageLoaded["item_service"] = true;				
+				banhji.userManagement.addMultiTask("Service","item_service",vm);
+				
+				banhji.view.layout.showIn("#content", banhji.view.itemService);						
+				
+				if(banhji.pageLoaded["item_service"]==undefined){
+					banhji.pageLoaded["item_service"] = true;				
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_pattern);	
-		}
+				vm.pageLoad(id, is_pattern);	
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/non_inventory_part(/:id)(/:is_pattern)", function(id, is_pattern){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.nonInventoryPart;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				var vm = banhji.nonInventoryPart;
 
-			banhji.userManagement.addMultiTask("Other Inventory","non_inventory_part",vm);
-			
-			banhji.view.layout.showIn("#content", banhji.view.nonInventoryPart);						
-			
-			if(banhji.pageLoaded["non_inventory_part"]==undefined){
-				banhji.pageLoaded["non_inventory_part"] = true;				
+				banhji.userManagement.addMultiTask("Other Inventory","non_inventory_part",vm);
+				
+				banhji.view.layout.showIn("#content", banhji.view.nonInventoryPart);						
+				
+				if(banhji.pageLoaded["non_inventory_part"]==undefined){
+					banhji.pageLoaded["non_inventory_part"] = true;				
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id, is_pattern);	
-		}
+				vm.pageLoad(id, is_pattern);	
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/fixed_assets(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.fixedAssets);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.fixedAssets);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
 
-			var vm = banhji.fixedAssets;
+				var vm = banhji.fixedAssets;
 
-			banhji.userManagement.addMultiTask("Fixed Assets","fixed_assets",vm);
+				banhji.userManagement.addMultiTask("Fixed Assets","fixed_assets",vm);
 
-			if(banhji.pageLoaded["fixed_assets"]==undefined){
-				banhji.pageLoaded["fixed_assets"] = true;
-								
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+				if(banhji.pageLoaded["fixed_assets"]==undefined){
+					banhji.pageLoaded["fixed_assets"] = true;
+									
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id);
-		}		
+				vm.pageLoad(id);
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
 	});
 	banhji.router.route("/txn_item(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.txnItem;
-			banhji.userManagement.addMultiTask("Transaction Item","txn_item",vm);
-			
-			banhji.view.layout.showIn("#content", banhji.view.txnItem);						
-			
-			if(banhji.pageLoaded["txn_item"]==undefined){
-				banhji.pageLoaded["txn_item"] = true;
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				var vm = banhji.txnItem;
+				banhji.userManagement.addMultiTask("Transaction Item","txn_item",vm);
+				
+				banhji.view.layout.showIn("#content", banhji.view.txnItem);						
+				
+				if(banhji.pageLoaded["txn_item"]==undefined){
+					banhji.pageLoaded["txn_item"] = true;
 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-			vm.pageLoad(id);	
-		}
+				vm.pageLoad(id);	
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
 	});
 	banhji.router.route("/item_adjustment(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.itemAdjustment);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.itemAdjustment);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
 
-			var vm = banhji.itemAdjustment;
+				var vm = banhji.itemAdjustment;
 
-			banhji.userManagement.addMultiTask("Inventory Adjustment","item_adjustment",vm);
+				banhji.userManagement.addMultiTask("Inventory Adjustment","item_adjustment",vm);
 
-			if(banhji.pageLoaded["item_adjustment"]==undefined){
-				banhji.pageLoaded["item_adjustment"] = true;
-								
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
+				if(banhji.pageLoaded["item_adjustment"]==undefined){
+					banhji.pageLoaded["item_adjustment"] = true;
+									
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
 
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
 
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-			}
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+				}
 
-			vm.pageLoad(id);
-		}		
-	});
-	
-	
-	banhji.router.route("/item_setting", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.itemSetting);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
-
-			var vm = banhji.itemSetting;
-
-			banhji.userManagement.addMultiTask("General Products/ Services Setting","item_setting",null);
-			
-			if(banhji.pageLoaded["item_setting"]==undefined){
-				banhji.pageLoaded["item_setting"] = true;
-				
-			}
-
-			vm.pageLoad();			     		
-		}
+				vm.pageLoad(id);
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});		
 	});
 	banhji.router.route("/internal_usage(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.internalUsage);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.internalUsage);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
 
-			var vm = banhji.internalUsage;
+				var vm = banhji.internalUsage;
 
-			banhji.userManagement.addMultiTask("Internal Usage","internal_usage",null);
-			
-			if(banhji.pageLoaded["internal_usage"]==undefined){
-				banhji.pageLoaded["internal_usage"] = true;
+				banhji.userManagement.addMultiTask("Internal Usage","internal_usage",null);
 				
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-												
-		        $("#saveNew").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();		            				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-
-				$("#saveClose").click(function(e){				
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();		            	
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){				
-					e.preventDefault();
+				if(banhji.pageLoaded["internal_usage"]==undefined){
+					banhji.pageLoaded["internal_usage"] = true;
 					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();       				  
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }		            
-				});
-			}
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+													
+			        $("#saveNew").click(function(e){				
+						e.preventDefault();
 
-			vm.pageLoad(id);			     		
-		}
+						if(validator.validate()){
+			            	vm.save();		            				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+
+					$("#saveClose").click(function(e){				
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();		            	
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){				
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();       				  
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }		            
+					});
+				}
+
+				vm.pageLoad(id);			     		
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});	
 	});
+	banhji.router.route("/item_setting", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.itemSetting);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+
+				var vm = banhji.itemSetting;
+
+				banhji.userManagement.addMultiTask("General Products/ Services Setting","item_setting",null);
+				
+				if(banhji.pageLoaded["item_setting"]==undefined){
+					banhji.pageLoaded["item_setting"] = true;
+					
+				}
+
+				vm.pageLoad();			     		
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}				
+		});
+	});	
+
 	banhji.router.route("/service_setting", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -77417,5 +77278,28 @@
 		banhji.router.start();
 		banhji.source.loadData();
 		console.log($(location).attr('hash').substr(2));
+
+		function createCookie(name,value,days) {
+		    if (days) {
+		        var date = new Date();
+		        date.setTime(date.getTime()+(days*24*60*60*1000));
+		        var expires = "; expires="+date.toGMTString();
+		    }
+		    else var expires = "";
+		    document.cookie = name+"="+value+expires+"; path=/";
+		}
+		function readCookie(name) {
+		    var nameEQ = name + "=";
+		    var ca = document.cookie.split(';');
+		    for(var i=0;i < ca.length;i++) {
+		        var c = ca[i];
+		        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+		    }
+		    return null;
+		}
+		function eraseCookie(name) {
+		    createCookie(name,"");
+		}
 	});
 </script>

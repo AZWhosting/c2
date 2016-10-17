@@ -186,8 +186,8 @@ class Items extends REST_Controller {
 				   	"deleted" 					=> $value->deleted,
 				   	"is_system" 				=> $value->is_system,
  					
- 					"category" 				=> $value->category_name,
-				   	"item_prices"			=> $itemPrice
+ 					"category" 					=> $value->category_name,
+				   	"item_prices"				=> $itemPrice
 				);
 			}
 		}		

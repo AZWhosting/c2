@@ -238,7 +238,6 @@
         }
         .cover {
             position: relative;
-            height: 31px;
             clear: both;
             margin-bottom: 5px;
         }
@@ -246,6 +245,13 @@
             position: absolute;
             right: 2px;
             top: 5px;
+            display: none;
+        }
+        .cover p.msg {
+            width: 100%;
+            color: #fff;
+            padding: 5px 10px;
+            background: #a22314;
             display: none;
         }
     </style>
@@ -298,12 +304,14 @@
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
                                     <input type="email" data-bind="value: email, events: {change : emailChange}" required="required" placeholder="Your email" class="signup-email">
+                                    <p class="msg"></p>
                                 </div>
                                 <div class="cover">
                                     <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
                                     <input required="required" type="numbers" data-bind="value: telephone, events: {change: phoneChange}" id="phoneInput" placeholder="Your Telephone" class="signup-email">
+                                    <p class="msg"></p>
                                 </div>
                                 <p class="signup-noted">We will use this information to communicate with you. We never share your number with third parties without your consent.</p>
                                 <div class="cover">
@@ -311,6 +319,7 @@
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
                                     <input required="required" type="password" data-bind="value: password, events : {change: pwdCheck}" placeholder="Password " class="signup-email">
+                                    <p class="msg"></p>
                                 </div>
 
                                 <p class="signup-noted">The minimum requirements for password are:  at least 8 characters, letter, and numbers.</p>
@@ -318,14 +327,16 @@
                                     <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input required="required" type="password" data-bind="value: cPassword, events: {change: pwdChange}" placeholder="Confirm password " class="signup-email"><br>
+                                    <input required="required" minlength="8" type="password" data-bind="value: cPassword, events: {change: pwdChange}" placeholder="Confirm password " class="signup-email">
+                                    <p class="msg"></p>
                                 </div>
 
                                 <label>Company Information</label><br>
                                 <div class="cover">
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
-                                    <input required="required" type="text" data-bind="value: name, events: {change: comChange }" placeholder="Company Name " class="signup-email"><br>
+                                    <input required="required" type="text" data-bind="value: name, events: {change: comChange }" placeholder="Company Name " class="signup-email">
+                                    <p class="msg">Company Name Required!</p>
                                 </div>
                                 <select class="signup-country" 
                                         data-role="dropdownlist" 
@@ -360,7 +371,7 @@
                                         data-place-holder="select one" style="text-align: left;">
                                 </select><br>
 
-                                <input style="background: #1F4E78;font-size: 20px !important; " id="signupBtn" type="button" data-bind="click: create" class="btn-signup" value="SIGNUP FOR FREE"><br>
+                                <input style="background: #1F4E78;font-size: 20px !important; " id="signupBtn" type="button" data-bind="enabled: signupEnable, click: create" class="btn-signup" value="SIGNUP FOR FREE"><br>
                                 <p class="signup-text-bottom">
                                     By clicking on “signup”, you agree to the <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a>  and <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a>.
                                 </p>
@@ -760,6 +771,7 @@
             userDS    : banhji.userDS,
             currencies: banhji.currencies,
             err       : null,
+            signupEnable : true,
             createDB  : new kendo.data.DataSource({
                 transport: {
                     create  : {
@@ -803,74 +815,99 @@
                         if(self.userDSCheck.data().length > 0){
                             self.set("err", null);
                             self.set("err", "Your Email is already Register!");
-                            alert(self.err);
                             $(".cover").eq(0).children(".imgLoad, .imgTick").css("display", "none");
                             $(".cover").eq(0).children(".imgCross").css("display", "block");
+                            $(".cover").eq(0).children(".msg").text("Email is already registered!");
+                            $(".cover").eq(0).children(".msg").css("display", "block");
+                            $(".cover").eq(0).children("input").css("border", "1px solid #a22314");
+                            $(".cover").eq(0).children("input").focus();
                         }else{
                             $(".cover").eq(0).children(".imgLoad, .imgCross").css("display", "none");
                             $(".cover").eq(0).children(".imgTick").css("display", "block");
+                            $(".cover").eq(0).children(".msg").removeAttr("style");
+                            $(".cover").eq(0).children("input").removeAttr("style");
+
                         }
                     });
                 }else{
                     this.set("err", null);
-                    this.set("err", "Please check your email address!")
-                    alert(this.err);
+                    this.set("err", "Email incorrect!")
+                    $(".cover").eq(0).children(".msg").text("Incorrect email address!");
                     $(".cover").eq(0).children(".imgLoad, .imgTick").css("display", "none");
                     $(".cover").eq(0).children(".imgCross").css("display", "block");
+                    $(".cover").eq(0).children(".msg").css("display", "block");
+                    $(".cover").eq(0).children("input").css("border", "1px solid #a22314");
+                    $(".cover").eq(0).children("input").focus();
                 }
             },
-            allLetter   : function(inputtxt) {  
-                    var letters = /^[a-zA-Z]+$/;
-                    if (letters.test(inputtxt)) {
-                        this.set("err", null);
-                        this.set("err", "Password Invalid!");
-                    }else{
-                        this.set("err", null);
-                    }
-            },  
-            allNumber   : function(inputtxt) {  
-                    var letters = /^[0-9]+$/;
-                    if (letters.test(inputtxt)) {
-                        this.set("err", null);
-                        this.set("err", "Password Invalid!");
-                    }else{
-                        this.set("err", null);
-                    }
-            },  
             phoneChange : function(e) {
                 $(".cover").eq(1).children(".imgTick").css("display", "block");
             },
-            pwdCheck    : function(e) {
-                this.allLetter(this.get('password'));
-                this.allNumber(this.get('password'));
+            checkLetter   : function(inputtxt) {  
+                    var letters = /^[a-zA-Z]+$/,Num = /^[0-9]+$/, Result;
+                    if (letters.test(inputtxt)) {
+                        Result = false;
+                        return Result;
+                    }
+                    if (Num.test(inputtxt)) {
+                        Result = false;
+                        return Result;
+                    }
             },
             pwdChange   : function(e) {
                 
                 if(this.get('password') != this.get('cPassword')) {
                     this.set("err", null);
-                    this.set("err", "Your Passwrod Not Match!");
-                    alert(this.err);
-                    $(".cover").eq(2).children(".imgLoad, .imgTick").css("display", "none");
-                    $(".cover").eq(2).children(".imgCross").css("display", "block");
+                    this.set("err", "Your password does not match!");
                     $(".cover").eq(3).children(".imgLoad, .imgTick").css("display", "none");
                     $(".cover").eq(3).children(".imgCross").css("display", "block");
+                    $(".cover").eq(3).children(".msg").text("Your password does not match!");
+                    $(".cover").eq(3).children(".msg").css("display", "block");
+                    $(".cover").eq(3).children("input").css("border", "1px solid #a22314");
+                    $(".cover").eq(3).children("input").focus();
                 }else{
                     this.set("err", null);
-                    $(".cover").eq(2).children(".imgLoad, .imgCross").css("display", "none");
-                    $(".cover").eq(2).children(".imgTick").css("display", "block");
                     $(".cover").eq(3).children(".imgLoad, .imgCross").css("display", "none");
                     $(".cover").eq(3).children(".imgTick").css("display", "block");
+                    $(".cover").eq(3).children(".msg").removeAttr("style");
+                    $(".cover").eq(3).children("input").removeAttr("style");
                 }
+            },
+            pwdCheck    : function(e) {
+                var checkL = this.checkLetter(this.get('password'));
+                if(checkL == false || this.get('password').length < 8) {
+                    this.set("err", null);
+                    this.set("err", "Password does not match requirements!");
+                    $(".cover").eq(2).children(".imgLoad, .imgTick").css("display", "none");
+                    $(".cover").eq(2).children(".imgCross").css("display", "block");
+                    $(".cover").eq(2).children(".msg").text("Password does not match requirements");
+                    $(".cover").eq(2).children(".msg").css("display", "block");
+                    $(".cover").eq(2).children("input").css("border", "1px solid #a22314");
+                    $(".cover").eq(2).children("input").focus();
+                }else{
+                    $(".cover").eq(2).children(".imgLoad, .imgCross").css("display", "none");
+                    $(".cover").eq(2).children(".imgTick").css("display", "block");
+                    $(".cover").eq(2).children(".msg").removeAttr("style");
+                    $(".cover").eq(2).children("input").removeAttr("style");
+                }
+                this.pwdChange();
             },
             comChange   : function(e) {
                 if(this.get("name") == ""){
                     this.set("err", null);
-                    this.set("err", "Please fill Company Name!");
+                    this.set("err", "Please fill company name!");
+                    $(".cover").eq(4).children(".imgLoad, .imgTick").css("display", "none");
                     $(".cover").eq(4).children(".imgCross").css("display", "block");
-                    $(".cover").eq(4).children(".imgTick").css("display", "none");
+                    $(".cover").eq(4).children(".msg").text("Please fill company name!");
+                    $(".cover").eq(4).children(".msg").css("display", "block");
+                    $(".cover").eq(4).children("input").css("border", "1px solid #a22314");
+                    $(".cover").eq(4).children("input").focus();
                 }else{
+                    this.set("err", null);
+                    $(".cover").eq(4).children(".imgLoad, .imgCross").css("display", "none");
                     $(".cover").eq(4).children(".imgTick").css("display", "block");
-                    $(".cover").eq(4).children(".imgCross").css("display", "none");
+                    $(".cover").eq(4).children(".msg").removeAttr("style");
+                    $(".cover").eq(4).children("input").removeAttr("style");
                 }
             },
             create: function() {
@@ -883,11 +920,13 @@
                         Name : 'email',
                         Value : this.get('email')
                     };
-
+                    if(this.err == null){
+                        this.set("signupEnable", true);
+                    }
                     var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
 
                     attributeList.push(attributeEmail);
-
+                    this.comChange();
                     userPool.signUp(this.get('email'), this.get('password'), attributeList, null, function(err, result){
                         if (err) {
                         } else {

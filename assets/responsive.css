@@ -1604,6 +1604,45 @@ width: 50% !important;
   margin-bottom: 20px;
 }
 
+
+
+
+.journal_block1{
+  overflow: hidden;
+   margin-bottom: 20px;
+}
+.journal_block1>.span2,
+.journal_block1>.span5{
+  text-align: center;
+}
+.journal_block1>.span2 {
+  background: #bbbbbb;
+  padding: 10px;
+  color: #fff;
+}
+.journal_block1>.span5:nth-child(2) {
+  padding: 10px;
+  background: #5cc7dd;
+  text-align: center;
+  color: #fff;
+}
+.journal_block1>.span5:nth-child(3) {
+  background: #496cad;
+  padding: 10px;
+  color: #fff;
+}
+.journal_block1>.span2 p,
+.journal_block1>.span5 p{
+  font-size: 15px;
+}
+.journal_block1>.span2 span,
+.journal_block1>.span5 span{
+    font-size: 35px;
+}
+
+
+
+
 .report-tab .widget-body {
     padding: 15px 15px 0;
 }
@@ -1965,7 +2004,7 @@ a.enquiries:hover .enquiry-content,
     right: 0px
 }
 /* --- Welcome ---*/
-#firstPopUp {
+#firstPopUp, #customerPopUp, #supplierPopUp, #inventoryPopUp, #accountPopUp {
     width: 850px;
     margin: 0 auto;
     height: 375px;
@@ -1985,13 +2024,13 @@ a.enquiries:hover .enquiry-content,
     border:1px solid #2c74b5;
     margin-bottom: 10px;
 }
-#firstPopUp .close {
-        position: absolute;
+#firstPopUp .close, #customerPopUp .close , #supplierPopUp .close, #inventoryPopUp .close, #accountPopUp .close{
+    position: absolute;
     color: #fff;
     right: 10px;
     top: 10px;
 }
-a.aWelcome {
+a.aWelcome, a.aCustomer, a.aSupplier, a.aInventory, a.aAccount {
     display: none;
 }
 #conFirm-cover {
@@ -2030,7 +2069,11 @@ a.aWelcome {
   z-index: 100;
   width: 170px;
 }
-
+.bottom-cover {
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+}
 
 
   /* flip the pane when hovered */
