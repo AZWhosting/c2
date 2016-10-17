@@ -2993,25 +2993,26 @@
 					<table class="table table-borderless table-condensed">
 						<thead>
 							<tr>
-								<th data-bind="text: lang.lang.type"></th>
-								<th data-bind="text: lang.lang.date"></th>
-								<th>TXN #</th>
-								<span data-bind="text: lang.lang.txn_description"></span>
-								<th class="right"><span data-bind="text: lang.lang.debit"></span></th>
-								<th class="right"><span data-bind="text: lang.lang.credit"></span></th>
-								<th class="center"><span data-bind="text: lang.lang.balance"></span></th>
-								<th><i class="icon-paper-clip"></i></th>
+								<th><span data-bind="text: lang.lang.type"></span></th>
+								<th style="width: 10%;"><span data-bind="text: lang.lang.date"></span></th>
+								<th style="width: 15%;"><span data-bind="text: lang.lang.reference_no"></span></th>
+								<th><span data-bind="text: lang.lang.description"></span></th>
+								<th class="right"><span data-bind="text: lang.lang.amount"></span></th>
+								<th class="right"><span data-bind="text: lang.lang.balance"></span></th>
 							</tr>
 						</thead>
 						<tbody data-role="listview"
 				        		data-auto-bind="false"
 				        		data-template="generalLedger-template"			        		
 				        		data-bind="source: dataSource"></tbody>
-					</table>
-
-					<div data-role="pager"
-		            	data-auto-bind="false" 
-		            	data-bind="source: dataSource"></div>					  
+				       	<tfoot>
+				       		<tr style="font-weight: bold; font-size: large;">
+				       			<td colspan="4">TOTAL</td>
+				       			<td align="right" data-bind="text: totalAmount"></td>
+				       			<td align="right" data-bind="text: totalBalance"></td>
+				       		</tr>
+				       	</tfoot>
+					</table>				  
 
 				</div>
 			</div>						
@@ -3019,66 +3020,60 @@
 	</div>
 </script>
 <script id="generalLedger-template" type="text/x-kendo-tmpl">
-	#var sumDr =0, sumCr = 0;#
+	<tr>
+		<td style="font-weight: bold;">#: number # #: name #</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right strong" style="color: black;">
+    		#=kendo.toString(balance_forward, "c", banhji.locale)#
+    	</td>
+	</tr>
+	#var balance = balance_forward;#
 	#for(var i=0; i<line.length; i++){#
-	#sumDr += line[i].dr / line[i].rate;#
-	#sumCr += line[i].cr / line[i].rate;#
+	#balance += line[i].amount;#
 	<tr>
 		<td style="color: black;">
-			#if(i==0){#
-				#=type#
+			&nbsp;&nbsp; #=line[i].type#
+		</td>		
+		<td style="color: black;">
+			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
+		</td>
+		<td style="color: black;">
+			#if(line[i].type=="Cash_Purchase" || line[i].type=="Credit_Purchase"){#
+				<a href="\#/purchase/#=line[i].id#"><i></i> #=line[i].number#</a>
+			#}else if(line[i].type=="Deposit" || line[i].type=="Witdraw" || line[i].type=="Transfer"){#
+				<a href="\#/cash_transaction/#=line[i].id#"><i></i> #=line[i].number#</a>				
+			#}else{#
+				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
 			#}#
 		</td>		
 		<td style="color: black;">
 			#if(i==0){#
-				#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy")#
-			#}#
-		</td>
-		<td style="color: black;">
-			#if(i==0){#
-				#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
-					<a href="\#/purchase/#=id#"><i></i> #=number#</a>
-				#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
-					<a href="\#/cash_transaction/#=id#"><i></i> #=number#</a>				
-				#}else{#
-					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
-				#}#
-			#}#
-		</td>		
-		<td style="color: black;">
-			#if(i==0){#
-				#=memo#
-			#}#
-		</td>
-		<td style="color: black;">
-			#=line[i].account#
-		</td>			
-		<td class="right" style="color: black;">
-			#if(line[i].dr>0){#
-				#=kendo.toString(line[i].dr / line[i].rate, "c0", banhji.locale)#
+				#=line[i].memo#
 			#}#
 		</td>
 		<td class="right" style="color: black;">
-			#if(line[i].cr>0){#
-				#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.locale)#
-			#}#
+			#=line[i].amount#
 		</td>
-		<td></td>  			
+		<td class="right" style="color: black;">
+			#=kendo.toString(balance, "c", banhji.locale)#
+		</td> 			
     </tr>    
     #}# 
     <tr>
-    	<td style="color: black;">Total:</td>
-    	<td></td>    	
+    	<td style="font-weight: bold; color: black;">Total #: number # #: name #</td>
     	<td></td>
     	<td></td>
-    	<td></td>    	
-    	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumDr, "c0", banhji.locale)#
+    	<td></td>
+    	<td></td>
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(balance, "c", banhji.locale)#
     	</td>
-    	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumCr, "c0", banhji.locale)#
-    	</td>
-    	<td class="right" style="padding-right: 8px !important;"><i class="icon-paper-clip"></i></td>  	
+    </tr>
+    <tr>
+    	<td colspan="6">&nbsp;</td>
     </tr>  
 </script>
 <script id="transactionListDate" type="text/x-kendo-template">
@@ -43122,7 +43117,7 @@
 	});
 	banhji.generalLedger =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "accounting_reports/journal"),		
+		dataSource 			: dataStore(apiUrl + "accounting_reports/general_ledger"),		
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -43130,6 +43125,8 @@
 		obj 				: null,
 		company 			: banhji.institute,
 		displayDate 		: "",
+		totalAmount 		: 0,
+		totalBalance 		: 0,
 		pageLoad 			: function(){
 			this.search();
 		},
@@ -43193,15 +43190,15 @@
 
             this.set("displayDate", displayDate);
 
-            this.dataSource.query({
-            	filter: para,
-            	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "number", dir: "desc" }
-			  	],
-            	page: 1,
-            	pageSize: 50
-            });            
+            this.dataSource.filter(para);
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response;
+
+					self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
+					self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
+				}
+			});            
 		}		      		
 	});	
 	banhji.trialBalance =  kendo.observable({
