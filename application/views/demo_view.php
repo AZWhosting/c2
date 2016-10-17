@@ -41740,8 +41740,9 @@
 			}
 			//Refresh
 			if(this.dataSource.total()>0){
-				this.searchTransaction();					
+				this.dataSource.fetch();
 				this.summaryDS.fetch();
+				this.searchTransaction();
 			}						
 		},
 		sorterChanges 		: function(){
@@ -41946,7 +41947,7 @@
 	});
 	banhji.account =  kendo.observable({
     	lang 					: langVM,
-    	dataSource 				: dataStore(apiUrl + "accounts"),
+    	dataSource 				: banhji.source.accountDS,
     	deleteDS 				: dataStore(apiUrl + "account_lines"),
     	numberDS 				: dataStore(apiUrl + "accounts"),
     	accountTypeDS 			: banhji.source.accountTypeDS,
