@@ -42175,6 +42175,10 @@
 			this.dataSource.cancelChanges();
 			this.dataSource.data([]);
 
+			if(this.get("isEdit")){
+				this.dataSource.filter([]);
+			}
+
 			banhji.userManagement.removeMultiTask("account");
 		},
 		delete 					: function(){
