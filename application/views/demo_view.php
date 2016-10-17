@@ -2399,7 +2399,7 @@
 								<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a >General Ledger(Coming on 14/10/2016)</a></h3>								
+								<h3><a href="#/general_ledger">General Ledger</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -2484,7 +2484,7 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td >
-								<h3><a >Statement of Profit or Loss(Coming on 14/10/2016)</a></h3>
+								<h3><a >Statement of Profit or Loss(Coming on 18/10/2016)</a></h3>
 							</td>
 							<td >
 								<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
@@ -37378,7 +37378,7 @@
 														<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 													</td>
 													<td class="span4">
-														<h3><a >General Ledger(Coming on 14/10/2016)</a></h3>
+														<h3><a href="#/general_ledger">General Ledger</a></h3>
 													</td>
 													<td class="span4">
 														<h3><a href="#/trial_balance">Trial Balance</a></h3>
@@ -37478,7 +37478,7 @@
 											<table class="span12">
 												<tr>
 													<td class="span4">
-														<h3><a >Statement of Profit or Loss(Coming on 14/10/2016)</a></h3>
+														<h3><a >Statement of Profit or Loss(Coming on 18/10/2016)</a></h3>
 													</td>
 													<td class="span4">
 														<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
