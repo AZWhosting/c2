@@ -40604,6 +40604,24 @@
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
+				},
+				create 	: {
+					url: apiUrl + "accounts",
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: apiUrl + "accounts",
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: apiUrl + "accounts",
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
 				},				
 				parameterMap: function(options, operation) {
 					if(operation === 'read') {
@@ -41735,13 +41753,18 @@
 		typeName 			: "",		
 		nature 				: "",		
 		user_id 			: banhji.source.user_id,				
-		pageLoad 			: function(id){			
+		pageLoad 			: function(id){
+			var self = this, obj = this.get("obj");
+
 			if(id){
 				this.loadObj(id);
 			}
 			//Refresh
 			if(this.dataSource.total()>0){
-				this.dataSource.fetch();
+				this.dataSource.fetch(function(){
+					var dataItem = self.dataSource.get(obj.id);
+					self.set("obj", dataItem);
+				});
 				this.summaryDS.fetch();
 				this.searchTransaction();
 			}						
@@ -41850,7 +41873,7 @@
 			sub = this.dataSource.get(data.sub_of_id),
 			type = this.accountTypeDS.get(data.account_type_id);
 			
-			if(data.sub_of_id>0){
+			if(obj.sub_of_id>0){
 				this.set("subName", sub.name);
 			}else{
 				this.set("subName", "");
@@ -41861,7 +41884,7 @@
 
 			this.set("obj", data);
 			this.loadSummary();
-			this.searchTransaction();		
+			this.searchTransaction();
 		},		
 		enterSearch 		: function(e){
 			e.preventDefault();
@@ -42001,18 +42024,12 @@
     	showBank 				: false,
     	pageLoad 				: function(id){
 			if(id){
-				this.set("isEdit", true);
+				this.set("isEdit", true);						
 				this.loadObj(id);
 			}else{				
-				if(this.get("isEdit")){
-					this.set("isEdit", false);
-					
-					this.dataSource.data([]);
-					
+				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}else if(this.dataSource.total()==0){
-					this.addEmpty();
-				}
+				}								
 			}
 		},
 		//Number      	
@@ -42094,6 +42111,7 @@
     	},    	 	   	
       	addEmpty 				: function(){
       		this.dataSource.data([]);
+      		this.set("isEdit", false);
       		this.set("obj", null);
 
       		this.dataSource.insert(0,{
