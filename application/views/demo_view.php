@@ -3761,83 +3761,91 @@
 						<p data-bind="text: displayDate"></p>
 					</div>
 			    
-					<table width="100%" class="table table-borderless table-condensed">
-						<tr>
-							<th></th>
-							<th>Note</th>
-							<th class="right">2016</th>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td class="right">KHR</td>
-						</tr>
-						<tr>
-							<td>Revenue</td>
-							<td><a href="">10</a></td>
-							<td class="right">680,000</td>
-						</tr>
-						<tr>
-							<td>Cost</td>
-							<td></td>
-							<td class="right">(400,000)</td>
-						</tr>
-						<tr>
-							<td class="bold">Gross Profit</td>
-							<td></td>
-							<td class="right bold-border">280,000</td>
-						</tr>
-						<tr>
-							<td>Distribution costs</td>
-							<td></td>
-							<td class="right">(8,580)</td>
-						</tr>
-						<tr>
-							<td>Administrative Expense</td>
-							<td></td>
-							<td class="right">(50,000)</td>
-						</tr>
-						<tr>
-							<td>Finance Costs</td>
-							<td><a href="">10</a></td>
-							<td class="right">(22,300)</td>
-						</tr>
-						<tr>
-							<td>Share of profit of associate</td>
-							<td><a href="">10</a></td>
-							<td class="right">42,100</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit before Tax</td>
-							<td><a href="">10</a></td>
-							<td class="right bold-border">241,220</td>
-						</tr>
-						<tr>
-							<td>Income tax expense</td>
-							<td><a href="">10</a></td>
-							<td class="right">(60,305)</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit for the year from continuing operations</td>
-							<td></td>
-							<td class="right bold-border">180,915</td>
-						</tr>
-						<tr>
-							<td>Loss for the year discoutinued operations</td>
-							<td><a href="">10</a></td>
-							<td class="right">(24,780)</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit for the year</td>
-							<td></td>
-							<td class="right bold-border border-bottom">156,135</td>
-						</tr>
+					<table class="table table-borderless table-condensed">
+						<thead>
+							<tr>
+								<th><span data-bind="text: lang.lang.type"></span></th>
+								<th style="width: 10%;"><span data-bind="text: lang.lang.date"></span></th>
+								<th style="width: 15%;"><span data-bind="text: lang.lang.reference_no"></span></th>
+								<th><span data-bind="text: lang.lang.description"></span></th>
+								<th class="right"><span data-bind="text: lang.lang.amount"></span></th>
+								<th class="right"><span data-bind="text: lang.lang.balance"></span></th>
+							</tr>
+						</thead>
+						<tbody data-role="listview"
+				        		data-auto-bind="false"
+				        		data-template="statementProfitLoss-template"			        		
+				        		data-bind="source: dataSource"></tbody>
+				       	<tfoot>
+				       		<tr style="font-weight: bold; font-size: large;">
+				       			<td colspan="4">TOTAL</td>
+				       			<td align="right" data-bind="text: totalAmount"></td>
+				       			<td align="right" data-bind="text: totalBalance"></td>
+				       		</tr>
+				       	</tfoot>
 					</table>
 
 		        </div>		        
 			</div>							
 		</div>
 	</div>
+</script>
+<script id="statementProfitLoss-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td style="font-weight: bold;">#: number # #: name #</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right strong" style="color: black;">
+    		#=kendo.toString(balance_forward, "c", banhji.locale)#
+    	</td>
+	</tr>
+	#var balance = balance_forward;#
+	#for(var i=0; i<line.length; i++){#
+	#balance += line[i].amount;#
+	<tr>
+		<td style="color: black;">
+			&nbsp;&nbsp; #=line[i].type#
+		</td>		
+		<td style="color: black;">
+			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
+		</td>
+		<td style="color: black;">
+			#if(line[i].type=="Cash_Purchase" || line[i].type=="Credit_Purchase"){#
+				<a href="\#/purchase/#=line[i].id#"><i></i> #=line[i].number#</a>
+			#}else if(line[i].type=="Deposit" || line[i].type=="Witdraw" || line[i].type=="Transfer"){#
+				<a href="\#/cash_transaction/#=line[i].id#"><i></i> #=line[i].number#</a>				
+			#}else{#
+				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
+			#}#
+		</td>		
+		<td style="color: black;">
+			#if(i==0){#
+				#=line[i].memo#
+			#}#
+		</td>
+		<td class="right" style="color: black;">
+			#=line[i].amount#
+		</td>
+		<td class="right" style="color: black;">
+			#=kendo.toString(balance, "c", banhji.locale)#
+		</td> 			
+    </tr>    
+    #}# 
+    <tr>
+    	<td style="font-weight: bold; color: black;">Total #: number # #: name #</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(balance, "c", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="6">&nbsp;</td>
+    </tr>  
 </script>
 <script id="statementFinancialPosition" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -43276,7 +43284,7 @@
 	});
 	banhji.statementProfitLoss =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "accounting_reports/general_ledger"),		
+		dataSource 			: dataStore(apiUrl + "accounting_reports/income_statement"),		
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -72055,14 +72063,15 @@
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
 			
-			var vm = banhji.journalReport;
-
+			var vm = banhji.statementProfitLoss;
 			banhji.userManagement.addMultiTask("Statement of Profit or Loss","statement_profit_loss",null);
 
 			if(banhji.pageLoaded["statement_profit_loss"]==undefined){
 				banhji.pageLoaded["statement_profit_loss"] = true;
 						
 			}
+
+			vm.pageLoad();
 		}		
 	});	
 	banhji.router.route("/statement_financial_position", function(){
