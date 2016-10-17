@@ -70793,7 +70793,7 @@
 					});				
 				}
 
-		// 		vm.pageLoad(id,is_recurring);
+				vm.pageLoad(id,is_recurring);
 		// 	} else {
 		// 		window.location.replace(baseUrl + "admin");
 		// 	}				
