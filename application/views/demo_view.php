@@ -2399,7 +2399,7 @@
 								<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 							</td>
 							<td width="50%">
-								<h3><a >General Ledger(Coming on 14/10/2016)</a></h3>								
+								<h3><a href="#/general_ledger">General Ledger</a></h3>								
 							</td>						
 						</tr>
 						<tr>
@@ -2484,7 +2484,7 @@
 					<table class="table table-borderless table-condensed">
 						<tr>
 							<td >
-								<h3><a >Statement of Profit or Loss(Coming on 14/10/2016)</a></h3>
+								<h3><a >Statement of Profit or Loss(Coming on 18/10/2016)</a></h3>
 							</td>
 							<td >
 								<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
@@ -2964,17 +2964,17 @@
 							
 							        	</div>
 
-							        	<!-- PRINT / EXPORT								         -->
+							        	<!-- PRINT / EXPORT	-->
 								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" onclick="javascript: window.print();" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
 								        	</span>
 								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
+								        	</span> -->
 							        	</div>
 
 								    </div>
@@ -2993,25 +2993,26 @@
 					<table class="table table-borderless table-condensed">
 						<thead>
 							<tr>
-								<th data-bind="text: lang.lang.type"></th>
-								<th data-bind="text: lang.lang.date"></th>
-								<th>TXN #</th>
-								<span data-bind="text: lang.lang.txn_description"></span>
-								<th class="right"><span data-bind="text: lang.lang.debit"></span></th>
-								<th class="right"><span data-bind="text: lang.lang.credit"></span></th>
-								<th class="center"><span data-bind="text: lang.lang.balance"></span></th>
-								<th><i class="icon-paper-clip"></i></th>
+								<th><span data-bind="text: lang.lang.type"></span></th>
+								<th style="width: 10%;"><span data-bind="text: lang.lang.date"></span></th>
+								<th style="width: 15%;"><span data-bind="text: lang.lang.reference_no"></span></th>
+								<th><span data-bind="text: lang.lang.description"></span></th>
+								<th class="right"><span data-bind="text: lang.lang.amount"></span></th>
+								<th class="right"><span data-bind="text: lang.lang.balance"></span></th>
 							</tr>
 						</thead>
 						<tbody data-role="listview"
 				        		data-auto-bind="false"
 				        		data-template="generalLedger-template"			        		
 				        		data-bind="source: dataSource"></tbody>
-					</table>
-
-					<div data-role="pager"
-		            	data-auto-bind="false" 
-		            	data-bind="source: dataSource"></div>					  
+				       	<tfoot>
+				       		<tr style="font-weight: bold; font-size: large;">
+				       			<td colspan="4">TOTAL</td>
+				       			<td align="right" data-bind="text: totalAmount"></td>
+				       			<td align="right" data-bind="text: totalBalance"></td>
+				       		</tr>
+				       	</tfoot>
+					</table>				  
 
 				</div>
 			</div>						
@@ -3019,66 +3020,60 @@
 	</div>
 </script>
 <script id="generalLedger-template" type="text/x-kendo-tmpl">
-	#var sumDr =0, sumCr = 0;#
+	<tr>
+		<td style="font-weight: bold;">#: number # #: name #</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right strong" style="color: black;">
+    		#=kendo.toString(balance_forward, "c", banhji.locale)#
+    	</td>
+	</tr>
+	#var balance = balance_forward;#
 	#for(var i=0; i<line.length; i++){#
-	#sumDr += line[i].dr / line[i].rate;#
-	#sumCr += line[i].cr / line[i].rate;#
+	#balance += line[i].amount;#
 	<tr>
 		<td style="color: black;">
-			#if(i==0){#
-				#=type#
+			&nbsp;&nbsp; #=line[i].type#
+		</td>		
+		<td style="color: black;">
+			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
+		</td>
+		<td style="color: black;">
+			#if(line[i].type=="Cash_Purchase" || line[i].type=="Credit_Purchase"){#
+				<a href="\#/purchase/#=line[i].id#"><i></i> #=line[i].number#</a>
+			#}else if(line[i].type=="Deposit" || line[i].type=="Witdraw" || line[i].type=="Transfer"){#
+				<a href="\#/cash_transaction/#=line[i].id#"><i></i> #=line[i].number#</a>				
+			#}else{#
+				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
 			#}#
 		</td>		
 		<td style="color: black;">
 			#if(i==0){#
-				#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy")#
-			#}#
-		</td>
-		<td style="color: black;">
-			#if(i==0){#
-				#if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
-					<a href="\#/purchase/#=id#"><i></i> #=number#</a>
-				#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
-					<a href="\#/cash_transaction/#=id#"><i></i> #=number#</a>				
-				#}else{#
-					<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
-				#}#
-			#}#
-		</td>		
-		<td style="color: black;">
-			#if(i==0){#
-				#=memo#
-			#}#
-		</td>
-		<td style="color: black;">
-			#=line[i].account#
-		</td>			
-		<td class="right" style="color: black;">
-			#if(line[i].dr>0){#
-				#=kendo.toString(line[i].dr / line[i].rate, "c0", banhji.locale)#
+				#=line[i].memo#
 			#}#
 		</td>
 		<td class="right" style="color: black;">
-			#if(line[i].cr>0){#
-				#=kendo.toString(line[i].cr / line[i].rate, "c0", banhji.locale)#
-			#}#
+			#=line[i].amount#
 		</td>
-		<td></td>  			
+		<td class="right" style="color: black;">
+			#=kendo.toString(balance, "c", banhji.locale)#
+		</td> 			
     </tr>    
     #}# 
     <tr>
-    	<td style="color: black;">Total:</td>
-    	<td></td>    	
+    	<td style="font-weight: bold; color: black;">Total #: number # #: name #</td>
     	<td></td>
     	<td></td>
-    	<td></td>    	
-    	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumDr, "c0", banhji.locale)#
+    	<td></td>
+    	<td></td>
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(balance, "c", banhji.locale)#
     	</td>
-    	<td class="right strong" style="border-top-color: black; color: black;">
-    		#=kendo.toString(sumCr, "c0", banhji.locale)#
-    	</td>
-    	<td class="right" style="padding-right: 8px !important;"><i class="icon-paper-clip"></i></td>  	
+    </tr>
+    <tr>
+    	<td colspan="6">&nbsp;</td>
     </tr>  
 </script>
 <script id="transactionListDate" type="text/x-kendo-template">
@@ -3688,91 +3683,169 @@
 		<div class="customer-background ">
 			<div class="container-960">	
 				<div id="example" class="k-content saleSummaryCustomer">
+
 					<span class="glyphicons no-js remove_2 pull-right" 
 							onclick="javascript: window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+
+										<!-- Date -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+
+							        	<!-- PRINT / EXPORT -->
+								        <div class="tab-pane" id="tab-2">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" onclick="javascript: window.print();" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		<span data-bind="text: lang.lang.export_to_excel"></span>
+								        	</span> -->
+							        	</div>
+
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+
 					<div class="block-title">
-						<h3>Company is Name</h3>
+						<h3 data-bind="text: company.name"></h3>
 						<h2>Statement of Profit or Loss</h2>
-						<p>for the year ended 31 December 2016</p>
+						<p data-bind="text: displayDate"></p>
 					</div>
 			    
-					<table width="100%" class="table table-borderless table-condensed">
-						<tr>
-							<th></th>
-							<th>Note</th>
-							<th class="right">2016</th>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td class="right">KHR</td>
-						</tr>
-						<tr>
-							<td>Revenue</td>
-							<td><a href="">10</a></td>
-							<td class="right">680,000</td>
-						</tr>
-						<tr>
-							<td>Cost</td>
-							<td></td>
-							<td class="right">(400,000)</td>
-						</tr>
-						<tr>
-							<td class="bold">Gross Profit</td>
-							<td></td>
-							<td class="right bold-border">280,000</td>
-						</tr>
-						<tr>
-							<td>Distribution costs</td>
-							<td></td>
-							<td class="right">(8,580)</td>
-						</tr>
-						<tr>
-							<td>Administrative Expense</td>
-							<td></td>
-							<td class="right">(50,000)</td>
-						</tr>
-						<tr>
-							<td>Finance Costs</td>
-							<td><a href="">10</a></td>
-							<td class="right">(22,300)</td>
-						</tr>
-						<tr>
-							<td>Share of profit of associate</td>
-							<td><a href="">10</a></td>
-							<td class="right">42,100</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit before Tax</td>
-							<td><a href="">10</a></td>
-							<td class="right bold-border">241,220</td>
-						</tr>
-						<tr>
-							<td>Income tax expense</td>
-							<td><a href="">10</a></td>
-							<td class="right">(60,305)</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit for the year from continuing operations</td>
-							<td></td>
-							<td class="right bold-border">180,915</td>
-						</tr>
-						<tr>
-							<td>Loss for the year discoutinued operations</td>
-							<td><a href="">10</a></td>
-							<td class="right">(24,780)</td>
-						</tr>
-						<tr>
-							<td class="bold">Profit for the year</td>
-							<td></td>
-							<td class="right bold-border border-bottom">156,135</td>
-						</tr>
+					<table class="table table-borderless table-condensed">
+						<thead>
+							<tr>
+								<th><span data-bind="text: lang.lang.type"></span></th>
+								<th style="width: 10%;"><span data-bind="text: lang.lang.date"></span></th>
+								<th style="width: 15%;"><span data-bind="text: lang.lang.reference_no"></span></th>
+								<th><span data-bind="text: lang.lang.description"></span></th>
+								<th class="right"><span data-bind="text: lang.lang.amount"></span></th>
+								<th class="right"><span data-bind="text: lang.lang.balance"></span></th>
+							</tr>
+						</thead>
+						<tbody data-role="listview"
+				        		data-auto-bind="false"
+				        		data-template="statementProfitLoss-template"			        		
+				        		data-bind="source: dataSource"></tbody>
+				       	<tfoot>
+				       		<tr style="font-weight: bold; font-size: large;">
+				       			<td colspan="4">TOTAL</td>
+				       			<td align="right" data-bind="text: totalAmount"></td>
+				       			<td align="right" data-bind="text: totalBalance"></td>
+				       		</tr>
+				       	</tfoot>
 					</table>
 
 		        </div>		        
 			</div>							
 		</div>
 	</div>
+</script>
+<script id="statementProfitLoss-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td style="font-weight: bold;">#: number # #: name #</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right strong" style="color: black;">
+    		#=kendo.toString(balance_forward, "c", banhji.locale)#
+    	</td>
+	</tr>
+	#var balance = balance_forward;#
+	#for(var i=0; i<line.length; i++){#
+	#balance += line[i].amount;#
+	<tr>
+		<td style="color: black;">
+			&nbsp;&nbsp; #=line[i].type#
+		</td>		
+		<td style="color: black;">
+			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
+		</td>
+		<td style="color: black;">
+			#if(line[i].type=="Cash_Purchase" || line[i].type=="Credit_Purchase"){#
+				<a href="\#/purchase/#=line[i].id#"><i></i> #=line[i].number#</a>
+			#}else if(line[i].type=="Deposit" || line[i].type=="Witdraw" || line[i].type=="Transfer"){#
+				<a href="\#/cash_transaction/#=line[i].id#"><i></i> #=line[i].number#</a>				
+			#}else{#
+				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
+			#}#
+		</td>		
+		<td style="color: black;">
+			#if(i==0){#
+				#=line[i].memo#
+			#}#
+		</td>
+		<td class="right" style="color: black;">
+			#=line[i].amount#
+		</td>
+		<td class="right" style="color: black;">
+			#=kendo.toString(balance, "c", banhji.locale)#
+		</td> 			
+    </tr>    
+    #}# 
+    <tr>
+    	<td style="font-weight: bold; color: black;">Total #: number # #: name #</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(balance, "c", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="6">&nbsp;</td>
+    </tr>  
 </script>
 <script id="statementFinancialPosition" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -8405,7 +8478,8 @@
 	                 data-series="[
 	                                 { field: 'sale', name: 'Monthly Purchase', categoryField:'month', color: '#236DA4' },
 	                                 { field: 'order', name: 'Monthly Purchase Order', categoryField:'month', color: '#A6C9E3' }
-	                             ]"	                             
+	                             ]"
+	                 data-auto-bind="false"	                             
 	                 data-bind="source: graphDS"
 	                 style="height: 250px;" ></div>            
             </div>
@@ -15448,7 +15522,8 @@
 	                 data-series="[
 	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
 	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
-	                             ]"	                             
+	                             ]"
+	                 data-auto-bind="false"	                             
 	                 data-bind="source: graphDS"
 	                 style="height: 250px;" ></div>
             <!-- End Graph -->
@@ -29646,7 +29721,8 @@
 	                 data-series="[
 	                                { field: 'purchase', name: 'Monthly Purchase', categoryField:'month', color: '#236DA4' },
 	                                { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#A6C9E3' }
-	                            ]"	                             
+	                            ]"
+	                 data-auto-bind="false"	                             
 	                 data-bind="source: graphDS"
 	                 style="height: 250px;" ></div>            
             </div>
@@ -37302,7 +37378,7 @@
 														<h3><a href="#/journal_report">Journal Entry Report</a></h3>
 													</td>
 													<td class="span4">
-														<h3><a >General Ledger(Coming on 14/10/2016)</a></h3>
+														<h3><a href="#/general_ledger">General Ledger</a></h3>
 													</td>
 													<td class="span4">
 														<h3><a href="#/trial_balance">Trial Balance</a></h3>
@@ -37402,7 +37478,7 @@
 											<table class="span12">
 												<tr>
 													<td class="span4">
-														<h3><a >Statement of Profit or Loss(Coming on 14/10/2016)</a></h3>
+														<h3><a >Statement of Profit or Loss(Coming on 18/10/2016)</a></h3>
 													</td>
 													<td class="span4">
 														<h3><a href="#/statement_financial_position">Statement of Financial Position</a></h3>								
@@ -42175,6 +42251,10 @@
 			this.dataSource.cancelChanges();
 			this.dataSource.data([]);
 
+			if(this.get("isEdit")){
+				this.dataSource.filter([]);
+			}
+
 			banhji.userManagement.removeMultiTask("account");
 		},
 		delete 					: function(){
@@ -43118,7 +43198,7 @@
 	});
 	banhji.generalLedger =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "accounting_reports/journal"),		
+		dataSource 			: dataStore(apiUrl + "accounting_reports/general_ledger"),		
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
@@ -43126,6 +43206,8 @@
 		obj 				: null,
 		company 			: banhji.institute,
 		displayDate 		: "",
+		totalAmount 		: 0,
+		totalBalance 		: 0,
 		pageLoad 			: function(){
 			this.search();
 		},
@@ -43189,15 +43271,101 @@
 
             this.set("displayDate", displayDate);
 
-            this.dataSource.query({
-            	filter: para,
-            	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "number", dir: "desc" }
-			  	],
-            	page: 1,
-            	pageSize: 50
-            });            
+            this.dataSource.filter(para);
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response;
+
+					self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
+					self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
+				}
+			});            
+		}		      		
+	});
+	banhji.statementProfitLoss =  kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "accounting_reports/income_statement"),		
+		sortList			: banhji.source.sortList,
+		sorter 				: "all",
+		sdate 				: "",
+		edate 				: "",
+		obj 				: null,
+		company 			: banhji.institute,
+		displayDate 		: "",
+		totalAmount 		: 0,
+		totalBalance 		: 0,
+		pageLoad 			: function(){
+			this.search();
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		search				: function(){
+			var self = this, para = [], displayDate = "",
+				start = this.get("sdate"),
+        		end = this.get("edate");
+    	
+        	//Dates
+        	if(start && end){
+            	para.push({ field:"issued_date >=", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+
+            	displayDate = "From " + kendo.toString(new Date(start), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            }else if(start){
+            	para.push({ field:"issued_date", value: kendo.toString(new Date(start), "yyyy-MM-dd") });
+
+            	displayDate = "On " + kendo.toString(new Date(start), "dd-MM-yyyy");
+            }else if(end){
+            	para.push({ field:"issued_date <=", value: kendo.toString(new Date(end), "yyyy-MM-dd") });
+
+            	displayDate = "As Of " + kendo.toString(new Date(end), "dd-MM-yyyy");
+            }else{
+            	
+            }
+
+            this.set("displayDate", displayDate);
+
+            this.dataSource.filter(para);
+            this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="read"){
+					var response = e.response;
+
+					self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
+					self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
+				}
+			});            
 		}		      		
 	});	
 	banhji.trialBalance =  kendo.observable({
@@ -46526,6 +46694,8 @@
 		ap_overdue 			: 0,						
 		pageLoad 			: function(){
 			var self = this;
+
+			this.graphDS.read();
 
 			this.summaryDS.query({
 				filter: [],								
@@ -53190,6 +53360,8 @@
 		pageLoad 			: function(){
 			var self = this, today = new Date(),
 			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+
+			this.graphDS.read();
 
 			this.summaryDS.query({
 				filter: [
@@ -65616,6 +65788,8 @@
 			var self = this, today = new Date(),
 			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
 
+			this.graphDS.read();
+
 			this.summaryDS.query({
 				filter: [
 					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
@@ -71889,145 +72063,15 @@
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.accountingMenu);			
 			
-			var vm = banhji.journalReport;
-
+			var vm = banhji.statementProfitLoss;
 			banhji.userManagement.addMultiTask("Statement of Profit or Loss","statement_profit_loss",null);
 
 			if(banhji.pageLoaded["statement_profit_loss"]==undefined){
 				banhji.pageLoaded["statement_profit_loss"] = true;
-
-				function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
-
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
-
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function dateChanges(){
-                	var strDate = "";
-
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}
-
-					$("#strDate").text(strDate);
-                }
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");               
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $("#sorter").val();
-
-					switch(value){
-					case "today":								
-						sdate = today;
-															  					
-					  	break;
-					case "week":			  	
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));						
-						
-					  	break;
-					case "month":							  	
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":				
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-											  
-					}
-
-					start.value(sdate);
-					end.value(edate);
-					
-					start.max(end.value());
-                	end.min(start.value());
-
-                	dateChanges();                	
-                });
-                
-                start.max(end.value());
-                end.min(start.value());				
-
-				$("#search").click(function(e){
-		        	e.preventDefault();
-
-		        	var para = [],		        	
-					sdate = kendo.toString(start.value(), "yyyy-MM-dd"), 
-					edate = kendo.toString(end.value(), "yyyy-MM-dd");
-					
-		        	//Dates
-		        	if(start.value() && end.value()){        		
-		            	para.push({ field:"issued_date >=", value: sdate });
-		            	para.push({ field:"issued_date <=", value: edate });            	          	            	
-		            }else if(start.value()){
-		            	para.push({ field:"issued_date", value: sdate });
-		            }else if(end.value()){
-		            	para.push({ field:"issued_date <=", value: edate });
-		            }else{
-		            	
-		            }
-
-		            vm.dataSource.filter(para);		            
-		        });								
 						
 			}
+
+			vm.pageLoad();
 		}		
 	});	
 	banhji.router.route("/statement_financial_position", function(){
