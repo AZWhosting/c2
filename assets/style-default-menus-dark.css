@@ -392,7 +392,9 @@ p.separator i {
   color: #d7d7d7 ;
 }
 .text-large {
-  font-size: 35px ;
+  font-size: 35px ; 
+  /*font-size: 4.8vmin;*/
+  white-space: nowrap;
   line-height: 40px ;
 }
 .text-xlarge {
