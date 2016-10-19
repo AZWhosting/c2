@@ -3755,27 +3755,10 @@
 					</div>
 			    
 					<table class="table table-borderless table-condensed">
-						<thead>
-							<tr>
-								<th><span data-bind="text: lang.lang.type"></span></th>
-								<th style="width: 10%;"><span data-bind="text: lang.lang.date"></span></th>
-								<th style="width: 15%;"><span data-bind="text: lang.lang.reference_no"></span></th>
-								<th><span data-bind="text: lang.lang.description"></span></th>
-								<th class="right"><span data-bind="text: lang.lang.amount"></span></th>
-								<th class="right"><span data-bind="text: lang.lang.balance"></span></th>
-							</tr>
-						</thead>
 						<tbody data-role="listview"
 				        		data-auto-bind="false"
 				        		data-template="statementProfitLoss-template"			        		
 				        		data-bind="source: dataSource"></tbody>
-				       	<tfoot>
-				       		<tr style="font-weight: bold; font-size: large;">
-				       			<td colspan="4">TOTAL</td>
-				       			<td align="right" data-bind="text: totalAmount"></td>
-				       			<td align="right" data-bind="text: totalBalance"></td>
-				       		</tr>
-				       	</tfoot>
 					</table>
 
 		        </div>		        
@@ -3784,60 +3767,38 @@
 	</div>
 </script>
 <script id="statementProfitLoss-template" type="text/x-kendo-tmpl">
+	#if(id>0){#
+		<tr>
+			<td colspan="3" style="font-weight: bold; color: black;">#: type #</td>
+		</tr>
+		#var total = 0;#
+		#for(var i=0; i<line.length; i++){#
+		#total += line[i].amount;#
+		<tr>
+			<td style="color: black;">
+				&nbsp;&nbsp; #=line[i].number# #=line[i].name#
+			</td>
+			<td class="right" style="color: black;">
+				#=kendo.toString(line[i].amount, "c", banhji.locale)#
+			</td>
+			<td></td> 			
+	    </tr>    
+	    #}# 
+	    <tr>
+	    	<td style="font-weight: bold; color: black;">Total #: type #</td>
+	    	<td></td>	    	
+	    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+	    		#=kendo.toString(total, "c", banhji.locale)#
+	    	</td>
+	    </tr>	    
+	#}else{#
+		<tr>
+			<td colspan="2" style="font-weight: bold; color: black;">#: name #</td>
+			<td class="right" style="font-weight: bold; color: black;">#: kendo.toString(amount, "c", banhji.locale) #</td>
+		</tr>
+	#}#
 	<tr>
-		<td style="font-weight: bold;">#: number # #: name #</td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td class="right strong" style="color: black;">
-    		#=kendo.toString(balance_forward, "c", banhji.locale)#
-    	</td>
-	</tr>
-	#var balance = balance_forward;#
-	#for(var i=0; i<line.length; i++){#
-	#balance += line[i].amount;#
-	<tr>
-		<td style="color: black;">
-			&nbsp;&nbsp; #=line[i].type#
-		</td>		
-		<td style="color: black;">
-			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
-		</td>
-		<td style="color: black;">
-			#if(line[i].type=="Cash_Purchase" || line[i].type=="Credit_Purchase"){#
-				<a href="\#/purchase/#=line[i].id#"><i></i> #=line[i].number#</a>
-			#}else if(line[i].type=="Deposit" || line[i].type=="Witdraw" || line[i].type=="Transfer"){#
-				<a href="\#/cash_transaction/#=line[i].id#"><i></i> #=line[i].number#</a>				
-			#}else{#
-				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
-			#}#
-		</td>		
-		<td style="color: black;">
-			#if(i==0){#
-				#=line[i].memo#
-			#}#
-		</td>
-		<td class="right" style="color: black;">
-			#=line[i].amount#
-		</td>
-		<td class="right" style="color: black;">
-			#=kendo.toString(balance, "c", banhji.locale)#
-		</td> 			
-    </tr>    
-    #}# 
-    <tr>
-    	<td style="font-weight: bold; color: black;">Total #: number # #: name #</td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(balance, "c", banhji.locale)#
-    	</td>
-    </tr>
-    <tr>
-    	<td colspan="6">&nbsp;</td>
+    	<td colspan="3">&nbsp;</td>
     </tr>  
 </script>
 <script id="statementFinancialPosition" type="text/x-kendo-template">
