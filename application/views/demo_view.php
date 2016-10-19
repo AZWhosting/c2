@@ -3579,64 +3579,10 @@
 							onclick="javascript: window.history.back()"><i></i></span>
 					<br>
 					<br>
-					
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-							
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->								
-								<div class="widget-body">
-									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">									        	
-											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"                   
-									           data-value-primitive="true"
-									           data-text-field="text"
-									           data-value-field="value"
-									           data-bind="value: sorter,
-									                      source: sortList" />
-									                                   
-									        <input id="sdate" name="sdate"						           
-										           data-bind="value: sdate"
-										           placeholder="From ..." />
-									        
-									       	<input id="edate" name="edate"						           
-										           data-bind="value: edate"
-										           placeholder="To ..." />
-
-								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>								       
-								    </div>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->						
-					</div>
+					<br>					
 
 					<div class="block-title">
-						<h3>ABC Co., Ltd</h3>
 						<h2>Chart of Account</h2>
-						<p>From 1 June 2016 to 30 June 2016</p>
 					</div>
 
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
@@ -3667,7 +3613,7 @@
 			#=name#
 		</td>
 		<td style="color: black;">
-			#=account_type.length>0 ? account_type[0].name : ""#
+			#=account_type_name#
 		</td>				
     </tr>    
 </script>
