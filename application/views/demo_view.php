@@ -43501,14 +43501,14 @@
             this.set("displayDate", displayDate);
 
             this.dataSource.filter(para);
-            this.dataSource.bind("requestEnd", function(e){				
-				if(e.type=="read"){
-					var response = e.response;
+   //          this.dataSource.bind("requestEnd", function(e){				
+			// 	if(e.type=="read"){
+			// 		var response = e.response;
 
-					self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
-					self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
-				}
-			});            
+			// 		self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
+			// 		self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
+			// 	}
+			// });            
 		}		      		
 	});	
 	banhji.trialBalance =  kendo.observable({

@@ -1289,42 +1289,23 @@ class Accounting_reports extends REST_Controller {
 		$data["count"] = 0;
 		$is_recurring = 0;
 		$deleted = 0;
-		$startDate = "";
-		$totalAmount = 0;
-		$totalBalance = 0;
-
+		
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-		
-		//Sort
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$obj->order_by_related("transaction", $value["field"], $value["dir"]);
-			}
-		}
-		
+				
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {
 	    		$obj->where_related("transaction", $value["field"], $value["value"]);
-
-	    		if($value["field"]=="issued_date >=" || $value["field"]=="issued_date"){
-	    			$startDate = $value["value"];
-	    		}
 			}									 			
 		}
 		
-		$obj->include_related("transaction", array("type", "number", "issued_date", "memo"));
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("account/account_type", array("name","nature"));
-		$obj->where_related("transaction", "is_journal", 1);
+		$obj->where_in_related("account", "account_type_id", array(35,36,37,38,39,40,41,42));
 		$obj->where_related("transaction", "is_recurring", 0);		
 		$obj->where_related("transaction", "deleted", 0);
 		$obj->where("deleted", 0);
-		$obj->order_by_related("account", "account_type_id", "asc");
-		$obj->order_by_related("account", "number", "asc");
-		$obj->order_by_related("transaction", "issued_date", "asc");
-		$obj->order_by_related("transaction", "number", "asc");
-		
+				
 		//Results
 		$obj->get_iterated();		
 		
@@ -1338,49 +1319,18 @@ class Accounting_reports extends REST_Controller {
 					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->rate);					
 				}
 
-				$totalAmount += $amount;
-				$totalBalance += $amount;
-
 				if(isset($objList[$value->account_id])){
-					$objList[$value->account_id]["line"][] = array(
-						"id" 				=> $value->transaction_id,
-						"type" 				=> $value->transaction_type,
-						"number" 			=> $value->transaction_number,
-						"issued_date" 		=> $value->transaction_issued_date,
-						"memo" 				=> $value->transaction_memo,
-						"amount" 			=> $amount
-					);
+					$objList[$value->account_id]["line"]["amount"] += $amount;
 				}else{
-					//Balance Forward
-					$balance_forward = 0;
-					if($startDate!==""){
-						$bf = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-						$bf->include_related("account/account_type", array("nature"));
-						$bf->where_related("transaction", "issued_date <", $startDate);
-						$bf->get_iterated();
-
-						foreach ($bf as $val) {
-							if($val->account_account_type_nature=="Dr"){
-								$balance_forward += (floatval($val->dr) - floatval($val->cr)) / floatval($val->rate);				
-							}else{
-								$balance_forward += (floatval($val->cr) - floatval($val->dr)) / floatval($val->rate);					
-							}
-						}
-					}
-
-					$totalBalance += $balance_forward;
-
 					$objList[$value->account_id]["id"] 				= $value->account_id;
 					$objList[$value->account_id]["number"] 			= $value->account_number;
 					$objList[$value->account_id]["name"] 			= $value->account_name;
 					$objList[$value->account_id]["balance_forward"] = $balance_forward;
 					$objList[$value->account_id]["line"][] 			= array(
-						"id" 				=> $value->transaction_id,
-						"type" 				=> $value->transaction_type,
-						"number" 			=> $value->transaction_number,
-						"issued_date" 		=> $value->transaction_issued_date,
-						"memo" 				=> $value->transaction_memo,
-						"amount" 			=> $amount
+						"id" 			=> $value->account_id,
+						"number" 		=> $value->account_number,
+						"name" 			=> $value->account_name,
+						"amount" 		=> $amount
 					);			
 				}
 			}
@@ -1390,10 +1340,7 @@ class Accounting_reports extends REST_Controller {
 			}
 
 			$data["count"] = count($data["results"]);			
-		}
-
-		$data["totalAmount"] = $totalAmount;
-		$data["totalBalance"] = $totalBalance;
+		}		
 
 		//Response Data		
 		$this->response($data, 200);	
