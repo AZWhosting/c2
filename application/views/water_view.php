@@ -36944,14 +36944,14 @@
     </div> -->
     <div class="row-fluid">
 		<!-- Left Side -->
-		<div class="span4">
+		<div class="span6">
 
 			<!-- Logo of the page -->
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td valign="top">
-			        	<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_bill.png" width="300" height="100">
-			        	<div class="supplier-icon">
+			        	<img src="<?php echo base_url();?>/assets/water_bill.png" width="300" height="100">
+			        	<div class="supplier-icon" style="margin-top: 15px;">
 					       	<div class="span4">
 						       	<a href="#/wNew_customer" class="center">
 						       		<img title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
@@ -36971,59 +36971,72 @@
 			        </td>
 			 	</tr>
 			</table>
+
 			<table class="table table-borderless table-condensed table-vertical-center ">
 				<tr>
-					<td class="center">
+					<td class="center ">
 						<a href="#/wReading">
-							<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/reading.png" width="110" height="200" />
+							<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png" width="110" height="200" />
 							Reading
 						</a>						
 					</td>
-					<td class="center">
+					<td class="center ">
 						<a href="#/wIR_reader">
 							<img title="Add IR Reader" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png" width="110" height="200" />
 							IR Reader
 						</a>
 					</td>
-					<td class="center">
+					<td class="center ">
 						<a href="#/wReading_book">
 							<img title="Add Reading Book" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/reading_book.png" width="110" height="200" />
 							R. Book
 						</a>						
-					</td>					
-				</tr>
-				<tr>
-					<td class="center">
+					</td>
+					<td class="center ">
 						<a href="#/wInvoice">
 							<img title="Add Create Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/create_invoice.png" width="110" height="200" />
 							W. Invoice
 						</a>
-					</td>
-					<td class="center">						
+					</td>					
+				</tr>
+				<tr>					
+					<td class="center ">						
 						<a href="#/wPrint_center">
 							<img title="Add Print Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/print_invoice.png" width="110" height="200" />
 							Print
 						</a>						
 					</td>
-					<td class="center">						
+					<td class="center ">						
 						<a href="#/currency_rate">
 							<img title="Receive Water Bill Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/receive_payment.png" width="110" height="200" />
 							Receipt
 						</a>						
-					</td>										
+					</td>
+					<td class="center ">
+					</td>
+					<td class="center ">
+					</td>									
 				</tr>							
 			</table>                
 
 		</div>
 
 		<!-- Right Side -->
-		<div class="span8">
+		<div class="span6">
+
+			<div class="board-chart" style="margin-bottom: 15px;">
+				<div class="span12">
+					<h4>PCG & Partners</h4>
+					<h2 style="color: #113051; margin-bottom: 11px; display: inline-block; width: 100%;" >Financial Snapshot</h2>
+					<span style="color: #000000;">As of: Tue Oct 18 2016 15:18:08 GMT+0700 (ICT)</span><br/>
+				</div>
+			</div>
 
 			<!-- Summary -->
-			<div class="row-fluid">
+			<div class="row">
 	
 				<!-- Column -->
-				<div class="span4">
+				<div class="span6" style="padding-right: 0;">
 				
 					<!-- Widget -->
 					<div class="widget widget-3 customer-border">
@@ -37061,7 +37074,55 @@
 				<!-- // Column END -->
 				
 				<!-- Column -->
-				<div class="span4">
+				<div class="span6" >
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span>Active Customer</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert-info">
+							
+							<div align="center" class="text-large strong">0</div>
+							<table width="100%">
+								<tr align="center">
+									<td width="33%">										
+										<span>0</span>
+										<br>
+										<span>Active</span>
+									</td>
+									<td width="33%">
+										<span>0</span>
+										<br>
+										<span>Inactive</span>
+									</td>
+									<td width="33%">
+										<span>0</span>
+										<br>
+										<span>Voice</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				
+			</div>
+
+			<!-- Summary -->
+			<div class="row">
+				<!-- Column -->
+				<div class="span6" style="padding-right: 0;">
 				
 					<!-- Widget -->
 					<div class="widget widget-3 customer-border">
@@ -37104,48 +37165,10 @@
 				<!-- // Column END -->
 				
 				<!-- Column -->
-				<div class="span4">
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span>Receivable</h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<div class="widget-body alert-info3" style="background-color: LightGray">
-							
-							<div align="center" class="text-large strong">0</div>
-							<table width="100%">
-								<tr align="center">
-									<td width="33%">										
-										<span >0</span>
-										<br>
-										<span>Open</span>
-									</td>
-									<td width="33%">
-										<span >0</span>
-										<br>
-										<span>Customer</span>
-									</td>
-									<td width="33%">
-										<span >0</span>
-										<br>
-										<span>Overdue</span>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
+				<div class="span6">
 				</div>
 				<!-- // Column END -->
-				
+
 			</div>
 
 			<!-- Top 5 -->
@@ -37192,28 +37215,53 @@
 			</div>
 
 			<!-- Graph -->
-		    <div class="span12">
-				<div class="home-chart">
-					<!-- Graph -->
-					<div data-role="chart"
-						 data-auto-bind="false"
-		                 data-legend="{ position: 'top' }"
-		                 data-series-defaults="{ type: 'column' }"
-		                 data-tooltip='{
-		                    visible: true,
-		                    format: "{0}%",
-		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-		                 }'                 
-		                 data-series="[
-		                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
-		                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
-		                             ]"	                             
-		                 data-bind="source: graphDS"
-		                 style="height: 250px;" ></div>
-		            <!-- End Graph -->      
-				</div>
+		    <div class="innerLR innerT">			
+				<div id="esale-graph" style="height: 150px;"></div>
 			</div>
 		</div>
+
+		<div class="row-fluid">		
+	        <div>
+	        	<input data-role="dropdownlist"                   
+	                   data-value-primitive="true"
+	                   data-text-field="text"
+	                   data-value-field="value"
+	                   data-bind="value: sorter,
+	                              source: sortList,                              
+	                              events: { change: sorterChanges }" />
+
+	        	<input data-role="datepicker"
+	        		   data-format="dd-MM-yyyy"
+	                   data-bind="value: sdate,
+	                              events: { change: dateChanges }" >
+
+	            <input data-role="datepicker"
+	            	   data-format="dd-MM-yyyy"
+	                   data-bind="value: edate,
+	                              events: { change: dateChanges }" >
+	            
+	            <button type="button" data-role="button" data-icon="search" data-bind="click: search"></button>
+	        </div>
+        	
+            <div data-role="grid" 
+					data-bind="source: saleByLocationDS"
+				    data-auto-bind="false"	        
+				    data-row-template="esale-by-location-row-template"						                           
+				    data-columns='[
+				    	{ title: "No.", width: 45 },				       	
+				        { title: "Location" },	                     
+				        { title: "អតិថិជនកំពុងប្រើប្រាស់" },
+				        { title: "អតិថិជនឈប់ប្រើប្រាស់" },
+				        { title: "Deposit" },
+				        { title: "បរិមាណលក់ភ្លើង" },	            
+				        { title: "Amount" },
+				        { title: "ជំពាក់" },
+				        { title: "Balance" }				                           	                    
+				    ]'></div>
+
+    	</div>
+
+
 	</div> 
 
 

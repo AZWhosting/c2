@@ -96,8 +96,7 @@
 						<li style="text-align:center;">
 							<a href="#/accounting">
 								<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">							
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.accounting" style="margin-top: 8px;
-    display: inline-block;" style="margin-top: 5px; display: inline-block;"></span></span>
+								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.accounting" style="margin-top: 8px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></span></span>
 							</a>
 						</li>
 						<li style="text-align:center;">
@@ -110,14 +109,12 @@
 							<a href="#/sale_tax">
 								<img title="Tax Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
 							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax" style="margin-top: 5px;
-    display: inline-block;" style="margin-top: 5px; display: inline-block;"></span></span>
+							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></span></span>
 						</li>
 						<li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
 								<img title="Admin Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings" style="margin-top: 5px;
-    display: inline-block;" style="margin-top: 5px; display: inline-block;"></span></span>
+								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></span></span>
 							</a>
 						</li>											
 					</ul>
@@ -148,8 +145,7 @@
 			</div>
 			<br>
 			<br>
-		</div>
-		
+		</div>		
 		
 		<div class="span6">
 			<div class="row">
@@ -188,8 +184,8 @@
 						</div>
 					</div><!--End Add New Board -->
 
-				</div>	
-
+				</div>
+				
 				<div class="board-chart">
 					<div class="span12">
 						<h4 data-bind="text: companyName"></h4>
@@ -198,121 +194,117 @@
 					</div>
 				</div>
 
-					
-					<div class="board-chart">
-						<div class="span12">
-							<div class="span6">
-								<p><span data-bind="text: lang.lang.performance"></span></p>
-								<a >
-									<table class="performance">
-										<tr>
-											<td><span data-bind="text: lang.lang.income"></span></td>
-											<td></td>
-											<td align="right"><span data-bind="text: income"></span></td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.expense"></span></td>
-											<td></td>
-											<td align="right"><span data-bind="text: expense"></span></td>
-										</tr>
-										<tr>
-											<td><b><span data-bind="text: lang.lang.net_income"></span></b></td>
-											<td></td>
-											<td align="right"><b data-bind="text: net_income"></b></td>
-										</tr>
-									</table>
-								</a>     
-							</div>
-							<div class="span6">
-								<p><span data-bind="text: lang.lang.position"></span></p>
-								<a >
-									<table class="position" style="width: 100%;">
-										<tr>
-											<td><span data-bind="text: lang.lang.asset"></span></td>
-											<td></td>
-											<td align="right"><span data-bind="text: asset"></span></td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.liabilities"></span></td>
-											<td></td>
-											<td align="right"><span data-bind="text: liability"></span></td>
-										</tr>
-										<tr>
-											<td><b><span data-bind="text: lang.lang.equity"></span></b></td>
-											<td></td>
-											<td align="right"><b data-bind="text: equity"></b></td>
-										</tr>
-									</table>
-								</a>
-							</div>
+				<div class="board-chart">
+					<div class="span12">
+						<div class="span6">
+							<p><span data-bind="text: lang.lang.performance"></span></p>
+							<a>
+								<table class="performance">
+									<tr>
+										<td><span data-bind="text: lang.lang.income"></span></td>
+										<td></td>
+										<td align="right"><span data-bind="text: income"></span></td>
+									</tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.expense"></span></td>
+										<td></td>
+										<td align="right"><span data-bind="text: expense"></span></td>
+									</tr>
+									<tr>
+										<td><b><span data-bind="text: lang.lang.net_income"></span></b></td>
+										<td></td>
+										<td align="right"><b data-bind="text: net_income"></b></td>
+									</tr>
+								</table>
+							</a>     
 						</div>
-						
-						<div class="span12">
-							<div class="span6">
-								<a href="#/customer_balance_summary">
-									<div class="widget-body alert-info welcome-nopadding" >
-										<p><span data-bind="text: lang.lang.receivable"></span></p>
+						<div class="span6">
+							<p><span data-bind="text: lang.lang.position"></span></p>
+							<a>
+								<table class="position" style="width: 100%;">
+									<tr>
+										<td><span data-bind="text: lang.lang.asset"></span></td>
+										<td></td>
+										<td align="right"><span data-bind="text: asset"></span></td>
+									</tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.liabilities"></span></td>
+										<td></td>
+										<td align="right"><span data-bind="text: liability"></span></td>
+									</tr>
+									<tr>
+										<td><b><span data-bind="text: lang.lang.equity"></span></b></td>
+										<td></td>
+										<td align="right"><b data-bind="text: equity"></b></td>
+									</tr>
+								</table>
+							</a>
+						</div>
+					</div>
+					
+					<div class="span12">
+						<div class="span6">
+							<a href="#/customer_balance_summary">
+								<div class="widget-body alert-info welcome-nopadding" >
+									<p><span data-bind="text: lang.lang.receivable"></span></p>
+							
+									<div align="center" class="text-large strong" data-bind="text: ar"></div>
 								
-										<div align="center" class="text-large strong" data-bind="text: ar"></div>
-									
-										<table width="100%" >
-											<tr align="center">
-												<td>										
-													<span data-bind="text: ar_open"></span>
-													<br>
-													<span><span data-bind="text: lang.lang.open"></span></span>
-												</td>
-												<td>
-													<span data-bind="text: ar_customer"></span>
-													<br>
-													<span><span data-bind="text: lang.lang.customers"></span></span>
-												</td>
-												<td>
-													<span data-bind="text: ar_overdue"></span>
-													<br>
-													<span><span data-bind="text: lang.lang.overdue"></span></span>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</a>
-							</div>
-							<div class="span6">
-								
-								<a href="#/suppliers_balance_summary">
-									<div class="widget-body  alert-info welcome-nopadding" style="width: 100%;">
-										<p><span data-bind="text: lang.lang.payables"></span></p>
-								
-										<div align="center" class="text-large strong" data-bind="text: ap"></div>
-									
-										<table width="100%">
-											<tr align="center">
-												<td>										
-													<span data-bind="text: ap_open"></span>
-													<br>
-													<span><span data-bind="text: lang.lang.open"></span></span>
-												</td>
-												<td>
-													<span data-bind="text: ap_vendor"></span>
-													<br>
-													<span><span data-bind="text: lang.lang.suppliers"></span></span>
-												</td>
-												<td>
-													<span data-bind="text: ap_overdue"></span>
-													<br>
-													<span><span data-bind="text: lang.lang.overdue"></span></span>
-												</td>
-											</tr>
-										</table>
-									</div>
+									<table width="100%" >
+										<tr align="center">
+											<td>										
+												<span data-bind="text: ar_open"></span>
+												<br>
+												<span><span data-bind="text: lang.lang.open"></span></span>
+											</td>
+											<td>
+												<span data-bind="text: ar_customer"></span>
+												<br>
+												<span><span data-bind="text: lang.lang.customers"></span></span>
+											</td>
+											<td>
+												<span data-bind="text: ar_overdue"></span>
+												<br>
+												<span><span data-bind="text: lang.lang.overdue"></span></span>
+											</td>
+										</tr>
+									</table>
 								</div>
 							</a>
 						</div>
+						<div class="span6">
+							
+							<a href="#/suppliers_balance_summary">
+								<div class="widget-body  alert-info welcome-nopadding" style="width: 100%;">
+									<p><span data-bind="text: lang.lang.payables"></span></p>
+							
+									<div align="center" class="text-large strong" data-bind="text: ap"></div>
+								
+									<table width="100%">
+										<tr align="center">
+											<td>										
+												<span data-bind="text: ap_open"></span>
+												<br>
+												<span><span data-bind="text: lang.lang.open"></span></span>
+											</td>
+											<td>
+												<span data-bind="text: ap_vendor"></span>
+												<br>
+												<span><span data-bind="text: lang.lang.suppliers"></span></span>
+											</td>
+											<td>
+												<span data-bind="text: ap_overdue"></span>
+												<br>
+												<span><span data-bind="text: lang.lang.overdue"></span></span>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</a>
+					</div>					
+				</div>	
 
-						
-					</div>
-					
-				</div>
 			</div>
 		</div>
 	</div>
@@ -827,7 +819,7 @@
 			<div class="row">
 				<div class="span6 accounting-right">
 					<div class="financial-report" style="padding-bottom: 0;">
-						<p><span data-bind="text: lang.lang.financial_report_standard"></span> <b>Cambodia International Financial Reporting Standards for SMEs (CIFRSn for SMEs)</b>
+						<p><span data-bind="text: lang.lang.financial_report_standard"></span> <b>Cambodia International Financial Reporting Standards for SMEs (CIFRS for SMEs)</b>
 						</p>
 						<a style="margin: 0 0 15px;" class="btn-download" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/IFRS+for+SME_Khmer.pdf" target="_blank"><span data-bind="text: lang.lang.take_this_standard"></span></a>
 						<a style="margin: 0px 0 15px; float: right;" class="btn-download" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/IFRS+for+SMEs_Standard_2015.pdf" target="_blank">Download Standards</a>
@@ -2742,7 +2734,7 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -2778,7 +2770,7 @@
 							        	</div>
 
 							        	<!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-2">								        	
+								        <!--div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -2788,54 +2780,54 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>								       
+							        	</div-->								       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>JOURNAL ENTRY REPORTS</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
 
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>JOURNAL ENTRY REPORTS</h2>
-						<p data-bind="text: displayDate"></p>
+						<div class="row-fluid journal_block">
+							<div class="span4">
+								<p>Total no. of transactions</p>
+								<span data-bind="text: totalTxn"></span>
+							</div>
+							<div class="span4">
+								<p>Total Dr. Balance</p>
+								<span data-bind="text: dr"></span>
+							</div>
+							<div class="span4">
+								<p>Total Cr. Balance</p>
+								<span data-bind="text: dr"></span>
+							</div>
+						</div>
+
+						<table class="table table-borderless table-condensed">
+				            <thead>
+					            <tr>
+					                <th>TYPE</th>
+					                <th>DATE</th>
+					                <th>TXN#</th>
+					                <th>TXN DESCRIPTION</th>
+					                <th>ACCOUNT</th>                		                
+					                <th class="right">DEBITS (Dr)</th>
+					                <th class="right">CREDITS (Cr)</th>
+					                <th><i class="icon-paper-clip"></i></th>		                
+					            </tr>
+				            </thead> 
+					        <tbody data-role="listview"
+					        		data-auto-bind="false"
+					        		data-template="journalReport-template"			        		
+					        		data-bind="source: dataSource"></tbody>			        
+					    </table>
 					</div>
-
-					<div class="row-fluid journal_block">
-						<div class="span4">
-							<p>Total no. of transactions</p>
-							<span data-bind="text: totalTxn"></span>
-						</div>
-						<div class="span4">
-							<p>Total Dr. Balance</p>
-							<span data-bind="text: dr"></span>
-						</div>
-						<div class="span4">
-							<p>Total Cr. Balance</p>
-							<span data-bind="text: dr"></span>
-						</div>
-					</div>
-
-					<table class="table table-borderless table-condensed">
-			            <thead>
-				            <tr>
-				                <th>TYPE</th>
-				                <th>DATE</th>
-				                <th>TXN#</th>
-				                <th>TXN DESCRIPTION</th>
-				                <th>ACCOUNT</th>                		                
-				                <th class="right">DEBITS (Dr)</th>
-				                <th class="right">CREDITS (Cr)</th>
-				                <th><i class="icon-paper-clip"></i></th>		                
-				            </tr>
-			            </thead> 
-				        <tbody data-role="listview"
-				        		data-auto-bind="false"
-				        		data-template="journalReport-template"			        		
-				        		data-bind="source: dataSource"></tbody>			        
-				    </table>
-
 		            <div data-role="pager"
 		            	data-auto-bind="false" 
 		            	data-bind="source: dataSource"></div>					  
@@ -2927,7 +2919,7 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -2965,17 +2957,17 @@
 							        	</div>
 
 							        	<!-- PRINT / EXPORT	-->
-								        <div class="tab-pane" id="tab-2">								        	
+								        <!--div class="tab-pane" id="tab-2">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" onclick="javascript: window.print();" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.print"></span></span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        	< <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
 								        	</span>
 								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span> -->
-							        	</div>
+								        	</span> >
+							        	</div-->
 
 								    </div>
 								</div>
@@ -2983,37 +2975,37 @@
 						</div>
 						<!-- // Tabs END -->						
 					</div>
-			    	
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2 span data-bind="text: lang.lang.general_ledger"></h2>
-						<p data-bind="text: displayDate"></p>
+			    	<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2 span data-bind="text: lang.lang.general_ledger"></h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<table class="table table-borderless table-condensed">
+							<thead>
+								<tr>
+									<th><span data-bind="text: lang.lang.type"></span></th>
+									<th style="width: 10%;"><span data-bind="text: lang.lang.date"></span></th>
+									<th style="width: 15%;"><span data-bind="text: lang.lang.reference_no"></span></th>
+									<th><span data-bind="text: lang.lang.description"></span></th>
+									<th class="right"><span data-bind="text: lang.lang.amount"></span></th>
+									<th class="right"><span data-bind="text: lang.lang.balance"></span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+					        		data-auto-bind="false"
+					        		data-template="generalLedger-template"			        		
+					        		data-bind="source: dataSource"></tbody>
+					       	<tfoot>
+					       		<tr style="font-weight: bold; font-size: large;">
+					       			<td colspan="4">TOTAL</td>
+					       			<td align="right" data-bind="text: totalAmount"></td>
+					       			<td align="right" data-bind="text: totalBalance"></td>
+					       		</tr>
+					       	</tfoot>
+						</table>				  
 					</div>
-
-					<table class="table table-borderless table-condensed">
-						<thead>
-							<tr>
-								<th><span data-bind="text: lang.lang.type"></span></th>
-								<th style="width: 10%;"><span data-bind="text: lang.lang.date"></span></th>
-								<th style="width: 15%;"><span data-bind="text: lang.lang.reference_no"></span></th>
-								<th><span data-bind="text: lang.lang.description"></span></th>
-								<th class="right"><span data-bind="text: lang.lang.amount"></span></th>
-								<th class="right"><span data-bind="text: lang.lang.balance"></span></th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-				        		data-auto-bind="false"
-				        		data-template="generalLedger-template"			        		
-				        		data-bind="source: dataSource"></tbody>
-				       	<tfoot>
-				       		<tr style="font-weight: bold; font-size: large;">
-				       			<td colspan="4">TOTAL</td>
-				       			<td align="right" data-bind="text: totalAmount"></td>
-				       			<td align="right" data-bind="text: totalBalance"></td>
-				       		</tr>
-				       	</tfoot>
-					</table>				  
-
 				</div>
 			</div>						
 		</div>
@@ -3450,7 +3442,7 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i>Print/Export</a></li>
+										<li><a class="glyphicons print" data-bind="click: printGrid"><i></i>Print/Export</a></li>
 									</ul>
 								</div>
 							    <!-- // Tabs Heading END -->
@@ -3471,7 +3463,7 @@
 								        <!-- //GENERAL INFO END -->
 
 								        <!-- //ACCOUNTING -->
-								        <div class="tab-pane" id="tab-2">
+								        <!--div class="tab-pane" id="tab-2">
 								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
 								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
@@ -3482,7 +3474,7 @@
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>
+							        	</div-->
 								        <!-- //ACCOUNTING END -->						       
 
 								       
@@ -3492,50 +3484,51 @@
 						</div>
 					
 					</div>
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>TRIAL BALANCE</h2>
-						<p data-bind="text: displayDate"></p>
-					</div>
-
-					<div class="row-fluid journal_block1">
-						<div class="span2">
-							<p>
-								Account
-							</p>
-							<span data-bind="text: dataSource.total"></span>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>TRIAL BALANCE</h2>
+							<p data-bind="text: displayDate"></p>
 						</div>
-						<div class="span5">
-							<p>
-								Total Dr. Balance
-							</p>
-							<span data-bind="text: dr"></span>
-						</div>
-						<div class="span5">
-							<p>
-								Total Cr. Balance
-							</p>
-							<span data-bind="text: cr"></span>
-						</div>
-					</div>
 
-					<table class="table table-borderless table-condensed">
-						<thead>
-				            <tr>
-				                <th>CODE</th>
-				                <th>NAME</th>
-				                <th>TYPE</th>
-				                <th class="right">DEBIT</th>
-				                <th class="right">CREDIT</th>
-				            </tr>
-				        </thead>
-				        <tbody data-template="trialBalance-template"
-				        		data-auto-bind="false" 
-				        		data-bind="source: dataSource"></tbody>
-				        <tfoot data-template="trialBalance-footer-template" 
-				        		data-bind="source: this"></tfoot>
-					</table>					  
+						<div class="row-fluid journal_block1">
+							<div class="span2">
+								<p>
+									Account
+								</p>
+								<span data-bind="text: dataSource.total"></span>
+							</div>
+							<div class="span5">
+								<p>
+									Total Dr. Balance
+								</p>
+								<span data-bind="text: dr"></span>
+							</div>
+							<div class="span5">
+								<p>
+									Total Cr. Balance
+								</p>
+								<span data-bind="text: cr"></span>
+							</div>
+						</div>
+
+						<table class="table table-borderless table-condensed">
+							<thead>
+					            <tr>
+					                <th>CODE</th>
+					                <th>NAME</th>
+					                <th>TYPE</th>
+					                <th class="right">DEBIT</th>
+					                <th class="right">CREDIT</th>
+					            </tr>
+					        </thead>
+					        <tbody data-template="trialBalance-template"
+					        		data-auto-bind="false" 
+					        		data-bind="source: dataSource"></tbody>
+					        <tfoot data-template="trialBalance-footer-template" 
+					        		data-bind="source: this"></tfoot>
+						</table>
+					</div>				  
 		        </div>		        
 			</div>							
 		</div>
@@ -43194,7 +43187,82 @@
             	self.set("cr", kendo.toString(view[0].cr, "c", banhji.locale));
             	self.set("totalTxn", kendo.toString(view[0].totalTxn, "n0"));
             });	                  
-		}		      		
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=990, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+		            	'.inv1 .main-color {' +
+		            		
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'} ' +
+		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+		            	'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+		            	'.inv1 .light-blue-td { ' +
+		            		'background-color: #c6d9f1!important;' +
+		            		'text-align: left;' +
+		            		'padding-left: 5px;' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+    						'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+						'}'+
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+    						' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block>.span4 * {color: #fff!important;}' +
+		            	'.journal_block>.span4:first-child { ' +
+    						'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block>.span4:last-child {' +
+							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.journal_block>.span4 {' +
+							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+		            	'.pcg .mid-header {' +
+		            		'background-color: #dce6f2!important; ' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}'+
+		            	'.inv1 span.total-amount { ' +
+		            		'color:#fff!important;' +
+		            	'}</style>' +
+		            '</head>' +
+		            '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		}       		
 	});
 	banhji.generalLedger =  kendo.observable({
 		lang 				: langVM,
@@ -43280,7 +43348,82 @@
 					self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
 				}
 			});            
-		}		      		
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=990, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+		            	'.inv1 .main-color {' +
+		            		
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'} ' +
+		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+		            	'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+		            	'.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+		            	'.inv1 .light-blue-td { ' +
+		            		'background-color: #c6d9f1!important;' +
+		            		'text-align: left;' +
+		            		'padding-left: 5px;' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+    						'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+						'}'+
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+    						' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+		            	'.journal_block1>.span2:first-child { ' +
+    						'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span5:last-child {' +
+							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.journal_block1>.span5 {' +
+							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+		            		'background-color: #1C2633!important;' +
+		            		'color: #fff!important; ' + 
+		            		'-webkit-print-color-adjust:exact;' +
+		            	'}' +
+		            	'</style>' +
+		            '</head>' +
+		            '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		}	      		
 	});
 	banhji.statementProfitLoss =  kendo.observable({
 		lang 				: langVM,
@@ -43469,7 +43612,81 @@
 	        this.set("cr", kendo.toString(sum, "c", banhji.locale));
 
 	        return kendo.toString(sum, "c", banhji.locale);
-	    }		      		
+	    },
+	    printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=990, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+		            	'.inv1 .main-color {' +
+		            		
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'} ' +
+		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+		            	'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+		            	'.inv1 .light-blue-td { ' +
+		            		'background-color: #c6d9f1!important;' +
+		            		'text-align: left;' +
+		            		'padding-left: 5px;' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+    						'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+						'}'+
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+    						' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+		            	'.journal_block1>.span2:first-child { ' +
+    						'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span5:last-child {' +
+							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.journal_block1>.span5 {' +
+							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+		            		'background-color: #1C2633!important;' +
+		            		'color: #fff!important; ' + 
+		            		'-webkit-print-color-adjust:exact;' +
+		            	'}' +
+		            	'</style>' +
+		            '</head>' +
+		            '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		} 	      		
 	});
 	banhji.statementFinancialPosition =  kendo.observable({
 		lang 				: langVM,		
@@ -43541,7 +43758,7 @@
 					}
 				});
 			}
-		}   		
+		}		
 	});
 	banhji.chartOfAccount =  kendo.observable({
 		lang 				: langVM,

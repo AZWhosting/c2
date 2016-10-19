@@ -1514,7 +1514,7 @@ class Dashboards extends REST_Controller {
 		$date2 = new DateTime($today);
 		$days = $date2->diff($date1)->format("%a")-1;
 
-		$inventoryTurnOver = ($totalInventory / $totalCOGS) * $days;		
+		$inventoryTurnOver = $totalCOGS > 0?($totalInventory / $totalCOGS) * $days : 0;		
 		
 		//Results
 		$data["results"][] = array(
