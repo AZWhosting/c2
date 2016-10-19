@@ -3581,7 +3581,7 @@
 					<br>
 					<br>					
 
-					<div class="block-title">
+					<div class="block-title" style="overflow: initial;">
 						<h2>Chart of Account</h2>
 					</div>
 
@@ -3756,7 +3756,9 @@
 					<span class="glyphicons no-js remove_2 pull-right" 
 							onclick="javascript: window.history.back()"><i></i></span>
 
-					<div>
+					<br>
+					<br>
+					<!-- <div>
 						As of:
 				        <input data-role="datepicker"
 								data-format="dd-MM-yyyy"
@@ -3764,7 +3766,60 @@
 								data-bind="value: as_of" />
 
 			            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+					</div> -->
+
+
+					<div class="row-fluid">
+						<!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">	
+							    <!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
+										<li><a class="glyphicons print" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+							    <!-- // Tabs Heading END -->
+								<div class="widget-body">
+								    <div class="tab-content">
+
+								    	<!-- //GENERAL INFO -->
+								        <div class="tab-pane active" id="tab-1">									
+									        As of:
+									        <input data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd" 
+													data-bind="value: as_of" />
+
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							
+							        	</div>
+								        <!-- //GENERAL INFO END -->
+
+								        <!-- //ACCOUNTING -->
+								        <!--div class="tab-pane" id="tab-2">
+								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i> Print</span>
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div-->
+								        <!-- //ACCOUNTING END -->						       
+
+								       
+								    </div>
+								</div>
+							</div>
+						</div>
+					
 					</div>
+
 
 					<div class="block-title">
 						<h3 data-bind="text: company.name"></h3>
@@ -12716,21 +12771,21 @@
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
 					<h2>Expenses/ Purchase Overview</h2>
-					<div align="center" class="text-large strong" data-bind="text: total"></div>
+					<div align="center" class="text-large strong" data-bind="text: purchase"></div>
 					<table width="100%">
 						<tr align="center">
 							<td>										
-								<span data-bind="text: supplierCount"></span>
+								<span data-bind="text: purchase_supplier"></span>
 								<br>
 								<span>Suppliers</span>
 							</td>
 							<td>
-								<span data-bind="text: items"></span>
+								<span data-bind="text: purchase_product"></span>
 								<br>
 								<span>Products</span>
 							</td>
 							<td>
-								<span data-bind="text: order"></span>
+								<span data-bind="text: purchase_order"></span>
 								<br>
 								<span>Order</span>
 							</td>
@@ -12758,26 +12813,26 @@
 			<div class="report-chart">
 				<div class="widget-body receivable-overview" style="background-color: LightGray">
 					<h2>PAYABLES MANAGEMENT</h2>
-					<div align="center" class="text-large strong" data-bind="text: totalBalance"></div>
+					<div align="center" class="text-large strong" data-bind="text: ap"></div>
 					<table width="100%">
 						<tr align="center">
 							<td>										
-								<span data-bind="text: openBalance"></span>
+								<span data-bind="text: ap_open"></span>
 								<br>
 								<span>Open</span>
 							</td>
 							<td>
-								<span data-bind="text: count"></span>
+								<span data-bind="text: ap_supplier"></span>
 								<br>
 								<span>Supplier</span>
 							</td>
 							<td>
-								<span data-bind="text: overDate"></span>
+								<span data-bind="text: ap_overdue"></span>
 								<br>
 								<span>Overdue</span>
 							</td>
 							<td>
-								<span>0 Days</span>
+								<span data-bind="text: collection_day"></span>
 								<br>
 								<span>Payable Payment Days</span>
 							</td>
@@ -12862,21 +12917,14 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Expenses/ Purchase Summary by Supplier</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span5">
 								<div class="total-customer">
-									<div class="span6">
-										<p>Segment</p>
-										<span data-bind="text: segments"></span>
-									</div>
-									<div class="span6">
-										<p>Total Supplier</p>
-										<span data-bind="text: count"></span>
-									</div>	
-										
+									<p>Total Supplier</p>
+									<span data-bind="text: count"></span>
 								</div>
 							</div>
 							<div class="span7">
@@ -12974,7 +13022,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Suppliers Transaction List</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -13029,7 +13077,7 @@
 				</div>		
 			</div>
 		</div>
-	</div><span>
+</div>
 <script id="suppliersTransactionList-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
@@ -13044,8 +13092,9 @@
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>		
 					#if(items[i].type=="Cash_Purchase" || items[i].type=="Credit_Purchase"){#
 						<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
@@ -13120,7 +13169,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Expenses/ Purchase Detail by Supplier</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -13144,8 +13193,7 @@
 							<tr>
 								<th><span data-bind="text: lang.lang.type"></span></th>
 								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.no_"></span></th>
-								<th><span data-bind="text: lang.lang.memo"></span></th>								
+								<th><span data-bind="text: lang.lang.no_"></span></th>							
 								<th><span data-bind="text: lang.lang.amount"></span></th>
 							</tr>
 						</thead>
@@ -13155,8 +13203,8 @@
 						</tbody>
 						<tfoot>
 							<tr>
-								<th colspan="4"><span data-bind="text: lang.lang.total"></span></th>
-								<th colspan="4"><span data-bind="text: total"></span></th>
+								<th colspan="2"><span data-bind="text: lang.lang.total"></span></th>
+								<th colspan="2"><span data-bind="text: total"></span></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -13174,13 +13222,13 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>		
 					#if(items[i].type=="Cash_Purchase" || items[i].type=="Credit_Purchase"){#
 						<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
@@ -13188,17 +13236,16 @@
 						<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 					#}#
 		        </td>
-				<td>#=items[i].memo#</td>
 				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
 			</tr>
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
+	<tr style="font-weight: 700;">
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>		
+		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
 <script id="depositDetailSupplier" type="text/x-kendo-template">
@@ -13258,7 +13305,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Deposit Detail by Supplier</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -13320,8 +13367,9 @@
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>		
 					<a href="\#/#=items[i].type.toLowerCase()#/#=items[i].id#">#=items[i].number#</a>
 		        </td>
@@ -13397,7 +13445,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Purchase Summary by Product/ Services</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -13434,7 +13482,7 @@
 									<th><span>QTY</span></th>
 									<th><span>AMOUNT</span></th>
 									<th><span>AVG PRICE</span></th>
-									<th><span>COST</span></th>
+									<th><span>AVG COST</span></th>
 									<th><span>GROSS PROFIT MARGIN</span></th>								
 								</tr>
 							</thead>
@@ -13524,32 +13572,26 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Open Purchase Order</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span5">
 								<div class="total-customer">
 									<div class="span6">
-										<p>Product Items</p>
+										<p>Customer</p>
 										<span data-bind="text: customer"></span>
-									</div>
-									<div class="span6">
-										<p>Product Items on Hand</p>
-										<span data-bind="text: count"></span>
-									</div>	
-								</div>
-							</div>
-							<div class="span7">
-								<div class="total-customer">
-									<div class="span6">
-										<p>Purchase Order</p>
-										<span data-bind="text: total"></span>
 									</div>
 									<div class="span6">
 										<p>Order</p>
 										<span data-bind="text: order"></span>
 									</div>
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">								
+									<p>Purchase Order</p>
+									<span data-bind="text: total"></span>									
 								</div>
 							</div>
 						</div>
@@ -13591,9 +13633,9 @@
 		<td>#=PO#</td>
 		<td>#=item#</td>
 		<td>#=memo#</td>		
-		<td style="text-align: right;">#=cost#</td>
+		<td style="text-align: right;">#=kendo.toString(cost, 'c2')#</td>
 		<td style="text-align: right;">#=qty#</td>
-		<td>#=price#</td>
+		<td style="text-align: right;">#=kendo.toString(price, 'c2')#</td>
 		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
 </script>
@@ -13655,7 +13697,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Purchase Detail by Product/Service</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -13666,21 +13708,15 @@
 										<span data-bind="text: count"></span>
 									</div>
 									<div class="span6">
-										<p>Total Purchase</p>
-										<span data-bind="text: total"></span>
+										<p>Qty on Hand</p>
+										<span data-bind="text: totaProdcuts"></span>									
 									</div>
 								</div>
 							</div>
 							<div class="span7">
-								<div class="total-customer">
-									<div class="span6">
-										<p>Number Products</p>
-										<span data-bind="text: totaProdcuts"></span>									
-									</div>
-									<div class="span6">
-										<p>Qty on Hand</p>
-										<span data-bind="text: totalQuantity"></span>
-									</div>
+								<div class="total-customer">									
+									<p>Total Purchase</p>
+									<span data-bind="text: total"></span>								
 								</div>
 							</div>
 						</div>
@@ -13731,8 +13767,9 @@
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>		
 					#if(items[i].type=="Cash_Purchase" || items[i].type=="Credit_Purchase"){#
 						<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
@@ -13814,7 +13851,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Suppliers Balance Summary</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -13927,7 +13964,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Supplier Balance Detail</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -13999,8 +14036,9 @@
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>
 					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
 				</td>
@@ -14069,7 +14107,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Payables Aging Summary</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -14080,17 +14118,17 @@
 										<span data-bind="text: supplierCount"></span>
 									</div>	
 									<div class="span6">
-										<p>Supplier Balance</p>
-										<span data-bind="text: total"></span>
-									</div>	
+										<p>NUmber of Supplier</p>
+										<span data-bind="text: count"></span>
+									</div>
 								</div>
 							</div>
 							<div class="span7">
 								<div class="total-customer">
 									<div class="span6">
-										<p>NUmber of Supplier</p>
-										<span data-bind="text: count"></span>
-									</div>
+										<p>Supplier Balance</p>
+										<span data-bind="text: total"></span>
+									</div>									
 									<div class="span6">
 										<p>Average Aging</p>
 										<span data-bind="text: aging"></span>
@@ -14158,10 +14196,8 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-
-
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -14187,60 +14223,50 @@
 										           data-bind="value: endDate, events: {change: dateMin}"
 										           placeholder="To ..." />
 
-								            <button type="button" data-role="button" data-bind="click: payablesAgingDetail.search"><i class="icon-search"></i></button>
-							
-							        	</div>								        
-								        <div class="tab-pane" id="tab-2">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: cancel" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
-								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		<span data-bind="text: lang.lang.print_as_pdf"></span>
-								        	</span>
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		<span data-bind="text: lang.lang.export_to_excel"></span>
-								        	</span>
-							        	</div>								       
+										  	 <button type="button" data-role="button" data-bind="click: payablesAging.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					</div>
+
 					<div id="invFormContent">
 
 					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2><span data-bind="text: lang.lang.payables_aging_detail"></span></h2>
-						<p><span data-bind="text: lang.lang.from_1_june_2016_To_30_june_2016"></span></p>
-					</div>
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Payables Aging Detail</h2>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
+						</div>
 
+					
 					<div class="row-fluid">
-						<div class="span5">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.total_supplier"></span></p>
-									<span data-bind="text: supplierCount"></span>
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.supplier_balance"></span></p>
+							<div class="span5">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Total Supplier</p>
+									<span data-bind="text: supplierCount"></span>>
+									</div>	
+									<div class="span6">
+										<p>Supplier Balance</p>
 									<span data-bind="text: total"></span>
-								</div>	
+									</div>
+								</div>
 							</div>
-						</div>
-						<div class="span7">
-							<div class="total-customer">
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.number_of_supplier"></span></p>
+							<div class="span7">
+								<div class="total-customer">
+									<div class="span6">
+										<p>Number Supplier</p>
 									<span data-bind="text: count"></span>
-								</div>
-								<div class="span6">
-									<p><span data-bind="text: lang.lang.average_aging"></span></p>
+									</div>									
+									<div class="span6">
+										<p>Average Aging</p>
 									<span data-bind="text: aging"></span>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
 					<table class="table table-borderless table-condensed ">
 						<thead>
@@ -14264,31 +14290,6 @@
 							</tr>
 						</tfoot>
 					</table>
-					
-
-
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-								<th><span data-bind="text: lang.lang.type"></span></th>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.no_"></span></th>
-								<th><span data-bind="text: lang.lang.memo"></span></th>
-								<th><span data-bind="text: lang.lang.aging"></span></th>
-								<th><span data-bind="text: lang.lang.balance"></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-										 data-bind="source: payablesAgingDetail.dataSource"
-										 data-template="payablesAgingDetail-temp"
-							></tbody>
-							<tfoot>
-								<tr>
-									<th colspan="4">Total</th>
-									<th colspan="3"  data-bind="text: total"></th>
-								</tr>
-							</tfoot>
-						</table>
 					</div>	
 				</div>		
 			</div>
@@ -14309,152 +14310,9 @@
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
-				<td>
-					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
-				</td>
-				<td>#=items[i].memo#</td>
-				<td>#=items[i].outstanding#</td>
-				<td style="text-align: right;">#=kendo.toString(items[i].amount, 'c2')#</td>
-			</tr>
-
-		#}#
-	#}#
-</script>
-<script id="listBillsPaid" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">		
-			    	<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-							
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
-
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->								
-								<div class="widget-body">
-									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
-											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
-									           data-value-primitive="true"
-									           data-text-field="text"
-									           data-value-field="value"
-									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
-										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
-										           placeholder="To ..." />
-
-										  	 <button type="button" data-role="button" data-bind="click: payablesAgingDetail.search"><i class="icon-search"></i></button>							
-									    </div>									        							       
-								    </div>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->						
-					</div>
-					<div id="invFormContent">
-
-						<div class="block-title">
-							<h3 data-bind="text: company.name"></h3>
-							<h2>Payables Aging Detail</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
-						</div>
-
-						<div class="row-fluid">
-							<div class="span5">
-								<div class="total-customer">
-									<div class="span6">
-										<p>Total Supplier</p>
-										<span data-bind="text: supplierCount"></span>
-									</div>
-									<div class="span6">
-										<p>Supplier Balance</p>
-										<span data-bind="text: total"></span>
-									</div>	
-								</div>
-							</div>
-							<div class="span7">
-								<div class="total-customer">
-									<div class="span6">
-										<p>Number of Supplier</p>
-										<span data-bind="text: count"></span>
-									</div>
-									<div class="span6">
-										<p>Average Aging</p>
-										<span data-bind="text: aging"></span>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th><span>Type</span></th>
-									<th><span>Date</span></th>
-									<th><span>No</span></th>
-									<th><span>Memo</span></th>
-									<th><span>Aging</span></th>
-									<th><span>Balance</span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-										 data-bind="source: payablesAgingDetail.dataSource"
-										 data-template="payablesAgingDetail-temp"
-							></tbody>
-							<tfoot>
-								<tr><span>
-									<th colspan="4"><span>Total</span></th>
-									<th colspan="3"><span  data-bind="text: total"></span></th>
-								</tr>
-							</tfoot>
-						</table>
-					</div>	
-				</div>		
-			</div>
-		</div>
-	</div>
-</script>
-<script id="payablesAgingDetail-temp" type="text/x-kendo-template" >
-	# kendo.culture(banhji.customerSale.locale); #
-	<tr style="font-weight: bold">
-		<td>#=group#</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-	</tr>
-	# if (items.length) {#
-		#for(var i= 0; i <items.length; i++) {#
-			<tr>
-				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>
 					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
 				</td>
@@ -14521,27 +14379,11 @@
 					</div>
 					<div id="invFormContent">
 
-					<table class="table table-borderless table-condensed ">
-						<thead>
-							<tr>
-								<th><span data-bind="text: lang.lang.type"></span></th>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.no_"></span></th>							
-								<th><span data-bind="text: lang.lang.memo"></span></th>							
-								<th><span data-bind="text: lang.lang.balance"></span></th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-									 data-bind="source: listBillsPaid.dataSource"
-									 data-template="listBillsPaid-temp"
-						></tbody>
-						<tfoot>
-							<tr>
-								<th colspan="4"><span data-bind="text: lang.lang.total"></span></th>
-								<th colspan="3" data-bind="text: total"></th>
-							</tr>
-						</tfoot>
-					</table>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>List of bills to be paid</h2>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
+						</div>
 
 						<div class="row-fluid">
 							<div class="span5">
@@ -14573,13 +14415,11 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-
-								<th><span data-bind="text: lang.lang.type"></span></th>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.no_"></span></th>							
-								<th><span data-bind="text: lang.lang.memo"></span></th>							
-								<th><span data-bind="text: lang.lang.balance"></span></th>
-
+									<th><span>Type</span></th>
+									<th><span>Date</span></th>
+									<th><span>No</span></th>								
+									<th><span>Memo</span></th>								
+									<th><span>Balance</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
@@ -14683,17 +14523,14 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Bill Payment List</h2>
-							<p>From <span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span5">
 								<div class="total-customer">
-									<div class="span6">
-										<p>Total Purchase</p>
-										<span data-bind="text: total"></span>
-									</div>
-										
+									<p>Total Purchase</p>
+									<span data-bind="text: total"></span>
 								</div>
 							</div>
 							<div class="span7">
@@ -14732,30 +14569,7 @@
 								<th colspan="3" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
-					</table>					
-
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-								<th><span data-bind="text: lang.lang.type"></span></th>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.no_"></span></th>							
-								<th><span data-bind="text: lang.lang.memo"></span></th>							
-								<th><span data-bind="text: lang.lang.balance"></span></th>
-
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-										 data-bind="source: billPaymentList.dataSource"
-										 data-template="billPaymentList-temp"
-							></tbody>
-							<tfoot>
-								<tr>
-									<th colspan="4"><span>Total</span></th>
-									<th colspan="3"><span data-bind="text: total"></span></th>
-								</tr>
-							</tfoot>
-						</table>					
+					</table>									
 					</div>
 				</div>		
 			</div>
@@ -14776,8 +14590,9 @@
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
 			<tr>
+				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
-				<td>#=items[i].date#</td>
+				<td>#=myDate#</td>
 				<td>
 					<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
 				</td>				
@@ -15047,6 +14862,7 @@
 		</div>
 	</div>
 </script>
+
 
 <script id="vendorRecurring" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -20225,9 +20041,8 @@
 					<span class="pull-right glyphicons no-js remove_2" 
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br><br>
-
-					<h1 style="font-size: 25px; text-align: center;">Coming Soon</h1>								
-					<!-- <div>
+											
+					<div>
 						<input id="cbbContact" name="cbbContact"
 							   data-role="combobox"											                    
 			                   data-value-primitive="true"
@@ -20287,6 +20102,7 @@
 							</tr>
 						</thead>
 						<tbody data-role="listview"
+							data-auto-bind="false"
 							data-bind="source: dataSource"
 							data-template="statement-row-template"
 						></tbody>
@@ -20299,23 +20115,22 @@
 					</table>
 
 					<table class="table-statement">
-						<tr>
-							<th><span data-bind="text: lang.lang.current"></span></th>
-							<th>0 to 30</th>
-							<th>30</th>
-							<th>60</th>
-							<th>90</th>
-							<th>Over 90</th>
-						</tr>
-						<tr>
-							<td><p><span data-bind="text: lang.lang.amount"></span></p></td>
-							<td><span data-bind="text: underThirty"></span></td>
-							<td><span data-bind="text: thirty"></span></td>
-							<td><span data-bind="text: sixty"></span></td>
-							<td><span data-bind="text: ninety"></span></td>
-							<td><span data-bind="text: overNinety"></span></td>
-						</tr>
-					</table> -->
+						<thead>
+							<tr>
+								<th class="center"><span data-bind="text: lang.lang.current"></span></th>
+								<th class="center">30</th>
+								<th class="center">60</th>
+								<th class="center">90</th>
+								<th class="center">> 90</th>
+								<th class="center"><span data-bind="text: lang.lang.amount_due"></span></th>
+							</tr>
+						</thead>
+						<tbody data-role="listview"
+							data-auto-bind="false"
+							data-bind="source: agingDS"
+							data-template="statement-aging-row-template"
+						></tbody>
+					</table>
 				</div>							
 			</div>
 		</div>
@@ -20323,14 +20138,22 @@
 </script>
 <script id="statement-row-template" type="text/x-kendo-template" >
 	<tr>
-		<td>#=group#</td>
-		<td></td>
-		<td></td>
-		<td></td>		
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+		<td>#=type#</td>
+		<td>#=job#</td>
+		<td>#=reference_no#</td>		
+		<td align="right">#=kendo.toString(amount, "c", locale)#</td>
+		<td align="right">#=kendo.toString(balance, "c", locale)#</td>
+	</tr>
+</script>
+<script id="statement-aging-row-template" type="text/x-kendo-template" >
+	<tr>
+		<td align="right">#=kendo.toString(current, "c", locale)#</td>
+		<td align="right">#=kendo.toString(oneMonth, "c", locale)#</td>
+		<td align="right">#=kendo.toString(twoMonth, "c", locale)#</td>
+		<td align="right">#=kendo.toString(threeMonth, "c", locale)#</td>		
+		<td align="right">#=kendo.toString(overMonth, "c", locale)#</td>
+		<td align="right">#=kendo.toString(amount, "c", locale)#</td>
 	</tr>
 </script>
 
@@ -43342,8 +43165,6 @@
 		obj 				: null,
 		company 			: banhji.institute,
 		displayDate 		: "",
-		totalAmount 		: 0,
-		totalBalance 		: 0,
 		pageLoad 			: function(){
 			this.search();
 		},
@@ -43408,14 +43229,6 @@
             this.set("displayDate", displayDate);
 
             this.dataSource.filter(para);
-   //          this.dataSource.bind("requestEnd", function(e){				
-			// 	if(e.type=="read"){
-			// 		var response = e.response;
-
-			// 		self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
-			// 		self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
-			// 	}
-			// });            
 		}		      		
 	});	
 	banhji.trialBalance =  kendo.observable({
@@ -52771,7 +52584,8 @@
 		}
 	});
 	banhji.vendorReportCenter = kendo.observable({
-		lang 				: langVM,		
+		lang 				: langVM,	
+		summaryDS 			: dataStore(apiUrl + "dashboards/supplier_dashboard_summary"),	
 		dataSource 			: dataStore(apiUrl + "vendorReports/over_view"),		
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
@@ -52800,9 +52614,29 @@
 			pageSize: 100
 		}),						
 		pageLoad 			: function(){
-																
-		}		
-	});		
+			var self = this;
+
+			this.summaryDS.query({
+				filter: [],								
+				page: 1,
+				pageSize: 100
+			}).then(function(){
+				var view = self.summaryDS.view();
+				
+				self.set("purchase", kendo.toString(view[0].purchase, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("purchase_supplier", kendo.toString(view[0].purchase_supplier, "n0"));
+				self.set("purchase_product", kendo.toString(view[0].purchase_product, "n0"));
+				self.set("purchase_order", kendo.toString(view[0].purchase_order, "n0"));
+
+
+				self.set("ap", kendo.toString(view[0].ap, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("ap_open", kendo.toString(view[0].ap_open, "n0"));
+				self.set("ap_supplier", kendo.toString(view[0].ap_supplier, "n0"));
+				self.set("ap_overdue", kendo.toString(view[0].ap_overdue, "n0"));
+				self.set("collection_day", kendo.toString(view[0].collection_day, "n0"));
+			});										
+		}	
+	});				
 	banhji.vendorSetting =  kendo.observable({
 		lang 				: langVM,		
         contactTypeDS 		: banhji.source.supplierTypeDS,
@@ -53273,7 +53107,7 @@
 		total_sale 			: 0,
 		companyName 		: null,
 		startDate 			: "<?php echo date("d-m-y"); ?>",
-		endDate				: "<?php echo date("d-m-y"); ?>",
+		endDate				: new Date(),
 		sorter				: '',
 		openInvoice 		: 0,	
 		company 			: banhji.institute,		
@@ -53305,6 +53139,12 @@
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
 				]
 			});
+		},
+		displayDateStart    : function() {
+			return kendo.toString(new Date(this.get('startDate')), 'dd-MM-yyyy');
+		},
+		displayDateEnd    : function() {
+			return kendo.toString(new Date(this.get('endDate')), 'dd-MM-yyyy');
 		},
 		trnxSearch 			: function() {},
 		depositDetailSearch : function() {},
@@ -61689,6 +61529,7 @@
 	banhji.statement = kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions/statement"),
+		agingDS 			: dataStore(apiUrl + "transactions/statement_aging"),
 		contactDS 			: banhji.source.customerDS,
 		sortList 			: banhji.source.sortList,
 		sorter 				: "all",
@@ -61737,7 +61578,7 @@
 			}
 		},
 		search				: function(){
-			var para = [], displayDate = "",
+			var self = this, para = [], displayDate = "",
 				contact_id = this.get("contact_id"),
 				start = this.get("sdate"),
         		end = this.get("edate");
@@ -61768,15 +61609,15 @@
 
 	            this.set("displayDate", displayDate);
 
-	            this.dataSource.query({
-	            	filter: para,
-	            	sort: [
-				  		{ field: "issued_date", dir: "desc" },
-				  		{ field: "id", dir: "desc" }
-				  	],
-	            	page: 1,
-	            	pageSize: 100
-	            });
+	            this.dataSource.filter(para);
+	            this.agingDS.filter(para);
+	            this.agingDS.bind("requestEnd", function(e){				
+					if(e.type=="read"){
+						var response = e.response.results[0];
+
+						self.set("total", kendo.toString(response.amount, "c", response.locale));
+					}
+				}); 
 	        }            
 		}
 	});	
@@ -73895,7 +73736,8 @@
 					banhji.vendorReportCenter.set('totalBalance', kendo.toString(e.response.totalBalance, 'c2'));
 					banhji.vendorReportCenter.set('openBalance', kendo.toString(e.response.openBalance, 'n0'));
 				}
-			});			
+			});
+			vm.pageLoad();				
 		}		
 	});
 	banhji.router.route("/expenses_purchase_summary_supplier", function(){
@@ -73906,7 +73748,14 @@
 			banhji.userManagement.addMultiTask("Expense Purchase Summary Supplier","expenses_purchase_summary_supplier"); 
 
 			banhji.view.layout.showIn("#content", banhji.view.expensesPurchaseSummarySupplier);
-			banhji.vendorSale.purchaseSummary.dataSource.read();			
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.purchaseSummary.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});			
 			banhji.vendorSale.purchaseSummary.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
@@ -73925,7 +73774,14 @@
 			banhji.userManagement.addMultiTask("Supplier Transaction List","suppliers_transaction_list"); 
 
 			banhji.view.layout.showIn("#content", banhji.view.suppliersTransactionList);
-			banhji.vendorSale.supplierTransaction.dataSource.read();
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.supplierTransaction.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});		
 			banhji.vendorSale.supplierTransaction.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
@@ -73945,7 +73801,14 @@
 			banhji.userManagement.addMultiTask("Expense Purchase Detail Supplier","expenses_purchase_detail_supplier"); 
 
 			banhji.view.layout.showIn("#content", banhji.view.expensesPurchaseDetailSupplier);
-			banhji.vendorSale.purchaseDetail.dataSource.read();
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.purchaseDetail.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});	
 			banhji.vendorSale.purchaseDetail.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
@@ -73963,7 +73826,14 @@
 			banhji.userManagement.addMultiTask("Deposit Detail Supplier","deposit_detail_supplier"); 
 
 			banhji.view.layout.showIn("#content", banhji.view.depositDetailSupplier);
-			banhji.vendorSale.depositDetail.dataSource.read();
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.depositDetail.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});	
 			banhji.vendorSale.depositDetail.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
@@ -73981,7 +73851,14 @@
 			banhji.userManagement.addMultiTask("Purchase Summary Product/Service","purchase_summary_product_services"); 
 
 			banhji.view.layout.showIn("#content", banhji.view.purchaseSummaryProductServices);
-			banhji.vendorSale.summaryProduct.dataSource.read();
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.summaryProduct.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.vendorSale.summaryProduct.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
@@ -74001,7 +73878,14 @@
 			banhji.userManagement.addMultiTask("Open Purchase Order","open_purchase_order");
 
 			banhji.view.layout.showIn("#content", banhji.view.openPurchaseOrder);
-			banhji.vendorSale.purchaseOrder.dataSource.read();
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.purchaseOrder.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.vendorSale.purchaseOrder.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
@@ -74021,7 +73905,14 @@
 			banhji.userManagement.addMultiTask("Purchase Detail Product/Service","purchase_detail_product_services");
 
 			banhji.view.layout.showIn("#content", banhji.view.purchaseDetailProductServices);
-			banhji.vendorSale.detailProduct.dataSource.read();
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.detailProduct.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.vendorSale.detailProduct.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
@@ -74041,7 +73932,14 @@
 			banhji.userManagement.addMultiTask("Supplier Balance Summary","suppliers_balance_summary");
 
 			banhji.view.layout.showIn("#content", banhji.view.suppliersBalanceSummary);
-			banhji.vendorSale.supplierBalance.dataSource.read();
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.supplierBalance.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.vendorSale.supplierBalance.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
@@ -74061,7 +73959,14 @@
 			banhji.userManagement.addMultiTask("Supplier Balance Detail","suppliers_balance_detail");
 
 			banhji.view.layout.showIn("#content", banhji.view.suppliersBalanceDetail);
-			banhji.vendorSale.balanceDetailSupplier.dataSource.read();
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.balanceDetailSupplier.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.vendorSale.balanceDetailSupplier.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
@@ -74081,7 +73986,14 @@
 			banhji.userManagement.addMultiTask("Payables Aging Summary ","payables_aging_summary");
 
 			banhji.view.layout.showIn("#content", banhji.view.payablesAgingSummary);
-			banhji.vendorSale.payablesAging.dataSource.read();
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.payablesAging.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.vendorSale.payablesAging.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
@@ -74101,7 +74013,14 @@
 			banhji.userManagement.addMultiTask("Payables Aging Detail ","payables_aging_detail");
 
 			banhji.view.layout.showIn("#content", banhji.view.payablesAgingDetail);
-			banhji.vendorSale.payablesAgingDetail.dataSource.read();
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.payablesAgingDetail.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.vendorSale.payablesAgingDetail.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
@@ -74121,7 +74040,14 @@
 			banhji.userManagement.addMultiTask("List Bills Paid ","list_bills_paid");
 
 			banhji.view.layout.showIn("#content", banhji.view.listBillsPaid);
-			banhji.vendorSale.listBillsPaid.dataSource.read();
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.listBillsPaid.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.vendorSale.listBillsPaid.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
@@ -74141,7 +74067,14 @@
 			banhji.userManagement.addMultiTask("List of Payment","bill_payment_list");
 
 			banhji.view.layout.showIn("#content", banhji.view.billPaymentList);
-			banhji.vendorSale.billPaymentList.dataSource.read();
+			banhji.vendorSale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.vendorSale.billPaymentList.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [			
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.vendorSale.billPaymentList.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.vendorSale.set('count', e.response.count);
