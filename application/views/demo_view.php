@@ -52321,7 +52321,7 @@
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
-		edate 				: "",\
+		edate 				: "",
 		obj 				: {id:0},
 		note 				: "",
 		searchText 			: "",
