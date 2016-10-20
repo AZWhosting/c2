@@ -49088,7 +49088,6 @@
 		as_of 				: new Date(),		
 		currentSort 		: "asc",							
 		pageLoad 			: function(){
-			
 		},	
 		sort 				: function(e){
 			var col = "",
@@ -76652,7 +76651,8 @@
 		// 	} else {
 		// 		window.location.replace(baseUrl + "admin");
 		// 	}				
-		// });	});
+		// });	
+	});
 	banhji.router.route("/accounting_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
