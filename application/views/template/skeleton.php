@@ -364,10 +364,9 @@ var themerPrimaryColor = primaryColor;
 			<div class="span8" style="float:right;margin-top: 46px;">
 				<h2 style="font-size: 16px; color: #bdd7ee;">ដើម្បីចាប់ផ្តើមប្រើទំព័រនេះ អ្នកគួរមានលក្ខខណ្ឌខាងក្រោម</h2>
 				<div class="span12 cover-welcome-four-blog">
-					<div class="cover-blog-welcome span8">
+					<div class="cover-blog-welcome span6">
 						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតផលិតផលដែលអ្នកលក់​ និងទិញ ឬសេវាកម្មដែលអ្នកផ្តល់</p>
 						<div class="row">
-							<a href="#/txn_item"><img style="width: 32%;float:left;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_txn_item.ico"></a>
 							<a href="#/account"><img style="width: 32%;float:left;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/journal.ico"></a>
 							<a href="#/segment"><img style="width: 32%;float:left;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/segment.ico"></a>
 						</div>
@@ -471,7 +470,62 @@ var themerPrimaryColor = primaryColor;
 	function eraseCookie(name) {
 	    createCookie(name,"");
 	}
+	jQuery(function(){
+		var quickfitText=function(reset) {
+			var quickFitClass="text-large";				//Base class of elements to adapt
+			var quickFitGroupClass="quickfitGroup";		//Elements in a group will all have the same size
+			var quickFitIndependantClass="quickfitIndependant";	//Elements with this class won't be taken for quickfitGroup (they will be independant)
+			var quickFitSetClass="text-large";			//Elements with size set will get this class
+			var quickFitFontSizeData="quickfit-font-size";
+			//Set the font-size property of your element to the MINIMUM size you want for your content
+			
+			if(reset)
+			{ jQuery("."+quickFitSetClass).removeClass(quickFitSetClass); }
 
+			//The magic happens here
+			var setMaxTextSize=function(jElement) {
+				//Get and set the font size into data for reuse upon resize
+				var fontSize=parseInt(jElement.data(quickFitFontSizeData)) || parseInt(jElement.css("font-size"));
+				jElement.data(quickFitFontSizeData,fontSize);
+			
+				//Gradually increase font size unti the element gets a big increase in height (ie line break)
+				var i=0;
+				var previousHeight;
+				do
+				{
+					previousHeight=jElement.height();
+					jElement.css("font-size",""+(++fontSize)+"px");
+				}
+				while(i++<300 && jElement.height()-previousHeight<fontSize/2)
+
+				//Finally, go back before the increase in height and set the element as resized by adding quickFitSetClass
+				fontSize-=1;
+				jElement.addClass(quickFitSetClass).css("font-size",""+fontSize+"px");
+
+				return fontSize;
+			};
+			jQuery("."+quickFitClass).each(function() {
+				var jThis=$(this);
+
+				if(!jThis.hasClass(quickFitSetClass))
+				{
+					var jFitGroup=jThis.closest("."+quickFitGroupClass);
+					if(!jThis.hasClass(quickFitIndependantClass) && jFitGroup.length>0)
+					{
+						//We are in a group, set the max fit size for all
+						var minFontSize=1000;
+						jFitGroup.find("."+quickFitClass+":not(."+quickFitIndependantClass+")").each(function(i,item) {
+							minFontSize=Math.min(minFontSize,setMaxTextSize($(item)));
+						}).css("font-size",""+minFontSize+"px");
+					}
+					else
+					{ setMaxTextSize(jThis); }
+				}
+			});
+		};
+		quickfitText();	//Run once...
+		jQuery(window).on("resize orientationchange",function() { quickfitText(true); });
+	});
 	$(document).ready(function(e) {
 		$("#feedBackSend").click(function(){
 			var MSG = $("#feedbackMsg").val();
