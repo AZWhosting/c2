@@ -1,36 +1,39 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Company extends DataMapper {
-	public $table = 'companies';
+class Branch extends DataMapper {
+	public $table = 'branches';
 	protected $created_field = 'created_at';
 	protected $updated_field = 'updated_at';
-
-	public $has_one = array(
-		'currency'		
+	
+	public $has_one = array(		
+		'currency' => array(
+			"class" => 'currency',
+			"other_field" => "branch"
+		)
 	);
 
 	public $has_many = array('user',		
 		'fee' => array(
 			"class" => 'fee',
-			"other_field" => "company"
+			"other_field" => "branch"
 		),
 		'contact' => array(
 			"class" => 'contact',
-			"other_field" => "company"
+			"other_field" => "branch"
 		),
 		'location' => array(
 			"class" => 'location',
-			"other_field" => "company"
+			"other_field" => "branch"
 		),
 		'ebranch' => array(
 			"class" => 'contact',
-			"other_field" => "ebranch"
+			"other_field" => "branch"
 		),
 		'wbranch' => array(
 			"class" => 'contact',
-			"other_field" => "wbranch"
-		),		
-		'invoice');
+			"other_field" => "branch"
+		)
+	);
 	
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
 		$this->db_params = array(
@@ -51,5 +54,5 @@ class Company extends DataMapper {
 	}
 }
 
-/* End of file company.php */
-/* Location: ./application/models/company.php */
+/* End of file branch.php */
+/* Location: ./application/models/branch.php */
