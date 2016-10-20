@@ -117,7 +117,7 @@ class Items extends REST_Controller {
 				if($value->item_type_id=="1"){					
 					$itemIn = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$itemIn->select_sum("quantity");
-					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
+					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));
 					$itemIn->where_related("transaction", "is_recurring", 0);
 					$itemIn->where_related("transaction", "deleted", 0);
 					$itemIn->where("item_id", $value->id);
@@ -126,7 +126,7 @@ class Items extends REST_Controller {
 					
 					$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$itemOut->select_sum("quantity");
-					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
+					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Item_Adjustment"));
 					$itemOut->where_related("transaction", "is_recurring", 0);
 					$itemOut->where_related("transaction", "deleted", 0);
 					$itemOut->where("item_id", $value->id);
@@ -137,53 +137,57 @@ class Items extends REST_Controller {
 				}
 
 				$data["results"][] = array(
-					"id" 					=> $value->id,
-					"company_id" 			=> $value->company_id,
-					"contact_id" 			=> $value->contact_id,
-					"currency_id" 			=> $value->currency_id,
-					"item_type_id"			=> $value->item_type_id,					
-					"category_id" 			=> $value->category_id,
-					"item_group_id"			=> $value->item_group_id,
-					"item_sub_group_id"		=> $value->item_sub_group_id,
-					"brand_id" 				=> $value->brand_id,					
-					"measurement_id" 		=> $value->measurement_id,					
-					"main_id" 				=> $value->main_id,
-					"abbr" 					=> $value->abbr,
-					"number" 				=> $value->number,
-					"international_code" 	=> $value->international_code,
-					"imei" 					=> $value->imei,
-					"serial_number" 		=> $value->serial_number,
-					"supplier_code"			=> $value->supplier_code,
-					"color_code" 			=> $value->color_code,
-				   	"name" 					=> $value->name,
-				   	"purchase_description" 	=> $value->purchase_description,
-				   	"sale_description" 		=> $value->sale_description,
-				   	"catalogs" 				=> explode(",",$value->catalogs),				   	
-				   	"cost" 					=> floatval($value->cost),
-				   	"price" 				=> floatval($value->price),
-				   	"amount" 				=> floatval($value->amount),
-				   	"rate" 					=> floatval($value->rate),
-				   	"locale" 				=> $value->locale,
-				   	"on_hand" 				=> $on_hand,
-				   	"on_po" 				=> floatval($value->on_po),
-				   	"on_so" 				=> floatval($value->on_so),
-				   	"order_point" 			=> intval($value->order_point),
-				   	"account_id" 			=> $value->account_id,
-				   	"income_account_id" 	=> $value->income_account_id,
-				   	"cogs_account_id"		=> $value->cogs_account_id,
-				   	"inventory_account_id"	=> $value->inventory_account_id,
-				   	"deposit_account_id" 	=> $value->deposit_account_id,	   				   	
-				   	"preferred_vendor_id" 	=> $value->preferred_vendor_id,
-				   	"image_url" 			=> $value->image_url,
-				   	"favorite" 				=> $value->favorite=="true"?true:false,
-				   	"is_catalog" 			=> $value->is_catalog,
-				   	"is_assembly" 			=> $value->is_assembly,
-				   	"is_pattern" 			=> intval($value->is_pattern),				  
-				   	"status" 				=> $value->status,
-				   	"deleted" 				=> $value->deleted,
+					"id" 						=> $value->id,
+					"company_id" 				=> $value->company_id,
+					"contact_id" 				=> $value->contact_id,
+					"currency_id" 				=> $value->currency_id,
+					"item_type_id"				=> $value->item_type_id,					
+					"category_id" 				=> $value->category_id,
+					"item_group_id"				=> $value->item_group_id,
+					"item_sub_group_id"			=> $value->item_sub_group_id,
+					"brand_id" 					=> $value->brand_id,					
+					"measurement_id" 			=> $value->measurement_id,					
+					"main_id" 					=> $value->main_id,
+					"abbr" 						=> $value->abbr,
+					"number" 					=> $value->number,
+					"international_code" 		=> $value->international_code,
+					"imei" 						=> $value->imei,
+					"serial_number" 			=> $value->serial_number,
+					"supplier_code"				=> $value->supplier_code,
+					"color_code" 				=> $value->color_code,
+				   	"name" 						=> $value->name,
+				   	"purchase_description" 		=> $value->purchase_description,
+				   	"sale_description" 			=> $value->sale_description,
+				   	"catalogs" 					=> explode(",",$value->catalogs),				   	
+				   	"cost" 						=> floatval($value->cost),
+				   	"price" 					=> floatval($value->price),
+				   	"amount" 					=> floatval($value->amount),
+				   	"rate" 						=> floatval($value->rate),
+				   	"locale" 					=> $value->locale,
+				   	"on_hand" 					=> $on_hand,
+				   	"on_po" 					=> floatval($value->on_po),
+				   	"on_so" 					=> floatval($value->on_so),
+				   	"order_point" 				=> intval($value->order_point),
+				   	"account_id" 				=> $value->account_id,
+				   	"income_account_id" 		=> $value->income_account_id,
+				   	"cogs_account_id"			=> $value->cogs_account_id,
+				   	"inventory_account_id"		=> $value->inventory_account_id,
+				   	"fixed_assets_account_id" 	=> $value->fixed_assets_account_id,
+				   	"accumulated_account_id" 	=> $value->accumulated_account_id,
+				   	"depreciation_account_id" 	=> $value->depreciation_account_id,
+				   	"deposit_account_id" 		=> $value->deposit_account_id,	   				   	
+				   	"preferred_vendor_id" 		=> $value->preferred_vendor_id,
+				   	"image_url" 				=> $value->image_url,
+				   	"favorite" 					=> $value->favorite=="true"?true:false,
+				   	"is_catalog" 				=> $value->is_catalog,
+				   	"is_assembly" 				=> $value->is_assembly,
+				   	"is_pattern" 				=> intval($value->is_pattern),				  
+				   	"status" 					=> $value->status,
+				   	"deleted" 					=> $value->deleted,
+				   	"is_system" 				=> $value->is_system,
  					
- 					"category" 				=> $value->category_name,
-				   	"item_prices"			=> $itemPrice
+ 					"category" 					=> $value->category_name,
+				   	"item_prices"				=> $itemPrice
 				);
 			}
 		}		
@@ -234,6 +238,9 @@ class Items extends REST_Controller {
 		   	isset($value->income_account_id) 		? $obj->income_account_id 		= $value->income_account_id : "";
 		   	isset($value->cogs_account_id) 			? $obj->cogs_account_id 		= $value->cogs_account_id : "";
 		   	isset($value->inventory_account_id) 	? $obj->inventory_account_id 	= $value->inventory_account_id : "";
+		   	isset($value->fixed_assets_account_id) 	? $obj->fixed_assets_account_id = $value->fixed_assets_account_id : "";
+		   	isset($value->accumulated_account_id) 	? $obj->accumulated_account_id 	= $value->accumulated_account_id : "";
+		   	isset($value->depreciation_account_id) 	? $obj->depreciation_account_id = $value->depreciation_account_id : "";
 		   	isset($value->deposit_account_id) 		? $obj->deposit_account_id 		= $value->deposit_account_id : "";
 		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
 		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
@@ -246,50 +253,54 @@ class Items extends REST_Controller {
 
 	   		if($obj->save()){
 			   	$data["results"][] = array(
-			   		"id" 					=> $obj->id,
-					"company_id" 			=> $obj->company_id,
-					"contact_id" 			=> $obj->contact_id,
-					"currency_id" 			=> $obj->currency_id,
-					"item_type_id"			=> $obj->item_type_id,					
-					"category_id" 			=> $obj->category_id,
-					"item_group_id"			=> $obj->item_group_id,
-					"item_sub_group_id"		=> $obj->item_sub_group_id,
-					"brand_id" 				=> $obj->brand_id,					
-					"measurement_id" 		=> $obj->measurement_id,					
-					"main_id" 				=> $obj->main_id,
-					"abbr" 					=> $obj->abbr,
-					"number" 				=> $obj->number,
-					"international_code" 	=> $obj->international_code,
-					"imei" 					=> $obj->imei,
-					"serial_number" 		=> $obj->serial_number,
-					"supplier_code"			=> $obj->supplier_code,
-					"color_code" 			=> $obj->color_code,
-				   	"name" 					=> $obj->name,
-				   	"purchase_description" 	=> $obj->purchase_description,
-				   	"sale_description" 		=> $obj->sale_description,
-				   	"catalogs" 				=> explode(",",$obj->catalogs),				   	
-				   	"cost" 					=> floatval($obj->cost),
-				   	"price" 				=> floatval($obj->price),
-				   	"amount" 				=> floatval($obj->amount),
-				   	"rate" 					=> floatval($obj->rate),
-				   	"locale" 				=> floatval($obj->locale),
-				   	"on_hand" 				=> floatval($obj->on_hand),
-				   	"on_po" 				=> floatval($obj->on_po),
-				   	"on_so" 				=> floatval($obj->on_so),
-				   	"order_point" 			=> intval($obj->order_point),
-				   	"account_id" 			=> $obj->account_id,
-				   	"income_account_id" 	=> $obj->income_account_id,
-				   	"cogs_account_id"		=> $obj->cogs_account_id,
-				   	"inventory_account_id"	=> $obj->inventory_account_id,
-				   	"deposit_account_id" 	=> $obj->deposit_account_id,				   				   	
-				   	"preferred_vendor_id" 	=> $obj->preferred_vendor_id,
-				   	"image_url" 			=> $obj->image_url,
-				   	"favorite" 				=> $obj->favorite=="true"?true:false,
-				   	"is_catalog" 			=> $obj->is_catalog,
-				   	"is_assembly" 			=> $obj->is_assembly,
-				   	"is_pattern" 			=> intval($obj->is_pattern),				  
-				   	"status" 				=> $obj->status,
-				   	"deleted" 				=> $obj->deleted
+			   		"id" 						=> $obj->id,
+					"company_id" 				=> $obj->company_id,
+					"contact_id" 				=> $obj->contact_id,
+					"currency_id" 				=> $obj->currency_id,
+					"item_type_id"				=> $obj->item_type_id,					
+					"category_id" 				=> $obj->category_id,
+					"item_group_id"				=> $obj->item_group_id,
+					"item_sub_group_id"			=> $obj->item_sub_group_id,
+					"brand_id" 					=> $obj->brand_id,					
+					"measurement_id" 			=> $obj->measurement_id,					
+					"main_id" 					=> $obj->main_id,
+					"abbr" 						=> $obj->abbr,
+					"number" 					=> $obj->number,
+					"international_code" 		=> $obj->international_code,
+					"imei" 						=> $obj->imei,
+					"serial_number" 			=> $obj->serial_number,
+					"supplier_code"				=> $obj->supplier_code,
+					"color_code" 				=> $obj->color_code,
+				   	"name" 						=> $obj->name,
+				   	"purchase_description" 		=> $obj->purchase_description,
+				   	"sale_description" 			=> $obj->sale_description,
+				   	"catalogs" 					=> explode(",",$obj->catalogs),				   	
+				   	"cost" 						=> floatval($obj->cost),
+				   	"price" 					=> floatval($obj->price),
+				   	"amount" 					=> floatval($obj->amount),
+				   	"rate" 						=> floatval($obj->rate),
+				   	"locale" 					=> floatval($obj->locale),
+				   	"on_hand" 					=> floatval($obj->on_hand),
+				   	"on_po" 					=> floatval($obj->on_po),
+				   	"on_so" 					=> floatval($obj->on_so),
+				   	"order_point" 				=> intval($obj->order_point),
+				   	"account_id" 				=> $obj->account_id,
+				   	"income_account_id" 		=> $obj->income_account_id,
+				   	"cogs_account_id"			=> $obj->cogs_account_id,
+				   	"inventory_account_id"		=> $obj->inventory_account_id,
+				   	"fixed_assets_account_id" 	=> $obj->fixed_assets_account_id,
+				   	"accumulated_account_id" 	=> $obj->accumulated_account_id,
+				   	"depreciation_account_id" 	=> $obj->depreciation_account_id,
+				   	"deposit_account_id" 		=> $obj->deposit_account_id,				   				   	
+				   	"preferred_vendor_id" 		=> $obj->preferred_vendor_id,
+				   	"image_url" 				=> $obj->image_url,
+				   	"favorite" 					=> $obj->favorite=="true"?true:false,
+				   	"is_catalog" 				=> $obj->is_catalog,
+				   	"is_assembly" 				=> $obj->is_assembly,
+				   	"is_pattern" 				=> intval($obj->is_pattern),				  
+				   	"status" 					=> $obj->status,
+				   	"deleted" 					=> $obj->deleted,
+				   	"is_system" 				=> $obj->is_system
 			   	);
 		    }	
 		}
@@ -342,6 +353,9 @@ class Items extends REST_Controller {
 		   	isset($value->income_account_id) 		? $obj->income_account_id 		= $value->income_account_id : "";
 		   	isset($value->cogs_account_id) 			? $obj->cogs_account_id 		= $value->cogs_account_id : "";
 		   	isset($value->inventory_account_id) 	? $obj->inventory_account_id 	= $value->inventory_account_id : "";
+		   	isset($value->fixed_assets_account_id) 	? $obj->fixed_assets_account_id = $value->fixed_assets_account_id : "";
+		   	isset($value->accumulated_account_id) 	? $obj->accumulated_account_id 	= $value->accumulated_account_id : "";
+		   	isset($value->depreciation_account_id) 	? $obj->depreciation_account_id = $value->depreciation_account_id : "";
 		   	isset($value->deposit_account_id) 		? $obj->deposit_account_id 		= $value->deposit_account_id : "";		   	
 		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
 		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
@@ -355,50 +369,54 @@ class Items extends REST_Controller {
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
-					"id" 					=> $obj->id,
-					"company_id" 			=> $obj->company_id,
-					"contact_id" 			=> $obj->contact_id,
-					"currency_id" 			=> $obj->currency_id,
-					"item_type_id"			=> $obj->item_type_id,					
-					"category_id" 			=> $obj->category_id,
-					"item_group_id"			=> $obj->item_group_id,
-					"item_sub_group_id"		=> $obj->item_sub_group_id,
-					"brand_id" 				=> $obj->brand_id,					
-					"measurement_id" 		=> $obj->measurement_id,					
-					"main_id" 				=> $obj->main_id,
-					"abbr" 					=> $obj->abbr,
-					"number" 				=> $obj->number,
-					"international_code" 	=> $obj->international_code,
-					"imei" 					=> $obj->imei,
-					"serial_number" 		=> $obj->serial_number,
-					"supplier_code"			=> $obj->supplier_code,
-					"color_code" 			=> $obj->color_code,
-				   	"name" 					=> $obj->name,
-				   	"purchase_description" 	=> $obj->purchase_description,
-				   	"sale_description" 		=> $obj->sale_description,
-				   	"catalogs" 				=> explode(",",$obj->catalogs),				   	
-				   	"cost" 					=> floatval($obj->cost),
-				   	"price" 				=> floatval($obj->price),
-				   	"amount" 				=> floatval($obj->amount),
-				   	"rate" 					=> floatval($obj->rate),
-				   	"locale" 				=> floatval($obj->locale),
-				   	"on_hand" 				=> floatval($obj->on_hand),
-				   	"on_po" 				=> floatval($obj->on_po),
-				   	"on_so" 				=> floatval($obj->on_so),
-				   	"order_point" 			=> intval($obj->order_point),
-				   	"account_id" 			=> $obj->account_id,
-				   	"income_account_id" 	=> $obj->income_account_id,
-				   	"cogs_account_id"		=> $obj->cogs_account_id,
-				   	"inventory_account_id"	=> $obj->inventory_account_id,
-				   	"deposit_account_id" 	=> $obj->deposit_account_id,				   				   	
-				   	"preferred_vendor_id" 	=> $obj->preferred_vendor_id,
-				   	"image_url" 			=> $obj->image_url,
-				   	"favorite" 				=> $obj->favorite=="true"?true:false,
-				   	"is_catalog" 			=> $obj->is_catalog,
-				   	"is_assembly" 			=> $obj->is_assembly,
-				   	"is_pattern" 			=> intval($obj->is_pattern),				  
-				   	"status" 				=> $obj->status,
-				   	"deleted" 				=> $obj->deleted
+					"id" 						=> $obj->id,
+					"company_id" 				=> $obj->company_id,
+					"contact_id" 				=> $obj->contact_id,
+					"currency_id" 				=> $obj->currency_id,
+					"item_type_id"				=> $obj->item_type_id,					
+					"category_id" 				=> $obj->category_id,
+					"item_group_id"				=> $obj->item_group_id,
+					"item_sub_group_id"			=> $obj->item_sub_group_id,
+					"brand_id" 					=> $obj->brand_id,					
+					"measurement_id" 			=> $obj->measurement_id,					
+					"main_id" 					=> $obj->main_id,
+					"abbr" 						=> $obj->abbr,
+					"number" 					=> $obj->number,
+					"international_code" 		=> $obj->international_code,
+					"imei" 						=> $obj->imei,
+					"serial_number" 			=> $obj->serial_number,
+					"supplier_code"				=> $obj->supplier_code,
+					"color_code" 				=> $obj->color_code,
+				   	"name" 						=> $obj->name,
+				   	"purchase_description" 		=> $obj->purchase_description,
+				   	"sale_description" 			=> $obj->sale_description,
+				   	"catalogs" 					=> explode(",",$obj->catalogs),				   	
+				   	"cost" 						=> floatval($obj->cost),
+				   	"price" 					=> floatval($obj->price),
+				   	"amount" 					=> floatval($obj->amount),
+				   	"rate" 						=> floatval($obj->rate),
+				   	"locale" 					=> floatval($obj->locale),
+				   	"on_hand" 					=> floatval($obj->on_hand),
+				   	"on_po" 					=> floatval($obj->on_po),
+				   	"on_so" 					=> floatval($obj->on_so),
+				   	"order_point" 				=> intval($obj->order_point),
+				   	"account_id" 				=> $obj->account_id,
+				   	"income_account_id" 		=> $obj->income_account_id,
+				   	"cogs_account_id"			=> $obj->cogs_account_id,
+				   	"inventory_account_id"		=> $obj->inventory_account_id,
+				   	"fixed_assets_account_id" 	=> $obj->fixed_assets_account_id,
+				   	"accumulated_account_id" 	=> $obj->accumulated_account_id,
+				   	"depreciation_account_id" 	=> $obj->depreciation_account_id,
+				   	"deposit_account_id" 		=> $obj->deposit_account_id,				   				   	
+				   	"preferred_vendor_id" 		=> $obj->preferred_vendor_id,
+				   	"image_url" 				=> $obj->image_url,
+				   	"favorite" 					=> $obj->favorite=="true"?true:false,
+				   	"is_catalog" 				=> $obj->is_catalog,
+				   	"is_assembly" 				=> $obj->is_assembly,
+				   	"is_pattern" 				=> intval($obj->is_pattern),				  
+				   	"status" 					=> $obj->status,
+				   	"deleted" 					=> $obj->deleted,
+				   	"is_system" 				=> $obj->is_system
 				);						
 			}
 		}
@@ -990,7 +1008,7 @@ class Items extends REST_Controller {
 			}									 			
 		}
 
-		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Cash_Purchase", "Credit_Purchase", "Adjustment"));		
+		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -1227,7 +1245,7 @@ class Items extends REST_Controller {
 				//Adjustment
 				$adj->where("item_id", $value->id);
 				$adj->select_sum("quantity");
-				$adj->where_related("transaction", "type", "Adjustment");							
+				$adj->where_related("transaction", "type", "Item_Adjustment");							
 				$adj->get();
 
 				$data["results"][] = array(
@@ -1275,7 +1293,7 @@ class Items extends REST_Controller {
 			}									 			
 		}
 
-		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Cash_Purchase", "Credit_Purchase", "Adjustment"));		
+		$obj->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));		
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);

@@ -721,6 +721,7 @@ class Banhji extends REST_Controller {
 			// find user
 			$inst = new Institute();
 			$inst->where('id', $r->institute);
+			$inst->include_related('monetary', 'locale');
 			$inst->get();
 			$data = array();
 			if($inst->exists()) {
@@ -754,6 +755,28 @@ class Banhji extends REST_Controller {
 							$this->db->query($data);
 							$sql = $this->db->query($f->statement);
 						}
+						// add currency based on company to contact
+						$this->db->where('locale <>', "");
+						$this->db->update('contacts', array('locale'=> "$inst->monetary_locale"));
+
+						// add currency based on company to inventory
+						$this->db->where('locale <>', "");
+						$this->db->update('items', array('locale'=> "$inst->monetary_locale"));
+
+						$this->db->where('locale', "$inst->monetary_locale");
+						$this->db->update('currencies', array('status' => 1));
+						// add currency to rate
+						$this->db->insert('currency_rates', array(
+							'currency_id' => "$inst->monetary_id", 
+							'user_id' => 0, 
+							'rate' => 1, 
+							'source' => '', 
+							'method' => 'Manual', 
+							'date' => date('Y-m-d'), 
+							'is_system' => 1, 
+							'created_at' => date('Y-m-d'),
+							'locale'=> "$inst->monetary_locale"
+						));
 					}
 				}
 

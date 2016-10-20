@@ -20,6 +20,16 @@ class Itemreports extends REST_Controller {
 			$this->server_pwd = $conn->password;
 			$this->_database = $conn->inst_database;
 			
+		//Fiscal Date
+			$today = date("Y-m-d");
+			$fdate = date("Y") ."-". $institute->fiscal_date;
+			if($today > $fdate){
+				$this->startFiscalDate 	= date("Y") ."-". $institute->fiscal_date;
+				$this->endFiscalDate 	= date("Y",strtotime("+1 year")) ."-". $institute->fiscal_date;
+			}else{
+				$this->startFiscalDate 	= date("Y",strtotime("-1 year")) ."-". $institute->fiscal_date;
+				$this->endFiscalDate 	= date("Y") ."-". $institute->fiscal_date;
+			}
 		}
 	}
 
@@ -38,10 +48,60 @@ class Itemreports extends REST_Controller {
 		$totalService =0;
 		$totalProduct = 0;
 		$totalOnhand =0;
+		$totalQOH = 0;
+		$totalPO =0;
+		$totalSO =0;
 
-		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where("item_type_id", 1);
-		$obj->where('is_pattern', 0);
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->where_in( 'type', array("Purchase_Order", "Sale_Order"));
+		$obj->where('is_recurring <>', 1);
+		$obj->where('deleted <>', 1);
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters["filters"] as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		// $obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		// $obj->where("item_type_id", 1);
+		// $obj->where('is_pattern', 0);
 
 		// $obj->include_related("contact_type", "name");
 
@@ -53,57 +113,52 @@ class Itemreports extends REST_Controller {
 			foreach ($obj as $value) {
 				$po = 0;
 				$so = 0;
-				$line = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$line->where('item_id', $value->id);
-				$line->where_related('transaction', 'status <>', 1);
-				$line->where_in_related('transaction', 'type', array("Purchase_Order", "Sale_Order"));
-				$line->include_related('transaction', 'type');
-				$line->get();
+				$items = $value->item_line->get();
+				foreach ($items as $item) {
+					$inventory = $item->item->get();
+					
 
-				$in = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$in->select_sum('quantity');
-				$in->where('item_id', $value->id);
-				$in->where('movement', 1);
-				$in->get();
-
-				$out = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$out->select_sum('quantity');
-				$out->where('item_id', $value->id);
-				$out->where('movement', -1);
-				$out->get();
-
-				$item = new Item_Type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				
-				foreach($line as $trx) {
-
-					if(isset($temp["$trx->item_id"])) {
-						if($line->transaction_type == "Purchase_Order") {
-							$temp["$trx->item_id"]['po'] += $trx->quantity;
+					if(isset($temp["$inventory->id"])) {
+						if($value->type == "Purchase_Order") {
+							isset($temp["$inventory->id"]['po']) ? $temp["$inventory->id"]['po'] += $item->quantity : $temp["$inventory->id"]['po'] = $item->quantity;
 						} else {
-							$temp["$trx->item_id"]['so'] += $trx->quantity;
+							isset($temp["$inventory->id"]['so']) ? $temp["$inventory->id"]['so'] += $item->quantity : $temp["$inventory->id"]['so'] = $item->quantity;
 						}
 					} else {
-						if($line->transaction_type == "Purchase_Order") {
-							$temp["$trx->item_id"]['po'] = $trx->quantity;
-						} else {
-							$temp["$trx->item_id"]['so'] = $trx->quantity;
-						}
-						$temp["$trx->item_id"]['name'] = $value->name;
-						$temp["$trx->item_id"]['cost'] = $value->cost;
-						$temp["$trx->item_id"]['price'] = $value->price;
-						$temp["$trx->item_id"]['onHand'] = $in->quantity - $out->quantity;
-						$temp["$trx->item_id"]['currency_code'] = $value->locale;
+						$in = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$in->select_sum('quantity');						
+						$in->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));
+						$in->where_related("transaction", "is_recurring", 0);
+						$in->where_related("transaction", "deleted", 0);
+						$in->where('item_id', $item->item_id);
+						$in->where('movement', 1);
+						$in->get();
 
+						$out = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$out->select_sum('quantity');
+						$out->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Item_Adjustment"));
+						$out->where_related("transaction", "is_recurring", 0);
+						$out->where_related("transaction", "deleted", 0);
+						$out->where('item_id', $item->item_id);
+						$out->where('movement', -1);
+						$out->get();
+
+						
+
+						if($value->type == "Purchase_Order") {
+							$temp["$inventory->id"]['po'] = $item->quantity;
+						} else {
+							$temp["$inventory->id"]['so'] = $item->quantity;
+						}
+						$temp["$inventory->id"]['name'] = $inventory->name;
+						$temp["$inventory->id"]['cost'] = $inventory->cost;
+						$temp["$inventory->id"]['price'] = $inventory->price;
+						$temp["$inventory->id"]['onHand'] = $in->quantity - $out->quantity;
+						$temp["$inventory->id"]['currency_code'] = $inventory->locale;
+
+						$onHand +=  $in->quantity - $out->quantity;
 					}
-					$onHand += $in->quantity - $out->quantity;
-					if($item->id == 4) {						
-						$totalService += 1;
-					}
-					if($item->id == 1) {						
-						$totalService += 1;
-					}
-					
-				}
+				}				
 			}
 		}			
 
@@ -116,16 +171,14 @@ class Itemreports extends REST_Controller {
 				'onHand'	=> $value['onHand'],
 				'currency'	=> $value['currency_code'],
 				'so'		=> isset($value['so'])? $value['so'] : 0,
-				'po'		=> $value['po']
+				'po'		=> isset($value['po'])? $value['po'] : 0,
 			);
-			$totalOnhand += $onHand;
+
 		}
 		
 
 		// Response Data
-		$data['totalService'] = $totalService;
-		$data['totalProduct'] = $totalProduct;
-		$data['totalOnhand'] = $totalOnhand;
+		$data['onHand'] = $onHand;
 		$data['count'] = count($temp);
 		$this->response($data, 200);
 	}
@@ -146,38 +199,70 @@ class Itemreports extends REST_Controller {
 		$total =0;
 		$temp = array();
 
-		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$type->where('parent_id', 1)->get();
-
-		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where("item_type_id", 1);
-		$obj->where('is_pattern', 0);
+		$line = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$line->where_in("type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "invoice", "Sale_Return", "Item_Adjustment") );
+		$line->where('is_recurring <>', 1);
+		$line->where('deleted <>', 1);
+		
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$line->order_by($value["field"], $value["dir"]);
+			}
+		}
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters["filters"] as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$line->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$line->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$line->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$line->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$line->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$line->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$line->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$line->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$line->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$line->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$line->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$line->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$line->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$line->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
 
 		// $obj->include_related("contact_type", "name");
 
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
+		$line->get_paged_iterated($page, $limit);
 		
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				$line = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$line->where('is_recurring', 0);
-				$line->where('status <>', 1);
-				$line->where_related('item_line', 'item_id', $value->id);
-				$line->where_in('type', array("Purchase_Order", "Sale_Order"));
-				$line->get();
-
-				foreach($line as $trx) {
-					
-					$itemLine = $trx->item_line->get();
+		$data["count"] = $line->paged->total_rows;
+		
+		if($line->result_count()>0){
+			foreach ($line as $value) {				
+					$itemLine = $value->item_line->get();
 					$inventory = $itemLine->item->get();
-					if(isset($temp["$value->id"])) {
-						$temp["$value->id"]['transactions'][] = array(
-							'id' => $trx->id,
-							'date' => $trx->issued_date,
-							'type' 	=> $trx->type,
-							'ref'	=> $trx->reference_id,
+					if(isset($temp["$itemLine->item_id"])) {
+						$temp["$itemLine->item_id"]['transactions'][] = array(
+							'id' => $value->id,
+							'date' => $value->issued_date,
+							'type' 	=> $value->type,
+							'ref'	=> $value->number,
 							'qty'	=> $itemLine->quantity * $itemLine->movement,
 							'cost'  => $itemLine->cost,
 							'price' => $itemLine->price
@@ -186,60 +271,59 @@ class Itemreports extends REST_Controller {
 					} else {
 						$in = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$in->select_sum('quantity');
-						$in->where('item_id', $value->id);
+						$in->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));
+						$in->where_related("transaction", "is_recurring", 0);
+						$in->where_related("transaction", "deleted", 0);
+						$in->where('item_id', $itemLine->item_id);
 						$in->where('movement', 1);
 						$in->get();
 
 						$out = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$out->select_sum('quantity');
-						$out->where('item_id', $value->id);
+						$out->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Item_Adjustment"));
+						$out->where_related("transaction", "is_recurring", 0);
+						$out->where_related("transaction", "deleted", 0);
+						$out->where('item_id', $itemLine->item_id);
 						$out->where('movement', -1);
 						$out->get();
 						
-						$temp["$value->id"]['name'] = $value->name;
-						$temp["$value->id"]['avg_cost'] = $value->cost;
-						$temp["$value->id"]['price'] = $value->price;
-						$temp["$value->id"]['onHand'] = $in->quantity - $out->quantity;
-						$temp["$value->id"]['currency_code'] = $value->locale;
-						$temp["$value->id"]['transactions'][] = array(
-							'id' => $trx->id,
-							'date' => $trx->issued_date,
-							'type' 	=> $trx->type,
-							'ref'	=> $trx->reference_id,
-							'qty'	=> $itemLine->quantity * $itemLine->movement,
+						$temp["$itemLine->item_id"]['name'] = $inventory->name;
+						$temp["$itemLine->item_id"]['avg_cost'] = $inventory->cost;
+						$temp["$itemLine->item_id"]['price'] = $inventory->price;
+						$temp["$itemLine->item_id"]['onHand'] = $in->quantity - $out->quantity;
+						$temp["$itemLine->item_id"]['currency_code'] = $inventory->locale;
+						$temp["$itemLine->item_id"]['transactions'][] = array(
+							'id' => $value->id,
+							'date' => $value->issued_date,
+							'type' 	=> $value->type,
+							'ref'	=> $value->number,
+							'qty'	=> $itemLine->quantity,
 							'cost'  => $itemLine->cost,
 							'price' => $itemLine->price
 						);
-						$onHand += $in->quantity - $out->quantity;
+						
 					}
-					
-					if($inventory->item_type_id == 1) {
-						$itemSale++;
-					} if($inventory->item_type_id == 4) {
-						$service++;
-					}
-				}
 			}
 		}
 		foreach ($temp as $key => $value) {
 			$data["results"][] = array(
-				'id' 	=> $key,
-				'item' 	=> $value['name'],			
+				'id' 		=> $key,
+				'item' 		=> $value['name'],			
 				'avg_cost'	=> $value['avg_cost'],
-				'price'	=> $value['price'],
+				'price'		=> $value['price'],
 				'onHand'	=> $value['onHand'],
 				'currency'	=> $value['currency_code'],
 				'transactions' => $value['transactions']
 			);
-			$totalOnhand += $onHand;
-			$total += floatval($value['onHand']) * floatval($value['avg_cost']);
+			$onHand +=  $value['onHand'];
+			$total += $onHand * floatval($value['avg_cost']);
 		}
 
 		// Response Data
 		$data['total'] = $total;
 		$data['item'] = $itemSale;
-		$data['service'] = $service;
-		$data['totalOnhand'] = $totalOnhand;
+		$data['count'] = count($temp);
+		$data['totalOnhand'] = $onHand;
 		$this->response($data, 200);
 	}
 
@@ -251,6 +335,7 @@ class Itemreports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = array();
 		$data["count"] = 0;
+		$temp = array();
 		// $is_pattern = 0;
 		$deleted = 0;
 		$itemSale = 0;
@@ -261,6 +346,54 @@ class Itemreports extends REST_Controller {
 		$totalGPM = 0;
 		$costSale =0;
 		$totalQuantity  =0 ;
+		$number  =0 ;
+		$today = date("Y-m-d");
+
+		//SALE (Begin FiscalDate To As Of)
+		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$sale->where_in("type", array("Invoice","Cash_Sale","Sale_Return"));
+		$sale->where("issued_date >=", $this->startFiscalDate);
+		$sale->where("issued_date <=", $today);
+		$sale->where("is_recurring", 0);
+		$sale->where("deleted", 0);
+		$sale->get_iterated();
+		
+		//Sum Sale					
+		$totalSale = 0;
+		foreach ($sale as $value) {
+			if($value->type=="Invoice" || $value->type=="Cash_Sale"){
+				$totalSale += floatval($value->amount) / floatval($value->rate);
+			}else{
+				// -Sale Return
+				$totalSale -= floatval($value->amount) / floatval($value->rate);
+			}
+		}
+		//END SALE
+
+		//COGS (Begin FiscalDate To As Of)
+		$cogs = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$cogs->where_related("account/account_type", "id", 36);
+		$cogs->where_related("transaction", "issued_date >=", $this->startFiscalDate);
+		$cogs->where_related("transaction", "issued_date <=", $today);
+		$cogs->where_related("transaction", "is_recurring", 0);
+		$cogs->where_related("transaction", "deleted", 0);
+		$cogs->where("deleted", 0);		
+		$cogs->get_iterated();
+		
+		//Sum Dr and Cr					
+		$cogsDr = 0;
+		$cogsCr = 0;
+		foreach ($cogs as $value) {			
+			if($value->dr>0){
+				$cogsDr += floatval($value->dr) / floatval($value->rate);
+			}
+			if($value->cr>0){
+				$cogsCr += floatval($value->cr) / floatval($value->rate);
+			}	
+		}
+		
+		$totalCOGS = $cogsDr - $cogsCr;
+		//END COGS
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$obj->where('deleted', 0);
@@ -268,11 +401,47 @@ class Itemreports extends REST_Controller {
 		// $obj->where('is_pattern', 0);
 		$obj->where_in('type', array('Cash_Sale', 'Invoice'));
 
-		// if(isset($filters)) {
-		// 	foreach($filters as $filter) {
-		// 		$obj->where($filter['field'], $filter['value']);
-		// 	}
-		// }
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters["filters"] as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
 
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -282,37 +451,51 @@ class Itemreports extends REST_Controller {
 			foreach ($obj as $value) {
 				$itemLine = $value->item_line->include_related('item', array('id', 'name', 'on_hand'))->get();
 				
-				
 				foreach ($itemLine as $line) {
+					$inventory = $line->item->get();
 					$gpm = 0;
-					$gpm = (floatval($itemLine->amount) - (($itemLine->cost) * ($itemLine->quantity) ))/($itemLine->amount);
-					$data['results'][] = array(
-					'id' => $line->id,
-					'type' => $value->type,
-					'items' => array(
-						'id' => $line->item_id,
-						'name' => $line->item_name,
-					),
-					'qty' => $line->quantity,
-					'price' => $line->price,
-					'amount' => $line->amount,
-					'cost' => $line->cost,
-					'gpm' => $gpm
-					);
-					$totalQuantity += floatval($line->quantity);
+					$gpm = (floatval($line->amount) - (($inventory->cost) * ($line->quantity) ))/($line->amount);
+					if(isset($temp["$itemLine->item_id"])){
+
+					}else{
+						$temp["$itemLine->item_id"]['name'] = $inventory->name;
+						$temp["$itemLine->item_id"]['gpm'] = $gpm;
+						$temp["$itemLine->item_id"]['transactions'][] = array(
+							'id' => $value->id,
+							'date' => $value->issued_date,
+							'type' 	=> $value->type,
+							'number'	=> $value->number,
+							'qty'	=> $line->quantity,
+							'price'  => floatval($line->price),
+							'amount'  => floatval($line->amount),
+							'cost'  => floatval($inventory->cost),
+						);
+					}
 					$onHand += floatval($line->item_on_hand);
 					$itemSale += floatval($line->amount)/ floatval($line->rate);
 					$costSale += floatval($line->cost)/ floatval($line->rate);
-					$totalGPM = ($itemSale-$costSale*$totalQuantity)/$itemSale;
+					
 				}
-				
 				
 			}
 		}
 
+		foreach($temp as $key => $value) {
+			$data['results'][] = array(
+				'item' => $value['name'],
+				'gpm' => $value['gpm'],
+				'transactions' => $value['transactions']
+			);
+			$totalGPM += $value['gpm'];
+		}
+		$number = count($temp);
+		
 		// Response Data
-		$data['gpm'] = $totalGPM;
+		$data['gpm'] = $totalGPM / $number;
+		$data['product'] = count($temp);
+		$data['number'] = $number;
 		$data['sale'] = $itemSale;
+		$data ['grossProfitMargin']	= ($totalSale - $totalCOGS) / $totalSale;
 		$data['onHand'] = $onHand;
 		$this->response($data, 200);
 	}
@@ -324,166 +507,269 @@ class Itemreports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = array();
 		$data["count"] = 0;
-		// $is_pattern = 0;
-		$deleted = 0;
-		$gpm = 0;
 		$turnover = 0;
 		$onHand = 0;
 		$total =0;
-		$adjustment = 0;
-		$jj = 0;
+		$cogs =0;
+		$itemOnHand = 0;
 		$temp = array();
+		$data['onHand'] =0 ;
+		$data['turnover'] =0;
+		$today = date("Y-m-d");
+
+		$date1 = new DateTime($this->startFiscalDate);
+		$date2 = new DateTime($today);
+		$days = $date2->diff($date1)->format("%a")-1;
 
 		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->include_related('item_line/transaction', 'type');
+		$obj->include_related('item_line', 'quantity');
+		$obj->where_in_related('item_line/transaction', 'type', array("Invoice", "Cash_Sale", "Sale_Return"));
+
+		// if(!empty($sort) && isset($sort)){					
+		// 	foreach ($sort as $value) {
+		// 		$obj->order_by($value["field"], $value["dir"]);
+		// 	}
+		// }
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters["filters"] as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where_related('item_line/transaction', $value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
 		$obj->where('item_type_id', 1);
 		$obj->where('deleted', 0);
 
 		$obj->get_iterated();
 		if($obj->exists()) {
 			foreach($obj as $value) {
-				// get journal line with item inventory account
-				$journalLines = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$journalLines->where('account_id', $value->cogs_account_id);
-				$journalLines->where_related('transaction', 'deleted', 0);
-				$journalLines->where_related('transaction', 'is_recurring', 0);
-				// $journalLines->where_related('transaction', 'is_pattern', 0);
-				$journalLines->where_in_related('transaction', 'type', array('Invoice', 'Cash_Sale'));
-				$journalLines->include_related('transaction', array('id','issued_date', 'type'));
-				$journalLines->get();
+				if(isset($temp["$value->id"])) {
+					if($value->transaction_type=='Sale_Return'){
+						$temp["$value->id"]['quantity']	+= $value->item_line_quantity*-1;
+					}else{
+						$temp["$value->id"]['quantity']	+= $value->item_line_quantity;
+					}					
+				} else {
+					$in = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$in->select_sum('quantity');						
+					$in->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));
+					$in->where_related("transaction", "is_recurring", 0);
+					$in->where_related("transaction", "deleted", 0);
+					$in->where('item_id', $value->id);
+					$in->where('movement', 1);
+					$in->get();
 
-				if($obj->exists()) {
-					foreach($obj as $ad) {
-						$adjustment += floatval($ad->quanity) * $ad->movement;
+					$out = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$out->select_sum('quantity');
+					$out->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Item_Adjustment"));
+					$out->where_related("transaction", "is_recurring", 0);
+					$out->where_related("transaction", "deleted", 0);
+					$out->where('item_id', $value->id);
+					$out->where('movement', -1);
+					$out->get();
+					$onHand = $in->quantity - $out->quantity;
+
+					$temp["$value->id"]['name']		= $value->name;
+					$temp["$value->id"]['cost']		= $value->cost;
+					$temp["$value->id"]['onHand']	= $onHand;
+					if($value->transaction_type=='Sale_Return'){
+						$temp["$value->id"]['quantity']	= $value->item_line_quantity*-1;
+					}else{
+						$temp["$value->id"]['quantity']	= $value->item_line_quantity;
 					}
 				}
-
-				$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$itemLines->where('item_id', $value->id);
-				$itemLines->where_related('transaction', 'deleted', 0);
-				$itemLines->where_related('transaction', 'is_recurring', 0);
-				// $itemLines->where_related('transaction', 'is_pattern', 0);
-				$itemLines->where_in_related('transaction', 'type', array('Invoice', 'Cash_Sale'));
-				$itemLines->get();
-
-				if($itemLines->exists()) {
-					foreach($itemLines as $item) {
-						$gpm += (floatval($item->amount) - (floatval($item->quantity) * $value->cost)) / floatval($item->amount);
-					}
-				}
-
-				if($journalLines->exists()) {
-					foreach($journalLines as $line) {
-						if(isset($temp["$value->id"])) {
-							$temp["$value->id"]['dr'] += $line->dr;
-							$temp["$value->id"]['cr'] += $line->cr;
-						} else {
-							$itemIn = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$itemIn->select_sum("quantity");
-							$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
-							$itemIn->where("item_id", $value->id);
-							$itemIn->where("movement", 1);
-							$itemIn->get();
-							
-							$itemOut = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$itemOut->select_sum("quantity");
-							$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
-							$itemOut->where("item_id", $value->id);
-							$itemOut->where("movement", -1);
-							$itemOut->get();
-
-							$on_hand = floatval($itemIn->quantity) - floatval($itemOut->quantity);
-							$temp["$value->id"]['name'] = $value->name;
-							$temp["$value->id"]['dr'] = $line->dr;
-							$temp["$value->id"]['cr'] = $line->cr;
-							$temp["$value->id"]['onhand'] = $on_hand;
-						}
-					}
-				}
-				
-					
-			}
+			}	
 		}
 		foreach ($temp as $key => $value) {
-			$cogs = floatval($value['dr']) - floatval($value['cr']);
-			$jj += floatval($value['onhand']);
-			$turnover += $jj > 0? ($cogs/$jj) : 0;
-			$onHand += $value['onhand'];
-			$data["results"][] = array(
-				'id' 	=> $key,
-				'cogs' 	=> $cogs,
-				'onHand'=> $value['onhand'],
-				'turnover'=> $value['onhand']>0? ($cogs/floatval($value['onhand'])) : 0
+			$cogs = $value['cost']* $value['quantity'];
+			$turnover = $cogs>0 ? ($value['onHand']/ $cogs)*$days : 0;
+			$data['results'][]= array(
+				'name' => $value['name'],
+				'cogs' => $value['cost'],
+				'onHand' => $value['onHand'],
+				'turnover'=> $turnover
 			);
+			$data['onHand'] += $value['onHand'];
+			$data['turnover'] += $turnover;
 		}
-		$data['onhand'] = $onHand;
-		$data['turnover'] = $turnover;
-		$data['count'] = count($temp);
+		$data['count'] = count($data['results']);
 		$this->response($data, 200);
 	}
 
-	function movement_summary_get() {
+	function movement_summary_get() {			
 		$filters 	= $this->get("filter");
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");
 		$data["results"] = array();
 		$data["count"] = 0;
-		// $is_pattern = 0;
-		$deleted = 0;
-		$totalSale = 0;
-		$service = 0;
+		$turnover = 0;
 		$onHand = 0;
 		$total =0;
+		$cogs =0;
+		$itemOnHand = 0;
 		$temp = array();
+		$data['onHand'] =0 ;
+		$data['turnover'] =0;
+		$data['sale'] = 0;
 
-		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where_related('transaction', 'deleted', 0);
-		$obj->where_related('transaction', 'is_recurring', 0);
-		// $obj->where_related('transaction', 'is_pattern', 0);
-		$obj->where_in_related('transaction', 'type', array('Cash_Sale', 'Invoice', 'Cash_Purchase', 'Credit_Purchase'));
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->include_related('item_line/transaction', 'type');
+		$obj->include_related('item_line', 'quantity, movement');
+		$obj->where_in_related('item_line/transaction', 'type', array("Invoice", "Cash_Sale", "Sale_Return", "Credit_Purchase", "Cash_Purchase", "Purchase_Return", "Item_Adjustment" ));
+
+		// if(!empty($sort) && isset($sort)){					
+		// 	foreach ($sort as $value) {
+		// 		$obj->order_by($value["field"], $value["dir"]);
+		// 	}
+		// }
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters["filters"] as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where_related('item_line/transaction', $value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+		$obj->where('item_type_id', 1);
+		$obj->where('deleted', 0);
 
 		$obj->get_iterated();
 		if($obj->exists()) {
 			foreach($obj as $value) {
-				$adjustment = 0;
-				$adj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$adj->where('item_id', $value->item_id);
-				$adj->where_related('transaction', 'deleted', 0);
-				$adj->where_related('transaction', 'is_recurring', 0);
-				// $adj->where_related('transaction', 'is_pattern', 0);
-				$adj->where_related('transaction', 'type', 'Adjustment');
-				$adj->get();
+				
 
-				if($adj->exists()) {
-					foreach($adj as $ad) {
-						$adjustment += floatval($ad->quanity) * $ad->movement;
+				if(isset($temp["$value->id"])) {
+					if($value->transaction_type=='Credit_Purchase' || $value->transaction_type=='Cash_Purchase' || $value->transaction_type=='Purchase_Return'){
+						if($value->transaction_type=='Purchase_Return'){
+							$temp["$value->id"]['purchase']	+= $value->item_line_quantity*-1;
+						}else{
+							$temp["$value->id"]['purchase']	+= $value->item_line_quantity;
+						}						
+					}elseif ($value->transaction_type=='Item_Adjustment'){
+						$temp["$value->id"]['Item_Adjustment']	+= $value->item_line_quantity*$value->item_line_movement;
+					}else{
+						if($value->transaction_type=='Sale_Return'){
+							$temp["$value->id"]['sale']	+= $value->item_line_quantity*-1;
+						}else{
+							$temp["$value->id"]['sale']	+= $value->item_line_quantity;
+						}						
+					}					
+				} else {
+					$in = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$in->select_sum('quantity');						
+					$in->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Item_Adjustment"));
+					$in->where_related("transaction", "is_recurring", 0);
+					$in->where_related("transaction", "deleted", 0);
+					$in->where('item_id', $value->id);
+					$in->where('movement', 1);
+					$in->get();
+
+					$out = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$out->select_sum('quantity');
+					$out->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Item_Adjustment"));
+					$out->where_related("transaction", "is_recurring", 0);
+					$out->where_related("transaction", "deleted", 0);
+					$out->where('item_id', $value->id);
+					$out->where('movement', -1);
+					$out->get();
+					$onHand = $in->quantity - $out->quantity;
+
+					$temp["$value->id"]['name']		= $value->name;
+					$temp["$value->id"]['cost']		= $value->cost;
+					$temp["$value->id"]['onHand']	= $onHand;
+					$temp["$value->id"]['purchase'] = 0; 
+					$temp["$value->id"]['Item_Adjustment'] = 0; 
+					if($value->transaction_type=='Credit_Purchase' || $value->transaction_type=='Cash_Purchase' || $value->transaction_type=='Purchase_Return'){
+						if($value->transaction_type=='Purchase_Return'){
+							$temp["$value->id"]['purchase']	= $value->item_line_quantity*-1;
+						}else{
+							$temp["$value->id"]['purchase']	= $value->item_line_quantity;
+						}						
+					}elseif ($value->transaction_type=='Item_Adjustment'){
+						$temp["$value->id"]['Item_Adjustment'] = $value->item_line_quantity*$value->item_line_movement;
+					}else{
+						if($value->transaction_type=='Sale_Return'){
+							$temp["$value->id"]['sale']	= $value->item_line_quantity*-1;
+						}else{
+							$temp["$value->id"]['sale']	= $value->item_line_quantity;
+						}						
 					}
 				}
-				
-				if(isset($temp["$value->item_id"])) {
-					$temp["$value->item_id"]['purchase'] 	+= $value->movement == 1 ? $value->quantity : 0;
-					$temp["$value->item_id"]['sale'] 	 	+= $value->movement == -1 ? $value->quantity : 0;
-				} else {
-					$item = $value->item->get();
-					$temp["$value->item_id"]['item']		= array("id" => $item->id, "name" => $item->name);
-					$temp["$value->item_id"]['purchase'] 	= $value->movement == 1 ? $value->quantity : 0;
-					$temp["$value->item_id"]['sale'] 	 	= $value->movement == -1 ? $value->quantity : 0;
-					$temp["$value->item_id"]['adjustment'] 	= $adjustment;
-				}
-			}
-
+			}	
 		}
 		foreach ($temp as $key => $value) {
-			$data["results"][] = array(
-				'id' 	=> $key,
-				'item' 	=> $value['item'],
-				'sale'	=> $value['sale'],
-				'purchase'	=> $value['purchase'],
-				'adjustment'	=> $value['adjustment']
+			$data['results'][]= array(
+				'name' 		=> $value['name'],
+				'purchase' => $value['purchase'],
+				'sale' 		=> $value['sale'],
+				'onHand' 	=> $value['onHand'],
+				'adjustment' => $value['Item_Adjustment'],
+				'balance'	=> $value['onHand']+$value['Item_Adjustment']
 			);
+			$data['onHand'] += $value['onHand'];
+			$data['turnover'] += $turnover;
+			$data['sale'] += $value['sale'];
 		}
-		$data['total'] = $total;
-		$data['count'] = count($temp);
+		$data['count'] = count($data['results']);
 		$this->response($data, 200);
 	}
 
@@ -498,7 +784,7 @@ class Itemreports extends REST_Controller {
 		$deleted = 0;
 		$gpm = 0;
 		$service = 0;
-		$adjustment = 0;
+		$Item_Adjustment = 0;
 		$onHand = 0;
 		$total =0;
 		$temp = array();
@@ -522,7 +808,7 @@ class Itemreports extends REST_Controller {
 
 				if($obj->exists()) {
 					foreach($obj as $ad) {
-						$adjustment += floatval($ad->quanity) * $ad->movement;
+						$Item_Adjustment += floatval($ad->quanity) * $ad->movement;
 					}
 				}
 
@@ -542,13 +828,13 @@ class Itemreports extends REST_Controller {
 
 				if($journalLines->exists()) {
 					foreach($journalLines as $line) {
-						$adjustment = 0;
+						$Item_Adjustment = 0;
 						$adj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$adj->where_related('transaction', 'id', $line->transaction_id);
 						$adj->get();
 						if($adj->exists()) {
 							foreach($adj as $ad) {
-								$adjustment += floatval($ad->quanity) * $ad->movement;
+								$Item_Adjustment += floatval($ad->quanity) * $ad->movement;
 							}
 						}
 						if(isset($temp["$value->id"])) {
@@ -563,7 +849,7 @@ class Itemreports extends REST_Controller {
 								"opening" => 0,
 								"dr" => $line->dr,
 								"cr" => $line->cr,
-								"adjustment"=> $adjustment
+								"adjustment"=> $Item_Adjustment
 							);
 						} else {
 							$temp["$value->id"][] 	= array(
@@ -577,7 +863,7 @@ class Itemreports extends REST_Controller {
 								"opening" => 0,
 								"dr" => $line->dr,
 								"cr" => $line->cr,
-								"adjustment"=> $adjustment
+								"adjustment"=> $Item_Adjustment
 							);
 						}
 					}
@@ -594,4 +880,5 @@ class Itemreports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	
 }//End Of Class

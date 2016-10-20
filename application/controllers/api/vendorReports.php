@@ -36,7 +36,50 @@ class Vendorreports extends REST_Controller {
 		$total =0;
 		$segments = 0;
 		// checked if the logic is customer or segment
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters["filters"] as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
 
 		// Segment
 		if($filters['logic'] == "segment") {
@@ -69,9 +112,9 @@ class Vendorreports extends REST_Controller {
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 2)->get();
 
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where('is_recurring', 0);
+			$obj->where("deleted", 0);
 			$obj->where_in("type", array("Credit_Purchase", "Cash_Purchase"));
 
 			// $obj->include_related("contact_type", "name");
@@ -123,7 +166,52 @@ class Vendorreports extends REST_Controller {
 		$totalCashPurchase = 0;
 		$totalCashPayment = 0;
 
-		if($filters['logic'] == "segment") {
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -135,7 +223,7 @@ class Vendorreports extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Credit_Purchase", "Cash_Purchase"));
+				$txn->where_in("type", array("Credit_Purchase", "Cash_Purchase", "Cash_Payment", "Vendor_Deposit"));
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -148,6 +236,7 @@ class Vendorreports extends REST_Controller {
 					if(isset($customers["$seg->name"])) {
 						$customers["$seg->name"]['amount']+= $amt;
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -157,6 +246,7 @@ class Vendorreports extends REST_Controller {
 					} else {
 						$customers["$seg->name"]['amount']= $amt;
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -175,13 +265,12 @@ class Vendorreports extends REST_Controller {
 			}
 		} else {
 
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 2)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
-			$obj->where_in("type", array("Credit_Purchase", "Cash_Purchase", "Cash_Payment"));
+			$obj->where_in("type", array("Credit_Purchase", "Cash_Purchase", "Cash_Payment", "Vendor_Deposit"));
 			$obj->where('is_recurring', 0);
 			$obj->where('deleted', 0);
 			if(isset($filters['filters'])) {
@@ -203,6 +292,7 @@ class Vendorreports extends REST_Controller {
 
 					if(isset($customers["$fullname"])) {
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -211,6 +301,7 @@ class Vendorreports extends REST_Controller {
 						);
 					} else {
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -255,6 +346,51 @@ class Vendorreports extends REST_Controller {
 		$customers = array();
 		$total = 0;
 
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters["filters"] as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
 		// Segment
 		if($filters['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -268,7 +404,7 @@ class Vendorreports extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where_in("type", array("Credit_Purchase", "Cash_Purchase"));
+				$txn->where_in("type", array("Credit_Purchase", "Cash_Purchase", "Journal", "Direct_Expense", "Reimbursement", "Advance_Settlement"));
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -281,6 +417,7 @@ class Vendorreports extends REST_Controller {
 					if(isset($customers["$seg->name"])) {
 						$customers["$seg->name"]['amount']+= $amt;
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -290,6 +427,7 @@ class Vendorreports extends REST_Controller {
 					} else {
 						$customers["$seg->name"]['amount']= $amt;
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -301,14 +439,14 @@ class Vendorreports extends REST_Controller {
 				}
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 2)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
-			$obj->where_in("type", array("Credit_Purchase", "Cash_Purchase"));
+			$obj->where_in("type", array("Credit_Purchase", "Cash_Purchase", "Journal", "Direct_Expense", "Reimbursement", "Advance_Settlement"));
 			$obj->where('is_recurring', 0);
+			$obj->where("deleted", 0);
 
 			// $obj->include_related("contact_type", "name");
 
@@ -324,6 +462,7 @@ class Vendorreports extends REST_Controller {
 					if(isset($customers["$fullname"])) {
 						$customers["$fullname"]['amount'] += floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -333,6 +472,7 @@ class Vendorreports extends REST_Controller {
 					} else {
 						$customers["$fullname"]['amount'] = floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -520,14 +660,61 @@ class Vendorreports extends REST_Controller {
 		$paid  = 0;
 		$openPurchase =0;
 
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 2)->get();
 
 		$supplier = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$supplier->where('deleted <>', 1);
+		$supplier->where('is_pattern <>', 1);
 		$supplierCount = $supplier->where_in('contact_type_id', $type)->count();
 
 
-		if($filters['logic'] == "segment") {
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -559,9 +746,6 @@ class Vendorreports extends REST_Controller {
 				}
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-			
 
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where("status <>", 1);
@@ -622,13 +806,60 @@ class Vendorreports extends REST_Controller {
 		$total = 0;
 		$openPurchase = 0;
 
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 2)->get();
 
 		$supplier = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$supplier->where('deleted <>', 1);
+		$supplier->where('is_pattern <>', 1);
 		$supplierCount = $supplier->where_in('contact_type_id', $type)->count();
 
-		if($filters['logic'] == "segment") {
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			
 			$segmentItem->get();
@@ -654,6 +885,7 @@ class Vendorreports extends REST_Controller {
 				
 					if(isset($customers["$seg->name"])) {
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -662,6 +894,7 @@ class Vendorreports extends REST_Controller {
 						);
 					} else {
 						$customers["$seg->name"]['transactions'][] = array(
+							'id'  		=> $t->id,
 							'type'  	=> $t->type,
 							'date' 		=> $t->issued_date,
 							'number' 	=> $t->number,
@@ -705,6 +938,7 @@ class Vendorreports extends REST_Controller {
 					$fullname = $customer->surname.' '.$customer->name;
 					if(isset($customers["$fullname"])) {
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -713,6 +947,7 @@ class Vendorreports extends REST_Controller {
 						);
 					} else {
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -763,7 +998,52 @@ class Vendorreports extends REST_Controller {
 		$total_avg = 0;
 		$gpm = 0;
 
-		if($filters['logic'] == "segment") {
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -820,13 +1100,13 @@ class Vendorreports extends REST_Controller {
 				}
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			// $type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 			// $type->where('parent_id', 1)->get();
 
 			// $obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where_in("type", array("Credit_Purchase", "Cash_Purchase"));
 			$obj->where('is_recurring', 0);
+			$obj->where("deleted", 0);
 
 			// $obj->include_related("contact_type", "name");
 
@@ -894,7 +1174,53 @@ class Vendorreports extends REST_Controller {
 		$totalQuantity = 0;
 		$totaProdcuts = 0;
 		
-		if($filters['logic'] == "segment") {
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+		
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -918,6 +1244,7 @@ class Vendorreports extends REST_Controller {
 						$itemLine = $t->item_line->include_related('item', array('name'))->get();
 						foreach($items as $item) {
 							$temp = array(
+								'id' 	=> $t->id,
 								'type' => $t->type,
 								'date' => $t->issued_date,
 								'memo' => $t->memo2,
@@ -945,8 +1272,8 @@ class Vendorreports extends REST_Controller {
 				);
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
+			
+			$obj->where("deleted",0);
 			$obj->where('is_recurring', 0);
 			$obj->where_in("type", array("Credit_Purchase", "Cash_Purchase"));
 			if(isset($filters['filters'])) {
@@ -961,6 +1288,7 @@ class Vendorreports extends REST_Controller {
 					$items = $value->item_line->include_related('item', array('name'))->get();
 					foreach($items as $item) {
 						$temp = array(
+							'id' 	=> $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'memo' => $value->memo2,
@@ -1007,7 +1335,52 @@ class Vendorreports extends REST_Controller {
 		$customers = array();
 		$total = 0;
 
-		if($filters['logic'] == "segment") {
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -1019,7 +1392,7 @@ class Vendorreports extends REST_Controller {
 			foreach ($segmentItem as $seg) {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-				$txn->where("type", "Deposit");
+				$txn->where("type", "Vendor_Deposit");
 				$txn->where_in("status", array(0,2));
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
@@ -1030,6 +1403,7 @@ class Vendorreports extends REST_Controller {
 						if(isset($customers["$segment->name"])) {
 							$customers["$segment->name"]['amount'] += floatval($t->amount);
 							$customers["$segment->name"]['transactions'][] = array(
+								'id'  		=> $t->id,
 								'type'  	=> $t->type,
 								'date' 		=> $t->issued_date,
 								'number' 	=> $t->number,
@@ -1039,6 +1413,7 @@ class Vendorreports extends REST_Controller {
 						} else {
 							$customers["$segment->name"]['amount'] = floatval($value->amount);
 							$customers["$segment->name"]['transactions'][] = array(
+								'id'  		=> $t->id,
 								'type'  	=> $t->type,
 								'date' 		=> $t->issued_date,
 								'number' 	=> $t->number,
@@ -1051,14 +1426,14 @@ class Vendorreports extends REST_Controller {
 				}	
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 2)->get();
 
 			$obj->where_related("contact", 'contact_type_id', $type);
-			$obj->where("type", "Deposit");
+			$obj->where("type", "Vendor_Deposit");
 			$obj->where('is_recurring', 0);
+			$obj->where("deleted", 0);
 
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -1078,6 +1453,7 @@ class Vendorreports extends REST_Controller {
 					if(isset($customers["$fullname"])) {
 						$customers["$fullname"]['amount'] += floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -1087,6 +1463,7 @@ class Vendorreports extends REST_Controller {
 					} else {
 						$customers["$fullname"]['amount'] = floatval($value->amount);
 						$customers["$fullname"]['transactions'][] = array(
+							'id'  		=> $value->id,
 							'type'  	=> $value->type,
 							'date' 		=> $value->issued_date,
 							'number' 	=> $value->number,
@@ -1274,13 +1651,60 @@ class Vendorreports extends REST_Controller {
 		$totalPurchase = 0;
 		$supplierCount = 0;
 
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 2)->get();
 
 		$supplier = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$supplier->where('deleted <>', 1);
+		$supplier->where('is_pattern <>', 1);
 		$supplierCount = $supplier->where_in('contact_type_id', $type)->count();
 
-		if($filters['logic'] == "segment") {
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -1343,7 +1767,6 @@ class Vendorreports extends REST_Controller {
 				}	
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 2)->get();
@@ -1351,6 +1774,7 @@ class Vendorreports extends REST_Controller {
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Credit_Purchase");
 			$obj->where('is_recurring', 0);
+			$obj->where("deleted", 0);
 
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -1453,13 +1877,60 @@ class Vendorreports extends REST_Controller {
 		$supplierCount = 0;
 		$totalPurchase = 0;
 
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 2)->get();
 
 		$supplier = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$supplier->where('deleted <>', 1);
+		$supplier->where('is_pattern <>', 1);
 		$supplierCount = $supplier->where_in('contact_type_id', $type)->count();
 
-		if($filters['logic'] == "segment") {
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -1504,11 +1975,12 @@ class Vendorreports extends REST_Controller {
 								$outstandingDay = 0;
 							}
 							$customers["$seg->name"]['transactions'][] = array(
+								'id' => $t->id,
 								'type' => $t->type,
 								'date' => $t->issued_date,
 								'number' => $t->number,
 								'memo' => $t->memo2,
-								'outstanding' => $outstanding,
+								'outstanding' => $diff,
 								'amount' => floatval($t->amount) / floatval($t->rate)
 							);
 						} else {
@@ -1530,11 +2002,12 @@ class Vendorreports extends REST_Controller {
 								$outstanding = '>30';
 							}
 							$customers["$seg->name"]['transactions'][] = array(
+								'id' => $t->id,
 								'type' => $t->type,
 								'date' => $t->issued_date,
 								'number' => $t->number,
 								'memo' => $t->memo2,
-								'outstanding' => $outstanding,
+								'outstanding' => $diff,
 								'amount' => floatval($t->amount) / floatval($t->rate)
 							);
 					//Results
@@ -1544,7 +2017,6 @@ class Vendorreports extends REST_Controller {
 				}	
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 2)->get();
@@ -1552,6 +2024,7 @@ class Vendorreports extends REST_Controller {
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Credit_Purchase");
 			$obj->where('is_recurring', 0);
+			$obj->where("deleted", 0);
 
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -1593,11 +2066,12 @@ class Vendorreports extends REST_Controller {
 							$outstanding = '>30';
 						}
 						$customers["$fullname"]['transactions'][] = array(
+							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
 							'memo' => $value->memo2,
-							'outstanding' => $outstanding,
+							'outstanding' => $diff,
 							'amount' => floatval($value->amount) / floatval($value->rate)
 						);
 					} else {
@@ -1619,11 +2093,12 @@ class Vendorreports extends REST_Controller {
 							$outstanding = '>30';
 						}
 						$customers["$fullname"]['transactions'][] = array(
+							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
 							'memo' => $value->memo2,
-							'outstanding' => $outstanding,
+							'outstanding' => $diff,
 							'amount' => floatval($value->amount) / floatval($value->rate)
 						);
 				//Results
@@ -1668,13 +2143,60 @@ class Vendorreports extends REST_Controller {
 		$supplierCount = 0;
 		$totalPurchase = 0;
 
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
 		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$type->where('parent_id', 2)->get();
 
 		$supplier = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$supplier->where('deleted <>', 1);
+		$supplier->where('is_pattern <>', 1);
 		$supplierCount = $supplier->where_in('contact_type_id', $type)->count();
 
-		if($filters['logic'] == "segment") {
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -1721,6 +2243,7 @@ class Vendorreports extends REST_Controller {
 							 // days
 
 							$customers["$outstanding"]['transactions'][] = array(
+								'id' => $value->id,
 								'type' => $value->type,
 								'date' => $value->issued_date,
 								'number' => $value->number,
@@ -1730,6 +2253,7 @@ class Vendorreports extends REST_Controller {
 						} else {
 							$customers["$outstanding"]['amount']	= floatval($value->amount) / floatval($value->rate);
 							$customers["$outstanding"]['transactions'][] = array(
+								'id' => $value->id,
 								'type' => $value->type,
 								'date' => $value->issued_date,
 								'number' => $value->number,
@@ -1743,7 +2267,6 @@ class Vendorreports extends REST_Controller {
 				}	
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 2)->get();
@@ -1751,6 +2274,7 @@ class Vendorreports extends REST_Controller {
 			$obj->where_related("contact", 'contact_type_id', $type);
 			$obj->where("type", "Credit_Purchase");
 			$obj->where('is_recurring', 0);
+			$obj->where("deleted", 0);
 
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -1794,6 +2318,7 @@ class Vendorreports extends REST_Controller {
 						 // days
 
 						$customers["$outstanding"]['transactions'][] = array(
+							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
@@ -1803,6 +2328,7 @@ class Vendorreports extends REST_Controller {
 					} else {
 						$customers["$outstanding"]['amount']	= floatval($value->amount) / floatval($value->rate);
 						$customers["$outstanding"]['transactions'][] = array(
+							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
@@ -1846,7 +2372,52 @@ class Vendorreports extends REST_Controller {
 		$total = 0;
 		$numberPayment = 0;
 
-		if($filters['logic'] == "segment") {
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
+
+		if($this->get("filter")['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -1875,6 +2446,7 @@ class Vendorreports extends REST_Controller {
 							 // days
 
 							$customers["$paymentMethod->name"]['transactions'][] = array(
+								'id' => $t->id,
 								'type' => $t->type,
 								'date' => $t->issued_date,
 								'number' => $t->number,
@@ -1884,6 +2456,7 @@ class Vendorreports extends REST_Controller {
 						} else {
 							$customers["$paymentMethod->name"]['amount']	= floatval($t->amount) / floatval($t->rate);
 							$customers["$paymentMethod->name"]['transactions'][] = array(
+								'id' => $t->id,
 								'type' => $t->type,
 								'date' => $t->issued_date,
 								'number' => $t->number,
@@ -1897,7 +2470,6 @@ class Vendorreports extends REST_Controller {
 				}	
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$type->where('parent_id', 2)->get();
@@ -1906,6 +2478,7 @@ class Vendorreports extends REST_Controller {
 			$obj->where_in("type", array("Credit_Purchase", "Cash_Purchase"));
 			$obj->where_in('status', array(1, 2));
 			$obj->where('is_recurring', 0);
+			$obj->where("deleted", 0);
 
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -1927,6 +2500,7 @@ class Vendorreports extends REST_Controller {
 						 // days
 
 						$customers["$paymentMethod->name"]['transactions'][] = array(
+							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
@@ -1936,6 +2510,7 @@ class Vendorreports extends REST_Controller {
 					} else {
 						$customers["$paymentMethod->name"]['amount']	= floatval($value->amount) / floatval($value->rate);
 						$customers["$paymentMethod->name"]['transactions'][] = array(
+							'id' => $value->id,
 							'type' => $value->type,
 							'date' => $value->issued_date,
 							'number' => $value->number,
@@ -1975,6 +2550,51 @@ class Vendorreports extends REST_Controller {
 		$total = 0;
 		$order = 0;
 		$customers = array();
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}
 
 		if($filters['logic'] == "segment") {
 			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -2026,11 +2646,11 @@ class Vendorreports extends REST_Controller {
 				}	
 			}
 		} else {
-			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');
 
 			$obj->where('is_recurring', 0);
 			$obj->where('status <>', 1);
 			$obj->where("type", "Purchase_Order");
+			$obj->where("deleted", 0);
 
 			if(isset($filters['filters'])) {
 				foreach($filters['filters'] as $f) {
@@ -2080,4 +2700,155 @@ class Vendorreports extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
+
+	function over_view_get() {
+		$filters 	= $this->get("filter");
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$deleted = 0;			
+		$customers = array();
+		$total =0;
+		$segments = 0;
+		$supplierCount = 0;
+		$order = 0;
+		$totalBalance = 0;
+		$openBalance = 0;
+		$overDate = 0;
+
+		$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$type->where('parent_id', 2)->get();
+
+		$supplier = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$supplierCount = $supplier->where_in('contact_type_id', $type)->count();
+		// checked if the logic is customer or segment
+
+
+		// Segment
+		if($filters['logic'] == "segment") {
+			$segmentItem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$segmentItem->get();
+
+			foreach ($segmentItem as $seg) {
+				$segments +=1;
+				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+				$txn->where_in("type", array("Credit_Purchase", "Cash_Purchase"));
+				$txn->where_in("status", array(0,2));
+				$txn->like("segments", $seg->id, "both");
+				$txn->where("deleted",0);
+				$txn->where("is_recurring",0);
+				$txn->get_iterated();
+
+				foreach ($txn as $t) {
+					$itemLine = $t->item_line->get();
+					$amt = floatval($t->amount)/ floatval($t->rate);
+
+					if(isset($customers["$seg->name"])) {
+						$customers["$seg->name"]['amount']+= $amt;
+					} else {
+						$customers["$seg->name"]['amount']= $amt;
+					}
+					$a += 1;
+				}
+			}
+		} else {
+			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$type->where('parent_id', 2)->get();
+
+			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where_related("contact", 'contact_type_id', $type);
+			$obj->where('is_recurring', 0);
+			$obj->where_in("type", array("Credit_Purchase", "Cash_Purchase", "Purchase_Order"));
+
+			// $obj->include_related("contact_type", "name");
+
+			//Results
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+			
+			if($obj->result_count()>0){
+				foreach ($obj as $value) {
+					$today = new DateTime();
+					$dueDate = new DateTime($value->due_date);
+
+					$customer = $value->contact->get();
+					$fullname = $customer->surname.' '.$customer->name;
+					if(isset($customers["$fullname"])) {
+						$customers["$fullname"]['amount']+= floatval($value->amount)/ floatval($value->rate);
+					} else {
+						$customers[$fullname]['amount']= floatval($value->amount)/ floatval($value->rate);
+					}
+					$itemLine = $value->item_line->get();
+					foreach($itemLine as $line) {
+						$item = $line->item->get();
+						if(isset($items["$item->name"])) {
+							$items["$item->name"]['qty'] += intval($line->quantity);
+							$items["$item->name"]['amount'] += floatval($line->amount);
+							$items["$item->name"]['price'] += floatval($line->price);
+							$items["$item->name"]['cost'] += floatval($line->cost);
+							$items["$item->name"]['gross_profit'] += (floatval($line->price)-floatval($line->cost)) * floatval($line->quantity);
+						} else {
+							$items["$item->name"]['qty'] = intval($line->quantity);
+							$items["$item->name"]['amount'] = floatval($line->amount);
+							$items["$item->name"]['price'] = floatval($line->price);
+							$items["$item->name"]['cost'] = floatval($line->cost);
+							$items["$item->name"]['rate'] = floatval($value->rate);
+							$items["$item->name"]['gross_profit'] = (floatval($line->price)-floatval($line->cost)) * floatval($line->quantity);
+
+						}						
+					}					
+					if($value->type == "Purchase_Order") {
+						if($value->status !=1 ) {
+							$order += 1;
+						}						
+					}
+					if($value->type == "Credit_Purchase"||$value->type == "Cash_Purchase") {							
+						$total += floatval($value->amount)/ floatval($value->rate);											
+					}
+					if($value->type == "Credit_Purchase") {	
+						if($value->status !=1 ) {						
+						$totalBalance += floatval($value->amount)/ floatval($value->rate);
+						}											
+					}
+					if($value->type == "Credit_Purchase") {
+						if($value->status ==2) {
+							$openBalance += 1;
+						}						
+					}
+					if($value->type == "Credit_Purchase") {
+						if($dueDate<$today) {
+							$overDate += 1;
+						}						
+					}
+				}
+				
+			}
+		}				
+
+		foreach ($customers as $key => $value) {
+			$data["results"][] = array(
+				'customer' => $key,
+				'amount'	=> $value['amount']
+
+			);
+		}
+
+		// Response Data
+		$data['total'] = $total;
+		$data['overDate'] = $overDate;
+		$data['totalBalance'] = $totalBalance;
+		$data['openBalance'] = $openBalance;
+		$data['supplierCount'] = $supplierCount;
+		$data['segments'] = $segments;
+		$data['order'] = $order;
+		$data['count'] = count($customers);
+		$data['items'] = count($items);
+		$this->response($data, 200);
+	}
+	
+
 }//End Of Class

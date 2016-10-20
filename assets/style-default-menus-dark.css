@@ -38,6 +38,7 @@ a:hover .text-underline {
 a {
   color: #e5412d;
   outline: 0 ;
+  cursor: pointer;
 }
 h1,
 h2,
@@ -1538,6 +1539,7 @@ html.top-full .navbar.main .topnav > li > a {
   height: 43px;
   line-height: 43px;
   font-weight: 600;
+  text-transform: uppercase;
 }
 html.top-full .navbar.main .topnav > li > a > img {
   margin: 0 0 3px;
@@ -3176,7 +3178,7 @@ html.top-full .navbar.main .topnav .dropdown-menu {
 .widget-stats.widget-stats-5 .txt span {
   display: block;
   line-height: 30px;
-  font-size: 25px;
+  font-size: 15px;
 }
 .widget-stats.widget-stats-easy-pie .easy-pie {
   display: block;

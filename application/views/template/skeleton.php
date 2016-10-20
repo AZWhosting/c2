@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.dataviz.material.min.css">
 <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.dataviz.bootstrap.min.css">
 
+
 <!-- Bootstrap -->
 <!--<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/css/responsive.css"-->
 <link rel="stylesheet" href="<?php echo base_url()?>assets/bootstrap.css" >
@@ -185,6 +186,208 @@ var themerPrimaryColor = primaryColor;
 		</div>
 		</a>
 	</div>
+	<a class="aWelcome" href="#firstPopUp" data-toggle="modal"></a>
+	<div class="modal fade popRightBlog" id="firstPopUp">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<div class="span12 welcome">
+			<div class="span5" style="text-align: center;">
+				<img src="<?php echo base_url(); ?>assets/img/welcome/welcome.png" style="width:93%;margin-top: 20px;" />
+				<div style="padding: 20px 0;" class="span12">
+					<a href="https://www.facebook.com/BanhjiApp/" target="_blank"> 
+						<img src="<?php echo base_url(); ?>assets/img/welcome/f-icon.png" style="float: left;width: 40px;" />
+						<p style="font-size: 10px;color: #8497b0;float:left;text-align: left;width: 64%;">សូមចូលទៅកាន់ទំព័រ Facebook របស់ BanhJi ដើម្បីទទួលបានព័តមានថ្មី និងការណែនាំផ្សេង</p>
+					</a>
+				</div>
+			</div>
+			<div class="span7" style="float:right;">
+				<h2 style="font-size: 16px; color: #bdd7ee;">មុនពេលចាប់ផ្តើមជាមួយBanhJi សូមមើលការណែនាំទីនេះ<br> <a style="color: #0063c1;" target="_blank" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/welcome_guide.pdf">[Welcome Guide]</a> ដើម្បីជាជំនួយ</h2>
+				<div class="span12 cover-welcome-four-blog">
+					<p style="color: #8497b0;font-size:12px;">ជាទូទៅដើម្បីចាប់ផ្តើមប្រើប្រាស់ អ្នកគួរមាន ផលិតផល ឬសេវាកម្មដើម្បីលក់ អតិថិជនដែលត្រូវចេញវិក័យបត្រអោយ និងអ្នកផ្គត់ផ្គង់ដែលអ្នកត្រូវទិញផលិតផលទាំងនោះ</p>
+					<a href="#/customer">
+						<div class="cover-blog-welcome span3">
+							<img src="<?php echo base_url(); ?>assets/img/welcome/1.png">
+							<p style="color: #fff;font-size:10px;">កត់ត្រាអតិថិជនរបស់អ្នក</p>
+						</div>
+					</a>
+					<a href="#/vendor">
+						<div class="cover-blog-welcome span3">
+							<img src="<?php echo base_url(); ?>assets/img/welcome/2.png">
+							<p style="color: #fff;font-size:10px;">បន្ថែមអ្នកផ្គត់ផ្គង់របស់អ្នក</p>
+						</div>
+					</a>
+					<a href="#/item">
+						<div class="cover-blog-welcome span3">
+							<img src="<?php echo base_url(); ?>assets/img/welcome/3.png">
+							<p style="color: #fff;font-size:10px;">កត់ត្រាផលិតផលដែលដែលអ្នកលក់​ និងទិញ</p>
+						</div>
+					</a>
+					<a href="#/item_service">
+						<div class="cover-blog-welcome span3">
+							<img src="<?php echo base_url(); ?>assets/img/welcome/4.png">
+							<p style="color: #fff;font-size:10px;">កត់ត្រាសេវាកម្មដែលផ្តល់អោយអតិថិជន</p>
+						</div>
+					</a>
+				</div>
+				<p style="color: #8497b0;font-size:11px;">យើងខ្ញុំកំពុងបកប្រែទំព័រមួយចំនួន ដូចនេះទំព័រទាំងនោះមិនទាន់មានភាសាខ្មែរនៅឡើយទេ សូមអភ័យទោសចំពោះការយឺតយាវនេះ។ លើសពីនេះប្រសិនបើមានសំណួរ ឬមតិយោបល់សូមចុចលើប៊ូតុងទាំងនេះ </p>
+			</div>
+		</div>
+	</div>
+
+	<a class="aCustomer" href="#customerPopUp" data-toggle="modal"></a>
+	<div class="modal fade popRightBlog" id="customerPopUp">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<div class="span12 welcome">
+			<div class="span4" style="text-align: center;">
+				<img src="<?php echo base_url(); ?>assets/img/welcome/wcustomer.png" style="margin-top: 35px;width: 63%;" />
+				
+			</div>
+			<div class="span8" style="float:right;margin-top: 46px;">
+				<h2 style="font-size: 16px; color: #bdd7ee;">ដើម្បីចាប់ផ្តើមប្រើទំព័រនេះ អ្នកគួរមានលក្ខខណ្ឌខាងក្រោម</h2>
+				<div class="span12 cover-welcome-four-blog">
+					<div class="cover-blog-welcome span3">
+						<a href="#/customer">
+						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតអតិថិជនរបស់អ្នកដើម្បីចេញវិក័យបត្រ</p>
+						<img src="<?php echo base_url(); ?>assets/img/welcome/1.png">
+						</a>
+					</div>
+					<div class="cover-blog-welcome span5">
+						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតផលិតផលដែលអ្នកលក់​ និងទិញ ឬសេវាកម្មដែលអ្នកផ្តល់</p>
+						<div class="row">
+							<a href="#/item"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/3.png"></a>
+							<a href="#/item_service"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/4.png"></a>
+						</div>
+					</div>
+					<div class="cover-blog-welcome span4" style="text-align: center;">
+						<a href="#/purchase">
+							<p style="color: #fff;font-size:10px;text-align: left;">បើអ្នកលក់ផលិតផល អ្នកត្រូវទិញផលិតផលទាំងនោះ</p>
+							<img style="width: 66%;" src="<?php echo base_url(); ?>assets/img/welcome/5.png">
+						</a>
+					</div>
+				</div>
+				<p style="color: #8497b0;font-size:14px;">មានទាំងអស់នេះហើយ អ្នកអាចរៀបចំសម្រង់តម្លៃ បញ្ជាលក់ ទទួលប្រាក់កក់ លក់ជាសាច់ប្រាក់ និងចេញវិក័យបត្របាន</p>
+			</div>
+		</div>
+		<div class="bottom-cover">
+			<a href="https://www.facebook.com/BanhjiApp/" target="_blank" style="float:left;"><img src="<?php echo base_url(); ?>assets/img/welcome/facebook-icon.png"></a><a href="https://m.me/862386433857166" target="_blank" style="float:left;"><img src="<?php echo base_url(); ?>assets/img/welcome/chart-icon.png"></a><p style="background: #5a9bd5; padding: 5px 15px; color: #000;float:left;">សួស្តីខ្ញុំជាជំនួយការអ្នក មានចំងល់សូមទំនាក់ទំនងមកខ្ញុំលេខ ០១០​ ៤១៣ ៧៧៧</p>
+		</div>
+	</div>
+
+	<a class="aSupplier" href="#supplierPopUp" data-toggle="modal"></a>
+	<div class="modal fade popRightBlog" id="supplierPopUp">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<div class="span12 welcome">
+			<div class="span4" style="text-align: center;">
+				<img src="<?php echo base_url(); ?>assets/img/welcome/supplier.png" style="margin-top: 35px;width: 63%;" />
+				
+			</div>
+			<div class="span8" style="float:right;margin-top: 46px;">
+				<h2 style="font-size: 16px; color: #bdd7ee;">ដើម្បីចាប់ផ្តើមប្រើទំព័រនេះ អ្នកគួរមានលក្ខខណ្ឌខាងក្រោម</h2>
+				<div class="span12 cover-welcome-four-blog">
+					<div class="cover-blog-welcome span3">
+						<a href="#/vendor">
+						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតអ្នកផ្គត់ផ្គង់របស់អ្នកដើម្បីបញ្ជាទិញ</p>
+						<img src="<?php echo base_url(); ?>assets/img/welcome/2.png">
+						</a>
+					</div>
+					<div class="cover-blog-welcome span5">
+						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតផលិតផលដែលអ្នកលក់​ និងទិញ ឬសេវាកម្មដែលអ្នកផ្តល់</p>
+						<div class="row">
+							<a href="#/item"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/3.png"></a>
+							<a href="#/item_service"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/4.png"></a>
+						</div>
+					</div>
+					<div class="cover-blog-welcome span4" style="text-align: center;">
+						<a href="#/purchase">
+							<p style="color: #fff;font-size:10px;text-align: left;">អ្នកអាចចាប់ផ្តើម ទិញផលិតផលសម្រាប់លក់</p>
+							<img style="width: 66%;" src="<?php echo base_url(); ?>assets/img/welcome/5.png">
+						</a>
+					</div>
+				</div>
+				<p style="color: #8497b0;font-size:14px;">មានទាំងអស់នេះហើយ អ្នកអាចរៀបចំការបញ្ជាទិញ ប្រាក់កក់ទៅអ្នកផ្គត់ផ្គង់ និងទិញផលិតផលសម្រាប់លក់បាន</p>
+			</div>
+		</div>
+		<div class="bottom-cover">
+			<a href="https://www.facebook.com/BanhjiApp/" target="_blank" style="float:left;"><img src="<?php echo base_url(); ?>assets/img/welcome/facebook-icon.png"></a><a href="https://m.me/862386433857166" target="_blank" style="float:left;"><img src="<?php echo base_url(); ?>assets/img/welcome/chart-icon.png"></a><p style="background: #5a9bd5; padding: 5px 15px; color: #000;float:left;">សួស្តីខ្ញុំជាជំនួយការអ្នក មានចំងល់សូមទំនាក់ទំនងមកខ្ញុំលេខ ០១០​ ៤១៣ ៧៧៧</p>
+		</div>
+	</div>
+
+	<a class="aInventory" href="#inventoryPopUp" data-toggle="modal"></a>
+	<div class="modal fade popRightBlog" id="inventoryPopUp">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<div class="span12 welcome">
+			<div class="span4" style="text-align: center;">
+				<img src="<?php echo base_url(); ?>assets/img/welcome/inventory.png" style="margin-top: 35px;width: 63%;" />
+				
+			</div>
+			<div class="span8" style="float:right;margin-top: 46px;">
+				<h2 style="font-size: 16px; color: #bdd7ee;">ដើម្បីចាប់ផ្តើមប្រើទំព័រនេះ អ្នកគួរមានលក្ខខណ្ឌខាងក្រោម</h2>
+				<div class="span12 cover-welcome-four-blog">
+					<div class="cover-blog-welcome span4">
+						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតផលិតផលដែលអ្នកលក់​ និងទិញ ឬសេវាកម្មដែលអ្នកផ្តល់</p>
+						<div class="row">
+							<a href="#/item"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/3.png"></a>
+							<a href="#/item_service"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/4.png"></a>
+						</div>
+					</div>
+					<div class="cover-blog-welcome span4">
+						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតអ្នកផ្គត់ផ្គង់ និងអតិថិជនរបស់អ្នកដើម្បីបញ្ជាទិញ និងលក់</p>
+						<div class="row">
+							<a href="#/vendor"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/2.png"></a>
+							<a href="#/customer"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/1.png"></a>
+						</div>
+					</div>
+					<div class="cover-blog-welcome span4">
+						<p style="color: #fff;font-size:10px;text-align: left;">អ្នកអាចចាប់ផ្តើម ទិញ និងលក់ផលិតផល</p>
+						<div class="row">
+							<a href="#/purchase"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/5.png"></a>
+							<a href="#/invoice"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/invoice.png"></a>
+						</div>
+					</div>
+					
+				</div>
+				<p style="color: #8497b0;font-size:14px;">មានទាំងអស់នេះហើយ អ្នកអាចទិញ និងលក់ផលិតផលបាន</p>
+			</div>
+		</div>
+		<div class="bottom-cover">
+			<a href="https://www.facebook.com/BanhjiApp/" target="_blank" style="float:left;"><img src="<?php echo base_url(); ?>assets/img/welcome/facebook-icon.png"></a><a href="https://m.me/862386433857166" target="_blank" style="float:left;"><img src="<?php echo base_url(); ?>assets/img/welcome/chart-icon.png"></a><p style="background: #5a9bd5; padding: 5px 15px; color: #000;float:left;">សួស្តីខ្ញុំជាជំនួយការអ្នក មានចំងល់សូមទំនាក់ទំនងមកខ្ញុំលេខ ០១០​ ៤១៣ ៧៧៧</p>
+		</div>
+	</div>
+
+	<a class="aAccount" href="#accountPopUp" data-toggle="modal"></a>
+	<div class="modal fade popRightBlog" id="accountPopUp">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<div class="span12 welcome">
+			<div class="span4" style="text-align: center;">
+				<img src="<?php echo base_url(); ?>assets/img/welcome/accounting.png" style="margin-top: 35px;width: 63%;" />
+				
+			</div>
+			<div class="span8" style="float:right;margin-top: 46px;">
+				<h2 style="font-size: 16px; color: #bdd7ee;">ដើម្បីចាប់ផ្តើមប្រើទំព័រនេះ អ្នកគួរមានលក្ខខណ្ឌខាងក្រោម</h2>
+				<div class="span12 cover-welcome-four-blog">
+					<div class="cover-blog-welcome span8">
+						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតផលិតផលដែលអ្នកលក់​ និងទិញ ឬសេវាកម្មដែលអ្នកផ្តល់</p>
+						<div class="row">
+							<a href="#/txn_item"><img style="width: 32%;float:left;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_txn_item.ico"></a>
+							<a href="#/account"><img style="width: 32%;float:left;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/journal.ico"></a>
+							<a href="#/segment"><img style="width: 32%;float:left;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/segment.ico"></a>
+						</div>
+					</div>
+					<div class="cover-blog-welcome span4">
+						<p style="color: #fff;font-size:10px;text-align: left;">បង្កើតអ្នកផ្គត់ផ្គង់ និងអតិថិជនរបស់អ្នកដើម្បីបញ្ជាទិញ និងលក់</p>
+						<div class="row">
+							<a href="#/vendor"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/2.png"></a>
+						</div>
+					</div>
+					
+				</div>
+				<p style="color: #8497b0;font-size:14px;">មានទាំងអស់នេះហើយ អ្នកអាចទិញ និងលក់ផលិតផលបាន</p>
+			</div>
+		</div>
+		<div class="bottom-cover">
+			<a href="https://www.facebook.com/BanhjiApp/" target="_blank" style="float:left;"><img src="<?php echo base_url(); ?>assets/img/welcome/facebook-icon.png"></a><a href="https://m.me/862386433857166" target="_blank" style="float:left;"><img src="<?php echo base_url(); ?>assets/img/welcome/chart-icon.png"></a><p style="background: #5a9bd5; padding: 5px 15px; color: #000;float:left;">សួស្តីខ្ញុំជាជំនួយការអ្នក មានចំងល់សូមទំនាក់ទំនងមកខ្ញុំលេខ ០១០​ ៤១៣ ៧៧៧</p>
+		</div>
+	</div>
+
 	<div class="modal fade popRightBlog" id="feedbackContent">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -198,21 +401,22 @@ var themerPrimaryColor = primaryColor;
 			<a href="#" class="btn btn-primary" id="feedBackSend">Send</a>
 		</div>
 	</div>
-	<div class="modal fade popRightBlog" id="referralContent">
+	<div class="modal fade popRightBlog" style="height: 330px" id="referralContent">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3>Referral</h3>
+			<h3>Refer to Friends</h3>
 		</div>
 		<div class="modal-body">
-		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
-		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
-		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
-		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
-		  	<input type="text" name="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" placeholder="Email" />
+			<p>Help us grow and earn rewards! Get 100MB of storage when you refer customers to BanhJi that signup.</p>
+		  	<input type="text" name="refferalName1" id="refferalName1" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail1" placeholder="Email" />
+		  	<input type="text" name="refferalName2" id="refferalName2" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail2" placeholder="Email" />
+		  	<input type="text" name="refferalName3" id="refferalName3" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail3" placeholder="Email" />
+		  	<input type="text" name="refferalName4" id="refferalName4" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail4" placeholder="Email" />
+		  	<input type="text" name="refferalName5" id="refferalName5" placeholder="Name" /><input type="email" name="refferalEmail1" id="refferalEmail5" placeholder="Email" />
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="btn btn-default cloze" data-dismiss="modal">Close</a>
-			<a href="#" class="btn btn-primary" id="feedBackSend">Send</a>
+			<a href="#" class="btn btn-primary" id="referralSend">Send</a>
 		</div>
 	</div>
 	<?php echo $body ?>
@@ -244,6 +448,30 @@ var themerPrimaryColor = primaryColor;
 
   </script>
   <script type="text/javascript">
+
+	function createCookie(name,value,days) {
+	    if (days) {
+	        var date = new Date();
+	        date.setTime(date.getTime()+(days*24*60*60*1000));
+	        var expires = "; expires="+date.toGMTString();
+	    }
+	    else var expires = "";
+	    document.cookie = name+"="+value+expires+"; path=/";
+	}
+	function readCookie(name) {
+	    var nameEQ = name + "=";
+	    var ca = document.cookie.split(';');
+	    for(var i=0;i < ca.length;i++) {
+	        var c = ca[i];
+	        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+	        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	    }
+	    return null;
+	}
+	function eraseCookie(name) {
+	    createCookie(name,"");
+	}
+
 	$(document).ready(function(e) {
 		$("#feedBackSend").click(function(){
 			var MSG = $("#feedbackMsg").val();
@@ -253,14 +481,51 @@ var themerPrimaryColor = primaryColor;
 			var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
 			$.ajax({  
 			    type: 'POST',
-			    url: '<?php echo base_url(); ?>api/send_mail', 
+			    url: '<?php echo base_url(); ?>api/feedbacks', 
 			    data: { msg: MSG, cURL: CurrentURL, uName: UserName, datesend: strDate },
 			    success: function(response) {
-			        alert(response);
+			        alert(response.message);
 			        $("#feedbackMsg").val("");
 			        $(".cloze").click();
 			    }
 			});
+		});
+		$("#referralSend").click(function(){
+			var name1 = $("#refferalName1").val();
+			var email1 = $("#refferalEmail1").val();
+			var name2 = $("#refferalName2").val();
+			var email2 = $("#refferalEmail2").val();
+			var name3 = $("#refferalName3").val();
+			var email3 = $("#refferalEmail3").val();
+			var name4 = $("#refferalName4").val();
+			var email4 = $("#refferalEmail4").val();
+			var name5 = $("#refferalName5").val();
+			var email5 = $("#refferalEmail5").val();
+			var UserName = banhji.userData.username;
+			var d = new Date();
+			var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
+			$.ajax({  
+			    type: 'POST',
+			    url: '<?php echo base_url(); ?>api/referrals',
+			    data: { uName: UserName, datesend: strDate, rName1: name1, rName2: name2, rName3: name3, rName4: name4, rName5: name5, rMail1: email1, rMail2: email2, rMail3: email3, rMail4: email4, rMail5: email5 },
+			    success: function(response) {
+			        alert(response.message);
+			        //$("#feedbackMsg").val("");
+			        $(".cloze").click();
+			    }
+			});
+		});
+
+		//eraseCookie("isshow");
+		var isshow = readCookie("isshow");
+		
+	    if (isshow != 1) {
+	        createCookie("isshow", 1);
+			$(".aWelcome").click();  
+		}
+
+		$(".cover-welcome-four-blog a").click(function(){
+			$(".close").click();
 		});
 	});
    </script>

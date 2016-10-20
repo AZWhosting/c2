@@ -111,12 +111,12 @@ class Currencies extends REST_Controller {
 									
 			if($obj->save()){
 				$data["results"][] = array(
-					"id" 		=> $value->id,					
-					"code" 		=> $value->code,
-					"country" 	=> $value->country,
-					"locale" 	=> $value->locale,
-					"group" 	=> $value->group,					
-					"status" 	=> $value->status
+					"id" 		=> $obj->id,					
+					"code" 		=> $obj->code,
+					"country" 	=> $obj->country,
+					"locale" 	=> $obj->locale,
+					"group" 	=> $obj->group,					
+					"status" 	=> $obj->status
 				);
 			}
 		}
@@ -143,12 +143,12 @@ class Currencies extends REST_Controller {
 
 			if($obj->save()){				
 				$data["results"][] = array(
-					"id" 		=> $value->id,					
-					"code" 		=> $value->code,
-					"country" 	=> $value->country,
-					"locale" 	=> $value->locale,
-					"group" 	=> $value->group,					
-					"status" 	=> $value->status	
+					"id" 		=> $obj->id,					
+					"code" 		=> $obj->code,
+					"country" 	=> $obj->country,
+					"locale" 	=> $obj->locale,
+					"group" 	=> $obj->group,					
+					"status" 	=> $obj->status	
 				);		
 			}
 		}
@@ -235,10 +235,9 @@ class Currencies extends REST_Controller {
 		$data["count"] = $obj->paged->total_rows;		
 
 		if($obj->exists()){			
-			foreach ($obj as $value) {				
-				//Results				
+			foreach ($obj as $value) {
 				$data["results"][] = array(
-					"id" 			=> $value->id,					
+					"id" 			=> $value->id,
 					"currency_id" 	=> $value->currency_id,
 					"user_id" 		=> $value->user_id,
 					"rate" 			=> floatval($value->rate),
@@ -246,6 +245,7 @@ class Currencies extends REST_Controller {
 					"source" 	 	=> $value->source,
 					"method" 		=> $value->method,
 					"date" 			=> $value->date,
+					"is_system" 	=> $value->is_system,
 
 					"currency" 		=> $value->currency->get_raw()->result()	
 				);
@@ -262,17 +262,25 @@ class Currencies extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-			$obj->currency_id 	= $value->currency_id;
-			$obj->user_id 		= $value->user_id;
-			$obj->rate 			= $value->rate;
-			$obj->locale 		= $value->locale;
-			$obj->source 		= $value->source;
-			$obj->method 		= $value->method;
-			$obj->date 			= $value->date;			
+			
+			isset($value->currency_id) 	? $obj->currency_id = $value->currency_id : "";
+			isset($value->user_id) 		? $obj->user_id 	= $value->user_id : "";
+			isset($value->rate) 		? $obj->rate 		= $value->rate : "";
+			isset($value->locale) 		? $obj->locale 		= $value->locale : "";
+			isset($value->source) 		? $obj->source 		= $value->source : "";
+			isset($value->method) 		? $obj->method 		= $value->method : "";
+			isset($value->date) 		? $obj->date 		= $value->date : "";
+			isset($value->is_system) 	? $obj->is_system 	= $value->is_system : "";
 						
 			if($obj->save()){
+				// Active Currency
+				$cur = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$cur->get_by_id($obj->currency_id);
+				$cur->status = 1;
+				$cur->save();
+
 				$data["results"][] = array(
-					"id" 			=> $obj->id,					
+					"id" 			=> $obj->id,
 					"currency_id" 	=> $obj->currency_id,
 					"user_id" 		=> $obj->user_id,
 					"rate" 			=> floatval($obj->rate),
@@ -280,6 +288,7 @@ class Currencies extends REST_Controller {
 					"source" 	 	=> $obj->source,
 					"method" 		=> $obj->method,
 					"date" 			=> $obj->date,
+					"is_system" 	=> $obj->is_system,
 
 					"currency" 		=> $obj->currency->get_raw()->result()
 				);
@@ -299,18 +308,25 @@ class Currencies extends REST_Controller {
 		foreach ($models as $value) {			
 			$obj = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
+			
+			isset($value->currency_id) 	? $obj->currency_id = $value->currency_id : "";
+			isset($value->user_id) 		? $obj->user_id 	= $value->user_id : "";
+			isset($value->rate) 		? $obj->rate 		= $value->rate : "";
+			isset($value->locale) 		? $obj->locale 		= $value->locale : "";
+			isset($value->source) 		? $obj->source 		= $value->source : "";
+			isset($value->method) 		? $obj->method 		= $value->method : "";
+			isset($value->date) 		? $obj->date 		= $value->date : "";
+			isset($value->is_system) 	? $obj->is_system 	= $value->is_system : "";		
 
-			$obj->currency_id 	= $value->currency_id;
-			$obj->user_id 		= $value->user_id;
-			$obj->rate 			= $value->rate;
-			$obj->locale 		= $value->locale;
-			$obj->source 		= $value->source;
-			$obj->method 		= $value->method;
-			$obj->date 			= $value->date;			
+			if($obj->save()){
+				// Active Currency
+				$cur = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$cur->get_by_id($obj->currency_id);
+				$cur->status = 1;
+				$cur->save();
 
-			if($obj->save()){				
 				$data["results"][] = array(
-					"id" 			=> $obj->id,					
+					"id" 			=> $obj->id,
 					"currency_id" 	=> $obj->currency_id,
 					"user_id" 		=> $obj->user_id,
 					"rate" 			=> floatval($obj->rate),
@@ -318,6 +334,7 @@ class Currencies extends REST_Controller {
 					"source" 	 	=> $obj->source,
 					"method" 		=> $obj->method,
 					"date" 			=> $obj->date,
+					"is_system" 	=> $obj->is_system,
 
 					"currency" 		=> $obj->currency->get_raw()->result()	
 				);		

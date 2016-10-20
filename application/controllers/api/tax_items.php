@@ -89,7 +89,10 @@ class Tax_items extends REST_Controller {
 					"tax_type_id" 	=> $value->tax_type_id,
 					"account_id" 	=> $value->account_id,
 					"name" 			=> $value->name,
+					"description" 	=> $value->description,
 					"rate" 			=> $value->rate,
+					"is_system"	 	=> $value->is_system,
+
 					"account" 		=> $value->account->get_raw()->result()
 				);
 			}
@@ -109,7 +112,9 @@ class Tax_items extends REST_Controller {
 			isset($value->tax_type_id) 	? $obj->tax_type_id 	= $value->tax_type_id : "";
 			isset($value->account_id) 	? $obj->account_id 		= $value->account_id : "";
 			isset($value->name) 		? $obj->name 			= $value->name : "";
+			isset($value->description) 	? $obj->description 	= $value->description : "";
 			isset($value->rate) 		? $obj->rate 			= $value->rate : "";
+			isset($value->is_system) 	? $obj->is_system 		= $value->is_system : "";
 									
 			if($obj->save()){				
 				//Respsone
@@ -118,7 +123,10 @@ class Tax_items extends REST_Controller {
 					"tax_type_id" 	=> $obj->tax_type_id,
 					"account_id" 	=> $obj->account_id,
 					"name" 			=> $obj->name,
+					"description" 	=> $obj->description,
 					"rate" 			=> $obj->rate,
+					"is_system"	 	=> $obj->is_system,
+
 					"account" 		=> $obj->account->get_raw()->result()
 				);				
 			}			
@@ -141,7 +149,9 @@ class Tax_items extends REST_Controller {
 			isset($value->tax_type_id) 	? $obj->tax_type_id 	= $value->tax_type_id : "";
 			isset($value->account_id) 	? $obj->account_id 		= $value->account_id : "";
 			isset($value->name) 		? $obj->name 			= $value->name : "";
-			isset($value->rate) 		? $obj->rate 			= $value->rate : "";			
+			isset($value->description) 	? $obj->description 	= $value->description : "";
+			isset($value->rate) 		? $obj->rate 			= $value->rate : "";
+			isset($value->is_system) 	? $obj->is_system 		= $value->is_system : "";			
 			
 			if($obj->save()){				
 				//Results
@@ -150,7 +160,10 @@ class Tax_items extends REST_Controller {
 					"tax_type_id" 	=> $obj->tax_type_id,
 					"account_id" 	=> $obj->account_id,
 					"name" 			=> $obj->name,
+					"description" 	=> $obj->description,
 					"rate" 			=> $obj->rate,
+					"is_system"	 	=> $obj->is_system,
+
 					"account" 		=> $obj->account->get_raw()->result()
 				);						
 			}

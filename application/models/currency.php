@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Currency extends DataMapper {
-	var $table = "currencies";
+	public $table = "currencies";
 
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";

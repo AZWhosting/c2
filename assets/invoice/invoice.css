@@ -304,7 +304,7 @@ pre {
 	padding: 20px 0;
 }
 .pcg * {
-	font-size: 10px;
+	font-size: 12px;
 	color: #355176;
 }
 .pcg .mid-header {
@@ -328,6 +328,9 @@ pre {
 .pcg .mid-title div {
 	color: #fff;
 	font-weight: bold;
+}
+.pcg .mid-title span {
+	color: #fff!important;
 }
 .pcg table th {
 	padding: 8px 0;

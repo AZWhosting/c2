@@ -339,6 +339,7 @@ class Profiles extends REST_Controller {
 					'year_founded'=>$u->institute->year_founded,
 					'locale' => $u->institute->locale,
 					'zip' => $u->institute->zip_code,
+					'telephone' => $u->institute->telephone,
 					'reportCurrency' => array('id'=>$report->id, 'code'=>$report->code, 'country' => $report->country, 'locale' =>$report->locale),
 					'is_local' => $u->institute->is_local,
 					'financial_year' => $u->institute->financial_year,
@@ -384,13 +385,13 @@ class Profiles extends REST_Controller {
 			$inst = new Institute();
 			$inst->name = $r->name;
 			$inst_year_founded = date('Y');
-			$inst->monetary_id = 3;
-			$inst->report_monetary_id = 3;
+			$inst->telephone = $r->telephone;
+			$inst->monetary_id = $r->currency->id;
+			$inst->report_monetary_id = $r->currency->id;
 			$inst->logo = 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/default_logo.png';
 			$inst->country_id = $r->country->id;
 			$inst->industry_id = $r->industry->id;
 			$inst->type_id = $r->type->id;
-			$inst->monetary_id = 3;
 			if($inst->save(array($user, $modules->all))) {
 				$user->save($modules->all);
 				// fillin dafault data

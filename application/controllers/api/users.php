@@ -206,7 +206,7 @@ class Users extends REST_Controller {
 			$User->last_name = $user->last_name;
 			$User->email = $user->email;
 			$User->mobile = $user->mobile;
-			$User->profile_photo_url = $user->profile_photo;
+			$User->pimage_id = 2;
 			$User->role = 1;
 			$User->is_confirmed = 0;
 			$User->is_disabled = 0;
@@ -412,6 +412,32 @@ class Users extends REST_Controller {
 			$this->response(array('results'=>$data, 'count'=>count($data)), 200);
 		} else {
 			$this->response(array('results'=>$data, 'count'=>0), 200);
+		}
+	}
+
+	function access_get() {
+		$requested_data = $this->get("filter");
+		$filters = $requested_data['filters'];
+		$limit = 1;
+
+		$user = new User();
+		if(isset($filters)) {
+			foreach($filters as $filter) {
+				$user->where($filter['field'], $filter['value']);
+			}
+		}
+		$user->get();
+		if($user->exists()) {
+			$modules = $user->module->get();
+			$data = array();
+			foreach($modules as $m) {
+				$data[] = array(
+					'name' => $m->name
+				);
+			}
+			$this->response(array('results' => $data), 200);
+		} else {
+			$this->response(array(), 200);
 		}
 	}
 
