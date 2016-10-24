@@ -4,14 +4,14 @@ class Meter extends DataMapper {
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";
 
-	public $has_one = array("company", "location", "electricity_box", "contact",
+	public $has_one = array("branch", "location", "electricity_box", "contact",
 		'item' => array(
             'class' => 'item',
             'other_field' => 'meter'
         ),
-        'invoice' => array(
+        'transaction' => array(
             'class' => 'meter',
-            'other_field' => 'invoice'
+            'other_field' => 'transaction'
         ),
         'tariff' => array(
             'class' => 'fee',
@@ -38,9 +38,13 @@ class Meter extends DataMapper {
             'other_field' => 'voltage'
         )
 	);
-	public $has_many = array("electricity_unit", "meter_record", 
-		'payment' => array(
-            'class' => 'payment',
+	public $has_many = array( 
+		'reading' => array(
+            'class' => 'reading',
+            'other_field' => 'meter'
+        ),
+        'electricity_unit' => array(
+            'class' => 'electricity_unit',
             'other_field' => 'meter'
         )    
 	);

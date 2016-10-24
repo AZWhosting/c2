@@ -91,7 +91,7 @@ class Meters extends REST_Controller {
 				//Results				
 				$data["results"][] = array(
 					"id" 					=> $value->id,
-					"company_id" 			=> $value->company_id, 		
+					"branch_id" 			=> $value->branch_id, 		
 					"utility_id" 			=> $value->utility_id,
 					"deposit_id" 			=> $value->deposit_id,
 					"invoice_id" 			=> $value->invoice_id,
@@ -145,7 +145,7 @@ class Meters extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			
-			$obj->company_id 			= $value->company_id;
+			$obj->branch_id 			= $value->branch_id;
 			$obj->utility_id 			= $value->utility_id;
 			$obj->deposit_id 			= isset($value->deposit_id)			?$value->deposit_id:0;
 			$obj->invoice_id 			= isset($value->invoice_id)			?$value->invoice_id:0;
@@ -177,7 +177,7 @@ class Meters extends REST_Controller {
 				//Respsone
 				$data["results"][] = array(
 					"id" 					=> $obj->id,
-					"company_id" 			=> $obj->company_id, 		
+					"branch_id" 			=> $obj->branch_id, 		
 					"utility_id" 			=> $obj->utility_id,
 					"deposit_id" 			=> $obj->deposit_id,
 					"invoice_id" 			=> $obj->invoice_id,
@@ -232,7 +232,7 @@ class Meters extends REST_Controller {
 			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			$obj->company_id 			= $value->company_id;
+			$obj->branch_id 			= $value->branch_id;
 			$obj->utility_id 			= $value->utility_id;
 			$obj->deposit_id 			= $value->deposit_id;
 			$obj->invoice_id 			= $value->invoice_id;
@@ -264,7 +264,7 @@ class Meters extends REST_Controller {
 				//Results
 				$data["results"][] = array(
 					"id" 					=> $obj->id,
-					"company_id" 			=> $obj->company_id, 		
+					"branch_id" 			=> $obj->branch_id, 		
 					"utility_id" 			=> $obj->utility_id,
 					"deposit_id" 			=> $obj->deposit_id,
 					"invoice_id" 			=> $obj->invoice_id,
@@ -1010,7 +1010,7 @@ class Meters extends REST_Controller {
 				if($value["field"]=="meter_number"){
 					$obj->order_by_related("meter", "number", $value["dir"]);
 				}else if($value["field"]=="branch_name"){
-					$obj->order_by_related("meter", "company_id", $value["dir"]);
+					$obj->order_by_related("meter", "branch_id", $value["dir"]);
 				}else if($value["field"]=="location_name"){
 					$obj->order_by_related("meter", "location_id", $value["dir"]);
 				}else if($value["field"]=="contact_number" || $value["field"]=="fullname"){
