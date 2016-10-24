@@ -20152,7 +20152,7 @@
 						<div class="span5" style="margin-bottom: 15px;">
 							<div class="strong" style="margin-bottom: 0px; width: 100%; padding: 10px; background-color: rgb(213, 219, 219);" align="center" >
 									<div align="left"><span>Amount Due</span></div>
-									<h2 align="right">100,000,000.00</h2>
+									<h2 align="right" data-bind="text: total"></h2>
 								</div>
 						</div>
 
