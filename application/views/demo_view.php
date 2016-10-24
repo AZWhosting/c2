@@ -198,7 +198,7 @@
 					<div class="span12">
 						<div class="span6">
 							<p><span data-bind="text: lang.lang.performance"></span></p>
-							<a>
+							<a href="#/statement_profit_loss">
 								<table class="performance">
 									<tr>
 										<td><span data-bind="text: lang.lang.income"></span></td>
@@ -220,7 +220,7 @@
 						</div>
 						<div class="span6">
 							<p><span data-bind="text: lang.lang.position"></span></p>
-							<a>
+							<a href="#/statement_financial_position">
 								<table class="position" style="width: 100%;">
 									<tr>
 										<td><span data-bind="text: lang.lang.asset"></span></td>
