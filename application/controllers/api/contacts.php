@@ -105,7 +105,7 @@ class Contacts extends REST_Controller {
 			foreach ($obj as $value) {
 		 		$data["results"][] = array(
 		 			"id" 						=> $value->id,		 			
-					"company_id" 				=> $value->company_id,
+					"branch_id" 				=> $value->branch_id,
 					"country_id" 				=> $value->country_id,
 					"ebranch_id" 				=> $value->ebranch_id,
 					"elocation_id" 				=> $value->elocation_id,
@@ -117,9 +117,10 @@ class Contacts extends REST_Controller {
 					"worder" 					=> $value->worder, 						
 					"abbr" 						=> $value->abbr,
 					"number" 					=> $value->number,
+					"eabbr" 					=> $value->eabbr,
 					"enumber" 					=> $value->enumber,
-					"wnumber" 					=> $value->wnumber,			
-					"surname" 					=> $value->surname,			
+					"wabbr" 					=> $value->wabbr,
+					"wnumber" 					=> $value->wnumber,		
 					"name" 						=> $value->name,			
 					"gender"					=> $value->gender,			
 					"dob" 						=> $value->dob,				
@@ -192,7 +193,7 @@ class Contacts extends REST_Controller {
 			$last_id++;
 
 			$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
+			isset($value->branch_id) 				? $obj->branch_id 				= $value->branch_id : "";
 			isset($value->country_id) 				? $obj->country_id 				= $value->country_id : "";
 			isset($value->ebranch_id) 				? $obj->ebranch_id 				= $value->ebranch_id : "";
 			isset($value->elocation_id) 			? $obj->elocation_id 			= $value->elocation_id : "";
@@ -204,9 +205,10 @@ class Contacts extends REST_Controller {
 			isset($value->worder)					? $obj->worder					= $last_id : "";
 			isset($value->abbr)						? $obj->abbr					= $value->abbr : "";
 			isset($value->number)					? $obj->number					= $value->number : "";
+			isset($value->eabbr)					? $obj->eabbr					= $value->eabbr : "";
 			isset($value->enumber)					? $obj->enumber					= $value->enumber : "";
+			isset($value->wabbr)					? $obj->wabbr					= $value->wabbr : "";
 			isset($value->wnumber)					? $obj->wnumber					= $value->wnumber : "";
-			isset($value->surname)					? $obj->surname					= $value->surname : "";
 			isset($value->name)						? $obj->name					= $value->name : "";
 			isset($value->gender)					? $obj->gender					= $value->gender : "";
 			isset($value->dob)						? $obj->dob						= date("Y-m-d", strtotime($value->dob)) : "";
@@ -267,7 +269,7 @@ class Contacts extends REST_Controller {
 				//Respsone
 				$data["results"][] = array(
 					"id" 						=> $obj->id,		 			
-					"company_id" 				=> $obj->company_id,
+					"branch_id" 				=> $obj->branch_id,
 					"country_id" 				=> $obj->country_id,
 					"ebranch_id" 				=> $obj->ebranch_id,
 					"elocation_id" 				=> $obj->elocation_id,
@@ -279,9 +281,10 @@ class Contacts extends REST_Controller {
 					"worder" 					=> $obj->worder,
 					"abbr" 						=> $obj->abbr, 						
 					"number" 					=> $obj->number,
+					"eabbr" 					=> $obj->eabbr,
 					"enumber" 					=> $obj->enumber,
-					"wnumber" 					=> $obj->wnumber,			
-					"surname" 					=> $obj->surname,			
+					"wabbr" 					=> $obj->wabbr,
+					"wnumber" 					=> $obj->wnumber,
 					"name" 						=> $obj->name,			
 					"gender"					=> $obj->gender,			
 					"dob" 						=> $obj->dob,				
@@ -353,7 +356,7 @@ class Contacts extends REST_Controller {
 			$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
+			isset($value->branch_id) 				? $obj->branch_id 				= $value->branch_id : "";
 			isset($value->country_id) 				? $obj->country_id 				= $value->country_id : "";
 			isset($value->ebranch_id) 				? $obj->ebranch_id 				= $value->ebranch_id : "";
 			isset($value->elocation_id) 			? $obj->elocation_id 			= $value->elocation_id : "";
@@ -365,9 +368,10 @@ class Contacts extends REST_Controller {
 			isset($value->worder)					? $obj->worder					= $value->worder : "";
 			isset($value->abbr)						? $obj->abbr					= $value->abbr : "";
 			isset($value->number)					? $obj->number					= $value->number : "";
+			isset($value->eabbr)					? $obj->eabbr					= $value->eabbr : "";
 			isset($value->enumber)					? $obj->enumber					= $value->enumber : "";
+			isset($value->wabbr)					? $obj->wabbr					= $value->wabbr : "";
 			isset($value->wnumber)					? $obj->wnumber					= $value->wnumber : "";
-			isset($value->surname)					? $obj->surname					= $value->surname : "";
 			isset($value->name)						? $obj->name					= $value->name : "";
 			isset($value->gender)					? $obj->gender					= $value->gender : "";
 			isset($value->dob)						? $obj->dob						= date("Y-m-d", strtotime($value->dob)) : "";
@@ -428,7 +432,7 @@ class Contacts extends REST_Controller {
 				//Results
 				$data["results"][] = array(
 					"id" 						=> $obj->id,		 			
-					"company_id" 				=> $obj->company_id,
+					"branch_id" 				=> $obj->branch_id,
 					"country_id" 				=> $obj->country_id,
 					"ebranch_id" 				=> $obj->ebranch_id,
 					"elocation_id" 				=> $obj->elocation_id,
@@ -440,9 +444,10 @@ class Contacts extends REST_Controller {
 					"worder" 					=> $obj->worder,
 					"abbr" 						=> $obj->abbr, 						
 					"number" 					=> $obj->number,
+					"eabbr" 					=> $obj->eabbr,
 					"enumber" 					=> $obj->enumber,
-					"wnumber" 					=> $obj->wnumber,			
-					"surname" 					=> $obj->surname,			
+					"wabbr" 					=> $obj->wabbr,
+					"wnumber" 					=> $obj->wnumber,		
 					"name" 						=> $obj->name,			
 					"gender"					=> $obj->gender,			
 					"dob" 						=> $obj->dob,				
@@ -603,7 +608,7 @@ class Contacts extends REST_Controller {
 			foreach ($obj as $value) {
 		 		$data["results"][] = array(
 		 			"id" 						=> $value->id,		 			
-					"company_id" 				=> $value->company_id,
+					"branch_id" 				=> $value->branch_id,
 					"country_id" 				=> $value->country_id,
 					"ebranch_id" 				=> $value->ebranch_id,
 					"elocation_id" 				=> $value->elocation_id,
@@ -758,7 +763,7 @@ class Contacts extends REST_Controller {
 			foreach ($obj as $value) {
 		 		$data["results"][] = array(
 		 			"id" 						=> $value->id,		 			
-					"company_id" 				=> $value->company_id,
+					"branch_id" 				=> $value->branch_id,
 					"country_id" 				=> $value->country_id,
 					"ebranch_id" 				=> $value->ebranch_id,
 					"elocation_id" 				=> $value->elocation_id,
@@ -1656,7 +1661,7 @@ class Contacts extends REST_Controller {
 	 //    		$obj->where($value["field"], $value["value"]);
 
 	 //    		if($value["field"]=="ebranch_id" || $value["field"]=="wbranch_id"){
-	 //    			$sub_obj->select('id')->where_related_meter('company_id', $value["value"]);
+	 //    			$sub_obj->select('id')->where_related_meter('branch_id', $value["value"]);
 	 //    		}	    		    		
 		// 	}									 			
 		// }

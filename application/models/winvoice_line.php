@@ -9,8 +9,8 @@ class Winvoice_line extends DataMapper {
 			'class' => 'transaction',
 			'other_field' => 'winvoice_line'
 		),		
-		'meter_record' => array(
-			'class' => 'meter_record',
+		'reading' => array(
+			'class' => 'reading',
 			'other_field' => 'winvoice_line'
 		)
 	);

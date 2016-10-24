@@ -26,11 +26,11 @@ class Contact extends DataMapper {
 			'other_field' => 'deposit'
 		),
 		'ebranch' => array(
-			'class' => 'company',
+			'class' => 'branch',
 			'other_field' => 'ebranch'
 		),
 		'wbranch' => array(
-			'class' => 'company',
+			'class' => 'branch',
 			'other_field' => 'wbranch'
 		),
 		'elocation' => array(

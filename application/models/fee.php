@@ -5,8 +5,8 @@ class Fee extends DataMapper {
 	protected $updated_field = "updated_at";
 
 	public $has_one = array(	
-        'company' => array(
-            'class' => 'company',
+        'branch' => array(
+            'class' => 'branch',
             'other_field' => 'fee'
         ),
         'utility' => array(

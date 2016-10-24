@@ -5,8 +5,8 @@ class Transaction extends DataMapper {
 	protected $updated_field = "updated_at";
 
 	public $has_one = array(
-		'company' => array(
-            'class' => 'company',
+		'branch' => array(
+            'class' => 'branch',
             'other_field' => 'transaction'
         ),
         'location' => array(
@@ -23,10 +23,6 @@ class Transaction extends DataMapper {
         ),
         'payment_method' => array(
             'class' => 'payment_method',
-            'other_field' => 'transaction'
-        ),        
-        'recurring' => array(
-            'class' => 'recurring',
             'other_field' => 'transaction'
         ),
         'reference' => array(
