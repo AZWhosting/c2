@@ -9346,6 +9346,10 @@
 					</div>
 					<!-- // Form actions END -->
 
+				</div>
+			</div>
+		</div>
+	</div>
 </script>
 <script id="vendor-contact-person-row-tmpl" type="text/x-kendo-tmpl">
 	<tr>		
@@ -13077,7 +13081,8 @@
 				</div>		
 			</div>
 		</div>
-</div>
+	</div>
+</script>
 <script id="suppliersTransactionList-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
@@ -28050,7 +28055,6 @@
 			</div><!-- //End div span12-->
 		</div><!-- //End div row-fluid-->
 	</div>
-
 </script>
 <script id="denominationRowTemplate" type="text/x-kendo-tmpl">		
 	<tr>				
@@ -38081,9 +38085,7 @@
     	</div>
 
 
-	</div> 
-
-
+	</div>
 </script>
 <script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">		
 	<tr>		
@@ -49086,7 +49088,6 @@
 		as_of 				: new Date(),		
 		currentSort 		: "asc",							
 		pageLoad 			: function(){
-			
 		},	
 		sort 				: function(e){
 			var col = "",
@@ -52321,7 +52322,7 @@
 		sortList			: banhji.source.sortList,
 		sorter 				: "all",
 		sdate 				: "",
-		edate 				: "",\
+		edate 				: "",
 		obj 				: {id:0},
 		note 				: "",
 		searchText 			: "",
@@ -76650,7 +76651,8 @@
 		// 	} else {
 		// 		window.location.replace(baseUrl + "admin");
 		// 	}				
-		// });	});
+		// });	
+	});
 	banhji.router.route("/accounting_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
