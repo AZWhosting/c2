@@ -20131,6 +20131,7 @@
 					<div class="block-title">
 						<h3 data-bind="text: company.name"></h3>
 						<h2 data-bind="text: lang.lang.statement"></h2>
+						<p data-bind="text: obj.name"></p>
 						<p data-bind="text: displayDate"></p>
 					</div>
 
@@ -20138,10 +20139,7 @@
 						<div class="span5" style="margin-bottom: 15px;">
 							<table class="table-statement" style="margin-top: 0;">
 								<tr>
-									<td style="font-weight: 600;background-color: #ddd;">Bill To</td>
-								</tr>
-								<tr>
-									<td data-bind="text: obj.name"></td>
+									<td style="font-weight: 600;background-color: #ddd;">Customer Info</td>
 								</tr>
 								<tr>
 									<td data-bind="text: obj.bill_to"></td>
