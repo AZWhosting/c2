@@ -76316,6 +76316,229 @@
 			}
 		}
 	});
+	banhji.wMeter = kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(baseUrl + "meters"),
+		existingDS 			: dataStore(baseUrl + "meters"),
+		deleteDS 			: dataStore(baseUrl + "meters/record"),		
+		contactDS 			: dataStore(baseUrl + "contacts"),					
+		locationDS 			: dataStore(baseUrl + "locations"),
+		itemDS 				: dataStore(baseUrl + "items"),
+		feeDS 				: dataStore(baseUrl + "fees"),
+		statusList 			: [            
+			{ "id": 1, "name": "Active" },
+			{ "id": 0, "name": "Inactive" },
+			{ "id": 2, "name": "Void" }
+        ],
+        tariffList 			: [],
+        exemptionList 		: [],
+        maintenanceList 	: [],
+        deposit_link 		: null,
+        invoice_link 		: null,
+        deposit_amount 		: 0,
+        invoice_amount 		: 0,
+        obj 				: null,             
+        current_company_id 	: 0,
+        current_meter_id 	: 0,
+        isDuplicateNumber 	: false,
+        originalNo 			: null,
+		pageLoad 			: function(id){
+			this.loadMeter(id);									
+		},		
+		loadMeter 			: function(id){
+			var self = this;
+
+			if(this.get("current_meter_id")!=id){
+			 	this.set("current_meter_id", id);				
+
+				this.dataSource.query({
+					filter: { field:"id", value: id },
+					page: 1,
+	  				take: 50
+				}).then(function(e) {
+				    var view = self.dataSource.view();
+
+				    self.set("originalNo", view[0].number);				    
+				    self.contactDS.filter({ field:"id", value:view[0].contact_id });		    			    	
+			    	self.contactDS.filter([]);
+
+			    	return self.feeQuery(view[0].company_id);	    		   	    			    			    				    
+				}).then(function(fee){
+					var view = self.dataSource.view();					
+					
+					self.set("obj", view[0]);
+					self.set("deposit_link", "#/wDeposit/"+view[0].deposit_id);
+					self.set("invoice_link", "#/wMeterInvoice/"+view[0].invoice_id);
+
+					if(view[0].deposit[0]){
+						self.set("deposit_amount", kendo.toString(kendo.parseFloat(view[0].deposit[0].amount), "c", view[0].deposit[0].locale));
+					}else{
+						self.set("deposit_amount", 0);
+					}
+
+					if(view[0].invoice[0]){
+						self.set("invoice_amount", kendo.toString(kendo.parseFloat(view[0].invoice[0].amount), "c", view[0].invoice[0].locale));
+					}else{
+						self.set("invoice_amount", 0);
+					}					
+										
+					self.loadMap();
+				});
+			}
+		},		
+		loadMap 			: function(){
+			var obj = this.get("obj"), lat = kendo.parseFloat(obj.latitute),
+			lng = kendo.parseFloat(obj.longtitute);
+
+			if(lat && lng){
+				var myLatLng = {lat:lat, lng:lng};
+				var mapOptions = {
+					zoom: 17,					
+					center: myLatLng,
+					mapTypeControl: false,
+					zoomControl: false,
+					scaleControl: false,
+					streetViewControl: false
+				};
+				var map = new google.maps.Map(document.getElementById('map'),mapOptions);
+				var marker = new google.maps.Marker({
+					position: myLatLng,
+					map: map,
+					title: obj.number
+				});
+			} 
+		},
+		feeQuery 			: function(company_id){
+			var self = this, dfd = $.Deferred();
+
+			if(this.get("current_company_id")!=company_id){
+			 	this.set("current_company_id", company_id);
+				
+		    	this.feeDS.query({
+					filter: [
+						{ field:"company_id", value: company_id },
+						{ field:"utility_id", value: 2 }
+					]
+				}).then(function(e) {
+					var view = self.feeDS.view();
+
+					self.set("tariffList", []);
+					self.set("exemptionList", []);
+					self.set("maintenanceList", []);
+
+					$.each(view, function(index, value){																						
+						if(value.type=="tariff"){							
+							self.tariffList.push({
+								id 	: value.id,
+								name: value.name 
+							});
+						}
+						if(value.type=="exemption"){							
+							self.exemptionList.push({
+								id 	: value.id,
+								name: value.name 
+							});
+						}
+						if(value.type=="maintenance"){
+							self.maintenanceList.push({
+								id 	: value.id,
+								name: value.name 
+							});
+						}								
+					});
+
+					dfd.resolve(view);				    			   		    			
+				});
+			}			
+
+		    return dfd;	    		    	
+	    },	    	
+		contactChanges 		: function(e){
+			if(e.sender.selectedIndex>0){
+				var obj = this.get("obj"),
+				contact = this.contactDS.get(obj.contact_id);
+
+				obj.set("company_id", contact.wbranch_id);
+				obj.set("location_id", contact.wlocation_id);
+				
+				this.feeQuery(contact.wbranch_id);
+			}
+		},
+		checkExistingNumber : function(){
+			var self = this;	
+			
+			var number = this.get("obj").number;
+			var originalNo = this.get("originalNo");
+			
+			if(number.length>0 && number!==originalNo){
+				this.existingDS.query({
+					filter: { field:"number", value: number },
+					page: 1,
+					pageSize: 100
+				}).then(function(e){
+					var view = self.existingDS.view();
+					
+					if(view.length>0){
+				 		self.set("isDuplicateNumber", true);						
+					}else{
+						self.set("isDuplicateNumber", false);
+					}
+				});							
+			}else{
+				this.set("isDuplicateNumber", false);
+			}			
+		},				
+		save 				: function(){			
+			var self = this, saved = false;
+
+			this.dataSource.sync();			
+			this.dataSource.bind("requestEnd", function(e){				
+				if(e.type=="create" && saved==false){					
+					saved = true;
+					banhji.wCustomerCenter.meterDS.fetch();
+					self.addEmpty();										
+				}
+
+				if(e.type=="update" && saved==false){
+					saved = true;
+					banhji.wCustomerCenter.meterDS.fetch();
+					window.history.back();
+				}
+
+				if(e.type=="destroy" && saved==false){
+					saved = true;
+					banhji.wCustomerCenter.meterDS.fetch();					
+					window.history.back();
+				}
+			});
+		},
+		delete 				: function(){
+			var self = this,
+			obj = this.get("obj");
+
+			if (confirm("Are you sure, you want to delete it?")) {
+				this.deleteDS.query({
+				  	filter: { field: "meter_id", value: obj.id },
+				  	page: 1,
+				  	take: 1
+				}).then(function() {
+					var view = self.deleteDS.view();
+
+					if(view.length>0){
+						alert("Sorry, you can not delete it because it is using now.");
+					}else{
+						var data = self.dataSource.get(obj.id);
+				        self.dataSource.remove(data);
+				        self.save();
+					}
+				});				
+	    	}
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();
+			window.history.back();
+		}		
+	});
 
 
 
@@ -76577,6 +76800,7 @@
 
 		//Water
 		waterCenter: new kendo.Layout("#waterCenter", {model: banhji.waterCenter}),
+		wMeter: new kendo.Layout("#wMeter", {model: banhji.wMeter}),
 
 		//Menu
 		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
@@ -83181,6 +83405,21 @@
 
 		if(banhji.pageLoaded["water_center"]==undefined){
 			banhji.pageLoaded["water_center"] = true;
+		}
+
+		vm.pageLoad(id);
+	});
+	banhji.router.route("/wMeter(/:id)", function(id){		
+		banhji.view.layout.showIn("#content", banhji.view.wMeter);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.wMeter;
+
+		banhji.userManagement.addMultiTask("Water Meter","wMeter",null);
+
+		if(banhji.pageLoaded["wMeter"]==undefined){
+			banhji.pageLoaded["wMeter"] = true;
 		}
 
 		vm.pageLoad(id);
