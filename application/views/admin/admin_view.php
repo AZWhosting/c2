@@ -881,7 +881,11 @@
       </div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-modules">
-      <div style="border: none;" data-role="listview" data-bind="source: modules" data-template="user-profile-modules-list"></div>
+      <div style="border: none;" 
+           data-role="listview" 
+           data-bind="source: modules"
+           data-auto-bind="false" 
+           data-template="user-profile-modules-list"></div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-modules-list">
       <div class="col-xs-3 col-md-2 col-lg-2">
@@ -1018,10 +1022,17 @@
                       <article class="col-md-9 col-lg-9 profile-info-item edit-table">
                           <table >
                               <tr>
-                                  <td>Username *</td>
+                                  <td>Email *</td>
                                   <td>:</td>
                                   <td>
-                                      <input type="text" data-bind="disabled: editable, value: current.username" class="form-control"  id="" placeholder="">
+                                      <input type="email" data-bind="disabled: editable, value: current.username" class="form-control"  id="" placeholder="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Password *</td>
+                                  <td>:</td>
+                                  <td>
+                                      <input type="password" data-bind="value: current.password" class="form-control" id="" placeholder="">
                                   </td>
                               </tr>
                               <tr>
@@ -1037,26 +1048,12 @@
                                   <td>
                                       <input type="text" data-bind="value: current.last_name" class="form-control" id="" placeholder="">
                                   </td>
-                              </tr>
-                              <tr>
-                                  <td>Password *</td>
-                                  <td>:</td>
-                                  <td>
-                                      <input type="password" data-bind="value: current.password" class="form-control" id="" placeholder="">
-                                  </td>
-                              </tr>
+                              </tr>                              
                               <tr>
                                   <td>Phone</td>
                                   <td>:</td>
                                   <td>
                                       <input type="text" data-bind="value: current.mobile" class="form-control" id="" placeholder="">
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>Email</td>
-                                  <td>:</td>
-                                  <td>
-                                      <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
                                   </td>
                               </tr>
                               <tr data-bind="visible:showAdmin">
@@ -1120,10 +1117,10 @@
                         <article class="col-md-9 col-lg-9 profile-info-item edit-table">
                             <table >
                                 <tr>
-                                    <td>Username *</td>
+                                    <td>Email *</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" data-bind="disabled: editable, value: current.username" class="form-control" id="" placeholder="">
+                                        <input type="email" data-bind="disabled: editable, value: current.username" class="form-control" id="" placeholder="">
                                     </td>
                                 </tr>
                                 <tr>
@@ -1145,13 +1142,6 @@
                                     <td>:</td>
                                     <td>
                                         <input type="text" data-bind="value: current.mobile" class="form-control" id="" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="Email" data-bind="value: current.email" class="form-control" id="" placeholder="">
                                     </td>
                                 </tr>
                                 <tr>
@@ -2812,46 +2802,71 @@
           });
         },
         save: function() {
-          if(banhji.users.get('current').isNew()) {
-            var attributeList = [];
-
-            var dataEmail = {
-                Name : 'email',
-                Value : userPool.getCurrentUser().username
-            };
-
-            var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
-
-            attributeList.push(attributeEmail);
-
-            userPool.signUp(banhji.users.get('current').username, banhji.users.get('current').password, attributeList, null, function(err, result){
-                if (err) {
-                  alert(err);
-                  return;
-                }
-                if(banhji.users.media.dataSource.hasChanges()) {
-                  banhji.users.media.save().then(function(data){
-                    banhji.users.get('current').set('profile_photo', {id: data.id, url: data.url});
-                    banhji.users.users.sync();
-                  });
-                } else {
-                  banhji.users.users.sync();
-                }
-            });
+          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          var errors = [];
+          if(re.test(this.get('current').username) == false){
+            errors.push({msg:"Invalid email address"});
+          }
+          if(this.get('current').password.length < 8) {
+            errors.push({msg:"Password must be at 8 characters with letters and numbers"});
+          } 
+          if(this.get('current').first_name == "") {
+            errors.push({msg:"Name is required."});
+          }
+          if(this.get('current').last_name == "") {
+            errors.push({msg:"Last name is required"});
+          }
+          if(errors.length > 0) {
+            var msg = "";
+            for(var i = 0; i < errors.length; i++) {
+              msg += errors[i].msg + "\n";
+            }
+            alert(msg);
           } else {
-            if(banhji.users.media.dataSource.hasChanges()) {
-              banhji.users.media.save().then(function(data){
-                banhji.users.get('current').set('profile_photo', {id: data.id, url: data.url});
-                banhji.users.users.sync();
+            if(banhji.users.get('current').isNew()) {
+              var attributeList = [];
+
+              var dataEmail = {
+                  Name : 'email',
+                  Value : userPool.getCurrentUser().username
+              };
+
+              var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
+
+              attributeList.push(attributeEmail);
+
+              userPool.signUp(banhji.users.get('current').username, banhji.users.get('current').password, attributeList, null, function(err, result){
+                  if (err) {
+                    alert(err);
+                    return;
+                  }
+                  if(banhji.users.media.dataSource.hasChanges()) {
+                    banhji.users.media.save().then(function(data){
+                      banhji.users.get('current').set('profile_photo', {id: data.id, url: data.url});
+                      banhji.users.users.sync();
+                    });
+                  } else {
+                    banhji.users.users.sync();
+                  }
               });
             } else {
-              banhji.users.users.sync();
+              if(banhji.users.media.dataSource.hasChanges()) {
+                banhji.users.media.save().then(function(data){
+                  banhji.users.get('current').set('profile_photo', {id: data.id, url: data.url});
+                  banhji.users.users.sync();
+                });
+              } else {
+                banhji.users.users.sync();
+              }
             }
           }
+          
           banhji.userDS.bind('requestEnd', function(e){
             var res = e.response, type = e.type;
             if(res.results.length > 0) {
-              $("#ntf1").data("kendoNotification").success("Data saved.");
+              if(type != 'read'){
+                $("#ntf1").data("kendoNotification").success("Data saved.");
+              }              
               banhji.router.route('userlist');
             } else {
               $("#ntf1").data("kendoNotification").error("Operation failed.");
