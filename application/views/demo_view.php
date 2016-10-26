@@ -2242,142 +2242,6 @@
     	</td>
    	</tr>
 </script>
-<!-- <script id="accountRecurring" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-			<div id="example" class="k-content">				
-					
-			    <div class="hidden-print">
-			    	<div class="pull-right">
-			    		<span class="glyphicons no-js remove_2" onclick="javascript:window.history.back();"><i></i></span>						
-					</div>
-
-			        <h2>ACCOUNTING RECURRING TRANSACTION LISTS</h2>				        				        				        	
-			    </div>
-
-			    <br>			   
-			   
-				
-				<table class="table table-bordered table-primary table-striped table-vertical-center">
-			        <thead>
-			            <tr>
-			                <th style="width: 1%;">No.</th>
-			                <th>TEMPLATE NAME</th>
-			                <th>NAME</th>
-			                <th class="center" style="width: 10%">TYPE</th>
-			                <th class="center">START DATE</th>
-			                <th class="center">FREQUENCY</th>
-			                <th></th>			                			                
-			            </tr> 
-			        </thead>
-			        <tbody data-template="recurring-template"
-			        		data-auto-bind="false"			        		
-			        		data-bind="source: dataSource"></tbody>			        
-			    </table>											
-
-			</div>							
-			</div>
-		</div>
-	</div>
-</script> -->
-<!-- <script id="recurring-template" type="text/x-kendo-tmpl">		
-	<tr data-uid="#: uid #">		
-		<td class="center">			
-			#:banhji.recurring.dataSource.indexOf(data)+1#			
-		</td>		
-		<td>#=recurring_name#</td>
-		<td>#=contact.length>0?contact[0].name:""#</td>
-		<td class="center">#=type#</td>		
-		<td class="center">#=kendo.toString(start_date, "dd-MMMM-yyyy")#</td>
-		<td class="center">#=frequency#</td>
-		<td class="right">
-			<span class="btn btn-success btn-icon glyphicons edit" data-bind="click: goToTemplate" style="width: 80px;"><i></i> Edit</span>
-			<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete" style="width: 80px;"><i></i> Delete</span>
-		</td>
-    </tr>   
-</script> -->
-<script id="accountRecurring" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">
-
-					<div class="hidden-print">
-				    	<div class="pull-right">
-
-				    		<span class="glyphicons no-js remove_2 pull-right" 
-	    				onclick="javascript:window.history.back()"
-						data-bind="click: cancel"><i></i></span>						
-						</div>
-
-				        <h2 span data-bind="text: lang.lang.accounting_recurring"></h2>				        				    	
-				    </div>			   
-
-				    <br>
-
-				    <div data-role="window"
-		                 data-title="Job"		                 
-		                 data-width="600"
-		                 data-actions="{}"
-		                 data-position="{top: '30%', left: '30%'}"
-		                 data-height="300"
-		                 data-bind="visible: isVisible">
-
-						<table class="table table-bordered table-primary table-striped table-vertical-center">							
-							<tr>
-								<td><span data-bind="text: lang.lang.name"></span></td>
-								<td>
-									<input class="k-textbox" placeholder="type name ..." data-bind="value: obj.name" style="width: 100%;">
-								</td>
-							</tr>
-							<tr>
-								<td><span data-bind="text: lang.lang.description"></span></td>
-								<td>
-									<input class="k-textbox" placeholder="type description ..." data-bind="value: obj.description" style="width: 100%;">
-								</td>
-							</tr>
-							<tr>
-								<td><span data-bind="text: lang.lang.customer"></span></td>
-								<td>
-									<input data-role="combobox"
-										   data-template="contact-list-tmpl"				            			               			   		                   
-						                   data-value-primitive="true"
-						                   data-text-field="name"
-						                   data-value-field="id"
-						                   data-bind="value: obj.contact_id,
-						                              source: contactDS"
-						                   style="width: 100%;" />
-								</td>
-							</tr>							
-						</table>
-
-						<br>
-
-						<div align="center">
-							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: closeWindow" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.close"></span></span>						
-						</div>
-					</div>
-					
-										                           					
-	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
-	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
-	            			<th style="width: 1%;">No.</th>
-			                <th data-bind="text: lang.lang.template_name"></th>
-			                <th data-bind="text: lang.lang.name"></th>
-			                <th class="center" style="width: 10%"><span data-bind="text: lang.lang.type"></span></th>
-			                <th class="center"><span data-bind="text: lang.lang.start_date"></span></th>
-			                <th class="center">FREQUENCY</th>
-			                <th></th>
-	            		</thead>
-	            		<tbody ></tbody>
-	            	</table>
-	            </div>	            						
-			</div>
-		</div>
-	</div>
-</script>
 
 <script id="accountingReportCenter" type="text/x-kendo-template">
 	<div class="row-fluid customer-report-center">
@@ -5345,7 +5209,59 @@
 		</td>
 	</tr>
 </script>
+<script id="accountingRecurring" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
 
+		    		<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+				    <h2>Accounting Recurring</h2>
+
+				    <br>
+					                           					
+	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
+	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
+			                <th>TYPE</th>
+			                <th>RECURRING NAME</th>			                
+			                <th>START DATE</th>
+			                <th class="center">FREQUENCY</th>
+			                <th></th>
+	            		</thead>
+	            		<tbody data-role="listview" 
+				        		data-template="accountingRecurring-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: dataSource"></tbody>
+	            	</table>
+
+	            	<div id="pager" class="k-pager-wrap"
+			             data-role="pager" 
+			             data-auto-bind="false"
+			             data-bind="source: dataSource"></div>
+
+	            </div>	            						
+			</div>
+		</div>
+	</div>
+</script>
+<script id="accountingRecurring-template" type="text/x-kendo-tmpl">		
+	<tr data-uid="#: uid #">
+		<td>#=type#</td>
+		<td>#=recurring_name#</td>
+		<td>#=kendo.toString(new Date(start_date), "dd-MM-yyyy")#</td>
+		<td class="center">#=frequency#</td>
+		<td class="center">
+			#if(type=="Deposit" || type=="Witdraw" || type=="Transfer"){#
+				<a class="btn btn-success" href="\#/cash_transaction/#=id#/1"><i></i> Edit</a>
+			#}else{#
+				<a class="btn btn-success" href="\#/#=type.toLowerCase()#/#=id#/1"><i></i> Edit</a>
+			#}#
+		</td>		
+    </tr>   
+</script>
 <script id="addAccountingprefix" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -12613,6 +12529,7 @@
 					                           					
 	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
 	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
+			                <th>TYPE</th>
 			                <th>RECURRING NAME</th>
 			                <th>SUPPLIER</th>
 			                <th>START DATE</th>
@@ -12637,6 +12554,7 @@
 </script>
 <script id="vendorRecurring-template" type="text/x-kendo-tmpl">		
 	<tr data-uid="#: uid #">
+		<td>#=type#</td>
 		<td>#=recurring_name#</td>
 		<td>#=contact.length>0?contact[0].abbr + contact[0].number +" "+ contact[0].name:""#</td>
 		<td>#=kendo.toString(new Date(start_date), "dd-MM-yyyy")#</td>
@@ -14998,23 +14916,23 @@
 			        </td>
 			 	</tr>
 			</table>
-			<table class="table table-borderless table-condensed table-vertical-center">
+			<table class="table table-borderless table-condensed table-vertical-center costom-imag">
 				<tr>
 					<td class="center">
 						<a href="#/quote">
-							<img title="Add Quote" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png" width="110" height="200" />
+							<img title="Add Quote" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png"  height="200" />
 							<span data-bind="text: lang.lang.quotation" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>						
 					</td>
 					<td class="center">
 						<a href="#/sale_order">
-							<img title="Add Sale Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_order.png" width="110" height="200" />
+							<img title="Add Sale Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_order.png"  height="200" />
 							<span data-bind="text: lang.lang.sale_order" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>
 					</td>
 					<td class="center" >
 						<a href="#/customer_deposit">
-							<img title="Add Customer Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png" width="110" height="200" />
+							<img title="Add Customer Deposit" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/customer_deposit.png"  height="200" />
 							<span data-bind="text: lang.lang.c_deposit" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>						
 					</td>					
@@ -15022,19 +14940,19 @@
 				<tr>
 					<td class="center">
 						<a href="#/cash_sale">
-							<img title="Add Cash Sale" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_receipt.png" width="110" height="200" />
+							<img title="Add Cash Sale" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_receipt.png"  height="200" />
 							<span data-bind="text: lang.lang.cash_sale" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>
 					</td>
 					<td class="center">
 						<a href="#/invoice">
-							<img title="Add Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/invoice.png" width="110" height="200" />
+							<img title="Add Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/invoice.png"  height="200" />
 							<span data-bind="text: lang.lang.invoice" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>
 					</td>
 					<td class="center">						
 						<a href="#/cash_receipt">
-							<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png" width="110" height="200" />
+							<img title="Add Cash Receipt" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/cash_receipt.png"  height="200" />
 							<span data-bind="text: lang.lang.cash_receipt" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>						
 					</td>										
@@ -15042,19 +14960,19 @@
 				<tr>				
 					<td style="vertical-align:top;" class="center">
 						<a href="#/gdn">
-							<img title="Add Delivery Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png" width="110" height="200" />
+							<img title="Add Delivery Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png"  height="200" />
 							<span data-bind="text: lang.lang.delivery_note" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>
 					</td>
 					<td width="186" class="center">
 						<a href="#/sale_return">
-							<img title="Add Sale Return" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_return.png" width="110" height="200" />
+							<img title="Add Sale Return" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_return.png"  height="200" />
 							<span data-bind="text: lang.lang.sale_return" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>
 					</td>				
 					<td width="186" class="center">
 						<a href="#/statement">
-							<img title="Add Statement" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/statement.png" width="110" height="200" />
+							<img title="Add Statement" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/statement.png"  height="200" />
 							<span data-bind="text: lang.lang.statement" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>
 					</td>
@@ -20567,6 +20485,7 @@
 					                           					
 	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
 	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
+			                <th>TYPE</th>
 			                <th>RECURRING NAME</th>
 			                <th>CUSTOMER</th>
 			                <th>START DATE</th>
@@ -20591,6 +20510,7 @@
 </script>
 <script id="customerRecurring-template" type="text/x-kendo-tmpl">		
 	<tr data-uid="#: uid #">
+		<td>#=type#</td>
 		<td>#=recurring_name#</td>
 		<td>#=contact.length>0?contact[0].abbr + contact[0].number +" "+ contact[0].name:""#</td>
 		<td>#=kendo.toString(new Date(start_date), "dd-MM-yyyy")#</td>
@@ -43066,7 +42986,7 @@
   				<li><a href='#/expense'><span data-bind="text: lang.lang.make_expense"></span></a></li>
   				<li> <span class="li-line"></span></li> 		
   				<li><a href='#/currency_rate'><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
-  				<li><a href='#/account_recurring'><span data-bind="text: lang.lang.accounting_recurring_list"></span></a></li> 			  				 		
+  				<li><a href='#/accounting_recurring'><span data-bind="text: lang.lang.accounting_recurring_list"></span></a></li> 			  				 		
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/accounting_report_center'>REPORTS</a></li>	  	
@@ -49455,6 +49375,19 @@
 		    banhji.router.navigate('/invoice_custom');
         }
     });
+    banhji.accountingRecurring = kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "transactions"),
+		pageLoad 			: function(){
+			this.search();
+		},
+		search 				: function(){
+			this.dataSource.filter([
+				{ field:"type", operator:"where_in", value:["Deposit","Witdraw","Transfer","Cash_Advance","Expense","Journal"] },
+				{ field:"is_recurring", value: 1 }
+			]);
+		}
+	});
     banhji.addAccountingprefix =  kendo.observable({
 		lang 				: langVM,		
 		selectTypeList 		: banhji.source.typeList,
@@ -76685,7 +76618,7 @@
 		chartOfAccount: new kendo.Layout("#chartOfAccount", {model: banhji.chartOfAccount}),
 		accountingReportCenter: new kendo.Layout("#accountingReportCenter", {model: banhji.accountingReportCenter}),
 		accountingSetting: new kendo.Layout("#accountingSetting", {model: banhji.accountingSetting}),
-
+		accountingRecurring: new kendo.Layout("#accountingRecurring", {model: banhji.accountingRecurring}),
 		addAccountingprefix: new kendo.Layout("#addAccountingprefix", {model: banhji.addAccountingprefix}),
 
 		segment: new kendo.Layout("#segment", {model: banhji.segment}),
@@ -76699,8 +76632,7 @@
 		statementChangesEquity: new kendo.Layout("#statementChangesEquity", {model: banhji.statementChangesEquity}),
 		statementCashFlow: new kendo.Layout("#statementCashFlow", {model: banhji.statementCashFlow}),
 		auditTrialReport: new kendo.Layout("#auditTrialReport", {model: banhji.auditTrialReport}),
-		accountRecurring: new kendo.Layout("#accountRecurring", {model: banhji.accountRecurring}),
-		
+				
 		//Sale Tax
 		saleTax: new kendo.Layout("#saleTax", {model: banhji.saleTax}),
 		saleTaxReportCenter: new kendo.Layout("#saleTaxReportCenter", {model: banhji.saleTaxReportCenter}),
@@ -78852,128 +78784,19 @@
 			}
 		}
 	});
-	banhji.router.route("/account_recurring", function(){
+	banhji.router.route("/accounting_recurring", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.accountRecurring);
+			banhji.view.layout.showIn("#content", banhji.view.accountingRecurring);
 			kendo.fx($("#slide-form")).slideIn("down").play();
 
-			var vm = banhji.accountRecurring;
-			banhji.userManagement.addMultiTask("Account Recurring","account_recurring",null);
+			var vm = banhji.accountingRecurring;
+			banhji.userManagement.addMultiTask("Accounting Recurring","accounting_recurring",null);
 			
-			if(banhji.pageLoaded["account_recurring"]==undefined){
-				banhji.pageLoaded["account_recurring"] = true;   
-				
-				vm.dataSource.filter({ field:"is_recurring", value: 1 });
+			if(banhji.pageLoaded["accounting_recurring"]==undefined){
+				banhji.pageLoaded["accounting_recurring"] = true;
 
-				function startChange() {
-                    var startDate = start.value(),
-                    endDate = end.value();
-
-                    if (startDate) {
-                        startDate = new Date(startDate);
-                        startDate.setDate(startDate.getDate());
-                        end.min(startDate);
-                    } else if (endDate) {
-                        start.max(new Date(endDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function endChange() {
-                    var endDate = end.value(),
-                    startDate = start.value();
-
-                    if (endDate) {
-                        endDate = new Date(endDate);
-                        endDate.setDate(endDate.getDate());
-                        start.max(endDate);
-                    } else if (startDate) {
-                        end.min(new Date(startDate));
-                    } else {
-                        endDate = new Date();
-                        start.max(endDate);
-                        end.min(endDate);
-                    }
-
-                    dateChanges();
-                }
-
-                function dateChanges(){
-                	var strDate = "";
-
-					if(start.value() && end.value()){
-						strDate = "From " + kendo.toString(new Date(start.value()), "dd-MM-yyyy") + " To " + kendo.toString(new Date(end.value()), "dd-MM-yyyy");
-					}else if(start.value()){
-						strDate = "On " + kendo.toString(new Date(start.value()),"dd-MM-yyyy");
-					}else if(end.value()){
-						strDate = "As Of " + kendo.toString(new Date(end.value()),"dd-MM-yyyy");
-					}else{
-						strDate = "";
-					}
-
-					$("#strDate").text(strDate);
-                }
-
-                var start = $("#sdate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: startChange
-                }).data("kendoDatePicker");
-
-                var end = $("#edate").kendoDatePicker({
-                	format: "dd-MM-yyyy",
-                    change: endChange
-                }).data("kendoDatePicker");
-
-                var sorter = $("#sorter").change(function(){
-                	var today = new Date(),
-                	sdate = "",
-                	edate = "",
-                	value = $("#sorter").val();
-
-					switch(value){
-					case "today":
-						sdate = today;
-					  	break;
-					case "week":
-						var first = today.getDate() - today.getDay(),
-						last = first + 6;
-
-						var sdate = new Date(today.setDate(first)),
-						edate = new Date(today.setDate(last));
-						
-					  	break;
-					case "month":
-						var sdate = new Date(today.getFullYear(), today.getMonth(), 1),
-						edate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-					  	break;
-					case "year":
-					  	var sdate = new Date(today.getFullYear(), 0, 1),
-					  	edate = new Date(today.getFullYear(), 11, 31);
-
-					  	break;
-					default:
-					}
-
-					start.value(sdate);
-					end.value(edate);
-					
-					start.max(end.value());
-                	end.min(start.value());
-
-                	dateChanges();
-                });
-                
-                start.max(end.value());
-                end.min(start.value());
-				 		
 			}
 
 			vm.pageLoad();
