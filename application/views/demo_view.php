@@ -47636,8 +47636,10 @@
 			
 			obj.set("rate", rate);
 
-
-			this.changes();						
+			$.each(this.lineDS.data(), function(index, value){
+				value.set("rate", rate);
+				value.set("locale", obj.locale);
+			});						
 		},
 		//Segment
 		segmentChanges  	: function(e) {					
@@ -47716,10 +47718,9 @@
 			var obj = this.dataSource.at(0);		
 			this.set("obj", obj);			
 
+			this.setRate();
 			this.addRow();
-			this.addRow();
-
-			this.setRate();			
+			this.addRow();						
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -50382,7 +50383,11 @@
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
 			obj.set("rate", rate);
-			this.changes();						
+
+			$.each(this.lineDS.data(), function(index, value){
+				value.set("rate", rate);
+				value.set("locale", obj.locale);
+			});
 		},
 		//Segment
 		segmentChanges  	: function(e) {
@@ -50478,8 +50483,8 @@
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
 			
+			this.setRate();
 			this.addRow();
-			this.setRate();				
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -51164,7 +51169,11 @@
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
 			obj.set("rate", rate);
-			this.changes();						
+			
+			$.each(this.lineDS.data(), function(index, value){
+				value.set("rate", rate);
+				value.set("locale", obj.locale);
+			});						
 		},
 		//Contact
 		loadContact 		: function(id){
@@ -51307,8 +51316,8 @@
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
 			
+			this.setRate();
 			this.addRow();
-			this.setRate();				
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -53308,24 +53317,13 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
-		},	
-	    segmentChanges 		: function(e) {
-			var dataArr = this.get("obj").segments,
-			lastIndex = dataArr.length - 1,
-			last = this.segmentItemDS.get(dataArr[lastIndex]);
-			
-			if(dataArr.length > 1) {
-				for(var i = 0; i < dataArr.length - 1; i++) {
-					var current_index = dataArr[i],
-					current = this.segmentItemDS.get(current_index);
+			obj.set("rate", rate);
 
-					if(current.segment_id === last.segment_id) {
-						dataArr.splice(lastIndex, 1);
-						break;
-					}
-				}
-			}				
+			$.each(this.lineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				
+				value.set("rate", itemRate);
+			});						
 		},
 		//Item		
 		itemChanges 		: function(e){								
@@ -53364,7 +53362,7 @@
 								amount 				: value.cost*catalogRate,
 								discount 			: 0,
 								rate				: catalogRate,
-								locale				: obj.locale,
+								locale				: value.locale,
 								movement 			: 1,								
 
 								item_prices 		: []
@@ -53379,6 +53377,7 @@
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 
 			        this.changes();		     
 		        }else{	        	
@@ -53387,10 +53386,29 @@
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 
 			        this.changes();
 		    	}
 	        }                	        	
+		},
+		//Segment
+		segmentChanges 		: function(e) {
+			var dataArr = this.get("obj").segments,
+			lastIndex = dataArr.length - 1,
+			last = this.segmentItemDS.get(dataArr[lastIndex]);
+			
+			if(dataArr.length > 1) {
+				for(var i = 0; i < dataArr.length - 1; i++) {
+					var current_index = dataArr[i],
+					current = this.segmentItemDS.get(current_index);
+
+					if(current.segment_id === last.segment_id) {
+						dataArr.splice(lastIndex, 1);
+						break;
+					}
+				}
+			}				
 		},
 		//Obj
 		loadObj 			: function(id, is_recurring){
@@ -53534,8 +53552,8 @@
 			var obj = this.dataSource.at(0);					
 			this.set("obj", obj);
 
+			this.setRate();
 			this.addRow();
-			this.setRate();			
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -54106,7 +54124,13 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+
+			$.each(this.lineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				
+				value.set("rate", itemRate);
+			});						
 		},
 		//Item		
 		itemChanges 		: function(e){								
@@ -54145,7 +54169,7 @@
 								amount 				: value.cost*rate,
 								discount 			: 0,
 								rate				: catalogRate,
-								locale				: obj.locale,
+								locale				: value.locale,
 								movement 			: 1,								
 
 								item_prices 		: []
@@ -54160,6 +54184,7 @@
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 
 			        this.changes();		     
 		        }else{	        	
@@ -54168,6 +54193,7 @@
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 
 			        this.changes();
 		    	}
@@ -54256,8 +54282,8 @@
 			var obj = this.dataSource.at(0);		
 			this.set("obj", obj);
 
+			this.setRate();
 			this.addRow();
-			this.setRate();			
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -55857,7 +55883,13 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+
+			$.each(this.lineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				
+				value.set("rate", itemRate);
+			});							
 		},
 		//Item		
 		itemChanges 		: function(e){								
@@ -55896,7 +55928,7 @@
 								amount 				: value.cost*catalogRate,
 								discount 			: 0,
 								rate				: catalogRate,
-								locale				: obj.locale,
+								locale				: value.locale,
 								movement 			: 1,								
 
 								item_prices 		: []
@@ -55911,6 +55943,7 @@
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 
 			        this.changes();		     
 		        }else{	        	
@@ -55919,6 +55952,7 @@
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 
 			        this.changes();
 		    	}
@@ -56342,9 +56376,9 @@
 			
 			var obj = this.dataSource.at(0);		
 			this.set("obj", obj);
-
-			this.addRow();			
+						
 			this.setRate();
+			this.addRow();
 			this.typeChanges();			
 		},
 		addRow 				: function(){				
@@ -57333,7 +57367,13 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+
+			$.each(this.lineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				
+				value.set("rate", itemRate);
+			});						
 		},
 		//Segment
 	    segmentChanges 		: function(e) {
@@ -57390,7 +57430,7 @@
 								amount 				: value.cost*catalogRate,
 								discount 			: 0,
 								rate				: catalogRate,
-								locale				: obj.locale,
+								locale				: value.locale,
 								movement 			: 1,								
 
 								item_prices 		: []
@@ -57405,6 +57445,7 @@
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 
 			        this.changes();		     
 		        }else{	        	
@@ -57413,6 +57454,7 @@
 		    		data.set("quantity", 1);	    		
 			        data.set("cost", item.cost*rate);
 			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 
 			        this.changes();
 		    	}
@@ -57622,9 +57664,9 @@
 			var obj = this.dataSource.at(0);		
 			this.set("obj", obj);
 
+			this.setRate();
 			this.addRow();
 			this.addRowOption();
-			this.setRate();			
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -60064,27 +60106,15 @@
 		},
 	    //Currency Rate	
 		setRate 			: function(){
-			var self = this, 
-			obj = this.get("obj"),
-			date = kendo.toString(new Date(obj.issued_date), "yyyy-MM-dd");
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			this.currencyRateDS.query({
-				filter: [
-					{ field:"locale", value: obj.locale },
-					{ field:"date <=", value: date }
-				],
-				sort: { field:"date", dir:"desc" },
-				page: 1,
-				pageSize: 1
-			}).then(function(){
-				var view = self.currencyRateDS.view();
+			obj.set("rate", rate);
 
-				if(view.length>0){
-					obj.set("rate", kendo.parseFloat(view[0].rate));
-				}else{
-					obj.set("rate", 1);
-				}
-			});				
+			$.each(this.lineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				value.set("rate", itemRate);
+			});						
 		},
 		//Payment Term
 		setTerm 			: function(){
@@ -60163,7 +60193,7 @@
 								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
 								rate				: catalogRate,
-								locale				: obj.locale,
+								locale				: value.locale,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -60175,9 +60205,10 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);
-		    		data.set("rate", rate);	    		
+		    		data.set("quantity", 1);		    			    		
 			        data.set("price", price);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
@@ -60185,8 +60216,9 @@
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
-		    		data.set("rate", rate);	    		
 			        data.set("price", price);
+			        data.set("rate", rate);	
+			        data.set("locale", item.locale);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -60347,9 +60379,9 @@
 			
 			var obj = this.dataSource.at(0);					
 			this.set("obj", obj);
-
-			this.addRow();
+			
 			this.setRate();
+			this.addRow();
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -60968,7 +61000,12 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+
+			$.each(this.lineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				value.set("rate", itemRate);
+			});						
 		},
 		//Segment		
 	    segmentChanges 		: function(e) {
@@ -61033,7 +61070,7 @@
 								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
 								rate				: catalogRate,
-								locale				: obj.locale,
+								locale				: value.locale,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -61045,18 +61082,20 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);
-		    		data.set("rate", rate);	    		
+		    		data.set("quantity", 1);		    			    		
 			        data.set("price", price);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);
-		    		data.set("rate", rate);	    		
+		    		data.set("quantity", 1);		    			    		
 			        data.set("price", price);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -61221,9 +61260,9 @@
 			
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
-
-			this.addRow();
+			
 			this.setRate();
+			this.addRow();
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -61972,6 +62011,7 @@
 
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
+
 			this.setRate();
 			this.addRow();
 		},
@@ -62796,7 +62836,12 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+
+			$.each(this.lineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				value.set("rate", itemRate);
+			});						
 		},
 		//Segment	
 	    segmentChanges 		: function(e) {
@@ -62861,7 +62906,7 @@
 								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
 								rate				: catalogRate,
-								locale				: obj.locale,
+								locale				: value.locale,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -62873,18 +62918,20 @@
 		        }else if(item.is_assembly=="1"){
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);
-		    		data.set("rate", rate);	    		
+		    		data.set("quantity", 1);		    			    		
 			        data.set("price", price);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);
-		    		data.set("rate", rate);	    		
+		    		data.set("quantity", 1);		    			    		
 			        data.set("price", price);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -63095,8 +63142,8 @@
 			var obj = this.dataSource.at(0);		
 			this.set("obj", obj);
 			
+			this.addRow();
 			this.setRate();
-			this.addRow();			
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -64133,7 +64180,12 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+
+			$.each(this.lineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				value.set("rate", itemRate);
+			});						
 		},
 		//Payment Term
 		setTerm 			: function(){
@@ -64212,7 +64264,7 @@
 								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
 								rate				: catalogRate,
-								locale				: obj.locale,
+								locale				: value.locale,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -64225,8 +64277,9 @@
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
-		    		data.set("rate", rate);	    		
 			        data.set("price", price);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
@@ -64234,8 +64287,9 @@
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
-		    		data.set("rate", rate);	    		
 			        data.set("price", price);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -64916,7 +64970,6 @@
 			]);
 		},
 		setRecurring 		: function(){
-			
 		},
 		applyRecurring 		: function(){
 			var self = this, obj = this.get("obj");
@@ -65324,7 +65377,12 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+
+			$.each(this.lineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				value.set("rate", itemRate);
+			});						
 		},
 		//Item		
 		itemChanges 		: function(e){								
@@ -65371,7 +65429,7 @@
 								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
 								rate				: catalogRate,
-								locale				: obj.locale,
+								locale				: value.locale,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -65384,17 +65442,19 @@
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
-		    		data.set("rate", rate);	    		
 			        data.set("price", price);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);
-		    		data.set("rate", rate);	    		
+		    		data.set("quantity", 1);		    			    		
 			        data.set("price", price);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -65501,8 +65561,8 @@
 			var obj = this.dataSource.at(0);		
 			this.set("obj", obj);
 
+			this.setRate();
 			this.addRow();
-			this.setRate();			
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -66164,7 +66224,12 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+
+			$.each(this.lineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				value.set("rate", itemRate);
+			});						
 		},
 		//Segment	
 	    segmentChanges 		: function(e) {
@@ -66229,7 +66294,7 @@
 								amount 				: value.item_prices[0].price*catalogRate,
 								discount 			: 0,
 								rate				: catalogRate,
-								locale				: obj.locale,
+								locale				: value.locale,
 								movement 			: -1,								
 
 								item_prices 		: value.item_prices
@@ -66242,17 +66307,19 @@
 		        	data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
 		    		data.set("quantity", 1);
-		    		data.set("rate", rate);	    		
 			        data.set("price", price);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			       	data.set("item_prices", []);
 
 			        this.changes();		     
 		        }else{	        	
 		    		data.set("measurement_id", measurement_id);
 		    		data.set("description", item.sale_description);
-		    		data.set("quantity", 1);
-		    		data.set("rate", rate);	    		
+		    		data.set("quantity", 1);		    			    		
 			        data.set("price", price);
+			        data.set("rate", rate);
+			        data.set("locale", item.locale);
 			        data.set("item_prices", item.item_prices);			        
 
 			        this.changes();
@@ -66504,9 +66571,9 @@
 			var obj = this.dataSource.at(0);		
 			this.set("obj", obj);
 
+			this.setRate();
 			this.addRow();
 			this.addRowOption();
-			this.setRate();			
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
@@ -69332,7 +69399,11 @@
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
 			obj.set("rate", rate);
-			this.changes();						
+			
+			$.each(this.lineDS.data(), function(index, value){
+				value.set("rate", rate);
+				value.set("locale", obj.locale);
+			});						
 		},
 		//Segment
 		transactionSegmentChanges  	: function() {									
@@ -69428,9 +69499,9 @@
 			var obj = this.dataSource.at(0);		
 			this.set("obj", obj);
 
-			this.typeChanges();
+			this.setRate();
 			this.addRow();
-			this.setRate();				
+			this.typeChanges();							
 		},
 		addRow 				: function(){				
 			var obj = this.get("obj");
