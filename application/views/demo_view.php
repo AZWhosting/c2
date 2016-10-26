@@ -54893,7 +54893,12 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+
+			$.each(this.lineDS.data(), function(index, value){
+				value.set("rate", rate);
+				value.set("locale", obj.locale);
+			});
 		},
 		//Segment
 		segmentChanges 		: function(e) {
@@ -54952,9 +54957,9 @@
 			
 			var obj = this.dataSource.at(0);		
 			this.set("obj", obj);
-
-			this.addRow();
-			this.setRate();				
+			
+			this.setRate();
+			this.addRow();				
 		},
 		addRow 				: function(){				
 			var transaction_id = 0, obj = this.get("obj");
@@ -61830,7 +61835,7 @@
 		    	obj.set("contact_id", view[0].id);
 		    	obj.set("account_id", view[0].deposit_account_id);
 		    	obj.set("locale", view[0].locale);
-				
+
 				self.setRate();
 				self.loadReference();
 				self.loadRecurring();
@@ -61858,7 +61863,12 @@
 			var obj = this.get("obj"), 
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));			
 			
-			obj.set("rate", rate);						
+			obj.set("rate", rate);
+
+			$.each(this.lineDS.data(), function(index, value){
+				value.set("rate", rate);
+				value.set("locale", obj.locale);
+			});
 		},
 		//Segment
 		segmentChanges 		: function(e) {
@@ -61942,7 +61952,7 @@
 			   	type					: "Customer_Deposit", //required
 			   	amount					: 0,
 			   	rate					: 1,
-			   	locale 					: banhji.institute.locale,
+			   	locale 					: banhji.locale,
 			   	issued_date 			: new Date(),
 			   	memo 					: "",
 			   	memo2 					: "",
@@ -61962,8 +61972,8 @@
 
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
-			this.addRow();
 			this.setRate();
+			this.addRow();
 		},
 		addRow 				: function(){
 			var obj = this.get("obj");
@@ -63875,7 +63885,7 @@
 			this.loadBalance();
 			this.loadDeposit();
 			this.loadReference();
-			this.loadRecurring();
+			// this.loadRecurring();
 		},
 		//Upload
 		onSelect 			: function(e){			
@@ -64904,7 +64914,10 @@
 				{ field:"contact_id", value:obj.contact_id },
 				{ field:"is_recurring", value:1 }
 			]);
-		},		
+		},
+		setRecurring 		: function(){
+			
+		},
 		applyRecurring 		: function(){
 			var self = this, obj = this.get("obj");
 			

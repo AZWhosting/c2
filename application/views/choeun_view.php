@@ -29281,32 +29281,21 @@
 							
 							<h4 class="separator bottom">Please Upload contact as EXCEL file</h4>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  id="myFile"  class="margin-none" /><button data-bind="click: contact.onSelected">Import</button>
+							  	<input type="file"  data-role="upload" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 
-							<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-			            		<!--thead>
-			            			<tr class="widget-head">
-			            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-			            				<th class="center"><span data-bind=""></span></th>
-			            				<th class="center"><span data-bind="text: lang.lang.last_edited"></span></th>
-			            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
-			            			</tr>
-			            		</thead-->
-			            		<tbody data-role="listview"
-										 data-selectable="false"
-						                 data-template="customerSetting-form-template"
-						                 data-bind="source: dataImport">				            
-			            		</tbody>
-			            	</table>
+							
 
 						</div>
 						<!-- // Tab content END -->
 					
 						<!-- Tab content -->
 						<div id="tabInventery" class="tab-pane widget-body-regular">
-							<h5>Inventory</h5>
-							<p>Donec at nunc dui. Integer eget sem sit amet arcu bibendum elementum vel sit amet risus. Fusce libero lorem, fermentum vitae lacinia dapibus, vestibulum ac enim. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum accumsan risus sed lorem tincidunt eget faucibus sapien tempor. Proin ac feugiat dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.</p>
+							
+							<h4 class="separator bottom">Please Upload contact as EXCEL file</h4>
+							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+							  	<input type="file"  data-role="upload" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
+							</div>
 						</div>
 						<!-- // Tab content END -->
 						
@@ -76762,59 +76751,110 @@
 	*	Import Section   * 
 	**************************/
 	banhji.importContact = kendo.observable({
+		dataSource 	  : dataStore(apiUrl+"imports/contact"),
 		onSelected    : function(e) {
-			var reader = new FileReader();					
-			//if(this.get("isSupported")) {
-				var file = document.getElementById('myFile').files[0];
-				// var file = $('#myFile').get(0).files[0];
-
-				if(file !== undefined) {
-					this.set("uploadStatus", "");
-					reader.readAsText(file);
-					
-					reader.onload = function() {						
- 						var result = reader.result.split('\r');	 						
- 						
-						// for (var i = 1; i < result.length; i ++) {								
-						// 	var data = result[i].split(',');
-						// 	readingList.push(data);															
-						// }
-
-						//self.dataSource.transport.options.read.data = result;
-						//self.dataSource.read();		
-						console.log(result);																
-					}
-
-					reader.onerror = function() {							
-						//this.set("uploadStatus", reader.error);
-					}						
-				} else {
-					//this.set("uploadStatus", "Please select file!");
-				}
-
-			//}
-	  //       var files = e.files;
-	  //       var reader = new FileReader();
+			var self = this;
+	        var files = e.files;
+	        var reader = new FileReader();
 	        
-	  //       reader.readAsText(files[0].rawFile);
+	        reader.readAsText(files[0].rawFile);
 					
-			// reader.onload = function() {						
-			// 		var result = reader.result.split('\r');	 						
+			reader.onload = function() {						
+				var result = reader.result.split('\n');	 						
 					
-			// 	// for (var i = 1; i < result.length; i ++) {								
-			// 	// 	var data = result[i].split(',');
-			// 	// 	readingList.push(data);															
-			// 	// }
-			// 	console.log(result);
-			// 	//self.dataSource.transport.options.read.data = result;
-			// 	//self.dataSource.read();																		
-			// }
+				for (var i = 1; i < result.length; i ++) {								
+					var data = result[i].split(',');
+					//for (var x = 0; x < data.length; x++) {
+						banhji.importContact.dataSource.add({
+							contact_type: data[0],
+							abbr: data[1],
+							number: data[2],
+							name: data[3],
+							gender: data[4],
+							dob: data[5],
+							pob: data[6],
+							credit_limit: data[7],
+							phone: data[8],
+							email: data[9],
+							website: data[10],
+							job: data[11],
+							city: data[12],
+							post_code: data[13],
+							address: data[14],
+							bill_to: data[15],
+							ship_to: data[16],
+							deposit_account: data[17],
+							trade_discount: data[18],
+							settlement_discount: data[19],
+							account: data[20],
+							revenue_account: data[21],
+							tax: data[22],
+							registered_date: data[23]
+						});
+					//}	
+
+				}
+				console.log(banhji.importContact.dataSource.data());
+				//self.dataSource.transport.options.read.data = result;
+				//self.dataSource.read();																		
+			}
          // console.log(files[0].rawFile);
+         	
         },
 		save: function() {}
 	});
 	banhji.importItem = kendo.observable({
-		save: function() {}
+		dataSource 	  : dataStore(apiUrl+"imports/item"),
+		onSelected    : function(e) {
+			var self = this;
+	        var files = e.files;
+	        var reader = new FileReader();
+	        
+	        reader.readAsText(files[0].rawFile);
+					
+			reader.onload = function() {						
+				var result = reader.result.split('\n');	 						
+					
+				for (var i = 1; i < result.length; i ++) {								
+					var data = result[i].split(',');
+					//for (var x = 0; x < data.length; x++) {
+						banhji.importItem.dataSource.add({
+							item_type: data[0],
+							abbr: data[1],
+							number: data[2],
+							name: data[3],
+							purchase_description: data[4],
+							sale_description: data[5],
+							measurements: data[6],
+							supplier_code: data[7],
+							color_code: data[8],
+							international_code: data[9],
+							imei: data[10],
+							serial_number: data[11],
+							cost: data[12],
+							price: data[13],
+							account: data[14],
+							income_account: data[15],
+							cogs_account: data[16],
+							inventory_account: data[17],
+							fixed_assets_account: data[18],
+							accumulated_account: data[19],
+							depreciation_account: data[20]
+						});
+					//}	
+
+				}
+				console.log(banhji.importItem.dataSource.data());
+				//self.dataSource.transport.options.read.data = result;
+				//self.dataSource.read();																		
+			}
+         // console.log(files[0].rawFile);
+         	
+        },
+		save: function() {
+			//Category Default in API 
+			//Locale Default base on company's locale
+		}
 	});
 	banhji.importJournal = kendo.observable({
 		save: function() {}
