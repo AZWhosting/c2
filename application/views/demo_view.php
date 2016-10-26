@@ -162,22 +162,22 @@
 							<div class="span12" style="padding-right: 0; padding-left: 0;">
 								<div class="span3">
 									<a href="#/customer" class="center">
-										<img width="90" height="90" title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+										<img  title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
 									</a>
 								</div>
 								<div class="span3">
 									<a href="#/vendor" class="center">
-										<img width="90" height="90" title="Add Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
+										<img  title="Add Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
 									</a>
 								</div>
 								<div class="span3">
 									<a href="#/item" class="center">
-										<img width="90" height="90" title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+										<img  title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
 									</a>
 								</div>
 								<div class="span3">
 									<a href="#/item_service" class="center">
-										<img width="90" height="90" title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+										<img  title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
 									</a>
 								</div>
 							</div>
@@ -14982,7 +14982,7 @@
 						    </div>
 						    <div class="span4">
 						       	<a href="#/item_service" class="center">
-						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
+						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" width="83" height="83" />
 						       	</a>
 						    </div>
 						</div>

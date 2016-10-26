@@ -136,6 +136,13 @@
         .footer-list ul li a:hover{
           color: #839ABA;
         }
+        @media only screen 
+        and (min-device-width : 768px) 
+        and (max-device-width : 1024px) 
+        and (orientation : portrait) { 
+        }
+
+
     </style>
     <style>
         /* FeedBack */
@@ -333,6 +340,7 @@
 
                                 <label>Company Information</label><br>
                                 <div class="cover">
+                                    <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
                                     <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
                                     <img src="<?php echo base_url();?>assets/img/form-cross.png" class="imgCross" />
                                     <input required="required" type="text" data-bind="value: name, events: {change: comChange }" placeholder="Company Name " class="signup-email">
@@ -756,6 +764,37 @@
                 serverPaging: true,
                 pageSize: 50
             }),
+            companyCheck : new kendo.data.DataSource({
+                transport: {
+                    read  : {
+                      url: baseUrl + 'api/institutes',
+                      type: "GET",
+                      dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                      if(operation === 'read') {
+                        return {
+                          limit: options.take,
+                          page: options.page,
+                          filter: options.filter
+                        };
+                      } else {
+                        return {models: kendo.stringify(options.models)};
+                      }
+                    }
+                },
+                schema  : {
+                    model: {
+                      id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                batch: true,
+                serverFiltering: true,
+                serverPaging: true,
+                pageSize: 1
+            }),
             email     : null,
             password  : null,
             cPassword : null,
@@ -893,6 +932,9 @@
                 this.pwdChange();
             },
             comChange   : function(e) {
+                var self = this;
+                $(".cover").eq(4).children(".imgLoad").css("display", "block");
+                $(".cover").eq(4).children(".imgTick, .imgCross").css("display", "none");
                 if(this.get("name") == ""){
                     this.set("err", null);
                     this.set("err", "Please fill company name!");
@@ -903,11 +945,26 @@
                     $(".cover").eq(4).children("input").css("border", "1px solid #a22314");
                     $(".cover").eq(4).children("input").focus();
                 }else{
-                    this.set("err", null);
-                    $(".cover").eq(4).children(".imgLoad, .imgCross").css("display", "none");
-                    $(".cover").eq(4).children(".imgTick").css("display", "block");
-                    $(".cover").eq(4).children(".msg").removeAttr("style");
-                    $(".cover").eq(4).children("input").removeAttr("style");
+                    this.companyCheck.query({
+                        filter: {field: "name", operator: "", value : this.get('name') }
+                    }).then(function(){
+                        if(self.companyCheck.data().length > 0){
+                            self.set("err", null);
+                            self.set("err", "Company name aleady registered!");
+                            $(".cover").eq(4).children(".imgLoad, .imgTick").css("display", "none");
+                            $(".cover").eq(4).children(".imgCross").css("display", "block");
+                            $(".cover").eq(4).children(".msg").text("Company name aleady registered!");
+                            $(".cover").eq(4).children(".msg").css("display", "block");
+                            $(".cover").eq(4).children("input").css("border", "1px solid #a22314");
+                            $(".cover").eq(4).children("input").focus();
+                        }else{
+                            self.set("err", null);
+                            $(".cover").eq(4).children(".imgLoad, .imgCross").css("display", "none");
+                            $(".cover").eq(4).children(".imgTick").css("display", "block");
+                            $(".cover").eq(4).children(".msg").removeAttr("style");
+                            $(".cover").eq(4).children("input").removeAttr("style");
+                        }
+                    });
                 }
             },
             create: function() {

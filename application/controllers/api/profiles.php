@@ -342,8 +342,8 @@ class Profiles extends REST_Controller {
 					'telephone' => $u->institute->telephone,
 					'reportCurrency' => array('id'=>$report->id, 'code'=>$report->code, 'country' => $report->country, 'locale' =>$report->locale),
 					'is_local' => $u->institute->is_local,
-					'financial_year' => $u->institute->financial_year,
-					'financial_report_date' => $u->institute->financial_report_date,
+					// 'financial_year' => $u->institute->financial_year,
+					// 'financial_report_date' => $u->institute->financial_report_date,
 					'industry' => array('id'=>$industry->id,'type' => $industry->name),
 					'currency' => $currency->id ? array('id'=> $currency->id, 'code' => $currency->code, 'country' => $currency->country, 'locale'=>$currency->locale):array('id'=>null),
 					'accounting_standard' => $u->institute->accounting_standard,
@@ -386,7 +386,9 @@ class Profiles extends REST_Controller {
 			$inst->name = $r->name;
 			$inst_year_founded = date('Y');
 			$inst->telephone = $r->telephone;
+			$inst->fiscal_date = '01-01';
 			$inst->monetary_id = $r->currency->id;
+			$inst->locale = $r->currency->locale;
 			$inst->report_monetary_id = $r->currency->id;
 			$inst->logo = 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/default_logo.png';
 			$inst->country_id = $r->country->id;

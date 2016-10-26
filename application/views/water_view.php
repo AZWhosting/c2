@@ -36776,7 +36776,7 @@
 	
     <div class="row-fluid">
 		<!-- Left Side -->
-		<div class="span6">
+		<div class="span4">
 
 			<!-- Logo of the page -->
 			<table width="100%" cellpadding="10">
@@ -36824,14 +36824,15 @@
 							R. Book
 						</a>						
 					</td>
+									
+				</tr>
+				<tr>
 					<td class="center ">
 						<a href="#/wInvoice">
 							<img title="Add Create Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/create_invoice.png" width="110" height="200" />
 							W. Invoice
 						</a>
 					</td>					
-				</tr>
-				<tr>					
 					<td class="center ">						
 						<a href="#/wPrint_center">
 							<img title="Add Print Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/print_invoice.png" width="110" height="200" />
@@ -36854,7 +36855,7 @@
 		</div>
 
 		<!-- Right Side -->
-		<div class="span6">
+		<div class="span8">
 
 			<div class="board-chart" style="margin-bottom: 15px;">
 				<div class="span12">
@@ -36865,10 +36866,10 @@
 			</div>
 
 			<!-- Summary -->
-			<div class="row">
+			<div class="row-fluid">
 	
 				<!-- Column -->
-				<div class="span6" style="padding-right: 0;">
+				<div class="span4" >
 				
 					<!-- Widget -->
 					<div class="widget widget-3 customer-border">
@@ -36906,55 +36907,7 @@
 				<!-- // Column END -->
 				
 				<!-- Column -->
-				<div class="span6" >
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span>Active Customer</h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<div class="widget-body alert-info">
-							
-							<div align="center" class="text-large strong">0</div>
-							<table width="100%">
-								<tr align="center">
-									<td width="33%">										
-										<span>0</span>
-										<br>
-										<span>Active</span>
-									</td>
-									<td width="33%">
-										<span>0</span>
-										<br>
-										<span>Inactive</span>
-									</td>
-									<td width="33%">
-										<span>0</span>
-										<br>
-										<span>Voice</span>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-				
-				
-			</div>
-
-			<!-- Summary -->
-			<div class="row">
-				<!-- Column -->
-				<div class="span6" style="padding-right: 0;">
+				<div class="span4" >
 				
 					<!-- Widget -->
 					<div class="widget widget-3 customer-border">
@@ -36997,11 +36950,49 @@
 				<!-- // Column END -->
 				
 				<!-- Column -->
-				<div class="span6">
+				<div class="span4" style="padding-right: 0;">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span>Active Customer</h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert-info" style="background-color: LightGray;">
+							
+							<div align="center" class="text-large strong">0</div>
+							<table width="100%">
+								<tr align="center">
+									<td width="33%">										
+										<span>0</span>
+										<br>
+										<span>Active</span>
+									</td>
+									<td width="33%">
+										<span>0</span>
+										<br>
+										<span>Inactive</span>
+									</td>
+									<td width="33%">
+										<span>0</span>
+										<br>
+										<span>Voice</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
 				</div>
 				<!-- // Column END -->
-
 			</div>
+
 
 			<!-- Top 5 -->
 			<div class="row-fluid">
@@ -84032,118 +84023,136 @@
 	/*************************
 	*   Water Section   *
 	**************************/
-	banhji.router.route("/water", function(){
+	// banhji.router.route("/water", function(){
+	// 	if(!banhji.userManagement.getLogin()){
+	// 		banhji.router.navigate('/manage');
+	// 	}else{
+	// 		banhji.view.layout.showIn("#content", banhji.view.wDashBoard);			
+	// 		banhji.view.layout.showIn('#menu', banhji.view.menu);
+	// 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			
+	// 		var vm = banhji.wDashBoard;
+
+	// 		if(banhji.pageLoaded["water"]==undefined){							
+	// 			banhji.pageLoaded["water"] = true;
+
+	// 			vm.sorterChanges();
+	// 			vm.search();
+
+	// 			var container = $("#employeeForm");
+ //                kendo.init(container);
+ //                container.kendoValidator({
+ //                    rules: {
+ //                        greaterdate: function (input) {
+ //                            if (input.is("[data-greaterdate-msg]") && input.val() != "") {                                    
+ //                                var date = kendo.parseDate(input.val()),
+ //                                    otherDate = kendo.parseDate($("[name='" + input.data("greaterdateField") + "']").val());
+ //                                return otherDate == null || otherDate.getTime() < date.getTime();
+ //                            }
+
+ //                            return true;
+ //                        }
+ //                    }
+ //                });
+
+ //                var validator = $("#employeeForm").data("kendoValidator");
+ //                validator.validate();                       
+
+	// 			var monthlyDS = new kendo.data.DataSource({
+	// 				transport: {
+	// 					read 	: {
+	// 						url: baseUrl + 'invoices/wmonthly',
+	// 						type: "GET",
+	// 						headers: {
+	// 							"Entity": getDB(),
+	// 							"User": banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id
+	// 						},
+	// 						dataType: 'json'
+	// 					},
+	// 					parameterMap: function(options, operation) {
+	// 						if(operation === 'read') {
+	// 							return {
+	// 								limit: options.take,
+	// 								page: options.page,
+	// 								filter: options.filter
+	// 							};
+	// 						}
+	// 					}
+	// 				},
+	// 				schema 	: {
+	// 					data: 'results',
+	// 					total: 'count'
+	// 				},
+	// 				group: {
+	// 					field: 'month',
+	// 					aggregates: [
+	// 						{field: 'amount', aggregate: 'sum'},
+	// 						{field: 'usage', aggregate: 'sum'}
+	// 					]
+	// 				},
+	// 				batch: true,
+	// 				serverFiltering: true,
+	// 				serverPaging: true,
+	// 				pageSize: 1000
+	// 			});				 
+        		
+ //        		monthlyDS.fetch(function(e){				
+	// 				$('#wsale-graph').kendoChart({
+	// 					dataSource: {data: monthlyDS.data()},												
+	// 					series: [
+	// 						{field: 'amount', categoryField:'month', type: 'line', axis: 'sale'},
+	// 						{field: 'usage', categoryField:'month', type: 'column', axis: 'usage'}
+	// 					],
+	// 					valueAxes: [
+	// 						{
+	// 		                    name: "sale",
+	// 		                    color: "#007eff",
+	// 		                    min: 0,
+	// 		                    majorUnit: 5000000,
+	// 		                    max: 50000000
+	// 		                }, 
+	// 		                {
+	// 		                    name: "usage",
+	// 		                    color: "#3399ff",
+	// 		                    min: 0,	
+	// 		                    majorUnit: 5000,		                   
+	// 		                    max: 50000
+	// 		                }
+	// 	                ],
+	// 	                categoryAxis: {
+	// 	                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
+	// 	                    axisCrossingValues: [0, 13],
+	// 	                    justified: true
+	// 	                },
+	// 	                tooltip: {
+	// 	                    visible: true,
+	// 	                    format: "{0}"
+	// 	                }
+
+	// 				});
+	// 			});		
+	// 		}
+
+	// 		vm.pageLoad();
+	// 	}				
+	// });
+	banhji.router.route("/water", function(){		
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.wDashBoard);			
+			banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 			
 			var vm = banhji.wDashBoard;
-
-			if(banhji.pageLoaded["water"]==undefined){							
-				banhji.pageLoaded["water"] = true;
-
-				vm.sorterChanges();
-				vm.search();
-
-				var container = $("#employeeForm");
-                kendo.init(container);
-                container.kendoValidator({
-                    rules: {
-                        greaterdate: function (input) {
-                            if (input.is("[data-greaterdate-msg]") && input.val() != "") {                                    
-                                var date = kendo.parseDate(input.val()),
-                                    otherDate = kendo.parseDate($("[name='" + input.data("greaterdateField") + "']").val());
-                                return otherDate == null || otherDate.getTime() < date.getTime();
-                            }
-
-                            return true;
-                        }
-                    }
-                });
-
-                var validator = $("#employeeForm").data("kendoValidator");
-                validator.validate();                       
-
-				var monthlyDS = new kendo.data.DataSource({
-					transport: {
-						read 	: {
-							url: baseUrl + 'invoices/wmonthly',
-							type: "GET",
-							headers: {
-								"Entity": getDB(),
-								"User": banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id
-							},
-							dataType: 'json'
-						},
-						parameterMap: function(options, operation) {
-							if(operation === 'read') {
-								return {
-									limit: options.take,
-									page: options.page,
-									filter: options.filter
-								};
-							}
-						}
-					},
-					schema 	: {
-						data: 'results',
-						total: 'count'
-					},
-					group: {
-						field: 'month',
-						aggregates: [
-							{field: 'amount', aggregate: 'sum'},
-							{field: 'usage', aggregate: 'sum'}
-						]
-					},
-					batch: true,
-					serverFiltering: true,
-					serverPaging: true,
-					pageSize: 1000
-				});				 
-        		
-        		monthlyDS.fetch(function(e){				
-					$('#wsale-graph').kendoChart({
-						dataSource: {data: monthlyDS.data()},												
-						series: [
-							{field: 'amount', categoryField:'month', type: 'line', axis: 'sale'},
-							{field: 'usage', categoryField:'month', type: 'column', axis: 'usage'}
-						],
-						valueAxes: [
-							{
-			                    name: "sale",
-			                    color: "#007eff",
-			                    min: 0,
-			                    majorUnit: 5000000,
-			                    max: 50000000
-			                }, 
-			                {
-			                    name: "usage",
-			                    color: "#3399ff",
-			                    min: 0,	
-			                    majorUnit: 5000,		                   
-			                    max: 50000
-			                }
-		                ],
-		                categoryAxis: {
-		                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
-		                    axisCrossingValues: [0, 13],
-		                    justified: true
-		                },
-		                tooltip: {
-		                    visible: true,
-		                    format: "{0}"
-		                }
-
-					});
-				});		
+			banhji.userManagement.addMultiTask("Water Center","water",null);
+			if(banhji.pageLoaded["water"]==undefined){
+				banhji.pageLoaded["water"] = true;			
+                						               
 			}
 
-			vm.pageLoad();
-		}				
+			vm.pageLoad();				
+		}
 	});
 	banhji.router.route("/wCustomer_center", function(){
 		if(!banhji.userManagement.getLogin()){
