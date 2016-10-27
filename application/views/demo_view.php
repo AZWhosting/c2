@@ -37320,7 +37320,7 @@
 						</a>
 					</td>
 					<td class="center">
-						&nbsp;&nbsp;						
+						&nbsp;&nbsp;				
 					</td>					
 				</tr>
 							
@@ -37342,29 +37342,24 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span data-bind="text: lang.lang.sale"></span></h4>
+							<h4 class="heading"><span class="glyphicons shopping_cart"><i></i></span><b data-bind="text: lang.lang.quote"></b></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
 						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary" style="min-height: 148px;">
 							
-							<div align="center" class="text-large strong" data-bind="text: sale"></div>
+							<div align="center" class="text-large strong" data-bind="text: quote"></div>
 							<table width="100%">
 								<tr align="center">
 									<td width="33%" style="vertical-align: top">										
-										<span data-bind="text: sale_customer"></span>
+										<span data-bind="text: quote_customer"></span>
 										<br>
 										<span><span data-bind="text: lang.lang.customers"></span></span>
 									</td>
 									<td width="33%" style="vertical-align: top">
-										<span data-bind="text: sale_product"></span>
+										<span data-bind="text: quote_open"></span>
 										<br>
-										<span><span data-bind="text: lang.lang.product"></span></span>
-									</td>
-									<td width="33%" style="vertical-align: top">
-										<span data-bind="text: sale_order"></span>
-										<br>
-										<span><span data-bind="text: lang.lang.order"></span></span>
+										<span>Open</span>
 									</td>
 								</tr>
 							</table>
@@ -37385,24 +37380,24 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><span data-bind="text: lang.lang.sale_order"></span></h4>
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><b data-bind="text: lang.lang.sale_order"></b></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
 						<div class="widget-body alert-info" style="min-height: 148px;">
 							
-							<div align="center" class="text-large strong" data-bind="text: order"></div>
+							<div align="center" class="text-large strong" data-bind="text: so"></div>
 							<table width="100%">
 								<tr align="center">
 									<td width="50%" style="vertical-align: top">										
-										<span data-bind="text: order_avg"></span>
+										<span data-bind="text: so_customer"></span>
 										<br>
-										<span><span data-bind="text: lang.lang.average"></span></span>
+										<span><span data-bind="text: lang.lang.customers"></span></span>
 									</td>
 									<td width="50%" style="vertical-align: top">
-										<span data-bind="text: order_open"></span>
+										<span data-bind="text: so_open"></span>
 										<br>
-										<span><span data-bind="text: lang.lang.order_open"></span></span>
+										<span>Open</span>
 									</td>									
 								</tr>
 							</table>
@@ -37423,29 +37418,24 @@
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span><span data-bind="text: lang.lang.receivable"></span></h4>
+							<h4 class="heading"><span class="glyphicons cargo"><i></i></span><b data-bind="text: lang.lang.products"></b></h4>
 						</div>
 						<!-- // Widget heading END -->
 						
 						<a href="#/customer_balance_summary"><div class="widget-body alert-info3" style="background-color: LightGray; min-height: 148px;">
 							
-							<div align="center" class="text-large strong" data-bind="text: ar"></div>
+							<div align="center" class="text-large strong" data-bind="text: product"></div>
 							<table width="100%">
 								<tr align="center">
-									<td width="33%" style="vertical-align: top">										
-										<span data-bind="text: ar_open"></span>
+									<td width="50%" style="vertical-align: top">
+										<span data-bind="text: product_quote"></span>
 										<br>
-										<span><span data-bind="text: lang.lang.open"></span></span>
+										<span>On Quote</span>
 									</td>
-									<td width="33%" style="vertical-align: top">
-										<span data-bind="text: ar_customer"></span>
+									<td width="50%" style="vertical-align: top">
+										<span data-bind="text: product_so"></span>
 										<br>
-										<span><span data-bind="text: lang.lang.customers"></span></span>
-									</td>
-									<td width="33%" style="vertical-align: top">
-										<span data-bind="text: ar_overdue"></span>
-										<br>
-										<span><span data-bind="text: lang.lang.overdue"></span></span>
+										<span>On SO</span>
 									</td>
 								</tr>
 							</table>
@@ -37466,7 +37456,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>
 				            <tr>
-				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_customers"></span></th>				                			                
+				                <th class="center" colspan="2">Top 5 Quotations</th>				                			                
 				            </tr>
 				        </thead>
 				        <tbody data-role="listview"
@@ -37479,7 +37469,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
 				        <thead>				           
 				            <tr>
-				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_ar_balance"></span></th>				                			                
+				                <th class="center" colspan="2">Top 5 Sale Orders</th>				                			                
 				            </tr>					        
 				        </thead>
 				        <tbody data-role="listview"
@@ -37514,7 +37504,7 @@
 	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 	                 }'                 
 	                 data-series="[
-	                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+	                                 { field: 'sale', name: 'Monthly Quote', categoryField:'month', color: '#236DA4' },
 	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
 	                             ]"
 	                 data-auto-bind="false"	                             
@@ -71926,7 +71916,6 @@
 		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
 		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),
 		topPurchase 		: dataStore(apiUrl + "dashboards/top_purchase"),
-		topTurnOver 		: dataStore(apiUrl + "dashboards/top_inventory_turnover"),
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -72027,16 +72016,7 @@
 				],							
 				page: 1,
 				pageSize: 5
-			});	
-
-			this.topTurnOver.query({
-				filter: [
-					{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],							
-				page: 1,
-				pageSize: 5
-			});										
+			});								
 		}
 	});
 	banhji.itemCenter = kendo.observable({
@@ -76629,17 +76609,15 @@
 			serverPaging: true,
 			pageSize: 100
 		}),
-		sale 				: 0,
-		sale_customer 		: 0,
-		sale_product 		: 0,
-		sale_order 			: 0,
-		order 				: 0,
-		order_avg 			: 0,
-		order_open 			: 0,
-		ar 					: 0,
-		ar_open 			: 0,
-		ar_customer 		: 0,
-		ar_overdue 			: 0,
+		quote 				: 0,
+		quote_customer 		: 0,
+		quote_open 			: 0,
+		so 					: 0,
+		so_customer 		: 0,
+		so_open 			: 0,
+		product 			: 0,
+		product_quote 		: 0,
+		product_so 			: 0,
 		pageLoad 			: function(){
 			var self = this, today = new Date(),
 			firstDayOfYear = new Date(today.getFullYear(), 0, 1);

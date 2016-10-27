@@ -624,6 +624,7 @@ class Sales extends REST_Controller {
 				$txn->like("segments", $seg->id, "both");
 				$txn->where("deleted",0);
 				$txn->where("is_recurring",0);
+				$txn->order_by("issued_date", "desc");
 	
 				$txn->get_iterated();
 				$customers = array();
