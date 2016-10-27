@@ -46501,6 +46501,7 @@
 				data: 'results',
 				total: 'count'
 			},
+			filter:{ field:"status", value:1 },
 			//group:{ field: "account_type_name" },
 			sort:{ field:"number", dir:"asc" },
 			batch: true,			
