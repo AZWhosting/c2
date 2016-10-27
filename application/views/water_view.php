@@ -1,4 +1,4 @@
- <div id="wrapperApplication" class="container-fluid"></div>
+<div id="wrapperApplication" class="container-fluid"></div>
 <!-- template section starts -->
 <script type="text/x-kendo-template" id="layout">
 	<div id="menu"></div>			
@@ -36773,175 +36773,7 @@
 *	Water Section      	  *
 **************************** -->
 <script id="wDashBoard" type="text/x-kendo-template">
-	<!-- <div class="container-fluid menu-hidden sidebar-hidden-phone fluid menu-left">
-		 
-		<img src="uploads/pictures/Water_Bill.png" width="300" height="100" />	
-		
-		<div class="row row-merge">
-			<div class="span4">
-				<div class="innerAll padding-bottom-none-phone">
-					<a href="#/wCustomer_balance" class="widget-stats widget-stats-primary widget-stats-4">
-						<span class="txt"><span data-bind="text: lang.lang.balance"></span></span>
-						<span class="count" style="font-size: 35px;" data-bind="text: balance"></span>
-						<span class="glyphicons coins"><i></i></span>
-						<div class="clearfix"></div>
-						<i class="icon-play-circle"></i>
-					</a>
-				</div>
-			</div>
-			<div class="span4">
-				<div class="innerAll padding-bottom-none-phone">
-					<a href="#/wCustomer_deposit" class="widget-stats widget-stats-inverse widget-stats-4">
-						<span class="txt"><span data-bind="text: lang.lang.deposit"></span></span>
-						<span class="count" style="font-size: 35px;" data-bind="text: deposit"></span>
-						<span class="glyphicons briefcase"><i></i></span>
-						<div class="clearfix"></div>
-						<i class="icon-play-circle"></i>
-					</a>
-				</div>
-			</div>			
-			<div class="span4">
-				<div class="innerAll padding-bottom-none-phone">
-					<a href="#/wCustomer_list" class="widget-stats widget-stats-gray widget-stats-4">
-						<span class="txt"><span data-bind="text: lang.lang.active_customer"></span></span>
-						<span class="count"​><span data-bind="text: activeCustomer"></span></span> 
-						<span class="glyphicons user"><i></i></span>
-						<div class="clearfix"></div>
-						<i class="icon-play-circle"></i>
-					</a>
-				</div>
-			</div>			
-		</div>
-
-		<div class="row">			
-			<div class="span8">
-				<div class="heading-buttons">
-					<h2 class="heading pull-left"><i class="icon-bar-chart icon-fixed-width text-primary"></i> <span data-bind="text: lang.lang.monthly_sale"></span></h2>
-					
-					<div class="clearfix"></div>
-				</div>
-
-				<div class="innerLR innerT">			
-					<div id="wsale-graph" style="height: 200px;"></div>
-				</div>
-			</div>
-
-			<div class="span4">
-				<div class="widget widget-body-white">
-					<div class="widget-head"><h4 class="heading strong text-uppercase"><span data-bind="text: lang.lang.customer_status"></span></h4></div>
-					<div class="widget-body padding-none">
-						<table class="table table-striped table-vertical-center table-condensed margin-none">
-							<tbody>
-								<tr>									
-									<td class="text-primary border-none"><span data-bind="text: lang.lang.inactive"></span></td>
-									<td class="text-right strong">
-										<span class="badge badge-warning" data-bind="text: voidCustomer"></span>										
-									</td>
-								</tr>
-								<tr>									
-									<td class="text-primary"><span data-bind="text: lang.lang.void"></span></td>
-									<td class="text-right strong">
-										<span class="badge badge-important" data-bind="text: inactiveCustomer"></span>										
-									</td>
-								</tr>
-								<tr>									
-									<td class="text-primary"><span data-bind="text: lang.lang.total"></span></td>
-									<td class="text-right strong">
-										<span class="badge badge-inverse" data-bind="text: totalCustomer"></span>										
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-
-				<div class="widget widget-heading-simple widget-body-white">
-					<div class="widget-body padding-none">
-						<div class="row-fluid row-merge">
-							<div class="span6">
-								<div class="innerAll center">
-									<h5 class="strong muted text-uppercase"><i class="icon-money text-faded"></i> <span data-bind="text: lang.lang.open"></span></h5>
-									<a href="#/wAging_summary" class="text-xlarge strong text-primary" data-bind="text: totalUnpaid"></a>									
-								</div>
-							</div>
-							<div class="span6">
-								<div class="innerAll center muted">
-									<h5 class="strong muted text-uppercase"><i class="icon-dashboard text-faded"></i> <span data-bind="text: lang.lang.no_meter"></span></h5>
-									<a href="#/wCustomer_no_meter" class="text-xlarge strong" data-bind="text: totalNoMeter"></a>									
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>								
-			</div>			
-		</div>	
-
-		<div class="row-fluid">
-	        <form id="employeeForm" data-role="validator" novalidate="novalidate">
-                <div id="fieldlist">
-                	<input data-role="dropdownlist"                   
-	                   data-value-primitive="true"
-	                   data-text-field="text"
-	                   data-value-field="value"
-	                   data-bind="value: sorter,
-	                              source: sortList,                              
-	                              events: { change: sorterChanges }" />
-	                                           
-                    <input type="text" data-role='datepicker' id="sdate" name="sdate" data-type="date" data-bind="value: sdate" />
-                    <span data-for='sdate' class='k-invalid-msg'></span>
-
-                    <input type="text" data-role='datepicker' id ="edate" data-type="date" name="edate" data-bind="value: edate" 
-                    		data-greaterdate-field="sdate" data-greaterdate-msg='Invalid' />
-                    <span data-for='edate' class='k-invalid-msg'></span>
-               
-                    <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>                           
-                </div>
-            </form>
-
-            <table class="table table-bordered table-vertical-center table-pricing table-pricing-2">
-        		<thead>
-        			<tr>
-        				<th width="45" class="center"><span data-bind="text: lang.lang.no"></span></th>
-        				<th class="center"><span data-bind="text: lang.lang.license"></span></th>
-        				<th class="center"><span data-bind="text: lang.lang.total_license"></span></th>
-        				<th class="center"><span data-bind="text: lang.lang.active_customer"></span></th>
-        				<th class="center"><span data-bind="text: lang.lang.void_customer"></span></th></th>	            				
-        				<th class="center"><span data-bind="text: lang.lang.deposit"></span></th></th>	            				
-        				<th class="center"><span data-bind="html: lang.lang.m"></span><sup>3</sup></th>
-        				<th class="center"><span data-bind="text: lang.lang.amount"></span></th>        				
-        				<th class="center"><span data-bind="text: lang.lang.balance"></span></th>	            					            				
-        			</tr>
-        		</thead>
-        		<tbody data-role="listview"
-        				data-auto-bind="false"	            					            			
-		                data-template="wsale-by-branch-row-template"
-		                data-bind="source: saleByBranchDS"></tbody>
-        	</table>            
-
-			<p class="separator text-center"><i class="icon-ellipsis-horizontal icon-3x"></i></p>
-
-			<table class="table table-bordered table-striped table-white">
-        		<thead>
-        			<tr>
-        				<th width="45"><span data-bind="text: lang.lang.no"></span></th>
-        				<th><span data-bind="text: lang.lang.license"></span></th>
-        				<th><span data-bind="text: lang.lang.location"></span></th>
-        				<th><span data-bind="text: lang.lang.active_customer"></span></th>
-        				<th><span data-bind="text: lang.lang.void_customer"></span></th>	            				
-        				<th><span data-bind="text: lang.lang.deposit"></span></th>	            				
-        				<th><span data-bind="html: lang.lang.m"></span><sup>3</sup></th>
-        				<th><span data-bind="text: lang.lang.amount"></span></th>        				
-        				<th><span data-bind="text: lang.lang.balance"></span></th>	            					            				
-        			</tr>
-        		</thead>
-        		<tbody data-role="listview"
-        				data-auto-bind="false"	            					            			
-		                data-template="wsale-by-location-row-template"
-		                data-bind="source: saleByLocationDS"></tbody>
-        	</table> 
-
-    	</div>
-    </div> -->
+	
     <div class="row-fluid">
 		<!-- Left Side -->
 		<div class="span4">
@@ -36950,10 +36782,10 @@
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td valign="top">
-			        	<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_bill.png" width="300" height="100">
-			        	<div class="supplier-icon">
+			        	<img src="<?php echo base_url();?>/assets/water_bill.png" width="300" height="100">
+			        	<div class="supplier-icon" style="margin-top: 15px;">
 					       	<div class="span4">
-						       	<a href="#/wNew_customer" class="center">
+						       	<a href="#/customer" class="center">
 						       		<img title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
 						       	</a>
 						       </div>
@@ -36971,46 +36803,52 @@
 			        </td>
 			 	</tr>
 			</table>
+
 			<table class="table table-borderless table-condensed table-vertical-center ">
 				<tr>
-					<td class="center">
+					<td class="center ">
 						<a href="#/wReading">
-							<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/reading.png" width="110" height="200" />
+							<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png" width="110" height="200" />
 							Reading
 						</a>						
 					</td>
-					<td class="center">
+					<td class="center ">
 						<a href="#/wIR_reader">
 							<img title="Add IR Reader" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png" width="110" height="200" />
 							IR Reader
 						</a>
 					</td>
-					<td class="center">
+					<td class="center ">
 						<a href="#/wReading_book">
 							<img title="Add Reading Book" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/reading_book.png" width="110" height="200" />
 							R. Book
 						</a>						
-					</td>					
+					</td>
+									
 				</tr>
 				<tr>
-					<td class="center">
+					<td class="center ">
 						<a href="#/wInvoice">
 							<img title="Add Create Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/create_invoice.png" width="110" height="200" />
 							W. Invoice
 						</a>
-					</td>
-					<td class="center">						
+					</td>					
+					<td class="center ">						
 						<a href="#/wPrint_center">
 							<img title="Add Print Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/print_invoice.png" width="110" height="200" />
 							Print
 						</a>						
 					</td>
-					<td class="center">						
+					<td class="center ">						
 						<a href="#/currency_rate">
 							<img title="Receive Water Bill Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/receive_payment.png" width="110" height="200" />
 							Receipt
 						</a>						
-					</td>										
+					</td>
+					<td class="center ">
+					</td>
+					<td class="center ">
+					</td>									
 				</tr>							
 			</table>                
 
@@ -37019,11 +36857,19 @@
 		<!-- Right Side -->
 		<div class="span8">
 
+			<div class="board-chart" style="margin-bottom: 15px;">
+				<div class="span12">
+					<h4>PCG & Partners</h4>
+					<h2 style="color: #113051; margin-bottom: 11px; display: inline-block; width: 100%;" >Financial Snapshot</h2>
+					<span style="color: #000000;">As of: Tue Oct 18 2016 15:18:08 GMT+0700 (ICT)</span><br/>
+				</div>
+			</div>
+
 			<!-- Summary -->
 			<div class="row-fluid">
 	
 				<!-- Column -->
-				<div class="span4">
+				<div class="span4" >
 				
 					<!-- Widget -->
 					<div class="widget widget-3 customer-border">
@@ -37061,7 +36907,7 @@
 				<!-- // Column END -->
 				
 				<!-- Column -->
-				<div class="span4">
+				<div class="span4" >
 				
 					<!-- Widget -->
 					<div class="widget widget-3 customer-border">
@@ -37104,36 +36950,36 @@
 				<!-- // Column END -->
 				
 				<!-- Column -->
-				<div class="span4">
+				<div class="span4" style="padding-right: 0;">
 				
 					<!-- Widget -->
 					<div class="widget widget-3 customer-border">
 					
 						<!-- Widget heading -->
 						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span>Receivable</h4>
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span>Active Customer</h4>
 						</div>
 						<!-- // Widget heading END -->
 						
-						<div class="widget-body alert-info3" style="background-color: LightGray">
+						<div class="widget-body alert-info" style="background-color: LightGray;">
 							
 							<div align="center" class="text-large strong">0</div>
 							<table width="100%">
 								<tr align="center">
 									<td width="33%">										
-										<span >0</span>
+										<span>0</span>
 										<br>
-										<span>Open</span>
+										<span>Active</span>
 									</td>
 									<td width="33%">
-										<span >0</span>
+										<span>0</span>
 										<br>
-										<span>Customer</span>
+										<span>Inactive</span>
 									</td>
 									<td width="33%">
-										<span >0</span>
+										<span>0</span>
 										<br>
-										<span>Overdue</span>
+										<span>Voice</span>
 									</td>
 								</tr>
 							</table>
@@ -37145,8 +36991,8 @@
 					
 				</div>
 				<!-- // Column END -->
-				
 			</div>
+
 
 			<!-- Top 5 -->
 			<div class="row-fluid">
@@ -37192,28 +37038,53 @@
 			</div>
 
 			<!-- Graph -->
-		    <div class="span12">
-				<div class="home-chart">
-					<!-- Graph -->
-					<div data-role="chart"
-						 data-auto-bind="false"
-		                 data-legend="{ position: 'top' }"
-		                 data-series-defaults="{ type: 'column' }"
-		                 data-tooltip='{
-		                    visible: true,
-		                    format: "{0}%",
-		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-		                 }'                 
-		                 data-series="[
-		                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
-		                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
-		                             ]"	                             
-		                 data-bind="source: graphDS"
-		                 style="height: 250px;" ></div>
-		            <!-- End Graph -->      
-				</div>
+		    <div class="innerLR innerT">			
+				<div id="esale-graph" style="height: 150px;"></div>
 			</div>
 		</div>
+
+		<div class="row-fluid">		
+	        <div>
+	        	<input data-role="dropdownlist"                   
+	                   data-value-primitive="true"
+	                   data-text-field="text"
+	                   data-value-field="value"
+	                   data-bind="value: sorter,
+	                              source: sortList,                              
+	                              events: { change: sorterChanges }" />
+
+	        	<input data-role="datepicker"
+	        		   data-format="dd-MM-yyyy"
+	                   data-bind="value: sdate,
+	                              events: { change: dateChanges }" >
+
+	            <input data-role="datepicker"
+	            	   data-format="dd-MM-yyyy"
+	                   data-bind="value: edate,
+	                              events: { change: dateChanges }" >
+	            
+	            <button type="button" data-role="button" data-icon="search" data-bind="click: search"></button>
+	        </div>
+        	
+            <div data-role="grid" 
+					data-bind="source: saleByLocationDS"
+				    data-auto-bind="false"	        
+				    data-row-template="esale-by-location-row-template"						                           
+				    data-columns='[
+				    	{ title: "No.", width: 45 },				       	
+				        { title: "Location" },	                     
+				        { title: "អតិថិជនកំពុងប្រើប្រាស់" },
+				        { title: "អតិថិជនឈប់ប្រើប្រាស់" },
+				        { title: "Deposit" },
+				        { title: "បរិមាណលក់ភ្លើង" },	            
+				        { title: "Amount" },
+				        { title: "ជំពាក់" },
+				        { title: "Balance" }				                           	                    
+				    ]'></div>
+
+    	</div>
+
+
 	</div> 
 
 
@@ -37245,7 +37116,7 @@
     </tr>   
 </script>
 
-<script id="wCustomerCenter" type="text/x-kendo-template">	
+<script id="waterCenter" type="text/x-kendo-template">	
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
@@ -37569,7 +37440,7 @@
 		<td>
 			<div class="media-body">
 				<span class="strong">
-					#=wnumber# #=fullname#				
+					#=wnumber# #=name#				
 				</span>
 			</div>
 		</td>
@@ -42585,7 +42456,7 @@
 	</ul>
 </script>
 <script id="waterMenu" type="text/x-kendo-template">
-	<ul class="topnav">
+	<!-- <ul class="topnav">
 	  	<li><a href='#/water' class='glyphicons home'><i></i></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.customer"></span> <span class='caret'></span></a>
@@ -42623,6 +42494,34 @@
 	  	</li>
 	  	<li><a href='#/wReport_center'><span data-bind="text: lang.lang.report"></span></a></li>	  	
 	  	<li><a href='#/wSettings' class='glyphicons settings'><i></i></a></li>
+	</ul> -->
+
+	<ul class="topnav">
+	  	<li><a href='#/water' class='glyphicons show_big_thumbnails'><i></i></a></li>
+	  	<li><a href='#/water_center'>CENTER</a></li>
+	  	<li role='presentation' class='dropdown'>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+  			<ul class='dropdown-menu'>
+  				<li><a href='#/#/wCustomer_center'><span ></span>Add wCustomer Center</a></li>
+  				<li><a href='#/wNew_customer'><span ></span>Add wNew Customer</a></li>  				
+  				<li><a href='#/wCustomer_order'><span ></span>Add wCustomer Order</a></li>
+  				<li> <span class="li-line"></span></li>
+  				<li><a href='#/wReading'><span ></span>Add wReading</a></li>
+  				<li><a href='#/wIR_reader'><span ></span>Add wIR Reader</a></li>				
+  				<li><a href='#/wReading_book'><span ></span>Add wReading Book</a></li>
+  				<li><a href='#/wReading_center'><span ></span>Add wReading Center</a></li>
+  				<li><span class="li-line"></span></li>
+  				<li><a href='#/wInvoice'><span ></span>Add wInvoice</a></li>
+  				<li><a href='#/wPrint_center'><span ></span>Add wPrint Center</a></li>
+  				<li> <span class="li-line"></span></li>
+  				<li><a href='#/wInventory_item'><span ></span>Add wInventory_item</a></li>
+  				<li><a href='#/item'><span ></span>Add Item</a></li>
+  				<li><a href='#/item_catalog'><span ></span>Add Item Catalog</a></li>
+  				<li><a href='#/item_assembly'><span ></span>Add Item Assembly</a></li>
+  			</ul>
+	  	</li>	  	  	
+	  	<li><a href="#/water_report_center">REPORTS</a></li>	  	
+	  	<li><a href='#/water_setting' class='glyphicons settings'><i></i></a></li>	  		  	
 	</ul>
 </script>
 <script id="inventoryMenu" type="text/x-kendo-template">
@@ -71705,9 +71604,9 @@
 	**************************/
 	banhji.wDashBoard = kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(baseUrl + "invoices/wdashboard"),
-		saleByBranchDS 		: dataStore(baseUrl + "invoices/wsale_by_branch"),
-		saleByLocationDS 	: dataStore(baseUrl + "invoices/wsale_by_location"),
+		dataSource 			: dataStore(baseUrl + "transactions/wdashboard"),
+		saleByBranchDS 		: dataStore(baseUrl + "transactions/wsale_by_branch"),
+		saleByLocationDS 	: dataStore(baseUrl + "transactions/wsale_by_location"),
 
 		sortList			: [ 
 	 		{ text:"All", value: "all" }, 
@@ -71841,18 +71740,18 @@
             });             
 		}
 	});
-	banhji.wCustomerCenter = kendo.observable({
+	banhji.waterCenter = kendo.observable({
 		lang 				: langVM,
-		transactionDS  		: dataStore(baseUrl + 'invoices/wtransaction'),
-		contactDS 			: dataStore(baseUrl + 'contacts'),
-		contactTypeDS		: dataStore(baseUrl + 'contacts/type'),
-		noteDS 				: dataStore(baseUrl + 'notes'),		
-		branchDS 			: dataStore(baseUrl + 'contacts/branch'),
-		locationDS 			: dataStore(baseUrl + 'locations'),
-		currencyDS 			: dataStore(baseUrl + 'currencies'),
-		monthlyDS 			: dataStore(baseUrl + 'invoices/wmonthly'),
-		outstandingDS 		: dataStore(baseUrl + "invoices/woutstanding"),
-		meterDS 			: dataStore(baseUrl + 'meters/wdeposit'),
+		transactionDS  		: dataStore(apiUrl + 'transactions'),
+		contactDS 			: dataStore(apiUrl + 'contacts'),
+		contactTypeDS		: dataStore(apiUrl + 'contacts/type'),
+		noteDS 				: dataStore(apiUrl + 'notes'),		
+		branchDS 			: dataStore(apiUrl + 'contacts/branch'),
+		locationDS 			: dataStore(apiUrl + 'locations'),
+		currencyDS 			: dataStore(apiUrl + 'currencies'),
+		monthlyDS 			: dataStore(apiUrl + 'transactions/wmonthly'),
+		outstandingDS 		: dataStore(apiUrl + "transactions/woutstanding"),
+		meterDS 			: dataStore(apiUrl + 'meters/wdeposit'),
 
 		sortList			: [ 
 	 		{ text:"All", value: "all" }, 
@@ -76244,7 +76143,7 @@
 		
 		//Water
 		wDashBoard: new kendo.Layout("#wDashBoard", {model: banhji.wDashBoard}),
-		wCustomerCenter: new kendo.Layout("#wCustomerCenter", {model: banhji.wCustomerCenter}),
+		waterCenter: new kendo.Layout("#waterCenter", {model: banhji.waterCenter}),
 		wNewCustomer: new kendo.Layout("#wNewCustomer", {model: banhji.wNewCustomer}),
 		wCustomer: new kendo.Layout("#wCustomer", {model: banhji.wCustomer}),
 		wCustomerOrder: new kendo.Layout("#wCustomerOrder", {model: banhji.wCustomerOrder}),		
@@ -84124,118 +84023,136 @@
 	/*************************
 	*   Water Section   *
 	**************************/
-	banhji.router.route("/water", function(){
+	// banhji.router.route("/water", function(){
+	// 	if(!banhji.userManagement.getLogin()){
+	// 		banhji.router.navigate('/manage');
+	// 	}else{
+	// 		banhji.view.layout.showIn("#content", banhji.view.wDashBoard);			
+	// 		banhji.view.layout.showIn('#menu', banhji.view.menu);
+	// 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			
+	// 		var vm = banhji.wDashBoard;
+
+	// 		if(banhji.pageLoaded["water"]==undefined){							
+	// 			banhji.pageLoaded["water"] = true;
+
+	// 			vm.sorterChanges();
+	// 			vm.search();
+
+	// 			var container = $("#employeeForm");
+ //                kendo.init(container);
+ //                container.kendoValidator({
+ //                    rules: {
+ //                        greaterdate: function (input) {
+ //                            if (input.is("[data-greaterdate-msg]") && input.val() != "") {                                    
+ //                                var date = kendo.parseDate(input.val()),
+ //                                    otherDate = kendo.parseDate($("[name='" + input.data("greaterdateField") + "']").val());
+ //                                return otherDate == null || otherDate.getTime() < date.getTime();
+ //                            }
+
+ //                            return true;
+ //                        }
+ //                    }
+ //                });
+
+ //                var validator = $("#employeeForm").data("kendoValidator");
+ //                validator.validate();                       
+
+	// 			var monthlyDS = new kendo.data.DataSource({
+	// 				transport: {
+	// 					read 	: {
+	// 						url: baseUrl + 'invoices/wmonthly',
+	// 						type: "GET",
+	// 						headers: {
+	// 							"Entity": getDB(),
+	// 							"User": banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id
+	// 						},
+	// 						dataType: 'json'
+	// 					},
+	// 					parameterMap: function(options, operation) {
+	// 						if(operation === 'read') {
+	// 							return {
+	// 								limit: options.take,
+	// 								page: options.page,
+	// 								filter: options.filter
+	// 							};
+	// 						}
+	// 					}
+	// 				},
+	// 				schema 	: {
+	// 					data: 'results',
+	// 					total: 'count'
+	// 				},
+	// 				group: {
+	// 					field: 'month',
+	// 					aggregates: [
+	// 						{field: 'amount', aggregate: 'sum'},
+	// 						{field: 'usage', aggregate: 'sum'}
+	// 					]
+	// 				},
+	// 				batch: true,
+	// 				serverFiltering: true,
+	// 				serverPaging: true,
+	// 				pageSize: 1000
+	// 			});				 
+        		
+ //        		monthlyDS.fetch(function(e){				
+	// 				$('#wsale-graph').kendoChart({
+	// 					dataSource: {data: monthlyDS.data()},												
+	// 					series: [
+	// 						{field: 'amount', categoryField:'month', type: 'line', axis: 'sale'},
+	// 						{field: 'usage', categoryField:'month', type: 'column', axis: 'usage'}
+	// 					],
+	// 					valueAxes: [
+	// 						{
+	// 		                    name: "sale",
+	// 		                    color: "#007eff",
+	// 		                    min: 0,
+	// 		                    majorUnit: 5000000,
+	// 		                    max: 50000000
+	// 		                }, 
+	// 		                {
+	// 		                    name: "usage",
+	// 		                    color: "#3399ff",
+	// 		                    min: 0,	
+	// 		                    majorUnit: 5000,		                   
+	// 		                    max: 50000
+	// 		                }
+	// 	                ],
+	// 	                categoryAxis: {
+	// 	                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
+	// 	                    axisCrossingValues: [0, 13],
+	// 	                    justified: true
+	// 	                },
+	// 	                tooltip: {
+	// 	                    visible: true,
+	// 	                    format: "{0}"
+	// 	                }
+
+	// 				});
+	// 			});		
+	// 		}
+
+	// 		vm.pageLoad();
+	// 	}				
+	// });
+	banhji.router.route("/water", function(){		
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.wDashBoard);			
+			banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 			
 			var vm = banhji.wDashBoard;
-
-			if(banhji.pageLoaded["water"]==undefined){							
-				banhji.pageLoaded["water"] = true;
-
-				vm.sorterChanges();
-				vm.search();
-
-				var container = $("#employeeForm");
-                kendo.init(container);
-                container.kendoValidator({
-                    rules: {
-                        greaterdate: function (input) {
-                            if (input.is("[data-greaterdate-msg]") && input.val() != "") {                                    
-                                var date = kendo.parseDate(input.val()),
-                                    otherDate = kendo.parseDate($("[name='" + input.data("greaterdateField") + "']").val());
-                                return otherDate == null || otherDate.getTime() < date.getTime();
-                            }
-
-                            return true;
-                        }
-                    }
-                });
-
-                var validator = $("#employeeForm").data("kendoValidator");
-                validator.validate();                       
-
-				var monthlyDS = new kendo.data.DataSource({
-					transport: {
-						read 	: {
-							url: baseUrl + 'invoices/wmonthly',
-							type: "GET",
-							headers: {
-								"Entity": getDB(),
-								"User": banhji.userManagement.getLogin() === null ? '':banhji.userManagement.getLogin().id
-							},
-							dataType: 'json'
-						},
-						parameterMap: function(options, operation) {
-							if(operation === 'read') {
-								return {
-									limit: options.take,
-									page: options.page,
-									filter: options.filter
-								};
-							}
-						}
-					},
-					schema 	: {
-						data: 'results',
-						total: 'count'
-					},
-					group: {
-						field: 'month',
-						aggregates: [
-							{field: 'amount', aggregate: 'sum'},
-							{field: 'usage', aggregate: 'sum'}
-						]
-					},
-					batch: true,
-					serverFiltering: true,
-					serverPaging: true,
-					pageSize: 1000
-				});				 
-        		
-        		monthlyDS.fetch(function(e){				
-					$('#wsale-graph').kendoChart({
-						dataSource: {data: monthlyDS.data()},												
-						series: [
-							{field: 'amount', categoryField:'month', type: 'line', axis: 'sale'},
-							{field: 'usage', categoryField:'month', type: 'column', axis: 'usage'}
-						],
-						valueAxes: [
-							{
-			                    name: "sale",
-			                    color: "#007eff",
-			                    min: 0,
-			                    majorUnit: 5000000,
-			                    max: 50000000
-			                }, 
-			                {
-			                    name: "usage",
-			                    color: "#3399ff",
-			                    min: 0,	
-			                    majorUnit: 5000,		                   
-			                    max: 50000
-			                }
-		                ],
-		                categoryAxis: {
-		                    //categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],		                    
-		                    axisCrossingValues: [0, 13],
-		                    justified: true
-		                },
-		                tooltip: {
-		                    visible: true,
-		                    format: "{0}"
-		                }
-
-					});
-				});		
+			banhji.userManagement.addMultiTask("Water Center","water",null);
+			if(banhji.pageLoaded["water"]==undefined){
+				banhji.pageLoaded["water"] = true;			
+                						               
 			}
 
-			vm.pageLoad();
-		}				
+			vm.pageLoad();				
+		}
 	});
 	banhji.router.route("/wCustomer_center", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -84298,6 +84215,24 @@
                     dataSource: vm.locationDS
                 }).data("kendoDropDownList");                
 			}				
+		}
+	});
+	banhji.router.route("/water_center(/:id)", function(id){		
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.waterCenter);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+			
+			var vm = banhji.waterCenter;
+			banhji.userManagement.addMultiTask("Water Center","water_center",null);
+			if(banhji.pageLoaded["water_center"]==undefined){
+				banhji.pageLoaded["water_center"] = true;			
+                						               
+			}
+
+			vm.pageLoad(id);				
 		}
 	});
 	banhji.router.route("/wNew_customer", function(){

@@ -1355,7 +1355,8 @@ class Transactions extends REST_Controller {
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = [];
 		$data["count"] = 0;
-		$balance_forward_date = "";
+		$startDate = "";
+		$typeList = array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return");
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
@@ -1370,72 +1371,68 @@ class Transactions extends REST_Controller {
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {
 	    		$obj->where($value["field"], $value["value"]);
+
+	    		if($value["field"]=="issued_date >=" || $value["field"]=="issued_date"){
+	    			$startDate = $value["value"];
+	    		}
 			}									 			
 		}
 
-		$obj->where_in("type", array("Invoice", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return"));
+		$obj->where_in("type", $typeList);
+		$obj->where("is_recurring", 0);
+		$obj->where("deleted", 0);
+		$obj->order_by("issued_date", "asc");
+		$obj->order_by("number", "asc");
 		$obj->get_iterated();
 
-		foreach ($obj as $value) {
-			$data["results"][] = array(
-				"id" 				=> $value->id,				   	
-			   	"description" 		=> "Balance Forward",				   	   	
-			   	"amount" 			=> floatval($bf->amount),
-			   	"balance" 			=> floatval($bf->amount),			   	
-			   	"rate" 				=> $bf->rate,
-			   	"locale" 			=> $bf->locale,				   	
-			   	"issued_date"		=> $newdate	   	
-			);
-		}		
-
 		//Balance Forward
-		if($balance_forward_date!==""){			
-			$newdate = strtotime ( '-1 day' , strtotime ( $balance_forward_date ) ) ;
-			$newdate = date ( 'Y-m-d' , $newdate );
+		$balance = 0;
+		if($startDate!==""){
+			$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+			$bf->where("issued_date <", $startDate);
+			$bf->where_in("type", $typeList);
+			$bf->where("is_recurring", 0);
+			$bf->where("deleted", 0);
+			$bf->get_iterated();
+			
+			foreach ($bf as $value) {
+				$balance += floatval($value->amount) - floatval($value->deposit);
+			}
 
-			$bf->select_sum("amount");
-			$bf->where_in("type", ["Invoice", "Cash_Sale"]);
-			$bf->where_in("status", [0,2]);
-			$bf->get();
+		    $bfDate = strtotime($startDate);
+		    $bfDate = strtotime("-1 day", $bfDate);
 
 			$data["results"][] = array(
-				"id" 				=> 0,				   	
-			   	"description" 		=> "Balance Forward",				   	   	
-			   	"amount" 			=> floatval($bf->amount),
-			   	"balance" 			=> floatval($bf->amount),			   	
+				"id" 				=> 0,
+				"issued_date"		=> date('Y-m-d', $bfDate),
+				"type" 				=> "Balance Forward",
+				"job" 				=> "",				   	
+			   	"reference_no" 		=> "",				   	   	
+			   	"amount" 			=> $balance,
+			   	"balance" 			=> $balance,			   	
 			   	"rate" 				=> $bf->rate,
-			   	"locale" 			=> $bf->locale,				   	
-			   	"issued_date"		=> $newdate	   	
+			   	"locale" 			=> $bf->locale
 			);
-		}							
+		}				
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
+				$amount = floatval($value->amount) - floatval($value->deposit);
+				$balance += $amount;
+
 				$data["results"][] = array(
-					"id" 				=> $value->id,				   	
-				   	"description" 		=> $value->number,				   	   	
-				   	"amount" 			=> floatval($value->amount),
-				   	"balance" 			=> 0,				   	
-				   	"rate" 				=> floatval($value->rate),
-				   	"locale" 			=> $value->locale,				   	
-				   	"issued_date"		=> $value->issued_date   	
+					"id" 				=> 0,
+					"issued_date"		=> $value->issued_date,
+					"type" 				=> $value->type,
+					"job" 				=> $value->job->get()->name,				   	
+				   	"reference_no" 		=> $value->number,				   	   	
+				   	"amount" 			=> $amount,
+				   	"balance" 			=> $balance,			   	
+				   	"rate" 				=> $value->rate,
+				   	"locale" 			=> $value->locale	
 				);
 			}
 		}
-
-		if($pay->exists()){
-			foreach ($pay as $value) {
-				$data["results"][] = array(
-					"id" 				=> $value->id,				   	
-				   	"description" 		=> "PMT",				   	   	
-				   	"amount" 			=> floatval($value->amount)*-1,
-				   	"balance" 			=> 0,				   	
-				   	"rate" 				=> floatval($value->rate),
-				   	"locale" 			=> $value->locale,				   	
-				   	"issued_date"		=> $value->payment_date  	
-				);
-			}
-		}		
 
 		//Response Data		
 		$this->response($data, 200);	
@@ -1455,21 +1452,19 @@ class Transactions extends REST_Controller {
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="between"){
-		    			$obj->where_between($value["field"], $value["value1"], $value["value2"]);	    				    			    		
-		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
-		    		}
-	    		}else{	    			
-	    			$obj->where($value["field"], $value["value"]);	    			    				    			
+	    		$obj->where($value["field"], $value["value"]);
+
+	    		if($value["field"]=="issued_date >=" || $value["field"]=="issued_date"){
+	    			$startDate = $value["value"];
 	    		}
 			}									 			
 		}
 
 		$obj->where("type", "Invoice");		
-		$obj->where_in("status", array(0,2));		
-		$obj->get();				
+		$obj->where_in("status", array(0,2));
+		$obj->where("is_recurring", 0);
+		$obj->where("deleted", 0);		
+		$obj->get_iterated();				
 
 		$amount = 0;
 		$current = 0;
@@ -1477,23 +1472,22 @@ class Transactions extends REST_Controller {
 		$twoMonth = 0;
 		$threeMonth = 0;
 		$overMonth = 0;
-		$locale = "km-KH";
-
+		$locale = "";
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				$today = new DateTime();
 				$dueDate = new DateTime($value->due_date);
-				$diff = $today->diff($dueDate)->format("%a");
+				$days = $dueDate->diff($today)->format("%a");
 
 				$amount += floatval($value->amount);
 				$locale = $value->locale;
 
-				if($dueDate<$today){
-					if(intval($diff)>90){
+				if($dueDate < $today){
+					if(intval($days)>90){
 						$overMonth += floatval($value->amount);
-					}else if(intval($diff)>60){
+					}else if(intval($days)>60){
 						$threeMonth += floatval($value->amount);
-					}else if(intval($diff)>30){
+					}else if(intval($days)>30){
 						$twoMonth += floatval($value->amount);
 					}else{
 						$oneMonth += floatval($value->amount);

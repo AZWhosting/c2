@@ -103,10 +103,11 @@ class Brands extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Brand(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-			$obj->sub_of 		= $value->sub_of;
-			$obj->code 			= $value->code;
-			$obj->name 			= $value->name;
-			$obj->abbr 			= $value->abbr;			
+			
+			isset($value->sub_of) 	? $obj->sub_of 	= $value->sub_of : "";
+			isset($value->code) 	? $obj->code 	= $value->code : "";
+			isset($value->name) 	? $obj->name 	= $value->name : "";
+			isset($value->abbr) 	? $obj->abbr 	= $value->abbr : "";			
 						
 			if($obj->save()){
 				$data["results"][] = array(
@@ -133,10 +134,10 @@ class Brands extends REST_Controller {
 			$obj = new Brand(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			$obj->sub_of 		= $value->sub_of;
-			$obj->code 			= $value->code;
-			$obj->name 			= $value->name;
-			$obj->abbr 			= $value->abbr;			
+			isset($value->sub_of) 	? $obj->sub_of 	= $value->sub_of : "";
+			isset($value->code) 	? $obj->code 	= $value->code : "";
+			isset($value->name) 	? $obj->name 	= $value->name : "";
+			isset($value->abbr) 	? $obj->abbr 	= $value->abbr : "";		
 
 			if($obj->save()){				
 				$data["results"][] = array(

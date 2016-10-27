@@ -4,11 +4,7 @@ class Contact extends DataMapper {
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";
 
-	public $has_one = array(	
-		"company" => array(
-			'class' => "company",
-			'other_field' => 'contact'
-		),
+	public $has_one = array(
 		'contact_type' => array(
 			'class' => 'contact_type',
 			'other_field' => 'contact'
@@ -30,11 +26,11 @@ class Contact extends DataMapper {
 			'other_field' => 'deposit'
 		),
 		'ebranch' => array(
-			'class' => 'company',
+			'class' => 'branch',
 			'other_field' => 'ebranch'
 		),
 		'wbranch' => array(
-			'class' => 'company',
+			'class' => 'branch',
 			'other_field' => 'wbranch'
 		),
 		'elocation' => array(

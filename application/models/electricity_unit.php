@@ -3,8 +3,7 @@
 class Electricity_unit extends DataMapper {
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";
-
-	public $has_one = array("company");
+	
 	public $has_many = array("meter",
 		'ampere' => array(
             'class' => 'meter',
