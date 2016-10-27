@@ -1899,7 +1899,19 @@ and (-webkit-min-device-pixel-ratio: 2){
   .costom-imag tr td a img{
     width: 100px !important;
   }
+  
 
+}
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)  {
+  .container-960 {
+      width: 935px !important;
+  }
+  .customer-background {
+    width: 100% !important;
+  }
 }
 
 @media only screen 
@@ -1926,6 +1938,15 @@ and (orientation : portrait) {
   }
   .costom-imag tr td a img{
     width: 100px !important;
+  }
+  .container-960 {
+      width: 95% !important;
+  }
+  .customer-background {
+    width: 100% !important;
+  }
+  html.top-full .navbar.main .topnav > li > a{
+    padding: 0 10px !important;
   }
 }
 /* FeedBack */

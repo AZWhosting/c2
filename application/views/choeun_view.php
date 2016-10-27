@@ -29301,8 +29301,11 @@
 						
 						<!-- Tab content -->
 						<div id="tabJournal" class="tab-pane widget-body-regular">
-							<h5>Journal</h5>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ante est, tempor ut posuere nec, venenatis sed arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis in purus ut mauris sodales sollicitudin. Mauris cursus imperdiet dignissim. Phasellus risus felis, rutrum in laoreet vel, posuere vel dolor. Sed venenatis vehicula tempus. Nam at rutrum enim. Sed massa quam, mattis in viverra ut, ullamcorper et massa. Phasellus sapien diam, faucibus ac tempor a, condimentum quis est. Donec nec velit ante, vel mattis metus. Ut nec libero diam, id auctor sapien. Suspendisse eget lorem ante, in fringilla dui. In hac habitasse platea dictumst.</p>
+							
+							<h4 class="separator bottom">Please Upload contact as EXCEL file</h4>
+							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+							  	<input type="file"  data-role="upload" data-bind="events: {select: journal.onSelected}" id="myFile"  class="margin-none" />
+							</div>
 						</div>
 						<!-- // Tab content END -->
 						
@@ -76857,6 +76860,31 @@
 		}
 	});
 	banhji.importJournal = kendo.observable({
+		dataSource 	  : dataStore(apiUrl+"imports/journal"),
+		onSelected    : function(e) {
+			var self = this;
+	        var files = e.files;
+	        var reader = new FileReader();
+	        
+	        reader.readAsText(files[0].rawFile);
+					
+			reader.onload = function() {						
+				var result = reader.result.split('\n');	 						
+				
+				for (var i = 1; i < result.length; i ++) {	
+					var data = result[i].split(',');					
+					banhji.importJournal.dataSource.add({
+						trans_no: data[0],
+						date: data[1],
+						number: data[2],
+						account_number: data[3],
+						memo: data[4],
+						dr: data[5],
+						cr: data[6]
+					});		
+				}																		
+			}         	
+        },
 		save: function() {}
 	});
     banhji.importView = kendo.observable({
