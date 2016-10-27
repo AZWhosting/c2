@@ -23248,7 +23248,7 @@
 							</div>
 							<div class="span9" align="right">
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save-close"></span></span>			
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save-close"></span></span>		
 							</div>
 						</div>
 					</div>
@@ -29265,9 +29265,9 @@
 				<!-- Tabs Heading -->
 				<div class="widget-head">
 					<ul style="padding-left: 1px;">
-						<li class="active"><a class="glyphicons list" href="#tabContact" data-toggle="tab"><span style="line-height: 70px;">Contact</span></a></li>
-						<li><a class="glyphicons user" href="#tabInventery" data-toggle="tab"><span style="line-height: 70px;">Inventory</span></a></li>
-						<li><a class="glyphicons credit_card" href="#tabJournal" data-toggle="tab"><span style="line-height: 70px;">Journal</span></a></li>
+						<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Contact</span></a></li>
+						<li><a class="glyphicons list" href="#tabInventery" data-toggle="tab"><i></i><span style="line-height: 55px;">Inventory</span></a></li>
+						<li><a class="glyphicons credit_card" href="#tabJournal" data-toggle="tab"><i></i><span style="line-height: 55px;">Journal</span></a></li>
 						
 					</ul>
 				</div>
@@ -29277,32 +29277,58 @@
 					<div class="tab-content">
 					
 						<!-- Tab content -->
-						<div id="tabContact" class="tab-pane active widget-body-regular">
+						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
 							
-							<h4 class="separator bottom">Please Upload contact as EXCEL file</h4>
+							<h4 class="separator bottom" style="margin-top: 10px;">Please Upload contact as CSV file</h4>
+							<a href="<?php echo base_url(); ?>assets/imports/contact_form_import.csv" download>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+									<i></i> 
+									<span >Download file Example</span>
+								</span>
+							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 							  	<input type="file"  data-role="upload" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
 							</div>
-
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<span data-bind="click: contact.save">Import Contact</span></span>
 							
 
 						</div>
 						<!-- // Tab content END -->
 					
 						<!-- Tab content -->
-						<div id="tabInventery" class="tab-pane widget-body-regular">
+						<div id="tabInventery" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
 							
-							<h4 class="separator bottom">Please Upload contact as EXCEL file</h4>
+							<h4 class="separator bottom" style="margin-top: 10px;">Please Upload Inventory as CSV file</h4>
+							<a href="<?php echo base_url(); ?>assets/imports/inventory_form_import.csv" download>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+									<i></i> 
+									<span >Download file Example</span>
+								</span>
+							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 							  	<input type="file"  data-role="upload" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
 							</div>
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<span data-bind="click: item.save">Import Inventory</span></span>
 						</div>
 						<!-- // Tab content END -->
 						
 						<!-- Tab content -->
-						<div id="tabJournal" class="tab-pane widget-body-regular">
-							<h5>Journal</h5>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ante est, tempor ut posuere nec, venenatis sed arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis in purus ut mauris sodales sollicitudin. Mauris cursus imperdiet dignissim. Phasellus risus felis, rutrum in laoreet vel, posuere vel dolor. Sed venenatis vehicula tempus. Nam at rutrum enim. Sed massa quam, mattis in viverra ut, ullamcorper et massa. Phasellus sapien diam, faucibus ac tempor a, condimentum quis est. Donec nec velit ante, vel mattis metus. Ut nec libero diam, id auctor sapien. Suspendisse eget lorem ante, in fringilla dui. In hac habitasse platea dictumst.</p>
+						<div id="tabJournal" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
+							
+							<h4 class="separator bottom" style="margin-top: 10px;">Please Upload Journal as CSV file</h4>
+							<a href="<?php echo base_url(); ?>assets/imports/jounal_form_import.csv" download>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+									<i></i> 
+									<span >Download file Example</span>
+								</span>
+							</a>
+							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+							  	<input type="file"  data-role="upload" data-bind="events: {select: journal.onSelected}" id="myFile"  class="margin-none" />
+							</div>
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<span data-bind="click: journal.save">Import Journal</span></span>
 						</div>
 						<!-- // Tab content END -->
 						
@@ -76857,6 +76883,31 @@
 		}
 	});
 	banhji.importJournal = kendo.observable({
+		dataSource 	  : dataStore(apiUrl+"imports/journal"),
+		onSelected    : function(e) {
+			var self = this;
+	        var files = e.files;
+	        var reader = new FileReader();
+	        
+	        reader.readAsText(files[0].rawFile);
+					
+			reader.onload = function() {						
+				var result = reader.result.split('\n');	 						
+				
+				for (var i = 1; i < result.length; i ++) {	
+					var data = result[i].split(',');					
+					banhji.importJournal.dataSource.add({
+						trans_no: data[0],
+						date: data[1],
+						number: data[2],
+						account_number: data[3],
+						memo: data[4],
+						dr: data[5],
+						cr: data[6]
+					});		
+				}																		
+			}         	
+        },
 		save: function() {}
 	});
     banhji.importView = kendo.observable({

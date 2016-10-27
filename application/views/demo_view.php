@@ -20951,7 +20951,7 @@
 </script>
 <script id="saleSummaryCustomer" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background">
+		<div class="customer-background ">
 			<div class="container-960">
 				<div id="example" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2"
@@ -32965,7 +32965,7 @@
     		#:abbr#
    		</td>
    		<td align="center">
-    		#:category[0].name#
+    		#:category.length>0 ? category[0].name : ""#
    		</td>   		
    		<td align="center">	        
         	<div class="edit-buttons">
@@ -37265,6 +37265,634 @@
 		</div>
 	</div>
 </script>
+
+
+<!-- ***************************
+*	Sale Section        *
+**************************** -->
+<script id="saleDashboard" type="text/x-kendo-template">
+
+	<div class="row-fluid">
+
+		<!-- Left Side -->
+		<div class="span4">
+
+			<!-- Logo of the page -->
+			<table width="100%" cellpadding="10">
+				<tr>
+			        <td valign="top">
+			        	<h2 >Sales</h2>
+			        	<p>
+			        		<span data-bind="text: lang.lang.in_here"></span>
+			        	</p>
+			        	<div class="supplier-icon">
+					       	<div class="span4">
+						       	<a href="#/customer" class="center">
+						       		<img title="Add Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+						       	</a>
+						       </div>
+						    <div class="span4">
+						       	<a href="#/item" class="center">
+						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       	</a>
+						    </div>
+						    <div class="span4">
+						       	<a href="#/item_service" class="center">
+						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" width="83" height="83" />
+						       	</a>
+						    </div>
+						</div>
+			        </td>
+			 	</tr>
+			</table>
+			<table class="table table-borderless table-condensed table-vertical-center costom-imag">
+				<tr>
+					<td class="center">
+						<a href="#/quote">
+							<img title="Add Quote" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png"  height="200" />
+							<span data-bind="text: lang.lang.quotation" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+						</a>						
+					</td>
+					<td class="center">
+						<a href="#/sale_order">
+							<img title="Add Sale Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_order.png"  height="200" />
+							<span data-bind="text: lang.lang.sale_order" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+						</a>
+					</td>
+					<td class="center">
+						&nbsp;&nbsp;				
+					</td>					
+				</tr>
+							
+			</table>
+
+		</div>
+
+		<!-- Right Side -->
+		<div class="span8">
+
+			<!-- Summary -->
+			<div class="row-fluid">
+	
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border"  >
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons shopping_cart"><i></i></span><b data-bind="text: lang.lang.quote"></b></h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary" style="min-height: 148px;">
+							
+							<div align="center" class="text-large strong" data-bind="text: quote"></div>
+							<table width="100%">
+								<tr align="center">
+									<td width="33%" style="vertical-align: top">										
+										<span data-bind="text: quote_customer"></span>
+										<br>
+										<span><span data-bind="text: lang.lang.customers"></span></span>
+									</td>
+									<td width="33%" style="vertical-align: top">
+										<span data-bind="text: quote_open"></span>
+										<br>
+										<span>Open</span>
+									</td>
+								</tr>
+							</table>
+						</div></a>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<a href="#/sale_order_list"><div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><b data-bind="text: lang.lang.sale_order"></b></h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert-info" style="min-height: 148px;">
+							
+							<div align="center" class="text-large strong" data-bind="text: so"></div>
+							<table width="100%">
+								<tr align="center">
+									<td width="50%" style="vertical-align: top">										
+										<span data-bind="text: so_customer"></span>
+										<br>
+										<span><span data-bind="text: lang.lang.customers"></span></span>
+									</td>
+									<td width="50%" style="vertical-align: top">
+										<span data-bind="text: so_open"></span>
+										<br>
+										<span>Open</span>
+									</td>									
+								</tr>
+							</table>
+						</div></a>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons cargo"><i></i></span><b data-bind="text: lang.lang.products"></b></h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<a href="#/customer_balance_summary"><div class="widget-body alert-info3" style="background-color: LightGray; min-height: 148px;">
+							
+							<div align="center" class="text-large strong" data-bind="text: product"></div>
+							<table width="100%">
+								<tr align="center">
+									<td width="50%" style="vertical-align: top">
+										<span data-bind="text: product_quote"></span>
+										<br>
+										<span>On Quote</span>
+									</td>
+									<td width="50%" style="vertical-align: top">
+										<span data-bind="text: product_so"></span>
+										<br>
+										<span>On SO</span>
+									</td>
+								</tr>
+							</table>
+						</div></a>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+			</div>
+
+			<!-- Top 5 -->
+			<div class="row-fluid">
+				<div class="span4">								
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+				        <thead>
+				            <tr>
+				                <th class="center" colspan="2">Top 5 Quotations</th>				                			                
+				            </tr>
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"				        	                 
+			                 data-template="customerDashBoard-top-customer-template"
+			                 data-bind="source: topCustomerDS"></tbody>			        
+				    </table>			
+				</div>
+				<div class="span4">					
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+				        <thead>				           
+				            <tr>
+				                <th class="center" colspan="2">Top 5 Sale Orders</th>				                			                
+				            </tr>					        
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"				        	                  
+			                 data-template="customerDashBoard-top-ar-template"
+			                 data-bind="source: topARDS"></tbody>			        
+				    </table>
+				</div>
+				<div class="span4">					
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+				        <thead>				           
+				            <tr>
+				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_products"></span></th>				                			                
+				            </tr>					        
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"                
+			                 data-template="customerDashBoard-top-product-template"
+			                 data-bind="source: topProductDS"></tbody>			        
+				    </table>
+				</div>		
+			</div>
+
+			<!-- Graph -->
+			<div class="home-chart">
+				<div data-role="chart"
+	                 data-legend="{ position: 'top' }"
+	                 data-series-defaults="{ type: 'column' }"
+	                 data-tooltip='{
+	                    visible: true,
+	                    format: "{0}%",
+	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+	                 }'                 
+	                 data-series="[
+	                                 { field: 'sale', name: 'Monthly Quote', categoryField:'month', color: '#236DA4' },
+	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+	                             ]"
+	                 data-auto-bind="false"	                             
+	                 data-bind="source: graphDS"
+	                 style="height: 250px;" ></div>
+            <!-- End Graph -->
+            </div>
+		</div>		
+
+	</div>		
+</script>
+<script id="saleDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
+	<tr data-uid="#: uid #">
+		<!-- <td style="width: 1%">#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td -->>		
+		<td>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
+			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
+		</td>		
+	</tr>
+</script>
+<script id="saleDashBoard-top-ar-template" type="text/x-kendo-tmpl">
+	<tr>
+		<!-- <td style="width: 1%">#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		 -->
+		<td>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
+			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
+		</td>
+	</tr>
+</script>
+<script id="saleDashBoard-top-product-template" type="text/x-kendo-tmpl">
+	<tr>
+		<!-- <td style="width: 1%">#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		 -->
+		<td>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
+			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
+		</td>
+	</tr>
+</script>
+
+<script id="saleCenter" type="text/x-kendo-template">	
+	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
+		<div class="widget-body padding-none">			
+			<div class="row-fluid row-merge">
+				<div class="span3 listWrapper" >
+					<div class="innerAll">							
+						<form autocomplete="off" class="form-inline">
+							
+							<div class="widget-search separator bottom">
+								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<div class="overflow-hidden">
+									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
+								</div>
+							</div>						
+							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
+								<input data-role="dropdownlist"
+					                   data-option-label="Select Type..."
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: contact_type_id,
+					                              source: contactTypeDS"
+					                   style="width: 100%;" />							
+							</div>
+						</form>					
+					</div>
+					
+					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
+
+					<div class="table table-condensed" style="height: 580px;"						 
+						 data-role="grid"						 
+						 data-bind="source: contactDS"
+						 data-row-template="saleCenter-customer-list-tmpl"
+						 data-columns="[{title: ''}]"
+						 data-selectable=true
+						 data-height="600"						 
+						 data-scrollable="{virtual: true}"></div>									
+				</div>
+				<div class="span9 detailsWrapper">
+					<div class="row-fluid">					
+						<div class="span6">
+							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
+
+							    <!-- Widget Heading -->
+							    <div class="widget-head">
+
+							        <!-- Tabs -->
+							        <ul class="pull-right">
+							        	<li style="font-size: large; color: black; font-weight: bold;">							            	
+							            	<span data-bind="text: obj.name"></span>
+							            </li>
+							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
+							            </li>							            							            
+							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
+							            </li>							            
+							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
+							            </li>
+							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
+							            </li>							            							            
+							        </ul>
+							        <div class="clearfix"></div>
+							        <!-- // Tabs END -->
+
+							    </div>
+							    <!-- Widget Heading END -->
+
+							    <div class="widget-body">
+							        <div class="tab-content">
+
+							            <!-- Transactions Tab content -->
+							            <div id="tab1-4" class="tab-pane active box-generic">
+							            	<table class="table table-borderless table-condensed cart_total cash-table">
+								            	<tr>
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goQuote"><span><span data-bind="text: lang.lang.quote"></span></span>
+								            		</td>
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goSaleOrder"><span><span data-bind="text: lang.lang.sale_order"></span></span>								            			
+								            		</td>
+								            	</tr>
+							            	</table>
+							            </div>
+							            <!-- // Transactions Tab content END -->							           					            
+
+							            <!-- INFO Tab content -->
+							            <div id="tab2-4" class="tab-pane box-generic">
+							            	<div class="row-fluid">
+							            		<div class="accounCetner-textedit">
+									            	<table width="100%">
+														<tr>
+															<td width="40%"><span data-bind="text: lang.lang.customer_type"></span></td>
+															<td width="60%">
+																<span class="strong" data-bind="text: obj.contact_type"></span>
+															</td>
+														</tr>
+														<tr>
+															<td><span data-bind="text: lang.lang.number"></span></td>
+															<td>
+																<span class="strong" data-bind="text: obj.abbr"></span>
+																<span class="strong" data-bind="text: obj.number"></span>
+															</td>
+														</tr>
+														<tr>
+															<td><span data-bind="text: lang.lang.name"></span></td>
+															<td>
+																<span data-bind="text: obj.name"></span>
+															</td>
+														</tr>
+														<tr>
+															<td><span data-bind="text: lang.lang.billed_address"></span></td>
+															<td>
+																<span data-bind="text: obj.address"></span>
+															</td>
+														</tr>								
+														<tr>
+															<td><span data-bind="text: lang.lang.phone"></span></td>
+															<td>
+																<span data-bind="text: obj.phone"></span>
+															</td>
+														</tr>
+														<tr>
+															<td><span data-bind="text: lang.lang.currency"></span></td>
+															<td>										
+																<span data-bind="text: currencyCode"></span>
+															</td>
+														</tr>
+													</table>
+
+													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
+												</div>
+											</div>
+							            </div>
+							            <!-- // INFO Tab content END -->
+
+							            <!-- NOTE Tab content -->
+							            <div id="tab3-4" class="tab-pane">
+
+										    <div>
+												<input type="text" class="k-textbox" 
+														data-bind="value: note, events:{change:saveNoteEnter}" 
+														placeholder="Add memo ..." 
+														style="width: 366px;" />
+												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
+											</div>
+
+											<br>
+
+											<div class="table table-condensed" style="height: 100;"						 
+												 data-role="grid"
+												 data-auto-bind="false"						 
+												 data-bind="source: noteDS"
+												 data-row-template="saleCenter-note-tmpl"
+												 data-columns="[{title: ''}]"
+												 data-height="100"						 
+												 data-scrollable="{virtual: true}"></div>
+											
+							            </div>
+							            <!-- // NOTE Tab content END -->
+
+							            <!-- Attach Tab content -->
+								        <div id="tab4-4" class="tab-pane">							            	
+								            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+								            <input id="files" name="files"
+							                   type="file"
+							                   data-role="upload"
+							                   data-show-file-list="false"
+							                   data-bind="events: { 
+					                   				select: onSelect
+							                   }">
+
+								            <table class="table table-bordered">
+										        <thead>
+										            <tr>			                
+										                <th><span data-bind="text: lang.lang.file_name"></span></th>
+										                <th><span data-bind="text: lang.lang.description"></span></th>
+										                <th><span data-bind="text: lang.lang.date"></span></th>
+										                <th style="width: 13%;"></th>                			                
+										            </tr> 
+										        </thead>
+										        <tbody data-role="listview" 
+										        		data-template="attachment-list-tmpl" 
+										        		data-auto-bind="false"
+										        		data-bind="source: attachmentDS"></tbody>			        
+										    </table>
+
+										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
+
+								        </div>
+								        <!-- // Attach Tab content END -->							            								            
+
+							        </div>
+							    </div>
+							</div>
+						</div>
+
+						<div class="span6" style="margin-bottom: 10px;">
+							<div class="row-fluid">
+								<div class="span6">
+									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadQuote">
+										<span class="glyphicons shopping_cart"><i></i></span>
+										<span class="txt"><span data-bind="text: lang.lang.quote"></span><span data-bind="text: quote" style="font-size:medium;"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="span6">
+									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadSO">
+										<span class="glyphicons cart_in"><i></i></span>
+										<span class="txt"><span data-bind="text: lang.lang.sale_order"></span><span data-bind="text: so" style="font-size:medium;"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>										
+						</div>
+					</div>
+					
+					<div>
+						<input data-role="dropdownlist"
+							   class="sorter"                  
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList,                              
+					                      events: { change: sorterChanges }" />
+
+						<input data-role="datepicker"
+							   class="sdate"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					           			  max: edate"
+					           placeholder="From ..." >
+
+					    <input data-role="datepicker"
+					    	   class="edate"
+					    	   data-format="dd-MM-yyyy"
+					           data-bind="value: edate,
+					                      min: sdate"
+					           placeholder="To ..." >
+
+					  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+					</div>
+
+					<table class="table table-bordered table-striped table-white">
+						<thead>
+							<tr>
+								<th><span data-bind="text: lang.lang.date"></span></th>
+								<th><span data-bind="text: lang.lang.type"></span></th>								
+								<th><span data-bind="text: lang.lang.reference_no"></span></th>
+								<th><span data-bind="text: lang.lang.amount"></span></th>
+								<th><span data-bind="text: lang.lang.status"></span></th>
+							</tr>
+						</thead>	            		
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            					            					            					            			
+				                data-template="saleCenter-transaction-tmpl"
+				                data-bind="source: transactionDS" >
+				        </tbody>
+	            	</table>
+
+	            	<div id="pager" class="k-pager-wrap"
+				    	 data-auto-bind="false"
+			             data-role="pager" data-bind="source: transactionDS"></div>	            	
+				</div>
+			</div>			
+		</div>
+	</div>		
+</script>
+<script id="saleCenter-transaction-tmpl" type="text/x-kendo-tmpl">
+    <tr>    	  	
+    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+    	<td>#=type#</td>
+        <!-- Reference -->
+        <td>
+        	#if(type=="Customer_Deposit" && amount<0){#			
+				<a href="\#/#=reference[0].type.toLowerCase()#/#=reference[0].id#"><i></i> #=number#</a>			
+			#}else{#
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+			#}#        	
+        </td>
+        <!-- Amount -->
+    	<td class="right">
+    		#if(type=="GDN"){#
+    			#=kendo.toString(amount, "n0")#
+    		#}else{#
+    			#=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
+    		#}#
+    	</td>
+    	<!-- Status -->
+    	<td align="center">
+    		#if(type==="Quote"){#       		
+				#if(status==="0"){#
+        			Open
+        		#}else{#
+        			Used        			
+        		#}#
+        	#}else if(type==="Sale_Order"){#
+        		#if(status==="0"){#
+        			Open
+        		#}else{#
+        			Done        			
+        		#}#
+        	#}else{#
+
+        	#}#        				
+		</td> 	
+    </tr>
+</script>
+<script id="saleCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
+	<tr data-bind="click: selectedRow">
+		<td>
+			<div class="media-body strong">				
+				<span>#=abbr##=number#</span>
+				<span>#=name#</span>
+			</div>
+		</td>
+	</tr>
+</script>
+<script id="saleCenter-note-tmpl" type="text/x-kendo-template">
+	<tr>
+		<td>			
+			<blockquote>
+				<small class="author">
+					<span class="strong">#=creator#</span> :
+					<cite>#=kendo.toString(new Date(noted_date), "g")#</cite>
+				</small>					
+				<p>#=note#</p>
+			</blockquote>				
+		</td>
+	</tr>	
+</script>
+
 
 
 <!-- ***************************
@@ -43173,7 +43801,28 @@
 	  	<li><a href='#/' class='glyphicons settings'><i></i></a></li>	  				
 	</ul>
 </script>
-
+<script id="saleMenu" type="text/x-kendo-template">
+	<ul class="topnav">
+	  	<li><a href='#/sales' class='glyphicons show_big_thumbnails'><i></i></a></li>
+	  	<li><a href='#/sale_center'><span data-bind="text: lang.lang.center"></span></a></li>
+	  	<li role='presentation' class='dropdown'>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+  			<ul class='dropdown-menu'>
+  				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer"></span></a></li> 
+  				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li>
+  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory"></span></a></li>  				
+  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>  				
+  				<li> <span class="li-line"></span></li>
+  				<li style="padding-top: 10px;"><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>  				
+  				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
+  				<li> <span class="li-line"></span></li> 				
+  				<li><a href='#/sale_recurring'>Sale Recurring</a></li>  				 				  				 				
+  			</ul>
+	  	</li>	  	  	
+	  	<li><a href="#/sale_report_center">Reports</a></li>	  	
+	  	<li><a href='#/sale_setting' class='glyphicons settings'><i></i></a></li>
+	</ul>
+</script>
 
 
 
@@ -45410,46 +46059,11 @@
 		}),
 		currencyRateDS				: dataStore(apiUrl + "currencies/rate"),
 		//Item
-		itemDS						: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "items",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			sort:[
-				{ field:"item_type_id", dir:"asc" },
-				{ field:"number", dir:"asc" },
-			],
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		itemDS						: dataStore(apiUrl + "items"),
 		itemTypeDS					: dataStore(apiUrl + "item_types"),
+		itemGroupDS					: dataStore(apiUrl + "items/group"),
+		brandDS						: dataStore(apiUrl + "brands"),
+		categoryDS					: dataStore(apiUrl + "categories"),
 		itemInventoryDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -45877,6 +46491,7 @@
 				data: 'results',
 				total: 'count'
 			},
+			filter:{ field:"status", value:1 },
 			//group:{ field: "account_type_name" },
 			sort:{ field:"number", dir:"asc" },
 			batch: true,			
@@ -46866,6 +47481,7 @@
 			return rate;
 		}
 	});
+
 
 	/*********************
 	*  Accounting Section  *
@@ -49457,6 +50073,8 @@
 			window.history.back();
 		}
     });
+
+
 	/*********************
 	*   Employee Section   *
 	**********************/
@@ -52041,6 +52659,7 @@
 		    return dfd;
 	    }
 	});
+
 
 	/*********************
 	*   Vendor Section   *
@@ -55889,6 +56508,11 @@
 				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				
 				value.set("rate", itemRate);
+			});
+
+			$.each(this.accountLineDS.data(), function(index, value){
+				value.set("rate", rate);
+				value.set("locale", obj.locale);
 			});							
 		},
 		//Item		
@@ -58800,7 +59424,7 @@
 
 
 	/*************************
-	*   SME Section   *
+	*   Customer Section   *
 	**************************/
 	banhji.customerDashboard = kendo.observable({
 		lang 				: langVM,
@@ -66229,7 +66853,7 @@
 			$.each(this.lineDS.data(), function(index, value){
 				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
 				value.set("rate", itemRate);
-			});						
+			});					
 		},
 		//Segment	
 	    segmentChanges 		: function(e) {
@@ -71292,7 +71916,6 @@
 		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
 		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),
 		topPurchase 		: dataStore(apiUrl + "dashboards/top_purchase"),
-		topTurnOver 		: dataStore(apiUrl + "dashboards/top_inventory_turnover"),
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -71393,16 +72016,7 @@
 				],							
 				page: 1,
 				pageSize: 5
-			});	
-
-			this.topTurnOver.query({
-				filter: [
-					{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],							
-				page: 1,
-				pageSize: 5
-			});										
+			});								
 		}
 	});
 	banhji.itemCenter = kendo.observable({
@@ -71972,12 +72586,12 @@
     });	
     banhji.item = kendo.observable({
     	lang 					: langVM,    	
-    	dataSource 				: dataStore(apiUrl + "items"),
+    	dataSource 				: banhji.source.itemDS,
     	patternDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "transactions/line"),
     	categoryDS 				: banhji.source.inventoryCategoryDS,
-    	itemGroupDS 			: dataStore(apiUrl + "items/group"),   	
-    	brandDS 	 			: dataStore(apiUrl + "brands"),    	   	   	
+    	itemGroupDS 			: banhji.source.itemGroupDS,   	
+    	brandDS 	 			: banhji.source.brandDS,    	   	   	
     	measurementDS			: banhji.source.measurementDS,
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
@@ -75057,10 +75671,10 @@
 	banhji.itemSetting =  kendo.observable({
 		lang 				: langVM,
 		itemTypeDS 			: banhji.source.itemTypeDS,		        
-        categoryDS 			: dataStore(apiUrl + "categories"),        
-        itemGroupDS 		: dataStore(apiUrl + "items/group"),        
-        measurementDS		: dataStore(apiUrl + "measurements"),
-        brandDS 			: dataStore(apiUrl + "brands"),
+        categoryDS 			: banhji.source.categoryDS,        
+        itemGroupDS 		: banhji.source.itemGroupDS,        
+        measurementDS		: banhji.source.measurementDS,
+        brandDS 			: banhji.source.brandDS,
         category_code 		: "",
         category_name 		: "",
         category_abbr 		: "",
@@ -75958,6 +76572,553 @@
             this.dataSource.filter(para);
 		}
     });
+
+
+    /*************************
+	*   Sale Section   *
+	**************************/
+	banhji.saleDashboard = kendo.observable({
+		lang 				: langVM,
+		summaryDS 			: dataStore(apiUrl + "dashboards/customer_dashboard_summary"),
+		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
+		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),		
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "dashboards/monthly_sale",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),
+		quote 				: 0,
+		quote_customer 		: 0,
+		quote_open 			: 0,
+		so 					: 0,
+		so_customer 		: 0,
+		so_open 			: 0,
+		product 			: 0,
+		product_quote 		: 0,
+		product_so 			: 0,
+		pageLoad 			: function(){
+			var self = this, today = new Date(),
+			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+
+			this.graphDS.read();
+
+			this.summaryDS.query({
+				filter: [
+					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
+				],								
+				page: 1,
+				pageSize: 5
+			}).then(function(){
+				var view = self.summaryDS.view();
+				
+				self.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
+				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
+				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
+
+				self.set("order", kendo.toString(view[0].order, "n0"));
+				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.locale=="km-KH"?"c0":"c", banhji.locale));				
+				self.set("order_open", kendo.toString(view[0].order_open, "n0"));
+
+				self.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
+				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
+				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
+			});
+
+			this.topCustomerDS.query({
+				filter: [
+					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
+				],								
+				page: 1,
+				pageSize: 5
+			});
+
+			this.topARDS.query({
+				filter: [
+					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
+				],							
+				page: 1,
+				pageSize: 5
+			});
+
+			this.topProductDS.query({
+				filter: [
+					{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
+					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:  kendo.toString(today, "yyyy-MM-dd") }
+				],							
+				page: 1,
+				pageSize: 5
+			});										
+		}
+	});
+	banhji.saleCenter = kendo.observable({
+		lang 				: langVM,
+		transactionDS  		: dataStore(apiUrl + 'transactions'),
+		contactDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
+			sort:{ field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		contactTypeDS  		: banhji.source.customerTypeDS,
+		noteDS 				: dataStore(apiUrl + 'notes'),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		summaryDS 			: dataStore(apiUrl + "transactions"),
+		sortList			: banhji.source.sortList,
+		sorter 				: "all",
+		sdate 				: "",
+		edate 				: "",
+		obj 				: {id:0},
+		note 				: "",
+		searchText 			: "",
+		contact_type_id 	: null,
+		currency_id 		: 0,
+		quote 				: 0,
+		so 					: 0,
+		currencyCode 		: "",
+		user_id 			: banhji.source.user_id,
+		pageLoad 			: function(id){
+			if(id){
+				this.loadObj(id);
+			}
+
+			//Refresh
+			if(this.contactDS.total()>0){
+				this.contactDS.fetch();
+				this.searchTransaction();
+				this.loadSummary();
+			}
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		setCurrencyCode 	: function(){
+			var code = "", obj = this.get("obj");
+
+			$.each(banhji.source.currencyRateDS.data(), function(index, value){				
+				if(value.locale == obj.locale){
+					code = value.currency[0].code;					
+
+					return false;					
+				}
+			});
+
+			this.set("currencyCode", code);
+		},
+		loadObj 			: function(id){
+			var self = this;
+
+			this.contactDS.query({
+				filter: { field:"id", value:id},
+				page:1,
+				pageSize:100
+			}).then(function(){
+				var view = self.contactDS.view();
+
+				if(view.length>0){
+					self.set("obj", view[0]);
+					self.loadData();
+				}
+			});
+		},
+		loadData 			: function(){
+			var obj = this.get("obj");
+
+			this.searchTransaction();
+			this.loadSummary(obj.id);
+			this.setCurrencyCode();
+
+			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
+			this.noteDS.query({
+				filter: { field:"contact_id", value: obj.id },
+				sort: { field:"noted_date", dir:"desc" },
+				page: 1,
+				pageSize: 10
+			});
+		},
+		//Upload
+		onSelect 			: function(e){			
+	        // Array with information about the uploaded files
+	        var self = this, 
+	        files = e.files,
+	        obj = this.get("obj");			
+			
+			if(obj.id>0){
+		        // Check the extension of each file and abort the upload if it is not .jpg
+		        $.each(files, function(index, value){
+		            if (value.extension.toLowerCase() === ".jpg"
+		            	|| value.extension.toLowerCase() === ".jpeg"
+		            	|| value.extension.toLowerCase() === ".tiff"
+		            	|| value.extension.toLowerCase() === ".png" 
+		            	|| value.extension.toLowerCase() === ".gif"
+		            	|| value.extension.toLowerCase() === ".pdf"){
+
+		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+
+		            	self.attachmentDS.add({
+		            		user_id 		: self.get("user_id"),
+		            		contact_id 		: obj.id,
+		            		type 			: "Contact",
+		            		name 			: value.name,
+		            		description 	: "",
+		            		key 			: key,
+		            		url 			: banhji.s3 + key,
+		            		size 			: value.size,
+		            		created_at 		: new Date(),
+
+		            		file 			: value.rawFile
+		            	});	            			            		            
+		            }else{
+		            	alert("This type of file is not allowed to attach.");
+		            }
+		        });
+	    	}else{
+	    		alert("Please select a customer!");
+	    	}
+	    },
+	    removeFile 			: function(e){
+	    	var data = e.data;
+
+	    	if (confirm(banhji.source.confirmMessage)) {
+	    		this.attachmentDS.remove(data);
+	    		this.attachmentDS.sync();
+	    	}	    	
+	    },
+	    uploadFile 			: function(){
+	    	$.each(this.attachmentDS.data(), function(index, value){	    		
+		    	if(!value.id){
+			    	var params = { 
+		            	Body: value.file, 
+		            	Key: value.key 
+		            };
+		            bucket.upload(params, function (err, data) {		                
+	                	// console.log(err, data);
+	                	// var url = data.Location;                
+	            	});
+            	}	            
+            });
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+            	//Delete File
+            	if(e.type=="destroy"){
+	            	if(saved==false && e.response){
+	            		saved = true;
+	            	
+	            		var response = e.response.results;
+	            		$.each(response, function(index, value){            			
+		            		var params = {
+							  	//Bucket: 'STRING_VALUE', /* required */
+							 	Delete: { /* required */
+								    Objects: [ /* required */
+								      	{
+									        Key: value.data.key /* required */
+								      	}
+								      /* more items */
+								    ]
+							  	}
+							};
+							bucket.deleteObjects(params, function(err, data) {
+							  	//console.log(err, data);
+							});
+						});
+	            	}
+            	}
+            });
+	    },
+	    //Summary
+		loadContact 		: function(id){
+			var self = this;
+			
+			this.contactDS.query({
+			  	filter:[
+			  		{ field:"id", value:id }
+			  	],
+			  	page: 1,
+			  	pageSize: 50
+			}).then(function(e) {
+			    var view = self.contactDS.data();
+			    
+			    if(view.length>0){
+			    	self.set("obj", view[0]);
+			    	self.loadData();
+			    }
+			});
+		},
+		loadSummary 		: function(id){
+			var self = this, obj = this.get("obj");
+
+			this.summaryDS.query({
+			  	filter: [
+			  		{ field:"contact_id", value: obj.id },
+			  		{ field:"type", operator:"where_in", value: ["Quote","Sale_Order"] },
+			  		{ field:"status", value: 0 }
+			  	],
+			  	sort: { field: "issued_date", dir: "desc" },
+			  	page: 1,
+			  	pageSize: 1000
+			}).then(function(){
+				var view = self.summaryDS.view(),
+				quote = 0, so = 0;
+
+				$.each(view, function(index, value){
+					if(value.type=="Quote"){
+						quote++;
+					}else{
+						so++;
+					}									
+				});
+				
+				self.set("quote", kendo.toString(quote, "n0"));
+				self.set("so", kendo.toString(so, "n0"));
+			});
+		},
+		loadQuote 			: function(){
+			var obj = this.get("obj");
+
+			this.transactionDS.query({
+			  	filter: [
+			  		{ field:"contact_id", value: obj.id },
+			  		{ field:"type", value:"Quote" },
+			  		{ field:"status", value: 0 }
+			  	],
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
+			  	page: 1,
+			  	pageSize: 10
+			});
+		},
+		loadSO 				: function(){
+			var obj = this.get("obj");
+
+			this.transactionDS.query({
+			  	filter: [
+			  		{ field:"contact_id", value: obj.id },
+			  		{ field:"type", value:"Sale_Order" }
+			  	],
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
+			  	page: 1,
+			  	pageSize: 10
+			});
+		},
+		selectedRow			: function(e){
+			var data = e.data;
+			
+			this.set("obj", data);
+			this.loadData();
+		},
+		//Search
+		enterSearch 		: function(e){
+			e.preventDefault();
+
+			this.search();
+		},
+		search 				: function(){
+			var self = this, 
+			para = [],
+      		searchText = this.get("searchText"),
+      		contact_type_id = this.get("contact_type_id");
+      		
+      		if(searchText){
+      			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
+
+      			para.push(
+      				{ field: "abbr", value: textParts[0] },
+      				{ field: "number", value: textParts[1] },
+					{ field: "name", operator: "or_like", value: searchText }
+      			);
+      		}
+
+      		if(contact_type_id){
+      			para.push({ field: "contact_type_id", value: contact_type_id });
+      		}else{
+      			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 1 });
+      		}
+
+      		this.contactDS.filter(para);
+			
+			//Clear search filters
+      		self.set("searchText", "");
+      		self.set("contact_type_id", 0);
+		},
+		searchTransaction	: function(){
+			var self = this,
+				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
+        		para = [], obj = this.get("obj");
+
+        	if(obj.id>0){
+        		para.push({ field:"contact_id", value: obj.id });
+        	
+	        	//Dates
+	        	if(start && end){
+	            	para.push({ field:"issued_date >=", value: start });
+	            	para.push({ field:"issued_date <=", value: end });
+	            }else if(start){
+	            	para.push({ field:"issued_date", value: start });
+	            }else if(end){
+	            	para.push({ field:"issued_date <=", value: end });
+	            }else{
+	            	
+	            }
+
+	            para.push({ field:"type", operator:"where_in", value: ["Quote","Sale_Order"] });
+
+	            this.transactionDS.query({
+	            	filter: para,
+	            	sort: [
+				  		{ field: "issued_date", dir: "desc" },
+				  		{ field: "id", dir: "desc" }
+				  	],
+	            	page: 1,
+	            	pageSize: 10
+	            });
+	        }            
+		},
+		//Links	
+		goEdit 		 		: function(){
+			var obj = this.get("obj");
+
+			banhji.router.navigate('/customer/'+obj.id);
+		},
+		goQuote				: function(){
+			var obj = this.get("obj");
+
+			banhji.router.navigate('/quote');
+			banhji.quote.loadContact(obj.id);
+		},
+		goDeposit			: function(){
+			var obj = this.get("obj");
+
+			banhji.router.navigate('/customer_deposit');
+			banhji.customerDeposit.loadContact(obj.id);
+		},
+		goSaleOrder			: function(){
+			var obj = this.get("obj");
+
+			banhji.router.navigate('/sale_order');
+			banhji.saleOrder.loadContact(obj.id);
+		},
+		//Note
+		saveNoteEnter 		: function(e){
+			e.preventDefault();
+			this.saveNote();
+		},		
+		saveNote 			: function(){
+			var obj = this.get("obj");
+
+			if(obj.id>0 && this.get("note")!==""){
+				this.noteDS.insert(0, {
+					contact_id 	: obj.id,
+					note 		: this.get("note"),
+					noted_date	: new Date(),
+					created_by 	: this.get("user_id"),
+
+					creator 	: ""
+				});
+
+				this.noteDS.sync();
+				this.set("note", "");					
+			}else{
+				alert("Please select a customer and Memo is required");
+			}
+		}
+	});
 
 
 
@@ -76889,6 +78050,11 @@
 		//Report
 		reportDashboard: new kendo.Layout("#reportDashboard", {model: banhji.reportDashboard}),
 
+		//Sale
+		saleDashboard: new kendo.Layout("#saleDashboard", {model: banhji.saleDashboard}),
+		saleCenter: new kendo.Layout("#saleCenter", {model: banhji.saleCenter}),
+
+
 		//Water
 		waterCenter: new kendo.Layout("#waterCenter", {model: banhji.waterCenter}),
 		wMeter: new kendo.Layout("#wMeter", {model: banhji.wMeter}),
@@ -76901,7 +78067,8 @@
 		cashMenu: new kendo.View("#cashMenu", {model: langVM}),
 		waterMenu: new kendo.View("#waterMenu", {model: langVM}),
 		inventoryMenu: new kendo.View("#inventoryMenu", {model: langVM}),
-		saleTaxMenu: new kendo.View("#saleTaxMenu", {model: langVM})	
+		saleTaxMenu: new kendo.View("#saleTaxMenu", {model: langVM}),
+		saleMenu: new kendo.View("#saleMenu", {model: langVM})	
 	};
 	/* views and layout */
 	banhji.router = new kendo.Router({
@@ -83262,6 +84429,710 @@
 			vm.pageLoad();
 		}
 	});
+
+
+	/*************************
+	*	Sales    *
+	**************************/
+	banhji.router.route("/sales", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleDashboard);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
+				
+				var vm = banhji.saleDashboard;
+				banhji.userManagement.addMultiTask("Sale Dashboard","sales",null);
+				if(banhji.pageLoaded["sales"]==undefined){
+					banhji.pageLoaded["sales"] = true;
+				}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
+	banhji.router.route("/sale_center(/:id)", function(id){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
+				
+				var vm = banhji.customerCenter;
+				banhji.userManagement.addMultiTask("Sale Center","sale_center",null);
+				if(banhji.pageLoaded["sale_center"]==undefined){
+					banhji.pageLoaded["sale_center"] = true;
+				}
+
+				vm.pageLoad(id);
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
+	banhji.router.route("/customer(/:id)(/:is_pattern)", function(id,is_pattern){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.customer);
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.customer;
+				banhji.userManagement.addMultiTask("Customer","customer",vm);
+				if(banhji.pageLoaded["customer"]==undefined){
+					banhji.pageLoaded["customer"] = true;
+
+			        var validator = $("#example").kendoValidator().data("kendoValidator");
+			        $("#saveNew").click(function(e){
+						//e.preventDefault();
+
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveClose").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+							vm.set("saveClose", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
+
+				vm.pageLoad(id, is_pattern);
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
+	banhji.router.route("/quote(/:id)(/:is_recurring)", function(id,is_recurring){
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.quote);
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.quote;
+				banhji.userManagement.addMultiTask("Quote","quote",vm);
+
+				if(banhji.pageLoaded["quote"]==undefined){
+					banhji.pageLoaded["quote"] = true;
+
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+			        $("#saveNew").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveClose").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveRecurring").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
+
+				vm.pageLoad(id, is_recurring);
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
+	});
+	banhji.router.route("/sale_order(/:id)(/:is_recurring)", function(id,is_recurring){
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleOrder);
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.saleOrder;
+				banhji.userManagement.addMultiTask("Sale Order","sale_order",vm);
+				if(banhji.pageLoaded["sale_order"]==undefined){
+					banhji.pageLoaded["sale_order"] = true;
+
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+			        $("#saveNew").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveClose").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveRecurring").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
+
+				vm.pageLoad(id, is_recurring);
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
+	});
+	banhji.router.route("/customer_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.customerDeposit);
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.customerDeposit;
+				banhji.userManagement.addMultiTask("Customer Deposit","customer_deposit",vm);
+
+				if(banhji.pageLoaded["customer_deposit"]==undefined){
+					banhji.pageLoaded["customer_deposit"] = true;
+
+			        var validator = $("#example").kendoValidator().data("kendoValidator");
+			        $("#saveNew").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveClose").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveRecurring").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
+
+				vm.pageLoad(id, is_recurring);
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}
+		// });
+	});
+	banhji.router.route("/cash_sale(/:id)(/:is_recurring)", function(id,is_recurring){
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.cashSale);
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.cashSale;
+				banhji.userManagement.addMultiTask("Cash Sale","cash_sale",vm);
+				if(banhji.pageLoaded["cash_sale"]==undefined){
+					banhji.pageLoaded["cash_sale"] = true;
+
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+			        $("#saveNew").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveClose").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveRecurring").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
+
+				vm.pageLoad(id, is_recurring);
+
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });			
+	});
+	banhji.router.route("/invoice(/:id)(/:is_recurring)", function(id,is_recurring){
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.invoice);
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.invoice;
+				banhji.userManagement.addMultiTask("Invoice","invoice",vm);
+				if(banhji.pageLoaded["invoice"]==undefined){
+					banhji.pageLoaded["invoice"] = true;
+
+					var validator = $("#example").kendoValidator().data("kendoValidator");
+			        $("#saveNew").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveClose").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
+							vm.set("saveClose", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){
+						e.preventDefault();
+						
+						if(validator.validate()){
+							vm.set("savePrint", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveRecurring").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate() && vm.validateRecurring()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
+
+				vm.pageLoad(id, is_recurring);
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}
+		// });
+	});
+	banhji.router.route("/gdn(/:id)(/:is_recurring)", function(id,is_recurring){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.gdn);
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.gdn;
+			banhji.userManagement.addMultiTask("GDN","gdn",vm);
+			if(banhji.pageLoaded["gdn"]==undefined){
+				banhji.pageLoaded["gdn"] = true;
+
+				var validator = $("#example").kendoValidator().data("kendoValidator");
+		        $("#saveNew").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#saveClose").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+						vm.set("saveClose", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#savePrint").click(function(e){
+					e.preventDefault();
+					
+					if(validator.validate()){
+						vm.set("savePrint", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#saveRecurring").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate() && vm.validateRecurring()){
+		            	vm.set("saveRecurring", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+			}
+
+			vm.pageLoad(id, is_recurring);
+		}		
+	});
+	banhji.router.route("/sale_return(/:id)", function(id){
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleReturn);
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.saleReturn;
+				banhji.userManagement.addMultiTask("Sale Return","sale_return",vm);
+				if(banhji.pageLoaded["sale_return"]==undefined){
+					banhji.pageLoaded["sale_return"] = true;
+					
+			        var validator = $("#example").kendoValidator().data("kendoValidator");
+			        $("#saveNew").click(function(e){
+						e.preventDefault();
+						
+						if(validator.validate() && vm.get("obj").remaining===0){
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveClose").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate() && vm.get("obj").remaining===0){
+							vm.set("saveClose", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){
+						e.preventDefault();
+						
+						if(validator.validate() && vm.get("obj").remaining===0){
+							vm.set("savePrint", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
+
+				vm.pageLoad(id);
+		// 		} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });		
+	});
+	banhji.router.route("/statement(/:id)", function(){
+		// banhji.accessMod.query({
+		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		// }).then(function(e){
+		// 	var allowed = false;
+		// 	if(banhji.accessMod.data().length > 0) {
+		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
+		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+		// 				allowed = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 	} 
+		// 	if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.statement);
+
+				var vm = banhji.statement;
+				banhji.userManagement.addMultiTask("Statement","statement",null);
+
+				if(banhji.pageLoaded["statement"]==undefined){
+					banhji.pageLoaded["statement"] = true;
+					
+				}
+
+				vm.pageLoad();
+		// 	} else {
+		// 		window.location.replace(baseUrl + "admin");
+		// 	}				
+		// });
+	});
+	banhji.router.route("/customer_setting", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.customerSetting);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+
+				var vm = banhji.customerSetting;
+				banhji.userManagement.addMultiTask("Customer Setting","customer_setting",null);
+				if(banhji.pageLoaded["customer_setting"]==undefined){
+					banhji.pageLoaded["customer_setting"] = true;
+					
+					vm.contactTypeDS.filter({ field:"parent_id", value:1 });
+				}
+
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
+	banhji.router.route("/customer_recurring", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerRecurring);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+
+			var vm = banhji.customerRecurring;
+			banhji.userManagement.addMultiTask("Customer Recurring","customer_recurring",null);
+			if(banhji.pageLoaded["customer_recurring"]==undefined){
+				banhji.pageLoaded["customer_recurring"] = true;
+
+			}
+
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/customer_report_center", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerReportCenter);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+
+			var vm = banhji.customerReportCenter;
+			banhji.userManagement.addMultiTask("Customer Reports Center","customer_report_center",null);
+			if(banhji.pageLoaded["customer_report_center"]==undefined){
+				banhji.pageLoaded["customer_report_center"] = true;
+			}
+
+			vm.pageLoad();
+		}
+	});
+
+
 
 
 
