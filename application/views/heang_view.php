@@ -12815,8 +12815,8 @@
 		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 		                 }'                 
 		                 data-series="[
-		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
-		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                                 { field: 'sale', name: 'Monthly Purchase', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Purchase Order', categoryField:'month', color: '#A6C9E3' }
 		                             ]"	                             
 		                 data-bind="source: graphDS"
 		                 style="height: 250px;" ></div>
@@ -12862,8 +12862,8 @@
 		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
 		                 }'                 
 		                 data-series="[
-		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
-		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                                 { field: 'sale', name: 'Monthly Purchase', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Purchase Order', categoryField:'month', color: '#A6C9E3' }
 		                             ]"	                             
 		                 data-bind="source: graphDS"
 		                 style="height: 250px;" ></div>
@@ -13108,7 +13108,7 @@
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=myDate#</td>
-				<td>		
+				<td  style="text-align: left;">		
 					#if(items[i].type=="Cash_Purchase" || items[i].type=="Credit_Purchase"){#
 						<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
 					#}else if(items[i].type=="Vendor_Deposit" && items[i].amount<0){#	
@@ -13238,7 +13238,7 @@
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
-			<tr>
+			<tr style="text-align: left;">
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=myDate#</td>
@@ -13647,7 +13647,7 @@
 		<td>#=item#</td>
 		<td>#=memo#</td>		
 		<td style="text-align: right;">#=kendo.toString(cost, 'c2')#</td>
-		<td style="text-align: right;">#=qty#</td>
+		<td style="text-align: right;">#=kendo.toString(qty, 'n')#</td>
 		<td style="text-align: right;">#=kendo.toString(price, 'c2')#</td>
 		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
@@ -14259,7 +14259,7 @@
 								<div class="total-customer">
 									<div class="span6">
 										<p>Total Supplier</p>
-									<span data-bind="text: supplierCount"></span>>
+									<span data-bind="text: supplierCount"></span>
 									</div>	
 									<div class="span6">
 										<p>Supplier Balance</p>
@@ -33478,7 +33478,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Inventory Position Summary</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -33526,7 +33526,7 @@
 	    <td align="center">#=onHand#</td>
 	    <td align="center">#=po#</td>
 	    <td align="center">#=so#</td>
-	    <td align="center">#=kendo.toString(cost, 'c2')#</td>
+	    <td align="right">#=kendo.toString(cost, 'c2')#</td>
 	    <td style="text-align: right;">#=kendo.toString(price, 'c2')#</td>
 	</tr>
 </script>
@@ -33587,7 +33587,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Inventory Sale by Item Analysis</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -33714,7 +33714,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Inventory Position Detail</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -33783,7 +33783,7 @@
 		   		<a href="\#/#=transactions[i].type.toLowerCase()#/#=transactions[i].id#">#=transactions[i].ref#</a>
 		   	</td>
 		    <td>#=transactions[i].qty#</td>
-		    <td align="center">#=transactions[i].cost#</td>
+		    <td align="right">#=kendo.toString(transactions[i].cost, 'c2')#</td>
 		    <td align="center">#=onHand#</td>
 		    <td align="center">#=kendo.toString(avg_cost, 'c2')#</td>
 			<td align="right">#=kendo.toString(price, 'c2')#</td>
@@ -33961,7 +33961,7 @@
 
 						<h3 data-bind="text: institute.name"></h3>
 						<h2>Inventory Movement Summary</h2>
-						<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 					</div>
 
 					<div class="row-fluid">
@@ -58091,7 +58091,7 @@
 		graphDS  			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "dashboards/monthly_sale",
+					url: apiUrl + "dashboards/monthly_purchase",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -68329,7 +68329,7 @@
 		total_sale 			: 0,
 		companyName 		: null,
 		startDate 			: "<?php echo date("d-m-y"); ?>",
-		endDate				: "<?php echo date("d-m-y"); ?>",
+		endDate				: new Date(),
 		sorter				: '',
 		openInvoice 		: 0,
 		company 			: banhji.institute,		
@@ -75515,7 +75515,7 @@
 		total_sale 			: 0,
 		companyName 		: null,
 		startDate 			: "<?php echo date("d-m-y"); ?>",
-		endDate				: "<?php echo date("d-m-y"); ?>",
+		endDate				: new Date(),
 		sorter				: '',
 		openInvoice 		: 0,
 		company 			: banhji.institute,		
@@ -75537,6 +75537,12 @@
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
 				]
 			});
+		},
+		displayDateStart    : function() {
+			return kendo.toString(new Date(this.get('startDate')), 'dd-MM-yyyy');
+		},
+		displayDateEnd    : function() {
+			return kendo.toString(new Date(this.get('endDate')), 'dd-MM-yyyy');
 		},
 		trnxSearch 			: function() {},
 		depositDetailSearch : function() {},
@@ -82670,7 +82676,14 @@
 			banhji.userManagement.addMultiTask("Inventory Position Summary","inventory_position_summary",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.inventoryPositionSummary);
-			banhji.inventorySale.inventoryPositionSummary.dataSource.read();
+			banhji.inventorySale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.inventorySale.inventoryPositionSummary.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.inventorySale.inventoryPositionSummary.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.inventorySale.set('count', e.response.count);
@@ -82688,7 +82701,14 @@
 			banhji.userManagement.addMultiTask("Inventory Sale Item Analysis","inventory_sale_item_analysis",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.inventorySaleItemAnalysis);
-			banhji.inventorySale.inventorySaleDB.dataSource.read();
+			banhji.inventorySale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.inventorySale.inventorySaleDB.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.inventorySale.inventorySaleDB.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.inventorySale.set('count', e.response.count);
@@ -82705,7 +82725,14 @@
 			banhji.router.navigate('/manage');
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.inventoryPositionDetail);
-			banhji.inventorySale.inventoryPositionDetail.dataSource.read();
+			banhji.inventorySale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.inventorySale.inventoryPositionDetail.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.inventorySale.inventoryPositionDetail.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.inventorySale.set('count', e.response.count);

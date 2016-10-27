@@ -151,8 +151,8 @@ class Itemreports extends REST_Controller {
 							$temp["$inventory->id"]['so'] = $item->quantity;
 						}
 						$temp["$inventory->id"]['name'] = $inventory->name;
-						$temp["$inventory->id"]['cost'] = $inventory->cost;
-						$temp["$inventory->id"]['price'] = $inventory->price;
+						$temp["$inventory->id"]['cost'] = floatval($inventory->cost);
+						$temp["$inventory->id"]['price'] = floatval($inventory->price);
 						$temp["$inventory->id"]['onHand'] = $in->quantity - $out->quantity;
 						$temp["$inventory->id"]['currency_code'] = $inventory->locale;
 
@@ -264,7 +264,7 @@ class Itemreports extends REST_Controller {
 							'type' 	=> $value->type,
 							'ref'	=> $value->number,
 							'qty'	=> $itemLine->quantity * $itemLine->movement,
-							'cost'  => $itemLine->cost,
+							'cost'  => floatval($itemLine->cost),
 							'price' => $itemLine->price
 
 						);
@@ -288,7 +288,7 @@ class Itemreports extends REST_Controller {
 						$out->get();
 						
 						$temp["$itemLine->item_id"]['name'] = $inventory->name;
-						$temp["$itemLine->item_id"]['avg_cost'] = $inventory->cost;
+						$temp["$itemLine->item_id"]['avg_cost'] = floatval($inventory->cost);
 						$temp["$itemLine->item_id"]['price'] = $inventory->price;
 						$temp["$itemLine->item_id"]['onHand'] = $in->quantity - $out->quantity;
 						$temp["$itemLine->item_id"]['currency_code'] = $inventory->locale;
@@ -298,8 +298,8 @@ class Itemreports extends REST_Controller {
 							'type' 	=> $value->type,
 							'ref'	=> $value->number,
 							'qty'	=> $itemLine->quantity,
-							'cost'  => $itemLine->cost,
-							'price' => $itemLine->price
+							'cost'  => floatval($itemLine->cost),
+							'price' => floatval($itemLine->price)
 						);
 						
 					}
@@ -309,8 +309,8 @@ class Itemreports extends REST_Controller {
 			$data["results"][] = array(
 				'id' 		=> $key,
 				'item' 		=> $value['name'],			
-				'avg_cost'	=> $value['avg_cost'],
-				'price'		=> $value['price'],
+				'avg_cost'	=> floatval($value['avg_cost']),
+				'price'		=> floatval($value['price']),
 				'onHand'	=> $value['onHand'],
 				'currency'	=> $value['currency_code'],
 				'transactions' => $value['transactions']
