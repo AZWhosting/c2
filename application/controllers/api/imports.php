@@ -48,7 +48,10 @@ class Imports extends REST_Controller {
 			$revenue->where('number', $value->revenue_account)->get();
 
 			$tax = new Tax_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$deposit->where('name', $value->tax)->get();
+			$tax->where('name', $value->tax)->get();
+
+			$type = new Contact_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$type->where('name', $value->contact_type)->where('parent_id <>', "")->get();
 
 			$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->branch_id) 				? $obj->branch_id 				= $value->branch_id : "";
@@ -58,7 +61,7 @@ class Imports extends REST_Controller {
 			isset($value->wbranch_id) 				? $obj->wbranch_id 				= $value->wbranch_id : "";
 			isset($value->wlocation_id) 			? $obj->wlocation_id			= $value->wlocation_id : "";		
 			isset($value->user_id)					? $obj->user_id 				= $value->user_id : "";
-			isset($value->contact_type)				? $obj->contact_type_id 		= $value->contact_type : "";					
+			isset($value->contact_type)				? $obj->contact_type_id 		= $type->id : "";					
 			isset($value->eorder)					? $obj->eorder					= $last_id : "";
 			isset($value->worder)					? $obj->worder					= $last_id : "";
 			isset($value->abbr)						? $obj->abbr					= $value->abbr : "";
@@ -204,13 +207,17 @@ class Imports extends REST_Controller {
 		$this->response($data, 201);
 	}
 
-	function inventory_post() {
+	function item_post() {
 		$models = json_decode($this->post('models'));				
 		$data["results"] = array();
 		$data["count"] = 0;				
 		
 		foreach ($models as $value) {
-			$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
+			$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+			$fixed = 0;
+			$accumulated = 0;
+			$depreciation = 0;
 
 			$account = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$account->where('number', $value->account)->get();
@@ -224,19 +231,25 @@ class Imports extends REST_Controller {
 			$inventory = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$inventory->where('number', $value->inventory_account)->get();
 
-			$fixed = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$fixed->where('number', $value->fixed_assets_account)->get();
+			if(isset($value->fixed_assets_account)) {
+				$fixed = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$fixed->where('number', $value->fixed_assets_account)->get();
+			}				
 
-			$accumulated = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$accumulated->where('number', $value->accumulated_account)->get();
+			if(isset($value->accumulated_account)) {
+				$accumulated = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$accumulated->where('number', $value->accumulated_account)->get();
+			}
 
-			$depreciation = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$depreciation->where('number', $value->depreciation_account)->get();
+			if(isset($value->depreciation_account)) {
+				$depreciation = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$depreciation->where('number', $value->depreciation_account)->get();
+			}
 
 			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
 			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : "";			
 			isset($value->currency_id) 				? $obj->currency_id 			= $value->currency_id : "";
-			isset($value->item_type_id) 			? $obj->item_type_id			= $value->item_type_id : "";			
+			isset($value->item_type_id) 			? $obj->item_type_id			= $value->item_type_id : 1;			
 			isset($value->category_id) 				? $obj->category_id 			= $value->category_id : 1;
 			isset($value->item_group_id) 			? $obj->item_group_id 			= $value->item_group_id : "";
 			isset($value->item_sub_group_id) 		? $obj->item_sub_group_id 		= $value->item_sub_group_id : "";
@@ -267,9 +280,9 @@ class Imports extends REST_Controller {
 		   	isset($value->income_account) 			? $obj->income_account_id 		= $income->id : "";
 		   	isset($value->cogs_account) 			? $obj->cogs_account_id 		= $cogs->id : "";
 		   	isset($value->inventory_account) 		? $obj->inventory_account_id 	= $inventory->id : "";
-		   	isset($value->fixed_assets_account) 	? $obj->fixed_assets_account_id = $fixed->id : "";
-		   	isset($value->accumulated_account) 		? $obj->accumulated_account_id 	= $accumulated->id : "";
-		   	isset($value->depreciation_account) 	? $obj->depreciation_account_id = $depreciation->id : "";
+		   	isset($value->fixed_assets_account) 	? $obj->fixed_assets_account_id = $fixed->id : $fixed;
+		   	isset($value->accumulated_account) 		? $obj->accumulated_account_id 	= $accumulated->id : $accumulated;
+		   	isset($value->depreciation_account) 	? $obj->depreciation_account_id = $depreciation->id : $depreciation;
 		   	isset($value->deposit_account_id) 		? $obj->deposit_account_id 		= $value->deposit_account_id : "";
 		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
 		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
@@ -343,12 +356,16 @@ class Imports extends REST_Controller {
 		$journals = array();
 
 		foreach($models as $journal) {
+			$cr = 0;
+			$dr = 0;
+			isset($journal->dr) ? $dr = $journal->dr : $dr = 0;
+			isset($journal->cr) ? $cr = $journal->cr : $cr = 0;
 			if(isset($journals["$journal->trans_no"])){
 				$journals["$journal->trans_no"]["items"][] = array(
 					'account_number' => $journal->account_number,
 					'memo' => $journal->memo,
-					'dr' => $journal->dr,
-					'cr' => $journal->cr
+					'dr' => $dr,
+					'cr' => $cr
 				);
 			} else {
 				$journals["$journal->trans_no"]["amount"] = floatval($journal->dr);
@@ -357,8 +374,8 @@ class Imports extends REST_Controller {
 				$journals["$journal->trans_no"]["items"][] = array(
 					'account_number' => $journal->account_number,
 					'memo' => $journal->memo,
-					'dr' => $journal->dr,
-					'cr' => $journal->cr
+					'dr' => $dr,
+					'cr' => $cr
 				);
 			}
 		}
@@ -367,6 +384,7 @@ class Imports extends REST_Controller {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->number = $journal['number'];
 			$obj->type = "Journal";
+			$obj->journal_type = "Journal";
 			$obj->issued_date = date("Y-m-d", strtotime($journal['date']));
 			$obj->amount = $journal['amount'];
 			$obj->rate = 1.00;

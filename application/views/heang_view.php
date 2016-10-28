@@ -13044,7 +13044,7 @@
 										<p>Total Suppliers</p>
 										<span data-bind="text: count"></span>
 									</div>
-									<div class="span4">
+									<div class="span8">
 										<p>Cash Purchase</p>
 										<span data-bind="text: totalCashPurchase"></span>
 									</div>	
@@ -13095,8 +13095,6 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
-		<td></td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -13234,7 +13232,6 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
@@ -13369,9 +13366,6 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
-		<td></td>
-		<td></td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -13754,7 +13748,7 @@
 						></tbody>
 						<tfoot>
 							<tr>
-								<th colspan="4"><span data-bind="text: lang.lang.total"></span></th>
+								<th colspan="3"><span data-bind="text: lang.lang.total"></span></th>
 								<th colspan="4" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
@@ -13769,7 +13763,6 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -13803,7 +13796,9 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		
+		<td></td>
+		<td></td>
+		<td></td>
 	</tr>
 </script>
 <script id="suppliersBalanceSummary" type="text/x-kendo-template">
@@ -14043,7 +14038,6 @@
 		<td></td>
 		<td></td>
 		<td></td>		
-		<td></td>
 		<td></td>
 	</tr>
 	# if (items.length) {#
@@ -14318,7 +14312,6 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
@@ -14460,8 +14453,6 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
@@ -14593,8 +14584,6 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
-		<td></td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>

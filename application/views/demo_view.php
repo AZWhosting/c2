@@ -13044,7 +13044,7 @@
 										<p>Total Suppliers</p>
 										<span data-bind="text: count"></span>
 									</div>
-									<div class="span4">
+									<div class="span8">
 										<p>Cash Purchase</p>
 										<span data-bind="text: totalCashPurchase"></span>
 									</div>	
@@ -13099,8 +13099,6 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
@@ -13108,7 +13106,7 @@
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=myDate#</td>
-				<td>		
+				<td  style="text-align: left;">		
 					#if(items[i].type=="Cash_Purchase" || items[i].type=="Credit_Purchase"){#
 						<a href="\#/purchase/#=items[i].id#">#=items[i].number#</a>
 					#}else if(items[i].type=="Vendor_Deposit" && items[i].amount<0){#	
@@ -13234,11 +13232,10 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
-			<tr>
+			<tr style="text-align: left;">
 				# var myDate = kendo.toString(new Date(items[i].date),'dd-MM-yyyy'); #
 				<td>&nbsp;&nbsp;#=items[i].type#</td>
 				<td>#=myDate#</td>
@@ -13369,9 +13366,6 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
-		<td></td>
-		<td></td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -13647,7 +13641,7 @@
 		<td>#=item#</td>
 		<td>#=memo#</td>		
 		<td style="text-align: right;">#=kendo.toString(cost, 'c2')#</td>
-		<td style="text-align: right;">#=qty#</td>
+		<td style="text-align: right;">#=kendo.toString(qty, 'n')#</td>
 		<td style="text-align: right;">#=kendo.toString(price, 'c2')#</td>
 		<td style="text-align: right;">#=kendo.toString(amount, 'c2')#</td>
 	</tr>
@@ -13754,7 +13748,7 @@
 						></tbody>
 						<tfoot>
 							<tr>
-								<th colspan="4"><span data-bind="text: lang.lang.total"></span></th>
+								<th colspan="3"><span data-bind="text: lang.lang.total"></span></th>
 								<th colspan="4" data-bind="text: total"></th>
 							</tr>
 						</tfoot>
@@ -13769,7 +13763,6 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -13803,7 +13796,9 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		
+		<td></td>
+		<td></td>
+		<td></td>
 	</tr>
 </script>
 <script id="suppliersBalanceSummary" type="text/x-kendo-template">
@@ -14044,7 +14039,6 @@
 		<td></td>
 		<td></td>		
 		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
@@ -14259,7 +14253,7 @@
 								<div class="total-customer">
 									<div class="span6">
 										<p>Total Supplier</p>
-									<span data-bind="text: supplierCount"></span>>
+									<span data-bind="text: supplierCount"></span>
 									</div>	
 									<div class="span6">
 										<p>Supplier Balance</p>
@@ -14313,7 +14307,6 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -14460,8 +14453,6 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
-		<td></td>
 	</tr>
 	# if (items.length) {#
 		#for(var i= 0; i <items.length; i++) {#
@@ -14593,8 +14584,6 @@
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr style="font-weight: bold">
 		<td>#=group#</td>
-		<td></td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -14909,7 +14898,7 @@
 						    </div>
 						    <div class="span4">
 						       	<a href="#/item_service" class="center">
-						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" width="83" height="83" />
+						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
 						       	</a>
 						    </div>
 						</div>
@@ -33478,7 +33467,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Inventory Position Summary</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -33526,7 +33515,7 @@
 	    <td align="center">#=onHand#</td>
 	    <td align="center">#=po#</td>
 	    <td align="center">#=so#</td>
-	    <td align="center">#=kendo.toString(cost, 'c2')#</td>
+	    <td align="right">#=kendo.toString(cost, 'c2')#</td>
 	    <td style="text-align: right;">#=kendo.toString(price, 'c2')#</td>
 	</tr>
 </script>
@@ -33587,7 +33576,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Inventory Sale by Item Analysis</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -33714,7 +33703,7 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Inventory Position Detail</h2>
-							<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
 						<div class="row-fluid">
@@ -33783,7 +33772,7 @@
 		   		<a href="\#/#=transactions[i].type.toLowerCase()#/#=transactions[i].id#">#=transactions[i].ref#</a>
 		   	</td>
 		    <td>#=transactions[i].qty#</td>
-		    <td align="center">#=transactions[i].cost#</td>
+		    <td align="right">#=kendo.toString(transactions[i].cost, 'c2')#</td>
 		    <td align="center">#=onHand#</td>
 		    <td align="center">#=kendo.toString(avg_cost, 'c2')#</td>
 			<td align="right">#=kendo.toString(price, 'c2')#</td>
@@ -33961,7 +33950,7 @@
 
 						<h3 data-bind="text: institute.name"></h3>
 						<h2>Inventory Movement Summary</h2>
-						<p><span data-bind="text: startDate"></span>to<span data-bind="text: endDate"></p>
+						<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 					</div>
 
 					<div class="row-fluid">
@@ -37286,21 +37275,17 @@
 			        		<span data-bind="text: lang.lang.in_here"></span>
 			        	</p>
 			        	<div class="supplier-icon">
-					       	<div class="span4">
+					       	<div class="span6">
 						       	<a href="#/customer" class="center">
-						       		<img title="Add Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
+						       		<img title="Add Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" width="150"  />
 						       	</a>
 						       </div>
-						    <div class="span4">
+						    <div class="span6">
 						       	<a href="#/item" class="center">
-						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
+						       		<img title="Add Job" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" width="150" />
 						       	</a>
 						    </div>
-						    <div class="span4">
-						       	<a href="#/item_service" class="center">
-						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" width="83" height="83" />
-						       	</a>
-						    </div>
+
 						</div>
 			        </td>
 			 	</tr>
@@ -37893,6 +37878,497 @@
 	</tr>	
 </script>
 
+<script id="sale" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+					<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+
+					<h2>Sale</h2>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons search" href="#tab-1" data-toggle="tab"><i></i>Search</a></li>
+										<li><a class="glyphicons cargo" href="#tab-2" data-toggle="tab"><i></i>Category</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input type="text" class="span2 search-query" placeholder="Search" id="search-placeholder" data-bind="value: searchText" style="background-color: #fff; color: #333; border-color: #ddd; height: 33px; width: 192px;">
+											<button type="submit" class="btn btn-inverse" data-bind="click: search"><i class="icon-search"></i></button>					
+									    </div>
+									    <div class="tab-pane" id="tab-2">
+
+									    	<ul data-role="listview"
+									    		 data-auto-bind="false"
+									    		 data-selectable="true"
+								                 data-template="sale-category-template"
+								                 data-bind="source: categoryDS,"
+								                 style="overflow: auto; padding-top: 15px; padding-left: 15px; padding-bottom: 15px;"></ul>
+									    	
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>							
+					
+
+					<div class="row-fluid" id="main-section" style="overflow: hidden;margin-top: 15px;">
+						<ul data-role="listview"
+							 data-auto-bind="false"
+			                 data-template="sale-template"
+			                 data-bind="source: dataSource"
+			                 style="height: 300px; "></ul>
+			        </div>
+
+			        <!-- <div class="row-fluid" id="main-section" style="overflow: hidden;">
+						<ul data-role="listview" data-bind="source: items" data-template="item" id="main" class="k-widget k-listview" role="listbox">
+					        <li class="products" data-uid="3c77833d-b11b-47a1-8084-d2c0689b7d92" role="option" aria-selected="false">
+					            <a class="view-details" href="#/menu/1">
+					                <img class="main-image" src="<?php echo base_url();?>assets/chirashi-sushi.jpg" alt="Sashimi salad" title="Sashimi salad">
+					                <strong data-bind="text: name">Sashimi salad</strong>
+					                <span class="price"><span>$</span><span data-bind="text: price">12</span></span>
+					            </a>
+
+					            <button class="add-to-cart" data-bind="click: addToCart">Add to Cart</button>
+					        </li>
+					    
+					        <li class="products" data-uid="bae39fd0-6967-4063-90a9-67c608072cf9" role="option" aria-selected="false">
+					            <a class="view-details" href="#/menu/2">
+					                <img class="main-image" src="<?php echo base_url();?>assets/edamame.jpg" alt="Chirashi sushi" title="Chirashi sushi">
+					                <strong data-bind="text: name">Chirashi sushi</strong>
+					                <span class="price"><span>$</span><span data-bind="text: price">21</span></span>
+					            </a>
+
+					            <button class="add-to-cart" data-bind="click: addToCart">Add to Cart</button>
+					        </li>
+					    
+					        <li class="products" data-uid="0f76e1f4-8c90-44ca-8ca5-9cf5a12fd314" role="option" aria-selected="false">
+					            <a class="view-details" href="#/menu/3">
+					                <img class="main-image" src="<?php echo base_url();?>assets/miso-soup.jpg" alt="Seaweed salad" title="Seaweed salad">
+					                <strong data-bind="text: name">Seaweed salad</strong>
+					                <span class="price"><span>$</span><span data-bind="text: price">17</span></span>
+					            </a>
+
+					            <button class="add-to-cart" data-bind="click: addToCart">Add to Cart</button>
+					        </li>
+					    
+					        <li class="products" data-uid="94907a7c-95f8-4dfe-8547-c560f9a60150" role="option" aria-selected="false">
+					            <a class="view-details" href="#/menu/4">
+					                <img class="main-image" src="<?php echo base_url();?>assets/sashimi-salad.jpg" alt="Edamame" title="Edamame">
+					                <strong data-bind="text: name">Edamame</strong>
+					                <span class="price"><span>$</span><span data-bind="text: price">4</span></span>
+					            </a>
+
+					            <button class="add-to-cart" data-bind="click: addToCart">Add to Cart</button>
+					        </li>
+					    
+					        <li class="products" data-uid="fafec8cc-54c0-4358-bbab-e56304b925e3" role="option" aria-selected="false">
+					            <a class="view-details" href="#/menu/5">
+					                <img class="main-image" src="<?php echo base_url();?>assets/seaweed-salad.jpg" alt="Miso soup" title="Miso soup">
+					                <strong data-bind="text: name">Miso soup</strong>
+					                <span class="price"><span>$</span><span data-bind="text: price">4</span></span>
+					            </a>
+
+					            <button class="add-to-cart" data-bind="click: addToCart">Add to Cart</button>
+					        </li>
+					    </ul>
+					</div> -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="sale-category-template" type="text/x-kendo-tmpl">
+    <li class="btn btn-primary" 
+    	data-bind="text: name, click: selectedType"
+    	style="width: auto !important; text-align: center; padding:5px 10px !important; margin-bottom: 10px;">
+    </li>
+</script>
+<script id="sale-template" type="text/x-kendo-tmpl">	
+	<li class="products" aria-selected="false">
+	    <a class="view-details">
+	        <img class="main-image" src="#=image_url#" alt="Sashimi salad" title="Sashimi salad">
+	        <strong>#=name#</strong>
+	        <span class="price"><span>$</span><span data-bind="text: price"></span></span>
+	    </a>
+
+	    <button class="add-to-cart" data-bind="click: addToCart">Add to Cart</button>
+	</li>
+</script>
+<script id="saleDetail" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+					<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+
+					<h2>Sale Detail</h2>
+
+					<div class="row-fluid sale-detail">
+						<div id="details-top-image"></div>
+						<div id="details">
+			                <a id="navigate-prev" href=""></a>
+			                	<div id="detail-info">
+			                		<img class="main-image" src="<?php echo base_url();?>assets/chirashi-sushi.jpg" alt="Selected Product" title="Selected Product" >
+			                		<div id="description">
+										<h1>Chirashi sushi</h1>
+										<p>Sushi bar variety with sushi rice.</p>
+										<div id="details-total">
+											<p id="price-quantity" data-bind="text: price">$21.00</p>
+											<button class="buy" data-bind="click: addToCart">Add to cart</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="nutrition-info">
+								<h2>Nutritional Information</h2>
+								<dl>
+									<dt>Protein</dt>
+									<dd >2.3138</dd>
+									<dt>Fat (total)</dt>
+									<dd >0.6041</dd>
+									<dt>Carbohydrate</dt>
+									<dd >0.6041</dd>
+									<dt>Energy (kJ)</dt>
+									<dd >7.5314</dd>
+									<dt>Energy (kcal)</dt>
+									<dd >1.8000</dd>
+									<dt>Sugar</dt>
+									<dd >0.3114</dd>
+								</dl>
+							</div><a data-bind="" id="navigate-next" href="#/menu/3"></a>
+						</div>
+					</div>
+					<div id="details-bottom-image"></div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="saleReportCenter" type="text/x-kendo-template">
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<div class="row-fluid sale-report">				
+				<h2>SALE MANAGEMENT REPORTS</h2>
+				<p>
+					The following reports provide summary and detailed reports in 
+					different ways to help analyze your revenue performance.
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">						
+						<tr>
+							<td width="50%">
+								<h3><a href="#/quotation_list">Quotation List</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/sale_order_list">Sale Order List</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/sale_job_engagement">Sale by Job/Engagement</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/customer_list">Customer List</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+							</td>
+							<td >
+								<p>
+									List of all active customers
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h3><a href="#/sale_inventory_position_summary">Inventory Position Summary</a></h3>
+							</td>
+							<td>
+								
+							</td>
+
+						</tr>
+						<tr>
+							<td>
+								<p>
+									Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price.
+								</p>
+							</td>
+							<td>
+								
+							</td>
+
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			
+			<div class="row-fluid recevable-report">
+				<h2>OTHER REPORTS/ LISTS</h2>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td style="width: 48%; padding-right: 8px !important;">
+								<h3><a href="#/customer_recurring">Recurring Customer Template List</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/customer_setting">Payment Method & Term List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td style="width: 48%; padding-right: 8px !important;">
+								<p></p>								
+							</td>
+							<td>
+								<p>
+									List the types of payments and the term that determine due date for payment from customers.
+								</p>
+							</td>
+							
+						</tr>
+						<tr >
+							<td></td>														
+						</tr>
+
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
+			<div class="report-chart">
+				<div class="widget-body alert alert-primary sale-overview">
+					<h2>SALE OVERVIEW</h2>
+					<div align="center" class="text-large strong" data-bind="text: sale"></div>
+					<table width="100%">
+						<tr align="center">
+							<td>										
+								<span data-bind="text: sale_customer"></span>
+								<br>
+								<span>Customer</span>
+							</td>
+							<td>
+								<span data-bind="text: sale_product"></span>
+								<br>
+								<span>Product</span>
+							</td>
+							<td>
+								<span data-bind="text: order"></span>
+								<br>
+								<span>Order</span>
+							</td>
+							<td >
+								<span data-bind="text: sale_order"></span>
+								<br>
+								<span>Sale Order</span>
+							</td>
+
+						</tr>
+					</table>
+				</div>
+				<!-- Graph -->
+				<div class="home-chart">
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+	            <!-- End Graph -->
+	            </div>
+			</div>
+			<div class="report-chart">
+				<div class="widget-body receivable-overview" style="background-color: LightGray">
+					<h2>RECEIVABLES MANAGEMENT</h2>
+					<div align="center" class="text-large strong" data-bind="text: ar"></div>
+					<table width="100%">
+						<tr align="center">
+							<td>										
+								<span data-bind="text: ar_open"></span>
+								<br>
+								<span>Open</span>
+							</td>
+							<td>										
+								<span data-bind="text: ar_customer"></span>
+								<br>
+								<span>Customer</span>
+							</td>
+							<td>
+								<span data-bind="text: ar_overdue"></span>
+								<br>
+								<span>Overdue</span>
+							</td>
+							<td>
+								<span data-bind="text: collection_day"></span> days
+								<br>
+								<span>Collection Days</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<!-- Graph -->
+				<div class="home-chart">
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+	            <!-- End Graph -->
+            </div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleInventoryPositionSummary" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
+										           placeholder="From ..." />
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
+										           placeholder="To ..." />
+
+										  	 <button type="button" data-role="button" data-bind="click: inventoryPositionSummary.search"><i class="icon-search"></i></button>							
+									    </div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Inventory Position Summary</h2>
+							<p><span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
+
+						<div class="row-fluid" style="width: 80%; margin: 0 auto;">
+							<div class="span5">
+								<div class="total-customer">
+									<p>Product Items</p>
+									<span data-bind="text: count"></span>
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<p>Product Items on hand</p>
+									<span data-bind="text: onHand"></span>
+								</div>
+							</div>
+						</div>
+
+						<table class="table table-borderless table-condensed " style="width: 80%; margin: 0 auto;">
+							<thead>
+								<tr>
+									<th><span>Item Name</span></th>
+									<th class="center"><span>QOH</span></th>
+									<th style="text-align: center;"><span>On Purchase Order</span></th>
+									<th style="text-align: center;"><span>On Sale Order</span></th>
+								
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="sale-inventory-position-summary-row-template"
+					                data-bind="source: inventoryPositionSummary.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="sale-inventory-position-summary-row-template" type="text/x-kendo-tmpl">
+	<tr>
+	    <td>#=item#</td>
+	    <td align="center">#=onHand#</td>
+	    <td align="center">#=po#</td>
+	    <td align="center">#=so#</td>
+	</tr>
+</script>
+
+
+
+
 
 
 <!-- ***************************
@@ -38147,6 +38623,104 @@
         <img src="http://demos.telerik.com/kendo-ui/content/web/notification/success-icon.png" />
         <h3>#= message #</h3>
     </div>
+</script>
+
+<!-- ***************************
+*	Import Section      	  *
+**************************** -->
+<script id="importView" type="text/x-kendo-template">	
+	<div  class="row-fluid saleSummaryCustomer">
+		<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
+
+        <h2 data-bind="">Imports</h2>
+	    <br>		
+		<!-- Tabs -->
+		<div class="relativeWrap" data-toggle="source-code">
+			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
+			
+				<!-- Tabs Heading -->
+				<div class="widget-head">
+					<ul style="padding-left: 1px;">
+						<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Contact</span></a></li>
+						<li><a class="glyphicons list" href="#tabInventery" data-toggle="tab"><i></i><span style="line-height: 55px;">Inventory</span></a></li>
+						<li><a class="glyphicons credit_card" href="#tabJournal" data-toggle="tab"><i></i><span style="line-height: 55px;">Journal</span></a></li>
+						
+					</ul>
+				</div>
+				<!-- // Tabs Heading END -->
+				
+				<div class="widget-body">
+					<div class="tab-content">
+						<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+						</div>
+						<!-- Tab content -->
+						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+							
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload contacts file</h4>
+							<a href="<?php echo base_url(); ?>assets/imports/contact_import_form_excel.xlsx" download>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+									<i></i> 
+									<span >Download file example</span>
+								</span>
+							</a>
+							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
+							</div>
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<span data-bind="click: contact.save">Import Contact</span></span>
+							
+
+						</div>
+						<!-- // Tab content END -->
+					
+						<!-- Tab content -->
+						<div id="tabInventery" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
+							
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload Inventory file</h4>
+							<a href="<?php echo base_url(); ?>assets/imports/items_import_form_excel.xlsx" download>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+									<i></i> 
+									<span >Download file Example</span>
+								</span>
+							</a>
+							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
+							</div>
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<span data-bind="click: item.save">Import Inventory</span></span>
+						</div>
+						<!-- // Tab content END -->
+						
+						<!-- Tab content -->
+						<div id="tabJournal" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
+							
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload Journal file</h4>
+							<a href="<?php echo base_url(); ?>assets/imports/journal_import_form_excel.xlsx" download>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+									<i></i> 
+									<span >Download file Example</span>
+								</span>
+							</a>
+							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: journal.onSelected}" id="myFile"  class="margin-none" />
+							</div>
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<span data-bind="click: journal.save">Import Journal</span></span>
+						</div>
+						<!-- // Tab content END -->
+						
+						<!-- // Tab content END -->
+						
+					</div>
+				</div>
+				<div id="ntf1" data-role="notification"></div>
+			</div>
+		</div>
+		<!-- // Tabs END -->
+	</div>
 </script>
 
 
@@ -43808,10 +44382,7 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer"></span></a></li> 
-  				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li>
-  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory"></span></a></li>  				
-  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>  				
+  				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li> 				
   				<li> <span class="li-line"></span></li>
   				<li style="padding-top: 10px;"><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>  				
   				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
@@ -43819,8 +44390,7 @@
   				<li><a href='#/sale_recurring'>Sale Recurring</a></li>  				 				  				 				
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href="#/sale_report_center">Reports</a></li>	  	
-	  	<li><a href='#/sale_setting' class='glyphicons settings'><i></i></a></li>
+	  	<li><a href="#/sale_report_center">Reports</a></li>
 	</ul>
 </script>
 
@@ -68953,7 +69523,7 @@
 		total_sale 			: 0,
 		companyName 		: null,
 		startDate 			: "<?php echo date("d-m-y"); ?>",
-		endDate				: "<?php echo date("d-m-y"); ?>",
+		endDate				: new Date(),
 		sorter				: '',
 		openInvoice 		: 0,
 		company 			: banhji.institute,		
@@ -76129,7 +76699,7 @@
 		total_sale 			: 0,
 		companyName 		: null,
 		startDate 			: "<?php echo date("d-m-y"); ?>",
-		endDate				: "<?php echo date("d-m-y"); ?>",
+		endDate				: new Date(),
 		sorter				: '',
 		openInvoice 		: 0,
 		company 			: banhji.institute,		
@@ -76151,6 +76721,12 @@
 					{field: "issued_date <=", value: kendo.toString(this.endDate, "yyyy-MM-dd")}
 				]
 			});
+		},
+		displayDateStart    : function() {
+			return kendo.toString(new Date(this.get('startDate')), 'dd-MM-yyyy');
+		},
+		displayDateEnd    : function() {
+			return kendo.toString(new Date(this.get('endDate')), 'dd-MM-yyyy');
 		},
 		trnxSearch 			: function() {},
 		depositDetailSearch : function() {},
@@ -77119,7 +77695,38 @@
 			}
 		}
 	});
+	banhji.sale = kendo.observable({
+		lang 				: langVM,
+		dataSource  		: dataStore(apiUrl + 'items'),
+		categoryDS 			: dataStore(apiUrl + 'categories'),
+		obj 				: null,
+		searchText 			: "",
+		user_id 			: banhji.source.user_id,
+		pageLoad 			: function(){
+			this.search();
 
+			if(this.categoryDS.total()==0){
+				this.categoryDS.filter({ field:"item_type_id", operator:"where_in", value:[1,4] });
+			}
+		},
+		search 				: function(){
+			this.dataSource.query({
+				filter: { field:"item_type_id", value:1 },
+				page:1,
+				pageSize:100
+			});
+		},
+		selectedType 		: function(e){
+			var data = e.data;
+
+			this.dataSource.query({
+				filter: { field:"category_id", value:data.id },
+				page:1,
+				pageSize:100
+			});
+		}
+	});
+	
 
 
     /*************************
@@ -77841,6 +78448,126 @@
 		}
     });
 
+    /*************************
+	*	Import Section   * 
+	**************************/
+	banhji.importContact = kendo.observable({
+		dataSource 	  : dataStore(apiUrl+"imports/contact"),
+		onSelected    : function(e) {
+	        var files = e.files;
+	        var reader = new FileReader();
+			banhji.importContact.dataSource.data([]);		
+			reader.onload = function() {						
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						for(var i = 0; i < roa.length; i++) {	
+							banhji.importContact.dataSource.add(roa[i]);	
+						}						
+					}
+				});															
+			}
+			reader.readAsBinaryString(files[0].rawFile);         	
+        },
+		save: function() {
+			$("#loadImport").css("display","block");
+			banhji.importContact.dataSource.sync();
+			banhji.importContact.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+		    		$("#ntf1").data("kendoNotification").success("Imported contacts successfully!");
+					$("#loadImport").css("display","none");
+				}				  				
+		    });
+		    banhji.importContact.dataSource.bind("error", function(e){		    		    	
+				$("#ntf1").data("kendoNotification").error("Error Importing Contact!"); 	
+				$("#loadImport").css("display","none");			
+		    });
+		}
+	});
+	banhji.importItem = kendo.observable({
+		dataSource 	  : dataStore(apiUrl+"imports/item"),
+		onSelected    : function(e) {
+	        var files = e.files;
+	        var reader = new FileReader();
+			banhji.importItem.dataSource.data([]);	
+			reader.onload = function() {						
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						for(var i = 0; i < roa.length; i++) {	
+							banhji.importItem.dataSource.add(roa[i]);	
+						}						
+					}
+				});															
+			}
+			reader.readAsBinaryString(files[0].rawFile);         	
+        },
+		save: function() {
+			$("#loadImport").css("display","block");
+			banhji.importItem.dataSource.sync();
+			banhji.importItem.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+		    		$("#ntf1").data("kendoNotification").success("Imported Inventory successfully!");
+					$("#loadImport").css("display","none");
+				}				  				
+		    });
+		    banhji.importItem.dataSource.bind("error", function(e){		    		    	
+				$("#ntf1").data("kendoNotification").error("Error Importing Inventory!"); 
+				$("#loadImport").css("display","none");				
+		    });
+		}
+	});
+	banhji.importJournal = kendo.observable({
+		dataSource 	  : dataStore(apiUrl+"imports/journal"),
+		onSelected    : function(e) {
+	        var files = e.files;
+	        var reader = new FileReader();
+			banhji.importJournal.dataSource.data([]);	
+			reader.onload = function() {						
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						for(var i = 0; i < roa.length; i++) {	
+							banhji.importJournal.dataSource.add(roa[i]);	
+						}						
+					}
+				});															
+			}
+			reader.readAsBinaryString(files[0].rawFile);         	
+        },
+		save: function() {
+			$("#loadImport").css("display","block");
+			banhji.importJournal.dataSource.sync();
+			banhji.importJournal.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+		    		$("#ntf1").data("kendoNotification").success("Imported Journal successfully!");
+					$("#loadImport").css("display","none");
+				}				  				
+		    });
+		    banhji.importJournal.dataSource.bind("error", function(e){		    		    	
+				$("#ntf1").data("kendoNotification").error("Error Importing Journal!"); 
+				$("#loadImport").css("display","none");				
+		    });
+		}
+	});
+    banhji.importView = kendo.observable({
+    	lang 				: langVM,
+    	contact 			: banhji.importContact,
+    	item 				: banhji.importItem,
+    	journal 			: banhji.importJournal
+    });
 	/* views and layout */
 	banhji.view = {
 		layout 		: new kendo.Layout('#layout', {model: banhji.Layout}),
@@ -78050,9 +78777,17 @@
 		//Report
 		reportDashboard: new kendo.Layout("#reportDashboard", {model: banhji.reportDashboard}),
 
+		//Imports
+		imports: new kendo.Layout("#importView", {model: banhji.importView}),
+
 		//Sale
 		saleDashboard: new kendo.Layout("#saleDashboard", {model: banhji.saleDashboard}),
 		saleCenter: new kendo.Layout("#saleCenter", {model: banhji.saleCenter}),
+		sale: new kendo.Layout("#sale", {model: banhji.sale}),
+		saleDetail: new kendo.Layout("#saleDetail", {model: banhji.saleDetail}),
+		saleReportCenter: new kendo.Layout("#saleReportCenter", {model: banhji.saleReportCenter}),
+		saleInventoryPositionSummary: new kendo.Layout("#saleInventoryPositionSummary", {model: banhji.inventoryPositionSummary}),
+
 
 
 		//Water
@@ -83837,7 +84572,14 @@
 			banhji.userManagement.addMultiTask("Inventory Position Summary","inventory_position_summary",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.inventoryPositionSummary);
-			banhji.inventorySale.inventoryPositionSummary.dataSource.read();
+			banhji.inventorySale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.inventorySale.inventoryPositionSummary.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.inventorySale.inventoryPositionSummary.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.inventorySale.set('count', e.response.count);
@@ -83855,7 +84597,14 @@
 			banhji.userManagement.addMultiTask("Inventory Sale Item Analysis","inventory_sale_item_analysis",null);
 
 			banhji.view.layout.showIn("#content", banhji.view.inventorySaleItemAnalysis);
-			banhji.inventorySale.inventorySaleDB.dataSource.read();
+			banhji.inventorySale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.inventorySale.inventorySaleDB.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.inventorySale.inventorySaleDB.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.inventorySale.set('count', e.response.count);
@@ -83872,7 +84621,14 @@
 			banhji.router.navigate('/manage');
 		}else{
 			banhji.view.layout.showIn("#content", banhji.view.inventoryPositionDetail);
-			banhji.inventorySale.inventoryPositionDetail.dataSource.read();
+			banhji.inventorySale.set('startDate', new Date().getFullYear() + "-01-01");
+			banhji.inventorySale.inventoryPositionDetail.dataSource.filter({
+				logic: banhji.saleSummaryCustomer.get('filteredBy'),
+				filters: [
+					{field: "issued_date >=", value: kendo.toString(new Date().getFullYear() + "-01-01", "yyyy-MM-dd")},
+					{field: "issued_date <=", value: kendo.toString(new Date(), "yyyy-MM-dd")}
+				]
+			});
 			banhji.inventorySale.inventoryPositionDetail.dataSource.bind('requestEnd', function(e){
 				if(e.response) {
 					banhji.inventorySale.set('count', e.response.count);
@@ -84493,7 +85249,19 @@
 			}
 		});
 	});
-	banhji.router.route("/customer(/:id)(/:is_pattern)", function(id,is_pattern){
+	banhji.router.route("/sale", function(){
+		banhji.view.layout.showIn("#content", banhji.view.sale);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
+		
+		var vm = banhji.sale;
+		banhji.userManagement.addMultiTask("Sale","sale",null);
+		if(banhji.pageLoaded["sale"]==undefined){
+			banhji.pageLoaded["sale"] = true;
+		}
+		vm.pageLoad();
+	});
+	banhji.router.route("/sale_detail", function(){
 		banhji.accessMod.query({
 			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
 		}).then(function(e){
@@ -84507,632 +85275,68 @@
 				}
 			} 
 			if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.customer);
-				kendo.fx($("#slide-form")).slideIn("down").play();
-
-				var vm = banhji.customer;
-				banhji.userManagement.addMultiTask("Customer","customer",vm);
-				if(banhji.pageLoaded["customer"]==undefined){
-					banhji.pageLoaded["customer"] = true;
-
-			        var validator = $("#example").kendoValidator().data("kendoValidator");
-			        $("#saveNew").click(function(e){
-						//e.preventDefault();
-
-						if(validator.validate() && vm.get("isDuplicateNumber")==false){
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveClose").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate() && vm.get("isDuplicateNumber")==false){
-							vm.set("saveClose", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-				}
-
-				vm.pageLoad(id, is_pattern);
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}
-		});
-	});
-	banhji.router.route("/quote(/:id)(/:is_recurring)", function(id,is_recurring){
-		// banhji.accessMod.query({
-		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		// }).then(function(e){
-		// 	var allowed = false;
-		// 	if(banhji.accessMod.data().length > 0) {
-		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
-		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-		// 				allowed = true;
-		// 				break;
-		// 			}
-		// 		}
-		// 	} 
-		// 	if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.quote);
-				kendo.fx($("#slide-form")).slideIn("down").play();
-
-				var vm = banhji.quote;
-				banhji.userManagement.addMultiTask("Quote","quote",vm);
-
-				if(banhji.pageLoaded["quote"]==undefined){
-					banhji.pageLoaded["quote"] = true;
-
-					var validator = $("#example").kendoValidator().data("kendoValidator");
-			        $("#saveNew").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate()){
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveClose").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate()){
-							vm.set("saveClose", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#savePrint").click(function(e){
-						e.preventDefault();
-						
-						if(validator.validate()){
-							vm.set("savePrint", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveRecurring").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate() && vm.validateRecurring()){
-			            	vm.set("saveRecurring", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-				}
-
-				vm.pageLoad(id, is_recurring);
-		// 	} else {
-		// 		window.location.replace(baseUrl + "admin");
-		// 	}				
-		// });		
-	});
-	banhji.router.route("/sale_order(/:id)(/:is_recurring)", function(id,is_recurring){
-		// banhji.accessMod.query({
-		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		// }).then(function(e){
-		// 	var allowed = false;
-		// 	if(banhji.accessMod.data().length > 0) {
-		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
-		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-		// 				allowed = true;
-		// 				break;
-		// 			}
-		// 		}
-		// 	} 
-		// 	if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.saleOrder);
-				kendo.fx($("#slide-form")).slideIn("down").play();
-
-				var vm = banhji.saleOrder;
-				banhji.userManagement.addMultiTask("Sale Order","sale_order",vm);
-				if(banhji.pageLoaded["sale_order"]==undefined){
-					banhji.pageLoaded["sale_order"] = true;
-
-					var validator = $("#example").kendoValidator().data("kendoValidator");
-			        $("#saveNew").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate()){
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveClose").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate()){
-							vm.set("saveClose", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#savePrint").click(function(e){
-						e.preventDefault();
-						
-						if(validator.validate()){
-							vm.set("savePrint", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveRecurring").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate() && vm.validateRecurring()){
-			            	vm.set("saveRecurring", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-				}
-
-				vm.pageLoad(id, is_recurring);
-		// 	} else {
-		// 		window.location.replace(baseUrl + "admin");
-		// 	}				
-		// });		
-	});
-	banhji.router.route("/customer_deposit(/:id)(/:is_recurring)", function(id,is_recurring){
-		// banhji.accessMod.query({
-		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		// }).then(function(e){
-		// 	var allowed = false;
-		// 	if(banhji.accessMod.data().length > 0) {
-		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
-		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-		// 				allowed = true;
-		// 				break;
-		// 			}
-		// 		}
-		// 	} 
-		// 	if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.customerDeposit);
-				kendo.fx($("#slide-form")).slideIn("down").play();
-
-				var vm = banhji.customerDeposit;
-				banhji.userManagement.addMultiTask("Customer Deposit","customer_deposit",vm);
-
-				if(banhji.pageLoaded["customer_deposit"]==undefined){
-					banhji.pageLoaded["customer_deposit"] = true;
-
-			        var validator = $("#example").kendoValidator().data("kendoValidator");
-			        $("#saveNew").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate()){
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveClose").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate()){
-							vm.set("saveClose", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#savePrint").click(function(e){
-						e.preventDefault();
-						
-						if(validator.validate()){
-							vm.set("savePrint", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveRecurring").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate() && vm.validateRecurring()){
-			            	vm.set("saveRecurring", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-				}
-
-				vm.pageLoad(id, is_recurring);
-		// 	} else {
-		// 		window.location.replace(baseUrl + "admin");
-		// 	}
-		// });
-	});
-	banhji.router.route("/cash_sale(/:id)(/:is_recurring)", function(id,is_recurring){
-		// banhji.accessMod.query({
-		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		// }).then(function(e){
-		// 	var allowed = false;
-		// 	if(banhji.accessMod.data().length > 0) {
-		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
-		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-		// 				allowed = true;
-		// 				break;
-		// 			}
-		// 		}
-		// 	} 
-		// 	if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.cashSale);
-				kendo.fx($("#slide-form")).slideIn("down").play();
-
-				var vm = banhji.cashSale;
-				banhji.userManagement.addMultiTask("Cash Sale","cash_sale",vm);
-				if(banhji.pageLoaded["cash_sale"]==undefined){
-					banhji.pageLoaded["cash_sale"] = true;
-
-					var validator = $("#example").kendoValidator().data("kendoValidator");
-			        $("#saveNew").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate()){
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveClose").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate()){
-							vm.set("saveClose", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#savePrint").click(function(e){
-						e.preventDefault();
-						
-						if(validator.validate()){
-							vm.set("savePrint", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveRecurring").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate() && vm.validateRecurring()){
-			            	vm.set("saveRecurring", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-				}
-
-				vm.pageLoad(id, is_recurring);
-
-		// 	} else {
-		// 		window.location.replace(baseUrl + "admin");
-		// 	}				
-		// });			
-	});
-	banhji.router.route("/invoice(/:id)(/:is_recurring)", function(id,is_recurring){
-		// banhji.accessMod.query({
-		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		// }).then(function(e){
-		// 	var allowed = false;
-		// 	if(banhji.accessMod.data().length > 0) {
-		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
-		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-		// 				allowed = true;
-		// 				break;
-		// 			}
-		// 		}
-		// 	} 
-		// 	if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.invoice);
-				kendo.fx($("#slide-form")).slideIn("down").play();
-
-				var vm = banhji.invoice;
-				banhji.userManagement.addMultiTask("Invoice","invoice",vm);
-				if(banhji.pageLoaded["invoice"]==undefined){
-					banhji.pageLoaded["invoice"] = true;
-
-					var validator = $("#example").kendoValidator().data("kendoValidator");
-			        $("#saveNew").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate()){
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveClose").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate()){
-							vm.set("saveClose", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#savePrint").click(function(e){
-						e.preventDefault();
-						
-						if(validator.validate()){
-							vm.set("savePrint", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveRecurring").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate() && vm.validateRecurring()){
-			            	vm.set("saveRecurring", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-				}
-
-				vm.pageLoad(id, is_recurring);
-		// 	} else {
-		// 		window.location.replace(baseUrl + "admin");
-		// 	}
-		// });
-	});
-	banhji.router.route("/gdn(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.gdn);
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.gdn;
-			banhji.userManagement.addMultiTask("GDN","gdn",vm);
-			if(banhji.pageLoaded["gdn"]==undefined){
-				banhji.pageLoaded["gdn"] = true;
-
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-		        $("#saveNew").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#saveClose").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#saveRecurring").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
-
-			vm.pageLoad(id, is_recurring);
-		}		
-	});
-	banhji.router.route("/sale_return(/:id)", function(id){
-		// banhji.accessMod.query({
-		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		// }).then(function(e){
-		// 	var allowed = false;
-		// 	if(banhji.accessMod.data().length > 0) {
-		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
-		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-		// 				allowed = true;
-		// 				break;
-		// 			}
-		// 		}
-		// 	} 
-		// 	if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.saleReturn);
-				kendo.fx($("#slide-form")).slideIn("down").play();
-
-				var vm = banhji.saleReturn;
-				banhji.userManagement.addMultiTask("Sale Return","sale_return",vm);
-				if(banhji.pageLoaded["sale_return"]==undefined){
-					banhji.pageLoaded["sale_return"] = true;
-					
-			        var validator = $("#example").kendoValidator().data("kendoValidator");
-			        $("#saveNew").click(function(e){
-						e.preventDefault();
-						
-						if(validator.validate() && vm.get("obj").remaining===0){
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#saveClose").click(function(e){
-						e.preventDefault();
-
-						if(validator.validate() && vm.get("obj").remaining===0){
-							vm.set("saveClose", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-
-					$("#savePrint").click(function(e){
-						e.preventDefault();
-						
-						if(validator.validate() && vm.get("obj").remaining===0){
-							vm.set("savePrint", true);
-			            	vm.save();
-				        }else{
-				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-				        }
-					});
-				}
-
-				vm.pageLoad(id);
-		// 		} else {
-		// 		window.location.replace(baseUrl + "admin");
-		// 	}				
-		// });		
-	});
-	banhji.router.route("/statement(/:id)", function(){
-		// banhji.accessMod.query({
-		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		// }).then(function(e){
-		// 	var allowed = false;
-		// 	if(banhji.accessMod.data().length > 0) {
-		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
-		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-		// 				allowed = true;
-		// 				break;
-		// 			}
-		// 		}
-		// 	} 
-		// 	if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.statement);
-
-				var vm = banhji.statement;
-				banhji.userManagement.addMultiTask("Statement","statement",null);
-
-				if(banhji.pageLoaded["statement"]==undefined){
-					banhji.pageLoaded["statement"] = true;
-					
-				}
-
-				vm.pageLoad();
-		// 	} else {
-		// 		window.location.replace(baseUrl + "admin");
-		// 	}				
-		// });
-	});
-	banhji.router.route("/customer_setting", function(){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.customerSetting);
+				banhji.view.layout.showIn("#content", banhji.view.saleDetail);
 				banhji.view.layout.showIn('#menu', banhji.view.menu);
-				banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
-
-				var vm = banhji.customerSetting;
-				banhji.userManagement.addMultiTask("Customer Setting","customer_setting",null);
-				if(banhji.pageLoaded["customer_setting"]==undefined){
-					banhji.pageLoaded["customer_setting"] = true;
-					
-					vm.contactTypeDS.filter({ field:"parent_id", value:1 });
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
+				
+				var vm = banhji.saleDetail;
+				banhji.userManagement.addMultiTask("Sale Detail","sale_detail",null);
+				if(banhji.pageLoaded["sale_detail"]==undefined){
+					banhji.pageLoaded["sale_detail"] = true;
 				}
-
 				vm.pageLoad();
 			} else {
 				window.location.replace(baseUrl + "admin");
 			}
 		});
 	});
-	banhji.router.route("/customer_recurring", function(){
+	banhji.router.route("/sale_report_center", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleReportCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
+				
+				var vm = banhji.saleReportCenter;
+				banhji.userManagement.addMultiTask("Sale Report Center","sale_report_center",null);
+				if(banhji.pageLoaded["sale_report_center"]==undefined){
+					banhji.pageLoaded["sale_report_center"] = true;
+				}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
+	banhji.router.route("/sale_inventory_position_summary", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.customerRecurring);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+			var vm = banhji.inventoryPositionSummary;
+			banhji.userManagement.addMultiTask("Sale Inventory Position Summary","sale_inventory_position_summary",null);
 
-			var vm = banhji.customerRecurring;
-			banhji.userManagement.addMultiTask("Customer Recurring","customer_recurring",null);
-			if(banhji.pageLoaded["customer_recurring"]==undefined){
-				banhji.pageLoaded["customer_recurring"] = true;
-
-			}
-
-			vm.pageLoad();
+			banhji.view.layout.showIn("#content", banhji.view.saleInventoryPositionSummary);
+			banhji.inventorySale.inventoryPositionSummary.dataSource.read();
+			banhji.inventorySale.inventoryPositionSummary.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.inventorySale.set('count', e.response.count);
+					kendo.culture(banhji.locale);	
+					banhji.inventorySale.set('onHand', kendo.toString(e.response.onHand, 'n0'));
+				}
+			});
 		}
 	});
-	banhji.router.route("/customer_report_center", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.customerReportCenter);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
-
-			var vm = banhji.customerReportCenter;
-			banhji.userManagement.addMultiTask("Customer Reports Center","customer_report_center",null);
-			if(banhji.pageLoaded["customer_report_center"]==undefined){
-				banhji.pageLoaded["customer_report_center"] = true;
-			}
-
-			vm.pageLoad();
-		}
-	});
-
-
 
 
 
@@ -85192,6 +85396,12 @@
 		}
 	});
 
+	/*************************
+	*   Import Section   *
+	**************************/
+	banhji.router.route("/imports", function(){
+		banhji.view.layout.showIn("#content", banhji.view.imports);
+	});
 
 	$(function() {	
 		banhji.router.start();

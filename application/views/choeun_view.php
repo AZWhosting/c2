@@ -29256,6 +29256,10 @@
 **************************** -->
 <script id="importView" type="text/x-kendo-template">	
 	<div  class="row-fluid saleSummaryCustomer">
+		<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
+
         <h2 data-bind="">Imports</h2>
 	    <br>		
 		<!-- Tabs -->
@@ -29275,19 +29279,21 @@
 				
 				<div class="widget-body">
 					<div class="tab-content">
-					
+						<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+						</div>
 						<!-- Tab content -->
 						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
 							
-							<h4 class="separator bottom" style="margin-top: 10px;">Please Upload contact as CSV file</h4>
-							<a href="<?php echo base_url(); ?>assets/imports/contact_form_import.csv" download>
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload contacts file</h4>
+							<a href="<?php echo base_url(); ?>assets/imports/contact_import_form_excel.xlsx" download>
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
 									<i></i> 
-									<span >Download file Example</span>
+									<span >Download file example</span>
 								</span>
 							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
+							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
 							<span data-bind="click: contact.save">Import Contact</span></span>
@@ -29299,15 +29305,15 @@
 						<!-- Tab content -->
 						<div id="tabInventery" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
 							
-							<h4 class="separator bottom" style="margin-top: 10px;">Please Upload Inventory as CSV file</h4>
-							<a href="<?php echo base_url(); ?>assets/imports/inventory_form_import.csv" download>
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload Inventory file</h4>
+							<a href="<?php echo base_url(); ?>assets/imports/items_import_form_excel.xlsx" download>
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
 									<i></i> 
 									<span >Download file Example</span>
 								</span>
 							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
+							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
 							<span data-bind="click: item.save">Import Inventory</span></span>
@@ -29317,15 +29323,15 @@
 						<!-- Tab content -->
 						<div id="tabJournal" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
 							
-							<h4 class="separator bottom" style="margin-top: 10px;">Please Upload Journal as CSV file</h4>
-							<a href="<?php echo base_url(); ?>assets/imports/jounal_form_import.csv" download>
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload Journal file</h4>
+							<a href="<?php echo base_url(); ?>assets/imports/journal_import_form_excel.xlsx" download>
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
 									<i></i> 
 									<span >Download file Example</span>
 								</span>
 							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-bind="events: {select: journal.onSelected}" id="myFile"  class="margin-none" />
+							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: journal.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
 							<span data-bind="click: journal.save">Import Journal</span></span>
@@ -29336,29 +29342,11 @@
 						
 					</div>
 				</div>
+				<div id="ntf1" data-role="notification"></div>
 			</div>
 		</div>
 		<!-- // Tabs END -->
 	</div>
-</script>
-<script id="import-list-template" type="text/x-kendo-template"> <tr>
-		<td><a href="#=url#">#=name#</a></td>
-		<td>#=description#</td>
-		<td>#=kendo.toString(size, 'n4')# mb</td>
-		<td>
-			# if(attachedTo.type == "contact") {#
-				<a href="\#/customer_center/#=attachedTo.id#">#=attachedTo.name#</a>
-			#} else if(attachedTo.type == "transaction") {#
-				# var link = attachedTo.go; #
-				# var lowcase = link.toLowerCase(); #
-				<a href="\#/#=lowcase#/#=attachedTo.id#">#=attachedTo.name#</a>
-			#} else {#
-				<a href="\#/item_center/#=attachedTo.id#">#=attachedTo.name#</a>
-			#}#
-		</td>
-		<td>#=created_at#</td>
-		<td align="center"><a href="\#" data-bind="click: remove">Delete</a></td>
-	</tr>
 </script>
 
 <!-- ***************************
@@ -43371,6 +43359,7 @@
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 <script>
 	localforage.config({
 		driver: localforage.LOCALSTORAGE,
@@ -76779,136 +76768,113 @@
 	banhji.importContact = kendo.observable({
 		dataSource 	  : dataStore(apiUrl+"imports/contact"),
 		onSelected    : function(e) {
-			var self = this;
 	        var files = e.files;
 	        var reader = new FileReader();
-	        
-	        reader.readAsText(files[0].rawFile);
-					
+			banhji.importContact.dataSource.data([]);		
 			reader.onload = function() {						
-				var result = reader.result.split('\n');	 						
-					
-				for (var i = 1; i < result.length; i ++) {								
-					var data = result[i].split(',');
-					//for (var x = 0; x < data.length; x++) {
-						banhji.importContact.dataSource.add({
-							contact_type: data[0],
-							abbr: data[1],
-							number: data[2],
-							name: data[3],
-							gender: data[4],
-							dob: data[5],
-							pob: data[6],
-							credit_limit: data[7],
-							phone: data[8],
-							email: data[9],
-							website: data[10],
-							job: data[11],
-							city: data[12],
-							post_code: data[13],
-							address: data[14],
-							bill_to: data[15],
-							ship_to: data[16],
-							deposit_account: data[17],
-							trade_discount: data[18],
-							settlement_discount: data[19],
-							account: data[20],
-							revenue_account: data[21],
-							tax: data[22],
-							registered_date: data[23]
-						});
-					//}	
-
-				}
-				console.log(banhji.importContact.dataSource.data());
-				//self.dataSource.transport.options.read.data = result;
-				//self.dataSource.read();																		
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						for(var i = 0; i < roa.length; i++) {	
+							banhji.importContact.dataSource.add(roa[i]);	
+						}						
+					}
+				});															
 			}
-         // console.log(files[0].rawFile);
-         	
+			reader.readAsBinaryString(files[0].rawFile);         	
         },
-		save: function() {}
+		save: function() {
+			$("#loadImport").css("display","block");
+			banhji.importContact.dataSource.sync();
+			banhji.importContact.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+		    		$("#ntf1").data("kendoNotification").success("Imported contacts successfully!");
+					$("#loadImport").css("display","none");
+				}				  				
+		    });
+		    banhji.importContact.dataSource.bind("error", function(e){		    		    	
+				$("#ntf1").data("kendoNotification").error("Error Importing Contact!"); 	
+				$("#loadImport").css("display","none");			
+		    });
+		}
 	});
 	banhji.importItem = kendo.observable({
 		dataSource 	  : dataStore(apiUrl+"imports/item"),
 		onSelected    : function(e) {
-			var self = this;
 	        var files = e.files;
 	        var reader = new FileReader();
-	        
-	        reader.readAsText(files[0].rawFile);
-					
+			banhji.importItem.dataSource.data([]);	
 			reader.onload = function() {						
-				var result = reader.result.split('\n');	 						
-					
-				for (var i = 1; i < result.length; i ++) {								
-					var data = result[i].split(',');
-					//for (var x = 0; x < data.length; x++) {
-						banhji.importItem.dataSource.add({
-							item_type: data[0],
-							abbr: data[1],
-							number: data[2],
-							name: data[3],
-							purchase_description: data[4],
-							sale_description: data[5],
-							measurements: data[6],
-							supplier_code: data[7],
-							color_code: data[8],
-							international_code: data[9],
-							imei: data[10],
-							serial_number: data[11],
-							cost: data[12],
-							price: data[13],
-							account: data[14],
-							income_account: data[15],
-							cogs_account: data[16],
-							inventory_account: data[17],
-							fixed_assets_account: data[18],
-							accumulated_account: data[19],
-							depreciation_account: data[20]
-						});
-					//}	
-
-				}
-				console.log(banhji.importItem.dataSource.data());
-				//self.dataSource.transport.options.read.data = result;
-				//self.dataSource.read();																		
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						for(var i = 0; i < roa.length; i++) {	
+							banhji.importItem.dataSource.add(roa[i]);	
+						}						
+					}
+				});															
 			}
-         // console.log(files[0].rawFile);
-         	
+			reader.readAsBinaryString(files[0].rawFile);         	
         },
 		save: function() {
-			//Category Default in API 
-			//Locale Default base on company's locale
+			$("#loadImport").css("display","block");
+			banhji.importItem.dataSource.sync();
+			banhji.importItem.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+		    		$("#ntf1").data("kendoNotification").success("Imported Inventory successfully!");
+					$("#loadImport").css("display","none");
+				}				  				
+		    });
+		    banhji.importItem.dataSource.bind("error", function(e){		    		    	
+				$("#ntf1").data("kendoNotification").error("Error Importing Inventory!"); 
+				$("#loadImport").css("display","none");				
+		    });
 		}
 	});
 	banhji.importJournal = kendo.observable({
 		dataSource 	  : dataStore(apiUrl+"imports/journal"),
 		onSelected    : function(e) {
-			var self = this;
 	        var files = e.files;
 	        var reader = new FileReader();
-	        
-	        reader.readAsText(files[0].rawFile);
-					
+			banhji.importJournal.dataSource.data([]);	
 			reader.onload = function() {						
-				var result = reader.result.split('\n');	 						
-				
-				for (var i = 1; i < result.length; i ++) {	
-					var data = result[i].split(',');					
-					banhji.importJournal.dataSource.add({
-						trans_no: data[0],
-						date: data[1],
-						number: data[2],
-						account_number: data[3],
-						memo: data[4],
-						dr: data[5],
-						cr: data[6]
-					});		
-				}																		
-			}         	
+				var data = reader.result;	
+				var result = {}; 						
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						for(var i = 0; i < roa.length; i++) {	
+							banhji.importJournal.dataSource.add(roa[i]);	
+						}						
+					}
+				});															
+			}
+			reader.readAsBinaryString(files[0].rawFile);         	
         },
-		save: function() {}
+		save: function() {
+			$("#loadImport").css("display","block");
+			banhji.importJournal.dataSource.sync();
+			banhji.importJournal.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+		    		$("#ntf1").data("kendoNotification").success("Imported Journal successfully!");
+					$("#loadImport").css("display","none");
+				}				  				
+		    });
+		    banhji.importJournal.dataSource.bind("error", function(e){		    		    	
+				$("#ntf1").data("kendoNotification").error("Error Importing Journal!"); 
+				$("#loadImport").css("display","none");				
+		    });
+		}
 	});
     banhji.importView = kendo.observable({
     	lang 				: langVM,
