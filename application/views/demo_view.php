@@ -37277,12 +37277,12 @@
 			        	<div class="supplier-icon">
 					       	<div class="span6">
 						       	<a href="#/customer" class="center">
-						       		<img title="Add Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" width="150"  />
+						       		<img title="Add Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" width="120" style="margin-left: 19px;" />
 						       	</a>
 						       </div>
 						    <div class="span6">
 						       	<a href="#/item" class="center">
-						       		<img title="Add Job" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" width="150" />
+						       		<img title="Add Job" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" width="120" style="margin-left: 13px;"/>
 						       	</a>
 						    </div>
 
