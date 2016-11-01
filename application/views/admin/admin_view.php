@@ -89,7 +89,7 @@
                               <strong>Assigned Role</strong>: <span data-bind="text: userProfile.getRole"></span>
                           </div>
                           </div>
-                          <div class="profile-statistic tbl">
+                          <div class="profile-statistic tbl" style="margin-top: 15px;">
                             <a href="<?php echo base_url(); ?>rrd" type="button" class="btn btn-block goto-banhji" style="background-color: #001933;">Go to BanhJi App</a>
                             <button type="button" class="btn btn-block goto-banhji" data-bind="click: goModule">Assigned Modules</button>
                             <button type="button" class="btn btn-block goto-banhji" data-bind="click: goProfile">View/ Edit Profile</button>
@@ -774,7 +774,7 @@
         <div id="ntf1" data-role="notification"></div>
     </script>
     <script type="text/x-kendo-template" id="template-placeholder-user">
-      <article class="profile-info-item user">
+      <article class="profile-info-item user" style="margin:0;">
           <div class="" style="margin-bottom: 10px;">
               <button data-bind="click: addUser" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">
                   Create user
@@ -862,7 +862,7 @@
                                 </tr>
                             </table>
                         </article>
-                        <div class="box-generic">
+                        <div class="box-generic" style="margin-top: 15px;">
                           <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
                               <span class="glyphicon glyphicon-ok"><i></i></span>
                               &nbsp; Save
@@ -898,7 +898,7 @@
       </div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-list">
-      <section class="box-typical col-md-3" style="margin: 17px;">
+      <section class="box-typical col-md-3" style="margin: 0 0 17px 17px;">
         <div class="profile-card">
           <div class="profile-card-photo">
               <img data-bind="attr: {src: profile_photo.url}">
@@ -1014,72 +1014,74 @@
                       </div>
                       <h2>User Detail</h2>
                       <div class="divider"></div>
-                      <div class="col-md-3 col-lg-3">
-                          <img width="120px" data-bind="attr: {src: current.profile_photo.url}" />
-                          <h3>Profile Picture</h3>
-                          <input data-role="upload" id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {select: upload}" data-show-file-list="false">
-                      </div>
-                      <article class="col-md-9 col-lg-9 profile-info-item edit-table">
-                          <table >
-                              <tr>
-                                  <td>Email *</td>
-                                  <td>:</td>
-                                  <td>
-                                      <input type="email" data-bind="disabled: editable, value: current.username" class="form-control"  id="" placeholder="">
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>Password *</td>
-                                  <td>:</td>
-                                  <td>
-                                      <input type="password" data-bind="value: current.password" class="form-control" id="" placeholder="">
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>First Name *</td>
-                                  <td>:</td>
-                                  <td>
-                                      <input type="text" data-bind="value: current.first_name" class="form-control" id="" placeholder="">
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>Last Name *</td>
-                                  <td>:</td>
-                                  <td>
-                                      <input type="text" data-bind="value: current.last_name" class="form-control" id="" placeholder="">
-                                  </td>
-                              </tr>                              
-                              <tr>
-                                  <td>Phone</td>
-                                  <td>:</td>
-                                  <td>
-                                      <input type="text" data-bind="value: current.mobile" class="form-control" id="" placeholder="">
-                                  </td>
-                              </tr>
-                              <tr data-bind="visible:showAdmin">
-                                  <td>Role</td>
-                                  <td>:</td>
-                                  <td>
-                                      <input id="type"
-                                             data-role="dropdownlist"
-                                             data-bind="source: userRoles, value: current.role"
-                                             data-text-field="name"
-                                             data-value-field="id"
-                                             data-value-primitive="true"
-                                             class="form-control col-md-7 col-xs-12"
-                                             type="text"
-                                             >
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td></td>
-                                  <td></td>
-                                  <td>
-                                  </td>
-                              </tr>
-                          </table>
-                      </article>
-                      <div class="box-generic">
+                      
+                        <div class="col-md-3 col-lg-3" >
+                            <img width="120px" data-bind="attr: {src: current.profile_photo.url}" />
+                            <h3>Profile Picture</h3>
+                            <input data-role="upload" id="user-image" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {select: upload}" data-show-file-list="false">
+                        </div>
+                        <article class="col-md-9 col-lg-9 profile-info-item edit-table">
+                            <table >
+                                <tr>
+                                    <td>Email *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="email" data-bind="disabled: editable, value: current.username" class="form-control"  id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Password *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="password" data-bind="value: current.password" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>First Name *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: current.first_name" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name *</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: current.last_name" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>                              
+                                <tr>
+                                    <td>Phone</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" data-bind="value: current.mobile" class="form-control" id="" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr data-bind="visible:showAdmin">
+                                    <td>Role</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input id="type"
+                                               data-role="dropdownlist"
+                                               data-bind="source: userRoles, value: current.role"
+                                               data-text-field="name"
+                                               data-value-field="id"
+                                               data-value-primitive="true"
+                                               class="form-control col-md-7 col-xs-12"
+                                               type="text"
+                                               >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </table>
+                        </article>
+                   
+                      <div class="box-generic" style="margin-top: 15px;">
                         <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
                             <span class="glyphicon glyphicon-ok"><i></i></span>
                             &nbsp; Save
@@ -1161,7 +1163,7 @@
                                 </tr>
                             </table>
                         </article>
-                        <div class="box-generic">
+                        <div class="box-generic" style="margin-top: 15px;">
                           <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
                               <span class="glyphicon glyphicon-ok"><i></i></span>
                               &nbsp; Save
