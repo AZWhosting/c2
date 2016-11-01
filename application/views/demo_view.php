@@ -147,7 +147,7 @@
 			<br>
 		</div>		
 		
-		<div class="span6">
+		<div class="span6" style="margin-bottom: 15px;">
 			<div class="row">
 				<div class="span12" style="background: #fff;">
 					<!-- Add New Board -->
@@ -791,7 +791,7 @@
 					</td>		
 				</tr>
 				<tr>
-					<td class="center">						
+					<td class="center" style="vertical-align: top;">						
 						<a href="#/expense">
 							<img title="Add Expense" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/expense.png" width="110" height="200" />
 							<span data-bind="text: lang.lang.expense" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
@@ -803,7 +803,7 @@
 							<span data-bind="text: lang.lang.ex_rate_record" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>						
 					</td>
-					<td class="center">
+					<td class="center" style="vertical-align: top;">
 						<a href="#/segment">
 							<img title="Add Segment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/segment.png" width="110" height="200" />
 							<span style="margin-top: 7px; display: inline-block; text-transform: uppercase;" data-bind="text: lang.lang.segment"></span>
@@ -37282,7 +37282,7 @@
 						       </div>
 						    <div class="span6">
 						       	<a href="#/item" class="center">
-						       		<img title="Add Job" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" width="120" style="margin-left: 13px;"/>
+						       		<img title="Add Job" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_job.ico" width="120" style="margin-left: 13px;"/>
 						       	</a>
 						    </div>
 

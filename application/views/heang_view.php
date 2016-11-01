@@ -13791,7 +13791,7 @@
 
 		#}#
 	#}#
-	<tr style="font-weight: bold; color: red">
+	<!-- <tr style="font-weight: bold; color: red">
 		<td></td>
 		<td></td>
 		<td></td>
@@ -13799,7 +13799,7 @@
 		<td></td>
 		<td></td>
 		<td></td>
-	</tr>
+	</tr> -->
 </script>
 <script id="suppliersBalanceSummary" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -33628,7 +33628,6 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
 	</tr>
 	# if (transactions.length) {#
 		#for(var i= 0; i <transactions.length; i++) {#
@@ -33641,7 +33640,7 @@
 				<td style="text-align: right;">#=kendo.toString(transactions[i].price, 'c2')#</td>	
 				<td style="text-align: right;">#=kendo.toString(transactions[i].amount, 'c2')#</td>	
 				<td style="text-align: right;">#=kendo.toString(transactions[i].cost, 'c2')#</td>
-				<td style="text-align: right;">#=kendo.toString(transactions[i].gpm, 'p0')#</td>
+				<!-- <td style="text-align: right;">#=kendo.toString(transactions[i].gpm, 'p0')#</td> -->
 			</tr>
 		#}#
 	#}#

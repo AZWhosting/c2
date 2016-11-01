@@ -25735,7 +25735,7 @@
         </div>
     </div>
 </script>
-<script id="invoiceForm23" type="text/x-kendo-template">
+<!--script id="invoiceForm23" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
         	<div class="span5">
@@ -25837,7 +25837,7 @@
         	</table>
         </div>
     </div>
-</script>
+</script-->
 <script id="invoiceForm24" type="text/x-kendo-template">
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
@@ -26209,7 +26209,7 @@
         </div>
     </div>
 </script>
-<script id="invoiceForm28" type="text/x-kendo-template">
+<script id="invoiceForm23" type="text/x-kendo-template">
 	<div class="inv1">
     	<div class="head">
         	<div class="logo">
@@ -26277,8 +26277,8 @@
                         <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
                             <th>ល.រ<br />N<sup>0</sup></th>
                             <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-                            <th>បរិមាណ<br />Quantity</th>
-                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th width="50">បរិមាណ<br />Quantity</th>
+                            <th width="50">ថ្លៃឯកតា​<br />Unit Price</th>
                             <th>ថ្លៃ​ទំនិញ<br />Amount</th>
                         </tr>
                     </thead>
@@ -26290,27 +26290,27 @@
                     <tfoot>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
-                            <td data-bind="text: obj.discount"></td>
+                            <td class="rside" data-bind="text: obj.discount"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​ Total (VAT included)</td>
-                            <td data-bind="text: obj.amount"></td>
+                            <td class="rside" data-bind="text: obj.amount"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
-                            <td data-bind="text: obj.deposit"></td>
+                            <td class="rside" data-bind="text: obj.deposit"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
-                            <td data-bind="text: obj.amount_due"></td>
+                            <td class="rside" data-bind="text: obj.amount_due"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ទទួលបាន Cash Receipt</td>
-                            <td data-bind="text: obj.cash_receipt"></td>
+                            <td class="rside" data-bind="text: obj.cash_receipt"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សមតុល្យ Balance</td>
-                            <td data-bind="text: obj.balance"></td>
+                            <td class="rside" data-bind="text: obj.balance"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -27523,10 +27523,10 @@
 <script id="invoiceForm-lineDS-template" type="text/x-kendo-template">
 	<tr>
 		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i>&nbsp;</td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td class="lside">#= description#</td>
 		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template3" type="text/x-kendo-template">
@@ -27566,12 +27566,12 @@
 </script>
 <script id="invoiceForm-lineDS-template6" type="text/x-kendo-template">
 	<tr>
-		<td >&nbsp;#= item_id #</td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td class="lside">&nbsp;#= item_id #</td>
+		<td class="lside">#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template8" type="text/x-kendo-template">
@@ -27585,8 +27585,8 @@
 </script>
 <script id="invoiceForm-lineDS-template10" type="text/x-kendo-template">
 	<tr>
-		<td >&nbsp;#= item_id #</td>
-		<td class="lside" style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td class="lside">&nbsp;#= item_id #</td>
+		<td class="lside">#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
 		<td class="rside" style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
@@ -27595,11 +27595,11 @@
 </script>
 <script id="invoiceForm-lineDS-template12" type="text/x-kendo-template">
 	<tr>
-		<td style="text-align: left; padding-left: 5px;">#= description.length>0 ? description: "&nbsp;"#</td>
-		<td style="text-align: left; padding-left: 5px;">#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td class="lside">#= description.length>0 ? description: "&nbsp;"#</td>
+		<td >#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="background-color: \\#eee;text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee;">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template14" type="text/x-kendo-template">
@@ -67646,14 +67646,14 @@
 			for (var i = 0; i < 15; i++) { 
 				banhji.invoiceForm.lineDS.add({				
 					id			: i,
-					description : '',
-					quantity 	: '',
-					price 		: '',
-					amount 		: '',
-					description : '',
-					locale : '',
-					item_prices : [],
-					item_id 	: ''
+					description : '1',
+					quantity 	: '1',
+					price 		: '1',
+					amount 		: '1',
+					description : '1',
+					locale 		: '1',
+					item_prices : [1],
+					item_id 	: '1'
 		    	});	
 		    }
 		},
@@ -67682,7 +67682,7 @@
 				case 20: Active = banhji.view.invoiceForm20; break;
 				case 21: Active = banhji.view.invoiceForm21; break;
 				case 22: Active = banhji.view.invoiceForm22; break;
-				case 23: Active = banhji.view.invoiceForm28; break;
+				case 23: Active = banhji.view.invoiceForm23; break;
 				case 24: Active = banhji.view.invoiceForm29; break;
 				case 25: Active = banhji.view.invoiceForm35; break;
 				case 26: Active = banhji.view.invoiceForm39; break;
@@ -67978,15 +67978,15 @@
 					if(TotalRow > 0){
 						for (var i = 1; i < TotalRow; i++) { 
 							self.lineDS.add({				
-								id			: '',
-								description : '',
-								quantity 	: '',
-								price 		: '',
-								amount 		: '',
-								description : '',
-								locale 		: '',
+								id			: '1',
+								description : '1',
+								quantity 	: '1',
+								price 		: '1',
+								amount 		: '1',
+								description : '1',
+								locale 		: '1',
 								item_prices : [],
-								item_id 	: ''
+								item_id 	: '1'
 					    	});	
 					    }
 					    $("#loading-inv").remove();

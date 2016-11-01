@@ -354,13 +354,17 @@ class Imports extends REST_Controller {
 	function journal_post() {
 		$models = json_decode($this->post('models'));
 		$journals = array();
+		$err = array();
 
 		foreach($models as $journal) {
 			$cr = 0;
 			$dr = 0;
-			isset($journal->dr) ? $dr = $journal->dr : $dr = 0;
-			isset($journal->cr) ? $cr = $journal->cr : $cr = 0;
+			$amount = 0;
+			isset($journal->dr) ? $dr = floatval($journal->dr) : $dr = 0;
+			isset($journal->cr) ? $cr = floatval($journal->cr) : $cr = 0;
+			$amount += $dr;
 			if(isset($journals["$journal->trans_no"])){
+				$journals["$journal->trans_no"]["amount"] += $amount;
 				$journals["$journal->trans_no"]["items"][] = array(
 					'account_number' => $journal->account_number,
 					'memo' => $journal->memo,
@@ -368,7 +372,7 @@ class Imports extends REST_Controller {
 					'cr' => $cr
 				);
 			} else {
-				$journals["$journal->trans_no"]["amount"] = floatval($journal->dr);
+				$journals["$journal->trans_no"]["amount"] = $amount;
 				$journals["$journal->trans_no"]["number"] = $journal->number;
 				$journals["$journal->trans_no"]["date"] = $journal->date;
 				$journals["$journal->trans_no"]["items"][] = array(
@@ -408,8 +412,8 @@ class Imports extends REST_Controller {
 			}				
 		}
 		
-
-		$this->response(array('results'=> array(), 'msg' => "Operation is good."), 201);
+		
+		$this->response(array('results'=> array(), 'msg' => "Operation is good."), 201);		
 	}
 	
 }
