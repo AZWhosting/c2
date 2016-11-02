@@ -20403,10 +20403,10 @@
 <script id="customerSetting-form-template" type="text/x-kendo-template">
 	<tr>
 		<td ><a style="text-align: left;" href="\\#/invoice_custom/#= id # "> #=name#  </a></td>
-		<td style="text-align: center; padding-left: 10px!important;"> 
+		<td style="text-align: left; padding-left: 10px!important;"> 
 			#= type.replace("_"," ")# 
 		</td>
-		<td class="center"> #if( updated_at ){ # 
+		<td style="text-align: left; padding-left: 10px!important;"> #if( updated_at ){ # 
 				#=kendo.toString(new Date(updated_at),"D")# 
 			 #}else{ #
 			 	#=kendo.toString(new Date(created_at),"D")# 
@@ -23157,7 +23157,7 @@
 							</div>
 							<div class="span9" align="right">
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save-close"></span></span>			
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save-close"></span></span>		
 							</div>
 						</div>
 					</div>
@@ -25644,7 +25644,7 @@
         </div>
     </div>
 </script>
-<script id="invoiceForm23" type="text/x-kendo-template">
+<!--script id="invoiceForm23" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
         	<div class="span5">
@@ -25746,7 +25746,7 @@
         	</table>
         </div>
     </div>
-</script>
+</script-->
 <script id="invoiceForm24" type="text/x-kendo-template">
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
@@ -26118,7 +26118,7 @@
         </div>
     </div>
 </script>
-<script id="invoiceForm28" type="text/x-kendo-template">
+<script id="invoiceForm23" type="text/x-kendo-template">
 	<div class="inv1">
     	<div class="head">
         	<div class="logo">
@@ -26186,8 +26186,8 @@
                         <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
                             <th>ល.រ<br />N<sup>0</sup></th>
                             <th>បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-                            <th>បរិមាណ<br />Quantity</th>
-                            <th>ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th width="50">បរិមាណ<br />Quantity</th>
+                            <th width="50">ថ្លៃឯកតា​<br />Unit Price</th>
                             <th>ថ្លៃ​ទំនិញ<br />Amount</th>
                         </tr>
                     </thead>
@@ -26199,27 +26199,27 @@
                     <tfoot>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
-                            <td data-bind="text: obj.discount"></td>
+                            <td class="rside" data-bind="text: obj.discount"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​ Total (VAT included)</td>
-                            <td data-bind="text: obj.amount"></td>
+                            <td class="rside" data-bind="text: obj.amount"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
-                            <td data-bind="text: obj.deposit"></td>
+                            <td class="rside" data-bind="text: obj.deposit"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
-                            <td data-bind="text: obj.amount_due"></td>
+                            <td class="rside" data-bind="text: obj.amount_due"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ទទួលបាន Cash Receipt</td>
-                            <td data-bind="text: obj.cash_receipt"></td>
+                            <td class="rside" data-bind="text: obj.cash_receipt"></td>
                         </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សមតុល្យ Balance</td>
-                            <td data-bind="text: obj.balance"></td>
+                            <td class="rside" data-bind="text: obj.balance"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -27432,10 +27432,10 @@
 <script id="invoiceForm-lineDS-template" type="text/x-kendo-template">
 	<tr>
 		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i>&nbsp;</td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td class="lside">#= description#</td>
 		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template3" type="text/x-kendo-template">
@@ -27475,12 +27475,12 @@
 </script>
 <script id="invoiceForm-lineDS-template6" type="text/x-kendo-template">
 	<tr>
-		<td >&nbsp;#= item_id #</td>
-		<td style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td class="lside">&nbsp;#= item_id #</td>
+		<td class="lside">#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template8" type="text/x-kendo-template">
@@ -27488,27 +27488,27 @@
 		<td style="text-align: left; padding-left: 5px;">&nbsp;#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template10" type="text/x-kendo-template">
 	<tr>
-		<td >&nbsp;#= item_id #</td>
-		<td class="lside" style="text-align: left; padding-left: 5px;">#= description#</td>
+		<td class="lside">&nbsp;#= item_id #</td>
+		<td class="lside">#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td class="rside" style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
 		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template12" type="text/x-kendo-template">
 	<tr>
-		<td style="text-align: left; padding-left: 5px;">#= description.length>0 ? description: "&nbsp;"#</td>
-		<td style="text-align: left; padding-left: 5px;">#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
+		<td class="lside">#= description.length>0 ? description: "&nbsp;"#</td>
+		<td >#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="background-color: \\#eee;text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee;">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template14" type="text/x-kendo-template">
@@ -38002,12 +38002,15 @@
 <script id="sale-template" type="text/x-kendo-tmpl">	
 	<li class="products" aria-selected="false">
 	    <a class="view-details">
-	        <img class="main-image" src="#=image_url#" alt="Sashimi salad" title="Sashimi salad">
+	        <img class="main-image" src="#= image_url!==null ? image_url : banhji.no_image #" alt="#=name#" title="#=name#">
 	        <strong>#=name#</strong>
 	        <span class="price"><span>$</span><span data-bind="text: price"></span></span>
 	    </a>
 
-	    <button class="add-to-cart" data-bind="click: addToCart">Add to Cart</button>
+	    <button class="add-to-cart">Add 
+	    	<span data-bind="click: addQuote">Quote</span>
+	    	<span data-bind="click: addSO">SO</span>
+	    </button>
 	</li>
 </script>
 <script id="saleDetail" type="text/x-kendo-template">
@@ -44382,7 +44385,7 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li> 				
+  				<li ><a href='#/sale'>Make Sale</a></li> 				
   				<li> <span class="li-line"></span></li>
   				<li style="padding-top: 10px;"><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>  				
   				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
@@ -44410,6 +44413,7 @@
 	var apiUrl = baseUrl + 'api/';
 	banhji.s3 = "https://banhji.s3.amazonaws.com/";	
 	banhji.token = null;
+	banhji.no_image = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
 
 	// custom widget for min and max
 	kendo.data.binders.widget.max = kendo.data.Binder.extend({
@@ -61523,7 +61527,7 @@
 		},					
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
-			this.lineDS.data([]);
+			//this.lineDS.data([]);
 			this.attachmentDS.data([]);			
 
 			this.set("isEdit", false);
@@ -62401,7 +62405,7 @@
 		},					
 		addEmpty 		 	: function(){			
 			this.dataSource.data([]);
-			this.lineDS.data([]);
+			//this.lineDS.data([]);
 			this.attachmentDS.data([]);
 			
 			this.set("isEdit", false);
@@ -62573,6 +62577,8 @@
 			}).then(function(result){				
 				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
+				this.lineDS.data([]);
+				
 				if(self.get("saveClose")){
 					//Save Close					
 					self.set("saveClose", false);
@@ -77702,16 +77708,29 @@
 		obj 				: null,
 		searchText 			: "",
 		user_id 			: banhji.source.user_id,
-		pageLoad 			: function(){
-			this.search();
-
+		pageLoad 			: function(){			
 			if(this.categoryDS.total()==0){
 				this.categoryDS.filter({ field:"item_type_id", operator:"where_in", value:[1,4] });
+				this.search();
 			}
 		},
 		search 				: function(){
+			var para = [], searchText = this.get("searchText");
+
+			if(searchText){
+      			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
+
+      			para.push(
+      				{ field: "abbr", value: textParts[0] },
+      				{ field: "number", value: textParts[1] },
+					{ field: "name", operator: "or_like", value: searchText }
+      			);
+      		}
+
+			para.push({ field:"item_type_id", operator:"where_in", value:[1,4] });
+
 			this.dataSource.query({
-				filter: { field:"item_type_id", value:1 },
+				filter: para,
 				page:1,
 				pageSize:100
 			});
@@ -77724,6 +77743,52 @@
 				page:1,
 				pageSize:100
 			});
+		},
+		addQuote 			: function(e){
+			var data = e.data, price = 0;
+
+			if(data.item_prices.length>0){
+				price = data.item_prices[0].price;
+			}
+
+			banhji.quote.lineDS.add({
+				transaction_id 		: 0,
+				tax_item_id 		: "",
+				item_id 			: data.id,				
+				measurement_id 		: 0,				
+				description 		: data.sale_description,				
+				quantity 	 		: 1,
+				price 				: price,												
+				amount 				: price,
+				rate				: 1,
+				locale				: banhji.locale,
+				movement 			: -1,
+
+				item_prices 		: data.item_prices
+			});			
+		},
+		addSO 				: function(e){
+			var data = e.data, price = 0;
+
+			if(data.item_prices.length>0){
+				price = data.item_prices[0].price;
+			}
+
+			banhji.saleOrder.lineDS.add({
+				transaction_id 		: 0,
+				tax_item_id 		: "",
+				item_id 			: data.id,				
+				measurement_id 		: 0,				
+				description 		: data.sale_description,				
+				quantity 	 		: 1,
+				price 				: price,												
+				amount 				: price,
+				rate				: 1,
+				locale				: banhji.locale,
+				movement 			: -1,
+
+				item_prices 		: data.item_prices
+			});			
 		}
 	});
 	

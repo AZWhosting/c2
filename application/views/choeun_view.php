@@ -20496,10 +20496,10 @@
 <script id="customerSetting-form-template" type="text/x-kendo-template">
 	<tr>
 		<td ><a style="text-align: left;" href="\\#/invoice_custom/#= id # "> #=name#  </a></td>
-		<td style="text-align: center; padding-left: 10px!important;"> 
+		<td style="text-align: left; padding-left: 10px!important;"> 
 			#= type.replace("_"," ")# 
 		</td>
-		<td class="center"> #if( updated_at ){ # 
+		<td style="text-align: left; padding-left: 10px!important;"> #if( updated_at ){ # 
 				#=kendo.toString(new Date(updated_at),"D")# 
 			 #}else{ #
 			 	#=kendo.toString(new Date(created_at),"D")# 
@@ -27525,7 +27525,7 @@
 		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i>&nbsp;</td>
 		<td class="lside">#= description#</td>
 		<td>#= quantity#</td>
-		<td class="rside">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
 		<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
@@ -27570,7 +27570,7 @@
 		<td class="lside">#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td class="rside">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
 		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
@@ -27579,8 +27579,8 @@
 		<td style="text-align: left; padding-left: 5px;">&nbsp;#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template10" type="text/x-kendo-template">
@@ -27589,7 +27589,7 @@
 		<td class="lside">#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td class="rside" style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
 		<td class="rside" style="background-color: \\#eee">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
@@ -27598,7 +27598,7 @@
 		<td class="lside">#= description.length>0 ? description: "&nbsp;"#</td>
 		<td >#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td class="rside">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" width="70">#= kendo.toString(price, "c", locale) #</td>
 		<td class="rside" style="background-color: \\#eee;">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
@@ -29334,7 +29334,32 @@
 							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: journal.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-							<span data-bind="click: journal.save">Import Journal</span></span>
+							<button style="background: none;border: none;" data-bind="disabled: journal.enabled, click: journal.save">Import Journal</button></span><br>
+
+							<span id="printG" class="btn btn-icon btn-primary glyphicons print" style="width: 100px!important; display: none;background: #a22314;right: 11px;top: 194px;position: absolute;border: none;" data-bind="visible: journal.enabled"><i></i>
+							<button style="background: none;border: none;" data-bind="click: printGrid">Print</button></span>
+							<div id="invFormContent">
+								<p style="margin-top: 10px;" data-bind="visible: journal.enabled"><b>Please check the following account numbers. Make sure they corresponse to account number in the system.</b></p>
+								<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs" style="margin-top: 10px;" data-bind="visible: journal.enabled">
+									<thead>
+										<tr class="widget-head">
+											<th width="100">line</th>
+											<th width="120">trans_no</th>
+											<th width="130">date</th>
+											<th width="130">number</th>
+											<th>memo</th>
+											<th>account_number</th>
+											<th>dr</th>
+											<th>cr</th>
+										</tr>
+									</thead>
+									<tbody style="margin-top: 10px;border: none;" 
+										data-role="listview"
+										data-template="importJournalErrorList" 
+										data-bind="source: journal.noneAccount"
+										></tbody>
+								</table>
+							</div>
 						</div>
 						<!-- // Tab content END -->
 						
@@ -29347,6 +29372,26 @@
 		</div>
 		<!-- // Tabs END -->
 	</div>
+</script>
+<script id="importJournalErrorList" type="text/x-kendo-template">
+ <tr>
+ 	<td>#=line#</td>
+ 	<td>#=trans_no#</td>
+	<td>#=date#</td>
+	<td>#=number#</td>
+	<td>#=memo#</td>
+	<td>#=account_number#</td>
+	<td>
+		# if(typeof dr != 'undefined') {#
+			#=dr#
+		#}#
+	</td>
+	<td>
+		# if(typeof cr != 'undefined') {#
+			#=cr#
+		#}#
+	</td>
+ </tr>
 </script>
 
 <!-- ***************************
@@ -76841,39 +76886,75 @@
 	});
 	banhji.importJournal = kendo.observable({
 		dataSource 	  : dataStore(apiUrl+"imports/journal"),
+		noneAccount   : [],
+		enabled 	  : false,
+		numberExists  : function(account) {
+			var existed = false;
+			
+			for(var i = 0; i < banhji.source.accountDS.data().length; i++) {
+				if(account == banhji.source.accountDS.data()[i].number) {
+					existed = true;
+					break;
+				}
+			}			
+			return existed;
+		},
 		onSelected    : function(e) {
 	        var files = e.files;
+	        $("#loadImport").css("display","block");
+	        banhji.importJournal.set('enabled', false);
+	        banhji.importJournal.noneAccount.splice(0, banhji.importJournal.noneAccount.length);
 	        var reader = new FileReader();
 			banhji.importJournal.dataSource.data([]);	
-			reader.onload = function() {						
+			reader.onload = function() {	
 				var data = reader.result;	
 				var result = {}; 						
 				var workbook = XLSX.read(data, {type : 'binary'});
 				workbook.SheetNames.forEach(function(sheetName) {
 					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-					if(roa.length > 0){
-						result[sheetName] = roa;
-						for(var i = 0; i < roa.length; i++) {	
-							banhji.importJournal.dataSource.add(roa[i]);	
-						}						
-					}
+					banhji.source.accountDS.fetch(function(){
+						if(roa.length > 0){
+							result[sheetName] = roa;
+							for(var i = 0; i < roa.length; i++) {
+								var number = banhji.importJournal.numberExists(roa[i].account_number);
+								if(!number) {
+									banhji.importJournal.noneAccount.push({line: i+1, trans_no:roa[i].trans_no, date: roa[i].date, number: roa[i].number, memo: roa[i].memo, 	account_number: roa[i].account_number, dr: roa[i].dr, cr: roa[i].cr});
+								}
+							}
+							//banhji.importJournal.dataSource.add(roa[i]);	
+								
+							if(banhji.importJournal.noneAccount.length > 0){
+								banhji.importJournal.set('enabled', true);
+								$("#loadImport").css("display","none");	
+							}else{
+								for(var i = 0; i < roa.length; i++) {
+									banhji.importJournal.dataSource.add(roa[i]);
+									$("#loadImport").css("display","none");	
+								}
+								banhji.importJournal.set('enabled', false);
+							//banhji.importJournal.dataSource.add(roa[i]);	
+							}							
+						}
+					});						
 				});															
 			}
 			reader.readAsBinaryString(files[0].rawFile);         	
         },
 		save: function() {
-			$("#loadImport").css("display","block");
-			banhji.importJournal.dataSource.sync();
-			banhji.importJournal.dataSource.bind("requestEnd", function(e){
-		    	if(e.response){				
-		    		$("#ntf1").data("kendoNotification").success("Imported Journal successfully!");
-					$("#loadImport").css("display","none");
-				}				  				
-		    });
-		    banhji.importJournal.dataSource.bind("error", function(e){		    		    	
-				$("#ntf1").data("kendoNotification").error("Error Importing Journal!"); 
-				$("#loadImport").css("display","none");				
-		    });
+			if(banhji.importJournal.dataSource.data().length > 0) {
+				$("#loadImport").css("display","block");
+				banhji.importJournal.dataSource.sync();
+				banhji.importJournal.dataSource.bind("requestEnd", function(e){
+			    	if(e.response){				
+			    		$("#ntf1").data("kendoNotification").success("Imported Journal successfully!");
+						$("#loadImport").css("display","none");
+					}				  				
+			    });
+			    banhji.importJournal.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error Importing Journal!"); 
+					$("#loadImport").css("display","none");				
+			    });
+			}				
 		}
 	});
     banhji.importView = kendo.observable({
@@ -76881,6 +76962,48 @@
     	contact 			: banhji.importContact,
     	item 				: banhji.importItem,
     	journal 			: banhji.importJournal,
+    	printGrid			: function() {
+			var obj = this.get('obj');
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=800, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:0mm;margin-top: 1mm; }'+
+		            	'.table-primary thead th {background-color:#496cad!important;color: #fff;-webkit-print-color-adjust:true;}' +
+		            	'}</style>' +
+		            '</head>' +
+		            '<body>';
+		    var htmlEnd =
+		            '</body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		}
 
     });
 
@@ -82313,6 +82436,7 @@
 	**************************/
 	banhji.router.route("/imports", function(){
 		banhji.view.layout.showIn("#content", banhji.view.imports);
+		banhji.source.accountDS.fetch();
 	});
 
 	/*************************
