@@ -76901,7 +76901,7 @@
 		},
 		onSelected    : function(e) {
 	        var files = e.files;
-	        $("#loadImport").css("display","block");
+	        // $("#loadImport").css("display","block");
 	        banhji.importJournal.set('enabled', false);
 	        banhji.importJournal.noneAccount.splice(0, banhji.importJournal.noneAccount.length);
 	        var reader = new FileReader();
@@ -76918,22 +76918,23 @@
 							for(var i = 0; i < roa.length; i++) {
 								var number = banhji.importJournal.numberExists(roa[i].account_number);
 								if(!number) {
-									banhji.importJournal.noneAccount.push({line: i+1, trans_no:roa[i].trans_no, date: roa[i].date, number: roa[i].number, memo: roa[i].memo, 	account_number: roa[i].account_number, dr: roa[i].dr, cr: roa[i].cr});
+									roa[i].account_number ='32900';
+									// banhji.importJournal.noneAccount.push({line: i+1, trans_no:roa[i].trans_no, date: roa[i].date, number: roa[i].number, memo: roa[i].memo, 	account_number: roa[i].account_number, dr: roa[i].dr, cr: roa[i].cr});
 								}
+								banhji.importJournal.dataSource.add(roa[i]);
 							}
 							//banhji.importJournal.dataSource.add(roa[i]);	
 								
-							if(banhji.importJournal.noneAccount.length > 0){
-								banhji.importJournal.set('enabled', true);
-								$("#loadImport").css("display","none");	
-							}else{
-								for(var i = 0; i < roa.length; i++) {
-									banhji.importJournal.dataSource.add(roa[i]);
-									$("#loadImport").css("display","none");	
-								}
-								banhji.importJournal.set('enabled', false);
-							//banhji.importJournal.dataSource.add(roa[i]);	
-							}							
+							// if(banhji.importJournal.noneAccount.length > 0){
+							// 	banhji.importJournal.set('enabled', true);
+							// 	$("#loadImport").css("display","none");	
+							// }else{
+							// 	for(var i = 0; i < roa.length; i++) {
+							// 		banhji.importJournal.dataSource.add(roa[i]);
+							// 		$("#loadImport").css("display","none");	
+							// 	}
+							// 	banhji.importJournal.set('enabled', false);
+							// }							
 						}
 					});						
 				});															

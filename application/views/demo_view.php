@@ -37899,7 +37899,24 @@
 									<ul>
 										<li class="active"><a class="glyphicons search" href="#tab-1" data-toggle="tab"><i></i>Search</a></li>
 										<li><a class="glyphicons cargo" href="#tab-2" data-toggle="tab"><i></i>Category</a></li>
+										
 									</ul>
+									<div style="float: right;">
+										<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
+											<a style="margin-top: 4px; line-height: 17px;" class="glyphicons shopping_cart" href="#/quote" >
+												<i></i><span class="badge fix badge-primary" style="position: absolute; left: -8px; top: -9px; background: red;" data-bind="text: quoteLineDS.total()"></span>
+												Quote												
+											</a>
+										</span>
+										<sapn style="position: relative; height: 35px; line-height: 35px; padding-left: 15px; float: left; display: block; border-left: 1px solid #efefef;">
+											<a style="margin-top: 4px; line-height: 17px;" class="glyphicons cart_in" href="#/sale_order" >
+												<i></i><span class="badge fix badge-primary" style="position: absolute; left: -12px; top: -9px; background: red;" data-bind="text: soLineDS.total()"></span>
+												Sale Order
+											</a>
+										</span>
+									</div>
+
+									
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
@@ -37917,14 +37934,14 @@
 								                 data-bind="source: categoryDS,"
 								                 style="overflow: auto; padding-top: 15px; padding-left: 15px; padding-bottom: 15px;"></ul>
 									    	
-									    </div>									        							       
+									    </div>
+									   								        							       
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
-					</div>							
-					
+					</div>
 
 					<div class="row-fluid" id="main-section" style="overflow: hidden;margin-top: 15px;">
 						<ul data-role="listview"
@@ -37933,60 +37950,6 @@
 			                 data-bind="source: dataSource"
 			                 style="height: 300px; "></ul>
 			        </div>
-
-			        <!-- <div class="row-fluid" id="main-section" style="overflow: hidden;">
-						<ul data-role="listview" data-bind="source: items" data-template="item" id="main" class="k-widget k-listview" role="listbox">
-					        <li class="products" data-uid="3c77833d-b11b-47a1-8084-d2c0689b7d92" role="option" aria-selected="false">
-					            <a class="view-details" href="#/menu/1">
-					                <img class="main-image" src="<?php echo base_url();?>assets/chirashi-sushi.jpg" alt="Sashimi salad" title="Sashimi salad">
-					                <strong data-bind="text: name">Sashimi salad</strong>
-					                <span class="price"><span>$</span><span data-bind="text: price">12</span></span>
-					            </a>
-
-					            <button class="add-to-cart" data-bind="click: addToCart">Add to Cart</button>
-					        </li>
-					    
-					        <li class="products" data-uid="bae39fd0-6967-4063-90a9-67c608072cf9" role="option" aria-selected="false">
-					            <a class="view-details" href="#/menu/2">
-					                <img class="main-image" src="<?php echo base_url();?>assets/edamame.jpg" alt="Chirashi sushi" title="Chirashi sushi">
-					                <strong data-bind="text: name">Chirashi sushi</strong>
-					                <span class="price"><span>$</span><span data-bind="text: price">21</span></span>
-					            </a>
-
-					            <button class="add-to-cart" data-bind="click: addToCart">Add to Cart</button>
-					        </li>
-					    
-					        <li class="products" data-uid="0f76e1f4-8c90-44ca-8ca5-9cf5a12fd314" role="option" aria-selected="false">
-					            <a class="view-details" href="#/menu/3">
-					                <img class="main-image" src="<?php echo base_url();?>assets/miso-soup.jpg" alt="Seaweed salad" title="Seaweed salad">
-					                <strong data-bind="text: name">Seaweed salad</strong>
-					                <span class="price"><span>$</span><span data-bind="text: price">17</span></span>
-					            </a>
-
-					            <button class="add-to-cart" data-bind="click: addToCart">Add to Cart</button>
-					        </li>
-					    
-					        <li class="products" data-uid="94907a7c-95f8-4dfe-8547-c560f9a60150" role="option" aria-selected="false">
-					            <a class="view-details" href="#/menu/4">
-					                <img class="main-image" src="<?php echo base_url();?>assets/sashimi-salad.jpg" alt="Edamame" title="Edamame">
-					                <strong data-bind="text: name">Edamame</strong>
-					                <span class="price"><span>$</span><span data-bind="text: price">4</span></span>
-					            </a>
-
-					            <button class="add-to-cart" data-bind="click: addToCart">Add to Cart</button>
-					        </li>
-					    
-					        <li class="products" data-uid="fafec8cc-54c0-4358-bbab-e56304b925e3" role="option" aria-selected="false">
-					            <a class="view-details" href="#/menu/5">
-					                <img class="main-image" src="<?php echo base_url();?>assets/seaweed-salad.jpg" alt="Miso soup" title="Miso soup">
-					                <strong data-bind="text: name">Miso soup</strong>
-					                <span class="price"><span>$</span><span data-bind="text: price">4</span></span>
-					            </a>
-
-					            <button class="add-to-cart" data-bind="click: addToCart">Add to Cart</button>
-					        </li>
-					    </ul>
-					</div> -->
 
 				</div>
 			</div>
@@ -38007,9 +37970,9 @@
 	        <span class="price"><span>$</span><span data-bind="text: price"></span></span>
 	    </a>
 
-	    <button class="add-to-cart">Add 
-	    	<span data-bind="click: addQuote">Quote</span>
-	    	<span data-bind="click: addSO">SO</span>
+	    <button class="add-to-cart row-fluid"> 
+	    	<span class="span5" data-bind="click: addQuote" style="background: \#ddd; padding: 5px; cursor: pointer;margin-left: 3px; width: 70px; "> Quote </span>
+	    	<span class="span6" data-bind="click: addSO" style="background: \#ddd; padding: 5px; margin-left: 7px; cursor: pointer; width: 70px;"> Order </span>
 	    </button>
 	</li>
 </script>
@@ -77704,6 +77667,8 @@
 	banhji.sale = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + 'items'),
+		quoteLineDS  		: banhji.quote.lineDS,
+		soLineDS  			: banhji.saleOrder.lineDS,
 		categoryDS 			: dataStore(apiUrl + 'categories'),
 		obj 				: null,
 		searchText 			: "",

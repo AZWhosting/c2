@@ -415,5 +415,38 @@ class Imports extends REST_Controller {
 		
 		$this->response(array('results'=> array(), 'msg' => "Operation is good."), 201);		
 	}
+
+	// private _create_get() {
+	// 	$this->load->dbutil();
+	// 	$dbs = $this->dbutil->list_databases();
+
+	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
+	// 	$data = array();
+	// 	foreach ($dbs as $db)
+	// 	{	
+	// 		if (!in_array("$db", $companyList)) {
+	// 		    $data[] = $db;
+	// 		    $connection = 'use ' . $db;
+
+	// 		    $dataInserted = array(
+	// 			   'account_type_id' => 34,
+	// 			   'sub_of_id' => 70,
+	// 			   'number' => '32900',
+	// 			   'locale' => 'km-KH',
+	// 			   'name' => 'Opening Balance Equity',
+	// 			   'status' => 1,
+	// 			   'is_system' => 1
+	// 			);
+
+	// 			$this->db->query($connection);
+
+	// 			$this->db->insert('accounts', $dataInserted);
+	// 		}
+		    
+	// 	}
+
+	// 	$this->response(array('results'=>$data), 200);
+
+	// }
 	
 }
