@@ -30011,62 +30011,78 @@
 						    	<!-- //INFO -->
 						        <div class="tab-pane active" id="tab1">
 
-						        	<div class="row-fluid">
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtSerialNumber"><span data-bind="text: lang.lang.model"></span></label>
-						              			<input data-role="dropdownlist"
-						              			   data-option-label="(--- Select ---)"
-						              			   data-header-template="item-brand-header-tmpl"           
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.brand_id,
-								                              source: brandDS"
-								                   style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>
+						        	<div class="row">
+						        		<div class="span6">
+						        			<div class="row">
+							        			<div class="span12">														
+													<!-- Group -->
+													<div class="control-group">							
+														<label for="txtSerialNumber"><span data-bind="text: lang.lang.model"></span></label>
+								              			<input data-role="dropdownlist"
+								              			   data-option-label="(--- Select ---)"
+								              			   data-header-template="item-brand-header-tmpl"           
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.brand_id,
+										                              source: brandDS"
+										                   style="width: 100%;" />					              		
+													</div>
+													<!-- // Group END -->
+												</div>
 
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtMeasurement"><span data-bind="text: lang.lang.measurement"></span></label>
-						              			<input id="txtMeasurement" name="txtMeasurement" class="k-textbox"
-							              				data-bind="value: obj.measurements" 
-							              				placeholder="e.g. 4x6mn"
-							              				style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>
+												<div class="span12">														
+													<!-- Group -->
+													<div class="control-group">							
+														<label for="txtMeasurement"><span data-bind="text: lang.lang.measurement"></span></label>
+								              			<input id="txtMeasurement" name="txtMeasurement" class="k-textbox"
+									              				data-bind="value: obj.measurements" 
+									              				placeholder="e.g. 4x6mn"
+									              				style="width: 100%;" />					              		
+													</div>
+													<!-- // Group END -->
+												</div>
 
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtColorCode"><span data-bind="text: lang.lang.color_code"></span></label>
-						              			<input id="txtColorCode" name="txtColorCode" class="k-textbox"
-							              				data-bind="value: obj.color_code" 
-							              				placeholder="e.g. #FF0000"
-							              				style="width: 100%;" />					              		
+												<div class="span12">														
+													<!-- Group -->
+													<div class="control-group">							
+														<label for="txtColorCode"><span data-bind="text: lang.lang.color_code"></span></label>
+								              			<input id="txtColorCode" name="txtColorCode" class="k-textbox"
+									              				data-bind="value: obj.color_code" 
+									              				placeholder="e.g. #FF0000"
+									              				style="width: 100%;" />					              		
+													</div>
+													<!-- // Group END -->
+												</div>										
+									        
+												<div class="span12">														
+													<!-- Group -->
+													<div class="control-group">							
+														<label for="txtInternationalCode"><span data-bind="text: lang.lang.international_code"></span></label>
+								              			<input id="txtInternationalCode" name="txtInternationalCode" class="k-textbox"
+									              				data-bind="value: obj.international_code" 
+									              				placeholder="e.g. INT0001"
+									              				style="width: 100%;" />					              		
+													</div>
+													<!-- // Group END -->
+												</div>
 											</div>
-											<!-- // Group END -->
-										</div>										
-							        
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtInternationalCode"><span data-bind="text: lang.lang.international_code"></span></label>
-						              			<input id="txtInternationalCode" name="txtInternationalCode" class="k-textbox"
-							              				data-bind="value: obj.international_code" 
-							              				placeholder="e.g. INT0001"
-							              				style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
+						        		</div>
+										<div class="span6">
+											<img data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" width="120px" style="margin-bottom: 15px; border: 1px solid #ddd;">
+											
+											<input id="files" name="files"
+							                    type="file"
+							                    data-role="upload"
+							                    data-multiple="false"
+							                    data-show-file-list="false"
+							                    data-bind="events: { 
+					                   				select: onSelect
+							                    }">
 										</div>
 																						
 							        </div>
-
+							        <br/>
 							        <div class="row-fluid">
 							        	<div class="span3">
 											<!-- Group -->
@@ -30173,6 +30189,7 @@
 
 					        	</div>
 						        <!-- //VENDOR/CUSTOMER CODE END -->
+
 						    </div>
 						</div>
 					</div>					
@@ -31278,62 +31295,74 @@
 						    	<!-- //INFO -->
 						        <div class="tab-pane active" id="tab1">
 
-						        	<div class="row-fluid">
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtSerialNumber"><span data-bind="text: lang.lang.model"></span></label>
-						              			<input data-role="dropdownlist"
-						              			   data-option-label="(--- Select ---)"
-						              			   data-header-template="item-brand-header-tmpl"           
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.brand_id,
-								                              source: brandDS"
-								                   style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>
+						        	<div class="row">
+						        		<div class="span6">
+						        			<div class="row">
+							        			<div class="span12">														
+													<!-- Group -->
+													<div class="control-group">							
+														<label for="txtSerialNumber"><span data-bind="text: lang.lang.model"></span></label>
+								              			<input data-role="dropdownlist"
+								              			   data-option-label="(--- Select ---)"
+								              			   data-header-template="item-brand-header-tmpl"           
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.brand_id,
+										                              source: brandDS"
+										                   style="width: 100%;" />					              		
+													</div>
+													<!-- // Group END -->
+												</div>
 
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtMeasurement"><span data-bind="text: lang.lang.measurement"></span></label>
-						              			<input id="txtMeasurement" name="txtMeasurement" class="k-textbox"
-							              				data-bind="value: obj.measurements" 
-							              				placeholder="e.g. 4x6mn"
-							              				style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
-										</div>
+												<div class="span12">														
+													<!-- Group -->
+													<div class="control-group">							
+														<label for="txtMeasurement"><span data-bind="text: lang.lang.measurement"></span></label>
+								              			<input id="txtMeasurement" name="txtMeasurement" class="k-textbox"
+									              				data-bind="value: obj.measurements" 
+									              				placeholder="e.g. 4x6mn"
+									              				style="width: 100%;" />					              		
+													</div>
+													<!-- // Group END -->
+												</div>
 
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtColorCode"><span data-bind="text: lang.lang.color_code"></span></label>
-						              			<input id="txtColorCode" name="txtColorCode" class="k-textbox"
-							              				data-bind="value: obj.color_code" 
-							              				placeholder="e.g. #FF0000"
-							              				style="width: 100%;" />					              		
+												<div class="span12">														
+													<!-- Group -->
+													<div class="control-group">							
+														<label for="txtColorCode"><span data-bind="text: lang.lang.color_code"></span></label>
+								              			<input id="txtColorCode" name="txtColorCode" class="k-textbox"
+									              				data-bind="value: obj.color_code" 
+									              				placeholder="e.g. #FF0000"
+									              				style="width: 100%;" />					              		
+													</div>
+													<!-- // Group END -->
+												</div>										
+									        
+												<div class="span12">														
+													<!-- Group -->
+													<div class="control-group">							
+														<label for="txtInternationalCode"><span data-bind="text: lang.lang.international_code"></span></label>
+								              			<input id="txtInternationalCode" name="txtInternationalCode" class="k-textbox"
+									              				data-bind="value: obj.international_code" 
+									              				placeholder="e.g. INT0001"
+									              				style="width: 100%;" />					              		
+													</div>
+													<!-- // Group END -->
+												</div>
 											</div>
-											<!-- // Group END -->
-										</div>										
-							        
-										<div class="span3">														
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="txtInternationalCode"><span data-bind="text: lang.lang.international_code"></span></label>
-						              			<input id="txtInternationalCode" name="txtInternationalCode" class="k-textbox"
-							              				data-bind="value: obj.international_code" 
-							              				placeholder="e.g. INT0001"
-							              				style="width: 100%;" />					              		
-											</div>
-											<!-- // Group END -->
+						        		</div>
+										<div class="span6">
+											<p>Upload Image:</p>
+											<img width="120px" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" style="margin-bottom: 15px; border: 1px solid #ddd;">
+											
+											<div class="k-widget k-upload k-header k-upload-sync k-upload-empty"><div class="k-button k-upload-button"><input id="files" name="files" type="file" data-role="upload" data-show-file-list="false" data-bind="events: { 
+				                   				select: onSelect
+						                   }" multiple="multiple" autocomplete="off" class="k-valid"><span>Select files...</span></div></div>
 										</div>
 																						
 							        </div>
-
+							        <br/>
 							        <div class="row-fluid">
 							        	<div class="span3">
 											<!-- Group -->
@@ -73163,6 +73192,98 @@
 				}								
 			}  																							
 		},
+		//Upload
+		onSelect 			: function(e){			
+	        // Array with information about the uploaded files
+	        var self = this, 
+	        files = e.files,
+	        obj = this.get("obj");
+
+	        var fileReader = new FileReader();
+	        fileReader.onload = function (event) {
+	            var mapImage = event.target.result;
+	            self.obj.set('image_url', mapImage);
+	        }
+	        fileReader.readAsDataURL(e.files[0].rawFile);			
+			
+	        // // Check the extension of each file and abort the upload if it is not .jpg
+	        // $.each(files, function(index, value){
+	        //     if (value.extension.toLowerCase() === ".jpg"
+	        //     	|| value.extension.toLowerCase() === ".jpeg"
+	        //     	|| value.extension.toLowerCase() === ".tiff"
+	        //     	|| value.extension.toLowerCase() === ".png" 
+	        //     	|| value.extension.toLowerCase() === ".gif"){
+
+	        //     	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+
+	        //     	self.attachmentDS.add({
+	        //     		user_id 		: self.get("user_id"),
+	        //     		transaction_id 	: obj.id,
+	        //     		type 			: "Transaction",
+	        //     		name 			: value.name,
+	        //     		description 	: "",
+	        //     		key 			: key,
+	        //     		url 			: banhji.s3 + key,
+	        //     		size 			: value.size,
+	        //     		created_at 		: new Date(),
+
+	        //     		file 			: value.rawFile
+	        //     	});	            			            		            
+	        //     }else{
+	        //     	alert("This type of file is not allowed to attach.");
+	        //     }
+	        // });
+	    },
+	    removeFile 			: function(e){
+	    	var data = e.data;
+
+	    	if (confirm(banhji.source.confirmMessage)) {
+	    		this.attachmentDS.remove(data);
+	    	}	    	
+	    },
+	    uploadFile 			: function(){
+	    	$.each(this.attachmentDS.data(), function(index, value){	    		
+		    	if(!value.id){
+			    	var params = { 
+		            	Body: value.file, 
+		            	Key: value.key 
+		            };
+		            bucket.upload(params, function (err, data) {		                
+	                	// console.log(err, data);
+	                	// var url = data.Location;                
+	            	});
+            	}	            
+            });
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+            	//Delete File
+            	if(e.type=="destroy"){
+	            	if(saved==false && e.response){
+	            		saved = true;
+	            	
+	            		var response = e.response.results;
+	            		$.each(response, function(index, value){            			
+		            		var params = {
+							  	//Bucket: 'STRING_VALUE', /* required */
+							 	Delete: { /* required */
+								    Objects: [ /* required */
+								      	{
+									        Key: value.data.key /* required */
+								      	}
+								      /* more items */
+								    ]
+							  	}
+							};
+							bucket.deleteObjects(params, function(err, data) {
+							  	//console.log(err, data);
+							});
+						});
+	            	}
+            	}
+            });
+	    },
 		//Pattern
 		setPattern 				: function(category_id){
 			var obj = this.get("obj");

@@ -392,6 +392,7 @@ class Imports extends REST_Controller {
 			$obj->issued_date = date("Y-m-d", strtotime($journal['date']));
 			$obj->amount = $journal['amount'];
 			$obj->rate = 1.00;
+			$obj->is_journal = 1;
 			$obj->locale = $this->locale;
 
 			if($obj->save()) {

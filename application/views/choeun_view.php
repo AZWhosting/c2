@@ -29296,7 +29296,7 @@
 							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-							<span data-bind="click: contact.save">Import Contact</span></span>
+							<span data-bind="click: contact.save, text: lang.lang.import_contact">Import Contact</span></span>
 							
 
 						</div>
@@ -29316,7 +29316,7 @@
 							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-							<span data-bind="click: item.save">Import Inventory</span></span>
+							<span data-bind="click: item.save, text: lang.lang.import_inventory">Import Inventory</span></span>
 						</div>
 						<!-- // Tab content END -->
 						
@@ -29334,21 +29334,21 @@
 							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: journal.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-							<button style="background: none;border: none;" data-bind="disabled: journal.enabled, click: journal.save">Import Journal</button></span><br>
+							<button style="background: none;border: none;" data-bind="disabled: journal.enabled, click: journal.save, text: lang.lang.import_journal">Import Journal</button></span><br>
 
 							<span id="printG" class="btn btn-icon btn-primary glyphicons print" style="width: 100px!important; display: none;background: #a22314;right: 11px;top: 194px;position: absolute;border: none;" data-bind="visible: journal.enabled"><i></i>
-							<button style="background: none;border: none;" data-bind="click: printGrid">Print</button></span>
+							<button style="background: none;border: none;" data-bind="click: printGrid, text: lang.lang.print">Print</button></span>
 							<div id="invFormContent">
 								<p style="margin-top: 10px;" data-bind="visible: journal.enabled"><b>Please check the following account numbers. Make sure they corresponse to account number in the system.</b></p>
 								<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs" style="margin-top: 10px;" data-bind="visible: journal.enabled">
 									<thead>
 										<tr class="widget-head">
-											<th width="100">line</th>
-											<th width="120">trans_no</th>
-											<th width="130">date</th>
-											<th width="130">number</th>
-											<th>memo</th>
-											<th>account_number</th>
+											<th width="100" data-bind="text: lang.lang.line">line</th>
+											<th width="120" data-bind="text: lang.lang.trans_no">trans_no</th>
+											<th width="130" data-bind="text: lang.lang.date">date</th>
+											<th width="130" data-bind="text: lang.lang.number">number</th>
+											<th data-bind="text: lang.lang.memo">memo</th>
+											<th data-bind="text: lang.lang.account_number">account_number</th>
 											<th>dr</th>
 											<th>cr</th>
 										</tr>
@@ -76901,7 +76901,7 @@
 		},
 		onSelected    : function(e) {
 	        var files = e.files;
-	        // $("#loadImport").css("display","block");
+	        $("#loadImport").css("display","block");
 	        banhji.importJournal.set('enabled', false);
 	        banhji.importJournal.noneAccount.splice(0, banhji.importJournal.noneAccount.length);
 	        var reader = new FileReader();
@@ -76918,23 +76918,20 @@
 							for(var i = 0; i < roa.length; i++) {
 								var number = banhji.importJournal.numberExists(roa[i].account_number);
 								if(!number) {
-									roa[i].account_number ='32900';
-									// banhji.importJournal.noneAccount.push({line: i+1, trans_no:roa[i].trans_no, date: roa[i].date, number: roa[i].number, memo: roa[i].memo, 	account_number: roa[i].account_number, dr: roa[i].dr, cr: roa[i].cr});
+									banhji.importJournal.noneAccount.push({line: i+1, trans_no:roa[i].trans_no, date: roa[i].date, number: roa[i].number, memo: roa[i].memo, 	account_number: roa[i].account_number, dr: roa[i].dr, cr: roa[i].cr});
 								}
-								banhji.importJournal.dataSource.add(roa[i]);
 							}
-							//banhji.importJournal.dataSource.add(roa[i]);	
 								
-							// if(banhji.importJournal.noneAccount.length > 0){
-							// 	banhji.importJournal.set('enabled', true);
-							// 	$("#loadImport").css("display","none");	
-							// }else{
-							// 	for(var i = 0; i < roa.length; i++) {
-							// 		banhji.importJournal.dataSource.add(roa[i]);
-							// 		$("#loadImport").css("display","none");	
-							// 	}
-							// 	banhji.importJournal.set('enabled', false);
-							// }							
+							if(banhji.importJournal.noneAccount.length > 0){
+								banhji.importJournal.set('enabled', true);
+								$("#loadImport").css("display","none");	
+							}else{
+								for(var i = 0; i < roa.length; i++) {
+									banhji.importJournal.dataSource.add(roa[i]);
+									$("#loadImport").css("display","none");	
+								}
+								banhji.importJournal.set('enabled', false);
+							}							
 						}
 					});						
 				});															
