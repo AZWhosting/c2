@@ -37963,7 +37963,7 @@
     </li>
 </script>
 <script id="sale-template" type="text/x-kendo-tmpl">	
-	<li class="products" aria-selected="false">
+	<li class="products span2" aria-selected="false">
 	    <a class="view-details">
 	        <img class="main-image" src="#= image_url!==null ? image_url : banhji.no_image #" alt="#=name#" title="#=name#">
 	        <strong>#=name#</strong>
@@ -37971,8 +37971,8 @@
 	    </a>
 
 	    <button class="add-to-cart row-fluid"> 
-	    	<span class="span5" data-bind="click: addQuote" style="background: \#ddd; padding: 5px; cursor: pointer;margin-left: 3px; width: 70px; "> Quote </span>
-	    	<span class="span6" data-bind="click: addSO" style="background: \#ddd; padding: 5px; margin-left: 7px; cursor: pointer; width: 70px;"> Order </span>
+	    	<span class="span5" data-bind="click: addQuote" style="background: \#ddd; padding: 5px; cursor: pointer; width: 60px; "> Quote </span>
+	    	<span class="span6" data-bind="click: addSO" style="background: \#ddd; padding: 5px; margin-left: 5px; cursor: pointer; width: 58px;"> Order </span>
 	    </button>
 	</li>
 </script>
@@ -61649,6 +61649,8 @@
 			}).then(function(result){				
 				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
+				this.lineDS.data([]);
+
 				if(self.get("saveClose")){
 					//Save Close					
 					self.set("saveClose", false);
@@ -77716,21 +77718,33 @@
 				price = data.item_prices[0].price;
 			}
 
-			banhji.quote.lineDS.add({
-				transaction_id 		: 0,
-				tax_item_id 		: "",
-				item_id 			: data.id,				
-				measurement_id 		: 0,				
-				description 		: data.sale_description,				
-				quantity 	 		: 1,
-				price 				: price,												
-				amount 				: price,
-				rate				: 1,
-				locale				: banhji.locale,
-				movement 			: -1,
+			var isExisting = false;
+			$.each(banhji.quote.lineDS.data(), function(index, value){
+				if(value.item_id==data.id){
+					isExisting = true;
+					value.set("quantity", value.quantity+1);
 
-				item_prices 		: data.item_prices
-			});			
+					return false;
+				}
+			});
+
+			if(isExisting==false){
+				banhji.quote.lineDS.add({
+					transaction_id 		: 0,
+					tax_item_id 		: "",
+					item_id 			: data.id,				
+					measurement_id 		: 0,				
+					description 		: data.sale_description,				
+					quantity 	 		: 1,
+					price 				: price,												
+					amount 				: price,
+					rate				: 1,
+					locale				: banhji.locale,
+					movement 			: -1,
+
+					item_prices 		: data.item_prices
+				});
+			}			
 		},
 		addSO 				: function(e){
 			var data = e.data, price = 0;
@@ -77739,21 +77753,33 @@
 				price = data.item_prices[0].price;
 			}
 
-			banhji.saleOrder.lineDS.add({
-				transaction_id 		: 0,
-				tax_item_id 		: "",
-				item_id 			: data.id,				
-				measurement_id 		: 0,				
-				description 		: data.sale_description,				
-				quantity 	 		: 1,
-				price 				: price,												
-				amount 				: price,
-				rate				: 1,
-				locale				: banhji.locale,
-				movement 			: -1,
+			var isExisting = false;
+			$.each(banhji.quote.lineDS.data(), function(index, value){
+				if(value.item_id==data.id){
+					isExisting = true;
+					value.set("quantity", value.quantity+1);
 
-				item_prices 		: data.item_prices
-			});			
+					return false;
+				}
+			});
+
+			if(isExisting==false){
+				banhji.saleOrder.lineDS.add({
+					transaction_id 		: 0,
+					tax_item_id 		: "",
+					item_id 			: data.id,				
+					measurement_id 		: 0,				
+					description 		: data.sale_description,				
+					quantity 	 		: 1,
+					price 				: price,												
+					amount 				: price,
+					rate				: 1,
+					locale				: banhji.locale,
+					movement 			: -1,
+
+					item_prices 		: data.item_prices
+				});
+			}			
 		}
 	});
 	
