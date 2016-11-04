@@ -109,6 +109,7 @@ class Attachments extends REST_Controller {
 				$user = $value->user->get();
 				$data["results"][] = array(
 					"id" 				=> $value->id,					
+					"user_id" 			=> $value->user_id,
 					"transaction_id" 	=> $value->transaction_id,
 					"contact_id" 		=> $value->contact_id,
 					"item_id" 			=> $value->item_id,
@@ -143,6 +144,7 @@ class Attachments extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 			
+			isset($value->user_id) 			? $obj->user_id 		= $value->user_id : "";
 			isset($value->transaction_id) 	? $obj->transaction_id 	= $value->transaction_id : "";
 			isset($value->contact_id) 		? $obj->contact_id 		= $value->contact_id : "";
 			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
@@ -152,13 +154,13 @@ class Attachments extends REST_Controller {
 			isset($value->key) 				? $obj->key 			= $value->key : "";
 			isset($value->url) 				? $obj->url 			= $value->url : "";
 			isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
-			isset($value->user_id) 			? $obj->user->id 		= $value->user->id : "";
 			isset($value->size) 			? $obj->size 			= $value->size : "";
 			isset($value->created_at) 		? $obj->created_at 		= $value->created_at : "";
 						
 			if($obj->save()){
 				$data["results"][] = array(
-					"id" 				=> $obj->id,					
+					"id" 				=> $obj->id,
+					"user_id" 			=> $obj->user_id,					
 					"transaction_id" 	=> $obj->transaction_id,
 					"contact_id" 		=> $obj->contact_id,
 					"item_id" 			=> $obj->item_id,
@@ -188,13 +190,13 @@ class Attachments extends REST_Controller {
 			$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
+			isset($value->user_id) 			? $obj->user_id 		= $value->user_id : "";
 			isset($value->transaction_id) 	? $obj->transaction_id 	= $value->transaction_id : "";
 			isset($value->contact_id) 		? $obj->contact_id 		= $value->contact_id : "";
 			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
 			isset($value->type) 			? $obj->type 			= $value->type : "";
 			isset($value->name) 			? $obj->name 			= $value->name : "";
 			isset($value->description) 		? $obj->description 	= $value->description : "";
-			isset($value->user_id) 			? $obj->user->id 		= $value->user->id : "";
 			isset($value->size) 			? $obj->size 			= $value->size : "";
 			isset($value->key) 				? $obj->key 			= $value->key : "";			
 			isset($value->url) 				? $obj->url 			= $value->url : "";
@@ -202,7 +204,8 @@ class Attachments extends REST_Controller {
 
 			if($obj->save()){				
 				$data["results"][] = array(
-					"id" 				=> $obj->id,					
+					"id" 				=> $obj->id,
+					"user_id" 			=> $obj->user_id,					
 					"transaction_id" 	=> $obj->transaction_id,
 					"contact_id" 		=> $obj->contact_id,
 					"item_id" 			=> $obj->item_id,

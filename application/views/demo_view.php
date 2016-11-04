@@ -44440,6 +44440,7 @@
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 <script>
 	localforage.config({
 		driver: localforage.LOCALSTORAGE,
@@ -73208,6 +73209,7 @@
     	itemGroupDS 			: banhji.source.itemGroupDS,   	
     	brandDS 	 			: banhji.source.brandDS,    	   	   	
     	measurementDS			: banhji.source.measurementDS,
+    	attachmentDS	 		: dataStore(apiUrl + "attachments"),
     	numberDS 				: dataStore(apiUrl + "items"),
     	existingDS 				: dataStore(apiUrl + "items"),
     	itemPriceDS 			: dataStore(apiUrl + "item_prices"),
@@ -73238,10 +73240,10 @@
 			}  																							
 		},
 		//Upload
-		onSelect 			: function(e){			
+		onSelect 				: function(e){			
 	        // Array with information about the uploaded files
 	        var self = this, 
-	        files = e.files,
+	        files = e.files[0],
 	        obj = this.get("obj");
 
 	        var fileReader = new FileReader();
@@ -73249,44 +73251,41 @@
 	            var mapImage = event.target.result;
 	            self.obj.set('image_url', mapImage);
 	        }
-	        fileReader.readAsDataURL(e.files[0].rawFile);			
+	        fileReader.readAsDataURL(files.rawFile);			
 			
-	        // // Check the extension of each file and abort the upload if it is not .jpg
-	        // $.each(files, function(index, value){
-	        //     if (value.extension.toLowerCase() === ".jpg"
-	        //     	|| value.extension.toLowerCase() === ".jpeg"
-	        //     	|| value.extension.toLowerCase() === ".tiff"
-	        //     	|| value.extension.toLowerCase() === ".png" 
-	        //     	|| value.extension.toLowerCase() === ".gif"){
+	        // Check the extension of each file and abort the upload if it is not .jpg	       
+            if (files.extension.toLowerCase() === ".jpg"
+            	|| files.extension.toLowerCase() === ".jpeg"
+            	|| files.extension.toLowerCase() === ".tiff"
+            	|| files.extension.toLowerCase() === ".png" 
+            	|| files.extension.toLowerCase() === ".gif"){
 
-	        //     	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+            	if(this.attachmentDS.total()>0){
+            		var att = this.attachmentDS.at(0);
+            		this.attachmentDS.remove(att);
+            	}
 
-	        //     	self.attachmentDS.add({
-	        //     		user_id 		: self.get("user_id"),
-	        //     		transaction_id 	: obj.id,
-	        //     		type 			: "Transaction",
-	        //     		name 			: value.name,
-	        //     		description 	: "",
-	        //     		key 			: key,
-	        //     		url 			: banhji.s3 + key,
-	        //     		size 			: value.size,
-	        //     		created_at 		: new Date(),
+            	var key = 'ITEM_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files.name;
 
-	        //     		file 			: value.rawFile
-	        //     	});	            			            		            
-	        //     }else{
-	        //     	alert("This type of file is not allowed to attach.");
-	        //     }
-	        // });
-	    },
-	    removeFile 			: function(e){
-	    	var data = e.data;
+            	this.attachmentDS.add({
+            		user_id 		: this.get("user_id"),
+            		item_id 		: obj.id,
+            		type 			: "Item",
+            		name 			: files.name,
+            		description 	: "",
+            		key 			: key,
+            		url 			: banhji.s3 + key,
+            		size 			: files.size,
+            		created_at 		: new Date(),
 
-	    	if (confirm(banhji.source.confirmMessage)) {
-	    		this.attachmentDS.remove(data);
-	    	}	    	
-	    },
-	    uploadFile 			: function(){
+            		file 			: files.rawFile
+            	});	            	            			            		            
+            }else{
+            	alert("This type of file is not allowed to attach.");
+            }
+	       
+	    },	    
+	    saveAttachment 	 		: function(){
 	    	$.each(this.attachmentDS.data(), function(index, value){	    		
 		    	if(!value.id){
 			    	var params = { 
@@ -73554,6 +73553,8 @@
 		    	self.set("obj", view[0]);
 		    	self.loadItemContact();
 			});
+
+			this.attachmentDS.filter({ field:"item_id", value: id });
     	},    	   	
       	addEmpty 				: function(){
       		var self = this;
@@ -73636,13 +73637,18 @@
 			//Edit Mode
 	    	if(this.get("isEdit")){
 	    		//Contact Item has changes
-		    	if(this.itemVendorDS.hasChanges() || this.itemCustomerDS.hasChanges()){
+		    	if(this.itemVendorDS.hasChanges() || this.itemCustomerDS.hasChanges() || this.attachmentDS.hasChanges()){
 		    		obj.set("dirty", true);
 		    	}
 	    	}else{
 	    		this.addItemPrice();
 	    		obj.set("cost", 0);
 	    		obj.set("price", 0);
+	    	}
+
+	    	if(this.attachmentDS.total()>0){
+    			var att = this.attachmentDS.at(0);
+    			obj.set("image_url", att.url);
 	    	}
 
 			//Save Obj
@@ -73665,11 +73671,17 @@
 						self.savePattern(data[0].category_id, data[0].id);
 					}
 
+					//Attachment
+					$.each(self.attachmentDS.data(), function(index, value){
+			    		value.set("item_id", data[0].id);
+		            });
+
 					self.itemPriceDS.sync();
 				}
 				
       			self.itemVendorDS.sync();
       			self.itemCustomerDS.sync();
+      			self.saveAttachment();
 				
 				return data;
 			}, function(reason) { //Error
