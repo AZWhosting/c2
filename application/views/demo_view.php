@@ -37999,10 +37999,10 @@
 	        <span class="price"><span>$</span><span data-bind="text: price"></span></span>
 	    </a>
 
-	    <button class="add-to-cart row-fluid"> 
+	    <div class="add-to-cart row-fluid"> 
 	    	<span class="span5" data-bind="click: addQuote" style="background: \#ddd; padding: 5px; cursor: pointer; width: 60px; "> Quote </span>
 	    	<span class="span6" data-bind="click: addSO" style="background: \#ddd; padding: 5px; margin-left: 5px; cursor: pointer; width: 58px;"> Order </span>
-	    </button>
+	    </div>
 	</li>
 </script>
 <script id="saleDetail" type="text/x-kendo-template">
