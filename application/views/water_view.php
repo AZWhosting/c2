@@ -416,24 +416,25 @@
 			<div class="row-fluid row-merge">
 				<div class="span3 listWrapper" >
 					<div class="innerAll">			
-						<button class="btn-primary" data-bind="click: exportEXCEL">EXPORT XLSX</button>						
+						<!--button class="btn-primary span12" style="" data-bind="click: exportEXCEL">EXPORT XLSX</button-->						
 						<form autocomplete="off" class="form-inline">
 							
 							<div class="widget-search separator bottom">
+								
 								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
 									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
 								</div>
 							</div>						
 							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
-								<input data-role="dropdownlist"
-					                   data-option-label="Select Type..."
+								<select data-role="dropdownlist"
 					                   data-value-primitive="true"
 					                   data-text-field="name"
 					                   data-value-field="id"
-					                   data-bind="value: contact_type_id,
-					                              source: filterCustomerTypeDS"
-					                   style="width: 100%;" />							
+					                   data-bind="value: filterKey,
+					                   		source: filterCustomerTypeDS, 
+					                   		events: {change: filterChange}"
+					                   style="width: 100%;" ></select>							
 							</div>
 						</form>	
 
@@ -453,7 +454,7 @@
 				<div class="span9 detailsWrapper">
 					<div class="row-fluid">					
 						<div class="span6">
-							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
+							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none"-->
 
 							    <!-- Widget Heading -->
 							    <div class="widget-head">
@@ -497,7 +498,7 @@
 							            <!-- // Transactions Tab content END -->							           					            
 
 							            <!-- INFO Tab content -->
-							            <div id="tab2-4" class="tab-pane box-generic">
+							            <!--div id="tab2-4" class="tab-pane box-generic">
 							            	<div class="row-fluid">
 							            		<div class="accounCetner-textedit">
 									            	<table width="100%">
@@ -543,18 +544,18 @@
 													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
 												</div>
 											</div>
-							            </div>
+							            </div-->
 							            <!-- // INFO Tab content END -->
 
 							            <!-- NOTE Tab content -->
-							            <div id="tab3-4" class="tab-pane">
+							            <!--div id="tab3-4" class="tab-pane">
 
-										    <div>
+										    <div-->
 												<!--input type="text" class="k-textbox" 
 														data-bind="value: note, events:{change:saveNoteEnter}" 
 														placeholder="Add memo ..." 
 														style="width: 366px;" /-->
-												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
+												<!--span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
 											</div>
 
 											<br>
@@ -568,11 +569,11 @@
 												 data-height="100"						 
 												 data-scrollable="{virtual: true}"></div>
 											
-							            </div>
+							            </div-->
 							            <!-- // NOTE Tab content END -->
 
 							            <!-- Attach Tab content -->
-								        <div id="tab4-4" class="tab-pane">							            	
+								        <!--div id="tab4-4" class="tab-pane">							            	
 								            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
 								            <input id="files" name="files"
 							                   type="file"
@@ -599,7 +600,7 @@
 
 										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
 
-								        </div>
+								        </div-->
 								        <!-- // Attach Tab content END -->							            								            
 
 							        </div>
@@ -607,7 +608,7 @@
 							</div>
 						</div>
 
-						<div class="span6" style="margin-bottom: 10px;">
+						<!--div class="span6" style="margin-bottom: 10px;">
 							<div class="row-fluid">
 								<div class="span6">
 									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
@@ -691,7 +692,7 @@
 
 	            	<div id="pager" class="k-pager-wrap"
 				    	 data-auto-bind="false"
-			             data-role="pager" data-bind="source: transactionDS"></div>	            	
+			             data-role="pager" data-bind="source: transactionDS"></div-->	            	
 				</div>
 			</div>			
 		</div>
@@ -759,9 +760,15 @@
 <script id="waterCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
 		<td>
-			<div class="media-body strong">				
+			<div class="media-body strong" style="position: relative;">				
 				<span>#=abbr##=number#</span>
-				<span>#=name#</span>
+				<span>
+					#=name# 
+					
+				</span>
+				#if(use_water == 0){#
+					<a href="\#/activate_user/#=id#" class="activate">Activate</a>
+				#}#
 			</div>
 		</td>
 	</tr>
@@ -778,6 +785,30 @@
 			</blockquote>				
 		</td>
 	</tr>	
+</script>
+
+<script id="waterActivateUser" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2 style="padding:0 15px;">Activate Water User</h2>
+			        <div class="span12 row-fluid" style="overflow: hidden;padding:40px 0;">
+			        	<input type="text" id="" name="Licence" class="k-textbox k-invalid" placeholder="Licence" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+			        	<input type="text" id="" name="Code" class="k-textbox k-invalid" placeholder="Code" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+			        	<input type="text" id="" name="Number of Family" class="k-textbox k-invalid" placeholder="Number of Family" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+			        	<input type="text" id="" name="ID Card Number" class="k-textbox k-invalid" placeholder="ID Card Number" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+			        	<input type="text" id="" name="OCC" class="k-textbox k-invalid" placeholder="OCC" required="" validationmessage="" style="width: 100%;" aria-invalid="true">
+			        </div>
+				    <br>	
+				</div>						
+			</div>
+		</div>
+	</div>
 </script>
 
 <script id="wMeter" type="text/x-kendo-template">
@@ -4844,6 +4875,7 @@
     banhji.waterCenter = kendo.observable({
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
+		filterKey 			: 1,
 		contactDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -4872,7 +4904,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
+			filter:{ field:"use_water", value:1 },
 			sort:{ field:"number", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
@@ -4882,9 +4914,12 @@
 			pageSize: 100
 		}),
 		filterCustomerTypeDS : [
-	    	{ id: "Water", name: "Water" },
-			{ id: "None_Water", name: "None Water" }],
+	    	{ id: 1, name: "Water" },
+			{ id: 0, name: "None Water" }],
 		contactTypeDS  		: banhji.source.customerTypeDS,
+		filterChange 		: function(e){
+			this.contactDS.filter({field:"use_water", value: this.get("filterKey")});
+		},
 		noteDS 				: dataStore(apiUrl + 'notes'),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		currencyDS  		: banhji.source.currencyDS,
@@ -4921,7 +4956,7 @@
 			        {
 			          cells: [
 			            // First cell
-			            { value: "number" },
+			            { value: "number/" },
 			            { value: "date" },
 			            { value: "previous" },
 			            { value: "reading" },
@@ -5327,6 +5362,89 @@
 			}
 		}
 	});
+	banhji.waterActivateUser = kendo.observable({
+		lang 				: langVM,
+		pageLoad 			: function(id){
+			//Refresh
+			
+		},
+		loadObj 			: function(id){
+			var self = this;
+
+			this.contactDS.query({
+				filter: { field:"id", value:id},
+				page:1,
+				pageSize:100
+			}).then(function(){
+				var view = self.contactDS.view();
+
+				if(view.length>0){
+					self.set("obj", view[0]);
+					self.loadData();
+				}
+			});
+		},
+		//Upload
+		onSelect 			: function(e){			
+	        // Array with information about the uploaded files
+	        var self = this, 
+	        files = e.files,
+	        obj = this.get("obj");			
+			
+			if(obj.id>0){
+		        // Check the extension of each file and abort the upload if it is not .jpg
+		        $.each(files, function(index, value){
+		            if (value.extension.toLowerCase() === ".jpg"
+		            	|| value.extension.toLowerCase() === ".jpeg"
+		            	|| value.extension.toLowerCase() === ".tiff"
+		            	|| value.extension.toLowerCase() === ".png" 
+		            	|| value.extension.toLowerCase() === ".gif"
+		            	|| value.extension.toLowerCase() === ".pdf"){
+
+		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+
+		            	self.attachmentDS.add({
+		            		user_id 		: self.get("user_id"),
+		            		contact_id 		: obj.id,
+		            		type 			: "Contact",
+		            		name 			: value.name,
+		            		description 	: "",
+		            		key 			: key,
+		            		url 			: banhji.s3 + key,
+		            		size 			: value.size,
+		            		created_at 		: new Date(),
+
+		            		file 			: value.rawFile
+		            	});	            			            		            
+		            }else{
+		            	alert("This type of file is not allowed to attach.");
+		            }
+		        });
+	    	}else{
+	    		alert("Please select a customer!");
+	    	}
+	    },
+	    //Summary
+		loadContact 		: function(id){
+			var self = this;
+			
+			this.contactDS.query({
+			  	filter:[
+			  		{ field:"id", value:id }
+			  	],
+			  	page: 1,
+			  	pageSize: 50
+			}).then(function(e) {
+			    var view = self.contactDS.data();
+			    
+			    if(view.length>0){
+			    	self.set("obj", view[0]);
+			    	self.loadData();
+			    }
+			});
+		}
+		
+	});
 	banhji.wMeter = kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(baseUrl + "meters"),
@@ -5560,6 +5678,7 @@
 		searchAdvanced: new kendo.Layout("#searchAdvanced", {model: banhji.searchAdvanced}),
 		//Water
 		waterCenter: new kendo.Layout("#waterCenter", {model: banhji.waterCenter}),
+		waterActivateUser: new kendo.Layout("#waterActivateUser", {model: banhji.waterActivateUser}),
 		wMeter: new kendo.Layout("#wMeter", {model: banhji.wMeter}),
 
 		//Menu
@@ -5664,6 +5783,21 @@
 
 		if(banhji.pageLoaded["water_center"]==undefined){
 			banhji.pageLoaded["water_center"] = true;
+		}
+
+		vm.pageLoad(id);
+	});
+	banhji.router.route("/activate_user/:id", function(id){		
+		banhji.view.layout.showIn("#content", banhji.view.waterActivateUser);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.waterActivateUser;
+
+		banhji.userManagement.addMultiTask("Activate User","activate_user",null);
+
+		if(banhji.pageLoaded["activate_user"]==undefined){
+			banhji.pageLoaded["activate_user"] = true;
 		}
 
 		vm.pageLoad(id);

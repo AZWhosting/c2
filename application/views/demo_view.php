@@ -23088,6 +23088,1186 @@
 </script>
 
 
+
+
+
+
+<!-- ***************************
+*	Sale Section        *
+**************************** -->
+<script id="saleDashboard" type="text/x-kendo-template">
+
+	<div class="row-fluid">
+
+		<!-- Left Side -->
+		<div class="span4">
+
+			<!-- Logo of the page -->
+			<table width="100%" cellpadding="10">
+				<tr>
+			        <td valign="top">
+			        	<h2 >Sales</h2>
+			        	<p>
+			        		<span data-bind="text: lang.lang.in_here"></span>
+			        	</p>
+			        	<div class="supplier-icon">
+					       	<div class="span6">
+						       	<a href="#/customer" class="center">
+						       		<img title="Add Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" width="120" style="margin-left: 19px;" />
+						       	</a>
+						       </div>
+						    <div class="span6">
+						       	<a href="#/item" class="center">
+						       		<img title="Add Job" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_job.ico" width="120" style="margin-left: 13px;"/>
+						       	</a>
+						    </div>
+
+						</div>
+			        </td>
+			 	</tr>
+			</table>
+			<table class="table table-borderless table-condensed table-vertical-center costom-imag">
+				<tr>
+					<td class="center">
+						<a href="#/quote">
+							<img title="Add Quote" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png"  height="200" />
+							<span data-bind="text: lang.lang.quotation" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+						</a>						
+					</td>
+					<td class="center">
+						<a href="#/sale_order">
+							<img title="Add Sale Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_order.png"  height="200" />
+							<span data-bind="text: lang.lang.sale_order" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+						</a>
+					</td>
+					<td class="center">
+						&nbsp;&nbsp;				
+					</td>					
+				</tr>
+							
+			</table>
+
+		</div>
+
+		<!-- Right Side -->
+		<div class="span8">
+
+			<!-- Summary -->
+			<div class="row-fluid">
+	
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border"  >
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons shopping_cart"><i></i></span><b data-bind="text: lang.lang.quote"></b></h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary" style="min-height: 148px;">
+							
+							<div align="center" class="text-large strong" data-bind="text: quote"></div>
+							<table width="100%">
+								<tr align="center">
+									<td width="33%" style="vertical-align: top">										
+										<span data-bind="text: quote_customer"></span>
+										<br>
+										<span><span data-bind="text: lang.lang.customers"></span></span>
+									</td>
+									<td width="33%" style="vertical-align: top">
+										<span data-bind="text: quote_open"></span>
+										<br>
+										<span>Open</span>
+									</td>
+								</tr>
+							</table>
+						</div></a>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<a href="#/sale_order_list"><div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><b data-bind="text: lang.lang.sale_order"></b></h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<div class="widget-body alert-info" style="min-height: 148px;">
+							
+							<div align="center" class="text-large strong" data-bind="text: so"></div>
+							<table width="100%">
+								<tr align="center">
+									<td width="50%" style="vertical-align: top">										
+										<span data-bind="text: so_customer"></span>
+										<br>
+										<span><span data-bind="text: lang.lang.customers"></span></span>
+									</td>
+									<td width="50%" style="vertical-align: top">
+										<span data-bind="text: so_open"></span>
+										<br>
+										<span>Open</span>
+									</td>									
+								</tr>
+							</table>
+						</div></a>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+				<!-- Column -->
+				<div class="span4">
+				
+					<!-- Widget -->
+					<div class="widget widget-3 customer-border">
+					
+						<!-- Widget heading -->
+						<div class="widget-head">
+							<h4 class="heading"><span class="glyphicons cargo"><i></i></span><b data-bind="text: lang.lang.products"></b></h4>
+						</div>
+						<!-- // Widget heading END -->
+						
+						<a href="#/customer_balance_summary"><div class="widget-body alert-info3" style="background-color: LightGray; min-height: 148px;">
+							
+							<div align="center" class="text-large strong" data-bind="text: product"></div>
+							<table width="100%">
+								<tr align="center">
+									<td width="50%" style="vertical-align: top">
+										<span data-bind="text: product_quote"></span>
+										<br>
+										<span>On Quote</span>
+									</td>
+									<td width="50%" style="vertical-align: top">
+										<span data-bind="text: product_so"></span>
+										<br>
+										<span>On SO</span>
+									</td>
+								</tr>
+							</table>
+						</div></a>
+						<!-- // Widget footer END -->
+						
+					</div>
+					<!-- // Widget END -->
+					
+				</div>
+				<!-- // Column END -->
+				
+			</div>
+
+			<!-- Top 5 -->
+			<div class="row-fluid">
+				<div class="span4">								
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+				        <thead>
+				            <tr>
+				                <th class="center" colspan="2">Top 5 Quotations</th>				                			                
+				            </tr>
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"				        	                 
+			                 data-template="customerDashBoard-top-customer-template"
+			                 data-bind="source: topCustomerDS"></tbody>			        
+				    </table>			
+				</div>
+				<div class="span4">					
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+				        <thead>				           
+				            <tr>
+				                <th class="center" colspan="2">Top 5 Sale Orders</th>				                			                
+				            </tr>					        
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"				        	                  
+			                 data-template="customerDashBoard-top-ar-template"
+			                 data-bind="source: topARDS"></tbody>			        
+				    </table>
+				</div>
+				<div class="span4">					
+					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
+				        <thead>				           
+				            <tr>
+				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_products"></span></th>				                			                
+				            </tr>					        
+				        </thead>
+				        <tbody data-role="listview"
+				        	 data-auto-bind="false"                
+			                 data-template="customerDashBoard-top-product-template"
+			                 data-bind="source: topProductDS"></tbody>			        
+				    </table>
+				</div>		
+			</div>
+
+			<!-- Graph -->
+			<div class="home-chart">
+				<div data-role="chart"
+	                 data-legend="{ position: 'top' }"
+	                 data-series-defaults="{ type: 'column' }"
+	                 data-tooltip='{
+	                    visible: true,
+	                    format: "{0}%",
+	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+	                 }'                 
+	                 data-series="[
+	                                 { field: 'sale', name: 'Monthly Quote', categoryField:'month', color: '#236DA4' },
+	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+	                             ]"
+	                 data-auto-bind="false"	                             
+	                 data-bind="source: graphDS"
+	                 style="height: 250px;" ></div>
+            <!-- End Graph -->
+            </div>
+		</div>		
+
+	</div>		
+</script>
+<script id="saleDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
+	<tr data-uid="#: uid #">
+		<!-- <td style="width: 1%">#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td -->>		
+		<td>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
+			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
+		</td>		
+	</tr>
+</script>
+<script id="saleDashBoard-top-ar-template" type="text/x-kendo-tmpl">
+	<tr>
+		<!-- <td style="width: 1%">#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		 -->
+		<td>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
+			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
+		</td>
+	</tr>
+</script>
+<script id="saleDashBoard-top-product-template" type="text/x-kendo-tmpl">
+	<tr>
+		<!-- <td style="width: 1%">#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		 -->
+		<td>
+			<span>
+				#if(name.length>15){#
+					#=name.substring(0, 15)#...
+				#}else{#
+					#=name#
+				#}#
+			</span>
+			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
+		</td>
+	</tr>
+</script>
+
+<script id="saleCenter" type="text/x-kendo-template">	
+	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
+		<div class="widget-body padding-none">			
+			<div class="row-fluid row-merge">
+				<div class="span3 listWrapper" >
+					<div class="innerAll">							
+						<form autocomplete="off" class="form-inline">
+							
+							<div class="widget-search separator bottom">
+								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<div class="overflow-hidden">
+									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
+								</div>
+							</div>						
+							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
+								<input data-role="dropdownlist"
+					                   data-option-label="Select Type..."
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: contact_type_id,
+					                              source: contactTypeDS"
+					                   style="width: 100%;" />							
+							</div>
+						</form>					
+					</div>
+					
+					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
+
+					<div class="table table-condensed" style="height: 580px;"						 
+						 data-role="grid"						 
+						 data-bind="source: contactDS"
+						 data-row-template="saleCenter-customer-list-tmpl"
+						 data-columns="[{title: ''}]"
+						 data-selectable=true
+						 data-height="600"						 
+						 data-scrollable="{virtual: true}"></div>									
+				</div>
+				<div class="span9 detailsWrapper">
+					<div class="row-fluid">					
+						<div class="span6">
+							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
+
+							    <!-- Widget Heading -->
+							    <div class="widget-head">
+
+							        <!-- Tabs -->
+							        <ul class="pull-right">
+							        	<li style="font-size: large; color: black; font-weight: bold;">							            	
+							            	<span data-bind="text: obj.name"></span>
+							            </li>
+							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
+							            </li>							            							            
+							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
+							            </li>							            
+							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
+							            </li>
+							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
+							            </li>							            							            
+							        </ul>
+							        <div class="clearfix"></div>
+							        <!-- // Tabs END -->
+
+							    </div>
+							    <!-- Widget Heading END -->
+
+							    <div class="widget-body">
+							        <div class="tab-content">
+
+							            <!-- Transactions Tab content -->
+							            <div id="tab1-4" class="tab-pane active box-generic">
+							            	<table class="table table-borderless table-condensed cart_total cash-table">
+								            	<tr>
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goQuote"><span><span data-bind="text: lang.lang.quote"></span></span>
+								            		</td>
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goSaleOrder"><span><span data-bind="text: lang.lang.sale_order"></span></span>								            			
+								            		</td>
+								            	</tr>
+							            	</table>
+							            </div>
+							            <!-- // Transactions Tab content END -->							           					            
+
+							            <!-- INFO Tab content -->
+							            <div id="tab2-4" class="tab-pane box-generic">
+							            	<div class="row-fluid">
+							            		<div class="accounCetner-textedit">
+									            	<table width="100%">
+														<tr>
+															<td width="40%"><span data-bind="text: lang.lang.customer_type"></span></td>
+															<td width="60%">
+																<span class="strong" data-bind="text: obj.contact_type"></span>
+															</td>
+														</tr>
+														<tr>
+															<td><span data-bind="text: lang.lang.number"></span></td>
+															<td>
+																<span class="strong" data-bind="text: obj.abbr"></span>
+																<span class="strong" data-bind="text: obj.number"></span>
+															</td>
+														</tr>
+														<tr>
+															<td><span data-bind="text: lang.lang.name"></span></td>
+															<td>
+																<span data-bind="text: obj.name"></span>
+															</td>
+														</tr>
+														<tr>
+															<td><span data-bind="text: lang.lang.billed_address"></span></td>
+															<td>
+																<span data-bind="text: obj.address"></span>
+															</td>
+														</tr>								
+														<tr>
+															<td><span data-bind="text: lang.lang.phone"></span></td>
+															<td>
+																<span data-bind="text: obj.phone"></span>
+															</td>
+														</tr>
+														<tr>
+															<td><span data-bind="text: lang.lang.currency"></span></td>
+															<td>										
+																<span data-bind="text: currencyCode"></span>
+															</td>
+														</tr>
+													</table>
+
+													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
+												</div>
+											</div>
+							            </div>
+							            <!-- // INFO Tab content END -->
+
+							            <!-- NOTE Tab content -->
+							            <div id="tab3-4" class="tab-pane">
+
+										    <div>
+												<input type="text" class="k-textbox" 
+														data-bind="value: note, events:{change:saveNoteEnter}" 
+														placeholder="Add memo ..." 
+														style="width: 366px;" />
+												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
+											</div>
+
+											<br>
+
+											<div class="table table-condensed" style="height: 100;"						 
+												 data-role="grid"
+												 data-auto-bind="false"						 
+												 data-bind="source: noteDS"
+												 data-row-template="saleCenter-note-tmpl"
+												 data-columns="[{title: ''}]"
+												 data-height="100"						 
+												 data-scrollable="{virtual: true}"></div>
+											
+							            </div>
+							            <!-- // NOTE Tab content END -->
+
+							            <!-- Attach Tab content -->
+								        <div id="tab4-4" class="tab-pane">							            	
+								            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+								            <input id="files" name="files"
+							                   type="file"
+							                   data-role="upload"
+							                   data-show-file-list="false"
+							                   data-bind="events: { 
+					                   				select: onSelect
+							                   }">
+
+								            <table class="table table-bordered">
+										        <thead>
+										            <tr>			                
+										                <th><span data-bind="text: lang.lang.file_name"></span></th>
+										                <th><span data-bind="text: lang.lang.description"></span></th>
+										                <th><span data-bind="text: lang.lang.date"></span></th>
+										                <th style="width: 13%;"></th>                			                
+										            </tr> 
+										        </thead>
+										        <tbody data-role="listview" 
+										        		data-template="attachment-list-tmpl" 
+										        		data-auto-bind="false"
+										        		data-bind="source: attachmentDS"></tbody>			        
+										    </table>
+
+										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
+
+								        </div>
+								        <!-- // Attach Tab content END -->							            								            
+
+							        </div>
+							    </div>
+							</div>
+						</div>
+
+						<div class="span6" style="margin-bottom: 10px;">
+							<div class="row-fluid">
+								<div class="span6">
+									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadQuote">
+										<span class="glyphicons shopping_cart"><i></i></span>
+										<span class="txt"><span data-bind="text: lang.lang.quote"></span><span data-bind="text: quote" style="font-size:medium;"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="span6">
+									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadSO">
+										<span class="glyphicons cart_in"><i></i></span>
+										<span class="txt"><span data-bind="text: lang.lang.sale_order"></span><span data-bind="text: so" style="font-size:medium;"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>										
+						</div>
+					</div>
+					
+					<div>
+						<input data-role="dropdownlist"
+							   class="sorter"                  
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList,                              
+					                      events: { change: sorterChanges }" />
+
+						<input data-role="datepicker"
+							   class="sdate"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					           			  max: edate"
+					           placeholder="From ..." >
+
+					    <input data-role="datepicker"
+					    	   class="edate"
+					    	   data-format="dd-MM-yyyy"
+					           data-bind="value: edate,
+					                      min: sdate"
+					           placeholder="To ..." >
+
+					  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+					</div>
+
+					<table class="table table-bordered table-striped table-white">
+						<thead>
+							<tr>
+								<th><span data-bind="text: lang.lang.date"></span></th>
+								<th><span data-bind="text: lang.lang.type"></span></th>								
+								<th><span data-bind="text: lang.lang.reference_no"></span></th>
+								<th><span data-bind="text: lang.lang.amount"></span></th>
+								<th><span data-bind="text: lang.lang.status"></span></th>
+							</tr>
+						</thead>	            		
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"	            					            					            					            			
+				                data-template="saleCenter-transaction-tmpl"
+				                data-bind="source: transactionDS" >
+				        </tbody>
+	            	</table>
+
+	            	<div id="pager" class="k-pager-wrap"
+				    	 data-auto-bind="false"
+			             data-role="pager" data-bind="source: transactionDS"></div>	            	
+				</div>
+			</div>			
+		</div>
+	</div>		
+</script>
+<script id="saleCenter-transaction-tmpl" type="text/x-kendo-tmpl">
+    <tr>    	  	
+    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+    	<td>#=type#</td>
+        <!-- Reference -->
+        <td>
+        	#if(type=="Customer_Deposit" && amount<0){#			
+				<a href="\#/#=reference[0].type.toLowerCase()#/#=reference[0].id#"><i></i> #=number#</a>			
+			#}else{#
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+			#}#        	
+        </td>
+        <!-- Amount -->
+    	<td class="right">
+    		#if(type=="GDN"){#
+    			#=kendo.toString(amount, "n0")#
+    		#}else{#
+    			#=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
+    		#}#
+    	</td>
+    	<!-- Status -->
+    	<td align="center">
+    		#if(type==="Quote"){#       		
+				#if(status==="0"){#
+        			Open
+        		#}else{#
+        			Used        			
+        		#}#
+        	#}else if(type==="Sale_Order"){#
+        		#if(status==="0"){#
+        			Open
+        		#}else{#
+        			Done        			
+        		#}#
+        	#}else{#
+
+        	#}#        				
+		</td> 	
+    </tr>
+</script>
+<script id="saleCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
+	<tr data-bind="click: selectedRow">
+		<td>
+			<div class="media-body strong">				
+				<span>#=abbr##=number#</span>
+				<span>#=name#</span>
+			</div>
+		</td>
+	</tr>
+</script>
+<script id="saleCenter-note-tmpl" type="text/x-kendo-template">
+	<tr>
+		<td>			
+			<blockquote>
+				<small class="author">
+					<span class="strong">#=creator#</span> :
+					<cite>#=kendo.toString(new Date(noted_date), "g")#</cite>
+				</small>					
+				<p>#=note#</p>
+			</blockquote>				
+		</td>
+	</tr>	
+</script>
+
+<script id="sale" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+					<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+
+					<h2>Sale</h2>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons search" href="#tab-1" data-toggle="tab"><i></i>Search</a></li>
+										<li><a class="glyphicons cargo" href="#tab-2" data-toggle="tab"><i></i>Category</a></li>
+										
+									</ul>
+									<div style="float: right;">
+										<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
+											<a style="margin-top: 4px; line-height: 17px;" class="glyphicons shopping_cart" href="#/quote" >
+												<i></i><span class="badge fix badge-primary" style="position: absolute; left: -8px; top: -9px; background: red;" data-bind="text: quoteLineDS.total()"></span>
+												Quote												
+											</a>
+										</span>
+										<sapn style="position: relative; height: 35px; line-height: 35px; padding-left: 15px; float: left; display: block; border-left: 1px solid #efefef;">
+											<a style="margin-top: 4px; line-height: 17px;" class="glyphicons cart_in" href="#/sale_order" >
+												<i></i><span class="badge fix badge-primary" style="position: absolute; left: -12px; top: -9px; background: red;" data-bind="text: soLineDS.total()"></span>
+												Sale Order
+											</a>
+										</span>
+									</div>
+
+									
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input type="text" class="span2 search-query" placeholder="Search" id="search-placeholder" data-bind="value: searchText" style="background-color: #fff; color: #333; border-color: #ddd; height: 33px; width: 192px;">
+											<button type="submit" class="btn btn-inverse" data-bind="click: search"><i class="icon-search"></i></button>					
+									    </div>
+									    <div class="tab-pane" id="tab-2">
+
+									    	<ul data-role="listview"
+									    		 data-auto-bind="false"
+									    		 data-selectable="true"
+								                 data-template="sale-category-template"
+								                 data-bind="source: categoryDS,"
+								                 style="overflow: auto; padding-top: 15px; padding-left: 15px; padding-bottom: 15px;"></ul>
+									    	
+									    </div>
+									   								        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+
+					<div class="row-fluid" id="main-section" style="overflow: hidden;margin-top: 15px;">
+						<ul data-role="listview"
+							 data-auto-bind="false"
+			                 data-template="sale-template"
+			                 data-bind="source: dataSource"
+			                 style="height: 300px; "></ul>
+			        </div>
+
+			        <div id="pager" class="k-pager-wrap"
+				    	 data-auto-bind="false"
+			             data-role="pager" data-bind="source: dataSource"></div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="sale-category-template" type="text/x-kendo-tmpl">
+    <li class="btn btn-primary" 
+    	data-bind="text: name, click: selectedType"
+    	style="width: auto !important; text-align: center; padding:5px 10px !important; margin-bottom: 10px;">
+    </li>
+</script>
+<script id="sale-template" type="text/x-kendo-tmpl">	
+	<li class="products span2" aria-selected="false">
+	    <a class="view-details">
+	        <img class="main-image" src="#= image_url!==null ? image_url : banhji.no_image #" alt="#=name#" title="#=name#">
+	        <strong>#=name#</strong>
+	        <span class="price"><span>$</span><span data-bind="text: price"></span></span>
+	    </a>
+
+	    <div class="add-to-cart row-fluid"> 
+	    	<span class="span5" data-bind="click: addQuote" style="background: \#ddd; padding: 5px; cursor: pointer; width: 60px; margin-left: 7px;"> Quote </span>
+	    	<span class="span6" data-bind="click: addSO" style="background: \#ddd; padding: 5px; margin-left: 5px; cursor: pointer; width: 58px;"> Order </span>
+	    </div>
+	</li>
+</script>
+<script id="saleDetail" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+					<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+
+					<h2>Sale Detail</h2>
+
+					<div class="row-fluid sale-detail">
+						<div id="details-top-image"></div>
+						<div id="details">
+			                <a id="navigate-prev" href=""></a>
+			                	<div id="detail-info">
+			                		<img class="main-image" src="<?php echo base_url();?>assets/chirashi-sushi.jpg" alt="Selected Product" title="Selected Product" >
+			                		<div id="description">
+										<h1>Chirashi sushi</h1>
+										<p>Sushi bar variety with sushi rice.</p>
+										<div id="details-total">
+											<p id="price-quantity" data-bind="text: price">$21.00</p>
+											<button class="buy" data-bind="click: addToCart">Add to cart</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="nutrition-info">
+								<h2>Nutritional Information</h2>
+								<dl>
+									<dt>Protein</dt>
+									<dd >2.3138</dd>
+									<dt>Fat (total)</dt>
+									<dd >0.6041</dd>
+									<dt>Carbohydrate</dt>
+									<dd >0.6041</dd>
+									<dt>Energy (kJ)</dt>
+									<dd >7.5314</dd>
+									<dt>Energy (kcal)</dt>
+									<dd >1.8000</dd>
+									<dt>Sugar</dt>
+									<dd >0.3114</dd>
+								</dl>
+							</div><a data-bind="" id="navigate-next" href="#/menu/3"></a>
+						</div>
+					</div>
+					<div id="details-bottom-image"></div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="saleRecurring" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+
+		    		<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+				    <h2>Sale Recurring</h2>
+
+				    <br>
+
+				    <div class="row-fluid">
+						<!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">	
+							    <!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons user" href="#tab-1" data-toggle="tab"><i></i>Select Customer</a></li>
+									</ul>
+								</div>
+							    <!-- // Tabs Heading END -->
+								<div class="widget-body">
+								    <div class="tab-content">
+
+								    	<!-- //GENERAL INFO -->
+								        <div class="tab-pane active" id="tab-1">									
+									       <input id="cbbContact" name="cbbContact"
+												   data-role="combobox"											                    
+								                   data-value-primitive="true"
+								                   data-auto-bind="false"
+								                   data-header-template="contact-header-tmpl"
+								                   data-template="contact-list-tmpl"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: contact_id,
+								                              source: contactDS,
+								                              events:{change: search}"
+								                   data-placeholder="Customer..." style="width: 200px;" />
+							        	</div>
+								        <!-- //GENERAL INFO END -->
+
+								    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					                           					
+	            	<table class="table table-bordered table-primary table-striped table-vertical-center">
+	            		<thead style="background-color: blue; color: #fff; font-weight: bold">
+			                <th>TYPE</th>
+			                <th>RECURRING NAME</th>
+			                <th>CUSTOMER</th>
+			                <th>START DATE</th>
+			                <th class="center">FREQUENCY</th>
+			                <th></th>
+	            		</thead>
+	            		<tbody data-role="listview" 
+				        		data-template="saleRecurring-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: dataSource"></tbody>
+	            	</table>
+
+	            	<div id="pager" class="k-pager-wrap"
+			             data-role="pager" 
+			             data-auto-bind="false"
+			             data-bind="source: dataSource"></div>
+
+	            </div>	            						
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleRecurring-template" type="text/x-kendo-tmpl">		
+	<tr data-uid="#: uid #">
+		<td>#=type#</td>
+		<td>#=recurring_name#</td>
+		<td>#=contact.length>0?contact[0].abbr + contact[0].number +" "+ contact[0].name:""#</td>
+		<td>#=kendo.toString(new Date(start_date), "dd-MM-yyyy")#</td>
+		<td class="center">#=frequency#</td>
+		<td class="center">
+			<a class="btn btn-success" href="\#/#=type.toLowerCase()#/#=id#/1"><i></i> Edit</a>
+		</td>		
+    </tr>   
+</script>
+
+<script id="saleReportCenter" type="text/x-kendo-template">
+	<div class="row-fluid customer-report-center">
+		<div class="span7">
+			<div class="row-fluid sale-report">				
+				<h2>SALE MANAGEMENT REPORTS</h2>
+				<p>
+					The following reports provide summary and detailed reports in 
+					different ways to help analyze your revenue performance.
+				</p>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">						
+						<tr>
+							<td width="50%">
+								<h3><a href="#/quotation_list">Quotation List</a></h3>
+							</td>
+							<td width="50%">
+								<h3><a href="#/sale_order_list">Sale Order List</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<h3><a href="#/sale_job_engagement">Sale by Job/Engagement</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/customer_list">Customer List</a></h3>
+							</td>
+						</tr>
+						<tr>
+							<td >
+							</td>
+							<td >
+								<p>
+									List of all active customers
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h3><a href="#/sale_inventory_position_summary">Inventory Position Summary</a></h3>
+							</td>
+							<td>
+								
+							</td>
+
+						</tr>
+						<tr>
+							<td>
+								<p>
+									Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price.
+								</p>
+							</td>
+							<td>
+								
+							</td>
+
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			
+			<div class="row-fluid recevable-report">
+				<h2>OTHER REPORTS/ LISTS</h2>
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td style="width: 48%; padding-right: 8px !important;">
+								<h3><a href="#/customer_recurring">Recurring Customer Template List</a></h3>
+							</td>
+							<td >
+								<h3><a href="#/customer_setting">Payment Method & Term List</a></h3>								
+							</td>						
+						</tr>
+						<tr>
+							<td style="width: 48%; padding-right: 8px !important;">
+								<p></p>								
+							</td>
+							<td>
+								<p>
+									List the types of payments and the term that determine due date for payment from customers.
+								</p>
+							</td>
+							
+						</tr>
+						<tr >
+							<td></td>														
+						</tr>
+
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="span5">
+			<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+			<br>
+			<br>
+			<div class="report-chart">
+				<div class="widget-body alert alert-primary sale-overview">
+					<h2>SALE OVERVIEW</h2>
+					<div align="center" class="text-large strong" data-bind="text: sale"></div>
+					<table width="100%">
+						<tr align="center">
+							<td>										
+								<span data-bind="text: sale_customer"></span>
+								<br>
+								<span>Customer</span>
+							</td>
+							<td>
+								<span data-bind="text: sale_product"></span>
+								<br>
+								<span>Product</span>
+							</td>
+							<td>
+								<span data-bind="text: order"></span>
+								<br>
+								<span>Order</span>
+							</td>
+							<td >
+								<span data-bind="text: sale_order"></span>
+								<br>
+								<span>Sale Order</span>
+							</td>
+
+						</tr>
+					</table>
+				</div>
+				<!-- Graph -->
+				<div class="home-chart">
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+	            <!-- End Graph -->
+	            </div>
+			</div>
+			<div class="report-chart">
+				<div class="widget-body receivable-overview" style="background-color: LightGray">
+					<h2>RECEIVABLES MANAGEMENT</h2>
+					<div align="center" class="text-large strong" data-bind="text: ar"></div>
+					<table width="100%">
+						<tr align="center">
+							<td>										
+								<span data-bind="text: ar_open"></span>
+								<br>
+								<span>Open</span>
+							</td>
+							<td>										
+								<span data-bind="text: ar_customer"></span>
+								<br>
+								<span>Customer</span>
+							</td>
+							<td>
+								<span data-bind="text: ar_overdue"></span>
+								<br>
+								<span>Overdue</span>
+							</td>
+							<td>
+								<span data-bind="text: collection_day"></span> days
+								<br>
+								<span>Collection Days</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<!-- Graph -->
+				<div class="home-chart">
+					<div data-role="chart"
+		                 data-legend="{ position: 'top' }"
+		                 data-series-defaults="{ type: 'column' }"
+		                 data-tooltip='{
+		                    visible: true,
+		                    format: "{0}%",
+		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+		                 }'                 
+		                 data-series="[
+		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
+		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
+		                             ]"	                             
+		                 data-bind="source: graphDS"
+		                 style="height: 250px;" ></div>
+	            <!-- End Graph -->
+            </div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleInventoryPositionSummary" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
+										           placeholder="From ..." />
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
+										           placeholder="To ..." />
+
+										  	 <button type="button" data-role="button" data-bind="click: inventoryPositionSummary.search"><i class="icon-search"></i></button>							
+									    </div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Inventory Position Summary</h2>
+							<p><span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
+						</div>
+
+						<div class="row-fluid" style="width: 80%; margin: 0 auto;">
+							<div class="span5">
+								<div class="total-customer">
+									<p>Product Items</p>
+									<span data-bind="text: count"></span>
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<p>Product Items on hand</p>
+									<span data-bind="text: onHand"></span>
+								</div>
+							</div>
+						</div>
+
+						<table class="table table-borderless table-condensed " style="width: 80%; margin: 0 auto;">
+							<thead>
+								<tr>
+									<th><span>Item Name</span></th>
+									<th class="center"><span>QOH</span></th>
+									<th style="text-align: center;"><span>On Purchase Order</span></th>
+									<th style="text-align: center;"><span>On Sale Order</span></th>
+								
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="sale-inventory-position-summary-row-template"
+					                data-bind="source: inventoryPositionSummary.dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="sale-inventory-position-summary-row-template" type="text/x-kendo-tmpl">
+	<tr>
+	    <td>#=item#</td>
+	    <td align="center">#=onHand#</td>
+	    <td align="center">#=po#</td>
+	    <td align="center">#=so#</td>
+	</tr>
+</script>
+
+
+
+
+
+<!-- ***************************
+*	Invoice Form Section        *
+**************************** -->
 <script id="invoiceCustom" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -37282,1083 +38462,6 @@
 			</div>		
 		</div>
 	</div>
-</script>
-
-
-<!-- ***************************
-*	Sale Section        *
-**************************** -->
-<script id="saleDashboard" type="text/x-kendo-template">
-
-	<div class="row-fluid">
-
-		<!-- Left Side -->
-		<div class="span4">
-
-			<!-- Logo of the page -->
-			<table width="100%" cellpadding="10">
-				<tr>
-			        <td valign="top">
-			        	<h2 >Sales</h2>
-			        	<p>
-			        		<span data-bind="text: lang.lang.in_here"></span>
-			        	</p>
-			        	<div class="supplier-icon">
-					       	<div class="span6">
-						       	<a href="#/customer" class="center">
-						       		<img title="Add Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" width="120" style="margin-left: 19px;" />
-						       	</a>
-						       </div>
-						    <div class="span6">
-						       	<a href="#/item" class="center">
-						       		<img title="Add Job" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_job.ico" width="120" style="margin-left: 13px;"/>
-						       	</a>
-						    </div>
-
-						</div>
-			        </td>
-			 	</tr>
-			</table>
-			<table class="table table-borderless table-condensed table-vertical-center costom-imag">
-				<tr>
-					<td class="center">
-						<a href="#/quote">
-							<img title="Add Quote" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/quotation.png"  height="200" />
-							<span data-bind="text: lang.lang.quotation" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>						
-					</td>
-					<td class="center">
-						<a href="#/sale_order">
-							<img title="Add Sale Order" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_order.png"  height="200" />
-							<span data-bind="text: lang.lang.sale_order" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>
-					</td>
-					<td class="center">
-						&nbsp;&nbsp;				
-					</td>					
-				</tr>
-							
-			</table>
-
-		</div>
-
-		<!-- Right Side -->
-		<div class="span8">
-
-			<!-- Summary -->
-			<div class="row-fluid">
-	
-				<!-- Column -->
-				<div class="span4">
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border"  >
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons shopping_cart"><i></i></span><b data-bind="text: lang.lang.quote"></b></h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<a href="#/sale_summary_customer"><div class="widget-body alert alert-primary" style="min-height: 148px;">
-							
-							<div align="center" class="text-large strong" data-bind="text: quote"></div>
-							<table width="100%">
-								<tr align="center">
-									<td width="33%" style="vertical-align: top">										
-										<span data-bind="text: quote_customer"></span>
-										<br>
-										<span><span data-bind="text: lang.lang.customers"></span></span>
-									</td>
-									<td width="33%" style="vertical-align: top">
-										<span data-bind="text: quote_open"></span>
-										<br>
-										<span>Open</span>
-									</td>
-								</tr>
-							</table>
-						</div></a>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-				
-				<!-- Column -->
-				<div class="span4">
-				
-					<!-- Widget -->
-					<a href="#/sale_order_list"><div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><b data-bind="text: lang.lang.sale_order"></b></h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<div class="widget-body alert-info" style="min-height: 148px;">
-							
-							<div align="center" class="text-large strong" data-bind="text: so"></div>
-							<table width="100%">
-								<tr align="center">
-									<td width="50%" style="vertical-align: top">										
-										<span data-bind="text: so_customer"></span>
-										<br>
-										<span><span data-bind="text: lang.lang.customers"></span></span>
-									</td>
-									<td width="50%" style="vertical-align: top">
-										<span data-bind="text: so_open"></span>
-										<br>
-										<span>Open</span>
-									</td>									
-								</tr>
-							</table>
-						</div></a>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-				
-				<!-- Column -->
-				<div class="span4">
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons cargo"><i></i></span><b data-bind="text: lang.lang.products"></b></h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<a href="#/customer_balance_summary"><div class="widget-body alert-info3" style="background-color: LightGray; min-height: 148px;">
-							
-							<div align="center" class="text-large strong" data-bind="text: product"></div>
-							<table width="100%">
-								<tr align="center">
-									<td width="50%" style="vertical-align: top">
-										<span data-bind="text: product_quote"></span>
-										<br>
-										<span>On Quote</span>
-									</td>
-									<td width="50%" style="vertical-align: top">
-										<span data-bind="text: product_so"></span>
-										<br>
-										<span>On SO</span>
-									</td>
-								</tr>
-							</table>
-						</div></a>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-				
-			</div>
-
-			<!-- Top 5 -->
-			<div class="row-fluid">
-				<div class="span4">								
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
-				        <thead>
-				            <tr>
-				                <th class="center" colspan="2">Top 5 Quotations</th>				                			                
-				            </tr>
-				        </thead>
-				        <tbody data-role="listview"
-				        	 data-auto-bind="false"				        	                 
-			                 data-template="customerDashBoard-top-customer-template"
-			                 data-bind="source: topCustomerDS"></tbody>			        
-				    </table>			
-				</div>
-				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
-				        <thead>				           
-				            <tr>
-				                <th class="center" colspan="2">Top 5 Sale Orders</th>				                			                
-				            </tr>					        
-				        </thead>
-				        <tbody data-role="listview"
-				        	 data-auto-bind="false"				        	                  
-			                 data-template="customerDashBoard-top-ar-template"
-			                 data-bind="source: topARDS"></tbody>			        
-				    </table>
-				</div>
-				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px;">
-				        <thead>				           
-				            <tr>
-				                <th class="center" colspan="2"><span data-bind="text: lang.lang.top_5_products"></span></th>				                			                
-				            </tr>					        
-				        </thead>
-				        <tbody data-role="listview"
-				        	 data-auto-bind="false"                
-			                 data-template="customerDashBoard-top-product-template"
-			                 data-bind="source: topProductDS"></tbody>			        
-				    </table>
-				</div>		
-			</div>
-
-			<!-- Graph -->
-			<div class="home-chart">
-				<div data-role="chart"
-	                 data-legend="{ position: 'top' }"
-	                 data-series-defaults="{ type: 'column' }"
-	                 data-tooltip='{
-	                    visible: true,
-	                    format: "{0}%",
-	                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-	                 }'                 
-	                 data-series="[
-	                                 { field: 'sale', name: 'Monthly Quote', categoryField:'month', color: '#236DA4' },
-	                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
-	                             ]"
-	                 data-auto-bind="false"	                             
-	                 data-bind="source: graphDS"
-	                 style="height: 250px;" ></div>
-            <!-- End Graph -->
-            </div>
-		</div>		
-
-	</div>		
-</script>
-<script id="saleDashBoard-top-customer-template" type="text/x-kendo-tmpl">	
-	<tr data-uid="#: uid #">
-		<!-- <td style="width: 1%">#:banhji.customerDashboard.topCustomerDS.indexOf(data)+1#</td -->>		
-		<td>
-			<span>
-				#if(name.length>15){#
-					#=name.substring(0, 15)#...
-				#}else{#
-					#=name#
-				#}#
-			</span>
-			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
-		</td>		
-	</tr>
-</script>
-<script id="saleDashBoard-top-ar-template" type="text/x-kendo-tmpl">
-	<tr>
-		<!-- <td style="width: 1%">#:banhji.customerDashboard.topARDS.indexOf(data)+1#</td>		 -->
-		<td>
-			<span>
-				#if(name.length>15){#
-					#=name.substring(0, 15)#...
-				#}else{#
-					#=name#
-				#}#
-			</span>
-			<span class="pull-right">#=kendo.toString(amount, banhji.institute.locale=="km-KH"?"c0":"c", banhji.institute.locale)#</span>
-		</td>
-	</tr>
-</script>
-<script id="saleDashBoard-top-product-template" type="text/x-kendo-tmpl">
-	<tr>
-		<!-- <td style="width: 1%">#:banhji.customerDashboard.topProductDS.indexOf(data)+1#</td>		 -->
-		<td>
-			<span>
-				#if(name.length>15){#
-					#=name.substring(0, 15)#...
-				#}else{#
-					#=name#
-				#}#
-			</span>
-			<span class="pull-right">#=kendo.toString(quantity, "n0")#</span>
-		</td>
-	</tr>
-</script>
-
-<script id="saleCenter" type="text/x-kendo-template">	
-	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
-		<div class="widget-body padding-none">			
-			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" >
-					<div class="innerAll">							
-						<form autocomplete="off" class="form-inline">
-							
-							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-								<div class="overflow-hidden">
-									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
-								</div>
-							</div>						
-							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
-								<input data-role="dropdownlist"
-					                   data-option-label="Select Type..."
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: contact_type_id,
-					                              source: contactTypeDS"
-					                   style="width: 100%;" />							
-							</div>
-						</form>					
-					</div>
-					
-					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
-
-					<div class="table table-condensed" style="height: 580px;"						 
-						 data-role="grid"						 
-						 data-bind="source: contactDS"
-						 data-row-template="saleCenter-customer-list-tmpl"
-						 data-columns="[{title: ''}]"
-						 data-selectable=true
-						 data-height="600"						 
-						 data-scrollable="{virtual: true}"></div>									
-				</div>
-				<div class="span9 detailsWrapper">
-					<div class="row-fluid">					
-						<div class="span6">
-							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
-
-							    <!-- Widget Heading -->
-							    <div class="widget-head">
-
-							        <!-- Tabs -->
-							        <ul class="pull-right">
-							        	<li style="font-size: large; color: black; font-weight: bold;">							            	
-							            	<span data-bind="text: obj.name"></span>
-							            </li>
-							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
-							            </li>							            							            
-							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
-							            </li>
-							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
-							            </li>							            							            
-							        </ul>
-							        <div class="clearfix"></div>
-							        <!-- // Tabs END -->
-
-							    </div>
-							    <!-- Widget Heading END -->
-
-							    <div class="widget-body">
-							        <div class="tab-content">
-
-							            <!-- Transactions Tab content -->
-							            <div id="tab1-4" class="tab-pane active box-generic">
-							            	<table class="table table-borderless table-condensed cart_total cash-table">
-								            	<tr>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-inverse" data-bind="click: goQuote"><span><span data-bind="text: lang.lang.quote"></span></span>
-								            		</td>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-inverse" data-bind="click: goSaleOrder"><span><span data-bind="text: lang.lang.sale_order"></span></span>								            			
-								            		</td>
-								            	</tr>
-							            	</table>
-							            </div>
-							            <!-- // Transactions Tab content END -->							           					            
-
-							            <!-- INFO Tab content -->
-							            <div id="tab2-4" class="tab-pane box-generic">
-							            	<div class="row-fluid">
-							            		<div class="accounCetner-textedit">
-									            	<table width="100%">
-														<tr>
-															<td width="40%"><span data-bind="text: lang.lang.customer_type"></span></td>
-															<td width="60%">
-																<span class="strong" data-bind="text: obj.contact_type"></span>
-															</td>
-														</tr>
-														<tr>
-															<td><span data-bind="text: lang.lang.number"></span></td>
-															<td>
-																<span class="strong" data-bind="text: obj.abbr"></span>
-																<span class="strong" data-bind="text: obj.number"></span>
-															</td>
-														</tr>
-														<tr>
-															<td><span data-bind="text: lang.lang.name"></span></td>
-															<td>
-																<span data-bind="text: obj.name"></span>
-															</td>
-														</tr>
-														<tr>
-															<td><span data-bind="text: lang.lang.billed_address"></span></td>
-															<td>
-																<span data-bind="text: obj.address"></span>
-															</td>
-														</tr>								
-														<tr>
-															<td><span data-bind="text: lang.lang.phone"></span></td>
-															<td>
-																<span data-bind="text: obj.phone"></span>
-															</td>
-														</tr>
-														<tr>
-															<td><span data-bind="text: lang.lang.currency"></span></td>
-															<td>										
-																<span data-bind="text: currencyCode"></span>
-															</td>
-														</tr>
-													</table>
-
-													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
-												</div>
-											</div>
-							            </div>
-							            <!-- // INFO Tab content END -->
-
-							            <!-- NOTE Tab content -->
-							            <div id="tab3-4" class="tab-pane">
-
-										    <div>
-												<input type="text" class="k-textbox" 
-														data-bind="value: note, events:{change:saveNoteEnter}" 
-														placeholder="Add memo ..." 
-														style="width: 366px;" />
-												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
-											</div>
-
-											<br>
-
-											<div class="table table-condensed" style="height: 100;"						 
-												 data-role="grid"
-												 data-auto-bind="false"						 
-												 data-bind="source: noteDS"
-												 data-row-template="saleCenter-note-tmpl"
-												 data-columns="[{title: ''}]"
-												 data-height="100"						 
-												 data-scrollable="{virtual: true}"></div>
-											
-							            </div>
-							            <!-- // NOTE Tab content END -->
-
-							            <!-- Attach Tab content -->
-								        <div id="tab4-4" class="tab-pane">							            	
-								            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
-								            <input id="files" name="files"
-							                   type="file"
-							                   data-role="upload"
-							                   data-show-file-list="false"
-							                   data-bind="events: { 
-					                   				select: onSelect
-							                   }">
-
-								            <table class="table table-bordered">
-										        <thead>
-										            <tr>			                
-										                <th><span data-bind="text: lang.lang.file_name"></span></th>
-										                <th><span data-bind="text: lang.lang.description"></span></th>
-										                <th><span data-bind="text: lang.lang.date"></span></th>
-										                <th style="width: 13%;"></th>                			                
-										            </tr> 
-										        </thead>
-										        <tbody data-role="listview" 
-										        		data-template="attachment-list-tmpl" 
-										        		data-auto-bind="false"
-										        		data-bind="source: attachmentDS"></tbody>			        
-										    </table>
-
-										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-
-								        </div>
-								        <!-- // Attach Tab content END -->							            								            
-
-							        </div>
-							    </div>
-							</div>
-						</div>
-
-						<div class="span6" style="margin-bottom: 10px;">
-							<div class="row-fluid">
-								<div class="span6">
-									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadQuote">
-										<span class="glyphicons shopping_cart"><i></i></span>
-										<span class="txt"><span data-bind="text: lang.lang.quote"></span><span data-bind="text: quote" style="font-size:medium;"></span></span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-								<div class="span6">
-									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadSO">
-										<span class="glyphicons cart_in"><i></i></span>
-										<span class="txt"><span data-bind="text: lang.lang.sale_order"></span><span data-bind="text: so" style="font-size:medium;"></span></span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>										
-						</div>
-					</div>
-					
-					<div>
-						<input data-role="dropdownlist"
-							   class="sorter"                  
-					           data-value-primitive="true"
-					           data-text-field="text"
-					           data-value-field="value"
-					           data-bind="value: sorter,
-					                      source: sortList,                              
-					                      events: { change: sorterChanges }" />
-
-						<input data-role="datepicker"
-							   class="sdate"
-							   data-format="dd-MM-yyyy"
-					           data-bind="value: sdate,
-					           			  max: edate"
-					           placeholder="From ..." >
-
-					    <input data-role="datepicker"
-					    	   class="edate"
-					    	   data-format="dd-MM-yyyy"
-					           data-bind="value: edate,
-					                      min: sdate"
-					           placeholder="To ..." >
-
-					  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
-					</div>
-
-					<table class="table table-bordered table-striped table-white">
-						<thead>
-							<tr>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.type"></span></th>								
-								<th><span data-bind="text: lang.lang.reference_no"></span></th>
-								<th><span data-bind="text: lang.lang.amount"></span></th>
-								<th><span data-bind="text: lang.lang.status"></span></th>
-							</tr>
-						</thead>	            		
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"	            					            					            					            			
-				                data-template="saleCenter-transaction-tmpl"
-				                data-bind="source: transactionDS" >
-				        </tbody>
-	            	</table>
-
-	            	<div id="pager" class="k-pager-wrap"
-				    	 data-auto-bind="false"
-			             data-role="pager" data-bind="source: transactionDS"></div>	            	
-				</div>
-			</div>			
-		</div>
-	</div>		
-</script>
-<script id="saleCenter-transaction-tmpl" type="text/x-kendo-tmpl">
-    <tr>    	  	
-    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=type#</td>
-        <!-- Reference -->
-        <td>
-        	#if(type=="Customer_Deposit" && amount<0){#			
-				<a href="\#/#=reference[0].type.toLowerCase()#/#=reference[0].id#"><i></i> #=number#</a>			
-			#}else{#
-				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
-			#}#        	
-        </td>
-        <!-- Amount -->
-    	<td class="right">
-    		#if(type=="GDN"){#
-    			#=kendo.toString(amount, "n0")#
-    		#}else{#
-    			#=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
-    		#}#
-    	</td>
-    	<!-- Status -->
-    	<td align="center">
-    		#if(type==="Quote"){#       		
-				#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Used        			
-        		#}#
-        	#}else if(type==="Sale_Order"){#
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Done        			
-        		#}#
-        	#}else{#
-
-        	#}#        				
-		</td> 	
-    </tr>
-</script>
-<script id="saleCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
-	<tr data-bind="click: selectedRow">
-		<td>
-			<div class="media-body strong">				
-				<span>#=abbr##=number#</span>
-				<span>#=name#</span>
-			</div>
-		</td>
-	</tr>
-</script>
-<script id="saleCenter-note-tmpl" type="text/x-kendo-template">
-	<tr>
-		<td>			
-			<blockquote>
-				<small class="author">
-					<span class="strong">#=creator#</span> :
-					<cite>#=kendo.toString(new Date(noted_date), "g")#</cite>
-				</small>					
-				<p>#=note#</p>
-			</blockquote>				
-		</td>
-	</tr>	
-</script>
-
-<script id="sale" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">
-					<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-
-					<h2>Sale</h2>
-					<br>
-
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-							
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons search" href="#tab-1" data-toggle="tab"><i></i>Search</a></li>
-										<li><a class="glyphicons cargo" href="#tab-2" data-toggle="tab"><i></i>Category</a></li>
-										
-									</ul>
-									<div style="float: right;">
-										<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
-											<a style="margin-top: 4px; line-height: 17px;" class="glyphicons shopping_cart" href="#/quote" >
-												<i></i><span class="badge fix badge-primary" style="position: absolute; left: -8px; top: -9px; background: red;" data-bind="text: quoteLineDS.total()"></span>
-												Quote												
-											</a>
-										</span>
-										<sapn style="position: relative; height: 35px; line-height: 35px; padding-left: 15px; float: left; display: block; border-left: 1px solid #efefef;">
-											<a style="margin-top: 4px; line-height: 17px;" class="glyphicons cart_in" href="#/sale_order" >
-												<i></i><span class="badge fix badge-primary" style="position: absolute; left: -12px; top: -9px; background: red;" data-bind="text: soLineDS.total()"></span>
-												Sale Order
-											</a>
-										</span>
-									</div>
-
-									
-								</div>
-								<!-- // Tabs Heading END -->								
-								<div class="widget-body">
-									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
-											<input type="text" class="span2 search-query" placeholder="Search" id="search-placeholder" data-bind="value: searchText" style="background-color: #fff; color: #333; border-color: #ddd; height: 33px; width: 192px;">
-											<button type="submit" class="btn btn-inverse" data-bind="click: search"><i class="icon-search"></i></button>					
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-
-									    	<ul data-role="listview"
-									    		 data-auto-bind="false"
-									    		 data-selectable="true"
-								                 data-template="sale-category-template"
-								                 data-bind="source: categoryDS,"
-								                 style="overflow: auto; padding-top: 15px; padding-left: 15px; padding-bottom: 15px;"></ul>
-									    	
-									    </div>
-									   								        							       
-								    </div>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->						
-					</div>
-
-					<div class="row-fluid" id="main-section" style="overflow: hidden;margin-top: 15px;">
-						<ul data-role="listview"
-							 data-auto-bind="false"
-			                 data-template="sale-template"
-			                 data-bind="source: dataSource"
-			                 style="height: 300px; "></ul>
-			        </div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-</script>
-<script id="sale-category-template" type="text/x-kendo-tmpl">
-    <li class="btn btn-primary" 
-    	data-bind="text: name, click: selectedType"
-    	style="width: auto !important; text-align: center; padding:5px 10px !important; margin-bottom: 10px;">
-    </li>
-</script>
-<script id="sale-template" type="text/x-kendo-tmpl">	
-	<li class="products span2" aria-selected="false">
-	    <a class="view-details">
-	        <img class="main-image" src="#= image_url!==null ? image_url : banhji.no_image #" alt="#=name#" title="#=name#">
-	        <strong>#=name#</strong>
-	        <span class="price"><span>$</span><span data-bind="text: price"></span></span>
-	    </a>
-
-	    <div class="add-to-cart row-fluid"> 
-	    	<span class="span5" data-bind="click: addQuote" style="background: \#ddd; padding: 5px; cursor: pointer; width: 60px; "> Quote </span>
-	    	<span class="span6" data-bind="click: addSO" style="background: \#ddd; padding: 5px; margin-left: 5px; cursor: pointer; width: 58px;"> Order </span>
-	    </div>
-	</li>
-</script>
-<script id="saleDetail" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">
-					<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-
-					<h2>Sale Detail</h2>
-
-					<div class="row-fluid sale-detail">
-						<div id="details-top-image"></div>
-						<div id="details">
-			                <a id="navigate-prev" href=""></a>
-			                	<div id="detail-info">
-			                		<img class="main-image" src="<?php echo base_url();?>assets/chirashi-sushi.jpg" alt="Selected Product" title="Selected Product" >
-			                		<div id="description">
-										<h1>Chirashi sushi</h1>
-										<p>Sushi bar variety with sushi rice.</p>
-										<div id="details-total">
-											<p id="price-quantity" data-bind="text: price">$21.00</p>
-											<button class="buy" data-bind="click: addToCart">Add to cart</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div id="nutrition-info">
-								<h2>Nutritional Information</h2>
-								<dl>
-									<dt>Protein</dt>
-									<dd >2.3138</dd>
-									<dt>Fat (total)</dt>
-									<dd >0.6041</dd>
-									<dt>Carbohydrate</dt>
-									<dd >0.6041</dd>
-									<dt>Energy (kJ)</dt>
-									<dd >7.5314</dd>
-									<dt>Energy (kcal)</dt>
-									<dd >1.8000</dd>
-									<dt>Sugar</dt>
-									<dd >0.3114</dd>
-								</dl>
-							</div><a data-bind="" id="navigate-next" href="#/menu/3"></a>
-						</div>
-					</div>
-					<div id="details-bottom-image"></div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-</script>
-
-<script id="saleReportCenter" type="text/x-kendo-template">
-	<div class="row-fluid customer-report-center">
-		<div class="span7">
-			<div class="row-fluid sale-report">				
-				<h2>SALE MANAGEMENT REPORTS</h2>
-				<p>
-					The following reports provide summary and detailed reports in 
-					different ways to help analyze your revenue performance.
-				</p>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">						
-						<tr>
-							<td width="50%">
-								<h3><a href="#/quotation_list">Quotation List</a></h3>
-							</td>
-							<td width="50%">
-								<h3><a href="#/sale_order_list">Sale Order List</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-								<h3><a href="#/sale_job_engagement">Sale by Job/Engagement</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/customer_list">Customer List</a></h3>
-							</td>
-						</tr>
-						<tr>
-							<td >
-							</td>
-							<td >
-								<p>
-									List of all active customers
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<h3><a href="#/sale_inventory_position_summary">Inventory Position Summary</a></h3>
-							</td>
-							<td>
-								
-							</td>
-
-						</tr>
-						<tr>
-							<td>
-								<p>
-									Summarizes each inventory balance by quantity on hand, on purchase order and sale order. In addition, it also includes average cost and price.
-								</p>
-							</td>
-							<td>
-								
-							</td>
-
-						</tr>
-					</table>
-				</div>
-			</div>
-
-			
-			<div class="row-fluid recevable-report">
-				<h2>OTHER REPORTS/ LISTS</h2>
-				<div class="row-fluid">
-					<table class="table table-borderless table-condensed">
-						<tr>
-							<td style="width: 48%; padding-right: 8px !important;">
-								<h3><a href="#/customer_recurring">Recurring Customer Template List</a></h3>
-							</td>
-							<td >
-								<h3><a href="#/customer_setting">Payment Method & Term List</a></h3>								
-							</td>						
-						</tr>
-						<tr>
-							<td style="width: 48%; padding-right: 8px !important;">
-								<p></p>								
-							</td>
-							<td>
-								<p>
-									List the types of payments and the term that determine due date for payment from customers.
-								</p>
-							</td>
-							
-						</tr>
-						<tr >
-							<td></td>														
-						</tr>
-
-					</table>
-				</div>
-			</div>
-		</div>
-		<div class="span5">
-			<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-			<br>
-			<br>
-			<div class="report-chart">
-				<div class="widget-body alert alert-primary sale-overview">
-					<h2>SALE OVERVIEW</h2>
-					<div align="center" class="text-large strong" data-bind="text: sale"></div>
-					<table width="100%">
-						<tr align="center">
-							<td>										
-								<span data-bind="text: sale_customer"></span>
-								<br>
-								<span>Customer</span>
-							</td>
-							<td>
-								<span data-bind="text: sale_product"></span>
-								<br>
-								<span>Product</span>
-							</td>
-							<td>
-								<span data-bind="text: order"></span>
-								<br>
-								<span>Order</span>
-							</td>
-							<td >
-								<span data-bind="text: sale_order"></span>
-								<br>
-								<span>Sale Order</span>
-							</td>
-
-						</tr>
-					</table>
-				</div>
-				<!-- Graph -->
-				<div class="home-chart">
-					<div data-role="chart"
-		                 data-legend="{ position: 'top' }"
-		                 data-series-defaults="{ type: 'column' }"
-		                 data-tooltip='{
-		                    visible: true,
-		                    format: "{0}%",
-		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-		                 }'                 
-		                 data-series="[
-		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
-		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
-		                             ]"	                             
-		                 data-bind="source: graphDS"
-		                 style="height: 250px;" ></div>
-	            <!-- End Graph -->
-	            </div>
-			</div>
-			<div class="report-chart">
-				<div class="widget-body receivable-overview" style="background-color: LightGray">
-					<h2>RECEIVABLES MANAGEMENT</h2>
-					<div align="center" class="text-large strong" data-bind="text: ar"></div>
-					<table width="100%">
-						<tr align="center">
-							<td>										
-								<span data-bind="text: ar_open"></span>
-								<br>
-								<span>Open</span>
-							</td>
-							<td>										
-								<span data-bind="text: ar_customer"></span>
-								<br>
-								<span>Customer</span>
-							</td>
-							<td>
-								<span data-bind="text: ar_overdue"></span>
-								<br>
-								<span>Overdue</span>
-							</td>
-							<td>
-								<span data-bind="text: collection_day"></span> days
-								<br>
-								<span>Collection Days</span>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<!-- Graph -->
-				<div class="home-chart">
-					<div data-role="chart"
-		                 data-legend="{ position: 'top' }"
-		                 data-series-defaults="{ type: 'column' }"
-		                 data-tooltip='{
-		                    visible: true,
-		                    format: "{0}%",
-		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-		                 }'                 
-		                 data-series="[
-		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
-		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
-		                             ]"	                             
-		                 data-bind="source: graphDS"
-		                 style="height: 250px;" ></div>
-	            <!-- End Graph -->
-            </div>
-			</div>
-		</div>
-	</div>
-</script>
-<script id="saleInventoryPositionSummary" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">		
-			    	<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-							
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->								
-								<div class="widget-body">
-									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
-											<input id="sorter" name="sorter"
-									    	   data-role="dropdownlist"
-									           data-value-primitive="true"
-									           data-text-field="text"
-									           data-value-field="value"
-									           data-bind="value: sorter,
-									                      source: sortList,
-									                      events: {change: dateChange}" />
-
-									        <input id="sdate" name="sdate"
-									        	   data-role="datepicker"
-										           data-bind="value: startDate, events: {change: dateMax}"
-										           placeholder="From ..." />
-
-									       	<input id="edate" name="edate"
-									       		   data-role="datepicker"
-										           data-bind="value: endDate, events: {change: dateMin}"
-										           placeholder="To ..." />
-
-										  	 <button type="button" data-role="button" data-bind="click: inventoryPositionSummary.search"><i class="icon-search"></i></button>							
-									    </div>
-								    </div>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->						
-					</div>
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: company.name"></h3>
-							<h2>Inventory Position Summary</h2>
-							<p><span data-bind="text: startDate"></span> to <span data-bind="text: endDate"></p>
-						</div>
-
-						<div class="row-fluid" style="width: 80%; margin: 0 auto;">
-							<div class="span5">
-								<div class="total-customer">
-									<p>Product Items</p>
-									<span data-bind="text: count"></span>
-								</div>
-							</div>
-							<div class="span7">
-								<div class="total-customer">
-									<p>Product Items on hand</p>
-									<span data-bind="text: onHand"></span>
-								</div>
-							</div>
-						</div>
-
-						<table class="table table-borderless table-condensed " style="width: 80%; margin: 0 auto;">
-							<thead>
-								<tr>
-									<th><span>Item Name</span></th>
-									<th class="center"><span>QOH</span></th>
-									<th style="text-align: center;"><span>On Purchase Order</span></th>
-									<th style="text-align: center;"><span>On Sale Order</span></th>
-								
-								</tr>
-							</thead>
-		            		<tbody data-role="listview"
-		            				data-auto-bind="false"
-					                data-template="sale-inventory-position-summary-row-template"
-					                data-bind="source: inventoryPositionSummary.dataSource" >
-					        </tbody>
-		            	</table>
-		            </div>
-				</div>		
-			</div>
-		</div>
-	</div>
-</script>
-<script id="sale-inventory-position-summary-row-template" type="text/x-kendo-tmpl">
-	<tr>
-	    <td>#=item#</td>
-	    <td align="center">#=onHand#</td>
-	    <td align="center">#=po#</td>
-	    <td align="center">#=so#</td>
-	</tr>
 </script>
 
 
@@ -69755,6 +69858,695 @@
 	});
 
 
+	
+	/*************************
+	*   Sale Section   *
+	**************************/
+	banhji.saleDashboard = kendo.observable({
+		lang 				: langVM,
+		summaryDS 			: dataStore(apiUrl + "dashboards/customer_dashboard_summary"),
+		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
+		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
+		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),		
+		graphDS  			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "dashboards/monthly_sale",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			sort: {
+                field: "month",
+                dir: "asc"
+            },								
+			batch: true,			
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 100
+		}),
+		quote 				: 0,
+		quote_customer 		: 0,
+		quote_open 			: 0,
+		so 					: 0,
+		so_customer 		: 0,
+		so_open 			: 0,
+		product 			: 0,
+		product_quote 		: 0,
+		product_so 			: 0,
+		pageLoad 			: function(){
+			var self = this, today = new Date(),
+			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+
+			this.graphDS.read();
+
+			this.summaryDS.query({
+				filter: [
+					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
+				],								
+				page: 1,
+				pageSize: 5
+			}).then(function(){
+				var view = self.summaryDS.view();
+				
+				self.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
+				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
+				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
+
+				self.set("order", kendo.toString(view[0].order, "n0"));
+				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.locale=="km-KH"?"c0":"c", banhji.locale));				
+				self.set("order_open", kendo.toString(view[0].order_open, "n0"));
+
+				self.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
+				self.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
+				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
+				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
+			});
+
+			this.topCustomerDS.query({
+				filter: [
+					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
+				],								
+				page: 1,
+				pageSize: 5
+			});
+
+			this.topARDS.query({
+				filter: [
+					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
+				],							
+				page: 1,
+				pageSize: 5
+			});
+
+			this.topProductDS.query({
+				filter: [
+					{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
+					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:  kendo.toString(today, "yyyy-MM-dd") }
+				],							
+				page: 1,
+				pageSize: 5
+			});										
+		}
+	});
+	banhji.saleCenter = kendo.observable({
+		lang 				: langVM,
+		transactionDS  		: dataStore(apiUrl + 'transactions'),
+		contactDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
+			sort:{ field:"number", dir:"asc" },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
+		contactTypeDS  		: banhji.source.customerTypeDS,
+		noteDS 				: dataStore(apiUrl + 'notes'),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		summaryDS 			: dataStore(apiUrl + "transactions"),
+		sortList			: banhji.source.sortList,
+		sorter 				: "all",
+		sdate 				: "",
+		edate 				: "",
+		obj 				: {id:0},
+		note 				: "",
+		searchText 			: "",
+		contact_type_id 	: null,
+		currency_id 		: 0,
+		quote 				: 0,
+		so 					: 0,
+		currencyCode 		: "",
+		user_id 			: banhji.source.user_id,
+		pageLoad 			: function(id){
+			if(id){
+				this.loadObj(id);
+			}
+
+			//Refresh
+			if(this.contactDS.total()>0){
+				this.contactDS.fetch();
+				this.searchTransaction();
+				this.loadSummary();
+			}
+		},
+		sorterChanges 		: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		setCurrencyCode 	: function(){
+			var code = "", obj = this.get("obj");
+
+			$.each(banhji.source.currencyRateDS.data(), function(index, value){				
+				if(value.locale == obj.locale){
+					code = value.currency[0].code;					
+
+					return false;					
+				}
+			});
+
+			this.set("currencyCode", code);
+		},
+		loadObj 			: function(id){
+			var self = this;
+
+			this.contactDS.query({
+				filter: { field:"id", value:id},
+				page:1,
+				pageSize:100
+			}).then(function(){
+				var view = self.contactDS.view();
+
+				if(view.length>0){
+					self.set("obj", view[0]);
+					self.loadData();
+				}
+			});
+		},
+		loadData 			: function(){
+			var obj = this.get("obj");
+
+			this.searchTransaction();
+			this.loadSummary(obj.id);
+			this.setCurrencyCode();
+
+			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
+			this.noteDS.query({
+				filter: { field:"contact_id", value: obj.id },
+				sort: { field:"noted_date", dir:"desc" },
+				page: 1,
+				pageSize: 10
+			});
+		},
+		//Upload
+		onSelect 			: function(e){			
+	        // Array with information about the uploaded files
+	        var self = this, 
+	        files = e.files,
+	        obj = this.get("obj");			
+			
+			if(obj.id>0){
+		        // Check the extension of each file and abort the upload if it is not .jpg
+		        $.each(files, function(index, value){
+		            if (value.extension.toLowerCase() === ".jpg"
+		            	|| value.extension.toLowerCase() === ".jpeg"
+		            	|| value.extension.toLowerCase() === ".tiff"
+		            	|| value.extension.toLowerCase() === ".png" 
+		            	|| value.extension.toLowerCase() === ".gif"
+		            	|| value.extension.toLowerCase() === ".pdf"){
+
+		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+
+		            	self.attachmentDS.add({
+		            		user_id 		: self.get("user_id"),
+		            		contact_id 		: obj.id,
+		            		type 			: "Contact",
+		            		name 			: value.name,
+		            		description 	: "",
+		            		key 			: key,
+		            		url 			: banhji.s3 + key,
+		            		size 			: value.size,
+		            		created_at 		: new Date(),
+
+		            		file 			: value.rawFile
+		            	});	            			            		            
+		            }else{
+		            	alert("This type of file is not allowed to attach.");
+		            }
+		        });
+	    	}else{
+	    		alert("Please select a customer!");
+	    	}
+	    },
+	    removeFile 			: function(e){
+	    	var data = e.data;
+
+	    	if (confirm(banhji.source.confirmMessage)) {
+	    		this.attachmentDS.remove(data);
+	    		this.attachmentDS.sync();
+	    	}	    	
+	    },
+	    uploadFile 			: function(){
+	    	$.each(this.attachmentDS.data(), function(index, value){	    		
+		    	if(!value.id){
+			    	var params = { 
+		            	Body: value.file, 
+		            	Key: value.key 
+		            };
+		            bucket.upload(params, function (err, data) {		                
+	                	// console.log(err, data);
+	                	// var url = data.Location;                
+	            	});
+            	}	            
+            });
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+            	//Delete File
+            	if(e.type=="destroy"){
+	            	if(saved==false && e.response){
+	            		saved = true;
+	            	
+	            		var response = e.response.results;
+	            		$.each(response, function(index, value){            			
+		            		var params = {
+							  	//Bucket: 'STRING_VALUE', /* required */
+							 	Delete: { /* required */
+								    Objects: [ /* required */
+								      	{
+									        Key: value.data.key /* required */
+								      	}
+								      /* more items */
+								    ]
+							  	}
+							};
+							bucket.deleteObjects(params, function(err, data) {
+							  	//console.log(err, data);
+							});
+						});
+	            	}
+            	}
+            });
+	    },
+	    //Summary
+		loadContact 		: function(id){
+			var self = this;
+			
+			this.contactDS.query({
+			  	filter:[
+			  		{ field:"id", value:id }
+			  	],
+			  	page: 1,
+			  	pageSize: 50
+			}).then(function(e) {
+			    var view = self.contactDS.data();
+			    
+			    if(view.length>0){
+			    	self.set("obj", view[0]);
+			    	self.loadData();
+			    }
+			});
+		},
+		loadSummary 		: function(id){
+			var self = this, obj = this.get("obj");
+
+			this.summaryDS.query({
+			  	filter: [
+			  		{ field:"contact_id", value: obj.id },
+			  		{ field:"type", operator:"where_in", value: ["Quote","Sale_Order"] },
+			  		{ field:"status", value: 0 }
+			  	],
+			  	sort: { field: "issued_date", dir: "desc" },
+			  	page: 1,
+			  	pageSize: 1000
+			}).then(function(){
+				var view = self.summaryDS.view(),
+				quote = 0, so = 0;
+
+				$.each(view, function(index, value){
+					if(value.type=="Quote"){
+						quote++;
+					}else{
+						so++;
+					}									
+				});
+				
+				self.set("quote", kendo.toString(quote, "n0"));
+				self.set("so", kendo.toString(so, "n0"));
+			});
+		},
+		loadQuote 			: function(){
+			var obj = this.get("obj");
+
+			this.transactionDS.query({
+			  	filter: [
+			  		{ field:"contact_id", value: obj.id },
+			  		{ field:"type", value:"Quote" },
+			  		{ field:"status", value: 0 }
+			  	],
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
+			  	page: 1,
+			  	pageSize: 10
+			});
+		},
+		loadSO 				: function(){
+			var obj = this.get("obj");
+
+			this.transactionDS.query({
+			  	filter: [
+			  		{ field:"contact_id", value: obj.id },
+			  		{ field:"type", value:"Sale_Order" }
+			  	],
+			  	sort: [
+			  		{ field: "issued_date", dir: "desc" },
+			  		{ field: "id", dir: "desc" }
+			  	],
+			  	page: 1,
+			  	pageSize: 10
+			});
+		},
+		selectedRow			: function(e){
+			var data = e.data;
+			
+			this.set("obj", data);
+			this.loadData();
+		},
+		//Search
+		enterSearch 		: function(e){
+			e.preventDefault();
+
+			this.search();
+		},
+		search 				: function(){
+			var self = this, 
+			para = [],
+      		searchText = this.get("searchText"),
+      		contact_type_id = this.get("contact_type_id");
+      		
+      		if(searchText){
+      			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
+
+      			para.push(
+      				{ field: "abbr", value: textParts[0] },
+      				{ field: "number", value: textParts[1] },
+					{ field: "name", operator: "or_like", value: searchText }
+      			);
+      		}
+
+      		if(contact_type_id){
+      			para.push({ field: "contact_type_id", value: contact_type_id });
+      		}else{
+      			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 1 });
+      		}
+
+      		this.contactDS.filter(para);
+			
+			//Clear search filters
+      		self.set("searchText", "");
+      		self.set("contact_type_id", 0);
+		},
+		searchTransaction	: function(){
+			var self = this,
+				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
+        		para = [], obj = this.get("obj");
+
+        	if(obj.id>0){
+        		para.push({ field:"contact_id", value: obj.id });
+        	
+	        	//Dates
+	        	if(start && end){
+	            	para.push({ field:"issued_date >=", value: start });
+	            	para.push({ field:"issued_date <=", value: end });
+	            }else if(start){
+	            	para.push({ field:"issued_date", value: start });
+	            }else if(end){
+	            	para.push({ field:"issued_date <=", value: end });
+	            }else{
+	            	
+	            }
+
+	            para.push({ field:"type", operator:"where_in", value: ["Quote","Sale_Order"] });
+
+	            this.transactionDS.query({
+	            	filter: para,
+	            	sort: [
+				  		{ field: "issued_date", dir: "desc" },
+				  		{ field: "id", dir: "desc" }
+				  	],
+	            	page: 1,
+	            	pageSize: 10
+	            });
+	        }            
+		},
+		//Links	
+		goEdit 		 		: function(){
+			var obj = this.get("obj");
+
+			banhji.router.navigate('/customer/'+obj.id);
+		},
+		goQuote				: function(){
+			var obj = this.get("obj");
+
+			banhji.router.navigate('/quote');
+			banhji.quote.loadContact(obj.id);
+		},
+		goDeposit			: function(){
+			var obj = this.get("obj");
+
+			banhji.router.navigate('/customer_deposit');
+			banhji.customerDeposit.loadContact(obj.id);
+		},
+		goSaleOrder			: function(){
+			var obj = this.get("obj");
+
+			banhji.router.navigate('/sale_order');
+			banhji.saleOrder.loadContact(obj.id);
+		},
+		//Note
+		saveNoteEnter 		: function(e){
+			e.preventDefault();
+			this.saveNote();
+		},		
+		saveNote 			: function(){
+			var obj = this.get("obj");
+
+			if(obj.id>0 && this.get("note")!==""){
+				this.noteDS.insert(0, {
+					contact_id 	: obj.id,
+					note 		: this.get("note"),
+					noted_date	: new Date(),
+					created_by 	: this.get("user_id"),
+
+					creator 	: ""
+				});
+
+				this.noteDS.sync();
+				this.set("note", "");					
+			}else{
+				alert("Please select a customer and Memo is required");
+			}
+		}
+	});
+	banhji.sale = kendo.observable({
+		lang 				: langVM,
+		dataSource  		: dataStore(apiUrl + 'items'),
+		quoteLineDS  		: banhji.quote.lineDS,
+		soLineDS  			: banhji.saleOrder.lineDS,
+		categoryDS 			: dataStore(apiUrl + 'categories'),
+		obj 				: null,
+		searchText 			: "",
+		user_id 			: banhji.source.user_id,
+		pageLoad 			: function(){			
+			if(this.categoryDS.total()==0){
+				this.categoryDS.filter({ field:"item_type_id", operator:"where_in", value:[1,4] });
+				this.search();
+			}
+		},
+		search 				: function(){
+			var para = [], searchText = this.get("searchText");
+
+			if(searchText){
+      			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
+
+      			para.push(
+      				{ field: "abbr", value: textParts[0] },
+      				{ field: "number", value: textParts[1] },
+					{ field: "name", operator: "or_like", value: searchText }
+      			);
+      		}
+
+			para.push({ field:"item_type_id", operator:"where_in", value:[1,4] });
+
+			this.dataSource.query({
+				filter: para,
+				page:1,
+				pageSize:100
+			});
+		},
+		selectedType 		: function(e){
+			var data = e.data;
+
+			this.dataSource.query({
+				filter: { field:"category_id", value:data.id },
+				page:1,
+				pageSize:100
+			});
+		},
+		addQuote 			: function(e){
+			var data = e.data, price = 0;
+
+			if(data.item_prices.length>0){
+				price = data.item_prices[0].price;
+			}
+
+			var isExisting = false;
+			$.each(banhji.quote.lineDS.data(), function(index, value){
+				if(value.item_id==data.id){
+					isExisting = true;
+					value.set("quantity", value.quantity+1);
+
+					return false;
+				}
+			});
+
+			if(isExisting==false){
+				banhji.quote.lineDS.add({
+					transaction_id 		: 0,
+					tax_item_id 		: "",
+					item_id 			: data.id,				
+					measurement_id 		: 0,				
+					description 		: data.sale_description,				
+					quantity 	 		: 1,
+					price 				: price,												
+					amount 				: price,
+					rate				: 1,
+					locale				: banhji.locale,
+					movement 			: -1,
+
+					item_prices 		: data.item_prices
+				});
+			}			
+		},
+		addSO 				: function(e){
+			var data = e.data, price = 0;
+
+			if(data.item_prices.length>0){
+				price = data.item_prices[0].price;
+			}
+
+			var isExisting = false;
+			$.each(banhji.quote.lineDS.data(), function(index, value){
+				if(value.item_id==data.id){
+					isExisting = true;
+					value.set("quantity", value.quantity+1);
+
+					return false;
+				}
+			});
+
+			if(isExisting==false){
+				banhji.saleOrder.lineDS.add({
+					transaction_id 		: 0,
+					tax_item_id 		: "",
+					item_id 			: data.id,				
+					measurement_id 		: 0,				
+					description 		: data.sale_description,				
+					quantity 	 		: 1,
+					price 				: price,												
+					amount 				: price,
+					rate				: 1,
+					locale				: banhji.locale,
+					movement 			: -1,
+
+					item_prices 		: data.item_prices
+				});
+			}			
+		}
+	});
+	banhji.saleRecurring = kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "transactions"),
+		contactDS  			: banhji.source.customerDS,
+		contact_id 			: "",
+		pageLoad 			: function(){
+			if(this.dataSource.total>0){
+				this.search();
+			}
+		},
+		search 				: function(){
+			var contact_id = this.get("contact_id");
+
+			if(contact_id){
+				this.dataSource.filter([
+					{ field:"type", operator:"where_in", value:["Quote","Sale_Order"] },
+					{ field:"contact_id", value: contact_id },
+					{ field:"is_recurring", value: 1 }
+				]);
+			}
+
+			this.set("contact_id", "");
+		}
+	});
+
+
+
 	/*************************
 	*	Cash Section   *
 	**************************/
@@ -77297,669 +78089,6 @@
             this.dataSource.filter(para);
 		}
     });
-
-
-    /*************************
-	*   Sale Section   *
-	**************************/
-	banhji.saleDashboard = kendo.observable({
-		lang 				: langVM,
-		summaryDS 			: dataStore(apiUrl + "dashboards/customer_dashboard_summary"),
-		topCustomerDS 		: dataStore(apiUrl + "dashboards/top_customer"),
-		topARDS 			: dataStore(apiUrl + "dashboards/top_ar"),
-		topProductDS 		: dataStore(apiUrl + "dashboards/top_sale_product"),		
-		graphDS  			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "dashboards/monthly_sale",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			sort: {
-                field: "month",
-                dir: "asc"
-            },								
-			batch: true,			
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			pageSize: 100
-		}),
-		quote 				: 0,
-		quote_customer 		: 0,
-		quote_open 			: 0,
-		so 					: 0,
-		so_customer 		: 0,
-		so_open 			: 0,
-		product 			: 0,
-		product_quote 		: 0,
-		product_so 			: 0,
-		pageLoad 			: function(){
-			var self = this, today = new Date(),
-			firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-
-			this.graphDS.read();
-
-			this.summaryDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],								
-				page: 1,
-				pageSize: 5
-			}).then(function(){
-				var view = self.summaryDS.view();
-				
-				self.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
-				self.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
-				self.set("sale_order", kendo.toString(view[0].sale_order, "n0"));
-
-				self.set("order", kendo.toString(view[0].order, "n0"));
-				self.set("order_avg", kendo.toString(view[0].order_avg, banhji.locale=="km-KH"?"c0":"c", banhji.locale));				
-				self.set("order_open", kendo.toString(view[0].order_open, "n0"));
-
-				self.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c", banhji.locale));
-				self.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
-				self.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
-				self.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
-			});
-
-			this.topCustomerDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],								
-				page: 1,
-				pageSize: 5
-			});
-
-			this.topARDS.query({
-				filter: [
-					{ field:"issued_date >=", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],							
-				page: 1,
-				pageSize: 5
-			});
-
-			this.topProductDS.query({
-				filter: [
-					{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(firstDayOfYear, "yyyy-MM-dd") },
-					{ field:"issued_date <=", operator:"where_related", model:"transaction", value:  kendo.toString(today, "yyyy-MM-dd") }
-				],							
-				page: 1,
-				pageSize: 5
-			});										
-		}
-	});
-	banhji.saleCenter = kendo.observable({
-		lang 				: langVM,
-		transactionDS  		: dataStore(apiUrl + 'transactions'),
-		contactDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "contacts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
-			sort:{ field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		contactTypeDS  		: banhji.source.customerTypeDS,
-		noteDS 				: dataStore(apiUrl + 'notes'),
-		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		summaryDS 			: dataStore(apiUrl + "transactions"),
-		sortList			: banhji.source.sortList,
-		sorter 				: "all",
-		sdate 				: "",
-		edate 				: "",
-		obj 				: {id:0},
-		note 				: "",
-		searchText 			: "",
-		contact_type_id 	: null,
-		currency_id 		: 0,
-		quote 				: 0,
-		so 					: 0,
-		currencyCode 		: "",
-		user_id 			: banhji.source.user_id,
-		pageLoad 			: function(id){
-			if(id){
-				this.loadObj(id);
-			}
-
-			//Refresh
-			if(this.contactDS.total()>0){
-				this.contactDS.fetch();
-				this.searchTransaction();
-				this.loadSummary();
-			}
-		},
-		sorterChanges 		: function(){
-	        var today = new Date(),
-        	sdate = "",
-        	edate = "",
-        	sorter = this.get("sorter");
-        	
-			switch(sorter){
-				case "today":								
-					this.set("sdate", today);
-					this.set("edate", "");
-													  					
-				  	break;
-				case "week":			  	
-					var first = today.getDate() - today.getDay(),
-					last = first + 6;
-
-					this.set("sdate", new Date(today.setDate(first)));
-					this.set("edate", new Date(today.setDate(last)));						
-					
-				  	break;
-				case "month":							  	
-					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
-					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
-
-				  	break;
-				case "year":				
-				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
-				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
-
-				  	break;
-				default:
-					this.set("sdate", "");
-				  	this.set("edate", "");									  
-			}
-		},
-		setCurrencyCode 	: function(){
-			var code = "", obj = this.get("obj");
-
-			$.each(banhji.source.currencyRateDS.data(), function(index, value){				
-				if(value.locale == obj.locale){
-					code = value.currency[0].code;					
-
-					return false;					
-				}
-			});
-
-			this.set("currencyCode", code);
-		},
-		loadObj 			: function(id){
-			var self = this;
-
-			this.contactDS.query({
-				filter: { field:"id", value:id},
-				page:1,
-				pageSize:100
-			}).then(function(){
-				var view = self.contactDS.view();
-
-				if(view.length>0){
-					self.set("obj", view[0]);
-					self.loadData();
-				}
-			});
-		},
-		loadData 			: function(){
-			var obj = this.get("obj");
-
-			this.searchTransaction();
-			this.loadSummary(obj.id);
-			this.setCurrencyCode();
-
-			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
-			this.noteDS.query({
-				filter: { field:"contact_id", value: obj.id },
-				sort: { field:"noted_date", dir:"desc" },
-				page: 1,
-				pageSize: 10
-			});
-		},
-		//Upload
-		onSelect 			: function(e){			
-	        // Array with information about the uploaded files
-	        var self = this, 
-	        files = e.files,
-	        obj = this.get("obj");			
-			
-			if(obj.id>0){
-		        // Check the extension of each file and abort the upload if it is not .jpg
-		        $.each(files, function(index, value){
-		            if (value.extension.toLowerCase() === ".jpg"
-		            	|| value.extension.toLowerCase() === ".jpeg"
-		            	|| value.extension.toLowerCase() === ".tiff"
-		            	|| value.extension.toLowerCase() === ".png" 
-		            	|| value.extension.toLowerCase() === ".gif"
-		            	|| value.extension.toLowerCase() === ".pdf"){
-
-		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
-
-		            	self.attachmentDS.add({
-		            		user_id 		: self.get("user_id"),
-		            		contact_id 		: obj.id,
-		            		type 			: "Contact",
-		            		name 			: value.name,
-		            		description 	: "",
-		            		key 			: key,
-		            		url 			: banhji.s3 + key,
-		            		size 			: value.size,
-		            		created_at 		: new Date(),
-
-		            		file 			: value.rawFile
-		            	});	            			            		            
-		            }else{
-		            	alert("This type of file is not allowed to attach.");
-		            }
-		        });
-	    	}else{
-	    		alert("Please select a customer!");
-	    	}
-	    },
-	    removeFile 			: function(e){
-	    	var data = e.data;
-
-	    	if (confirm(banhji.source.confirmMessage)) {
-	    		this.attachmentDS.remove(data);
-	    		this.attachmentDS.sync();
-	    	}	    	
-	    },
-	    uploadFile 			: function(){
-	    	$.each(this.attachmentDS.data(), function(index, value){	    		
-		    	if(!value.id){
-			    	var params = { 
-		            	Body: value.file, 
-		            	Key: value.key 
-		            };
-		            bucket.upload(params, function (err, data) {		                
-	                	// console.log(err, data);
-	                	// var url = data.Location;                
-	            	});
-            	}	            
-            });
-
-            this.attachmentDS.sync();
-            var saved = false;
-            this.attachmentDS.bind("requestEnd", function(e){
-            	//Delete File
-            	if(e.type=="destroy"){
-	            	if(saved==false && e.response){
-	            		saved = true;
-	            	
-	            		var response = e.response.results;
-	            		$.each(response, function(index, value){            			
-		            		var params = {
-							  	//Bucket: 'STRING_VALUE', /* required */
-							 	Delete: { /* required */
-								    Objects: [ /* required */
-								      	{
-									        Key: value.data.key /* required */
-								      	}
-								      /* more items */
-								    ]
-							  	}
-							};
-							bucket.deleteObjects(params, function(err, data) {
-							  	//console.log(err, data);
-							});
-						});
-	            	}
-            	}
-            });
-	    },
-	    //Summary
-		loadContact 		: function(id){
-			var self = this;
-			
-			this.contactDS.query({
-			  	filter:[
-			  		{ field:"id", value:id }
-			  	],
-			  	page: 1,
-			  	pageSize: 50
-			}).then(function(e) {
-			    var view = self.contactDS.data();
-			    
-			    if(view.length>0){
-			    	self.set("obj", view[0]);
-			    	self.loadData();
-			    }
-			});
-		},
-		loadSummary 		: function(id){
-			var self = this, obj = this.get("obj");
-
-			this.summaryDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", operator:"where_in", value: ["Quote","Sale_Order"] },
-			  		{ field:"status", value: 0 }
-			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
-			  	page: 1,
-			  	pageSize: 1000
-			}).then(function(){
-				var view = self.summaryDS.view(),
-				quote = 0, so = 0;
-
-				$.each(view, function(index, value){
-					if(value.type=="Quote"){
-						quote++;
-					}else{
-						so++;
-					}									
-				});
-				
-				self.set("quote", kendo.toString(quote, "n0"));
-				self.set("so", kendo.toString(so, "n0"));
-			});
-		},
-		loadQuote 			: function(){
-			var obj = this.get("obj");
-
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value:"Quote" },
-			  		{ field:"status", value: 0 }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
-		},
-		loadSO 				: function(){
-			var obj = this.get("obj");
-
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value:"Sale_Order" }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
-		},
-		selectedRow			: function(e){
-			var data = e.data;
-			
-			this.set("obj", data);
-			this.loadData();
-		},
-		//Search
-		enterSearch 		: function(e){
-			e.preventDefault();
-
-			this.search();
-		},
-		search 				: function(){
-			var self = this, 
-			para = [],
-      		searchText = this.get("searchText"),
-      		contact_type_id = this.get("contact_type_id");
-      		
-      		if(searchText){
-      			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
-
-      			para.push(
-      				{ field: "abbr", value: textParts[0] },
-      				{ field: "number", value: textParts[1] },
-					{ field: "name", operator: "or_like", value: searchText }
-      			);
-      		}
-
-      		if(contact_type_id){
-      			para.push({ field: "contact_type_id", value: contact_type_id });
-      		}else{
-      			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 1 });
-      		}
-
-      		this.contactDS.filter(para);
-			
-			//Clear search filters
-      		self.set("searchText", "");
-      		self.set("contact_type_id", 0);
-		},
-		searchTransaction	: function(){
-			var self = this,
-				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
-        		para = [], obj = this.get("obj");
-
-        	if(obj.id>0){
-        		para.push({ field:"contact_id", value: obj.id });
-        	
-	        	//Dates
-	        	if(start && end){
-	            	para.push({ field:"issued_date >=", value: start });
-	            	para.push({ field:"issued_date <=", value: end });
-	            }else if(start){
-	            	para.push({ field:"issued_date", value: start });
-	            }else if(end){
-	            	para.push({ field:"issued_date <=", value: end });
-	            }else{
-	            	
-	            }
-
-	            para.push({ field:"type", operator:"where_in", value: ["Quote","Sale_Order"] });
-
-	            this.transactionDS.query({
-	            	filter: para,
-	            	sort: [
-				  		{ field: "issued_date", dir: "desc" },
-				  		{ field: "id", dir: "desc" }
-				  	],
-	            	page: 1,
-	            	pageSize: 10
-	            });
-	        }            
-		},
-		//Links	
-		goEdit 		 		: function(){
-			var obj = this.get("obj");
-
-			banhji.router.navigate('/customer/'+obj.id);
-		},
-		goQuote				: function(){
-			var obj = this.get("obj");
-
-			banhji.router.navigate('/quote');
-			banhji.quote.loadContact(obj.id);
-		},
-		goDeposit			: function(){
-			var obj = this.get("obj");
-
-			banhji.router.navigate('/customer_deposit');
-			banhji.customerDeposit.loadContact(obj.id);
-		},
-		goSaleOrder			: function(){
-			var obj = this.get("obj");
-
-			banhji.router.navigate('/sale_order');
-			banhji.saleOrder.loadContact(obj.id);
-		},
-		//Note
-		saveNoteEnter 		: function(e){
-			e.preventDefault();
-			this.saveNote();
-		},		
-		saveNote 			: function(){
-			var obj = this.get("obj");
-
-			if(obj.id>0 && this.get("note")!==""){
-				this.noteDS.insert(0, {
-					contact_id 	: obj.id,
-					note 		: this.get("note"),
-					noted_date	: new Date(),
-					created_by 	: this.get("user_id"),
-
-					creator 	: ""
-				});
-
-				this.noteDS.sync();
-				this.set("note", "");					
-			}else{
-				alert("Please select a customer and Memo is required");
-			}
-		}
-	});
-	banhji.sale = kendo.observable({
-		lang 				: langVM,
-		dataSource  		: dataStore(apiUrl + 'items'),
-		quoteLineDS  		: banhji.quote.lineDS,
-		soLineDS  			: banhji.saleOrder.lineDS,
-		categoryDS 			: dataStore(apiUrl + 'categories'),
-		obj 				: null,
-		searchText 			: "",
-		user_id 			: banhji.source.user_id,
-		pageLoad 			: function(){			
-			if(this.categoryDS.total()==0){
-				this.categoryDS.filter({ field:"item_type_id", operator:"where_in", value:[1,4] });
-				this.search();
-			}
-		},
-		search 				: function(){
-			var para = [], searchText = this.get("searchText");
-
-			if(searchText){
-      			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
-
-      			para.push(
-      				{ field: "abbr", value: textParts[0] },
-      				{ field: "number", value: textParts[1] },
-					{ field: "name", operator: "or_like", value: searchText }
-      			);
-      		}
-
-			para.push({ field:"item_type_id", operator:"where_in", value:[1,4] });
-
-			this.dataSource.query({
-				filter: para,
-				page:1,
-				pageSize:100
-			});
-		},
-		selectedType 		: function(e){
-			var data = e.data;
-
-			this.dataSource.query({
-				filter: { field:"category_id", value:data.id },
-				page:1,
-				pageSize:100
-			});
-		},
-		addQuote 			: function(e){
-			var data = e.data, price = 0;
-
-			if(data.item_prices.length>0){
-				price = data.item_prices[0].price;
-			}
-
-			var isExisting = false;
-			$.each(banhji.quote.lineDS.data(), function(index, value){
-				if(value.item_id==data.id){
-					isExisting = true;
-					value.set("quantity", value.quantity+1);
-
-					return false;
-				}
-			});
-
-			if(isExisting==false){
-				banhji.quote.lineDS.add({
-					transaction_id 		: 0,
-					tax_item_id 		: "",
-					item_id 			: data.id,				
-					measurement_id 		: 0,				
-					description 		: data.sale_description,				
-					quantity 	 		: 1,
-					price 				: price,												
-					amount 				: price,
-					rate				: 1,
-					locale				: banhji.locale,
-					movement 			: -1,
-
-					item_prices 		: data.item_prices
-				});
-			}			
-		},
-		addSO 				: function(e){
-			var data = e.data, price = 0;
-
-			if(data.item_prices.length>0){
-				price = data.item_prices[0].price;
-			}
-
-			var isExisting = false;
-			$.each(banhji.quote.lineDS.data(), function(index, value){
-				if(value.item_id==data.id){
-					isExisting = true;
-					value.set("quantity", value.quantity+1);
-
-					return false;
-				}
-			});
-
-			if(isExisting==false){
-				banhji.saleOrder.lineDS.add({
-					transaction_id 		: 0,
-					tax_item_id 		: "",
-					item_id 			: data.id,				
-					measurement_id 		: 0,				
-					description 		: data.sale_description,				
-					quantity 	 		: 1,
-					price 				: price,												
-					amount 				: price,
-					rate				: 1,
-					locale				: banhji.locale,
-					movement 			: -1,
-
-					item_prices 		: data.item_prices
-				});
-			}			
-		}
-	});
 	
 
 
@@ -79042,13 +79171,15 @@
 
 		customerRecurring : new kendo.Layout("#customerRecurring", {model: banhji.customerRecurring}),
 
-		//Cashier
-		cashier: new kendo.Layout("#cashier", {model: banhji.cashier}),
-		reconcile: new kendo.Layout("#reconcile", {model: banhji.reconcile}),
-		cashTransaction: new kendo.Layout("#cashTransaction", {model: banhji.cashTransaction}),
-		cashReceipt: new kendo.Layout("#cashReceipt", {model: banhji.cashReceipt}),
-		cashPayment: new kendo.Layout("#cashPayment", {model: banhji.cashPayment}),
-		
+		//Sale
+		saleDashboard: new kendo.Layout("#saleDashboard", {model: banhji.saleDashboard}),
+		saleCenter: new kendo.Layout("#saleCenter", {model: banhji.saleCenter}),
+		sale: new kendo.Layout("#sale", {model: banhji.sale}),
+		saleDetail: new kendo.Layout("#saleDetail", {model: banhji.saleDetail}),
+		saleReportCenter: new kendo.Layout("#saleReportCenter", {model: banhji.saleReportCenter}),
+		saleRecurring : new kendo.Layout("#saleRecurring", {model: banhji.saleRecurring}),
+		saleInventoryPositionSummary: new kendo.Layout("#saleInventoryPositionSummary", {model: banhji.inventoryPositionSummary}),
+
 		//Inventory		
 		itemDashBoard: new kendo.Layout("#itemDashBoard", {model: banhji.itemDashBoard}),
 		itemCenter: new kendo.Layout("#itemCenter", {model: banhji.itemCenter}),		
@@ -79076,6 +79207,13 @@
 		fixedAssets: new kendo.Layout("#fixedAssets", {model: banhji.fixedAssets}),
 		itemRecurring: new kendo.Layout("#itemRecurring", {model: banhji.itemRecurring}),
 
+		//Cashier
+		cashier: new kendo.Layout("#cashier", {model: banhji.cashier}),
+		reconcile: new kendo.Layout("#reconcile", {model: banhji.reconcile}),
+		cashTransaction: new kendo.Layout("#cashTransaction", {model: banhji.cashTransaction}),
+		cashReceipt: new kendo.Layout("#cashReceipt", {model: banhji.cashReceipt}),
+		cashPayment: new kendo.Layout("#cashPayment", {model: banhji.cashPayment}),
+
 		//Cash Managment
 		cashDashboard: new kendo.Layout("#cashDashboard", {model: banhji.cashDashboard}),
 		cashCenter: new kendo.Layout("#cashCenter", {model: banhji.cashCenter}),		
@@ -79093,16 +79231,6 @@
 
 		//Imports
 		imports: new kendo.Layout("#importView", {model: banhji.importView}),
-
-		//Sale
-		saleDashboard: new kendo.Layout("#saleDashboard", {model: banhji.saleDashboard}),
-		saleCenter: new kendo.Layout("#saleCenter", {model: banhji.saleCenter}),
-		sale: new kendo.Layout("#sale", {model: banhji.sale}),
-		saleDetail: new kendo.Layout("#saleDetail", {model: banhji.saleDetail}),
-		saleReportCenter: new kendo.Layout("#saleReportCenter", {model: banhji.saleReportCenter}),
-		saleInventoryPositionSummary: new kendo.Layout("#saleInventoryPositionSummary", {model: banhji.inventoryPositionSummary}),
-
-
 
 		//Water
 		waterCenter: new kendo.Layout("#waterCenter", {model: banhji.waterCenter}),
@@ -83827,6 +83955,178 @@
 			vm.pageLoad();
 		}
 	});
+
+
+
+	/*************************
+	*	Sales    *
+	**************************/
+	banhji.router.route("/sales", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleDashboard);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
+				
+				var vm = banhji.saleDashboard;
+				banhji.userManagement.addMultiTask("Sale Dashboard","sales",null);
+				if(banhji.pageLoaded["sales"]==undefined){
+					banhji.pageLoaded["sales"] = true;
+				}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
+	banhji.router.route("/sale_center(/:id)", function(id){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
+				
+				var vm = banhji.customerCenter;
+				banhji.userManagement.addMultiTask("Sale Center","sale_center",null);
+				if(banhji.pageLoaded["sale_center"]==undefined){
+					banhji.pageLoaded["sale_center"] = true;
+				}
+
+				vm.pageLoad(id);
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
+	banhji.router.route("/sale", function(){
+		banhji.view.layout.showIn("#content", banhji.view.sale);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
+		
+		var vm = banhji.sale;
+		banhji.userManagement.addMultiTask("Sale","sale",null);
+		if(banhji.pageLoaded["sale"]==undefined){
+			banhji.pageLoaded["sale"] = true;
+		}
+		vm.pageLoad();
+	});
+	banhji.router.route("/sale_recurring", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.saleRecurring);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
+
+			var vm = banhji.customerRecurring;
+			banhji.userManagement.addMultiTask("Sale Recurring","sale_recurring",null);
+			if(banhji.pageLoaded["sale_recurring"]==undefined){
+				banhji.pageLoaded["sale_recurring"] = true;
+
+			}
+
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/sale_detail", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleDetail);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
+				
+				var vm = banhji.saleDetail;
+				banhji.userManagement.addMultiTask("Sale Detail","sale_detail",null);
+				if(banhji.pageLoaded["sale_detail"]==undefined){
+					banhji.pageLoaded["sale_detail"] = true;
+				}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
+	banhji.router.route("/sale_report_center", function(){
+		banhji.accessMod.query({
+			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+		}).then(function(e){
+			var allowed = false;
+			if(banhji.accessMod.data().length > 0) {
+				for(var i = 0; i < banhji.accessMod.data().length; i++) {
+					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
+						allowed = true;
+						break;
+					}
+				}
+			} 
+			if(allowed) {
+				banhji.view.layout.showIn("#content", banhji.view.saleReportCenter);
+				banhji.view.layout.showIn('#menu', banhji.view.menu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
+				
+				var vm = banhji.saleReportCenter;
+				banhji.userManagement.addMultiTask("Sale Report Center","sale_report_center",null);
+				if(banhji.pageLoaded["sale_report_center"]==undefined){
+					banhji.pageLoaded["sale_report_center"] = true;
+				}
+				vm.pageLoad();
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
+	banhji.router.route("/sale_inventory_position_summary", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			var vm = banhji.inventoryPositionSummary;
+			banhji.userManagement.addMultiTask("Sale Inventory Position Summary","sale_inventory_position_summary",null);
+
+			banhji.view.layout.showIn("#content", banhji.view.saleInventoryPositionSummary);
+			banhji.inventorySale.inventoryPositionSummary.dataSource.read();
+			banhji.inventorySale.inventoryPositionSummary.dataSource.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.inventorySale.set('count', e.response.count);
+					kendo.culture(banhji.locale);	
+					banhji.inventorySale.set('onHand', kendo.toString(e.response.onHand, 'n0'));
+				}
+			});
+		}
+	});
+	
 	
 
 
@@ -85497,158 +85797,6 @@
 			}
 
 			vm.pageLoad();
-		}
-	});
-
-
-	/*************************
-	*	Sales    *
-	**************************/
-	banhji.router.route("/sales", function(){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.saleDashboard);
-				banhji.view.layout.showIn('#menu', banhji.view.menu);
-				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
-				
-				var vm = banhji.saleDashboard;
-				banhji.userManagement.addMultiTask("Sale Dashboard","sales",null);
-				if(banhji.pageLoaded["sales"]==undefined){
-					banhji.pageLoaded["sales"] = true;
-				}
-				vm.pageLoad();
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}
-		});
-	});
-	banhji.router.route("/sale_center(/:id)", function(id){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.saleCenter);
-				banhji.view.layout.showIn('#menu', banhji.view.menu);
-				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
-				
-				var vm = banhji.customerCenter;
-				banhji.userManagement.addMultiTask("Sale Center","sale_center",null);
-				if(banhji.pageLoaded["sale_center"]==undefined){
-					banhji.pageLoaded["sale_center"] = true;
-				}
-
-				vm.pageLoad(id);
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}
-		});
-	});
-	banhji.router.route("/sale", function(){
-		banhji.view.layout.showIn("#content", banhji.view.sale);
-		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
-		
-		var vm = banhji.sale;
-		banhji.userManagement.addMultiTask("Sale","sale",null);
-		if(banhji.pageLoaded["sale"]==undefined){
-			banhji.pageLoaded["sale"] = true;
-		}
-		vm.pageLoad();
-	});
-	banhji.router.route("/sale_detail", function(){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.saleDetail);
-				banhji.view.layout.showIn('#menu', banhji.view.menu);
-				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
-				
-				var vm = banhji.saleDetail;
-				banhji.userManagement.addMultiTask("Sale Detail","sale_detail",null);
-				if(banhji.pageLoaded["sale_detail"]==undefined){
-					banhji.pageLoaded["sale_detail"] = true;
-				}
-				vm.pageLoad();
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}
-		});
-	});
-	banhji.router.route("/sale_report_center", function(){
-		banhji.accessMod.query({
-			filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		}).then(function(e){
-			var allowed = false;
-			if(banhji.accessMod.data().length > 0) {
-				for(var i = 0; i < banhji.accessMod.data().length; i++) {
-					if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-						allowed = true;
-						break;
-					}
-				}
-			} 
-			if(allowed) {
-				banhji.view.layout.showIn("#content", banhji.view.saleReportCenter);
-				banhji.view.layout.showIn('#menu', banhji.view.menu);
-				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
-				
-				var vm = banhji.saleReportCenter;
-				banhji.userManagement.addMultiTask("Sale Report Center","sale_report_center",null);
-				if(banhji.pageLoaded["sale_report_center"]==undefined){
-					banhji.pageLoaded["sale_report_center"] = true;
-				}
-				vm.pageLoad();
-			} else {
-				window.location.replace(baseUrl + "admin");
-			}
-		});
-	});
-	banhji.router.route("/sale_inventory_position_summary", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			var vm = banhji.inventoryPositionSummary;
-			banhji.userManagement.addMultiTask("Sale Inventory Position Summary","sale_inventory_position_summary",null);
-
-			banhji.view.layout.showIn("#content", banhji.view.saleInventoryPositionSummary);
-			banhji.inventorySale.inventoryPositionSummary.dataSource.read();
-			banhji.inventorySale.inventoryPositionSummary.dataSource.bind('requestEnd', function(e){
-				if(e.response) {
-					banhji.inventorySale.set('count', e.response.count);
-					kendo.culture(banhji.locale);	
-					banhji.inventorySale.set('onHand', kendo.toString(e.response.onHand, 'n0'));
-				}
-			});
 		}
 	});
 
