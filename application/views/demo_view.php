@@ -1308,6 +1308,9 @@
 									   data-role="dropdownlist"
 									   data-template="account-list-tmpl"					                   
 					                   data-value-primitive="true"
+					                   data-auto-bind="false"
+					                   data-cascade-from="ddlType"
+									   data-cascade-from-field="account_type_id"
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: obj.sub_of_id,
@@ -1414,10 +1417,10 @@
 								
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> Save New</span>
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="visible: obj.isNew" style="width: 80px;"><i></i> Save New</span>
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, invisible: obj.isNew" style="width: 80px;"><i></i> Delete</span>
 							</div>
 						</div>
 					</div>
@@ -23111,17 +23114,18 @@
 			        		<span data-bind="text: lang.lang.in_here"></span>
 			        	</p>
 			        	<div class="supplier-icon">
-					       	<div class="span6">
+					       	<div class="span4">
 						       	<a href="#/customer" class="center">
-						       		<img title="Add Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" width="120" style="margin-left: 19px;" />
+						       		<img title="Add Customers" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" width="120"  />
 						       	</a>
 						       </div>
-						    <div class="span6">
+						    <div class="span4">
 						       	<a href="#/item" class="center">
-						       		<img title="Add Job" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_job.ico" width="120" style="margin-left: 13px;"/>
+						       		<img title="Add Job" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/add_job.ico" width="120" />
 						       	</a>
 						    </div>
-
+						    <div class="span4">
+						    </div>
 						</div>
 			        </td>
 			 	</tr>
@@ -23141,8 +23145,24 @@
 						</a>
 					</td>
 					<td class="center">
-						&nbsp;&nbsp;				
-					</td>					
+						<a href="#/item_assembly">
+							<img title="Add Build Assembly" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/build_assembly.png" width="110" height="200" />
+							<span data-bind="text: lang.lang.build_assembly" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+						</a>
+					</td>
+										
+				</tr>
+				<tr>
+					<td class="center" style="vertical-align: top;">
+						<a href="#/item_catalog">
+							<img title="Add Catalog" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/catalog.png" width="110" height="200" />
+							<span data-bind="text: lang.lang.catalog" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+						</a>
+					</td>
+					<td class="center" style="vertical-align: top;">
+					</td>
+					<td>
+					</td>
 				</tr>
 							
 			</table>
@@ -23722,7 +23742,6 @@
 					<span class="pull-right glyphicons no-js remove_2" 
 						onclick="javascript:window.history.back()"><i></i></span>
 
-					<h2>Sale</h2>
 					<br>
 
 					<div class="row-fluid">
@@ -23735,7 +23754,7 @@
 									<ul>
 										<li class="active"><a class="glyphicons search" href="#tab-1" data-toggle="tab"><i></i>Search</a></li>
 										<li><a class="glyphicons cargo" href="#tab-2" data-toggle="tab"><i></i>Category</a></li>
-										
+										<li><a class="glyphicons" href="#tab-3" data-toggle="tab"><i></i>Favorite</a></li>
 									</ul>
 									<div style="float: right;">
 										<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
@@ -23806,13 +23825,13 @@
 	<li class="products span2" aria-selected="false">
 	    <a class="view-details">
 	        <img class="main-image" src="#= image_url!==null ? image_url : banhji.no_image #" alt="#=name#" title="#=name#">
-	        <strong>#=name#</strong>
+	        <strong style="color: \#496cad;">#=name#</strong>
 	        <span class="price"><span>$</span><span data-bind="text: price"></span></span>
 	    </a>
 
 	    <div class="add-to-cart row-fluid"> 
-	    	<span class="span5" data-bind="click: addQuote" style="background: \#ddd; padding: 5px; cursor: pointer; width: 60px; margin-left: 7px;"> Quote </span>
-	    	<span class="span6" data-bind="click: addSO" style="background: \#ddd; padding: 5px; margin-left: 5px; cursor: pointer; width: 58px;"> Order </span>
+	    	<span class="span5" data-bind="click: addQuote" style="background: \#496cad; padding: 5px; cursor: pointer; width: 60px; margin-left: 7px; color: \#fff;"> Quote </span>
+	    	<span class="span6" data-bind="click: addSO" style="background: \#609450; padding: 5px; margin-left: 5px; cursor: pointer; width: 58px; color: \#fff;"> Order </span>
 	    </div>
 	</li>
 </script>
@@ -24057,7 +24076,7 @@
 			<br>
 			<div class="report-chart">
 				<div class="widget-body alert alert-primary sale-overview">
-					<h2>SALE OVERVIEW</h2>
+					<h2>SALE ORDER</h2>
 					<div align="center" class="text-large strong" data-bind="text: sale"></div>
 					<table width="100%">
 						<tr align="center">
@@ -24104,53 +24123,7 @@
 	            <!-- End Graph -->
 	            </div>
 			</div>
-			<div class="report-chart">
-				<div class="widget-body receivable-overview" style="background-color: LightGray">
-					<h2>RECEIVABLES MANAGEMENT</h2>
-					<div align="center" class="text-large strong" data-bind="text: ar"></div>
-					<table width="100%">
-						<tr align="center">
-							<td>										
-								<span data-bind="text: ar_open"></span>
-								<br>
-								<span>Open</span>
-							</td>
-							<td>										
-								<span data-bind="text: ar_customer"></span>
-								<br>
-								<span>Customer</span>
-							</td>
-							<td>
-								<span data-bind="text: ar_overdue"></span>
-								<br>
-								<span>Overdue</span>
-							</td>
-							<td>
-								<span data-bind="text: collection_day"></span> days
-								<br>
-								<span>Collection Days</span>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<!-- Graph -->
-				<div class="home-chart">
-					<div data-role="chart"
-		                 data-legend="{ position: 'top' }"
-		                 data-series-defaults="{ type: 'column' }"
-		                 data-tooltip='{
-		                    visible: true,
-		                    format: "{0}%",
-		                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-		                 }'                 
-		                 data-series="[
-		                                 { field: 'sale', name: 'Monthly Sale', categoryField:'month', color: '#236DA4' },
-		                                 { field: 'order', name: 'Monthly Order', categoryField:'month', color: '#A6C9E3' }
-		                             ]"	                             
-		                 data-bind="source: graphDS"
-		                 style="height: 250px;" ></div>
-	            <!-- End Graph -->
-            </div>
+			
 			</div>
 		</div>
 	</div>
@@ -30801,7 +30774,7 @@
 										        		data-bind="source: attachmentDS"></tbody>			        
 										    </table>
 
-										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile"><i></i> <span data-bind="text: lang.lang.save"></span></span>
+										    <span style=" width: 93px !important; margin-top: 10px;" class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile"><i></i> <span data-bind="text: lang.lang.save"></span></span>
 
 								        </div>
 								        <!-- // Attach Tab content END -->						            
@@ -44331,7 +44304,8 @@
   				<li><a href='#/expense'><span data-bind="text: lang.lang.make_expense"></span></a></li>
   				<li> <span class="li-line"></span></li> 		
   				<li><a href='#/currency_rate'><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
-  				<li><a href='#/accounting_recurring'><span data-bind="text: lang.lang.accounting_recurring_list"></span></a></li> 			  				 		
+  				<li><a href='#/accounting_recurring'><span data-bind="text: lang.lang.accounting_recurring_list"></span></a></li>
+  				<li><a href='#/imports'><span ></span>Imports</a></li> 			  				 		
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/accounting_report_center'>REPORTS</a></li>	  	
@@ -44376,6 +44350,7 @@
   				<li><a href='#/cash_payment'><span data-bind="text: lang.lang.make_cash_payment"></span></a></li>
   				<li> <span class="li-line"></span></li> 		
   				<li><a href='#/vendor_recurring'><span data-bind="text: lang.lang.supplier_recurring_list"></span></a></li>  			 				  				 				
+  				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/vendor_report_center'>REPORTS</a></li>	  	
@@ -44407,6 +44382,7 @@
   				<li><a href='#/statement'><span data-bind="text: lang.lang.create_statement"></span></a></li> 
   				<li> <span class="li-line"></span></li> 				
   				<li><a href='#/customer_recurring'><span data-bind="text: lang.lang.customer_recurring_list"></span></a></li>  				 				  				 				
+  				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href="#/customer_report_center">Reports</a></li>	  	
@@ -44429,7 +44405,8 @@
   				<li><a href='#/statement'>Statement</a></li>
   				<li><a href='#/cash_receipt'>Receive Payment</a></li>
   				<li><a href="#/customerInvoiceSent">Invoice Sent To</a></li>
-  				<li><a href='#/customer'>Add <span data-bind="text: lang.new_customer"></span></a></li> 				  				 				
+  				<li><a href='#/customer'>Add <span data-bind="text: lang.new_customer"></span></a></li>
+  				<li><a href='#/imports'><span ></span>Imports</a></li>				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/cash_report_center'>REPORTS</a></li>	  	
@@ -44498,6 +44475,7 @@
   				<li><a href='#/internal_usage'><span data-bind="text: lang.lang.create_internal_usage"></span></a></li>	
   				<!-- <li> <span class="li-line"></span></li>  -->	
   				<!-- <li><a href='#/item_recurring'>Inventory Recurring List</a></li>-->
+  				<li><a href='#/imports'><span ></span>Imports</a></li>
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/item_report_center'>REPORTS</a></li>	  	
@@ -44511,7 +44489,8 @@
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>				 				  				
   				<li><a href='#/journal'>Journal</a></li>  				
-  				<li><a href='#/sale_tax'>Tax</a></li>  				  				 				  				 				
+  				<li><a href='#/sale_tax'>Tax</a></li>
+  				<li><a href='#/imports'><span ></span>Imports</a></li> 				  				 				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href='#/sale_tax_report_center'>REPORTS</a></li>	  	
@@ -44525,12 +44504,17 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li ><a href='#/sale'>Make Sale</a></li> 				
+  				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer"></span></a></li> 
+  				<li ><a href='#/job'><span data-bind="text: lang.lang.add_job"></span></a></li>	
+  				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.add_new_catalog"></span></a></li>
+  				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.build_assembly"></span></a></li>
   				<li> <span class="li-line"></span></li>
-  				<li style="padding-top: 10px;"><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>  				
-  				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
+  				<li ><a href='#/sale'>Mobile Sale</a></li>
+  				<li ><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>  				
+  				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>  				
   				<li> <span class="li-line"></span></li> 				
-  				<li><a href='#/sale_recurring'>Sale Recurring</a></li>  				 				  				 				
+  				<li><a href='#/sale_recurring'>Recurring</a></li>
+  				<li><a href='#/imports'><span ></span>Imports</a></li>			 				  				 				
   			</ul>
 	  	</li>	  	  	
 	  	<li><a href="#/sale_report_center">Reports</a></li>
@@ -48575,7 +48559,7 @@
 			serverSorting: true,
 			serverPaging: true,
 			page:1,
-			pageSize: 1000
+			pageSize: 100
 		}),
     	currencyDS 				: banhji.source.currencyDS,
     	statusList 				: banhji.source.statusList,
@@ -48591,8 +48575,8 @@
 			if(id){
 				this.set("isEdit", true);						
 				this.loadObj(id);
-			}else{				
-				if(this.get("isEdit") || this.dataSource.total()==0){
+			}else{
+				if(this.get("obj")==null){
 					this.addEmpty();
 				}								
 			}
@@ -48665,12 +48649,12 @@
     	typeChanges 			: function(){    		
     		var obj = this.get("obj");
     		this.set("showBank", false);
-
+    		
     		if(obj.account_type_id){
     			if(obj.account_type_id==10){
     				this.set("showBank", true);
     			}
-    			this.subAccountDS.filter({ field:"account_type_id", value:obj.account_type_id });
+    			// this.subAccountDS.filter({ field:"account_type_id", value:obj.account_type_id });
     			this.generateNumber();
     		}
     	},    	 	   	

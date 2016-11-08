@@ -406,6 +406,139 @@
     </tr>   
 </script>
 
+
+<script id="setting" type="text/x-kendo-template">
+    <span class="pull-right glyphicons no-js remove_2" 
+			onclick="javascript:window.history.back()"><i></i></span>
+	<h2>Setting</h2>
+	<br>
+
+	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
+
+	    <!-- Tabs Heading -->
+	    <div class="widget-head span3">
+	        <ul>
+	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.customer_type"></span></span></a>
+
+	            </li>
+	            <li><a href="#tab2-4" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
+	            </li>
+	            <li><a href="#tab3-4" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_terms"></span></span></a>
+	            </li>
+	            <li><a href="#tab4-4" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span></a>
+	            </li>	                        
+	        </ul>
+	    </div>
+	    <!-- // Tabs Heading END -->
+
+	    <div class="widget-body span9">
+	        <div class="tab-content">
+
+	            <!-- CUSTOMER TYPE -->
+	            <div class="tab-pane active" id="tab1-4">
+	            	<div class="input-append">
+					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
+					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input abbr ..." data-bind="value: contactTypeAbbr">
+					    <select class="span3" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
+			                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
+			                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>			                
+			            </select>
+					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_type"></span></button>
+					</div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span data-bind="text: lang.lang.type"></span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.abbr"></span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.is_company"></span></th>
+	            				<th class="center"></th>
+	            			</tr>
+	            		</thead>
+	            		<!--tbody data-role="listview"	            				
+		            			data-edit-template="customerSetting-edit-contact-type-template"
+				                data-template="customerSetting-contact-type-template"
+				                data-bind="source: contactTypeDS"></tbody-->
+	            	</table>		            
+	            </div>
+	            <!-- // CUSTOMER TYPE END -->
+
+	            <!-- PAYMENT METHOD -->
+	            <div class="tab-pane" id="tab2-4">
+	            	<div class="input-append">
+					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
+					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_method"></span></button>
+					</div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
+	            				<th class="center"></th>
+	            			</tr>
+	            		</thead>
+	            		<!--tbody data-role="listview"	            				
+		            			data-edit-template="customerSetting-edit-payment-method-template"
+				                data-template="customerSetting-payment-method-template"
+				                data-bind="source: paymentMethodDS"></tbody-->
+	            	</table>			            
+	            </div>
+	            <!-- // PAYMENT METHOD END -->
+
+	            <!-- PAYMENT TERM -->
+	            <div class="tab-pane" id="tab3-4">
+            		<div class="input-append">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="net due ..." data-bind="value: paymentTermNetDue">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="period ..." data-bind="value: paymentTermPeriod">
+					    <input class="span3" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">
+					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_term"></span></button>
+					</div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.net_due"></span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.discount_period"></span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.discount_percentage"></span></th>
+	            				<th class="center"></th>
+	            			</tr>
+	            		</thead>
+	            		<!--tbody data-role="listview"	            				
+		            			data-edit-template="customerSetting-edit-payment-term-template"
+				                data-template="customerSetting-payment-term-template"
+				                data-bind="source: paymentTermDS"></tbody-->
+	            	</table>
+	            </div>
+	            <!-- // PAYMENT TERM END -->
+
+	            <!-- Tab Invocice Custom content -->
+	            <div class="tab-pane" id="tab4-4">
+            		
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr class="widget-head">
+	            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.form_type"></span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.last_edited"></span></th>
+	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
+	            			</tr>
+	            		</thead>
+	            		<!--tbody data-role="listview"
+								 data-selectable="false"
+				                 data-template="customerSetting-form-template"
+				                 data-bind="source: txnTemplateDS">				            
+	            		</tbody-->
+	            	</table>
+
+	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
+
+	            </div>
+	            <!-- // Tab Invoice Custom content END -->
+
+	        </div>
+	    </div>
+
+	</div>
+</script>
 <!-- ***************************
 *	Add Customer      	  *
 **************************** -->
@@ -483,11 +616,11 @@
 							        <div class="tab-content">
 
 							            <!-- Transactions Tab content -->
-							            <div id="tab1-4" class="tab-pane active box-generic">
+							            <div id="tab1-4" class="tab-pane active box-generic" data-bind="visible: meter_visible">
 							            	<table class="table table-borderless table-condensed cart_total cash-table">
 								            	<tr>
 								            		<td width="50%">
-								            			<span class="btn btn-block btn-inverse" data-bind="click: goQuote"><span>METER</span>
+								            			<a class="btn btn-block btn-inverse" data-bind="click: goMeter">METER</a>
 								            		</td>
 								            		<td width="50%">
 								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit"><span><span data-bind="text: lang.lang.c_deposit"></span></span>								            			
@@ -798,304 +931,86 @@
 					</div>
 			        <h2 style="padding:0 15px;">Activate Water User</h2>
 			        <div class="span12 row-fluid" style="overflow: hidden;padding:40px 0;">
-			        	<input type="text" id="" name="Licence" class="k-textbox k-invalid" placeholder="Licence" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
-			        	<input type="text" id="" name="Code" class="k-textbox k-invalid" placeholder="Code" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
-			        	<input type="text" id="" name="Number of Family" class="k-textbox k-invalid" placeholder="Number of Family" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
-			        	<input type="text" id="" name="ID Card Number" class="k-textbox k-invalid" placeholder="ID Card Number" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
-			        	<input type="text" id="" name="OCC" class="k-textbox k-invalid" placeholder="OCC" required="" validationmessage="" style="width: 100%;" aria-invalid="true">
+			        	<input type="text" id="" name="Licence" class="k-textbox k-invalid" placeholder="Licence" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" data-bind="value: obj.licence" aria-invalid="true">
+			        	<input type="text" id="" name="Code" class="k-textbox k-invalid" placeholder="Code" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" data-bind="value: obj.code" aria-invalid="true">
+			        	<input type="text" id="" name="Number of Family" class="k-textbox k-invalid" placeholder="Number of Family" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" data-bind="value: obj.family_member" aria-invalid="true">
+			        	<input type="text" id="" name="ID Card Number" class="k-textbox k-invalid" placeholder="ID Card Number" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" data-bind="value: obj.national_id_number" aria-invalid="true">
+			        	<input type="text" id="" name="Occupation" class="k-textbox k-invalid" placeholder="Occupation" required="" validationmessage="" style="width: 100%;" data-bind="value: obj.occupation" aria-invalid="true">
 			        </div>
-				    <br>	
+				    <br>
+				    <!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
+									
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->		
 				</div>						
 			</div>
 		</div>
 	</div>
 </script>
 
-<script id="wMeter" type="text/x-kendo-template">
-	<div class="container-960">	
-		<div class="row-fluid">		    
-			<div class="span12">			
-				<div id="example" class="k-content">					
-
-					<!-- Collapsible Widget -->			
-					<div class="widget">
-					    <div class="widget-head">
-					    	<span class="btn btn-primary pull-right" 
-									onclick="javascript:window.history.back()">X</span>
-					        
-					        <h4 class="heading glyphicons dashboard"><i></i>
-							<span data-bind="text: lang.lang.meter"></span></h4>							        	
-					    </div>
-					    <div class="widget-body">
-
-						    <div class="row-fluid">
-						    		<div class="span6">
-						    			<h5 class="heading-arrow" style="font-size: small;"><span data-bind="text: lang.lang.number1"></span> <span data-bind="text: obj.number"></span> </h5>
-						    			
-						    			<input id="cbbCustomer" name="cbbCustomer" 
-						    				   data-role="combobox"
-							                   data-placeholder="customer ..."
-							                   data-auto-bind="false"
-							                   data-value-primitive="true"
-							                   data-filter="search"							                   
-							                   data-min-length="3"							                   
-							                   data-text-field="fullname"
-							                   data-value-field="id"
-							                   data-template="wMeter-contact-combobox-template"
-							                   data-bind="value: obj.contact_id,
-							                              source: contactDS, events:{change: contactChanges}"
-							                   required data-required-msg="ត្រូវការ Customer"
-							                   style="width: 100%" />
-						    			
-						    			<br><br>
-
-						    			<div class="row-fluid">
-						    				<div class="span6">
-								    			<label><span data-bind="text: lang.lang.deposit"></span> </label>
-												<a data-bind="attr:{ href: deposit_link }"><span data-bind="text: obj.deposit[0].number"></span></a>
-								    			|
-								    			<span data-bind="text: deposit_amount"></span>
-											</div>
-											<div class="span6">
-								    			<label><span data-bind="text: lang.lang.service2"></span> </label>
-								    			<a data-bind="attr:{ href: invoice_link }"><span data-bind="text: obj.invoice[0].number"></span></a>
-								    			|
-								    			<span data-bind="text: invoice_amount"></span>
-											</div>
-										</div>
-
-										<br>
-
-						    			<div class="row-fluid">
-						    				<div class="span6">
-								    			<label for="latitute"><span data-bind="text: lang.lang.latitute"></span> </label>
-												<div class="input-prepend">
-													<span class="add-on glyphicons direction"><i></i></span>
-													<input type="text" class="input-large span12" data-bind="value: obj.latitute, events:{change: loadMap}" placeholder="012345.67897">
-												</div>
-											</div>
-											<div class="span6">
-								    			<label for="longtitute"><span data-bind="text: lang.lang.longtitute"></span> </label>
-								    			<div class="input-prepend">
-													<span class="add-on glyphicons google_maps"><i></i></span>
-													<input type="text" class="input-large span12" data-bind="value: obj.longtitute, events:{change: loadMap}" placeholder="012345.67897">
-												</div>
-											</div>
-										</div>
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.memo"></span></label>
-											<div class="controls">
-												<input class="k-textbox" 
-						                  				data-bind="value: obj.memo"
-						                  				style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->
-										
-										<div id="map" style="width: 450px; height: 250px;"></div>
-						    		</div>
-
-							    	<!-- Right Span -->
-							    	<div class="span6">
-
-							    		<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.location"></span> <span style="color:red">*</span></label>
-											<div class="controls">
-												<input id="ddlLocation" name="ddlLocation"
-													   data-role="dropdownlist"
-						                  			   data-option-label="(--- Select ---)"				                  			   
-									                   data-auto-bind="true"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.location_id, source: locationDS"
-									                   required data-required-msg="required"
-									                   style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.type1"></span> <span style="color:red">*</span></label>
-											<div class="controls">
-												<input id="meterType" name="meterType"
-													   data-role="dropdownlist"
-						                  			   data-option-label="(--- Select ---)"				                  			   
-									                   data-auto-bind="false"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.item_id, source: itemDS"
-									                   required data-required-msg="required"
-									                   style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->										
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.number2"></span> <span style="color:red">*</span></label>
-											<div class="controls">
-												<input id="meterNo" name="meterNo" class="k-textbox" 
-						                  				data-bind="value: obj.number, events:{change:checkExistingNumber}" 
-						                  				required data-required-msg="required"
-						                  				style="width: 100%;" />
-						                  		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
-											</div>
-										</div>
-										<!-- // Group END -->
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.startup_reading"></span> <span style="color:red">*</span></label>
-											<div class="controls">
-												<input id="txtStarupReading" name="txtStarupReading" class="k-textbox" 
-						                  				data-bind="value: obj.startup_reading" 
-						                  				required data-required-msg="required"
-						                  				style="width: 100%;" />						                  		
-											</div>
-										</div>
-										<!-- // Group END -->
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.number_of_digits"></span> <span style="color:red">*</span></label>
-											<div class="controls">
-												<input id="maxNo" name="maxNo" 
-						                  				data-role="numerictextbox" 
-						                  				data-bind="value: obj.max_number" 
-						                  				data-format="n0" min="0" 
-						                  				placeholder="ឧ.10,000/100,000" 
-						                  				required data-required-msg="required"
-						                  				style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
-											<div class="controls">
-												<input id="meterStatus" name="meterStatus"
-						                  				data-role="dropdownlist"
-						                  				data-value-primitive="true"													
-						                  				data-text-field="name" 
-						                  				data-value-field="id"				                  						                  				
-						                  				data-bind="source: statusList, value: obj.status"
-						                  				data-option-label="(--- Select ---)"
-														required data-required-msg="required"
-														style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->									
-										
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.tariff"></span> </label>
-											<div class="controls">
-												<input data-role="dropdownlist"
-						                  			   data-option-label="(--- Select ---)"				                  			   
-									                   data-auto-bind="false"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.tariff_id, source: tariffList"
-									                   style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.exemption"></span> </label>
-											<div class="controls">
-												<input data-role="dropdownlist"
-						                  			   data-option-label="(--- Select ---)"			                  			   
-									                   data-auto-bind="false"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.exemption_id, source: exemptionList"
-									                   style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.maintenance"></span> </label>
-											<div class="controls">
-												<input data-role="dropdownlist"
-						                  			   data-option-label="(--- Select ---)"			                  			   
-									                   data-auto-bind="false"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.maintenance_id, source: maintenanceList"
-									                   style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->
-
-									</div>
-									<!-- End Right Span -->
-
-							</div>
-
-							<br>
-
-							<div class="row-fluid">
-					          	<!-- Form actions -->
-								<div align="center">
-									<span id="notification"></span>
-
-									<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-									<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-									<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-								</div>
-								<!-- // Form actions END -->
-							</div>
-
-						</div> <!-- End Widget-Body List -->
+<script id="waterAddMeter" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
 					</div>
-					<!-- // Collapsible Widget END -->				          					                
-			    											
-				</div> <!-- // End div example-->  
-			</div> <!-- // End div span12-->
-		</div> <!-- // End div row-fluid-->	
-	</div> 	
-</script>
-<script id="wMeter-row-template" type="text/x-kendo-template">	
-	<tr>		
-		<td>#=number#</td>
-		<td>#=item_name#</td>		
-		<td>			
-			<div>#=tariffs.name!==undefined?tariffs.name:""#</div>
-			<div>#=exemptions.name!==undefined?exemptions.name:""#</div>
-			<div>#=maintenances.name!==undefined?maintenances.name:""#</div>
-		</td>
-		<td>
-			#if(reactive_of>0){#
-				REACTIVE
-			#}else if(backup_of>0){#
-				BACKUP
-			#}else{#
-				
-			#}#
-		</td>
-		<td>#:status==1 ? "Active" : "Inactive"#</td>
-		<td align="center">            
-			<span class="glyphicons no-js delete" data-bind="click: delete"><i></i></span>
-			<span class="glyphicons no-js edit" data-bind="click: edit"><i></i></span>						
-		</td>		
-	</tr>
-</script>
-<script id="wMeter-contact-combobox-template" type="text/x-kendo-template">	
-	#=wnumber# #=fullname#
+			        <h2 style="padding:0 15px;">Add Meter</h2>
+			        <div class="span12 row-fluid" style="overflow: hidden;padding:40px 0;">
+			        	<div class="span4">
+			        		User Name: <span data-bind="text: contact.name"></span>
+			        	</div>
+			        	<div class="span8">
+				        	<input type="text" id="" name="status" class="k-textbox k-invalid" placeholder="Status" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+				        	<input type="text" id="" name="Code" class="k-textbox k-invalid" placeholder="Location" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+				        	<input type="text" id="" name="Plan" class="k-textbox k-invalid" placeholder="Number of Family" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+				        	<input type="text" id="" name="ID Card Number" class="k-textbox k-invalid" placeholder="Map" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+				        	<input type="text" id="" name="OCC" class="k-textbox k-invalid" placeholder="Tariff" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+
+				        	<input type="text" id="" name="status" class="k-textbox k-invalid" placeholder="Memo" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+				        	<input type="text" id="" name="Code" class="k-textbox k-invalid" placeholder="Deposit" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+				        	<input type="text" id="" name="Plan" class="k-textbox k-invalid" placeholder="Type" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+				        	<input type="text" id="" name="ID Card Number" class="k-textbox k-invalid" placeholder="Service" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+				        	<input type="text" id="" name="OCC" class="k-textbox k-invalid" placeholder="No." required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+
+				        	<input type="text" id="" name="status" class="k-textbox k-invalid" placeholder="Example" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+				        	<input type="text" id="" name="Code" class="k-textbox k-invalid" placeholder="Starting No." required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+				        	<input type="text" id="" name="Plan" class="k-textbox k-invalid" placeholder="Maintenance" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+				        	<input type="text" id="" name="ID Card Number" class="k-textbox k-invalid" placeholder="Installation" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" aria-invalid="true">
+				        	<input type="text" id="" name="OCC" class="k-textbox k-invalid" placeholder="No. Digit" required="" validationmessage="" style="width: 100%;" aria-invalid="true">
+				       	</div>
+			        </div>
+				    <br>
+				    <!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save-close"></span></span>		
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->		
+				</div>						
+			</div>
+		</div>
+	</div>
 </script>
 
 <!-- ***************************
@@ -1147,7 +1062,7 @@
   			</ul>
 	  	</li>
 	  	<li><a href='#/wReport_center'><span data-bind="text: lang.lang.report"></span></a></li>	  	
-	  	<li><a href='#/wSettings' class='glyphicons settings'><i></i></a></li>
+	  	<li><a href='#/setting' class='glyphicons settings'><i></i></a></li>
 	</ul>
 </script>
 <script id="inventoryMenu" type="text/x-kendo-template">
@@ -4872,6 +4787,15 @@
 	/*************************
 	*	Water Section   	* 
 	**************************/
+	banhji.setting = kendo.observable({
+		lang 				: langVM,
+		pageLoad 			: function(){
+		},
+		cancel 				: function(){
+			//this.dataSource.cancelChanges();		
+			window.history.back();
+		}
+	});
     banhji.waterCenter = kendo.observable({
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
@@ -4919,6 +4843,9 @@
 		contactTypeDS  		: banhji.source.customerTypeDS,
 		filterChange 		: function(e){
 			this.contactDS.filter({field:"use_water", value: this.get("filterKey")});
+			if(this.meter_visible == true){
+				this.set('meter_visible',false);
+			}
 		},
 		noteDS 				: dataStore(apiUrl + 'notes'),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
@@ -4938,6 +4865,7 @@
 		outInvoice 			: 0,
 		overInvoice 		: 0,
 		currencyCode 		: "",
+		meter_visible 		: false,
 		user_id 			: banhji.source.user_id,
 		exportEXCEL 		: function(){
 			var workbook = new kendo.ooxml.Workbook({
@@ -5266,10 +5194,23 @@
 			});
 		},	
 		selectedRow			: function(e){
-			var data = e.data;
+			var data = e.data, self = this;
 			
 			this.set("obj", data);
 			this.loadData();
+			if(data.use_water == 1){
+				this.set('meter_visible', true);
+			}else{
+				this.set('meter_visible', false);
+			}
+			console.log(this.meter_visible);
+		},
+		goMeter 			: function(){
+			banhji.meter.set("contact", this.get("obj"));
+			// var obj = banhji.meter.get("obj");
+			// console.log(obj);
+			//obj.contact_id = this.obj.id;
+			banhji.router.navigate("/meter");
 		},
 		//Search
 		enterSearch 		: function(e){
@@ -5364,13 +5305,14 @@
 	});
 	banhji.waterActivateUser = kendo.observable({
 		lang 				: langVM,
+		dataSource  		: dataStore(apiUrl + "utilities"),
+		obj 				: null,
+		isEdit 				: false,
 		pageLoad 			: function(id){
-			//Refresh
-			
+			this.addEmpty(id);
 		},
 		loadObj 			: function(id){
 			var self = this;
-
 			this.contactDS.query({
 				filter: { field:"id", value:id},
 				page:1,
@@ -5384,50 +5326,8 @@
 				}
 			});
 		},
-		//Upload
-		onSelect 			: function(e){			
-	        // Array with information about the uploaded files
-	        var self = this, 
-	        files = e.files,
-	        obj = this.get("obj");			
-			
-			if(obj.id>0){
-		        // Check the extension of each file and abort the upload if it is not .jpg
-		        $.each(files, function(index, value){
-		            if (value.extension.toLowerCase() === ".jpg"
-		            	|| value.extension.toLowerCase() === ".jpeg"
-		            	|| value.extension.toLowerCase() === ".tiff"
-		            	|| value.extension.toLowerCase() === ".png" 
-		            	|| value.extension.toLowerCase() === ".gif"
-		            	|| value.extension.toLowerCase() === ".pdf"){
-
-		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
-
-		            	self.attachmentDS.add({
-		            		user_id 		: self.get("user_id"),
-		            		contact_id 		: obj.id,
-		            		type 			: "Contact",
-		            		name 			: value.name,
-		            		description 	: "",
-		            		key 			: key,
-		            		url 			: banhji.s3 + key,
-		            		size 			: value.size,
-		            		created_at 		: new Date(),
-
-		            		file 			: value.rawFile
-		            	});	            			            		            
-		            }else{
-		            	alert("This type of file is not allowed to attach.");
-		            }
-		        });
-	    	}else{
-	    		alert("Please select a customer!");
-	    	}
-	    },
-	    //Summary
 		loadContact 		: function(id){
 			var self = this;
-			
 			this.contactDS.query({
 			  	filter:[
 			  		{ field:"id", value:id }
@@ -5436,237 +5336,103 @@
 			  	pageSize: 50
 			}).then(function(e) {
 			    var view = self.contactDS.data();
-			    
 			    if(view.length>0){
 			    	self.set("obj", view[0]);
 			    	self.loadData();
 			    }
 			});
-		}
-		
-	});
-	banhji.wMeter = kendo.observable({
-		lang 				: langVM,
-		dataSource 			: dataStore(baseUrl + "meters"),
-		existingDS 			: dataStore(baseUrl + "meters"),
-		deleteDS 			: dataStore(baseUrl + "meters/record"),		
-		contactDS 			: dataStore(baseUrl + "contacts"),					
-		locationDS 			: dataStore(baseUrl + "locations"),
-		itemDS 				: dataStore(baseUrl + "items"),
-		feeDS 				: dataStore(baseUrl + "fees"),
-		statusList 			: [            
-			{ "id": 1, "name": "Active" },
-			{ "id": 0, "name": "Inactive" },
-			{ "id": 2, "name": "Void" }
-        ],
-        tariffList 			: [],
-        exemptionList 		: [],
-        maintenanceList 	: [],
-        deposit_link 		: null,
-        invoice_link 		: null,
-        deposit_amount 		: 0,
-        invoice_amount 		: 0,
-        obj 				: null,             
-        current_company_id 	: 0,
-        current_meter_id 	: 0,
-        isDuplicateNumber 	: false,
-        originalNo 			: null,
-		pageLoad 			: function(id){
-			this.loadMeter(id);									
-		},		
-		loadMeter 			: function(id){
-			var self = this;
-
-			if(this.get("current_meter_id")!=id){
-			 	this.set("current_meter_id", id);				
-
-				this.dataSource.query({
-					filter: { field:"id", value: id },
-					page: 1,
-	  				take: 50
-				}).then(function(e) {
-				    var view = self.dataSource.view();
-
-				    self.set("originalNo", view[0].number);				    
-				    self.contactDS.filter({ field:"id", value:view[0].contact_id });		    			    	
-			    	self.contactDS.filter([]);
-
-			    	return self.feeQuery(view[0].company_id);	    		   	    			    			    				    
-				}).then(function(fee){
-					var view = self.dataSource.view();					
-					
-					self.set("obj", view[0]);
-					self.set("deposit_link", "#/wDeposit/"+view[0].deposit_id);
-					self.set("invoice_link", "#/wMeterInvoice/"+view[0].invoice_id);
-
-					if(view[0].deposit[0]){
-						self.set("deposit_amount", kendo.toString(kendo.parseFloat(view[0].deposit[0].amount), "c", view[0].deposit[0].locale));
-					}else{
-						self.set("deposit_amount", 0);
-					}
-
-					if(view[0].invoice[0]){
-						self.set("invoice_amount", kendo.toString(kendo.parseFloat(view[0].invoice[0].amount), "c", view[0].invoice[0].locale));
-					}else{
-						self.set("invoice_amount", 0);
-					}					
-										
-					self.loadMap();
-				});
-			}
-		},		
-		loadMap 			: function(){
-			var obj = this.get("obj"), lat = kendo.parseFloat(obj.latitute),
-			lng = kendo.parseFloat(obj.longtitute);
-
-			if(lat && lng){
-				var myLatLng = {lat:lat, lng:lng};
-				var mapOptions = {
-					zoom: 17,					
-					center: myLatLng,
-					mapTypeControl: false,
-					zoomControl: false,
-					scaleControl: false,
-					streetViewControl: false
-				};
-				var map = new google.maps.Map(document.getElementById('map'),mapOptions);
-				var marker = new google.maps.Marker({
-					position: myLatLng,
-					map: map,
-					title: obj.number
-				});
-			} 
 		},
-		feeQuery 			: function(company_id){
-			var self = this, dfd = $.Deferred();
-
-			if(this.get("current_company_id")!=company_id){
-			 	this.set("current_company_id", company_id);
-				
-		    	this.feeDS.query({
-					filter: [
-						{ field:"company_id", value: company_id },
-						{ field:"utility_id", value: 2 }
-					]
-				}).then(function(e) {
-					var view = self.feeDS.view();
-
-					self.set("tariffList", []);
-					self.set("exemptionList", []);
-					self.set("maintenanceList", []);
-
-					$.each(view, function(index, value){																						
-						if(value.type=="tariff"){							
-							self.tariffList.push({
-								id 	: value.id,
-								name: value.name 
-							});
-						}
-						if(value.type=="exemption"){							
-							self.exemptionList.push({
-								id 	: value.id,
-								name: value.name 
-							});
-						}
-						if(value.type=="maintenance"){
-							self.maintenanceList.push({
-								id 	: value.id,
-								name: value.name 
-							});
-						}								
-					});
-
-					dfd.resolve(view);				    			   		    			
-				});
-			}			
-
-		    return dfd;	    		    	
-	    },	    	
-		contactChanges 		: function(e){
-			if(e.sender.selectedIndex>0){
-				var obj = this.get("obj"),
-				contact = this.contactDS.get(obj.contact_id);
-
-				obj.set("company_id", contact.wbranch_id);
-				obj.set("location_id", contact.wlocation_id);
-				
-				this.feeQuery(contact.wbranch_id);
-			}
+		addEmpty 		 	: function(id){			
+			//this.dataSource.data([]);		
+			this.set("obj", null);		
+			this.set("isEdit", false);		
+			this.dataSource.insert(0,{				
+				contact_id			: id,
+				code 				: null,
+				licence 			: null,
+				family_member 		: null,
+				national_id_number 	: null,
+				occupation 			: null
+	    	});		
+			var obj = this.dataSource.at(0);			
+			this.set("obj", obj);		
 		},
-		checkExistingNumber : function(){
-			var self = this;	
+		save 				: function() {
+			if(this.dataSource.data().length > 0) {
+				//$("#loadImport").css("display","block");
+				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+			    	if(e.response){				
+			    		$("#ntf1").data("kendoNotification").success("Activated user successfully!");
+			    		//console.log(banhji.waterCenter.get('obj'));		
+						banhji.waterCenter.get('obj').set('user_water', 1);	
+						banhji.waterCenter.dataSource.sync();
+			    		window.history.back();
+						//$("#loadImport").css("display","none");
+					}				  				
+			    });
+			    this.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error activated!"); 
+					//$("#loadImport").css("display","none");				
+			    });
+			}	
 			
-			var number = this.get("obj").number;
-			var originalNo = this.get("originalNo");
-			
-			if(number.length>0 && number!==originalNo){
-				this.existingDS.query({
-					filter: { field:"number", value: number },
-					page: 1,
-					pageSize: 100
-				}).then(function(e){
-					var view = self.existingDS.view();
-					
-					if(view.length>0){
-				 		self.set("isDuplicateNumber", true);						
-					}else{
-						self.set("isDuplicateNumber", false);
-					}
-				});							
-			}else{
-				this.set("isDuplicateNumber", false);
-			}			
-		},				
-		save 				: function(){			
-			var self = this, saved = false;
-
-			this.dataSource.sync();			
-			this.dataSource.bind("requestEnd", function(e){				
-				if(e.type=="create" && saved==false){					
-					saved = true;
-					banhji.wCustomerCenter.meterDS.fetch();
-					self.addEmpty();										
-				}
-
-				if(e.type=="update" && saved==false){
-					saved = true;
-					banhji.wCustomerCenter.meterDS.fetch();
-					window.history.back();
-				}
-
-				if(e.type=="destroy" && saved==false){
-					saved = true;
-					banhji.wCustomerCenter.meterDS.fetch();					
-					window.history.back();
-				}
-			});
-		},
-		delete 				: function(){
-			var self = this,
-			obj = this.get("obj");
-
-			if (confirm("Are you sure, you want to delete it?")) {
-				this.deleteDS.query({
-				  	filter: { field: "meter_id", value: obj.id },
-				  	page: 1,
-				  	take: 1
-				}).then(function() {
-					var view = self.deleteDS.view();
-
-					if(view.length>0){
-						alert("Sorry, you can not delete it because it is using now.");
-					}else{
-						var data = self.dataSource.get(obj.id);
-				        self.dataSource.remove(data);
-				        self.save();
-					}
-				});				
-	    	}
 		},
 		cancel 				: function(){
-			this.dataSource.cancelChanges();
+			//this.dataSource.cancelChanges();		
 			window.history.back();
-		}		
+		}
+	});
+	banhji.meter = kendo.observable({
+		lang 				: langVM,
+		dataSource  		: dataStore(apiUrl + "meters"),
+		obj 				: null,
+		isEdit 				: false,
+		contact 			: null,
+		pageLoad 			: function(id){
+			this.addEmpty(this.obj.id);
+		},
+		addEmpty 		 	: function(id){			
+			//this.dataSource.data([]);		
+			this.set("obj", null);		
+			this.set("isEdit", false);		
+			this.dataSource.insert(0,{				
+				contact_id			: id,
+				code 				: null,
+				licence 			: null,
+				family_member 		: null,
+				national_id_number 	: null,
+				occupation 			: null,
+				name 				: null			
+	    	});		
+			var obj = this.dataSource.at(0);			
+			this.set("obj", obj);		
+		},
+		save 				: function() {
+			if(this.dataSource.data().length > 0) {
+				//$("#loadImport").css("display","block");
+				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+			    	if(e.response){				
+			    		$("#ntf1").data("kendoNotification").success("Activated user successfully!");
+			    		//console.log(banhji.waterCenter.get('obj'));		
+						banhji.waterCenter.get('obj').set('user_water', 1);	
+						banhji.waterCenter.dataSource.sync();
+			    		window.history.back();
+						//$("#loadImport").css("display","none");
+					}				  				
+			    });
+			    this.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error activated!"); 
+					//$("#loadImport").css("display","none");				
+			    });
+			}	
+			
+		},
+		cancel 				: function(){
+			//this.dataSource.cancelChanges();		
+			window.history.back();
+		}
 	});
 
 	/* views and layout */
@@ -5677,9 +5443,10 @@
 		menu 		: new kendo.Layout('#menu-tmpl', {model: banhji.userManagement}),
 		searchAdvanced: new kendo.Layout("#searchAdvanced", {model: banhji.searchAdvanced}),
 		//Water
+		setting: new kendo.Layout("#setting", {model: banhji.setting}),
 		waterCenter: new kendo.Layout("#waterCenter", {model: banhji.waterCenter}),
 		waterActivateUser: new kendo.Layout("#waterActivateUser", {model: banhji.waterActivateUser}),
-		wMeter: new kendo.Layout("#wMeter", {model: banhji.wMeter}),
+		meter: new kendo.Layout("#waterAddMeter", {model: banhji.meter}),
 
 		//Menu
 		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
@@ -5751,6 +5518,21 @@
 		banhji.index.getLogo();
 		banhji.index.pageLoad();
 	});
+	banhji.router.route('/setting', function(){
+		banhji.view.layout.showIn("#content", banhji.view.setting);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.setting;
+
+		banhji.userManagement.addMultiTask("Setting","setting",null);
+
+		if(banhji.pageLoaded["setting"]==undefined){
+			banhji.pageLoaded["setting"] = true;
+		}
+
+		vm.pageLoad();
+	});
 	banhji.router.route("/search_advanced", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -5802,20 +5584,20 @@
 
 		vm.pageLoad(id);
 	});
-	banhji.router.route("/wMeter(/:id)", function(id){		
-		banhji.view.layout.showIn("#content", banhji.view.wMeter);
+	banhji.router.route("/meter", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.meter);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 		
-		var vm = banhji.wMeter;
+		var vm = banhji.meter;
 
-		banhji.userManagement.addMultiTask("Water Meter","wMeter",null);
+		banhji.userManagement.addMultiTask("Add Meter","meter",null);
 
-		if(banhji.pageLoaded["wMeter"]==undefined){
-			banhji.pageLoaded["wMeter"] = true;
+		if(banhji.pageLoaded["meter"]==undefined){
+			banhji.pageLoaded["meter"] = true;
 		}
 
-		vm.pageLoad(id);
+		vm.pageLoad();
 	});
 	$(function() {	
 		banhji.router.start();
