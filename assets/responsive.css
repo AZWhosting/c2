@@ -50,8 +50,18 @@
   line-height: 50px!important;
 }
 .glyphicons.shopping_cart i:before,
-.glyphicons.cart_in i:before{
+.glyphicons.cart_in i:before,
+.glyphicons.search i:before,
+.glyphicons.cargo i:before,
+.glyphicons.heart i:before{
   color: #fff;
+}
+
+.widget.widget-tabs > .widget-head.widget-custome ul li a i:before{
+  color: #fff;
+}
+.widget.widget-tabs > .widget-head.widget-custome ul li.active a i:before{
+      color: #505050;
 }
 .widget-head.head-custom ul li a{
   height: 50px!important;
@@ -264,6 +274,7 @@
     overflow: hidden;
     height: 167px;
     float: left;
+    background: #fff;
 }
 .sale-detail .main-image {
     width: 200px;
@@ -298,7 +309,7 @@
 }
 
 #details-top-image {
-    background: url(sushi-preview.png) no-repeat top left;
+    background: url(background-sale-detail.jpg) no-repeat top left;
     height: 200px;
 }
 
@@ -310,7 +321,7 @@
     float: left;
     height: 200px;
     width: 100px;
-    background: #000 url(nav-prev.png) no-repeat center;
+    background: #203864 url(nav-prev.png) no-repeat center;
 }
 #detail-info {
     width: 560px;
@@ -421,13 +432,13 @@
     float: left;
     height: 200px;
     width: 100px;
-    background: #000 url(nav-next.png) no-repeat center;
+    background: #203864 url(nav-next.png) no-repeat center;
 }
 
 
 
 #details-bottom-image {
-    background: url(sushi-preview.png) no-repeat bottom left;
+    background: url(background-sale-detail.jpg) no-repeat left;
     height: 200px;
     margin-bottom: 20px;
 }

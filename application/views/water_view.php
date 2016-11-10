@@ -418,8 +418,7 @@
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
 	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.customer_type"></span></span></a>
-
+	            <li class="active"><a href="#tab1-1" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span>Plans</span></span></a>
 	            </li>                        
 	        </ul>
 	    </div>
@@ -427,18 +426,9 @@
 
 	    <div class="widget-body span9">
 	        <div class="tab-content">
-
+	        	<a class="btn-icon btn-primary glyphicons circle_plus" href="#/plan"><i></i>Add Plan</a>
 	            <!-- CUSTOMER TYPE -->
 	            <div class="tab-pane active" id="tab1-4">
-	            	<div class="input-append">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
-					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input abbr ..." data-bind="value: contactTypeAbbr">
-					    <select class="span3" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
-			                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
-			                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>			                
-			            </select>
-					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_type"></span></button>
-					</div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
@@ -449,11 +439,11 @@
 	            				<th class="center">Action</th>
 	            			</tr>
 	            		</thead>
-	            		<!--tbody data-role="listview"	            				
-		            			data-edit-template="customerSetting-edit-contact-type-template"
-				                data-template="customerSetting-contact-type-template"
-				                data-bind="source: contactTypeDS"></tbody-->
-	            	</table>		            
+	            		<tbody data-role="listview"	            				
+				                data-template="planSetting-template"
+				                data-bind="source: dataSource"></tbody>
+	            	</table>
+
 	            </div>
 	            <!-- // CUSTOMER TYPE END -->
 
@@ -461,6 +451,113 @@
 	    </div>
 
 	</div>
+</script>
+<script id="planSetting-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>sdfasdf</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+</script>
+<script id="plan" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2 style="padding:0 15px;">Add Plan</h2>
+			        <div class="span12 row-fluid" style="overflow: hidden;padding:20px 0;">
+			        	<input type="text" id="" name="Name" class="k-textbox k-invalid" placeholder="Name" required="" validationmessage="" style="width: 100%;margin-bottom: 20px;" data-bind="value: current.name" aria-invalid="true">
+
+			        	<select data-role="dropdownlist"
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="
+		                   	source: selectType,
+		                   	value: current.type"
+		                   style="width: 100%;" ></select>		
+		                <div class="row" style="margin-top: 20px;">	
+		                	<div class="span6">
+		                		<input type="text" 
+			                	style="width: 100%" 
+			                	placeholder="Valide From" 
+			                	data-role="datepicker"
+			                	data-format="dd-MM-yyyy"
+					           	data-bind="value: current.validFrom,
+					           			  	max: current.validTo" />
+			                </div>
+			                <div class="span6">
+		                 		<input type="text" 
+			                	style="width: 100%" 
+			                	placeholder="Valide To" 
+			                	data-role="datepicker"
+			                	data-format="dd-MM-yyyy"
+					           	data-bind="value: current.validTo,
+					           			  	min: current.validFrom" />
+			                </div>
+			            </div>
+		                <table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs" style="margin-top: 20px;">
+		                	<thead>
+		                		<tr>
+		                			<th>Name</th>
+		                			<th width="180">Type</th>
+		                			<th width="160">Rate</th>
+		                			<th width="160">Tier From</th>
+		                			<th width="160">Tier To</th>
+		                			<th width="70">Taxed</th>
+		                			<th width="60" style="text-align: center"><p class="addItem glyphicons circle_plus" data-bind="click: addItem"><i></i></p></th>
+		                		</tr>
+		                	</thead>
+		                	<tbody data-bind="source: items.dataSource" data-auto-bind="false" data-role="listview" data-template="tariff-list-item">
+		                	</tbody>
+		                </table>
+			        	</div>
+			        </div>
+				    <br>
+				    <!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" style="width: 80px!important;margin:0" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 50px;"><i></i> <span>Save</span></span>
+								<span id="cancel" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 100px;"><i></i> <span >Cancel</span></span>
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->		
+				</div>						
+			</div>
+		</div>
+	</div>
+</script>
+<script id="tariff-list-item" type="text/x-kendo-tmpl">
+	<tr>
+		<td><input class="k-textbox k-invalid" style="width: 98%" type="text" data-bind="value: name" /></td>
+		<td>
+			<select data-role="dropdownlist"
+           		data-value-primitive="true"
+           		data-text-field="value"
+           		data-value-field="id"
+           		data-bind="
+		           	source: items.types,
+		           	value: type"
+           		style="width: 100%;" ></select>
+		</td>
+		<td><input style="width: 98%" data-role="numerictextbox" type="text" data-bind="value: rate" /></td>
+		<td><input data-role="numerictextbox" style="width: 98%" type="text" data-bind="value: tierFrom" /></td>
+		<td><input data-role="numerictextbox" style="width: 98%" type="text" data-bind="value: tierTo" /></td>
+		<td><input style="width: 98%" type="checkbox" data-bind="checked: taxed" /></td>
+		<td style="text-align:center"><p class="addItem glyphicons circle_remove" data-bind="click: removeItem"><i></i></p></td>
+	</tr>
 </script>
 <!-- ***************************
 *	Add Customer      	  *
@@ -4711,16 +4808,25 @@
 	*	Water Section   	* 
 	**************************/
 	banhji.item = kendo.observable({
-		dataSource 	: null,
+		dataSource 	: dataStore(apiUrl + "tariffs"),
+		types 		: [
+			{id: 'excemption', value: "Excemption"},
+			{id: 'tariff', value: "Tariff"},
+			{id: 'deposit', value: "Deposit"},
+			{id: 'service', value: "Service"},
+			{id: 'maintenance', value: "Maintenance"},
+			{id: 'installation', value: "Installation"}
+		],
 		addNew 		: function() {
 			banhji.item.dataSource.add({
-				description : null,
-				type 		: null,
+				name 		: null,
+				type 		: {name: 'excemption', value: "Excemption"},
 				rate 		: null,
 				tierFrom 	: null,
 				tierTo 		: null,
-				taxed 		: null
+				taxed 		: false
 			});
+			this.setCurrent(this.dataSource.at(this.dataSource.data().length -1));
 		},
 		current 	: null,
 		setCurrent 	: function(current) {
@@ -4750,19 +4856,24 @@
 		}
 	});
 	banhji.plan = kendo.observable({
-		dataSource 	: null,
+		dataSource 	: dataStore(apiUrl + "plans"),
 		items 		: banhji.item,
 		current 	: null,
+		selectType  : [{id: "water", name: "Water"},{id: "electricity", name: "Electricity"}],
+		pageLoad    : function(){
+			this.addNew();
+		},
 		setCurrent 	: function(current) {
 			this.set('current', current);
 		},
 		addNew 	  	: function() {
 			this.dataSource.add({
 				name 		: null,
-				type 		: null,
+				type 		: {id: "water", name: "Water"},
 				validFrom 	: null,
 				validTo 	: null
 			});
+			this.setCurrent(this.dataSource.at(this.dataSource.data().length -1));
 		},
 		remove 		: function(e) {
 			this.dataSource.remove(e.data);
@@ -4785,11 +4896,17 @@
 				dfd.reject(e.status);
 			});
 			return dfd.promise();
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();
+			this.items.cancel();		
+			window.history.back();
 		}
 	});
 	banhji.setting = kendo.observable({
 		lang 				: langVM,
 		pageLoad 			: function(){
+
 		},
 		cancel 				: function(){
 			//this.dataSource.cancelChanges();		
@@ -5447,6 +5564,7 @@
 		waterCenter: new kendo.Layout("#waterCenter", {model: banhji.waterCenter}),
 		waterActivateUser: new kendo.Layout("#waterActivateUser", {model: banhji.waterActivateUser}),
 		meter: new kendo.Layout("#waterAddMeter", {model: banhji.meter}),
+		plan: new kendo.Layout("#plan", {model: banhji.plan}),
 
 		//Menu
 		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
@@ -5599,6 +5717,21 @@
 
 		vm.pageLoad();
 	});
+	banhji.router.route("/plan", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.plan);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.plan;
+
+		banhji.userManagement.addMultiTask("Add Plan","plan",null);
+
+		if(banhji.pageLoaded["plan"]==undefined){
+			banhji.pageLoaded["plan"] = true;
+		}
+		console.log("plan");
+		vm.pageLoad();
+	});
 	$(function() {	
 		banhji.router.start();
 		banhji.source.loadData();
@@ -5626,5 +5759,22 @@
 		function eraseCookie(name) {
 		    createCookie(name,"");
 		}
+		//Function write css to header
+		function loadStyle(href){
+		    // avoid duplicates
+		    for(var i = 0; i < document.styleSheets.length; i++){
+		        if(document.styleSheets[i].href == href){
+		            return;
+		        }
+		    }
+		    var head  = document.getElementsByTagName('head')[0];
+		    var link  = document.createElement('link');
+		    link.rel  = 'stylesheet';
+		    link.type = 'text/css';
+		    link.href = href;
+		    head.appendChild(link);
+		}
+		var Href1 = '<?php echo base_url(); ?>assets/water/water.css';
+		loadStyle(Href1);
 	});
 </script>

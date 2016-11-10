@@ -8840,7 +8840,6 @@
 							                   			  events:{change: checkExistingNumber}"
 							                   placeholder="eg. 001" required data-required-msg="required"
 							                   style="width: 143px;" />
-					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->											
 								</div>
@@ -15669,11 +15668,10 @@
 					              		-					              		
 					              		<input id="txtNumber" name="txtNumber" class="k-textbox"					              			   					                   
 							                   data-bind="value: obj.number, 
-							                   			  disabled: obj.is_pattern, 
-							                   			  events:{change: checkExistingNumber}"
+							                   			  disabled: obj.is_pattern,
+							                   			  events:{change:checkExistingNumber}"
 							                   placeholder="eg. 001" required data-required-msg="required"
 							                   style="width: 143px;" />
-					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->											
 								</div>
@@ -16044,8 +16042,7 @@
 								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
 								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>
 								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>					
-
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> Delete</span>
 							</div>
 						</div>
 					</div>
@@ -23157,26 +23154,15 @@
 							<span data-bind="text: lang.lang.sale_order" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>
 					</td>
-					<td class="center">
-						<a href="#/item_assembly">
-							<img title="Add Build Assembly" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/build_assembly.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.build_assembly" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
-						</a>
-					</td>
-										
-				</tr>
-				<tr>
 					<td class="center" style="vertical-align: top;">
 						<a href="#/item_catalog">
 							<img title="Add Catalog" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/catalog.png" width="110" height="200" />
 							<span data-bind="text: lang.lang.catalog" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 						</a>
 					</td>
-					<td class="center" style="vertical-align: top;">
-					</td>
-					<td>
-					</td>
+										
 				</tr>
+				
 							
 			</table>
 
@@ -23764,7 +23750,7 @@
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
 							
 								<!-- Tabs Heading -->
-								<div class="widget-head widget-custome" style="background: #0B0B3B !important;">
+								<div class="widget-head widget-custome" style="background: #203864 !important;">
 									<ul>
 										<li class="active"><a  class="glyphicons search" href="#tab-1" data-toggle="tab"><i></i>Search</a></li>
 										<li><a  class="glyphicons cargo" href="#tab-2" data-toggle="tab"><i></i>Category</a></li>
@@ -23840,14 +23826,14 @@
 	    <a class="view-details">
 	        <img class="main-image" src="#= image_url!==null ? image_url : banhji.no_image #" alt="#=name#" title="#=name#">
 	    </a>
-	    <div style="background: \#496cad; padding-bottom: 49px;">
-		        <strong style="color: \#fff;">#=name#</strong>
-		        <span style="color: \#fff;" class="price"><span>$</span><span data-bind="text: price"></span></span>
+	    <div style=" padding-bottom: 49px;">
+		        <strong style="color: \#2B569A;">#=name#</strong>
+		        <span style="color: \#2B569A;" class="price"><span>$</span><span data-bind="text: price"></span></span>
 	    	
 	    
 
 		    <div class="add-to-cart row-fluid""> 
-		    	<span class="span5" data-bind="click: addQuote" style="background: \#0B0B3B; padding: 5px; cursor: pointer; width: 60px; margin-left: 7px; color: \#fff;"> Quote </span>
+		    	<span class="span5" data-bind="click: addQuote" style="background: \#203864; padding: 5px; cursor: pointer; width: 60px; margin-left: 7px; color: \#fff;"> Quote </span>
 		    	<span class="span6" data-bind="click: addSO" style="background: \#1b8330; padding: 5px; margin-left: 5px; cursor: pointer; width: 58px; color: \#fff;"> Order </span>
 		    </div>
 
@@ -31051,7 +31037,6 @@
 					              				placeholder="e.g. 0001" 
 					              				required data-required-msg="required"
 					              				style="width: 157px;" />
-					              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
 									</div>
 									<!-- // Group END -->		
 								</div>
@@ -48184,6 +48169,7 @@
 		successMessage 				: "Saved Successful!",
 		errorMessage 				: "Warning, please review it again!",
 		confirmMessage 				: "Are you sure, you want to delete it?",
+		duplicateNumber 			: "Duplicate Number!",
 		loadData 					: function(){
 			this.loadRate();
 			this.itemTypeDS.read();
@@ -48575,7 +48561,7 @@
 	});
 	banhji.account =  kendo.observable({
     	lang 					: langVM,
-    	dataSource 				: banhji.source.accountDS,
+    	dataSource 				: dataStore(apiUrl + "accounts"),
     	deleteDS 				: dataStore(apiUrl + "account_lines"),
     	numberDS 				: dataStore(apiUrl + "accounts"),
     	accountTypeDS 			: banhji.source.accountTypeDS,
@@ -48620,15 +48606,13 @@
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
     	obj 					: null,
-    	isEdit 		 			: false,
     	isProtected 			: false,
         saveClose 				: false,
 		showConfirm 			: false,
 		isDuplicateNumber 		: false,
     	showBank 				: false,
     	pageLoad 				: function(id){
-			if(id){
-				this.set("isEdit", true);						
+			if(id){					
 				this.loadObj(id);
 			}else{
 				if(this.get("obj")==null){
@@ -48643,7 +48627,7 @@
 			
 			if(obj.number!==""){
 
-				if(this.get("isEdit")){
+				if(obj.isNew()==false){
 					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
 				}
 				
@@ -48715,8 +48699,6 @@
     	},    	 	   	
       	addEmpty 				: function(){
       		this.dataSource.data([]);
-      		this.set("isEdit", false);
-      		this.set("obj", null);
 
       		this.dataSource.insert(0,{
       			account_type_id 		: 0,
@@ -48773,15 +48755,14 @@
 					//Save New
 					self.addEmpty();
 				}
+
+				banhji.source.accountDS.fetch();
 			});
 		},
 		cancel 					: function(){
 			this.dataSource.cancelChanges();
 			this.dataSource.data([]);
-
-			if(this.get("isEdit")){
-				this.dataSource.filter([]);
-			}
+			this.set("obj", null);
 
 			banhji.userManagement.removeMultiTask("account");
 		},
@@ -54015,7 +53996,7 @@
         obj 					: null,
         saveClose 				: false,
 		showConfirm 			: false,
-		isDuplicateNumber 		: false,
+		notDuplicateNumber 		: true,
 		phFullname 				: "Supplier Name ...",
 		contact_type_id 		: 0,
 		pageLoad 				: function(id, is_pattern){
@@ -54084,7 +54065,7 @@
 			
 			if(obj.number!==""){
 
-				if(this.get("isEdit")){
+				if(obj.isNew()==false){
 					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
 				}
 
@@ -54100,13 +54081,11 @@
 					var view = self.existingDS.view();
 					
 					if(view.length>0){
-				 		self.set("isDuplicateNumber", true);						
+				 		self.set("notDuplicateNumber", false);						
 					}else{
-						self.set("isDuplicateNumber", false);
+						self.set("notDuplicateNumber", true);
 					}
 				});							
-			}else{
-				this.set("isDuplicateNumber", false);
 			}			
 		},
 		generateNumber 			: function(){
@@ -60795,7 +60774,7 @@
         obj 					: null,
         saveClose 				: false,
 		showConfirm 			: false,
-		isDuplicateNumber 		: false,
+		notDuplicateNumber 		: true,
 		phFullname 				: "Customer Name ...",
 		contact_type_id 		: 0,						
 		pageLoad 				: function(id, is_pattern){
@@ -60864,7 +60843,7 @@
 			
 			if(obj.number!==""){
 
-				if(this.get("isEdit")){
+				if(obj.isNew()==false){
 					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
 				}
 
@@ -60880,14 +60859,12 @@
 					var view = self.existingDS.view();
 					
 					if(view.length>0){
-				 		self.set("isDuplicateNumber", true);						
+				 		self.set("notDuplicateNumber", false);
 					}else{
-						self.set("isDuplicateNumber", false);
+						self.set("notDuplicateNumber", true);
 					}
-				});							
-			}else{
-				this.set("isDuplicateNumber", false);
-			}			
+				});
+			}		
 		},
 		generateNumber 			: function(){
 			var self = this, obj = this.get("obj");
@@ -73996,7 +73973,7 @@
     });	
     banhji.item = kendo.observable({
     	lang 					: langVM,    	
-    	dataSource 				: banhji.source.itemDS,
+    	dataSource 				: dataStore(apiUrl + "items"),
     	patternDS 				: dataStore(apiUrl + "items"),
     	deleteDS 				: dataStore(apiUrl + "transactions/line"),
     	categoryDS 				: banhji.source.inventoryCategoryDS,
@@ -74021,20 +73998,20 @@
     	isEdit 					: false,
     	saveClose 				: false,
 		showConfirm 			: false,
-		isDuplicateNumber 		: false,
+		notDuplicateNumber 		: true,
 		user_id					: banhji.source.user_id,
-    	pageLoad 				: function(id, is_pattern){			
+    	pageLoad 				: function(id, is_pattern){
 			if(id){
-				this.set("isEdit", true);						
+				this.set("isEdit", true);
 				this.loadObj(id, is_pattern);
-			}else{				
+			}else{
 				if(this.get("isEdit") || this.dataSource.total()==0){
 					this.addEmpty();
-				}								
-			}  																							
+				}
+			}
 		},
 		//Upload
-		onSelect 				: function(e){			
+		onSelect 				: function(e){
 	        // Array with information about the uploaded files
 	        var self = this, 
 	        files = e.files[0],
@@ -74045,7 +74022,7 @@
 	            var mapImage = event.target.result;
 	            self.obj.set('image_url', mapImage);
 	        }
-	        fileReader.readAsDataURL(files.rawFile);			
+	        fileReader.readAsDataURL(files.rawFile);
 			
 	        // Check the extension of each file and abort the upload if it is not .jpg	       
             if (files.extension.toLowerCase() === ".jpg"
@@ -74073,24 +74050,23 @@
             		created_at 		: new Date(),
 
             		file 			: files.rawFile
-            	});	            	            			            		            
+            	});
             }else{
             	alert("This type of file is not allowed to attach.");
             }
-	       
 	    },	    
 	    saveAttachment 	 		: function(){
-	    	$.each(this.attachmentDS.data(), function(index, value){	    		
+	    	$.each(this.attachmentDS.data(), function(index, value){
 		    	if(!value.id){
 			    	var params = { 
 		            	Body: value.file, 
 		            	Key: value.key 
 		            };
-		            bucket.upload(params, function (err, data) {		                
+		            bucket.upload(params, function (err, data) {
 	                	// console.log(err, data);
 	                	// var url = data.Location;                
 	            	});
-            	}	            
+            	}
             });
 
             this.attachmentDS.sync();
@@ -74132,7 +74108,7 @@
 		savePattern 			: function(category_id, item_id){
 			var data = banhji.itemSetting.categoryDS.get(category_id);
 			data.set("item_id", item_id);
-			banhji.itemSetting.categoryDS.sync();			
+			banhji.itemSetting.categoryDS.sync();
 			window.history.back();
 		},
 		loadPattern 			: function(){
@@ -74147,7 +74123,7 @@
 				page: 1,
 				pageSize: 1
 			}).then(function(data){
-				var view = self.patternDS.view();				
+				var view = self.patternDS.view();
 
 				if(view.length>0){
 	      			obj.set("item_group_id", view[0].item_group_id),
@@ -74160,15 +74136,15 @@
 	      			obj.set("name", ""),
 	      			obj.set("purchase_description", view[0].purchase_description),
 	      			obj.set("sale_description", view[0].sale_description),
-	      			obj.set("measurements", view[0].measurements),	      			
+	      			obj.set("measurements", view[0].measurements),
 	      			obj.set("cost", view[0].cost),
 	      			obj.set("price", view[0].price),
-	      			obj.set("locale", view[0].locale),	      			     			
+	      			obj.set("locale", view[0].locale),
 	      			obj.set("order_point", view[0].order_point),
 	      			obj.set("income_account_id", view[0].income_account_id),
 	      			obj.set("cogs_account_id", view[0].cogs_account_id),
 	      			obj.set("inventory_account_id", view[0].inventory_account_id),
-	      			obj.set("favorite", view[0].favorite)	      						
+	      			obj.set("favorite", view[0].favorite)
 				}else{
 					obj.set("item_group_id", ""),
 	      			obj.set("brand_id", ""),
@@ -74180,10 +74156,10 @@
 	      			obj.set("name", ""),
 	      			obj.set("purchase_description", ""),
 	      			obj.set("sale_description", ""),
-	      			obj.set("measurements", ""),	      			
+	      			obj.set("measurements", ""),
 	      			obj.set("cost", ""),
 	      			obj.set("price", ""),
-	      			obj.set("locale", ""),	      			     			
+	      			obj.set("locale", ""),
 	      			obj.set("order_point", ""),
 	      			obj.set("income_account_id", ""),
 	      			obj.set("cogs_account_id", ""),
@@ -74196,7 +74172,7 @@
 		addItemPrice 			: function () {
 			var obj = this.get("obj");
 
-      		this.itemPriceDS.add({      			      			
+      		this.itemPriceDS.add({
       			item_id			: obj.id,
       			measurement_id 	: obj.measurement_id,
       			price 			: obj.price,
@@ -74207,7 +74183,7 @@
       	//Number      	
 		checkExistingNumber 	: function(){
 			var self = this, para = [], 
-			obj = this.get("obj");			
+			obj = this.get("obj");
 			
 			if(obj.number!==""){
 
@@ -74227,14 +74203,12 @@
 					var view = self.existingDS.view();
 					
 					if(view.length>0){
-				 		self.set("isDuplicateNumber", true);						
+				 		self.set("notDuplicateNumber", false);						
 					}else{
-						self.set("isDuplicateNumber", false);
+						self.set("notDuplicateNumber", true);
 					}
 				});							
-			}else{
-				this.set("isDuplicateNumber", false);
-			}			
+			}		
 		},
 		generateNumber 			: function(){
 			var self = this, obj = this.get("obj");
@@ -74429,11 +74403,8 @@
 			var self = this, obj = this.get("obj");
 
 			//Edit Mode
-	    	if(this.get("isEdit")){
-	    		//Contact Item has changes
-		    	if(this.itemVendorDS.hasChanges() || this.itemCustomerDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+	    	if(obj.isNew()==false){
+		    	obj.set("dirty", true);
 	    	}else{
 	    		this.addItemPrice();
 	    		obj.set("cost", 0);
@@ -74448,7 +74419,7 @@
 			//Save Obj
 			this.objSync()
 			.then(function(data){ //Success												
-				if(self.get("isEdit")==false){
+				if(obj.isNew()==false){
 					$.each(self.itemVendorDS.data(), function(index, value){
 	      				value.set("item_id", data[0].id);
 	      			});
@@ -74492,6 +74463,8 @@
 					//Save New
 					self.addEmpty();
 				}
+
+				banhji.source.itemDS.fetch();
 			});
 		},
 		cancel 					: function(){
@@ -81722,11 +81695,25 @@
 
 				if(banhji.pageLoaded["vendor"]==undefined){
 					banhji.pageLoaded["vendor"] = true;
-			        var validator = $("#example").kendoValidator().data("kendoValidator");
+			        
+			        var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
+
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+						if(validator.validate()){
 			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
@@ -81736,7 +81723,7 @@
 					$("#saveClose").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+						if(validator.validate()){
 							vm.set("saveClose", true);
 			            	vm.save();
 				        }else{
@@ -82752,11 +82739,24 @@
 				if(banhji.pageLoaded["customer"]==undefined){
 					banhji.pageLoaded["customer"] = true;
 
-			        var validator = $("#example").kendoValidator().data("kendoValidator");
-			        $("#saveNew").click(function(e){
-						//e.preventDefault();
+			        var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
 
-						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+			        $("#saveNew").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate()){
 			            	vm.save();
 				        }else{
 				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
@@ -82766,7 +82766,7 @@
 					$("#saveClose").click(function(e){
 						e.preventDefault();
 
-						if(validator.validate() && vm.get("isDuplicateNumber")==false){
+						if(validator.validate()){
 							vm.set("saveClose", true);
 			            	vm.save();
 				        }else{
@@ -84605,7 +84605,20 @@
 				if(banhji.pageLoaded["item"]==undefined){
 					banhji.pageLoaded["item"] = true;
 					
-					var validator = $("#example").kendoValidator().data("kendoValidator");
+					var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
+
 			        $("#saveNew").click(function(e){
 						e.preventDefault();
 
