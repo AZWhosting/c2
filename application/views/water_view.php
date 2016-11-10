@@ -420,13 +420,7 @@
 	        <ul>
 	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.customer_type"></span></span></a>
 
-	            </li>
-	            <li><a href="#tab2-4" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
-	            </li>
-	            <li><a href="#tab3-4" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_terms"></span></span></a>
-	            </li>
-	            <li><a href="#tab4-4" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span></a>
-	            </li>	                        
+	            </li>                        
 	        </ul>
 	    </div>
 	    <!-- // Tabs Heading END -->
@@ -448,10 +442,11 @@
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
-	            				<th class="center"><span data-bind="text: lang.lang.type"></span></th>
-	            				<th class="center"><span data-bind="text: lang.lang.abbr"></span></th>
-	            				<th class="center"><span data-bind="text: lang.lang.is_company"></span></th>
-	            				<th class="center"></th>
+	            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
+	            				<th class="center"><span>Usage Type</span></th>
+	            				<th class="center"><span>Valid From</span></th>
+	            				<th class="center"><span>Valid To</span></th>
+	            				<th class="center">Action</th>
 	            			</tr>
 	            		</thead>
 	            		<!--tbody data-role="listview"	            				
@@ -461,78 +456,6 @@
 	            	</table>		            
 	            </div>
 	            <!-- // CUSTOMER TYPE END -->
-
-	            <!-- PAYMENT METHOD -->
-	            <div class="tab-pane" id="tab2-4">
-	            	<div class="input-append">
-					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
-					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_method"></span></button>
-					</div>
-	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-	            		<thead>
-	            			<tr>
-	            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-	            				<th class="center"></th>
-	            			</tr>
-	            		</thead>
-	            		<!--tbody data-role="listview"	            				
-		            			data-edit-template="customerSetting-edit-payment-method-template"
-				                data-template="customerSetting-payment-method-template"
-				                data-bind="source: paymentMethodDS"></tbody-->
-	            	</table>			            
-	            </div>
-	            <!-- // PAYMENT METHOD END -->
-
-	            <!-- PAYMENT TERM -->
-	            <div class="tab-pane" id="tab3-4">
-            		<div class="input-append">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="net due ..." data-bind="value: paymentTermNetDue">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="period ..." data-bind="value: paymentTermPeriod">
-					    <input class="span3" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">
-					    <button class="btn btn-default" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_term"></span></button>
-					</div>
-	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-	            		<thead>
-	            			<tr>
-	            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-	            				<th class="center"><span data-bind="text: lang.lang.net_due"></span></th>
-	            				<th class="center"><span data-bind="text: lang.lang.discount_period"></span></th>
-	            				<th class="center"><span data-bind="text: lang.lang.discount_percentage"></span></th>
-	            				<th class="center"></th>
-	            			</tr>
-	            		</thead>
-	            		<!--tbody data-role="listview"	            				
-		            			data-edit-template="customerSetting-edit-payment-term-template"
-				                data-template="customerSetting-payment-term-template"
-				                data-bind="source: paymentTermDS"></tbody-->
-	            	</table>
-	            </div>
-	            <!-- // PAYMENT TERM END -->
-
-	            <!-- Tab Invocice Custom content -->
-	            <div class="tab-pane" id="tab4-4">
-            		
-	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-	            		<thead>
-	            			<tr class="widget-head">
-	            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-	            				<th class="center"><span data-bind="text: lang.lang.form_type"></span></th>
-	            				<th class="center"><span data-bind="text: lang.lang.last_edited"></span></th>
-	            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
-	            			</tr>
-	            		</thead>
-	            		<!--tbody data-role="listview"
-								 data-selectable="false"
-				                 data-template="customerSetting-form-template"
-				                 data-bind="source: txnTemplateDS">				            
-	            		</tbody-->
-	            	</table>
-
-	            	<a id="addNew" class="btn-icon btn-primary glyphicons ok_2" data-bind="click: goInvoiceCustom" style="width: 110px;"><i></i>Add New</a>
-
-	            </div>
-	            <!-- // Tab Invoice Custom content END -->
 
 	        </div>
 	    </div>
@@ -4787,6 +4710,83 @@
 	/*************************
 	*	Water Section   	* 
 	**************************/
+	banhji.item = kendo.observable({
+		dataSource 	: null,
+		addNew 		: function() {
+			banhji.item.dataSource.add({
+				description : null,
+				type 		: null,
+				rate 		: null,
+				tierFrom 	: null,
+				tierTo 		: null,
+				taxed 		: null
+			});
+		},
+		current 	: null,
+		setCurrent 	: function(current) {
+			banhji.item.set('current', current);
+		},
+		remove 		: function(e) {
+			banhji.item.dataSource.remove(e.data);
+		},
+		edit 		: function(e) {
+			banhji.item.setCurrent(e.data);
+		},
+		cancel 		: function() {
+			banhji.item.dataSource.cancelChanges();
+		},
+		save 		: function() {
+			var dfd = $.Deferred();
+			banhji.item.dataSource.sync();
+			banhji.item.dataSource.bind('requestEnd', function(e){
+				if(e.response.results) {
+					dfd.resolve(e.response.results);
+				}
+			});
+			banhji.item.dataSource.bind('error', function(e){
+				dfd.reject(e.status);
+			});
+			return dfd.promise();
+		}
+	});
+	banhji.plan = kendo.observable({
+		dataSource 	: null,
+		items 		: banhji.item,
+		current 	: null,
+		setCurrent 	: function(current) {
+			this.set('current', current);
+		},
+		addNew 	  	: function() {
+			this.dataSource.add({
+				name 		: null,
+				type 		: null,
+				validFrom 	: null,
+				validTo 	: null
+			});
+		},
+		remove 		: function(e) {
+			this.dataSource.remove(e.data);
+		},
+		addItem 	: function() {
+			this.items.addNew();
+		},
+		removeItem 	: function(e) {
+			this.items.remove(e);
+		},
+		save 		: function() {
+			var dfd = $.Deferred();
+			banhji.item.dataSource.sync();
+			banhji.item.dataSource.bind('requestEnd', function(e){
+				if(e.response.results) {
+					dfd.resolve(e.response.results);
+				}
+			});
+			banhji.item.dataSource.bind('error', function(e){
+				dfd.reject(e.status);
+			});
+			return dfd.promise();
+		}
+	});
 	banhji.setting = kendo.observable({
 		lang 				: langVM,
 		pageLoad 			: function(){

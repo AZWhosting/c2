@@ -17036,6 +17036,7 @@
 				                <th><span data-bind="text: lang.lang.description"></span></th>
 				                <th style="width: 15%;"><span data-bind="text: lang.lang.quantity"></span></th>
 				                <th style="width: 10%;"><span data-bind="text: lang.lang.price"></span></th>
+				                <th style="width: 10%;" data-bind="visible: showCost"><span >Cost</span></th>
 				                <th style="width: 10%;" data-bind="visible: showDiscount"><span data-bind="text: lang.lang.discount"></span></th>
 				                <th style="width: 10%;" data-bind="visible: showRequiredDate"><span data-bind="text: lang.lang.delivery_date"></span></th>               
 				                <th style="width: 10%;"><span data-bind="text: lang.lang.amount"></span></th>
@@ -17068,6 +17069,10 @@
 									<li>
 										<input type="checkbox" id="chbRequiredDate" class="k-checkbox" data-bind="checked: showRequiredDate">
       									<label class="k-checkbox-label" for="chbRequiredDate"><span data-bind="text: lang.lang.delivery_date"></span></label>
+									</li>
+									<li>
+										<input type="checkbox" id="chbCost" class="k-checkbox" data-bind="checked: showCost">
+      									<label class="k-checkbox-label" for="chbCost"><span>Cost</span></label>
 									</li>															
 								</ul>
 							</div>
@@ -17233,6 +17238,14 @@
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
+		</td>
+		<td class="center" data-bind="visible: showCost">
+			<input  
+					data-role="numerictextbox" 
+					data-format="n"
+					data-spinners="false" 
+					data-bind="value: price, events: {change : changes}" 
+					required data-required-msg="required" style="width: 100%;" />		
 		</td>
 		<td class="center" data-bind="visible: showDiscount">
 			<input data-role="numerictextbox"
@@ -23743,6 +23756,7 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 
 					<br>
+					<br>
 
 					<div class="row-fluid">
 					    <!-- Tabs -->
@@ -23750,22 +23764,22 @@
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
 							
 								<!-- Tabs Heading -->
-								<div class="widget-head">
+								<div class="widget-head widget-custome" style="background: #0B0B3B !important;">
 									<ul>
-										<li class="active"><a class="glyphicons search" href="#tab-1" data-toggle="tab"><i></i>Search</a></li>
-										<li><a class="glyphicons cargo" href="#tab-2" data-toggle="tab"><i></i>Category</a></li>
-										<li><a class="glyphicons" href="#tab-3" data-toggle="tab"><i></i>Favorite</a></li>
+										<li class="active"><a  class="glyphicons search" href="#tab-1" data-toggle="tab"><i></i>Search</a></li>
+										<li><a  class="glyphicons cargo" href="#tab-2" data-toggle="tab"><i></i>Category</a></li>
+										<li><a  class="glyphicons heart" data-toggle="tab" data-bind="click: favorite"><i></i>Favorite</a></li>
 									</ul>
 									<div style="float: right;">
 										<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
-											<a style="margin-top: 4px; line-height: 17px;" class="glyphicons shopping_cart" href="#/quote" >
-												<i></i><span class="badge fix badge-primary" style="position: absolute; left: -8px; top: -9px; background: red;" data-bind="text: quoteLineDS.total()"></span>
+											<a style="color: #fff; margin-top: 4px; line-height: 17px;" class="glyphicons shopping_cart" href="#/quote" >
+												<i></i><span class="badge fix badge-primary" style="color: #fff; position: absolute; left: -8px; top: -9px; background: red;" data-bind="text: quoteLineDS.total()"></span>
 												Quote												
 											</a>
 										</span>
 										<sapn style="position: relative; height: 35px; line-height: 35px; padding-left: 15px; float: left; display: block; border-left: 1px solid #efefef;">
-											<a style="margin-top: 4px; line-height: 17px;" class="glyphicons cart_in" href="#/sale_order" >
-												<i></i><span class="badge fix badge-primary" style="position: absolute; left: -12px; top: -9px; background: red;" data-bind="text: soLineDS.total()"></span>
+											<a style="color: #fff; margin-top: 4px; line-height: 17px;" class="glyphicons cart_in" href="#/sale_order" >
+												<i></i><span class="badge fix badge-primary" style="color: #fff; position: absolute; left: -12px; top: -9px; background: red;" data-bind="text: soLineDS.total()"></span>
 												Sale Order
 											</a>
 										</span>
@@ -23822,17 +23836,22 @@
     </li>
 </script>
 <script id="sale-template" type="text/x-kendo-tmpl">	
-	<li class="products span2" aria-selected="false">
+	<li class="products span2" aria-selected="false" ">
 	    <a class="view-details">
 	        <img class="main-image" src="#= image_url!==null ? image_url : banhji.no_image #" alt="#=name#" title="#=name#">
-	        <strong style="color: \#496cad;">#=name#</strong>
-	        <span class="price"><span>$</span><span data-bind="text: price"></span></span>
 	    </a>
+	    <div style="background: \#496cad; padding-bottom: 49px;">
+		        <strong style="color: \#fff;">#=name#</strong>
+		        <span style="color: \#fff;" class="price"><span>$</span><span data-bind="text: price"></span></span>
+	    	
+	    
 
-	    <div class="add-to-cart row-fluid"> 
-	    	<span class="span5" data-bind="click: addQuote" style="background: \#496cad; padding: 5px; cursor: pointer; width: 60px; margin-left: 7px; color: \#fff;"> Quote </span>
-	    	<span class="span6" data-bind="click: addSO" style="background: \#609450; padding: 5px; margin-left: 5px; cursor: pointer; width: 58px; color: \#fff;"> Order </span>
-	    </div>
+		    <div class="add-to-cart row-fluid""> 
+		    	<span class="span5" data-bind="click: addQuote" style="background: \#0B0B3B; padding: 5px; cursor: pointer; width: 60px; margin-left: 7px; color: \#fff;"> Quote </span>
+		    	<span class="span6" data-bind="click: addSO" style="background: \#1b8330; padding: 5px; margin-left: 5px; cursor: pointer; width: 58px; color: \#fff;"> Order </span>
+		    </div>
+
+		</div>
 	</li>
 </script>
 <script id="saleDetail" type="text/x-kendo-template">
@@ -23850,17 +23869,16 @@
 						<div id="details">
 			                <a id="navigate-prev" href=""></a>
 			                	<div id="detail-info">
-			                		<img class="main-image" src="<?php echo base_url();?>assets/chirashi-sushi.jpg" alt="Selected Product" title="Selected Product" >
+			                		<img class="main-image" width="200px" src="<?php echo base_url();?>assets/chirashi-sushi.jpg" alt="Selected Product" title="Selected Product" >
 			                		<div id="description">
 										<h1>Chirashi sushi</h1>
 										<p>Sushi bar variety with sushi rice.</p>
 										<div id="details-total">
-											<p id="price-quantity" data-bind="text: price">$21.00</p>
-											<button class="buy" data-bind="click: addToCart">Add to cart</button>
+											<p id="price-quantity" data-bind="">$21.00</p>
+											<button class="buy" data-bind="">Add to cart</button>
 										</div>
 									</div>
 								</div>
-							</div>
 							<div id="nutrition-info">
 								<h2>Nutritional Information</h2>
 								<dl>
@@ -23881,12 +23899,49 @@
 						</div>
 					</div>
 					<div id="details-bottom-image"></div>
-
 				</div>
 			</div>
 		</div>
 	</div>
 </script>
+<script type="text/x-kendo-template" id="detail-template">
+
+	<div id="details-top-image">
+	</div>
+
+	<div id="details">
+        <a data-bind="attr: {href: previousHref }" id="navigate-prev"></a><div
+		id="detail-info"><img class="main-image"
+		data-bind="attr: { src: imgUrl }" alt="Selected Product" title="Selected Product"/><div
+		id="description">
+				<h1 data-bind="text: current.name"></h1>
+				<p data-bind="text: current.description"></p>
+				<div id="details-total">
+					<p id="price-quantity" data-bind="text: price"></p>
+					<button class="buy" data-bind="click: addToCart">Add to cart</button>
+				</div>
+			</div>
+		</div><div id="nutrition-info"><h2>Nutritional Information</h2>
+				<dl>
+				  <dt>Protein</dt>
+					<dd data-bind="text: current.stats.protein"></dd>
+				  <dt>Fat (total)</dt>
+					<dd data-bind="text: current.stats.fat"></dd>
+				  <dt>Carbohydrate</dt>
+					<dd data-bind="text: current.stats.fat"></dd>
+					  <dt>Energy (kJ)</dt>
+					<dd data-bind="text: current.stats.energy"></dd>
+				  <dt>Energy (kcal)</dt>
+					<dd data-bind="text: kCal"></dd>
+					  <dt>Sugar</dt>
+					<dd data-bind="text: current.stats.sugar"></dd>
+				</dl>
+		</div><a data-bind="attr: { href: nextHref }" id="navigate-next"></a>
+	</div>
+
+    <div id="details-bottom-image"></div>
+</script>
+
 
 <script id="saleRecurring" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -30470,8 +30525,8 @@
 						
 						<a href="#/inventory_sale_item_analysis"><div class="widget-body alert-info" style="min-height: 148px;">
 							
-							<div align="center" class="text-large strong" data-bind="text: grossProfitMargin"></div>
-							<table width="100%">
+							<div style="margin-top: 15%;" align="center" class="text-large strong" data-bind="text: grossProfitMargin"></div>
+							<!-- <table width="100%">
 								<tr align="center">
 									<td>										
 										<span data-bind="text: product"></span>
@@ -30479,7 +30534,7 @@
 										<span data-bind="text: lang.lang.product"></span>
 									</td>
 								</tr>
-							</table>
+							</table> -->
 						</div></a>
 						<!-- // Widget footer END -->
 						
@@ -61811,7 +61866,7 @@
 			}).then(function(result){				
 				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
-				this.lineDS.data([]);
+				self.lineDS.data([]);
 
 				if(self.get("saveClose")){
 					//Save Close					
@@ -62139,6 +62194,7 @@
 		showConfirm 		: false,
 		statusSrc 			: "",
 		enableRef 	 		: false,
+		showCost 			: false,
 		showDiscount 		: false,
 		showRequiredDate 	: false,
 		sub_total 			: 0,		
@@ -62704,7 +62760,7 @@
 			}).then(function(result){				
 				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
-				this.lineDS.data([]);
+				self.lineDS.data([]);
 				
 				if(self.get("saveClose")){
 					//Save Close					
@@ -70396,6 +70452,7 @@
 		categoryDS 			: dataStore(apiUrl + 'categories'),
 		obj 				: null,
 		searchText 			: "",
+		isFavorite 			: false,
 		user_id 			: banhji.source.user_id,
 		pageLoad 			: function(){			
 			if(this.categoryDS.total()==0){
@@ -70416,6 +70473,11 @@
       			);
       		}
 
+      		if(this.get("isFavorite")){
+      			para.push({ field:"favorite", value:true });
+      			this.set("isFavorite", false);
+      		}
+
 			para.push({ field:"item_type_id", operator:"where_in", value:[1,4] });
 
 			this.dataSource.query({
@@ -70423,6 +70485,10 @@
 				page:1,
 				pageSize:100
 			});
+		},
+		favorite 			: function(){
+			this.set("isFavorite", true);
+			this.search();
 		},
 		selectedType 		: function(e){
 			var data = e.data;
@@ -78795,9 +78861,7 @@
 		}
     });
 
-    /*************************
-	*	Import Section   * 
-	**************************/
+    
 	/*************************
 	*	Import Section   * 
 	**************************/

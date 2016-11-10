@@ -39,9 +39,19 @@
 .widget-head.head-custom ul{
   height: 50px !important;
 }
+.widget-head.widget-custome ul li a{
+  color: #fff !important;
+}
+.widget-head.widget-custome ul li.active a{
+  color: #505050 !important;
+}
 .widget-head.head-custom ul li{
   height: 50px!important;
   line-height: 50px!important;
+}
+.glyphicons.shopping_cart i:before,
+.glyphicons.cart_in i:before{
+  color: #fff;
 }
 .widget-head.head-custom ul li a{
   height: 50px!important;
@@ -191,11 +201,12 @@
     position: relative;
     /*width: 185px;*/
     margin-bottom: 20px;
-    padding: 0 0 55px 0;
+    padding: 0 0 0 0;
     /*background: #fff url(item-separator.png) repeat-y right top;*/
     text-align: center;
     list-style: none;
     border: 1px solid #ddd;
+    min-height: 275px;
 }
 .k-widget.k-listview .products.span2{
   width: 16.4%;
@@ -252,6 +263,14 @@
     border-bottom: 1px solid #ddd;
     overflow: hidden;
     height: 167px;
+    float: left;
+}
+.sale-detail .main-image {
+    width: 200px;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+    height: 200px;
+    float: left;
 }
 .products strong {
     display: inline-block;
@@ -288,19 +307,19 @@
     height: 200px;
 }
 #navigate-prev {
-    display: inline-block;
+    float: left;
     height: 200px;
     width: 100px;
     background: #000 url(nav-prev.png) no-repeat center;
 }
 #detail-info {
-    width: 600px;
+    width: 560px;
     height: 200px;
-    display: inline-block;
+    float: left;
     background: #fff url(item-separator.png) repeat-y right top;
 }
 #description {
-    display: inline-block;
+    float: left;
     position: relative;
     height: 200px;
     vertical-align: top;
@@ -313,7 +332,7 @@
     font-size: 36px;
     line-height: 27px;
     font-weight: normal;
-    display: inline-block;
+    float: left;
 }
 #description p {
     max-width: 300px;
@@ -324,7 +343,7 @@
 #details-total {
     position: absolute;
     bottom: 0;
-    height: 30px;
+    height: 80px;
     line-height: 30px;
     vertical-align: middle;
     padding: 20px 30px;
@@ -332,7 +351,7 @@
     width: 339px;
 }
 #price-quantity {
-    display: inline-block;
+    float: left;
     margin: 0;
     padding: 0;
     font-size: 30px;
@@ -351,6 +370,7 @@
     color: #fff;
     font-size: 12px;
     text-align: center;
+    line-height: 23px;
     text-transform: uppercase;
     background: rgb(214,0,65);
     background: -moz-linear-gradient(top, rgba(214,0,65,1) 0%, rgba(169,0,64,1) 100%);
@@ -368,7 +388,7 @@
     font-weight: bold;
 }
 #nutrition-info {
-    display: inline-block;
+    float: left;
     width: 200px;
     height: 200px;
     font-size: 13px;
@@ -398,7 +418,7 @@
     width: 45px;
 }
 #navigate-next {
-    display: inline-block;
+    float: left;
     height: 200px;
     width: 100px;
     background: #000 url(nav-next.png) no-repeat center;
