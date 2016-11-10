@@ -49189,10 +49189,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+	    		obj.set("dirty", true);
 	    	}	    	
 	    	
 			//Save Obj
@@ -51952,10 +51949,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+	    		obj.set("dirty", true);
 
 		    	//Line has changed
 		    	if(obj.amount!==this.get("original_total") && obj.is_recurring==0){
@@ -52801,10 +52795,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+	    		obj.set("dirty", true);
 
 		    	//Line has changed
 		    	if(obj.amount!==this.get("original_total") && obj.is_recurring==0){
@@ -55005,10 +54996,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changes
-		    	if(this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+		    	obj.set("dirty", true);
 	    	}	    	
 	    	
     		//Save Obj
@@ -55742,10 +55730,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changes
-		    	if(this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+		    	obj.set("dirty", true);
 	    	}	    	
 	    	
     		//Save Obj
@@ -56485,10 +56470,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+		    	obj.set("dirty", true);
 
 		    	//Line has changed
 		    	if(obj.amount!==this.get("original_total") && obj.is_recurring==0){
@@ -57858,10 +57840,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.accountLineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+	    		obj.set("dirty", true);
 
 		    	//Line has changed
 		    	if(obj.amount!==this.get("original_total") && obj.is_recurring==0){
@@ -59103,10 +59082,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+	    		obj.set("dirty", true);
 
 		    	//Line has changed
 		    	if(obj.amount!==this.get("original_total")){
@@ -61837,10 +61813,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changes
-		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+		    	obj.set("dirty", true);
 	    	}	    	
 	    	
     		//Save Obj
@@ -62731,10 +62704,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changes
-		    	if(this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+		    	obj.set("dirty", true);
 	    	}	    	
 	    	
 			//Save Obj
@@ -63476,10 +63446,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+		    	obj.set("dirty", true);
 		    	
 		    	//Line has changed
 		    	if(obj.amount!==this.get("original_total") && obj.is_recurring==0){
@@ -64619,10 +64586,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+		    	obj.set("dirty", true);
 
 		    	//Line has changed
 		    	if(obj.amount!==this.get("original_total") && obj.is_recurring==0){
@@ -65975,10 +65939,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+		    	obj.set("dirty", true);
 		    	
 		    	//Line has changed
 		    	if(obj.amount!==this.get("original_total") && obj.is_recurring==0){
@@ -67031,10 +66992,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+		    	obj.set("dirty", true);
 	    	}	    	
 	    	
 			//Save Obj
@@ -68043,10 +68001,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+		    	obj.set("dirty", true);
 
 		    	//Line has changed
 		    	if(obj.amount!==this.get("original_total")){
@@ -71686,10 +71641,7 @@
 
 	    	//Edit Mode
 	    	if(this.get("isEdit")){
-	    		//Upload has changed
-		    	if(this.lineDS.hasChanges() || this.attachmentDS.hasChanges()){
-		    		obj.set("dirty", true);
-		    	}
+	    		obj.set("dirty", true);
 
 		    	//Line has changed
 		    	if(obj.amount!==this.get("original_total")){
