@@ -320,11 +320,11 @@
 #navigate-prev {
     float: left;
     height: 200px;
-    width: 100px;
+    width: 50px;
     background: #203864 url(nav-prev.png) no-repeat center;
 }
 #detail-info {
-    width: 560px;
+    width: 510px;
     height: 200px;
     float: left;
     background: #fff url(item-separator.png) repeat-y right top;
@@ -338,7 +338,7 @@
 }
 #description h1 {
     padding-top: 30px;
-    padding-left: 30px;
+    padding-left: 15px;
     padding-bottom: 10px;
     font-size: 36px;
     line-height: 27px;
@@ -359,7 +359,7 @@
     vertical-align: middle;
     padding: 20px 30px;
     border-top: 1px dotted #a6a6a6;
-    width: 339px;
+    width: 307px;
 }
 #price-quantity {
     float: left;
@@ -431,7 +431,7 @@
 #navigate-next {
     float: left;
     height: 200px;
-    width: 100px;
+    width: 50px;
     background: #203864 url(nav-next.png) no-repeat center;
 }
 
@@ -2392,6 +2392,34 @@ a.aWelcome, a.aCustomer, a.aSupplier, a.aInventory, a.aAccount {
     bottom: -10px;
     right: 0;
 }
+
+/*Sale Detail Top Up*/
+.popRightBlog-saleDetail {
+    width: 810px;
+    height: 250px;
+    left: 17%;
+    top: 20%
+}
+.popRightBlog-saleDetail textarea {
+    height: 150px;
+    min-height: 150px;
+    max-height: 150px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%
+}
+.popRightBlog-saleDetail input[type="email"],
+.popRightBlog-saleDetail input[type="text"] {
+    width: 65%;
+    margin-bottom: 2px;
+    padding: 5px;
+    border: 1px solid #ccc
+}
+.popRightBlog-saleDetail input[type="text"] {
+    width: 34%;
+    margin-right: 2px
+}
+
 
 
   /* flip the pane when hovered */

@@ -23810,6 +23810,45 @@
 				    	 data-auto-bind="false"
 			             data-role="pager" data-bind="source: dataSource"></div>
 
+
+			        <!--  Top Up Sale Detail -->
+			        <div class="modal fade popRightBlog-saleDetail" id="saleDetail">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-right: 15px; font-size: 35px; color: #000;">×</button>
+						<div class="row-fluid sale-detail">
+							<div id="details">
+				                <a id="navigate-prev" data-bind="click: prevItem"></a>
+			                	
+			                	<div id="detail-info" style="background: none;">
+			                		<img class="main-image" width="200px" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" style="border: 1px solid #ddd;">
+			                		<div id="description">
+										<h1 data-bind="text:obj.name"></h1>
+										<p data-bind="text:obj.sale_description"></p>
+										<div id="details-total">
+											<p id="price-quantity" data-bind="text:obj.item_prices[0].price" style="font-weight: 600;color: #333;background: none; font-size: 30px;padding-left: 0;"></p>												
+										</div>
+									</div>
+								</div>
+								<div id="nutrition-info" style="border: 1px solid #ddd;">
+									<h2 style="padding-top: 15PX;padding-bottom: 5px;padding-left: 10px;font-size: 20px;font-weight: 600;">Information</h2>
+									<dl>
+										<dt style="padding-left: 10px;">Categories:</dt>
+										<dd data-bind="text:obj.category"></dd>
+										<dt style="padding-left: 10px;">UOM</dt>
+										<dd data-bind="text:obj.measurement_id"></dd>
+										<dt style="padding-left: 10px;">On Hand</dt>
+										<dd data-bind="text:on_hand"></dd>
+										<dt style="padding-left: 10px;">On SO</dt>
+										<dd data-bind="text:on_so"></dd>
+										<dt style="padding-left: 10px;">On PO</dt>
+										<dd data-bind="text:on_po"></dd>
+									</dl>
+								</div>
+
+								<a data-bind="click: nextItem" id="navigate-next"></a>
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -23822,21 +23861,18 @@
     </li>
 </script>
 <script id="sale-template" type="text/x-kendo-tmpl">	
-	<li class="products span2" aria-selected="false" ">
-	    <a class="view-details">
+	<li class="products span2" aria-selected="false" >
+	    <a class="view-details" href="\#saleDetail" data-toggle="modal" data-bind="click:loadDetail">
 	        <img class="main-image" src="#= image_url!==null ? image_url : banhji.no_image #" alt="#=name#" title="#=name#">
 	    </a>
 	    <div style=" padding-bottom: 49px;">
-		        <strong style="color: \#2B569A;">#=name#</strong>
-		        <span style="color: \#2B569A;" class="price"><span>$</span><span data-bind="text: price"></span></span>
-	    	
-	    
+	        <strong style="color: \#2B569A;">#=name#</strong>
+	        <span style="color: \#2B569A;" class="price"><span>$</span><span data-bind="text: price"></span></span>
 
 		    <div class="add-to-cart row-fluid""> 
 		    	<span class="span5" data-bind="click: addQuote" style="background: \#203864; padding: 5px; cursor: pointer; width: 60px; margin-left: 7px; color: \#fff;"> Quote </span>
 		    	<span class="span6" data-bind="click: addSO" style="background: \#1b8330; padding: 5px; margin-left: 5px; cursor: pointer; width: 58px; color: \#fff;"> Order </span>
 		    </div>
-
 		</div>
 	</li>
 </script>
@@ -70379,12 +70415,16 @@
 	banhji.sale = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + 'items'),
+		txnDS  				: dataStore(apiUrl + 'transactions/line'),
 		quoteLineDS  		: banhji.quote.lineDS,
 		soLineDS  			: banhji.saleOrder.lineDS,
 		categoryDS 			: dataStore(apiUrl + 'categories'),
 		obj 				: null,
 		searchText 			: "",
 		isFavorite 			: false,
+		on_hand 			: 0,
+		on_so 				: 0,
+		on_po 				: 0,
 		user_id 			: banhji.source.user_id,
 		pageLoad 			: function(){			
 			if(this.categoryDS.total()==0){
@@ -70500,6 +70540,83 @@
 					item_prices 		: data.item_prices
 				});
 			}			
+		},
+		loadDetail			: function(e){
+			var data = e.data;
+			this.set("obj", data);
+			this.loadData();
+		},
+		loadData 			: function(){
+			var self = this, obj = this.get("obj"), on_so = 0, on_po = 0;
+
+			this.txnDS.query({
+				filter:[
+					{ field:"item_id", value:obj.id },
+					{ field:"type", operator:"where_related", model:"transaction", value:"Purchase_Order" },
+					{ field:"status", operator:"where_related", model:"transaction", value:0 },
+					{ field:"is_recurring", operator:"where_related", model:"transaction", value:0 },
+					{ field:"deleted", operator:"where_related", model:"transaction", value:0 }
+				],
+				page:1,
+				pageSize:1000
+			}).then(function(){
+				var view = self.txnDS.view();
+
+				$.each(view, function(index, value){
+					on_po += value.quantity;
+				});
+
+				self.set("on_po", on_po);
+			});
+
+			this.txnDS.query({
+				filter:[
+					{ field:"item_id", value:obj.id },
+					{ field:"type", operator:"where_related", model:"transaction", value:"Sale_Order" },
+					{ field:"status", operator:"where_related", model:"transaction", value:0 },
+					{ field:"is_recurring", operator:"where_related", model:"transaction", value:0 },
+					{ field:"deleted", operator:"where_related", model:"transaction", value:0 }
+				],
+				page:1,
+				pageSize:1000
+			}).then(function(){
+				var view = self.txnDS.view();
+
+				$.each(view, function(index, value){
+					on_so += value.quantity;
+				});
+				
+				self.set("on_so", on_so);
+			});
+		},
+		prevItem 			: function(){
+			var obj = this.get("obj"), 
+			index = this.dataSource.indexOf(obj);
+
+			index--;
+
+	        if (index === -1) {
+	        	
+	           	index = this.dataSource.data().length - 1;
+	        }
+
+	        var data = this.dataSource.at(index);
+			this.set("obj", data);
+			this.loadData();
+		},
+		nextItem 			: function(){
+			var obj = this.get("obj"), 
+			index = this.dataSource.indexOf(obj);
+
+			index++;
+
+			if (index === this.dataSource.data().length) {
+	           	index = 0;
+	        }
+
+	        var data = this.dataSource.at(index);
+			this.set("obj", data);
+			this.loadData();
 		}
 	});
 	banhji.saleRecurring = kendo.observable({

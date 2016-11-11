@@ -23,3 +23,6 @@ p.addItem.glyphicons.circle_plus i:before {
 p.addItem.glyphicons.circle_remove i:before {
 	color: #a22314;
 }
+.box-generic-noborder {
+	min-height: 155px;
+}
