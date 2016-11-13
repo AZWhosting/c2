@@ -366,6 +366,7 @@ a.enquiries:hover .enquiry-content, .enquiry-content:hover {
                     var verificationCode = prompt('Please input verification code ' ,'');
                     var newPassword = prompt('Enter new password ' ,'');
                     cognitoUser.confirmPassword(verificationCode, newPassword, this);
+                    window.location.replace("<?php echo base_url(); ?>login");
                 }
             });
           }

@@ -70,7 +70,7 @@ class Accounts extends REST_Controller {
 		    		}else if($value["operator"]=="or_where"){
 		    			$obj->or_where($value["field"], $value["value"]);		    				    		
 		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    			$obj->where($value["field"], $value["value"]);
 		    		}
 	    		}else{	    			
 	    			$obj->where($value["field"], $value["value"]);	    				    			
