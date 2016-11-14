@@ -3781,6 +3781,17 @@
 						</tfoot>
 					</table>
 
+					<br>
+
+					<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
+						<thead>
+							<tr>
+								<th style="font-weight: bold; font-size: large;">TOTAL LIABILITY & EQUITY</th>
+								<th width="15%" data-format="n" data-bind="text: totalLiabilityEquity" style="font-weight: bold; font-size: large;" align="right"></th>
+							</tr>
+						</thead>
+					</table>
+
 		        </div>		        
 			</div>							
 		</div>
@@ -50247,6 +50258,7 @@
 		},
 		search 				: function(){
 			var self = this, as_of = this.get("as_of");
+			this.set("totalLiabilityEquity", 0);
 
 			if(as_of){
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");

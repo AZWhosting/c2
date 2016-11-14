@@ -1156,7 +1156,7 @@ class Accounting_reports extends REST_Controller {
 		$this->response($data, 200);	
 	}
 
-	//GET BALANCE SHEET
+	//GET BALANCE SHEET (Statement of Financial Position)
 	function balance_sheet_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
@@ -1207,7 +1207,7 @@ class Accounting_reports extends REST_Controller {
 				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->rate);				
 			}else{
 				$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->rate);					
-			}
+			}			
 
 			//Group by account_id
 			if(isset($objList[$value->account_id])){
@@ -1217,6 +1217,7 @@ class Accounting_reports extends REST_Controller {
 				$objList[$value->account_id]["account_type_id"] = $value->account_account_type_id;				
 				$objList[$value->account_id]["sub_of_id"] 		= $value->account_account_type_sub_of_id;
 				$objList[$value->account_id]["type"] 			= $value->account_account_type_name;
+				$objList[$value->account_id]["nature"] 			= $value->account_account_type_nature;				
 				$objList[$value->account_id]["number"] 			= $value->account_number;
 				$objList[$value->account_id]["name"] 			= $value->account_name;
 				$objList[$value->account_id]["amount"] 			= $amount;				
@@ -1226,28 +1227,39 @@ class Accounting_reports extends REST_Controller {
 		//Group by account type id
 		$typeList = [];
 		$totalAmount = 0;
-		foreach ($objList as $value) {			
-			$totalAmount += $value["amount"];			
-
+		foreach ($objList as $value) {
 			//Group by account_type_id
 			if(isset($typeList[$value["account_type_id"]])){
 				$typeList[$value["account_type_id"]]["line"][] = array(
 					"id" 		=> $value["id"],
 					"number" 	=> $value["number"],
 					"name" 		=> $value["name"],
-					"amount" 	=> $value["amount"]
+					"amount" 	=> $value["amount"] * $typeList[$value["account_type_id"]]["multiplier"]
 				);
+
+				$totalAmount += $value["amount"] * $typeList[$value["account_type_id"]]["multiplier"];
 			} else {
+				$subOf = new Account_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$subOf->get_by_id($value["sub_of_id"]);
+				
+				$multiplier = 1;
+				if($subOf->nature!==$value["nature"]){
+					$multiplier = -1;
+				};
+
 				$typeList[$value["account_type_id"]]["id"] 			= $value["account_type_id"];
 				$typeList[$value["account_type_id"]]["sub_of_id"] 	= $value["sub_of_id"];
+				$typeList[$value["account_type_id"]]["sub_of_name"] = $subOf->name;
+				$typeList[$value["account_type_id"]]["multiplier"] 	= $multiplier;
 				$typeList[$value["account_type_id"]]["type"] 		= $value["type"];				
 				$typeList[$value["account_type_id"]]["line"][] 		= array(
 					"id" 		=> $value["id"],
 					"number" 	=> $value["number"],
 					"name" 		=> $value["name"],
-					"amount" 	=> $value["amount"]
+					"amount" 	=> $value["amount"] * $multiplier
 				);
 				
+				$totalAmount += $value["amount"] * $multiplier;
 			}			
 		}		
 		
@@ -1257,11 +1269,11 @@ class Accounting_reports extends REST_Controller {
 			if(isset($parentList[$value["sub_of_id"]])){
 				$parentList[$value["sub_of_id"]]["typeLine"][] 	= $value;
 			} else {
-				$subOf = new Account_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$subOf->get_by_id($value["sub_of_id"]);				
+				// $subOf = new Account_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $subOf->get_by_id($value["sub_of_id"]);				
 
-				$parentList[$value["sub_of_id"]]["id"] 			= $subOf->sub_of_id;
-				$parentList[$value["sub_of_id"]]["name"] 		= $subOf->name;				
+				$parentList[$value["sub_of_id"]]["id"] 			= $value["sub_of_id"];
+				$parentList[$value["sub_of_id"]]["name"] 		= $value["sub_of_name"];				
 				$parentList[$value["sub_of_id"]]["typeLine"][] 	= $value;
 			}
 		}
