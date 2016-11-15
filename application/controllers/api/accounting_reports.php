@@ -1290,6 +1290,174 @@ class Accounting_reports extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
+	function balance_sheet_equity_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
+		$deleted = 0;
+
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		$asOf = date("Y-m-d");
+		$typeID = [];
+		if(!empty($filters) && isset($filters)){
+	    	$asOf = $filters[0]["value"];
+	    	$obj->where_in_related("account", "account_type_id", $filters[1]["value"]);		 			
+		}		
+
+		//Fiscal Date
+		//Note: selecting date must greater than startFiscalDate AND smaller or equal to endFiscalDate		
+		$asOfYear = date("Y",strtotime($asOf));
+		$fdate = $asOfYear ."-". $this->fiscalDate;
+		if($asOf > $fdate){
+			$startDate 	= $asOfYear ."-". $this->fiscalDate;
+			$endDate 	= intval($asOfYear)+1 ."-". $this->fiscalDate;
+		}else{
+			$startDate 	= intval($asOfYear)-1 ."-". $this->fiscalDate;
+			$endDate 	= $asOfYear ."-". $this->fiscalDate;
+		}
+		
+		//OBJ (To Start Fiscal Date)
+		$obj->include_related("account", array("account_type_id","number","name"));
+		$obj->include_related("account/account_type", array("sub_of_id","name","nature"));		
+		$obj->where_related("transaction", "issued_date <=", $startDate);
+		$obj->where_related("transaction", "is_recurring", 0);
+		$obj->where_related("transaction", "deleted", 0);
+		$obj->where("deleted", 0);
+		$obj->order_by_related("account", "account_type_id", "desc");
+		$obj->order_by_related("account", "number", "asc");		
+		$obj->get_iterated();
+		
+		//Sum Dr and Cr					
+		$objList = [];
+		foreach ($obj as $value) {
+			$amount = 0;
+			if($value->account_account_type_nature=="Dr"){
+				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->rate);				
+			}else{
+				$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->rate);					
+			}			
+
+			//Group by account_id
+			if(isset($objList[$value->account_id])){
+				$objList[$value->account_id]["amount"] += $amount;
+			} else {
+				$objList[$value->account_id]["id"] 				= $value->account_id;
+				$objList[$value->account_id]["account_type_id"] = $value->account_account_type_id;				
+				$objList[$value->account_id]["sub_of_id"] 		= $value->account_account_type_sub_of_id;
+				$objList[$value->account_id]["type"] 			= $value->account_account_type_name;
+				$objList[$value->account_id]["nature"] 			= $value->account_account_type_nature;				
+				$objList[$value->account_id]["number"] 			= $value->account_number;
+				$objList[$value->account_id]["name"] 			= $value->account_name;
+				$objList[$value->account_id]["amount"] 			= $amount;				
+			}			
+		}
+
+		//Group by account type id
+		$typeList = [];
+		$totalAmount = 0;
+		foreach ($objList as $value) {
+			//Group by account_type_id
+			if(isset($typeList[$value["account_type_id"]])){
+				$typeList[$value["account_type_id"]]["line"][] = array(
+					"id" 		=> $value["id"],
+					"number" 	=> $value["number"],
+					"name" 		=> $value["name"],
+					"amount" 	=> $value["amount"] * $typeList[$value["account_type_id"]]["multiplier"]
+				);
+
+				$totalAmount += $value["amount"] * $typeList[$value["account_type_id"]]["multiplier"];
+			} else {
+				$subOf = new Account_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$subOf->get_by_id($value["sub_of_id"]);
+				
+				$multiplier = 1;
+				if($subOf->nature!==$value["nature"]){
+					$multiplier = -1;
+				};
+
+				$typeList[$value["account_type_id"]]["id"] 			= $value["account_type_id"];
+				$typeList[$value["account_type_id"]]["sub_of_id"] 	= $value["sub_of_id"];
+				$typeList[$value["account_type_id"]]["sub_of_name"] = $subOf->name;
+				$typeList[$value["account_type_id"]]["multiplier"] 	= $multiplier;
+				$typeList[$value["account_type_id"]]["type"] 		= $value["type"];				
+				$typeList[$value["account_type_id"]]["line"][] 		= array(
+					"id" 		=> $value["id"],
+					"number" 	=> $value["number"],
+					"name" 		=> $value["name"],
+					"amount" 	=> $value["amount"] * $multiplier
+				);
+				
+				$totalAmount += $value["amount"] * $multiplier;
+			}			
+		}
+
+		//CURRENT PROFIT AND LOSS (startFiscalDate to As Of) => Profit for the year
+		$currPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$currPL->include_related("account", array("number","name"));
+		$currPL->include_related("account/account_type", array("name","nature"));		
+		$currPL->where_related("account", "account_type_id >=", 35);
+		$currPL->where_related("account", "account_type_id <=", 43);
+		$currPL->where_related("transaction", "issued_date >", $startDate);
+		$currPL->where_related("transaction", "issued_date <=", $asOf);
+		$currPL->where_related("transaction", "is_recurring", $is_recurring);
+		$currPL->where_related("transaction", "deleted", $deleted);		
+		$currPL->where("deleted", $deleted);
+		$currPL->get_iterated();
+
+		//Sum dr and cr
+		$sumDr = 0;
+		$sumCr = 0;		
+		foreach ($currPL as $value) {			
+			if($value->dr>0){
+				$sumDr += floatval($value->dr) / floatval($value->rate);
+			}
+			if($value->cr>0){
+				$sumCr += floatval($value->cr) / floatval($value->rate);
+			}		
+		}
+
+		$currentPLAmount = $sumCr - $sumDr;		
+		if(isset($typeList[34])){
+			$typeList[34]["line"][] = array(
+				"id" 		=> 0,
+				"number" 	=> "",
+				"name" 		=> "Profit For The Year",
+				"amount" 	=> $currentPLAmount
+			);
+
+			$totalAmount += $currentPLAmount;
+		}
+		//END CURRENT PROFIT AND LOSS		
+		
+		//Group by sub_of_id
+		$parentList = [];
+		foreach ($typeList as $value) {
+			if(isset($parentList[$value["sub_of_id"]])){
+				$parentList[$value["sub_of_id"]]["typeLine"][] 	= $value;
+			} else {
+				$parentList[$value["sub_of_id"]]["id"] 			= $value["sub_of_id"];
+				$parentList[$value["sub_of_id"]]["name"] 		= $value["sub_of_name"];				
+				$parentList[$value["sub_of_id"]]["typeLine"][] 	= $value;
+			}
+		}
+		
+		$data["totalAmount"] = $totalAmount;
+
+		//Add to results
+		foreach ($parentList as $value) {
+			$data["results"][] = $value;
+		}
+		
+		$data["count"] = count($data["results"]);
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
 
 	//GET INCOME STATEMENT
 	function income_statement_get() {		

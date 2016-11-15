@@ -44881,7 +44881,7 @@
 		lang 				: langVM,
 		dataSource			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
 		liabilityDS			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
-		equityDS			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
+		equityDS			: dataStore(apiUrl + "accounting_reports/balance_sheet_equity"),
 		as_of 				: new Date(),
 		displayDate 		: "",
 		company 			: banhji.institute,
@@ -44934,7 +44934,7 @@
 				//Equity
 				this.equityDS.filter([
 					{ field:"issued_date", value:kendo.toString(new Date(as_of), "yyyy-MM-dd") },
-					{ field:"account_type_id", value:[32,33,34] }
+					{ field:"account_type_id", value:[32,33,34,35,36,37,38,39,40,41,42,43] }
 				]);
 				var unReadEquity = true;
 				this.equityDS.bind("requestEnd", function(e){
