@@ -28791,1534 +28791,6 @@
 
 
 
-
-
-<!-- ***************************
-*	Cash Section      	  *
-**************************** -->
-<script id="cashier" type="text/x-kendo-template">
-	<div class="container-fluid">
-		<div class="row-fluid">				
-			<div class="span12">
-				<div id="example" class="k-content">
-					<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-
-					<h3><span data-bind="text: lang.lang.cashier"></span></h3>
-
-					<div class="row-fluid">
-						<div class="span3">
-							<br>
-
-							<input id="ddlContact" data-bind="value: customer_id" style="width: 100%"  />
-
-							<br><br>							
-					      					
-							<h5><i class="icon-info-sign"></i> <span data-bind="text: lang.lang.customer_info"></span></h5>				
-							<table width="100%" style="background-color:Silver; color:black;">
-								<tr>
-									<td colspan="2">
-										<i class="icon-user icon-li icon-fixed-width"></i> 
-										<span data-bind="text: customer.fullIdName"></span>										
-									</td>																			
-								</tr>
-								<tr>
-									<td colspan="2">								
-										<span data-bind="text: lang.lang.balance"></span>: <span data-bind="text: customer.balance"></span>
-										<span data-bind="text: customer.currency[0].code">
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<span data-bind="text: lang.lang.deposit"></span>: <span data-bind="text: customer.deposit"></span>
-										<span data-bind="text: customer.currency[0].code">
-									</td>							
-								</tr>
-								<tr>
-									<td>
-										<i class="icon-money icon-li icon-fixed-width"></i> <span data-bind="text: customer.currency[0].code"></span>
-									</td>
-									<td>
-										<i class="icon-phone icon-li icon-fixed-width"></i> <span data-bind="text: customer.phone"></span>
-									</td>
-								</tr>											
-								<tr>
-									<td colspan="2">
-										<i class="icon-home icon-li icon-fixed-width"></i> <span data-bind="text: customer.address"></span>
-									</td>						
-								</tr>
-							</table>
-
-							<br>			
-							
-							<h5><i class="icon-list"></i> <span data-bind="text: lang.lang.activities"></span></h5>
-
-							<table class="table table-bordered table-striped table-white">
-						        <thead>
-						            <tr>
-						            	<th><span data-bind="text: lang.lang.date"></span></th>						                
-						                <th><span data-bind="text: lang.lang.type"></span></th>						                
-						                <th><span data-bind="text: lang.lang.amount"></span></th>						                						                
-						            </tr>
-						        </thead>
-						        <tbody data-role="listview"
-						        		data-auto-bind="false"					        		 
-						        		data-template="cashier-transaction-row-template" 
-						        		data-bind="source: transactionDS"></tbody>						        					        
-						    </table>
-							
-							<div id="pager" class="k-pager-wrap"					    		
-				             	data-role="pager"
-				             	data-auto-bind="false" 
-				             	data-bind="source: transactionDS"></div>
-						
-						</div> <!-- //End span3 -->
-
-						<div id="exampleValidator" class="span9">
-							<div class="row-fluid">
-								<div class="span4">
-									<div class="innerAll padding-bottom-none-phone">
-										<a href="javascript:void(0)" class="widget-stats widget-stats-gray widget-stats-4"> 
-											<span class="txt"><span data-bind="text: lang.lang.customer"></span></span>
-											<span class="count" data-bind="text: total_customer"></span>
-											<span class="glyphicons user"><i></i></span>
-											<div class="clearfix"></div>
-											<i class="icon-play-circle"></i> 
-										</a>
-									</div>
-								</div>
-
-								<div class="span4">
-									<div class="innerAll padding-bottom-none-phone">
-										<a href="#/wPayment_summary" class="widget-stats widget-stats-primary widget-stats-4">
-											<span class="txt"><span data-bind="text: lang.lang.today_payment"></span></span>
-											<span class="count"><span data-bind="text: total_payment" style="font-size: 35px;"></span></span>
-											<span class="glyphicons coins"><i></i></span>
-											<div class="clearfix"></div>
-											<i class="icon-play-circle"></i>
-										</a>
-									</div>
-								</div>
-
-								<div class="span4">
-									<div class="innerAll padding-bottom-none-phone">
-										<a href="#/reconcile" class="widget-stats widget-stats-inverse widget-stats-5">
-											<span class="glyphicons refresh"><i></i></span>
-											<span class="txt"><span data-bind="text: lang.lang.reconcile"></span> &<br><br> <span data-bind="text: lang.lang.transfer"></span></span>
-											<div class="clearfix"></div>
-										</a>
-									</div>
-								</div>				
-
-							</div> <!-- //End row-fluid -->
-														
-							<br>
-
-							<table class="table table-bordered table-striped table-white">
-						        <thead>
-						            <tr>
-						                <th></th>
-						                <th><span data-bind="text: lang.lang.no"></span></th>						                
-						                <th><span data-bind="text: lang.lang.date"></span></th>
-						                <th><span data-bind="text: lang.lang.name"></span></th>
-						                <th><span data-bind="text: lang.lang.invoice"></span></th>
-						                <th class="right"><span data-bind="text: lang.lang.amount"></span></th>
-						                <th class="right"><span data-bind="text: lang.lang.pay"></span></th>							                
-						            </tr>
-						        </thead>
-						        <tbody data-role="listview"
-						        		data-auto-bind="false"					        		 
-						        		data-template="cashier-row-template" 
-						        		data-bind="source: invoiceList"></tbody>
-						        <tfoot data-template="cashier-footer-template" 
-						        		data-bind="source: this"></tfoot>						        
-						    </table>						    
-
-							<br>
-							
-							<span id="notification"></span>
-
-							<div class="row-fluid">
-								<div class="span4">						
-									<table>
-										<tr>
-											<td><span data-bind="text: lang.lang.payment_date"></span></td>
-						              		<td>
-						              			<input id="txtPaymentDate" name="txtPaymentDate" 
-						              				data-role="datepicker" 
-						              				data-format="dd-MM-yyyy"
-						              				data-parse-formats="dd-MM-yyyy"
-							              			data-bind="value: payment_date" 
-							              			required data-required-msg="ត្រូវការ ថ្ងៃទទួលប្រាក់" />
-											</td>
-										</tr>										
-										<tr>
-						                    <td><span data-bind="text: lang.lang.payment_method"></span></td>
-						                  	<td>
-						                  		<input id="ddlPaymentMethod" id="ddlPaymentMethod"
-						                  			   data-role="dropdownlist"
-									                   data-auto-bind="false"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: payment_method_id,
-									                              source: paymentMethodDS"									                   
-									                   required data-required-msg="ត្រូវការ វីធីបង់ប្រាក់" />						                  					                  		
-						                  	</td>
-						                <tr>
-										<tr>
-							                <td><span data-bind="text: lang.lang.cheque"></span></td>
-							                <td><input id="check_no" class="k-textbox" data-bind="value: check_no" style="width: 161px;" /></td>
-							            <tr>
-							            <tr>
-											<td><span data-bind="text: lang.lang.cash_account"></span></td>
-											<td>
-												<input id="ddlCashAccount" name="ddlCashAccount" 
-														data-bind="value: account_id" 
-														required data-required-msg="required" />												
-											</td>
-										</tr>										
-									</table>							
-								</div>																
-								<div class="span4">
-									<table>	
-										<tr>
-											<td><span data-bind="text: lang.lang.total_payment"></span>:</td>
-											<td align="right"><span data-bind="text: pay_amount"></span></td>
-										</tr>									
-										<tr>
-											<td><span data-bind="text: lang.lang.discount"></span>:</td>
-											<td>
-												<input data-role="numerictextbox" 
-														data-format="c0" data-culture="km-KH" 
-														data-bind="value: discount, events: {change : change}" />
-											</td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.fine"></span>:</td>							
-											<td>
-												<input data-role="numerictextbox" 
-														data-format="c0" data-culture="km-KH" 
-														data-bind="value: fine, events: {change : change}" />
-											</td>
-										</tr>										
-										<tr>
-											<td><span data-bind="text: lang.lang.remain"></span>:</td>
-											<td align="right"><span data-bind="text: remain"></span></td>
-										</tr>
-									</table>		          	
-								</div>
-
-								<div class="span4">
-									<div class="innerAll padding-bottom-none-phone">
-										<a id="save" name="save" class="widget-stats widget-stats-info widget-stats-4">
-											<span class="txt"><span data-bind="text: lang.lang.save"></span></span>
-											<span class="count" style="font-size: 35px;" data-bind="text: receive_amount"></span>
-											<span class="glyphicons cart_in"><i></i></span>
-											<div class="clearfix"></div>
-											<i class="icon-play-circle"></i>
-										</a>
-									</div>								
-								</div>
-							</div>							
-
-						</div> <!-- //End span9 -->
-					</div>
-				</div> <!-- //End example -->
-			</div>
-		</div>
-	</div>
-</script>
-<script id="cashier-transaction-row-template" type="text/x-kendo-tmpl">
-    <tr>        
-        <td>#:kendo.toString(new Date(issued_date), "dd-MM-yy")#</td>
-        <td>#:type# </td>
-        <td align="right">#:kendo.toString(kendo.parseFloat(amount), "c", locale)#</td>        
-   	</tr>
-</script>
-<script id="cashier-row-template" type="text/x-kendo-tmpl">		
-	<tr id="rowGrid-#:id#">
-		<td>
-			<input type="checkbox" data-bind="checked: isPay, events:{change: checkPay}">			
-		</td>
-		<td class="sno">1</td>			
-		<td>#:kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>		
-		<td>#=fullname#</td>
-		<td>#:number#</td>				
-		<td class="right">#:kendo.toString(amount, "c", locale)#</td>
-		<td class="right">
-			<input data-role="numerictextbox" 
-					data-format="c" data-culture=#:locale#
-					data-bind="value: pay_amount, events: {change : change}" 
-					style="width: 120px;">
-			<i class="icon-trash" data-bind="events: { click: remove "></i>						
-		</td>				
-    </tr>   
-</script>
-<script id="cashier-footer-template" type="text/x-kendo-template">
-    <tr>    	
-        <td class="right" colspan="7" style="font-size:30px;">
-            Total: #:total()#
-        </td>
-    </tr>
-</script>
-
-<script id="reconcile" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">	
-				<div id="example" class="k-content">						
-					
-					<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>							
-
-					<div align="center">
-						<h4>Reconcile & Transfer</h4>							
-						<span data-bind="text: str_date()"></span>
-						<br>
-						by
-						<span data-bind="text: cashier_name"></span>
-					</div>
-					<br>
-					<table class="table table-bordered table-white">
-	            		<thead>
-	            			<tr>
-	            				<th>Cash</th>	            				
-	            				<th>Dollar Qty</th>
-	            				<th>Riel Qty</th>
-	            				<th>Dollar Amt</th>
-	            				<th>Riel Amt</th>	            				
-	            				<th>Dollar Qty Transfer</th>
-	            				<th>Riel Qty Transfer</th>
-	            				<th>Dollar Amt Transfer</th>
-	            				<th>Riel Amt Transfer</th>		            				
-	            			</tr>
-	            		</thead>
-	            		<tbody id="lvReconcileItem" data-role="listview"
-	            				data-auto-bind="false"			            			
-				                data-template="denominationRowTemplate"
-				                data-bind="source: reconcileItemDS">
-				        </tbody>
-	            	</table>
-
-					<br>
-
-					<div class="row-fluid">
-						<!-- //Reconcile -->
-						<div class="span6" style="padding-left: 0;">
-							<h4 class="heading">Reconcile</h4>
-
-							<table class="table table-condensed">
-								<tr>
-									<td>Total Paid Today</td>
-									<td></td>											
-									<td class="right"><span class="count" data-bind="text: obj.received_amount"></span> ៛</td>												
-								</tr>
-								<tr>
-									<td>Remain</td>
-									<td></td>											
-									<td class="right" style="border-bottom: 1px solid black;"><span class="count" data-bind="text: obj.previous_amount"></span> ៛</td>												
-								</tr>
-								<tr>
-									<td>Cash (A)</td>
-									<td></td>												
-									<td class="right"><span class="count" data-bind="text: obj.total_cash1"></span> ៛</td>
-								</tr>
-
-								<!-- Reconcile -->
-								<tr>
-									<td>Dollar</td>
-									<td>
-										$ <span class="count" data-bind="text: obj.usd_amount"></span> x
-										<input data-role="numerictextbox" data-format="c0" data-culture="km-KH" data-min="0" data-bind="value: obj.rate, events:{change:change}"  style="width:90px;">
-									</td>
-									<td class="right"><span class="count" data-bind="text: obj.usd2khr_amount"></span> ៛</td>												
-								</tr>
-								<tr>
-									<td>Riel</td>
-									<td></td>
-									<td class="right" style="border-bottom: 1px solid black;"><span class="count" data-bind="text: obj.total_cash2"></span> ៛</td>												
-								</tr>
-								<tr>
-									<td>Actual Cash (B)</td>
-									<td></td>												
-									<td class="right"><span class="count" data-bind="text: obj.reconciled_amount"></span> ៛</td>
-								</tr>
-								<tr id="reconcileAmount">
-									<td>Reconcile(A-B)</td>
-									<td></td>												
-									<td class="right"><span class="count" data-bind="text: obj.reconciled_amount"></span> ៛</td>
-								</tr>																				
-							</table>
-						</div>
-
-						<!-- //Transfer -->
-						<div class="span6" style="padding-right: 0;">								
-							<h4 class="heading">Cash Transfer</h4>								
-							
-							<table class="table table-condensed">
-								<tr>
-									<td>Dollar Transfer</td>
-									<td>
-										$ <span class="count" data-bind="text: obj.transfer_usd"></span> x
-										<input data-role="numerictextbox" data-format="c0" data-culture="km-KH" data-min="0" data-bind="value: obj.rate, events:{change:change}"  style="width:90px;">												
-									</td>
-									<td class="right"><span class="count" data-bind="text: obj.usd2khr_transfer_amount"></span> ៛</td>												
-								</tr>
-								<tr>
-									<td>Riel Transfer</td>
-									<td></td>
-									<td class="right" style="border-bottom: 1px solid black;"><span class="count" data-bind="text: obj.transfer_khr"></span> ៛</td>												
-								</tr>
-								<tr>
-									<td>Total Transfer</td>
-									<td></td>												
-									<td class="right"><span class="count" data-bind="text: obj.transfered_amount"></span> ៛</td>
-								</tr>
-								<tr>
-									<td>Balance</td>
-									<td></td>												
-									<td class="right"><span class="count" data-bind="text: obj.balance"></span> ៛</td>
-								</tr>
-								<tr>
-									<td>Transfer Account</td>
-									<td>
-										<input id="ddlCashAccount" name="ddlCashAccount" 
-												data-bind="value: obj.transfer_account_id" 
-												required data-required-msg="required" />
-									</td>
-									<td>
-										<!-- Class here -->
-					              	</td>
-								</tr>
-								<tr class="top">
-									<td>Memo:</td>
-									<td colspan="2">
-										<textarea cols="0" rows="2" class="k-textbox" style="width:100%; resize: none;" data-bind="value: obj.memo"></textarea>
-									</td>										
-								</tr>								
-							</table>																																			
-						</div>									
-					</div>
-					<div class="box-generic bg-action-button">
-						<!-- Form actions -->
-						<div align="right" data-bind="invisible: isExisting">
-							<span id="notification"></span>
-
-							<span class="btn btn-icon btn-success glyphicons share" data-bind="click: transferAll"><i></i>Transfer All</span>
-							<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i>Save</span>							
-							<span style="color: #fff;" class="btn btn-warning btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i>Cancel</span>
-						</div>
-						<!-- // Form actions END -->
-					</div>
-				</div><!-- //End div example-->
-			</div><!-- //End div span12-->
-		</div><!-- //End div row-fluid-->
-	</div>
-</script>
-<script id="denominationRowTemplate" type="text/x-kendo-tmpl">		
-	<tr>				
-		<td class="right">#=denomination#</td>
-		<td>
-			<input data-role="numerictextbox" data-format="n0" data-min="0" style="width:90px;"
-				data-bind="value: usd_qty, events: {change : change}" #: denomination>100 ? disabled="disabled" : "" # >
-		</td>
-		<td>
-			<input data-role="numerictextbox" data-format="n0" data-min="0" style="width:90px;"
-				data-bind="value: khr_qty, events: {change : change}" #: denomination<100 ? disabled="disabled" : "" # >
-		</td>
-		<td class="right">#:kendo.toString(usd_amount,'c')#</td>
-		<td class="right">#:kendo.toString(khr_amount,'c0','km-KH')#</td>
-
-		<td bgcolor="silver">
-			<input data-role="numerictextbox" data-format="n0" data-min="0" style="width:90px;"
-				data-bind="value: usd_transfer, events: {change : change}" #: denomination>100 ? disabled="disabled" : "" # >
-		</td>
-		<td bgcolor="silver">
-			<input data-role="numerictextbox" data-format="n0" data-min="0" style="width:90px;"
-				data-bind="value: khr_transfer, events: {change : change}" #: denomination<100 ? disabled="disabled" : "" # >
-		</td>
-		<td bgcolor="silver" class="right">#:kendo.toString(usd_transfer_amount,'c')#</td>
-		<td bgcolor="silver" class="right">#:kendo.toString(khr_transfer_amount,'c0','km-KH')#</td>					
-    </tr>   
-</script>
-
-<script id="cashTransaction" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">					
-				    
-			    	<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
-							data-bind="click: cancel"><i></i></span>
-
-			        <h2 span data-bind="text: lang.lang.c_transaction"></h2>			    		   
-
-				    <br>				   				
-						
-					<!-- Upper Part -->
-					<div class="row-fluid">
-						<div class="span4">
-							<div class="box-generic well" style="height: 150px;">				
-								<table class="table table-borderless table-condensed cart_total">									
-									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.no_"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
-									</tr>
-									<tr>
-										<td><span data-bind="text: lang.lang.date"></span></td>
-										<td class="right">
-											<input id="issuedDate" name="issuedDate" 
-													data-role="datepicker"
-													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd" 
-													data-bind="value: obj.issued_date, 
-																events:{ change : setRate }" 
-													required data-required-msg="required"
-													style="width:100%;" />
-										</td>
-									</tr>
-									<tr>
-										<td><span data-bind="text: lang.lang.type"></span></td>
-										<td>
-											<input id="ddlType" name="ddlType"
-												   data-role="dropdownlist"								                   
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.type,
-								                              source: types,
-								                              events:{ change: typeChanges }"							                   
-								                   data-option-label="(--- Select ---)"
-								                   required data-required-msg="required" 
-								                   style="width: 100%;" />
-										</td>
-									</tr>
-									<tr>
-										<td><span data-bind="text: lang.lang.currency"></span></td>
-										<td>
-											<input id="ddlCurrency" name="ddlCurrency"							            	 
-					              				data-role="dropdownlist"
-					              				data-template="currency-list-tmpl"
-					              				data-value-primitive="true"
-							            		data-text-field="code"
-				           						data-value-field="locale"			           						 
-							            		data-bind="source: currencyDS, 
-							            					value: obj.locale,
-							            					events:{change:setRate}"
-							            		data-option-label="(--- Select ---)"						            		
-							            		required data-required-msg="required" style="width: 100%;" />											
-										</td>
-									</tr>															
-								</table>
-							</div>
-						</div>					   
-
-						<div class="span8">
-
-							<div class="box-generic-noborder">
-
-							    <!-- Tabs Heading -->
-							    <div class="tabsbar tabsbar-2">
-							        <ul class="row-fluid row-merge">
-							            <li class="span1 glyphicons pencil active"><a href="#tab1-3" data-toggle="tab"><i></i></a>
-							            </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i></a>
-							            </li>
-							            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
-							            </li>								            
-							        </ul>
-							    </div>
-							    <!-- // Tabs Heading END -->
-
-							    <div class="tab-content">
-
-							        <!-- Memo Tab content -->
-							        <div class="tab-pane active" id="tab1-3">
-							        	<textarea id="memo2" cols="0" rows="4" class="k-textbox" 
-							        		data-bind="value: obj.memo2" style="width:100%;" 
-							        		placeholder="Please enter transaction purpose here ..."></textarea>
-							        </div>
-							        <!-- // Memo Tab content END -->
-
-							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab2-3">
-
-							        	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							       
-							            <input id="files" name="files"
-						                   type="file"
-						                   data-role="upload"
-						                   data-show-file-list="false"
-						                   data-bind="events: { 
-				                   				select: onSelect
-						                   }">
-
-							            <table class="table table-bordered">
-									        <thead>
-									            <tr>			                
-									                <th data-bind="text: lang.lang.file_name"></th>
-									                <th data-bind="text: lang.lang.description"></th>
-									                <th data-bind="text: lang.lang.date"></th>
-									                <th style="width: 13%;"></th>                			                
-									            </tr> 
-									        </thead>
-									        <tbody data-role="listview" 
-									        		data-template="attachment-list-tmpl" 
-									        		data-auto-bind="false"
-									        		data-bind="source: attachmentDS"></tbody>			        
-									    </table>
-
-							        </div>
-							        <!-- // Attach Tab content END -->
-
-							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab3-3">							            	
-							            
-							            <div class="span5">
-
-								        	<input data-role="combobox"
-							                   data-placeholder="Select existing recuring ..."
-							                   data-value-primitive="true"
-							                   data-auto-bind="false"
-							                   data-text-field="recurring_name"
-							                   data-value-field="id"
-							                   data-bind="value: obj.recurring_id,
-							                              source: recurringDS,
-							                              events:{ change:applyRecurring }"
-							                   style="width: 100%" />
-
-							                <br><br>
-
-							                <div align="right">
-								                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>						                
-								            </div>
-
-							            </div>
-
-							            <div class="span7">
-
-								            <table style="width: 100%">
-								            	<tr align="right">
-								            		<td>
-								            			<span data-bind="text: lang.lang.name"></span>
-								            		</td>
-								            		<td>
-								            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
-								            					placeholder="Recurring name.." 
-								            					style="width: 40%;" />
-								            			<span data-bind="text: lang.lang.start"></span>
-										                <input data-role="datepicker"
-																data-format="dd-MM-yyyy"
-																data-parse-formats="yyyy-MM-dd"
-																data-bind="value: obj.start_date"
-																style="width: 40%;" />
-								            		</td>
-								            	</tr>
-								            	<tr align="right">
-								            		<td>
-									            		<span data-bind="text: lang.lang.every"></span>
-									            	</td>
-								            		<td>
-									            		<input data-role="numerictextbox"
-										                   data-format="n0"
-										                   data-min="0"								                   
-										                   data-bind="value: obj.interval"
-										                   style="width: 45%;" />
-
-									            		<input data-role="dropdownlist"									                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.frequency,
-											                              source: frequencyList,
-											                              events: { change: frequencyChanges }"
-											                   style="width: 45%;" />
-									            	</td>
-								            	</tr>
-									            <tr align="right">
-									            	<td>
-									            		<span data-bind="text: lang.lang.on"></span>
-									            	</td>							            	
-									            	<td>
-
-									            		<input data-role="dropdownlist"									                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.month,
-											                   			  visible: showMonth,
-											                              source: monthList"										                   
-											                   style="width: 45%;" />
-
-									            		<input data-role="dropdownlist"									                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.month_option,
-											                   			  visible: showMonthOption,
-											                              source: monthOptionList,
-											                              events: { change: monthOptionChanges }"										                   
-											                   style="width: 45%;" />
-
-									            		<input data-role="dropdownlist"									                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.week,
-											                   			  visible: showWeek,
-											                              source: weekDayList"										                  
-											                   style="width: 45%;" />										            
-											        
-									            		<input data-role="dropdownlist"									                   
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.day,
-											                   			  visible: showDay,
-											                              source: dayList"										                   
-											                   style="width: 45%;" />
-
-									            	</td>
-									            </tr>
-								            </table>
-
-								        </div>									     
-							            
-							        </div>
-							        <!-- // Recuring Tab content END -->								        
-
-							    </div>
-							</div>
-
-					    </div>
-					</div>
-
-					<h4 data-bind="text: fromToTop"></h4>				
-					<table class="table table-borderless table-condensed cart_total">						
-						<tr>
-							<td style="width: 10%"><span data-bind="text: lang.lang.account"></span></td>
-							<td style="width: 40%">
-								<input id="cbbAccount" name="cbbAccount"
-									   data-role="combobox"                   
-					                   data-value-primitive="true"
-					                   data-header-template="account-header-tmpl"                 
-					                   data-template="account-list-tmpl"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: obj.account_id,
-					                              source: accountDS"
-					                   data-placeholder="Add Account.."					                                      
-					                   required data-required-msg="required" style="width: 100%" />
-							</td>
-							<td style="width: 10%"><span data-bind="text: lang.lang.segments"></span></td>
-							<td style="width: 40%">
-								<select data-role="multiselect"
-									   data-value-primitive="true"
-									   data-header-template="segment-header-tmpl"							   
-									   data-item-template="segment-list-tmpl"				    
-									   data-value-field="id" 
-									   data-text-field="code"
-									   data-bind="value: obj.segments, 
-									   			source: segmentItemDS,
-									   			events:{ change: transactionSegmentChanges }"
-									   data-placeholder="Add Segment.."				   
-									   style="width: 100%" /></select>
-							</td>							
-						</tr>									
-					</table>				
-
-					<h4 data-bind="text: fromToBottom"></h4>
-					<!-- Item List -->
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>
-				            <tr>
-				                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>
-				                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
-				                <th style="width: 20%;"><span data-bind="text: lang.lang.method"></span></th>
-				                <th data-bind="text: lang.lang.description"></th>
-				                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.reference"></span></th>
-				                <th data-bind="visible: showName" style="width: 15%;"><span data-bind="text: lang.lang.name"></span></th>
-				                <th data-bind="visible: showSegment" style="width: 15%;"><span data-bind="text: lang.lang.segment"></span></th>
-				                <th style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>			                			                
-				            </tr> 
-				        </thead>
-				        <tbody data-role="listview" 
-				        		data-template="cashTransaction-template" 
-				        		data-auto-bind="false"
-				        		data-bind="source: lineDS"></tbody>			        
-				    </table>			    
-									
-		            <!-- Bottom part -->
-		            <div class="row-fluid">
-			
-						<!-- Column -->
-						<div class="span6 hidden-print">
-							
-							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
-
-							<div class="btn-group">
-								<div class="leadcontainer">
-									
-								</div>
-								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-									<li>
-										<input type="checkbox" data-bind="checked: showRef" /> <span data-bind="text: lang.lang.reference"></span>
-									</li>
-									<li>
-										<input type="checkbox" data-bind="checked: showName" /> <span data-bind="text: lang.lang.name"></span>
-									</li>
-									<li>
-										<input type="checkbox" data-bind="checked: showSegment" /> <span data-bind="text: lang.lang.segment"></span>
-									</li>								
-								</ul>
-							</div>						
-							
-						</div>
-						<!-- Column END -->
-						
-						<!-- Column -->
-						<div class="span6">
-							<table class="table table-borderless table-condensed cart_total">
-								<tbody>								
-									<tr>
-										<td class="right"><span data-bind="text: lang.lang.total"></span>:</td>
-										<td class="right strong"><span data-bind="text: total"></span></td>
-									</tr>								
-								</tbody>
-							</table>
-						</div>
-						<!-- // Column END -->
-						
-					</div>
-		           
-		            <br>
-					
-					<!-- Form actions -->
-					<div class="box-generic bg-action-button">
-						<div id="ntf1" data-role="notification"></div>
-
-						<!-- Delete Confirmation -->
-						<div data-role="window"
-			                 data-title="Delete Confirmation"
-			                 data-width="350"
-			                 data-height="200"
-			                 data-iframe="true"
-			                 data-modal="true"
-			                 data-visible="false"
-			                 data-position="{top:'40%',left:'35%'}"
-			                 data-actions="{}"
-			                 data-resizable="false"
-			                 data-bind="visible: showConfirm"
-			                 style="text-align:center;">
-			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
-						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
-						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
-			            </div>
-			            <!-- // Delete Confirmation -->
-
-						<div class="row">
-							<div class="span3">
-								<input data-role="dropdownlist"
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: obj.transaction_template_id,
-					                              source: txnTemplateDS"
-					                   data-option-label="Select Template..." />
-							</div>
-							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>																	
-								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
-								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
-							</div>
-						</div>
-					</div>
-					<!-- // Form actions END -->
-
-				</div>							
-			</div>
-		</div>
-	</div>
-</script>
-<script id="cashTransaction-template" type="text/x-kendo-tmpl">		
-	<tr data-uid="#: uid #">		
-		<td class="center">
-			<i class="icon-trash" data-bind="events: { click: remove }"></i>
-			#:banhji.cashTransaction.lineDS.indexOf(data)+1#			
-		</td>	
-		<td>
-			<input id="cbbAccounts" name="cbbAccounts"
-				   data-role="combobox"                   
-                   data-value-primitive="true"  
-                   data-header-template="account-header-tmpl"                 
-                   data-template="account-list-tmpl"
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: account_id,
-                              source: accountDS"
-                   data-placeholder="Add Account.."
-                   data-list-width="400"                    
-                   required data-required-msg="required" style="width: 100%" />	
-		</td>
-		<td>
-			<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-				   data-role="dropdownlist"                   
-                   data-value-primitive="true"                   
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: payment_method_id,
-                              source: paymentMethodDS"
-                   data-option-label="Select method.."
-                   data-list-width="400"                    
-                   required data-required-msg="required" style="width: 100%" />	
-		</td>		
-		<td>
-			<input name="description" 
-					type="text" class="k-textbox" 
-					data-bind="value: description"					
-					style="width: 100%; margin-bottom: 0;" />
-		</td>
-		<td data-bind="visible: showRef">
-			<input type="text" class="k-textbox" 
-					data-bind="value: reference_no"				
-					style="width: 100%; margin-bottom: 0;" />		
-		</td>					
-		<td data-bind="visible: showName">
-			<input data-role="combobox" id="showName"                  
-                   data-value-primitive="true"
-                   data-template="contact-list-tmpl"
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: contact_id,
-                              source: contactDS"
-                   data-placeholder="Add Name.."                    
-                   style="width: 100%" />
-		</td>		
-		<td data-bind="visible: showSegment">
-			<select data-role="multiselect" id="showSegment"
-				   data-value-primitive="true"				   
-				   data-item-template="segment-list-tmpl"				    
-				   data-value-field="id" 
-				   data-text-field="code"
-				   data-bind="value: segments, 
-				   			source: segmentItemDS,
-				   			events:{ change: segmentChanges }"
-				   data-placeholder="Add Segment.."				   
-				   style="width: 100%" /></select>					
-		</td>
-		<td class="right">
-			<input id="txtAmount" name="txtAmount" 
-					data-role="numerictextbox" 
-					data-format="n0"
-					data-spinners="false"
-					data-bind="value: amount, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" /> 						
-		</td>			
-    </tr>   
-</script>
-
-<script id="cashReceipt" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-				<div id="example" class="k-content">					
-				    
-			    	<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
-							data-bind="click: cancel"><i></i></span>
-
-			        <h2 data-bind="text: lang.lang.cash_receipt"></h2>			    		   
-
-				    <br>				   				
-						
-					<!-- Upper Part -->
-					<div class="row-fluid">
-						<div class="span4">
-							<div class="widget widget-heading-simple widget-body-primary widget-employees">		
-								<div class="widget-body padding-none">			
-									<div class="row-fluid row-merge">
-										<div class="listWrapper">
-											<div class="innerAll" style="padding: 15px 15px 19px;">							
-												<form autocomplete="off" class="form-inline">
-													<div class="widget-search separator bottom">
-														<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-														<div class="overflow-hidden">
-															<input type="search" placeholder="Invoice Number..." data-bind="value: searchText, events:{change: enterSearch}">
-														</div>
-													</div>
-													<div class="select2-container" style="width: 100%;">								
-														<input id="cbbContact" name="cbbContact"
-															   data-role="combobox"
-															   data-auto-bind="false"    
-											                   data-value-primitive="true"
-											                   data-header-template="contact-header-tmpl"
-											                   data-template="contact-list-tmpl"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: contact_id,
-											                              source: contactDS,
-											                              events:{ change: contactChanges }"
-											                   data-placeholder="Customer..."                    
-											                   style="width: 100%; height: 29px;" />									
-													</div>
-												</form>					
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
-								data-bind="style: { backgroundColor: amtDueColor}">
-								<div align="left"><span data-bind="text: lang.lang.amount_received"></span></div>
-								<h2 data-bind="text: total" align="right"></h2>
-							</div>												
-						</div>					   
-
-						<div class="span8">
-
-							<div class="box-generic-noborder" >
-
-							    <!-- Tabs Heading -->
-							    <div class="tabsbar tabsbar-2">
-							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-1" data-toggle="tab"><i></i> </a>
-							            </li>
-							        </ul>
-							    </div>
-							    <!-- // Tabs Heading END -->
-
-							    <div class="tab-content">
-
-							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-1">						            
-							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
-							            	<tr>
-												<td><span data-bind="text: lang.lang.date"></span></td>
-												<td class="right">
-													<input id="issuedDate" name="issuedDate" 
-															data-role="datepicker"
-															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd" 
-															data-bind="value: obj.issued_date, 
-																		events:{ change : issuedDateChanges }" 
-															required data-required-msg="required"
-															style="width:100%;" />
-												</td>
-											</tr>							            
-											<tr>
-								            	<td>
-								            		<span data-bind="text: lang.lang.payment_term"></span>
-								            	</td>				
-												<td>
-													<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-															data-role="dropdownlist"								
-															data-header-template="customer-payment-method-header-tmpl"
-								              				data-value-primitive="true"
-															data-text-field="name" 
-								              				data-value-field="id"
-								              				data-bind="value: obj.payment_method_id,
-								              							source: paymentMethodDS"
-								              				data-option-label="Select Method..."
-								              				required data-required-msg="required" 
-								              				style="width: 100%" />
-												</td>
-											</tr>
-											<tr>
-								            	<td><span data-bind="text: lang.lang.cash_account"></span></td>							            	
-							            		<td>
-													<input id="ddlCashAccount" name="ddlCashAccount" 
-														data-role="dropdownlist"
-														data-header-template="account-header-tmpl"
-														data-template="account-list-tmpl"
-							              				data-value-primitive="true"
-														data-text-field="name" 
-							              				data-value-field="id"
-							              				data-bind="value: obj.account_id,
-							              							source: accountDS"
-							              				data-option-label="Select Account..."
-							              				required data-required-msg="required" 
-							              				style="width: 100%" />
-												</td>							            	
-								            </tr>							            
-								            <tr>
-												<td><span data-bind="text: lang.lang.segment"></span></td>
-												<td>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="segment-header-tmpl"
-														   data-item-template="segment-list-tmpl"				    
-														   data-value-field="id" 
-														   data-text-field="code"
-														   data-bind="value: obj.segments, 
-														   			source: segmentItemDS,
-														   			events:{ change: segmentChanges }"
-														   data-placeholder="Add Segment.."				   
-														   style="width: 100%" /></select>
-												</td>
-											</tr>											
-							            </table>						            
-							        </div>
-							        <!-- // Options Tab content END -->
-
-							    </div>
-							</div>
-
-					    </div>
-					</div>
-
-					<!-- Item List -->
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>
-				            <tr>
-				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
-				                <th><span data-bind="text: lang.lang.date"></span></th>
-				                <th><span data-bind="text: lang.lang.name"></span></th>
-				                <th><span data-bind="text: lang.lang.invoice"></span></th>
-				                <th data-bind="visible: showCheckNo" style="width: 10%"><span data-bind="text: lang.lang.check_number"></span></th>
-				                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>			                
-				                <th style="width: 15%"><span data-bind="text: lang.lang.discount"></span></th>
-				                <th style="width: 15%"><span data-bind="text: lang.lang.pay"></span></th>
-				            </tr> 
-				        </thead>
-				        <tbody data-role="listview" 
-				        		data-template="cashReceipt-template" 
-				        		data-auto-bind="false"
-				        		data-bind="source: dataSource"></tbody>			        
-				    </table>			    
-									
-		            <!-- Bottom part -->
-		            <div class="row-fluid">
-			
-						<!-- Column -->
-						<div class="span5">
-							
-							<div class="btn-group">
-								<div class="leadcontainer">
-									
-								</div>
-								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-									<li>
-										<input type="checkbox" id="chbCheckNo" class="k-checkbox" data-bind="checked: showCheckNo">
-	  									<label class="k-checkbox-label" for="chbCheckNo"><span data-bind="text: lang.lang.check_number"></span></label>
-									</li>															
-								</ul>
-							</div>
-
-							<br>
-							<div class="well" style="overflow: hidden;">
-								<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
-								<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-							</div>
-						</div>
-						<!-- Column END -->
-						
-						<!-- Column -->
-						<div class="span7">
-							<table class="table table-condensed table-striped table-white">
-								<tbody>
-									<tr>
-										<td class="right"><span data-bind="text: lang.lang.total_received"></span>:</td>
-										<td class="right strong"><span data-bind="text: pay"></span></td>
-										<td class="right"><span data-bind="text: lang.lang.subtotal"></span>:</td>
-										<td class="right strong" width="40%"><span data-bind="text: sub_total"></span></td>
-									</tr>								
-									<tr>
-										<td class="right"><span data-bind="text: lang.lang.remaining"></span>:</td>
-										<td class="right strong"><span data-bind="text: remain"></span></td>
-										<td class="right"><span data-bind="text: lang.lang.total_discount"></span>:</td>
-										<td class="right strong">
-											<span data-bind="text: discount"></span>
-	                   					</td>
-									</tr>																
-									<tr>
-										<td></td>
-										<td></td>
-										<td class="right"><h4><span data-bind="text: lang.lang.total_due"></span>:</h4></td>
-										<td class="right strong"><h4 data-bind="text: total"></h4></td>
-									</tr>								
-								</tbody>
-							</table>
-						</div>
-						<!-- // Column END -->
-						
-					</div>	           
-					
-					<!-- Form actions -->
-					<div class="box-generic bg-action-button">
-						<div id="ntf1" data-role="notification"></div>
-
-						<div class="row">
-							<div class="span3">
-								<input data-role="dropdownlist"
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: obj.transaction_template_id,
-					                              source: txnTemplateDS"
-					                   data-option-label="Select Template..." />
-							</div>
-							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_new"></span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_close"></span></span>																	
-								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_print"></span></span>
-								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>				
-							</div>
-						</div>
-					</div>
-					<!-- // Form actions END -->								
-
-				</div>							
-			</div>
-		</div>
-	</div>
-</script>
-<script id="cashReceipt-template" type="text/x-kendo-tmpl">		
-	<tr data-uid="#: uid #">		
-		<td>
-			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
-			#:banhji.cashReceipt.dataSource.indexOf(data)+1#			
-		</td>		
-		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-		<td>#=contact[0].name#</td>		
-		<td>#=reference.length>0?reference[0].number:""#</td>
-		<td data-bind="visible: showCheckNo">
-			<input type="text" class="k-textbox" 
-					data-bind="value: check_no"
-					style="width: 100%; margin-bottom: 0;" />
-		</td>		
-		<td class="center">
-			#=reference.length>0 ? kendo.toString(reference[0].amount - (amount_paid + reference[0].deposit), "c", locale) : 0#			
-		</td>		
-		<td class="center">
-			<input data-role="numerictextbox"
-				   data-spinners="false"
-				   data-culture="#:locale#"
-                   data-format="c0"
-                   data-min="0"                   
-                   data-bind="value: discount,
-                              events: { change: changes }"
-                   style="width: 100%;">			
-		</td>
-		<td class="center">
-			<input data-role="numerictextbox"
-				   data-spinners="false"
-				   data-culture="#:locale#"
-                   data-format="c0"
-                   data-min="0"                   
-                   data-bind="value: amount,
-                              events: { change: changes }"
-                   style="width: 100%;">			
-		</td>
-    </tr>   
-</script>
-
-<script id="cashPayment" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">					
-			<div id="example" class="k-content">					
-			    
-		    	<span class="glyphicons no-js remove_2 pull-right" 
-	    				onclick="javascript:window.history.back()"
-						data-bind="click: cancel"><i></i></span>
-
-		        <h2 data-bind="text: lang.lang.cash_payment"></h2>			    		   
-
-			    <br>				   				
-					
-				<!-- Upper Part -->
-				<div class="row-fluid">
-					<div class="span4">
-						<div class="widget widget-heading-simple widget-body-primary widget-employees">		
-							<div class="widget-body padding-none">			
-								<div class="row-fluid row-merge">
-									<div class="listWrapper">
-										<div class="innerAll"  style="padding: 15px 15px 19px;"">							
-											<form autocomplete="off" class="form-inline">
-												<div class="widget-search separator bottom">
-													<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-													<div class="overflow-hidden">
-														<input type="search" placeholder="Bill Number..." data-bind="value: searchText, events:{change: enterSearch}">
-													</div>
-												</div>
-												<div class="select2-container" style="width: 100%;">								
-													<input id="cbbContact" name="cbbContact"
-														   data-role="combobox"
-														   data-auto-bind="false"
-														   data-header-template="vendor-header-tmpl"										                    
-										                   data-value-primitive="true"
-										                   data-template="contact-list-tmpl"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: contact_id,
-										                              source: contactDS,
-										                              events:{ change: contactChanges }"
-										                   data-placeholder="Supplier..."                    
-										                   style="width: 100%; height: 29px;" />									
-												</div>
-											</form>					
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
-							data-bind="style: { backgroundColor: amtDueColor}">
-							<div align="left"><span data-bind="text: lang.lang.c_amount_paid"></span></div>
-							<h2 data-bind="text: total" align="right"></h2>
-						</div>												
-					</div>					   
-
-					<div class="span8">
-
-						<div class="box-generic-noborder">
-
-						    <!-- Tabs Heading -->
-						    <div class="tabsbar tabsbar-2">
-						        <ul class="row-fluid row-merge">
-						        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-1" data-toggle="tab"><i></i> </a>
-						            </li>		            								            
-						        </ul>
-						    </div>
-						    <!-- // Tabs Heading END -->
-
-						    <div class="tab-content">
-
-						    	<!-- Options Tab content -->
-						        <div class="tab-pane active" id="tab1-1">						            
-						            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
-						            	<tr>
-											<td><span data-bind="text: lang.lang.date"></span></td>
-											<td class="right">
-												<input id="issuedDate" name="issuedDate" 
-														data-role="datepicker"
-														data-format="dd-MM-yyyy"
-														data-parse-formats="yyyy-MM-dd" 
-														data-bind="value: obj.issued_date, 
-																	events:{ change : issuedDateChanges }" 
-														required data-required-msg="required"
-														style="width:100%;" />
-											</td>
-										</tr>							            
-										<tr>
-							            	<td>
-							            		<span data-bind="text: lang.lang.payment_method"></span>					            						            		
-							            	</td>				
-											<td>
-												<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-														data-role="dropdownlist"
-														data-header-template="vendor-payment-method-header-tmpl"														
-							              				data-value-primitive="true"
-														data-text-field="name" 
-							              				data-value-field="id"						              				 
-							              				data-bind="value: obj.payment_method_id,
-							              							source: paymentMethodDS"
-							              				data-option-label="Select Method..."
-							              				required data-required-msg="required" 
-							              				style="width: 100%" />
-											</td>
-										</tr>
-										<tr>
-							            	<td><span data-bind="text: lang.lang.cash_account"></span></td>							            	
-						            		<td>
-												<input id="ddlCashAccount" name="ddlCashAccount" 
-													data-role="dropdownlist"
-													data-header-template="account-header-tmpl"
-													data-template="account-list-tmpl"														
-						              				data-value-primitive="true"
-													data-text-field="name" 
-						              				data-value-field="id"						              				 
-						              				data-bind="value: obj.account_id,
-						              							source: accountDS"
-						              				data-option-label="Select Account..."
-						              				required data-required-msg="required" 
-						              				style="width: 100%" />
-											</td>							            	
-							            </tr>							            
-							            <tr>
-											<td><span data-bind="text: lang.lang.segment"></span></td>
-											<td>
-												<select data-role="multiselect"
-													   data-value-primitive="true"	
-													   data-header-template="segment-header-tmpl"							   
-													   data-item-template="segment-list-tmpl"				    
-													   data-value-field="id" 
-													   data-text-field="code"
-													   data-bind="value: obj.segments, 
-													   			source: segmentItemDS,
-													   			events:{ change: segmentChanges }"
-													   data-placeholder="Add Segment.."				   
-													   style="width: 100%" /></select>
-											</td>
-										</tr>											
-						            </table>						            
-						        </div>
-						        <!-- // Options Tab content END -->					        								        
-
-						    </div>
-						</div>
-
-				    </div>
-				</div>
-
-				<!-- Item List -->
-				<table class="table table-bordered table-primary table-striped table-vertical-center">
-			        <thead>
-			            <tr>
-			                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
-			                <th data-bind="text: lang.lang.date"></th>
-			                <th data-bind="text: lang.lang.name"></th>
-			                <th data-bind="text: lang.lang.bill_number"></th>
-			                <th data-bind="visible: showCheckNo" style="width: 10%"><span data-bind="text: lang.lang.check_number"></span></th>			                		                
-			                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>
-			                <th style="width: 15%"><span data-bind="text: lang.lang.discount"></span></th>         
-			                <th style="width: 15%"><span data-bind="text: lang.lang.pay"></span></th>			                			                			                
-			            </tr> 
-			        </thead>
-			        <tbody data-role="listview" 
-			        		data-template="cashPayment-template" 
-			        		data-auto-bind="false"
-			        		data-bind="source: dataSource"></tbody>			        
-			    </table>			    
-								
-	            <!-- Bottom part -->
-	            <div class="row-fluid">
-		
-					<!-- Column -->
-					<div class="span4">
-						
-						<div class="btn-group">
-							<div class="leadcontainer">
-								
-							</div>
-							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-							<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-								<li>
-									<input type="checkbox" id="chbCheckNo" class="k-checkbox" data-bind="checked: showCheckNo">
-  									<label class="k-checkbox-label" for="chbCheckNo"><span data-bind="text: lang.lang.check_number"></span></label>
-								</li>															
-							</ul>
-						</div>
-
-						<br>
-						
-						<div class="well" style="margin-top:10px; overflow:hidden;">
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
-							<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-						</div>
-					</div>
-					<!-- Column END -->
-
-					
-					<!-- Column -->
-					<div class="span8">
-						<table class="table table-condensed table-striped table-white">
-							<tbody>
-								<tr>
-									<td class="right"><span data-bind="text: lang.lang.total_received"></span></td>
-									<td class="right strong"><span data-bind="text: pay"></span></td>
-									<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
-									<td class="right strong" width="40%"><span data-bind="text: sub_total"></span></td>
-								</tr>								
-								<tr>
-									<td class="right"><span data-bind="text: lang.lang.remaining"></span>:</td>
-									<td class="right strong"><span data-bind="text: remain"></span></td>
-									<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-									<td class="right strong">
-										<span data-bind="text: discount"></span>
-                   					</td>
-								</tr>																
-								<tr>
-									<td></td>
-									<td></td>
-									<td class="right"><h4><span data-bind="text: lang.lang.total"></span></h4></td>
-									<td class="right strong"><h4 data-bind="text: total"></h4></td>
-								</tr>								
-							</tbody>
-						</table>
-					</div>
-					<!-- // Column END -->
-					
-				</div>	           
-				
-				<!-- Form actions -->
-				<div class="box-generic bg-action-button">
-					<div id="ntf1" data-role="notification"></div>
-
-					<div class="row">
-						<div class="span3">
-							<input data-role="dropdownlist"
-				                   data-value-primitive="true"
-				                   data-text-field="name"
-				                   data-value-field="id"
-				                   data-bind="value: obj.transaction_template_id,
-				                              source: txnTemplateDS"
-				                   data-option-label="Select Template..." />
-						</div>
-						<div class="span9" align="right">
-							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
-							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>																	
-							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
-							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-						</div>
-					</div>
-				</div>
-				<!-- // Form actions END -->								
-
-			</div>							
-			</div>
-		</div>
-	</div>
-</script>
-<script id="cashPayment-template" type="text/x-kendo-tmpl">		
-	<tr data-uid="#: uid #">		
-		<td>
-			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
-			#:banhji.cashPayment.dataSource.indexOf(data)+1#			
-		</td>		
-		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-		<td>#=contact[0].name#</td>		
-		<td>#=reference.length>0?reference[0].number:""#</td>
-		<td data-bind="visible: showCheckNo">
-			<input type="text" class="k-textbox" 
-					data-bind="value: check_no"
-					style="width: 100%; margin-bottom: 0;" />
-		</td>		
-		<td class="center">
-			#=reference.length>0 ? kendo.toString(reference[0].amount - (amount_paid + reference[0].deposit), "c", locale) : 0#			
-		</td>
-		<td class="center">
-			<input data-role="numerictextbox"
-				   data-spinners="false"
-				   data-culture="#:locale#"
-                   data-format="c0"
-                   data-min="0"                   
-                   data-bind="value: discount,
-                              events: { change: changes }"
-                   style="width: 100%;">			
-		</td>		
-		<td class="center">
-			<input data-role="numerictextbox"
-				   data-spinners="false"
-				   data-culture="#:locale#"
-                   data-format="c0"
-                   data-min="0"                   
-                   data-bind="value: amount,
-                              events: { change: changes }"
-                   style="width: 100%;">			
-		</td>
-    </tr>   
-</script>
-
-
-
 <!-- ***************************
 *	Document Section      	  *
 **************************** -->
@@ -36316,7 +34788,7 @@
 </script>
 
 <!-- ***************************
-*	Cash Management  -> Pich             *
+*	Cash Management            *
 **************************** -->
 <script id="cashDashboard" type="text/x-kendo-template" >
 	<div class="row-fluid">
@@ -37313,6 +35785,1652 @@
 	</tr>
 </script>
 
+<script id="cashier" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<div class="row-fluid">				
+			<div class="span12">
+				<div id="example" class="k-content">
+					<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+
+					<h3><span data-bind="text: lang.lang.cashier"></span></h3>
+
+					<div class="row-fluid">
+						<div class="span3">
+							<br>
+
+							<input id="ddlContact" data-bind="value: customer_id" style="width: 100%"  />
+
+							<br><br>							
+					      					
+							<h5><i class="icon-info-sign"></i> <span data-bind="text: lang.lang.customer_info"></span></h5>				
+							<table width="100%" style="background-color:Silver; color:black;">
+								<tr>
+									<td colspan="2">
+										<i class="icon-user icon-li icon-fixed-width"></i> 
+										<span data-bind="text: customer.fullIdName"></span>										
+									</td>																			
+								</tr>
+								<tr>
+									<td colspan="2">								
+										<span data-bind="text: lang.lang.balance"></span>: <span data-bind="text: customer.balance"></span>
+										<span data-bind="text: customer.currency[0].code">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<span data-bind="text: lang.lang.deposit"></span>: <span data-bind="text: customer.deposit"></span>
+										<span data-bind="text: customer.currency[0].code">
+									</td>							
+								</tr>
+								<tr>
+									<td>
+										<i class="icon-money icon-li icon-fixed-width"></i> <span data-bind="text: customer.currency[0].code"></span>
+									</td>
+									<td>
+										<i class="icon-phone icon-li icon-fixed-width"></i> <span data-bind="text: customer.phone"></span>
+									</td>
+								</tr>											
+								<tr>
+									<td colspan="2">
+										<i class="icon-home icon-li icon-fixed-width"></i> <span data-bind="text: customer.address"></span>
+									</td>						
+								</tr>
+							</table>
+
+							<br>			
+							
+							<h5><i class="icon-list"></i> <span data-bind="text: lang.lang.activities"></span></h5>
+
+							<table class="table table-bordered table-striped table-white">
+						        <thead>
+						            <tr>
+						            	<th><span data-bind="text: lang.lang.date"></span></th>						                
+						                <th><span data-bind="text: lang.lang.type"></span></th>						                
+						                <th><span data-bind="text: lang.lang.amount"></span></th>						                						                
+						            </tr>
+						        </thead>
+						        <tbody data-role="listview"
+						        		data-auto-bind="false"					        		 
+						        		data-template="cashier-transaction-row-template" 
+						        		data-bind="source: transactionDS"></tbody>						        					        
+						    </table>
+							
+							<div id="pager" class="k-pager-wrap"					    		
+				             	data-role="pager"
+				             	data-auto-bind="false" 
+				             	data-bind="source: transactionDS"></div>
+						
+						</div> <!-- //End span3 -->
+
+						<div id="exampleValidator" class="span9">
+							<div class="row-fluid">
+								<div class="span4">
+									<div class="innerAll padding-bottom-none-phone">
+										<a href="javascript:void(0)" class="widget-stats widget-stats-gray widget-stats-4"> 
+											<span class="txt"><span data-bind="text: lang.lang.customer"></span></span>
+											<span class="count" data-bind="text: total_customer"></span>
+											<span class="glyphicons user"><i></i></span>
+											<div class="clearfix"></div>
+											<i class="icon-play-circle"></i> 
+										</a>
+									</div>
+								</div>
+
+								<div class="span4">
+									<div class="innerAll padding-bottom-none-phone">
+										<a href="#/wPayment_summary" class="widget-stats widget-stats-primary widget-stats-4">
+											<span class="txt"><span data-bind="text: lang.lang.today_payment"></span></span>
+											<span class="count"><span data-bind="text: total_payment" style="font-size: 35px;"></span></span>
+											<span class="glyphicons coins"><i></i></span>
+											<div class="clearfix"></div>
+											<i class="icon-play-circle"></i>
+										</a>
+									</div>
+								</div>
+
+								<div class="span4">
+									<div class="innerAll padding-bottom-none-phone">
+										<a href="#/reconcile" class="widget-stats widget-stats-inverse widget-stats-5">
+											<span class="glyphicons refresh"><i></i></span>
+											<span class="txt"><span data-bind="text: lang.lang.reconcile"></span> &<br><br> <span data-bind="text: lang.lang.transfer"></span></span>
+											<div class="clearfix"></div>
+										</a>
+									</div>
+								</div>				
+
+							</div> <!-- //End row-fluid -->
+														
+							<br>
+
+							<table class="table table-bordered table-striped table-white">
+						        <thead>
+						            <tr>
+						                <th></th>
+						                <th><span data-bind="text: lang.lang.no"></span></th>						                
+						                <th><span data-bind="text: lang.lang.date"></span></th>
+						                <th><span data-bind="text: lang.lang.name"></span></th>
+						                <th><span data-bind="text: lang.lang.invoice"></span></th>
+						                <th class="right"><span data-bind="text: lang.lang.amount"></span></th>
+						                <th class="right"><span data-bind="text: lang.lang.pay"></span></th>							                
+						            </tr>
+						        </thead>
+						        <tbody data-role="listview"
+						        		data-auto-bind="false"					        		 
+						        		data-template="cashier-row-template" 
+						        		data-bind="source: invoiceList"></tbody>
+						        <tfoot data-template="cashier-footer-template" 
+						        		data-bind="source: this"></tfoot>						        
+						    </table>						    
+
+							<br>
+							
+							<span id="notification"></span>
+
+							<div class="row-fluid">
+								<div class="span4">						
+									<table>
+										<tr>
+											<td><span data-bind="text: lang.lang.payment_date"></span></td>
+						              		<td>
+						              			<input id="txtPaymentDate" name="txtPaymentDate" 
+						              				data-role="datepicker" 
+						              				data-format="dd-MM-yyyy"
+						              				data-parse-formats="dd-MM-yyyy"
+							              			data-bind="value: payment_date" 
+							              			required data-required-msg="ត្រូវការ ថ្ងៃទទួលប្រាក់" />
+											</td>
+										</tr>										
+										<tr>
+						                    <td><span data-bind="text: lang.lang.payment_method"></span></td>
+						                  	<td>
+						                  		<input id="ddlPaymentMethod" id="ddlPaymentMethod"
+						                  			   data-role="dropdownlist"
+									                   data-auto-bind="false"
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-value-field="id"
+									                   data-bind="value: payment_method_id,
+									                              source: paymentMethodDS"									                   
+									                   required data-required-msg="ត្រូវការ វីធីបង់ប្រាក់" />						                  					                  		
+						                  	</td>
+						                <tr>
+										<tr>
+							                <td><span data-bind="text: lang.lang.cheque"></span></td>
+							                <td><input id="check_no" class="k-textbox" data-bind="value: check_no" style="width: 161px;" /></td>
+							            <tr>
+							            <tr>
+											<td><span data-bind="text: lang.lang.cash_account"></span></td>
+											<td>
+												<input id="ddlCashAccount" name="ddlCashAccount" 
+														data-bind="value: account_id" 
+														required data-required-msg="required" />												
+											</td>
+										</tr>										
+									</table>							
+								</div>																
+								<div class="span4">
+									<table>	
+										<tr>
+											<td><span data-bind="text: lang.lang.total_payment"></span>:</td>
+											<td align="right"><span data-bind="text: pay_amount"></span></td>
+										</tr>									
+										<tr>
+											<td><span data-bind="text: lang.lang.discount"></span>:</td>
+											<td>
+												<input data-role="numerictextbox" 
+														data-format="c0" data-culture="km-KH" 
+														data-bind="value: discount, events: {change : change}" />
+											</td>
+										</tr>
+										<tr>
+											<td><span data-bind="text: lang.lang.fine"></span>:</td>							
+											<td>
+												<input data-role="numerictextbox" 
+														data-format="c0" data-culture="km-KH" 
+														data-bind="value: fine, events: {change : change}" />
+											</td>
+										</tr>										
+										<tr>
+											<td><span data-bind="text: lang.lang.remain"></span>:</td>
+											<td align="right"><span data-bind="text: remain"></span></td>
+										</tr>
+									</table>		          	
+								</div>
+
+								<div class="span4">
+									<div class="innerAll padding-bottom-none-phone">
+										<a id="save" name="save" class="widget-stats widget-stats-info widget-stats-4">
+											<span class="txt"><span data-bind="text: lang.lang.save"></span></span>
+											<span class="count" style="font-size: 35px;" data-bind="text: receive_amount"></span>
+											<span class="glyphicons cart_in"><i></i></span>
+											<div class="clearfix"></div>
+											<i class="icon-play-circle"></i>
+										</a>
+									</div>								
+								</div>
+							</div>							
+
+						</div> <!-- //End span9 -->
+					</div>
+				</div> <!-- //End example -->
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashier-transaction-row-template" type="text/x-kendo-tmpl">
+    <tr>        
+        <td>#:kendo.toString(new Date(issued_date), "dd-MM-yy")#</td>
+        <td>#:type# </td>
+        <td align="right">#:kendo.toString(kendo.parseFloat(amount), "c", locale)#</td>        
+   	</tr>
+</script>
+<script id="cashier-row-template" type="text/x-kendo-tmpl">		
+	<tr id="rowGrid-#:id#">
+		<td>
+			<input type="checkbox" data-bind="checked: isPay, events:{change: checkPay}">			
+		</td>
+		<td class="sno">1</td>			
+		<td>#:kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>		
+		<td>#=fullname#</td>
+		<td>#:number#</td>				
+		<td class="right">#:kendo.toString(amount, "c", locale)#</td>
+		<td class="right">
+			<input data-role="numerictextbox" 
+					data-format="c" data-culture=#:locale#
+					data-bind="value: pay_amount, events: {change : change}" 
+					style="width: 120px;">
+			<i class="icon-trash" data-bind="events: { click: remove "></i>						
+		</td>				
+    </tr>   
+</script>
+<script id="cashier-footer-template" type="text/x-kendo-template">
+    <tr>    	
+        <td class="right" colspan="7" style="font-size:30px;">
+            Total: #:total()#
+        </td>
+    </tr>
+</script>
+
+<script id="reconcile" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">	
+				<div id="example" class="k-content">						
+					
+					<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>							
+
+					<div align="center">
+						<h4>Reconcile & Transfer</h4>							
+						<span data-bind="text: str_date()"></span>
+						<br>
+						by
+						<span data-bind="text: cashier_name"></span>
+					</div>
+					<br>
+					<table class="table table-bordered table-white">
+	            		<thead>
+	            			<tr>
+	            				<th>Cash</th>	            				
+	            				<th>Dollar Qty</th>
+	            				<th>Riel Qty</th>
+	            				<th>Dollar Amt</th>
+	            				<th>Riel Amt</th>	            				
+	            				<th>Dollar Qty Transfer</th>
+	            				<th>Riel Qty Transfer</th>
+	            				<th>Dollar Amt Transfer</th>
+	            				<th>Riel Amt Transfer</th>		            				
+	            			</tr>
+	            		</thead>
+	            		<tbody id="lvReconcileItem" data-role="listview"
+	            				data-auto-bind="false"			            			
+				                data-template="denominationRowTemplate"
+				                data-bind="source: reconcileItemDS">
+				        </tbody>
+	            	</table>
+
+					<br>
+
+					<div class="row-fluid">
+						<!-- //Reconcile -->
+						<div class="span6" style="padding-left: 0;">
+							<h4 class="heading">Reconcile</h4>
+
+							<table class="table table-condensed">
+								<tr>
+									<td>Total Paid Today</td>
+									<td></td>											
+									<td class="right"><span class="count" data-bind="text: obj.received_amount"></span> ៛</td>												
+								</tr>
+								<tr>
+									<td>Remain</td>
+									<td></td>											
+									<td class="right" style="border-bottom: 1px solid black;"><span class="count" data-bind="text: obj.previous_amount"></span> ៛</td>												
+								</tr>
+								<tr>
+									<td>Cash (A)</td>
+									<td></td>												
+									<td class="right"><span class="count" data-bind="text: obj.total_cash1"></span> ៛</td>
+								</tr>
+
+								<!-- Reconcile -->
+								<tr>
+									<td>Dollar</td>
+									<td>
+										$ <span class="count" data-bind="text: obj.usd_amount"></span> x
+										<input data-role="numerictextbox" data-format="c0" data-culture="km-KH" data-min="0" data-bind="value: obj.rate, events:{change:change}"  style="width:90px;">
+									</td>
+									<td class="right"><span class="count" data-bind="text: obj.usd2khr_amount"></span> ៛</td>												
+								</tr>
+								<tr>
+									<td>Riel</td>
+									<td></td>
+									<td class="right" style="border-bottom: 1px solid black;"><span class="count" data-bind="text: obj.total_cash2"></span> ៛</td>												
+								</tr>
+								<tr>
+									<td>Actual Cash (B)</td>
+									<td></td>												
+									<td class="right"><span class="count" data-bind="text: obj.reconciled_amount"></span> ៛</td>
+								</tr>
+								<tr id="reconcileAmount">
+									<td>Reconcile(A-B)</td>
+									<td></td>												
+									<td class="right"><span class="count" data-bind="text: obj.reconciled_amount"></span> ៛</td>
+								</tr>																				
+							</table>
+						</div>
+
+						<!-- //Transfer -->
+						<div class="span6" style="padding-right: 0;">								
+							<h4 class="heading">Cash Transfer</h4>								
+							
+							<table class="table table-condensed">
+								<tr>
+									<td>Dollar Transfer</td>
+									<td>
+										$ <span class="count" data-bind="text: obj.transfer_usd"></span> x
+										<input data-role="numerictextbox" data-format="c0" data-culture="km-KH" data-min="0" data-bind="value: obj.rate, events:{change:change}"  style="width:90px;">												
+									</td>
+									<td class="right"><span class="count" data-bind="text: obj.usd2khr_transfer_amount"></span> ៛</td>												
+								</tr>
+								<tr>
+									<td>Riel Transfer</td>
+									<td></td>
+									<td class="right" style="border-bottom: 1px solid black;"><span class="count" data-bind="text: obj.transfer_khr"></span> ៛</td>												
+								</tr>
+								<tr>
+									<td>Total Transfer</td>
+									<td></td>												
+									<td class="right"><span class="count" data-bind="text: obj.transfered_amount"></span> ៛</td>
+								</tr>
+								<tr>
+									<td>Balance</td>
+									<td></td>												
+									<td class="right"><span class="count" data-bind="text: obj.balance"></span> ៛</td>
+								</tr>
+								<tr>
+									<td>Transfer Account</td>
+									<td>
+										<input id="ddlCashAccount" name="ddlCashAccount" 
+												data-bind="value: obj.transfer_account_id" 
+												required data-required-msg="required" />
+									</td>
+									<td>
+										<!-- Class here -->
+					              	</td>
+								</tr>
+								<tr class="top">
+									<td>Memo:</td>
+									<td colspan="2">
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%; resize: none;" data-bind="value: obj.memo"></textarea>
+									</td>										
+								</tr>								
+							</table>																																			
+						</div>									
+					</div>
+					<div class="box-generic bg-action-button">
+						<!-- Form actions -->
+						<div align="right" data-bind="invisible: isExisting">
+							<span id="notification"></span>
+
+							<span class="btn btn-icon btn-success glyphicons share" data-bind="click: transferAll"><i></i>Transfer All</span>
+							<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i>Save</span>							
+							<span style="color: #fff;" class="btn btn-warning btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i>Cancel</span>
+						</div>
+						<!-- // Form actions END -->
+					</div>
+				</div><!-- //End div example-->
+			</div><!-- //End div span12-->
+		</div><!-- //End div row-fluid-->
+	</div>
+</script>
+<script id="denominationRowTemplate" type="text/x-kendo-tmpl">		
+	<tr>				
+		<td class="right">#=denomination#</td>
+		<td>
+			<input data-role="numerictextbox" data-format="n0" data-min="0" style="width:90px;"
+				data-bind="value: usd_qty, events: {change : change}" #: denomination>100 ? disabled="disabled" : "" # >
+		</td>
+		<td>
+			<input data-role="numerictextbox" data-format="n0" data-min="0" style="width:90px;"
+				data-bind="value: khr_qty, events: {change : change}" #: denomination<100 ? disabled="disabled" : "" # >
+		</td>
+		<td class="right">#:kendo.toString(usd_amount,'c')#</td>
+		<td class="right">#:kendo.toString(khr_amount,'c0','km-KH')#</td>
+
+		<td bgcolor="silver">
+			<input data-role="numerictextbox" data-format="n0" data-min="0" style="width:90px;"
+				data-bind="value: usd_transfer, events: {change : change}" #: denomination>100 ? disabled="disabled" : "" # >
+		</td>
+		<td bgcolor="silver">
+			<input data-role="numerictextbox" data-format="n0" data-min="0" style="width:90px;"
+				data-bind="value: khr_transfer, events: {change : change}" #: denomination<100 ? disabled="disabled" : "" # >
+		</td>
+		<td bgcolor="silver" class="right">#:kendo.toString(usd_transfer_amount,'c')#</td>
+		<td bgcolor="silver" class="right">#:kendo.toString(khr_transfer_amount,'c0','km-KH')#</td>					
+    </tr>   
+</script>
+
+<script id="cashTransaction" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">					
+				    
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+			        <h2 span data-bind="text: lang.lang.c_transaction"></h2>			    		   
+
+				    <br>				   				
+						
+					<!-- Upper Part -->
+					<div class="row-fluid">
+						<div class="span4">
+							<div class="box-generic well" style="height: 150px;">				
+								<table class="table table-borderless table-condensed cart_total">									
+									<tr data-bind="visible: isEdit">				
+										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+									</tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.date"></span></td>
+										<td class="right">
+											<input id="issuedDate" name="issuedDate" 
+													data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd" 
+													data-bind="value: obj.issued_date, 
+																events:{ change : setRate }" 
+													required data-required-msg="required"
+													style="width:100%;" />
+										</td>
+									</tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.type"></span></td>
+										<td>
+											<input id="ddlType" name="ddlType"
+												   data-role="dropdownlist"								                   
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.type,
+								                              source: types,
+								                              events:{ change: typeChanges }"							                   
+								                   data-option-label="(--- Select ---)"
+								                   required data-required-msg="required" 
+								                   style="width: 100%;" />
+										</td>
+									</tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.currency"></span></td>
+										<td>
+											<input id="ddlCurrency" name="ddlCurrency"							            	 
+					              				data-role="dropdownlist"
+					              				data-template="currency-list-tmpl"
+					              				data-value-primitive="true"
+							            		data-text-field="code"
+				           						data-value-field="locale"			           						 
+							            		data-bind="source: currencyDS, 
+							            					value: obj.locale,
+							            					events:{change:setRate}"
+							            		data-option-label="(--- Select ---)"						            		
+							            		required data-required-msg="required" style="width: 100%;" />											
+										</td>
+									</tr>															
+								</table>
+							</div>
+						</div>					   
+
+						<div class="span8">
+
+							<div class="box-generic-noborder">
+
+							    <!-- Tabs Heading -->
+							    <div class="tabsbar tabsbar-2">
+							        <ul class="row-fluid row-merge">
+							            <li class="span1 glyphicons pencil active"><a href="#tab1-3" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons paperclip"><a href="#tab2-3" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons history"><a href="#tab3-3" data-toggle="tab"><i></i></a>
+							            </li>								            
+							        </ul>
+							    </div>
+							    <!-- // Tabs Heading END -->
+
+							    <div class="tab-content">
+
+							        <!-- Memo Tab content -->
+							        <div class="tab-pane active" id="tab1-3">
+							        	<textarea id="memo2" cols="0" rows="4" class="k-textbox" 
+							        		data-bind="value: obj.memo2" style="width:100%;" 
+							        		placeholder="Please enter transaction purpose here ..."></textarea>
+							        </div>
+							        <!-- // Memo Tab content END -->
+
+							        <!-- Attach Tab content -->
+							        <div class="tab-pane" id="tab2-3">
+
+							        	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							       
+							            <input id="files" name="files"
+						                   type="file"
+						                   data-role="upload"
+						                   data-show-file-list="false"
+						                   data-bind="events: { 
+				                   				select: onSelect
+						                   }">
+
+							            <table class="table table-bordered">
+									        <thead>
+									            <tr>			                
+									                <th data-bind="text: lang.lang.file_name"></th>
+									                <th data-bind="text: lang.lang.description"></th>
+									                <th data-bind="text: lang.lang.date"></th>
+									                <th style="width: 13%;"></th>                			                
+									            </tr> 
+									        </thead>
+									        <tbody data-role="listview" 
+									        		data-template="attachment-list-tmpl" 
+									        		data-auto-bind="false"
+									        		data-bind="source: attachmentDS"></tbody>			        
+									    </table>
+
+							        </div>
+							        <!-- // Attach Tab content END -->
+
+							        <!-- Recuring Tab content -->
+							        <div class="tab-pane" id="tab3-3">							            	
+							            
+							            <div class="span5">
+
+								        	<input data-role="combobox"
+							                   data-placeholder="Select existing recuring ..."
+							                   data-value-primitive="true"
+							                   data-auto-bind="false"
+							                   data-text-field="recurring_name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.recurring_id,
+							                              source: recurringDS,
+							                              events:{ change:applyRecurring }"
+							                   style="width: 100%" />
+
+							                <br><br>
+
+							                <div align="right">
+								                <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>						                
+								            </div>
+
+							            </div>
+
+							            <div class="span7">
+
+								            <table style="width: 100%">
+								            	<tr align="right">
+								            		<td>
+								            			<span data-bind="text: lang.lang.name"></span>
+								            		</td>
+								            		<td>
+								            			<input class="k-textbox" data-bind="value: obj.recurring_name" 
+								            					placeholder="Recurring name.." 
+								            					style="width: 40%;" />
+								            			<span data-bind="text: lang.lang.start"></span>
+										                <input data-role="datepicker"
+																data-format="dd-MM-yyyy"
+																data-parse-formats="yyyy-MM-dd"
+																data-bind="value: obj.start_date"
+																style="width: 40%;" />
+								            		</td>
+								            	</tr>
+								            	<tr align="right">
+								            		<td>
+									            		<span data-bind="text: lang.lang.every"></span>
+									            	</td>
+								            		<td>
+									            		<input data-role="numerictextbox"
+										                   data-format="n0"
+										                   data-min="0"								                   
+										                   data-bind="value: obj.interval"
+										                   style="width: 45%;" />
+
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.frequency,
+											                              source: frequencyList,
+											                              events: { change: frequencyChanges }"
+											                   style="width: 45%;" />
+									            	</td>
+								            	</tr>
+									            <tr align="right">
+									            	<td>
+									            		<span data-bind="text: lang.lang.on"></span>
+									            	</td>							            	
+									            	<td>
+
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.month,
+											                   			  visible: showMonth,
+											                              source: monthList"										                   
+											                   style="width: 45%;" />
+
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.month_option,
+											                   			  visible: showMonthOption,
+											                              source: monthOptionList,
+											                              events: { change: monthOptionChanges }"										                   
+											                   style="width: 45%;" />
+
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.week,
+											                   			  visible: showWeek,
+											                              source: weekDayList"										                  
+											                   style="width: 45%;" />										            
+											        
+									            		<input data-role="dropdownlist"									                   
+											                   data-value-primitive="true"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: obj.day,
+											                   			  visible: showDay,
+											                              source: dayList"										                   
+											                   style="width: 45%;" />
+
+									            	</td>
+									            </tr>
+								            </table>
+
+								        </div>									     
+							            
+							        </div>
+							        <!-- // Recuring Tab content END -->								        
+
+							    </div>
+							</div>
+
+					    </div>
+					</div>
+
+					<h4 data-bind="text: fromToTop"></h4>				
+					<table class="table table-borderless table-condensed cart_total">						
+						<tr>
+							<td style="width: 10%"><span data-bind="text: lang.lang.account"></span></td>
+							<td style="width: 40%">
+								<input id="cbbAccount" name="cbbAccount"
+									   data-role="combobox"                   
+					                   data-value-primitive="true"
+					                   data-header-template="account-header-tmpl"                 
+					                   data-template="account-list-tmpl"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: obj.account_id,
+					                              source: accountDS"
+					                   data-placeholder="Add Account.."					                                      
+					                   required data-required-msg="required" style="width: 100%" />
+							</td>
+							<td style="width: 10%"><span data-bind="text: lang.lang.segments"></span></td>
+							<td style="width: 40%">
+								<select data-role="multiselect"
+									   data-value-primitive="true"
+									   data-header-template="segment-header-tmpl"							   
+									   data-item-template="segment-list-tmpl"				    
+									   data-value-field="id" 
+									   data-text-field="code"
+									   data-bind="value: obj.segments, 
+									   			source: segmentItemDS,
+									   			events:{ change: transactionSegmentChanges }"
+									   data-placeholder="Add Segment.."				   
+									   style="width: 100%" /></select>
+							</td>							
+						</tr>									
+					</table>				
+
+					<h4 data-bind="text: fromToBottom"></h4>
+					<!-- Item List -->
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>
+				                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
+				                <th style="width: 20%;"><span data-bind="text: lang.lang.method"></span></th>
+				                <th data-bind="text: lang.lang.description"></th>
+				                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.reference"></span></th>
+				                <th data-bind="visible: showName" style="width: 15%;"><span data-bind="text: lang.lang.name"></span></th>
+				                <th data-bind="visible: showSegment" style="width: 15%;"><span data-bind="text: lang.lang.segment"></span></th>
+				                <th style="width: 15%;"><span data-bind="text: lang.lang.amount"></span></th>			                			                
+				            </tr> 
+				        </thead>
+				        <tbody data-role="listview" 
+				        		data-template="cashTransaction-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: lineDS"></tbody>			        
+				    </table>			    
+									
+		            <!-- Bottom part -->
+		            <div class="row-fluid">
+			
+						<!-- Column -->
+						<div class="span6 hidden-print">
+							
+							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
+
+							<div class="btn-group">
+								<div class="leadcontainer">
+									
+								</div>
+								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+									<li>
+										<input type="checkbox" data-bind="checked: showRef" /> <span data-bind="text: lang.lang.reference"></span>
+									</li>
+									<li>
+										<input type="checkbox" data-bind="checked: showName" /> <span data-bind="text: lang.lang.name"></span>
+									</li>
+									<li>
+										<input type="checkbox" data-bind="checked: showSegment" /> <span data-bind="text: lang.lang.segment"></span>
+									</li>								
+								</ul>
+							</div>						
+							
+						</div>
+						<!-- Column END -->
+						
+						<!-- Column -->
+						<div class="span6">
+							<table class="table table-borderless table-condensed cart_total">
+								<tbody>								
+									<tr>
+										<td class="right"><span data-bind="text: lang.lang.total"></span>:</td>
+										<td class="right strong"><span data-bind="text: total"></span></td>
+									</tr>								
+								</tbody>
+							</table>
+						</div>
+						<!-- // Column END -->
+						
+					</div>
+		           
+		            <br>
+					
+					<!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+
+						<!-- Delete Confirmation -->
+						<div data-role="window"
+			                 data-title="Delete Confirmation"
+			                 data-width="350"
+			                 data-height="200"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'40%',left:'35%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: showConfirm"
+			                 style="text-align:center;">
+			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+			            </div>
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span3">
+								<input data-role="dropdownlist"
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: obj.transaction_template_id,
+					                              source: txnTemplateDS"
+					                   data-option-label="Select Template..." />
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>																	
+								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+								<span class="btn btn-danger btn-icon glyphicons bin" data-bind="click: openConfirm, visible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.delete"></span></span>					
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->
+
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashTransaction-template" type="text/x-kendo-tmpl">		
+	<tr data-uid="#: uid #">		
+		<td class="center">
+			<i class="icon-trash" data-bind="events: { click: remove }"></i>
+			#:banhji.cashTransaction.lineDS.indexOf(data)+1#			
+		</td>	
+		<td>
+			<input id="cbbAccounts" name="cbbAccounts"
+				   data-role="combobox"                   
+                   data-value-primitive="true"  
+                   data-header-template="account-header-tmpl"                 
+                   data-template="account-list-tmpl"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: account_id,
+                              source: accountDS"
+                   data-placeholder="Add Account.."
+                   data-list-width="400"                    
+                   required data-required-msg="required" style="width: 100%" />	
+		</td>
+		<td>
+			<input id="ddlPaymentMethod" name="ddlPaymentMethod"
+				   data-role="dropdownlist"                   
+                   data-value-primitive="true"                   
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: payment_method_id,
+                              source: paymentMethodDS"
+                   data-option-label="Select method.."
+                   data-list-width="400"                    
+                   required data-required-msg="required" style="width: 100%" />	
+		</td>		
+		<td>
+			<input name="description" 
+					type="text" class="k-textbox" 
+					data-bind="value: description"					
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td data-bind="visible: showRef">
+			<input type="text" class="k-textbox" 
+					data-bind="value: reference_no"				
+					style="width: 100%; margin-bottom: 0;" />		
+		</td>					
+		<td data-bind="visible: showName">
+			<input data-role="combobox" id="showName"                  
+                   data-value-primitive="true"
+                   data-template="contact-list-tmpl"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: contact_id,
+                              source: contactDS"
+                   data-placeholder="Add Name.."                    
+                   style="width: 100%" />
+		</td>		
+		<td data-bind="visible: showSegment">
+			<select data-role="multiselect" id="showSegment"
+				   data-value-primitive="true"				   
+				   data-item-template="segment-list-tmpl"				    
+				   data-value-field="id" 
+				   data-text-field="code"
+				   data-bind="value: segments, 
+				   			source: segmentItemDS,
+				   			events:{ change: segmentChanges }"
+				   data-placeholder="Add Segment.."				   
+				   style="width: 100%" /></select>					
+		</td>
+		<td class="right">
+			<input id="txtAmount" name="txtAmount" 
+					data-role="numerictextbox" 
+					data-format="n0"
+					data-spinners="false"
+					data-bind="value: amount, events: {change : changes}" 
+					required data-required-msg="required" style="width: 100%;" /> 						
+		</td>			
+    </tr>   
+</script>
+
+<script id="cashReceipt" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">					
+				    
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+			        <h2 data-bind="text: lang.lang.cash_receipt"></h2>			    		   
+
+				    <br>				   				
+						
+					<!-- Upper Part -->
+					<div class="row-fluid">
+						<div class="span4">
+							<div class="widget widget-heading-simple widget-body-primary widget-employees">		
+								<div class="widget-body padding-none">			
+									<div class="row-fluid row-merge">
+										<div class="listWrapper">
+											<div class="innerAll" style="padding: 15px 15px 19px;">							
+												<form autocomplete="off" class="form-inline">
+													<div class="widget-search separator bottom">
+														<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+														<div class="overflow-hidden">
+															<input type="search" placeholder="Invoice Number..." data-bind="value: searchText, events:{change: enterSearch}">
+														</div>
+													</div>
+													<div class="select2-container" style="width: 100%;">								
+														<input id="cbbContact" name="cbbContact"
+															   data-role="combobox"
+															   data-auto-bind="false"    
+											                   data-value-primitive="true"
+											                   data-header-template="contact-header-tmpl"
+											                   data-template="contact-list-tmpl"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: contact_id,
+											                              source: contactDS,
+											                              events:{ change: contactChanges }"
+											                   data-placeholder="Customer..."                    
+											                   style="width: 100%; height: 29px;" />									
+													</div>
+												</form>					
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
+								data-bind="style: { backgroundColor: amtDueColor}">
+								<div align="left"><span data-bind="text: lang.lang.amount_received"></span></div>
+								<h2 data-bind="text: total" align="right"></h2>
+							</div>												
+						</div>					   
+
+						<div class="span8">
+
+							<div class="box-generic-noborder" >
+
+							    <!-- Tabs Heading -->
+							    <div class="tabsbar tabsbar-2">
+							        <ul class="row-fluid row-merge">
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-1" data-toggle="tab"><i></i> </a>
+							            </li>
+							        </ul>
+							    </div>
+							    <!-- // Tabs Heading END -->
+
+							    <div class="tab-content">
+
+							    	<!-- Options Tab content -->
+							        <div class="tab-pane active" id="tab1-1">						            
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+							            	<tr>
+												<td><span data-bind="text: lang.lang.date"></span></td>
+												<td class="right">
+													<input id="issuedDate" name="issuedDate" 
+															data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd" 
+															data-bind="value: obj.issued_date, 
+																		events:{ change : issuedDateChanges }" 
+															required data-required-msg="required"
+															style="width:100%;" />
+												</td>
+											</tr>							            
+											<tr>
+								            	<td>
+								            		<span data-bind="text: lang.lang.payment_term"></span>
+								            	</td>				
+												<td>
+													<input id="ddlPaymentMethod" name="ddlPaymentMethod"
+															data-role="dropdownlist"								
+															data-header-template="customer-payment-method-header-tmpl"
+								              				data-value-primitive="true"
+															data-text-field="name" 
+								              				data-value-field="id"
+								              				data-bind="value: obj.payment_method_id,
+								              							source: paymentMethodDS"
+								              				data-option-label="Select Method..."
+								              				required data-required-msg="required" 
+								              				style="width: 100%" />
+												</td>
+											</tr>
+											<tr>
+								            	<td><span data-bind="text: lang.lang.cash_account"></span></td>							            	
+							            		<td>
+													<input id="ddlCashAccount" name="ddlCashAccount" 
+														data-role="dropdownlist"
+														data-header-template="account-header-tmpl"
+														data-template="account-list-tmpl"
+							              				data-value-primitive="true"
+														data-text-field="name" 
+							              				data-value-field="id"
+							              				data-bind="value: obj.account_id,
+							              							source: accountDS"
+							              				data-option-label="Select Account..."
+							              				required data-required-msg="required" 
+							              				style="width: 100%" />
+												</td>							            	
+								            </tr>							            
+								            <tr>
+												<td><span data-bind="text: lang.lang.segment"></span></td>
+												<td>
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-header-template="segment-header-tmpl"
+														   data-item-template="segment-list-tmpl"				    
+														   data-value-field="id" 
+														   data-text-field="code"
+														   data-bind="value: obj.segments, 
+														   			source: segmentItemDS,
+														   			events:{ change: segmentChanges }"
+														   data-placeholder="Add Segment.."				   
+														   style="width: 100%" /></select>
+												</td>
+											</tr>											
+							            </table>						            
+							        </div>
+							        <!-- // Options Tab content END -->
+
+							    </div>
+							</div>
+
+					    </div>
+					</div>
+
+					<!-- Item List -->
+					<table class="table table-bordered table-primary table-striped table-vertical-center">
+				        <thead>
+				            <tr>
+				                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+				                <th><span data-bind="text: lang.lang.date"></span></th>
+				                <th><span data-bind="text: lang.lang.name"></span></th>
+				                <th><span data-bind="text: lang.lang.invoice"></span></th>
+				                <th data-bind="visible: showCheckNo" style="width: 10%"><span data-bind="text: lang.lang.check_number"></span></th>
+				                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>			                
+				                <th style="width: 15%"><span data-bind="text: lang.lang.discount"></span></th>
+				                <th style="width: 15%"><span data-bind="text: lang.lang.pay"></span></th>
+				            </tr> 
+				        </thead>
+				        <tbody data-role="listview" 
+				        		data-template="cashReceipt-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: dataSource"></tbody>			        
+				    </table>			    
+									
+		            <!-- Bottom part -->
+		            <div class="row-fluid">
+			
+						<!-- Column -->
+						<div class="span5">
+							
+							<div class="btn-group">
+								<div class="leadcontainer">
+									
+								</div>
+								<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+								<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+									<li>
+										<input type="checkbox" id="chbCheckNo" class="k-checkbox" data-bind="checked: showCheckNo">
+	  									<label class="k-checkbox-label" for="chbCheckNo"><span data-bind="text: lang.lang.check_number"></span></label>
+									</li>															
+								</ul>
+							</div>
+
+							<br>
+							<div class="well" style="overflow: hidden;">
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+							</div>
+						</div>
+						<!-- Column END -->
+						
+						<!-- Column -->
+						<div class="span7">
+							<table class="table table-condensed table-striped table-white">
+								<tbody>
+									<tr>
+										<td class="right"><span data-bind="text: lang.lang.total_received"></span>:</td>
+										<td class="right strong"><span data-bind="text: pay"></span></td>
+										<td class="right"><span data-bind="text: lang.lang.subtotal"></span>:</td>
+										<td class="right strong" width="40%"><span data-bind="text: sub_total"></span></td>
+									</tr>								
+									<tr>
+										<td class="right"><span data-bind="text: lang.lang.remaining"></span>:</td>
+										<td class="right strong"><span data-bind="text: remain"></span></td>
+										<td class="right"><span data-bind="text: lang.lang.total_discount"></span>:</td>
+										<td class="right strong">
+											<span data-bind="text: discount"></span>
+	                   					</td>
+									</tr>																
+									<tr>
+										<td></td>
+										<td></td>
+										<td class="right"><h4><span data-bind="text: lang.lang.total_due"></span>:</h4></td>
+										<td class="right strong"><h4 data-bind="text: total"></h4></td>
+									</tr>								
+								</tbody>
+							</table>
+						</div>
+						<!-- // Column END -->
+						
+					</div>	           
+					
+					<!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+
+						<div class="row">
+							<div class="span3">
+								<input data-role="dropdownlist"
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: obj.transaction_template_id,
+					                              source: txnTemplateDS"
+					                   data-option-label="Select Template..." />
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_new"></span></span>
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_close"></span></span>																	
+								<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i><span data-bind="text: lang.lang.save_print"></span></span>
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>				
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->								
+
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashReceipt-template" type="text/x-kendo-tmpl">		
+	<tr data-uid="#: uid #">		
+		<td>
+			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
+			#:banhji.cashReceipt.dataSource.indexOf(data)+1#			
+		</td>		
+		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+		<td>#=contact[0].name#</td>		
+		<td>#=reference.length>0?reference[0].number:""#</td>
+		<td data-bind="visible: showCheckNo">
+			<input type="text" class="k-textbox" 
+					data-bind="value: check_no"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>		
+		<td class="center">
+			#=reference.length>0 ? kendo.toString(reference[0].amount - (amount_paid + reference[0].deposit), "c", locale) : 0#			
+		</td>		
+		<td class="center">
+			<input data-role="numerictextbox"
+				   data-spinners="false"
+				   data-culture="#:locale#"
+                   data-format="c0"
+                   data-min="0"                   
+                   data-bind="value: discount,
+                              events: { change: changes }"
+                   style="width: 100%;">			
+		</td>
+		<td class="center">
+			<input data-role="numerictextbox"
+				   data-spinners="false"
+				   data-culture="#:locale#"
+                   data-format="c0"
+                   data-min="0"                   
+                   data-bind="value: amount,
+                              events: { change: changes }"
+                   style="width: 100%;">			
+		</td>
+    </tr>   
+</script>
+
+<script id="cashPayment" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+			<div id="example" class="k-content">					
+			    
+		    	<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>
+
+		        <h2 data-bind="text: lang.lang.cash_payment"></h2>			    		   
+
+			    <br>				   				
+					
+				<!-- Upper Part -->
+				<div class="row-fluid">
+					<div class="span4">
+						<div class="widget widget-heading-simple widget-body-primary widget-employees">		
+							<div class="widget-body padding-none">			
+								<div class="row-fluid row-merge">
+									<div class="listWrapper">
+										<div class="innerAll"  style="padding: 15px 15px 19px;"">							
+											<form autocomplete="off" class="form-inline">
+												<div class="widget-search separator bottom">
+													<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+													<div class="overflow-hidden">
+														<input type="search" placeholder="Bill Number..." data-bind="value: searchText, events:{change: enterSearch}">
+													</div>
+												</div>
+												<div class="select2-container" style="width: 100%;">								
+													<input id="cbbContact" name="cbbContact"
+														   data-role="combobox"
+														   data-auto-bind="false"
+														   data-header-template="vendor-header-tmpl"										                    
+										                   data-value-primitive="true"
+										                   data-template="contact-list-tmpl"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: contact_id,
+										                              source: contactDS,
+										                              events:{ change: contactChanges }"
+										                   data-placeholder="Supplier..."                    
+										                   style="width: 100%; height: 29px;" />									
+												</div>
+											</form>					
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="center"
+							data-bind="style: { backgroundColor: amtDueColor}">
+							<div align="left"><span data-bind="text: lang.lang.c_amount_paid"></span></div>
+							<h2 data-bind="text: total" align="right"></h2>
+						</div>												
+					</div>					   
+
+					<div class="span8">
+
+						<div class="box-generic-noborder">
+
+						    <!-- Tabs Heading -->
+						    <div class="tabsbar tabsbar-2">
+						        <ul class="row-fluid row-merge">
+						        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-1" data-toggle="tab"><i></i> </a>
+						            </li>		            								            
+						        </ul>
+						    </div>
+						    <!-- // Tabs Heading END -->
+
+						    <div class="tab-content">
+
+						    	<!-- Options Tab content -->
+						        <div class="tab-pane active" id="tab1-1">						            
+						            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+						            	<tr>
+											<td><span data-bind="text: lang.lang.date"></span></td>
+											<td class="right">
+												<input id="issuedDate" name="issuedDate" 
+														data-role="datepicker"
+														data-format="dd-MM-yyyy"
+														data-parse-formats="yyyy-MM-dd" 
+														data-bind="value: obj.issued_date, 
+																	events:{ change : issuedDateChanges }" 
+														required data-required-msg="required"
+														style="width:100%;" />
+											</td>
+										</tr>							            
+										<tr>
+							            	<td>
+							            		<span data-bind="text: lang.lang.payment_method"></span>					            						            		
+							            	</td>				
+											<td>
+												<input id="ddlPaymentMethod" name="ddlPaymentMethod"
+														data-role="dropdownlist"
+														data-header-template="vendor-payment-method-header-tmpl"														
+							              				data-value-primitive="true"
+														data-text-field="name" 
+							              				data-value-field="id"						              				 
+							              				data-bind="value: obj.payment_method_id,
+							              							source: paymentMethodDS"
+							              				data-option-label="Select Method..."
+							              				required data-required-msg="required" 
+							              				style="width: 100%" />
+											</td>
+										</tr>
+										<tr>
+							            	<td><span data-bind="text: lang.lang.cash_account"></span></td>							            	
+						            		<td>
+												<input id="ddlCashAccount" name="ddlCashAccount" 
+													data-role="dropdownlist"
+													data-header-template="account-header-tmpl"
+													data-template="account-list-tmpl"														
+						              				data-value-primitive="true"
+													data-text-field="name" 
+						              				data-value-field="id"						              				 
+						              				data-bind="value: obj.account_id,
+						              							source: accountDS"
+						              				data-option-label="Select Account..."
+						              				required data-required-msg="required" 
+						              				style="width: 100%" />
+											</td>							            	
+							            </tr>							            
+							            <tr>
+											<td><span data-bind="text: lang.lang.segment"></span></td>
+											<td>
+												<select data-role="multiselect"
+													   data-value-primitive="true"	
+													   data-header-template="segment-header-tmpl"							   
+													   data-item-template="segment-list-tmpl"				    
+													   data-value-field="id" 
+													   data-text-field="code"
+													   data-bind="value: obj.segments, 
+													   			source: segmentItemDS,
+													   			events:{ change: segmentChanges }"
+													   data-placeholder="Add Segment.."				   
+													   style="width: 100%" /></select>
+											</td>
+										</tr>											
+						            </table>						            
+						        </div>
+						        <!-- // Options Tab content END -->					        								        
+
+						    </div>
+						</div>
+
+				    </div>
+				</div>
+
+				<!-- Item List -->
+				<table class="table table-bordered table-primary table-striped table-vertical-center">
+			        <thead>
+			            <tr>
+			                <th class="center" style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
+			                <th data-bind="text: lang.lang.date"></th>
+			                <th data-bind="text: lang.lang.name"></th>
+			                <th data-bind="text: lang.lang.bill_number"></th>
+			                <th data-bind="visible: showCheckNo" style="width: 10%"><span data-bind="text: lang.lang.check_number"></span></th>			                		                
+			                <th style="width: 15%"><span data-bind="text: lang.lang.amount"></span></th>
+			                <th style="width: 15%"><span data-bind="text: lang.lang.discount"></span></th>         
+			                <th style="width: 15%"><span data-bind="text: lang.lang.pay"></span></th>			                			                			                
+			            </tr> 
+			        </thead>
+			        <tbody data-role="listview" 
+			        		data-template="cashPayment-template" 
+			        		data-auto-bind="false"
+			        		data-bind="source: dataSource"></tbody>			        
+			    </table>			    
+								
+	            <!-- Bottom part -->
+	            <div class="row-fluid">
+		
+					<!-- Column -->
+					<div class="span4">
+						
+						<div class="btn-group">
+							<div class="leadcontainer">
+								
+							</div>
+							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+							<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+								<li>
+									<input type="checkbox" id="chbCheckNo" class="k-checkbox" data-bind="checked: showCheckNo">
+  									<label class="k-checkbox-label" for="chbCheckNo"><span data-bind="text: lang.lang.check_number"></span></label>
+								</li>															
+							</ul>
+						</div>
+
+						<br>
+						
+						<div class="well" style="margin-top:10px; overflow:hidden;">
+							<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
+							<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+						</div>
+					</div>
+					<!-- Column END -->
+
+					
+					<!-- Column -->
+					<div class="span8">
+						<table class="table table-condensed table-striped table-white">
+							<tbody>
+								<tr>
+									<td class="right"><span data-bind="text: lang.lang.total_received"></span></td>
+									<td class="right strong"><span data-bind="text: pay"></span></td>
+									<td class="right"><span data-bind="text: lang.lang.subtotal"></span></td>
+									<td class="right strong" width="40%"><span data-bind="text: sub_total"></span></td>
+								</tr>								
+								<tr>
+									<td class="right"><span data-bind="text: lang.lang.remaining"></span>:</td>
+									<td class="right strong"><span data-bind="text: remain"></span></td>
+									<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
+									<td class="right strong">
+										<span data-bind="text: discount"></span>
+                   					</td>
+								</tr>																
+								<tr>
+									<td></td>
+									<td></td>
+									<td class="right"><h4><span data-bind="text: lang.lang.total"></span></h4></td>
+									<td class="right strong"><h4 data-bind="text: total"></h4></td>
+								</tr>								
+							</tbody>
+						</table>
+					</div>
+					<!-- // Column END -->
+					
+				</div>	           
+				
+				<!-- Form actions -->
+				<div class="box-generic bg-action-button">
+					<div id="ntf1" data-role="notification"></div>
+
+					<div class="row">
+						<div class="span3">
+							<input data-role="dropdownlist"
+				                   data-value-primitive="true"
+				                   data-text-field="name"
+				                   data-value-field="id"
+				                   data-bind="value: obj.transaction_template_id,
+				                              source: txnTemplateDS"
+				                   data-option-label="Select Template..." />
+						</div>
+						<div class="span9" align="right">
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>																	
+							<span id="savePrint" class="btn btn-icon btn-default glyphicons print" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_print"></span></span>
+							<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+						</div>
+					</div>
+				</div>
+				<!-- // Form actions END -->								
+
+			</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashPayment-template" type="text/x-kendo-tmpl">		
+	<tr data-uid="#: uid #">		
+		<td>
+			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
+			#:banhji.cashPayment.dataSource.indexOf(data)+1#			
+		</td>		
+		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+		<td>#=contact[0].name#</td>		
+		<td>#=reference.length>0?reference[0].number:""#</td>
+		<td data-bind="visible: showCheckNo">
+			<input type="text" class="k-textbox" 
+					data-bind="value: check_no"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>		
+		<td class="center">
+			#=reference.length>0 ? kendo.toString(reference[0].amount - (amount_paid + reference[0].deposit), "c", locale) : 0#			
+		</td>
+		<td class="center">
+			<input data-role="numerictextbox"
+				   data-spinners="false"
+				   data-culture="#:locale#"
+                   data-format="c0"
+                   data-min="0"                   
+                   data-bind="value: discount,
+                              events: { change: changes }"
+                   style="width: 100%;">			
+		</td>		
+		<td class="center">
+			<input data-role="numerictextbox"
+				   data-spinners="false"
+				   data-culture="#:locale#"
+                   data-format="c0"
+                   data-min="0"                   
+                   data-bind="value: amount,
+                              events: { change: changes }"
+                   style="width: 100%;">			
+		</td>
+    </tr>   
+</script>
+
+<script id="cashFlowForecast" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">					
+				    
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+			        <h2>CASH FLOW FORECAST</h2>			    		   
+
+				    <br>
+
+				    <table class="table table-bordered table-primary table-striped table-vertical-center">
+				    	<thead>
+				    		<tr>
+				    			<th width="20%"></th>
+				    			<th style="background-color: #515A5A">Sep 2016</th>
+				    			<th style="background-color: #515A5A">Oct 2016</th>
+				    			<th>Nov 2016</th>
+				    			<th style="background-color: #CCD1D1; color: black;">Dec 2016</th>
+				    			<th style="background-color: #CCD1D1; color: black;">Jan 2017</th>
+				    			<th style="background-color: #CCD1D1; color: black;">Feb 2017</th>
+				    			<th style="background-color: #CCD1D1; color: black;">Mar 2017</th>
+				    			<th style="background-color: #CCD1D1; color: black;">Apr 2017</th>
+				    			<th style="background-color: #CCD1D1; color: black;">May 2017</th>			    			
+				    		</tr>
+				    	</thead>
+				        <tbody data-role="listview"
+				        		data-auto-bind="false"
+				        		data-template="cashFlowForecast-template"
+				        		data-bind="source: dataSource"></tbody>			        
+				    </table>
+
+				    <!-- Edit Form -->
+					<div data-role="window"
+		                 data-title="Edit"
+		                 data-iframe="true"
+		                 data-width="900"
+			             data-height="200"
+		                 data-modal="true"
+		                 data-visible="false"
+		                 data-position="{top:'50%',left:'16%'}"
+		                 data-actions="{}"
+		                 data-resizable="false"
+		                 data-bind="visible: showEdit"
+		                 style="text-align:center;">
+								
+						<h2 data-bind="text: obj.name"></h2>
+
+						<table>
+							<tr>
+            					<td colspan="2" align="left">
+			            			<input type="radio" value="only" class="k-radio"
+			            					name="option" id="option1"
+			            					data-bind="checked: month_option"> 
+			            			<label class="k-radio-label" for="option1">All only this month</label>
+			            		</td>
+			            	</tr>
+			            	<tr>
+			            		<td colspan="2" align="left">
+						            <input type="radio" value="all" class="k-radio"
+						            		name="option" id="option2"
+						            		data-bind="checked: month_option"> 
+						            <label class="k-radio-label" for="option2">Apply all future months</label>
+				            	</td>
+				            </tr>
+				            <tr>
+				            	<td>&nbsp;</td>
+				            	<td>&nbsp;</td>
+				            </tr>
+							<tr>
+								<td>Amount:</td>
+								<td>
+									<input type="number" class="k-textbox" data-bind="value: amount" />
+								</td>
+							</tr>
+						</table>
+
+						<br>
+
+						<div align="center">
+							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> Save</span>
+							<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+						</div>
+
+		            </div>
+		            <!-- // Edit Form -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashFlowForecast-template" type="text/x-kendo-tmpl">
+	#if(name=="Cash Receipts" || name=="Cash Disbursement" || name=="Liquidlity Position"){#		
+		<tr data-uid="#: uid #" style="font-weight: bold;">		
+			<td>#=name#</td>		
+			<td align="right" data-format="n0" data-bind="text: m0"></td>
+			<td align="right" data-format="n0" data-bind="text: m1"></td>
+			<td align="right" data-format="n0" data-bind="text: m2"></td>		
+			<td align="right" data-format="n0" data-bind="text: m3"></td>
+			<td align="right" data-format="n0" data-bind="text: m4"></td>
+			<td align="right" data-format="n0" data-bind="text: m5"></td>
+			<td align="right" data-format="n0" data-bind="text: m6"></td>
+			<td align="right" data-format="n0" data-bind="text: m7"></td>
+			<td align="right" data-format="n0" data-bind="text: m8"></td>
+	    </tr>
+    #}else{#
+    	<tr data-uid="#: uid #">		
+			<td>&nbsp;&nbsp;&nbsp;#=name#</td>		
+			<td align="right" data-format="n0" data-bind="text: m0, click: selectedRow0"></td>
+			<td align="right" data-format="n0" data-bind="text: m1, click: selectedRow1"></td>
+			<td align="right" data-format="n0" data-bind="text: m2, click: selectedRow2"></td>		
+			<td align="right" data-format="n0" data-bind="text: m3, click: selectedRow3"></td>
+			<td align="right" data-format="n0" data-bind="text: m4, click: selectedRow4"></td>
+			<td align="right" data-format="n0" data-bind="text: m5, click: selectedRow5"></td>
+			<td align="right" data-format="n0" data-bind="text: m6, click: selectedRow6"></td>
+			<td align="right" data-format="n0" data-bind="text: m7, click: selectedRow7"></td>
+			<td align="right" data-format="n0" data-bind="text: m8, click: selectedRow8"></td>
+	    </tr>
+    #}#   
+</script>
+
 <script id="cashSetting" type="text/x-kendo-template">
 	<span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
@@ -37677,6 +37795,8 @@
 		</div>
 	</div>
 </script>
+
+
 
 
 <!-- ***************************
@@ -38927,5449 +39047,6 @@
 </script>
 
 
-<!-- ***************************
-*	Water Section      	  *
-**************************** -->
-<script id="wDashBoard" type="text/x-kendo-template">
-	<!-- <div class="container-fluid menu-hidden sidebar-hidden-phone fluid menu-left">
-		 
-		<img src="uploads/pictures/Water_Bill.png" width="300" height="100" />	
-		
-		<div class="row row-merge">
-			<div class="span4">
-				<div class="innerAll padding-bottom-none-phone">
-					<a href="#/wCustomer_balance" class="widget-stats widget-stats-primary widget-stats-4">
-						<span class="txt"><span data-bind="text: lang.lang.balance"></span></span>
-						<span class="count" style="font-size: 35px;" data-bind="text: balance"></span>
-						<span class="glyphicons coins"><i></i></span>
-						<div class="clearfix"></div>
-						<i class="icon-play-circle"></i>
-					</a>
-				</div>
-			</div>
-			<div class="span4">
-				<div class="innerAll padding-bottom-none-phone">
-					<a href="#/wCustomer_deposit" class="widget-stats widget-stats-inverse widget-stats-4">
-						<span class="txt"><span data-bind="text: lang.lang.deposit"></span></span>
-						<span class="count" style="font-size: 35px;" data-bind="text: deposit"></span>
-						<span class="glyphicons briefcase"><i></i></span>
-						<div class="clearfix"></div>
-						<i class="icon-play-circle"></i>
-					</a>
-				</div>
-			</div>			
-			<div class="span4">
-				<div class="innerAll padding-bottom-none-phone">
-					<a href="#/wCustomer_list" class="widget-stats widget-stats-gray widget-stats-4">
-						<span class="txt"><span data-bind="text: lang.lang.active_customer"></span></span>
-						<span class="count"​><span data-bind="text: activeCustomer"></span></span> 
-						<span class="glyphicons user"><i></i></span>
-						<div class="clearfix"></div>
-						<i class="icon-play-circle"></i>
-					</a>
-				</div>
-			</div>			
-		</div>
-
-		<div class="row">			
-			<div class="span8">
-				<div class="heading-buttons">
-					<h2 class="heading pull-left"><i class="icon-bar-chart icon-fixed-width text-primary"></i> <span data-bind="text: lang.lang.monthly_sale"></span></h2>
-					
-					<div class="clearfix"></div>
-				</div>
-
-				<div class="innerLR innerT">			
-					<div id="wsale-graph" style="height: 200px;"></div>
-				</div>
-			</div>
-
-			<div class="span4">
-				<div class="widget widget-body-white">
-					<div class="widget-head"><h4 class="heading strong text-uppercase"><span data-bind="text: lang.lang.customer_status"></span></h4></div>
-					<div class="widget-body padding-none">
-						<table class="table table-striped table-vertical-center table-condensed margin-none">
-							<tbody>
-								<tr>									
-									<td class="text-primary border-none"><span data-bind="text: lang.lang.inactive"></span></td>
-									<td class="text-right strong">
-										<span class="badge badge-warning" data-bind="text: voidCustomer"></span>										
-									</td>
-								</tr>
-								<tr>									
-									<td class="text-primary"><span data-bind="text: lang.lang.void"></span></td>
-									<td class="text-right strong">
-										<span class="badge badge-important" data-bind="text: inactiveCustomer"></span>										
-									</td>
-								</tr>
-								<tr>									
-									<td class="text-primary"><span data-bind="text: lang.lang.total"></span></td>
-									<td class="text-right strong">
-										<span class="badge badge-inverse" data-bind="text: totalCustomer"></span>										
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-
-				<div class="widget widget-heading-simple widget-body-white">
-					<div class="widget-body padding-none">
-						<div class="row-fluid row-merge">
-							<div class="span6">
-								<div class="innerAll center">
-									<h5 class="strong muted text-uppercase"><i class="icon-money text-faded"></i> <span data-bind="text: lang.lang.open"></span></h5>
-									<a href="#/wAging_summary" class="text-xlarge strong text-primary" data-bind="text: totalUnpaid"></a>									
-								</div>
-							</div>
-							<div class="span6">
-								<div class="innerAll center muted">
-									<h5 class="strong muted text-uppercase"><i class="icon-dashboard text-faded"></i> <span data-bind="text: lang.lang.no_meter"></span></h5>
-									<a href="#/wCustomer_no_meter" class="text-xlarge strong" data-bind="text: totalNoMeter"></a>									
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>								
-			</div>			
-		</div>	
-
-		<div class="row-fluid">
-	        <form id="employeeForm" data-role="validator" novalidate="novalidate">
-                <div id="fieldlist">
-                	<input data-role="dropdownlist"                   
-	                   data-value-primitive="true"
-	                   data-text-field="text"
-	                   data-value-field="value"
-	                   data-bind="value: sorter,
-	                              source: sortList,                              
-	                              events: { change: sorterChanges }" />
-	                                           
-                    <input type="text" data-role='datepicker' id="sdate" name="sdate" data-type="date" data-bind="value: sdate" />
-                    <span data-for='sdate' class='k-invalid-msg'></span>
-
-                    <input type="text" data-role='datepicker' id ="edate" data-type="date" name="edate" data-bind="value: edate" 
-                    		data-greaterdate-field="sdate" data-greaterdate-msg='Invalid' />
-                    <span data-for='edate' class='k-invalid-msg'></span>
-               
-                    <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>                           
-                </div>
-            </form>
-
-            <table class="table table-bordered table-vertical-center table-pricing table-pricing-2">
-        		<thead>
-        			<tr>
-        				<th width="45" class="center"><span data-bind="text: lang.lang.no"></span></th>
-        				<th class="center"><span data-bind="text: lang.lang.license"></span></th>
-        				<th class="center"><span data-bind="text: lang.lang.total_license"></span></th>
-        				<th class="center"><span data-bind="text: lang.lang.active_customer"></span></th>
-        				<th class="center"><span data-bind="text: lang.lang.void_customer"></span></th></th>	            				
-        				<th class="center"><span data-bind="text: lang.lang.deposit"></span></th></th>	            				
-        				<th class="center"><span data-bind="html: lang.lang.m"></span><sup>3</sup></th>
-        				<th class="center"><span data-bind="text: lang.lang.amount"></span></th>        				
-        				<th class="center"><span data-bind="text: lang.lang.balance"></span></th>	            					            				
-        			</tr>
-        		</thead>
-        		<tbody data-role="listview"
-        				data-auto-bind="false"	            					            			
-		                data-template="wsale-by-branch-row-template"
-		                data-bind="source: saleByBranchDS"></tbody>
-        	</table>            
-
-			<p class="separator text-center"><i class="icon-ellipsis-horizontal icon-3x"></i></p>
-
-			<table class="table table-bordered table-striped table-white">
-        		<thead>
-        			<tr>
-        				<th width="45"><span data-bind="text: lang.lang.no"></span></th>
-        				<th><span data-bind="text: lang.lang.license"></span></th>
-        				<th><span data-bind="text: lang.lang.location"></span></th>
-        				<th><span data-bind="text: lang.lang.active_customer"></span></th>
-        				<th><span data-bind="text: lang.lang.void_customer"></span></th>	            				
-        				<th><span data-bind="text: lang.lang.deposit"></span></th>	            				
-        				<th><span data-bind="html: lang.lang.m"></span><sup>3</sup></th>
-        				<th><span data-bind="text: lang.lang.amount"></span></th>        				
-        				<th><span data-bind="text: lang.lang.balance"></span></th>	            					            				
-        			</tr>
-        		</thead>
-        		<tbody data-role="listview"
-        				data-auto-bind="false"	            					            			
-		                data-template="wsale-by-location-row-template"
-		                data-bind="source: saleByLocationDS"></tbody>
-        	</table> 
-
-    	</div>
-    </div> -->
-    <div class="row-fluid">
-		<!-- Left Side -->
-		<div class="span6">
-
-			<!-- Logo of the page -->
-			<table width="100%" cellpadding="10">
-				<tr>
-			        <td valign="top">
-			        	<img src="<?php echo base_url();?>/assets/water_bill.png" width="300" height="100">
-			        	<div class="supplier-icon" style="margin-top: 15px;">
-					       	<div class="span4">
-						       	<a href="#/wNew_customer" class="center">
-						       		<img title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
-						       	</a>
-						       </div>
-						   <!--  <div class="span4">
-						       	<a href="#/item" class="center">
-						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
-						       	</a>
-						    </div>
-						    <div class="span4">
-						       	<a href="#/item_service" class="center">
-						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
-						       	</a>
-						    </div> -->
-						</div>
-			        </td>
-			 	</tr>
-			</table>
-
-			<table class="table table-borderless table-condensed table-vertical-center ">
-				<tr>
-					<td class="center ">
-						<a href="#/wReading">
-							<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png" width="110" height="200" />
-							Reading
-						</a>						
-					</td>
-					<td class="center ">
-						<a href="#/wIR_reader">
-							<img title="Add IR Reader" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png" width="110" height="200" />
-							IR Reader
-						</a>
-					</td>
-					<td class="center ">
-						<a href="#/wReading_book">
-							<img title="Add Reading Book" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/reading_book.png" width="110" height="200" />
-							R. Book
-						</a>						
-					</td>
-					<td class="center ">
-						<a href="#/wInvoice">
-							<img title="Add Create Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/create_invoice.png" width="110" height="200" />
-							W. Invoice
-						</a>
-					</td>					
-				</tr>
-				<tr>					
-					<td class="center ">						
-						<a href="#/wPrint_center">
-							<img title="Add Print Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/print_invoice.png" width="110" height="200" />
-							Print
-						</a>						
-					</td>
-					<td class="center ">						
-						<a href="#/currency_rate">
-							<img title="Receive Water Bill Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/receive_payment.png" width="110" height="200" />
-							Receipt
-						</a>						
-					</td>
-					<td class="center ">
-					</td>
-					<td class="center ">
-					</td>									
-				</tr>							
-			</table>                
-
-		</div>
-
-		<!-- Right Side -->
-		<div class="span6">
-
-			<div class="board-chart" style="margin-bottom: 15px;">
-				<div class="span12">
-					<h4>PCG & Partners</h4>
-					<h2 style="color: #113051; margin-bottom: 11px; display: inline-block; width: 100%;" >Financial Snapshot</h2>
-					<span style="color: #000000;">As of: Tue Oct 18 2016 15:18:08 GMT+0700 (ICT)</span><br/>
-				</div>
-			</div>
-
-			<!-- Summary -->
-			<div class="row">
-	
-				<!-- Column -->
-				<div class="span6" style="padding-right: 0;">
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons coins"><i></i></span>Sale</h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<div class="widget-body alert alert-primary">
-							
-							<div align="center" class="text-large strong">0</div>
-							<table width="100%">
-								<tr align="center">
-									<td width="50%">										
-										<span >0</span>
-										<br>
-										<span>Customer</span>
-									</td>
-									<td width="50%">
-										<span >0</span>
-										<br>
-										<span>Meter</span>
-									</td>									
-								</tr>
-							</table>
-						</div>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-				
-				<!-- Column -->
-				<div class="span6" >
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span>Active Customer</h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<div class="widget-body alert-info">
-							
-							<div align="center" class="text-large strong">0</div>
-							<table width="100%">
-								<tr align="center">
-									<td width="33%">										
-										<span>0</span>
-										<br>
-										<span>Active</span>
-									</td>
-									<td width="33%">
-										<span>0</span>
-										<br>
-										<span>Inactive</span>
-									</td>
-									<td width="33%">
-										<span>0</span>
-										<br>
-										<span>Voice</span>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-				
-				
-			</div>
-
-			<!-- Summary -->
-			<div class="row">
-				<!-- Column -->
-				<div class="span6" style="padding-right: 0;">
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span>Active Customer</h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<div class="widget-body alert-info">
-							
-							<div align="center" class="text-large strong">0</div>
-							<table width="100%">
-								<tr align="center">
-									<td width="33%">										
-										<span>0</span>
-										<br>
-										<span>Active</span>
-									</td>
-									<td width="33%">
-										<span>0</span>
-										<br>
-										<span>Inactive</span>
-									</td>
-									<td width="33%">
-										<span>0</span>
-										<br>
-										<span>Voice</span>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-				
-				<!-- Column -->
-				<div class="span6">
-				</div>
-				<!-- // Column END -->
-
-			</div>
-
-			<!-- Top 5 -->
-			<div class="row-fluid">
-				<div class="span4">								
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>
-				            <tr>
-				                <th class="center" colspan="2">Top 5 Customers</th>				                			                
-				            </tr>
-				        </thead>
-				        <tbody data-role="listview"
-				        	 data-auto-bind="false"				        	                 
-			                 data-template="customerDashBoard-top-customer-template"
-			                 data-bind="source: topCustomerDS"></tbody>			        
-				    </table>			
-				</div>
-				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>				           
-				            <tr>
-				                <th class="center" colspan="2">Top 5 A/R Balance</th>				                			                
-				            </tr>					        
-				        </thead>
-				        <tbody data-role="listview"
-				        	 data-auto-bind="false"				        	                  
-			                 data-template="customerDashBoard-top-ar-template"
-			                 data-bind="source: topARDS"></tbody>			        
-				    </table>
-				</div>
-				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>				           
-				            <tr>
-				                <th class="center" colspan="2">Top 5 Products</th>				                			                
-				            </tr>					        
-				        </thead>
-				        <tbody data-role="listview"
-				        	 data-auto-bind="false"                
-			                 data-template="customerDashBoard-top-product-template"
-			                 data-bind="source: topProductDS"></tbody>			        
-				    </table>
-				</div>		
-			</div>
-
-			<!-- Graph -->
-		    <div class="innerLR innerT">			
-				<div id="esale-graph" style="height: 150px;"></div>
-			</div>
-		</div>
-
-		<div class="row-fluid">		
-	        <div>
-	        	<input data-role="dropdownlist"                   
-	                   data-value-primitive="true"
-	                   data-text-field="text"
-	                   data-value-field="value"
-	                   data-bind="value: sorter,
-	                              source: sortList,                              
-	                              events: { change: sorterChanges }" />
-
-	        	<input data-role="datepicker"
-	        		   data-format="dd-MM-yyyy"
-	                   data-bind="value: sdate,
-	                              events: { change: dateChanges }" >
-
-	            <input data-role="datepicker"
-	            	   data-format="dd-MM-yyyy"
-	                   data-bind="value: edate,
-	                              events: { change: dateChanges }" >
-	            
-	            <button type="button" data-role="button" data-icon="search" data-bind="click: search"></button>
-	        </div>
-        	
-            <div data-role="grid" 
-					data-bind="source: saleByLocationDS"
-				    data-auto-bind="false"	        
-				    data-row-template="esale-by-location-row-template"						                           
-				    data-columns='[
-				    	{ title: "No.", width: 45 },				       	
-				        { title: "Location" },	                     
-				        { title: "អតិថិជនកំពុងប្រើប្រាស់" },
-				        { title: "អតិថិជនឈប់ប្រើប្រាស់" },
-				        { title: "Deposit" },
-				        { title: "បរិមាណលក់ភ្លើង" },	            
-				        { title: "Amount" },
-				        { title: "ជំពាក់" },
-				        { title: "Balance" }				                           	                    
-				    ]'></div>
-
-    	</div>
-
-
-	</div>
-</script>
-<script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">		
-	<tr>		
-		<td class="sno">1</td>
-		<td>#=name#</td>
-		<td>#=location#</td>		
-		<td align="right">#=kendo.toString(active_customer, "n0")#</td>
-		<td align="right">#=kendo.toString(inactive_customer, "n0")#​</td>				
-		<td align="right">#=kendo.toString(deposit, "c0", banhji.institute.locale)#</td>
-		<td align="right">#=kendo.toString(usage, "n0")# m<sup>3</sup></td>		
-		<td align="right">#=kendo.toString(sale, "c0", banhji.institute.locale)#</td>
-		<td align="right">#=kendo.toString(unpaid, "c0", banhji.institute.locale)#</td>					
-    </tr>   
-</script>
-<script id="wsale-by-location-row-template" type="text/x-kendo-tmpl">		
-	<tr>		
-		<td class="snoo">1</td>
-		<td>#=branch_name#</td>
-		<td>#=location_name#</td>		
-		<td align="right">#=kendo.toString(active_customer, "n0")# </td>
-		<td align="right">#=kendo.toString(inactive_customer, "n0")#​ </td>				
-		<td align="right">#=kendo.toString(deposit, "c0", banhji.eDashBoard.locale)#</td>
-		<td align="right">#=kendo.toString(usage, "n0")# m<sup>3</sup></td>		
-		<td align="right">#=kendo.toString(sale, "c0", banhji.eDashBoard.locale)#</td>
-		<td align="right">#=kendo.toString(unpaid, "c0", banhji.eDashBoard.locale)#</td>						
-    </tr>   
-</script>
-
-<script id="waterCenter" type="text/x-kendo-template">	
-	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
-		<div class="widget-body padding-none">			
-			<div class="row-fluid row-merge">
-				<div class="span3 listWrapper" >
-					<div class="innerAll">							
-						<form autocomplete="off" class="form-inline">
-							
-							<div class="widget-search separator bottom">
-								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
-								<div class="overflow-hidden">
-									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
-								</div>
-							</div>						
-							<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
-								<input data-role="dropdownlist"
-					                   data-option-label="Select Type..."
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: contact_type_id,
-					                              source: contactTypeDS"
-					                   style="width: 100%;" />							
-							</div>
-						</form>					
-					</div>
-					
-					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
-
-					<div class="table table-condensed" style="height: 580px;"						 
-						 data-role="grid"						 
-						 data-bind="source: contactDS"
-						 data-row-template="waterCenter-customer-list-tmpl"
-						 data-columns="[{title: ''}]"
-						 data-selectable=true
-						 data-height="600"						 
-						 data-scrollable="{virtual: true}"></div>									
-				</div>
-				<div class="span9 detailsWrapper">
-					<div class="row-fluid">					
-						<div class="span6">
-							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
-
-							    <!-- Widget Heading -->
-							    <div class="widget-head">
-
-							        <!-- Tabs -->
-							        <ul class="pull-right">
-							        	<li style="font-size: large; color: black; font-weight: bold;">							            	
-							            	<span data-bind="text: obj.name"></span>
-							            </li>
-							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
-							            </li>							            							            
-							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
-							            </li>
-							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
-							            </li>							            							            
-							        </ul>
-							        <div class="clearfix"></div>
-							        <!-- // Tabs END -->
-
-							    </div>
-							    <!-- Widget Heading END -->
-
-							    <div class="widget-body">
-							        <div class="tab-content">
-
-							            <!-- Transactions Tab content -->
-							            <div id="tab1-4" class="tab-pane active box-generic">
-							            	<table class="table table-borderless table-condensed cart_total cash-table">
-								            	<tr>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-inverse" data-bind="click: goQuote"><span>METER</span>
-								            		</td>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit"><span><span data-bind="text: lang.lang.c_deposit"></span></span>								            			
-								            		</td>
-								            	</tr>
-							            	</table>
-							            </div>
-							            <!-- // Transactions Tab content END -->							           					            
-
-							            <!-- INFO Tab content -->
-							            <div id="tab2-4" class="tab-pane box-generic">
-							            	<div class="row-fluid">
-							            		<div class="accounCetner-textedit">
-									            	<table width="100%">
-														<tr>
-															<td width="40%"><span data-bind="text: lang.lang.customer_type"></span></td>
-															<td width="60%">
-																<span class="strong" data-bind="text: obj.contact_type"></span>
-															</td>
-														</tr>
-														<tr>
-															<td><span data-bind="text: lang.lang.number"></span></td>
-															<td>
-																<span class="strong" data-bind="text: obj.abbr"></span>
-																<span class="strong" data-bind="text: obj.number"></span>
-															</td>
-														</tr>
-														<tr>
-															<td><span data-bind="text: lang.lang.name"></span></td>
-															<td>
-																<span data-bind="text: obj.name"></span>
-															</td>
-														</tr>
-														<tr>
-															<td><span data-bind="text: lang.lang.billed_address"></span></td>
-															<td>
-																<span data-bind="text: obj.address"></span>
-															</td>
-														</tr>								
-														<tr>
-															<td><span data-bind="text: lang.lang.phone"></span></td>
-															<td>
-																<span data-bind="text: obj.phone"></span>
-															</td>
-														</tr>
-														<tr>
-															<td><span data-bind="text: lang.lang.currency"></span></td>
-															<td>										
-																<span data-bind="text: currencyCode"></span>
-															</td>
-														</tr>
-													</table>
-
-													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
-												</div>
-											</div>
-							            </div>
-							            <!-- // INFO Tab content END -->
-
-							            <!-- NOTE Tab content -->
-							            <div id="tab3-4" class="tab-pane">
-
-										    <div>
-												<input type="text" class="k-textbox" 
-														data-bind="value: note, events:{change:saveNoteEnter}" 
-														placeholder="Add memo ..." 
-														style="width: 366px;" />
-												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
-											</div>
-
-											<br>
-
-											<div class="table table-condensed" style="height: 100;"						 
-												 data-role="grid"
-												 data-auto-bind="false"						 
-												 data-bind="source: noteDS"
-												 data-row-template="waterCenter-note-tmpl"
-												 data-columns="[{title: ''}]"
-												 data-height="100"						 
-												 data-scrollable="{virtual: true}"></div>
-											
-							            </div>
-							            <!-- // NOTE Tab content END -->
-
-							            <!-- Attach Tab content -->
-								        <div id="tab4-4" class="tab-pane">							            	
-								            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
-								            <input id="files" name="files"
-							                   type="file"
-							                   data-role="upload"
-							                   data-show-file-list="false"
-							                   data-bind="events: { 
-					                   				select: onSelect
-							                   }">
-
-								            <table class="table table-bordered">
-										        <thead>
-										            <tr>			                
-										                <th><span data-bind="text: lang.lang.file_name"></span></th>
-										                <th><span data-bind="text: lang.lang.description"></span></th>
-										                <th><span data-bind="text: lang.lang.date"></span></th>
-										                <th style="width: 13%;"></th>                			                
-										            </tr> 
-										        </thead>
-										        <tbody data-role="listview" 
-										        		data-template="attachment-list-tmpl" 
-										        		data-auto-bind="false"
-										        		data-bind="source: attachmentDS"></tbody>			        
-										    </table>
-
-										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-
-								        </div>
-								        <!-- // Attach Tab content END -->							            								            
-
-							        </div>
-							    </div>
-							</div>
-						</div>
-
-						<div class="span6" style="margin-bottom: 10px;">
-							<div class="row-fluid">
-								<div class="span6">
-									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
-										<span class="glyphicons coins"><i></i></span>
-										<span class="txt"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium;"></span></span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-								<div class="span6">
-									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit">
-										<span class="glyphicons briefcase"><i></i></span>
-										<span class="txt"><span data-bind="text: lang.lang.deposit"></span><span data-bind="text: deposit" style="font-size:medium;"></span></span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>							
-							
-							<div class="row-fluid">
-								<div class="span6">
-									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
-										<span class="glyphicons circle_exclamation_mark"><i></i></span>
-										<span class="txt"><span data-bind="text: outInvoice"></span> <span data-bind="text: lang.lang.open_invoice"></span></span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-								<div class="span6">
-									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice">
-										<span class="glyphicons turtle"><i></i></span>
-										<span class="txt"><span data-bind="text: overInvoice"></span> <span data-bind="text: lang.lang.over_due"></span></span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>														
-						</div>
-					</div>
-					
-					<div>
-						<input data-role="dropdownlist"
-							   class="sorter"                  
-					           data-value-primitive="true"
-					           data-text-field="text"
-					           data-value-field="value"
-					           data-bind="value: sorter,
-					                      source: sortList,                              
-					                      events: { change: sorterChanges }" />
-
-						<input data-role="datepicker"
-							   class="sdate"
-							   data-format="dd-MM-yyyy"
-					           data-bind="value: sdate,
-					           			  max: edate"
-					           placeholder="From ..." >
-
-					    <input data-role="datepicker"
-					    	   class="edate"
-					    	   data-format="dd-MM-yyyy"
-					           data-bind="value: edate,
-					                      min: sdate"
-					           placeholder="To ..." >
-
-					  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
-					</div>
-
-					<table class="table table-bordered table-striped table-white">
-						<thead>
-							<tr>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.type"></span></th>								
-								<th><span data-bind="text: lang.lang.reference_no"></span></th>
-								<th><span data-bind="text: lang.lang.amount"></span></th>
-								<th><span data-bind="text: lang.lang.status"></span></th>
-								<th><span data-bind="text: lang.lang.action"></span></th>
-							</tr>
-						</thead>	            		
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"	            					            					            					            			
-				                data-template="waterCenter-transaction-tmpl"
-				                data-bind="source: transactionDS" >
-				        </tbody>
-	            	</table>
-
-	            	<div id="pager" class="k-pager-wrap"
-				    	 data-auto-bind="false"
-			             data-role="pager" data-bind="source: transactionDS"></div>	            	
-				</div>
-			</div>			
-		</div>
-	</div>		
-</script>
-<script id="waterCenter-transaction-tmpl" type="text/x-kendo-tmpl">
-    <tr>    	  	
-    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=type#</td>
-        <!-- Reference -->
-        <td>
-        	#if(type=="Customer_Deposit" && amount<0){#			
-				<a href="\#/#=reference[0].type.toLowerCase()#/#=reference[0].id#"><i></i> #=number#</a>			
-			#}else{#
-				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
-			#}#        	
-        </td>
-        <!-- Amount -->
-    	<td class="right">
-    		#if(type=="GDN"){#
-    			#=kendo.toString(amount, "n0")#
-    		#}else{#
-    			#=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
-    		#}#
-    	</td>
-    	<!-- Status -->
-    	<td align="center">
-    		#if(type==="Quote"){#       		
-				#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Used        			
-        		#}#
-        	#}else if(type==="Sale_Order"){#
-        		#if(status==="0"){#
-        			Open
-        		#}else{#
-        			Done        			
-        		#}#
-        	#}else if(type==="GDN"){#
-        		Delivered
-        	#}else if(type==="Invoice"){#
-        		#if(status==="0" || status==="2") {#
-        			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
-					#if(dueDate < toDay) {#
-						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
-					#} else {#
-						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
-					#}#
-				#} else {#
-					Paid
-				#}#        	
-        	#}#        				
-		</td>
-		<!-- Actions -->
-    	<td align="center">
-			#if(type==="Invoice"){#
-				#if(status==="0" || status==="2") {#
-        			<a data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></a>
-        		#}#
-        	#}#
-		</td>     	
-    </tr>
-</script>
-<script id="waterCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
-	<tr data-bind="click: selectedRow">
-		<td>
-			<div class="media-body strong">				
-				<span>#=abbr##=number#</span>
-				<span>#=name#</span>
-			</div>
-		</td>
-	</tr>
-</script>
-<script id="waterCenter-note-tmpl" type="text/x-kendo-template">
-	<tr>
-		<td>			
-			<blockquote>
-				<small class="author">
-					<span class="strong">#=creator#</span> :
-					<cite>#=kendo.toString(new Date(noted_date), "g")#</cite>
-				</small>					
-				<p>#=note#</p>
-			</blockquote>				
-		</td>
-	</tr>	
-</script>
-
-<script id="wNewCustomer" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-960">			
-
-				<!-- Collapsible Widget -->			
-				<div class="widget">
-				    <div class="widget-head">
-				    	<span class="btn btn-primary pull-right" 
-								onclick="javascript:window.history.back()">X</span>
-				        
-				        <h4 class="heading glyphicons user_add"><i></i><span data-bind="text: lang.lang.new_water_customer"></span></h4>							        	
-				    </div>
-				    <div class="widget-body">												
-												
-						<table class="table table-bordered table-primary table-striped table-vertical-center">
-							<thead>
-								<tr>
-									<th style="width: 5%;" class="center"><span data-bind="text: lang.lang.no"></span></th>
-									<th><span data-bind="text: lang.lang.number"></span></th>								
-									<th><span data-bind="text: lang.lang.name"></span></th>
-									<th></th>
-								</tr>
-							</thead>	            		
-		            		<tbody data-role="listview"
-		            				data-auto-bind="false"
-					                data-template="wNewCustomer-customer-list-tmpl"
-					                data-bind="source: dataSource">
-					        </tbody>
-		            	</table>						
-
-		            	<!-- Window Pop-Up -->
-						<div id="window" data-role="window" data-visible="false" data-modal="true" data-resizable="false" data-iframe="true">				    	
-							<div id="example" class="k-content">
-								<br>
-								<table class="table table-borderless table-condensed cart_total">						            	
-				            		<tr>
-						                <td><span data-bind="text: lang.lang.license"></span> <span style="color:red">*</span></td>
-						              	<td>
-						              		<input id="ddlBranch" name="ddlBranch"
-												data-bind="value: obj.wbranch_id" 
-												required data-required-msg="required" style="width: 100%;" />
-						              	</td>							              	
-						            	<td><span data-bind="text: lang.lang.location"></span> <span style="color:red">*</span></td>
-						              	<td>
-						              		<input id="ddlLocation" name="ddlLocation"
-												data-bind="value: obj.wlocation_id, events:{change:locationChanges}" disabled="disabled"
-												required data-required-msg="required" style="width: 100%;" />
-						              	</td>
-						            </tr>
-						            <tr>
-						                <td><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></td>
-						              	<td>
-						              		<input id="numberHead" name="numberHead" class="k-textbox"
-						              				data-bind="value: obj.wnumber_head" 
-						              				placeholder="e.g. ID" required data-required-msg="required"
-						              				style="width: 30%;" />
-						              		<input id="number" name="number" class="k-textbox"
-						              				data-bind="value: obj.wnumber, events:{change:checkExistingNumber}" 
-						              				placeholder="e.g. 0001" required data-required-msg="required"
-						              				style="width: 68%;" />
-						              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
-						              	</td>							              	
-						            	<td><span data-bind="text: lang.lang.id_card_number"></span></td>
-						              	<td><input class="k-textbox" data-bind="value: obj.id_number" placeholder="e.g. 123456789" /></td>
-						            </tr>					            
-						            <tr>
-						            	<td><span data-bind="text: lang.lang.family_member"></span></td>
-						              	<td><input class="k-textbox" data-bind="value: obj.family_member" placeholder="e.g. 3" /></td>							            	
-						            	<td><span data-bind="text: lang.lang.job"></span></td>
-						              	<td><input class="k-textbox" data-bind="value: obj.job" placeholder="e.g. teacher" /></td>
-						            </tr>					            						            							            								            								            			            
-						        </table>							
-
-								<div align="center">
-									<span id="save" class="btn btn-success btn-icon glyphicons ok_2"><i></i>Save</span>
-									<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i>Close</span> 
-								</div>
-							</div> 
-						</div>
-
-						<span id="notification"></span>								
-
-					</div> <!-- End Widget-Body List -->
-				</div>
-				<!-- // Collapsible Widget END -->
-
-			</div>							
-		</div>
-	</div>
-</script>
-<script id="wNewCustomer-customer-list-tmpl" type="text/x-kendo-template">
-	<tr>
-		<td>#:banhji.wNewCustomer.dataSource.indexOf(data)+1#</td>
-		<td>#=number#</td>
-		<td>#=fullname#</td>
-		<td class="center">
-			<span class="btn btn-icon btn-success glyphicons circle_plus" data-bind="click: openWindow"><i></i> Use Water</span>
-		</td>
-	</tr>	
-</script>
-
-<script id="wCustomer" type="text/x-kendo-template">
-	<div class="container-960">	
-		<div class="row-fluid">		    
-			<div class="span12">			
-				<div id="example" class="k-content">
-
-					<!-- Collapsible Widget -->			
-					<div class="widget">
-					    <div class="widget-head">
-					    	<span class="btn btn-primary pull-right" 
-									onclick="javascript:window.history.back()">X</span>
-					        
-					        <h4 class="heading glyphicons circle_info"><i></i> Customer</h4>					        							        	
-					    </div>
-					    <div class="widget-body">
-					    	<!-- Upper part -->
-					    	<div class="row-fluid">
-					    		<div class="span6 well">									
-									<div class="row-fluid">
-										<div class="span6">														
-											<!-- Group -->
-											<div class="control-group">										
-												<label for="ddlContactType"><span data-bind="text: lang.lang.customer_type"></span> <span style="color:red">*</span></label>
-												<input id="ddlContactType" name="ddlContactType"
-													data-bind="value: obj.contact_type_id" 
-													required data-required-msg="required" style="width: 100%;" />																					            
-											</div>
-											<!-- // Group END -->
-										</div>
-										
-										<div class="span2">	
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="numberHead">អក្សរកូដ <span style="color:red">*</span></label>
-						              			<input id="numberHead" name="numberHead" class="k-textbox"
-							              				data-bind="value: obj.number_head" 
-							              				placeholder="e.g. ID" required data-required-msg="required"
-							              				style="width: 100%;" />
-											</div>
-											<!-- // Group END -->											
-										</div>
-
-										<div class="span4">	
-											<!-- Group -->
-											<div class="control-group">							
-												<label for="number"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>
-						              			<input id="number" name="number" class="k-textbox"
-							              				data-bind="value: obj.number, events:{change: checkExistingNumber}" 
-							              				placeholder="e.g. 0001" required data-required-msg="required"
-							              				style="width: 75%;" />
-							              		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
-							              		<button type="button" data-role="button" data-bind="click: setNumber"><i class="icon-refresh"></i></button>
-											</div>
-											<!-- // Group END -->											
-										</div>
-									</div>
-									
-									<div class="row-fluid">
-										<div class="span6">						
-											<!-- Group -->
-											<div class="control-group">
-												<label for="surname"><span data-bind="text: lang.lang.surname"></span> <span style="color:red">*</span></label>
-							              		<input id="surname" name="surname" class="k-textbox" data-bind="value: obj.surname" 
-									              		placeholder="surname ..." required data-required-msg="required"
-									              		style="width: 100%;" />
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span6">	
-											<!-- Group -->
-											<div class="control-group">								
-												<label for="name"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
-									            <input id="name" name="name" class="k-textbox" data-bind="value: obj.name" 
-									              		placeholder="name ..." required data-required-msg="required"
-									              		style="width: 100%;" />
-											</div>																		
-											<!-- // Group END -->
-										</div>
-									</div>
-									
-									<div class="row-fluid" data-bind="visible: isCompany">
-										<div class="span6">
-											<!-- Group -->
-											<div class="control-group">
-												<label for="companyName"><span data-bind="text: lang.lang.organization_name"></span> <span style="color:red">*</span></label>
-												<input id="companyName" name="companyName" class="k-textbox" data-bind="enabled: isCompany, value: obj.company"									
-														placeholder="e.g. PCG & Partner"
-														style="width: 100%;" />	
-											</div>
-											<!-- // Group END -->
-										</div>
-
-										<div class="span6">	
-											<!-- Group -->
-											<div class="control-group">
-												<label for="vatNo">VAT Number</label>								
-							            		<input id="vatNo" name="vatNo" class="k-textbox" data-bind="enabled: isCompany, value: obj.vat_no" 
-														placeholder="e.g. 01234567897"
-														style="width: 100%;" />												
-											</div>					
-											<!-- // Group END -->
-										</div>
-									</div>
-																
-								</div>
-								<div class="span6">
-									<div class="row-fluid">	
-										<!-- Map -->
-										<div id="map" class="span12" style="height: 130px;"></div>
-									</div>
-
-									<div class="separator line bottom"></div>
-
-									<div class="row-fluid">	
-										<div class="span6">									
-											<!-- Group -->
-											<div class="control-group">
-								    			<label for="latitute"><span data-bind="text: lang.lang.latitute"></span> </label>
-												<div class="input-prepend">
-													<span class="add-on glyphicons direction"><i></i></span>
-													<input type="text" class="input-large span12" data-bind="value: obj.latitute, events:{change: loadMap}" placeholder="012345.67897">
-												</div>
-											</div>									
-											<!-- // Group END -->
-										</div>	
-										
-										<div class="span6">	
-											<!-- Group -->
-											<div class="control-group">
-								    			<label for="longtitute"><span data-bind="text: lang.lang.longtitute"></span> </label>
-								    			<div class="input-prepend">
-													<span class="add-on glyphicons google_maps"><i></i></span>
-													<input type="text" class="input-large span12" data-bind="value: obj.longtitute, events:{change: loadMap}" placeholder="012345.67897">
-												</div>										
-											</div>
-											<!-- // Group END -->
-										</div>										
-									</div>
-								</div>
-							</div>								
-									
-							<!-- // Inner Tabs -->
-							<div class="row-fluid">								
-								<div class="box-generic">
-								    <!-- //Tabs Heading -->
-								    <div class="tabsbar tabsbar-1">
-								        <ul class="row-fluid row-merge">								            								            
-								            <li class="span2 glyphicons tint active">
-								            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.water"></span></span></a>
-								            </li>
-								            <li class="span2 glyphicons usd">
-								            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.account"></span></span></a>
-								            </li>
-								            <li class="span2 glyphicons nameplate_alt">
-								            	<a href="#tab3" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.info"></span></span></a>
-								            </li>
-								            <li class="span2 glyphicons parents">
-								            	<a href="#tab4" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.agents"></span></span></a>
-								            </li>						            					            
-								        </ul>
-								    </div>
-								    <!-- // Tabs Heading END -->
-
-								    <div class="tab-content">
-
-								    	<!-- //WATER INFO -->
-								        <div class="tab-pane active" id="tab1">
-							            	<div class="row-fluid">
-
-							            		<div class="span3">
-								            		<!-- Group -->
-													<div class="control-group">											
-														<label for="ddlBranch"><span data-bind="text: lang.lang.license"></span> <span style="color:red">*</span></label>
-														<input id="ddlBranch" name="ddlBranch"
-															data-bind="value: obj.wbranch_id" 
-															required data-required-msg="required" style="width: 100%;" />
-													</div>
-													<!-- // Group END -->
-												</div>
-
-												<div class="span3">
-								            		<!-- Group -->
-													<div class="control-group">											
-														<label for="ddlLocation"><span data-bind="text: lang.lang.location"></span> <span style="color:red">*</span></label>
-														<input id="ddlLocation" name="ddlLocation"
-															data-bind="value: obj.wlocation_id, events:{change: locationChanges}" disabled="disabled" style="width: 100%;" />
-													</div>
-													<!-- // Group END -->
-												</div>
-
-												<div class="span3">
-													<!-- Group -->
-													<div class="control-group">							
-														<label for="wnumberHead">អក្សរកូដ <span style="color:red">*</span></label>
-								              			<input id="wnumberHead" name="wnumberHead" class="k-textbox"
-									              				data-bind="value: obj.wnumber_head" 
-									              				placeholder="e.g. ID" required data-required-msg="required"
-									              				style="width: 100%;" />
-													</div>
-													<!-- // Group END -->
-												</div>
-
-												<div class="span3">
-													<!-- Group -->
-													<div class="control-group">							
-														<label for="wnumber"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>
-								              			<input id="wnumber" name="wnumber" class="k-textbox"
-									              				data-bind="value: obj.wnumber, events:{change: checkExistingWNumber}" 
-									              				placeholder="e.g. 0001" required data-required-msg="required"
-									              				style="width: 100%;" />
-									              		<span data-bind="visible: isDuplicateWNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
-													</div>
-													<!-- // Group END -->
-												</div>
-
-							            	</div>
-							        	</div>
-								        <!-- //WATER INFO END -->
-
-								        <!-- //ACCOUNTING INFO -->
-								        <div class="tab-pane" id="tab2">
-								        	<div class="row-fluid">								        		
-								            	<div class="span3">
-													<label for="ddlAR"><span data-bind="text: lang.lang.account_receiveable"></span> <span style="color:red">*</span></label>
-													<input id="ddlAR" name="ddlAR"
-														data-bind="value: obj.contact_account_id" 
-														required data-required-msg="required" style="width: 100%;" />
-												</div>
-												<div class="span3">
-													<label for="ddlRA"><span data-bind="text: lang.lang.revenue_account"></span> <span style="color:red">*</span></label>
-													<input id="ddlRA" name="ddlRA"
-														data-bind="value: obj.ra_id" 
-														required data-required-msg="required" style="width: 100%;" />
-												</div>
-												<div class="span3">
-													<label for="ddlDepositAccount"><span data-bind="text: lang.lang.deposit_account"></span> <span style="color:red">*</span></label>
-													<input id="ddlDepositAccount" name="ddlDepositAccount"
-														data-bind="value: obj.deposit_account_id" 
-														required data-required-msg="required" style="width: 100%;" />
-												</div>
-												<div class="span3">
-													<label for="ddlDiscountAccount"><span data-bind="text: lang.lang.discount_account"></span> <span style="color:red">*</span></label>
-													<input id="ddlDiscountAccount" name="ddlDiscountAccount"
-														data-bind="value: obj.discount_account_id" 
-														required data-required-msg="required" style="width: 100%;" />	
-												</div>												
-									        </div>
-
-									        <div class="separator line bottom"></div>
-
-									        <div class="row-fluid">
-								        		<div class="span3">						
-										            <label for="currency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>
-										            <input id="currency" name="currency" 
-										            	data-role="dropdownlist"
-										            	data-value-primitive="true"
-										                data-text-field="code"
-										                data-value-field="id"
-														data-bind="value: obj.currency_id, source: currencyDS"
-														data-option-label="(--- Select ---)" 
-														required data-required-msg="required" style="width: 100%;" />
-										        </div>
-								            	<div class="span3">
-													<label for="ddlPaymentTerm"><span data-bind="text: lang.lang.payment_term"></span></label>
-													<input id="ddlPaymentTerm" name="ddlPaymentTerm"
-														data-role="dropdownlist"
-														data-option-label="(--- Select ---)"
-										            	data-value-primitive="true"
-										                data-text-field="name"
-										                data-value-field="id"
-														data-bind="value: obj.payment_term_id, source: paymentTermDS"														
-														style="width: 100%;" />
-												</div>
-												<div class="span3">
-													<label for="ddlPaymentMethod"><span data-bind="text: lang.lang.payment_method"></span></label>
-													<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-														data-role="dropdownlist"
-														data-option-label="(--- Select ---)"
-										            	data-value-primitive="true"
-										                data-text-field="name"
-										                data-value-field="id"
-														data-bind="value: obj.payment_method_id, source: paymentMethodDS"														
-														style="width: 100%;" />
-												</div>
-												<div class="span3">
-													<label for="ddlTaxItem"><span data-bind="text: lang.lang.vat"></span> </label>
-													<input id="ddlTaxItem" name="ddlTaxItem"
-														   data-role="dropdownlist"
-														   data-option-label="(--- Select ---)"
-										                   data-auto-bind="false"
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.tax_item_id,
-										                              source: taxDS"
-										                   required data-required-msg="required"
-										                   style="width: 100%;" />													
-												</div>												
-									        </div>
-
-									        <div class="separator line bottom"></div>
-
-									        <div class="row-fluid">	
-										        <div class="span3">
-													<label for="txtCreditLimit"><span data-bind="text: lang.lang.credit_limit"></span> </label>								              		
-										            <input data-role="numerictextbox"
-										                   data-format="n"
-										                   data-min="0"										                   
-										                   data-bind="value: obj.credit_limit"										                  
-										                   style="width: 100%;">
-												</div>
-											</div>
-							        	</div>
-								        <!-- //ACCOUNTING INFO END -->
-
-								        <!-- //GENERAL INFO -->
-								        <div class="tab-pane" id="tab3">
-							            	<table class="table table-borderless table-condensed cart_total">						            	
-							            		<tr>
-									                <td><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></td>
-									              	<td>
-									              		<input id="customerStatus" name="customerStatus" 
-									              				data-role="dropdownlist"
-											            		data-text-field="name"
-								           						data-value-field="id"
-								           						data-value-primitive="true" 
-											            		data-bind="source: statusList, value: obj.status"
-											            		data-option-label="(--- Select ---)"
-											            		required data-required-msg="ត្រូវការ ស្ថានភាព" />
-									              	</td>							              	
-									            	<td><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></td>
-									              	<td>
-									              		<input id="registered_date" name="registered_date" 
-										            		data-role="datepicker"			            		
-							            					data-bind="value: obj.registered_date" 
-							            					data-format="dd-MM-yyyy"
-							            					data-parse-formats="yyyy-MM-dd" 
-							            					placeholder="dd-MM-yyyy" required data-required-msg="required" />
-									              	</td>
-									            </tr>
-									            <tr>
-									                <td><span data-bind="text: lang.lang.gender"></span></td>
-									              	<td><select data-role="dropdownlist" data-bind="source: genders, value: obj.gender"></select></td>							              	
-									            	<td><span data-bind="text: lang.lang.phone"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" /></td>
-									            </tr>
-									            <tr>
-									            	<td><span data-bind="text: lang.lang.family_member"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.family_member" placeholder="e.g. 3" /></td>							              	
-									            	<td><span data-bind="text: lang.lang.email"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" />
-									            </tr>
-									            <tr>
-									            	<td><span data-bind="text: lang.lang.job"></span></td>
-									                <td><input class="k-textbox" data-bind="value: obj.job" placeholder="e.g. teacher" /></td>							            	
-									            	<td><span data-bind="text: lang.lang.id_card_number"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.id_number" placeholder="e.g. 123456789" /></td>
-									            </tr>
-									            <tr>
-									            	<td><span data-bind="text: lang.lang.address"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." />							              	
-									            	<td><span data-bind="text: lang.lang.memo"></span></td>
-									              	<td><input class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." /></td>
-									            </tr>
-									            <tr>
-									            	<td>
-									            		<label for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> <i class="icon-share"></i></label>											            
-									            	</td>
-									            	<td>
-									            		<input class="k-textbox" data-bind="value: obj.bill_to" placeholder="bill to ..." />
-									            	</td>
-									            	<td>
-									            		<span data-bind="text: lang.lang.ship_to"></span>										            
-									            	</td>
-									            	<td>
-									            		<input class="k-textbox" data-bind="value: obj.ship_to" placeholder="ship to ..." />
-									            	</td>
-									            </tr>									            							            							            								            								            			            
-									        </table>
-							        	</div>
-								        <!-- //GENERAL INFO END -->
-
-								        <!-- //CONTACT PERSON -->
-								        <div class="tab-pane" id="tab4">
-								        	<span class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i> <span data-bind="text: lang.lang.new_agent"></span></span>
-								        	
-								        	<table class="table table-bordered table-white">
-										        <thead>
-										            <tr>
-										                <th><span data-bind="text: lang.lang.name"></span></th>
-										                <th><span data-bind="text: lang.lang.department"></span></th>						                
-										                <th><span data-bind="text: lang.lang.phone"></span></th>
-										                <th><span data-bind="text: lang.lang.email"></span></th>
-										                <th width="20px"></th>										               
-										            </tr>
-										        </thead>
-										        <tbody data-role="listview"										        		
-										        		data-auto-bind="false"										        						        		 
-										        		data-template="contact-person-row-tmpl" 
-										        		data-bind="source: contactPersonDS">
-										        </tbody>										        						        
-										    </table>
-							        	</div>
-								        <!-- //CONTACT PERSON END -->
-								    </div>
-								</div>
-							</div>
-
-							<br>											
-							
-							<!-- Form actions -->
-							<div align="center">
-								<span id="notification"></span>
-
-								<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-								<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-								<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-							</div>
-							<!-- // Form actions END -->
-
-						</div> <!-- End Widget-Body List -->
-					</div>
-					<!-- // Collapsible Widget END -->				          					                
-			    											
-				</div> <!-- // End div example-->  
-			</div> <!-- // End div span12-->
-		</div> <!-- // End div row-fluid-->	
-	</div> 	
-</script>
-<script id="wCustomer-contact-person-row-tmpl" type="text/x-kendo-tmpl">
-	<tr>		
-		<td>
-			<input id="name" name="name" 
-					type="text" class="k-textbox" 
-					data-bind="value: name"
-					placeholder="eg: Mr. John" 
-					required="required" validationMessage="required" style="width: 190px;" />
-            <span data-for="name" class="k-invalid-msg"></span>
-		</td>
-		<td>
-			<input type="text" class="k-textbox" data-bind="value: department" placeholder="eg: Accounting" style="width: 190px;" />
-		</td>		
-		<td>
-			<input type="text" class="k-textbox" data-bind="value: phone" placeholder="eg: 012 333 444" style="width: 190px;" />
-		</td>
-		<td>
-			<input type="text" class="k-textbox" data-bind="value: email" placeholder="eg: john@email.com" style="width: 190px;" />
-		</td>		
-		<td align="center">            
-			<span class="glyphicons no-js delete" data-bind="click: deleteContactPerson"><i></i></span>									
-		</td>		
-	</tr>
-</script>
-
-<script id="wCustomerOrder" type="text/x-kendo-template">
-	<div class="container-960">
-		<div class="row-fluid">
-			<div class="span12">
-				<div id="example" class="k-content">
-					<div class="hidden-print">
-						<span class="pull-right glyphicons no-js remove_2" 
-							onclick="javascript:window.history.back();"><i></i></span>
-
-						<input id="ddlBranch" data-bind="value: branch_id" />						                
-						<input id="ddlLocation" data-bind="value: location_id" disabled="disabled" />
-						<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-						<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
-					</div>
-					
-					<br>
-
-					<h3 align="center"><span data-bind="text: lang.lang.reorder_customer"></span></h3>
-					<p align="center"><span data-bind="text: lang.lang.note1"></span></p>
-										
-					<br>
-				
-					<div id="grid"></div>
-
-					<br>
-
-					<div class="hidden-print" align="center">
-						<div data-role="notification" id="ntf1" data-width="300" data-height="50"></div>
-						<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok" data-bind="click: save"><i></i><span data-bind="text: lang.lang.save"></span></span>
-					</div>					
-
-				</div>
-			</div>
-		</div>
-	</div>
-</script>
-<style>
-    .k-grid tbody tr {
-        cursor: move;
-    }
-</style>
-
-<script id="wInstallment" type="text/x-kendo-template">
-	<div class="container-960">	
-		<div class="row-fluid">		    
-			<div class="span12">			
-				<div id="example" class="k-content">					
-
-					<!-- Collapsible Widget -->			
-					<div class="widget">
-					    <div class="widget-head">
-					    	<span class="btn btn-primary pull-right" 
-									onclick="javascript:window.history.back()">X</span>
-					        
-					        <h4 class="heading glyphicons dashboard"><i></i><span data-bind="text: lang.lang.deprisiation"></span></h4>							        	
-					    </div>
-					    <div class="widget-body">
-						    
-			    			<input id="cbbCustomer" name="cbbCustomer" 
-			    				   data-role="combobox"
-				                   data-placeholder="Customer..."
-				                   data-auto-bind="false"
-				                   data-value-primitive="true"
-				                   data-filter="search"							                   
-				                   data-min-length="3"							                   
-				                   data-text-field="fullname"
-				                   data-value-field="id"
-				                   data-template="wInstallment-contact-combobox-template"
-				                   data-bind="value: obj.contact_id,
-				                              source: contactDS"
-				                   required data-required-msg="ត្រូវការ Customer"
-				                   style="width: 130px;" />						    			
-
-							<br>
-
-							<table class="table table-bordered table-condensed table-white">
-								<thead>
-									<tr>
-										<th><span data-bind="text: lang.lang.month_of"></span></th>
-										<th><span data-bind="text: lang.lang.reading"></span></th>								
-										<th><span data-bind="text: lang.lang.usage"></span></th>
-										<th><span data-bind="text: lang.lang.amount"></span></th>
-										<th><span data-bind="text: lang.lang.reader"></span></th>
-										<th><span data-bind="text: lang.lang.memo"></span></th>
-										<th></th>
-									</tr>
-								</thead>	            		
-			            		<tbody data-role="listview"
-			            				data-auto-bind="false"	            					            					            					            			
-						                data-template="wReading-center-tmpl"
-						                data-bind="source: dataSource">
-						        </tbody>
-			            	</table>						   
-
-							<div class="row-fluid">
-					          	<!-- Form actions -->
-								<div align="center">
-									<span id="notification"></span>
-
-									<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-									<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-									<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-								</div>
-								<!-- // Form actions END -->
-							</div>
-
-						</div> <!-- End Widget-Body List -->
-					</div>
-					<!-- // Collapsible Widget END -->				          					                
-			    											
-				</div> <!-- // End div example-->  
-			</div> <!-- // End div span12-->
-		</div> <!-- // End div row-fluid-->	
-	</div> 	
-</script>
-<script id="wInstallment-row-template" type="text/x-kendo-template">	
-	<tr>		
-		<td>#=kendo.toString("month", "MM-yyyy")#</td>
-		<td>#=amount#</td>		
-		<td>#=balance#</td>			
-	</tr>
-</script>
-<script id="wInstallment-contact-combobox-template" type="text/x-kendo-template">	
-	#=wnumber# #=fullname#
-</script>
-
-<script id="wDeposit" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-960">					
-			<div id="example" class="k-content">
-
-				<!-- Collapsible Widget -->			
-				<div class="widget">
-				    <div class="widget-head">
-				    	<span class="btn btn-primary pull-right" 
-								onclick="javascript:window.history.back()">X</span>
-				        
-				        <h4 class="heading glyphicons notes"><i></i><span data-bind="text: lang.lang.deposit_receipt"></span></h4>							        	
-				    </div>
-				    <div class="widget-body">					
-						
-						<!-- Upper Part -->
-						<div class="row-fluid">
-							<div class="span4">				
-								<table class="table table-borderless table-condensed cart_total">
-									<tr>
-										<td><span data-bind="text: lang.lang.customer"></span></td>
-										<td>
-											<input id="cbbCustomer" name="cbbCustomer" 
-							    				   data-role="combobox"
-								                   data-placeholder="customer ..."
-								                   data-auto-bind="false"
-								                   data-value-primitive="true"
-								                   data-filter="search"							                   
-								                   data-min-length="3"							                   
-								                   data-text-field="fullname"
-								                   data-value-field="id"
-								                   data-template='receipt-contact-combobox-template'
-								                   data-bind="value: obj.contact_id,
-								                              source: contactDS,
-								                              events:{change:contactChanges}"
-								                   required data-required-msg="required"
-								                   style="width: 100%" />
-										</td>
-									</tr>					          
-									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.number"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" readonly /></td>
-									</tr>																	           
-									<tr>
-										<td colspan="2">
-											<span data-bind="text: lang.lang.address"></span>
-											<br>
-											<textarea id="address" cols="0" rows="2" class="k-textbox" style="width: 100%;" data-bind="value: obj.bill_to"></textarea>
-										</td>
-									</tr>
-								</table>
-							</div>
-
-						    <div class="span4">
-						    	<div align="center">
-						    		<span class="glyphicons standard circle_ok" data-bind="visible: paid"><i></i> <span data-bind="text: lang.lang.paid"></span></span>				    	
-						    	</div>
-						    </div>
-
-							<div class="span4">
-								<table class="table table-borderless table-condensed cart_total">
-									<tr>
-										<td><span data-bind="text: lang.lang.date"></span></td>
-										<td>
-											<input id="issuedDate" name="issuedDate" data-role="datepicker" 
-													data-bind="value: obj.issued_date" data-format="dd-MM-yyyy" 
-													required data-required-msg="required" />											
-										</td>
-									</tr>
-									<tr>
-						                <td><span data-bind="text: lang.lang.cheque"></span></td>						              	
-						              	<td><input class="k-textbox" data-bind="value: obj.check_no" style="width:100%;" /></td>
-						            </tr>
-									<tr>
-										<td><span data-bind="text: lang.lang.payment_method"></span></td>
-										<td>
-											<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-													data-bind="value: obj.payment_method_id"
-													required data-required-msg="required"  
-													style="width: 100%" />											
-										</td>
-									</tr>									
-									<tr>
-										<td><span data-bind="text: lang.lang.deposit_account"></span></td>
-										<td>
-											<input id="ddlDepositAccount" name="ddlDepositAccount"
-													data-bind="value: obj.deposit_account_id"
-													required data-required-msg="required"  
-													style="width: 100%" />											
-										</td>
-									</tr>
-									<tr>
-										<td><span data-bind="text: lang.lang.cash_account"></span></td>
-										<td>
-											<input id="ddlCashAccount" name="ddlCashAccount"
-													data-bind="value: obj.account_id"
-													required data-required-msg="required"  
-													style="width: 100%" />										
-										</td>
-									</tr>						            								
-								</table>           		          	
-						    </div>
-						</div>
-
-						<br>
-
-						<!-- Item List -->
-						<table class="table table-bordered table-vertical-center table-pricing table-pricing-2">
-							<thead>
-								<tr>									
-									<th class="center"><span data-bind="text: lang.lang.item"></span></th>								
-									<th class="center"><span data-bind="text: lang.lang.description"></span></th>									
-									<th class="center"><span data-bind="text: lang.lang.amount"></span></th>									
-								</tr>
-							</thead>	            		
-		            		<tbody id="lvInvoice" data-role="listview"
-		            				data-auto-bind="false"	            					            					            					            			
-					                data-template="wDeposit-row-template"
-					                data-bind="source: lineDS">
-					        </tbody>
-		            	</table>						
-						
-						<!-- Lower Part -->
-						<div class="row-fluid">							
-							<span data-bind="text: lang.lang.memo"></span>:
-							<br>
-							<textarea id="memo" cols="0" rows="2" class="k-textbox" style="width:49%;" data-bind="value: obj.memo" placeholder="memo for customer ..."></textarea>
-							<textarea id="memo2" cols="0" rows="2" class="k-textbox" style="width:49%;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>																									
-						</div>
-
-						<br>						
-
-						<!-- Buttons -->
-						<div class="row-fluid">
-				          	<!-- Form actions -->
-							<div align="center" class="hidden-print">
-								<span id="notification"></span>
-
-								<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-								<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-								<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-								<span class="btn btn-primary btn-icon glyphicons print" data-bind="click: linkPrint, visible: isEdit"><i></i> <span data-bind="text: lang.lang.print"></span></span>
-							</div>
-							<!-- // Form actions END -->
-						</div>						
-
-					</div> <!-- End Widget-Body List -->
-				</div>
-				<!-- // Collapsible Widget END -->
-
-			</div>							
-		</div>
-	</div>
-</script>
-<script id="wDeposit-row-template" type="text/x-kendo-tmpl">		
-	<tr>				
-		<td>
-			<input id="ccbItem" name="ccbItem"
-				   data-role="combobox"
-				   data-auto-bind="false"                   
-                   data-value-primitive="true"				   
-                   data-text-field="name"
-                   data-value-field="id"
-                   data-bind="value: item_id, source: itemList, events: {change : itemChanges}"
-                   required data-required-msg="required" style="width: 100%" />			
-		</td>		
-		<td>
-			<input id="description" name="description" type="text"
-					class="k-textbox" 
-					data-bind="value: description"					 
-					required data-required-msg="required"
-					style="width: 100%; margin-bottom: 0;" />
-		</td>			
-		<td class="right">
-			<input id="amount" name="amount" 
-					data-role="numerictextbox" 
-					data-format="c" data-culture=#:locale#
-					data-bind="value: amount, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />						
-		</td>				
-    </tr>   
-</script>
-<script id="wDeposit-contact-combobox-template" type="text/x-kendo-template">	
-	#=number# #=fullname#
-</script>
-
-<script id="wDepositWitdraw" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-960">					
-			<div id="example" class="k-content">
-
-				<!-- Collapsible Widget -->			
-				<div class="widget">
-				    <div class="widget-head">
-				    	<span class="btn btn-primary pull-right" 
-								onclick="javascript:window.history.back()">X</span>
-				        
-				        <h4 class="heading glyphicons notes"><i></i>
-						<span data-bind="text: lang.lang.witdraw_Deposit_Receipt"></span></h4>							        	
-				    </div>
-				    <div class="widget-body">					
-						
-						<!-- Upper Part -->
-						<div class="row-fluid">
-							<div class="span4">				
-								<table class="table table-borderless table-condensed cart_total">
-									<tr>
-										<td><span data-bind="text: lang.lang.customer"></span></td>
-										<td>
-											<input id="cbbCustomer" name="cbbCustomer" 
-							    				   data-role="combobox"
-								                   data-placeholder="customer ..."
-								                   data-auto-bind="false"
-								                   data-value-primitive="true"
-								                   data-filter="search"							                   
-								                   data-min-length="3"							                   
-								                   data-text-field="fullname"
-								                   data-value-field="id"
-								                   data-template='receipt-contact-combobox-template'
-								                   data-bind="value: obj.contact_id,
-								                              source: contactDS,
-								                              events:{change:contactChanges}"
-								                   required data-required-msg="required"
-								                   style="width: 100%" />
-										</td>
-									</tr>					          
-									<tr data-bind="visible: isEdit">				
-										<td><span data-bind="text: lang.lang.number"></span></td>
-										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" readonly /></td>
-									</tr>																	           
-									<tr>
-										<td colspan="2">
-											<span data-bind="text: lang.lang.address"></span>
-											<br>
-											<textarea id="address" cols="0" rows="2" class="k-textbox" style="width: 100%;" data-bind="value: obj.bill_to"></textarea>
-										</td>
-									</tr>
-								</table>
-							</div>
-
-						    <div class="span4">
-						    	<div align="center">
-						    		<span class="glyphicons standard circle_ok" data-bind="visible: paid"><i></i> <span data-bind="text: lang.lang.paid"></span></span>				    	
-						    	</div>
-						    </div>
-
-							<div class="span4">
-								<table class="table table-borderless table-condensed cart_total">
-									<tr>
-										<td><span data-bind="text: lang.lang.date"></span></td>
-										<td>
-											<input id="issuedDate" name="issuedDate" data-role="datepicker" 
-													data-bind="value: obj.issued_date" data-format="dd-MM-yyyy" 
-													required data-required-msg="required" />											
-										</td>
-									</tr>																									
-									<tr>
-										<td><span data-bind="text: lang.lang.deposit_account"></span></td>
-										<td>
-											<input id="ddlDepositAccount" name="ddlDepositAccount"
-													data-bind="value: obj.deposit_account_id"
-													required data-required-msg="required"  
-													style="width: 100%" />											
-										</td>
-									</tr>
-									<tr>
-										<td><span data-bind="text: lang.lang.cash_account"></span></td>
-										<td>
-											<input id="ddlCashAccount" name="ddlCashAccount"
-													data-bind="value: obj.account_id"
-													required data-required-msg="required"  
-													style="width: 100%" />										
-										</td>
-									</tr>						            								
-								</table>           		          	
-						    </div>
-						</div>
-
-						<br>
-
-						<div class="row-fluid">
-	
-							<!-- Column -->
-							<div class="span6">
-							
-								<!-- Widget -->
-								<div class="widget widget-3">
-								
-									<!-- Widget heading -->
-									<div class="widget-head">
-										<h4 class="heading"><span class="glyphicons coins"><i></i></span>Witdraw Amount</h4>
-									</div>
-									<!-- // Widget heading END -->
-									
-									<div class="widget-body large">
-										<span data-bind="text: total"></span>
-									</div>
-									
-									<!-- Widget footer -->
-									<div class="widget-footer align-right">
-										
-									</div>
-									<!-- // Widget footer END -->
-									
-								</div>
-								<!-- // Widget END -->
-								
-							</div>
-							<!-- // Column END -->
-							
-							<!-- Column -->
-							<div class="span6">
-							
-								<!-- Widget -->
-								<div class="widget widget-3">
-								
-									<!-- Widget heading -->
-									<div class="widget-head">
-										<h4 class="heading"><span class="glyphicons pencil"><i></i></span><span data-bind="text: lang.lang.memo"></span></h4>
-									</div>
-									<!-- // Widget heading END -->
-									
-									<div class="widget-body">
-										<textarea id="memo" cols="0" rows="2" class="k-textbox" style="width:95%;" data-bind="value: obj.memo" placeholder="memo for customer ..."></textarea>
-										<textarea id="memo2" cols="0" rows="2" class="k-textbox" style="width:95%;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>	
-									</div>
-									
-								</div>
-								<!-- // Widget END -->
-								
-							</div>
-							<!-- // Column -->							
-							
-						</div>						
-
-						<br>						
-
-						<!-- Buttons -->
-						<div class="row-fluid">
-				          	<!-- Form actions -->
-							<div align="center">
-								<span id="notification"></span>
-
-								<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-								<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-								<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-								<span class="btn btn-primary btn-icon glyphicons print" data-bind="click: linkPrint, visible: isEdit"><i></i> <span data-bind="text: lang.lang.print"></span></span>
-							</div>
-							<!-- // Form actions END -->
-						</div>						
-
-					</div> <!-- End Widget-Body List -->
-				</div>
-				<!-- // Collapsible Widget END -->
-
-			</div>							
-		</div>
-	</div>
-</script>
-<script id="wDepositWitdraw-contact-combobox-template" type="text/x-kendo-template">	
-	#=number# #=fullname#
-</script>
-
-<script id="wMeter" type="text/x-kendo-template">
-	<div class="container-960">	
-		<div class="row-fluid">		    
-			<div class="span12">			
-				<div id="example" class="k-content">					
-
-					<!-- Collapsible Widget -->			
-					<div class="widget">
-					    <div class="widget-head">
-					    	<span class="btn btn-primary pull-right" 
-									onclick="javascript:window.history.back()">X</span>
-					        
-					        <h4 class="heading glyphicons dashboard"><i></i>
-							<span data-bind="text: lang.lang.meter"></span></h4>							        	
-					    </div>
-					    <div class="widget-body">
-
-						    <div class="row-fluid">
-						    		<div class="span6">
-						    			<h5 class="heading-arrow" style="font-size: small;"><span data-bind="text: lang.lang.number1"></span> <span data-bind="text: obj.number"></span> </h5>
-						    			
-						    			<input id="cbbCustomer" name="cbbCustomer" 
-						    				   data-role="combobox"
-							                   data-placeholder="customer ..."
-							                   data-auto-bind="false"
-							                   data-value-primitive="true"
-							                   data-filter="search"							                   
-							                   data-min-length="3"							                   
-							                   data-text-field="fullname"
-							                   data-value-field="id"
-							                   data-template="wMeter-contact-combobox-template"
-							                   data-bind="value: obj.contact_id,
-							                              source: contactDS, events:{change: contactChanges}"
-							                   required data-required-msg="ត្រូវការ Customer"
-							                   style="width: 100%" />
-						    			
-						    			<br><br>
-
-						    			<div class="row-fluid">
-						    				<div class="span6">
-								    			<label><span data-bind="text: lang.lang.deposit"></span> </label>
-												<a data-bind="attr:{ href: deposit_link }"><span data-bind="text: obj.deposit[0].number"></span></a>
-								    			|
-								    			<span data-bind="text: deposit_amount"></span>
-											</div>
-											<div class="span6">
-								    			<label><span data-bind="text: lang.lang.service2"></span> </label>
-								    			<a data-bind="attr:{ href: invoice_link }"><span data-bind="text: obj.invoice[0].number"></span></a>
-								    			|
-								    			<span data-bind="text: invoice_amount"></span>
-											</div>
-										</div>
-
-										<br>
-
-						    			<div class="row-fluid">
-						    				<div class="span6">
-								    			<label for="latitute"><span data-bind="text: lang.lang.latitute"></span> </label>
-												<div class="input-prepend">
-													<span class="add-on glyphicons direction"><i></i></span>
-													<input type="text" class="input-large span12" data-bind="value: obj.latitute, events:{change: loadMap}" placeholder="012345.67897">
-												</div>
-											</div>
-											<div class="span6">
-								    			<label for="longtitute"><span data-bind="text: lang.lang.longtitute"></span> </label>
-								    			<div class="input-prepend">
-													<span class="add-on glyphicons google_maps"><i></i></span>
-													<input type="text" class="input-large span12" data-bind="value: obj.longtitute, events:{change: loadMap}" placeholder="012345.67897">
-												</div>
-											</div>
-										</div>
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.memo"></span></label>
-											<div class="controls">
-												<input class="k-textbox" 
-						                  				data-bind="value: obj.memo"
-						                  				style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->
-										
-										<div id="map" style="width: 450px; height: 250px;"></div>
-						    		</div>
-
-							    	<!-- Right Span -->
-							    	<div class="span6">
-
-							    		<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.location"></span> <span style="color:red">*</span></label>
-											<div class="controls">
-												<input id="ddlLocation" name="ddlLocation"
-													   data-role="dropdownlist"
-						                  			   data-option-label="(--- Select ---)"				                  			   
-									                   data-auto-bind="true"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.location_id, source: locationDS"
-									                   required data-required-msg="required"
-									                   style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.type1"></span> <span style="color:red">*</span></label>
-											<div class="controls">
-												<input id="meterType" name="meterType"
-													   data-role="dropdownlist"
-						                  			   data-option-label="(--- Select ---)"				                  			   
-									                   data-auto-bind="false"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.item_id, source: itemDS"
-									                   required data-required-msg="required"
-									                   style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->										
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.number2"></span> <span style="color:red">*</span></label>
-											<div class="controls">
-												<input id="meterNo" name="meterNo" class="k-textbox" 
-						                  				data-bind="value: obj.number, events:{change:checkExistingNumber}" 
-						                  				required data-required-msg="required"
-						                  				style="width: 100%;" />
-						                  		<span data-bind="visible: isDuplicateNumber" style="color: red;"><span data-bind="text: lang.lang.duplicate_number"></span></span>
-											</div>
-										</div>
-										<!-- // Group END -->
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.startup_reading"></span> <span style="color:red">*</span></label>
-											<div class="controls">
-												<input id="txtStarupReading" name="txtStarupReading" class="k-textbox" 
-						                  				data-bind="value: obj.startup_reading" 
-						                  				required data-required-msg="required"
-						                  				style="width: 100%;" />						                  		
-											</div>
-										</div>
-										<!-- // Group END -->
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.number_of_digits"></span> <span style="color:red">*</span></label>
-											<div class="controls">
-												<input id="maxNo" name="maxNo" 
-						                  				data-role="numerictextbox" 
-						                  				data-bind="value: obj.max_number" 
-						                  				data-format="n0" min="0" 
-						                  				placeholder="ឧ.10,000/100,000" 
-						                  				required data-required-msg="required"
-						                  				style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
-											<div class="controls">
-												<input id="meterStatus" name="meterStatus"
-						                  				data-role="dropdownlist"
-						                  				data-value-primitive="true"													
-						                  				data-text-field="name" 
-						                  				data-value-field="id"				                  						                  				
-						                  				data-bind="source: statusList, value: obj.status"
-						                  				data-option-label="(--- Select ---)"
-														required data-required-msg="required"
-														style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->									
-										
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.tariff"></span> </label>
-											<div class="controls">
-												<input data-role="dropdownlist"
-						                  			   data-option-label="(--- Select ---)"				                  			   
-									                   data-auto-bind="false"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.tariff_id, source: tariffList"
-									                   style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.exemption"></span> </label>
-											<div class="controls">
-												<input data-role="dropdownlist"
-						                  			   data-option-label="(--- Select ---)"			                  			   
-									                   data-auto-bind="false"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.exemption_id, source: exemptionList"
-									                   style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->
-
-										<!-- Group -->
-										<div class="control-group">
-											<label class="control-label"><span data-bind="text: lang.lang.maintenance"></span> </label>
-											<div class="controls">
-												<input data-role="dropdownlist"
-						                  			   data-option-label="(--- Select ---)"			                  			   
-									                   data-auto-bind="false"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: obj.maintenance_id, source: maintenanceList"
-									                   style="width: 100%;" />
-											</div>
-										</div>
-										<!-- // Group END -->
-
-									</div>
-									<!-- End Right Span -->
-
-							</div>
-
-							<br>
-
-							<div class="row-fluid">
-					          	<!-- Form actions -->
-								<div align="center">
-									<span id="notification"></span>
-
-									<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-									<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-									<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-								</div>
-								<!-- // Form actions END -->
-							</div>
-
-						</div> <!-- End Widget-Body List -->
-					</div>
-					<!-- // Collapsible Widget END -->				          					                
-			    											
-				</div> <!-- // End div example-->  
-			</div> <!-- // End div span12-->
-		</div> <!-- // End div row-fluid-->	
-	</div> 	
-</script>
-<script id="wMeter-row-template" type="text/x-kendo-template">	
-	<tr>		
-		<td>#=number#</td>
-		<td>#=item_name#</td>		
-		<td>			
-			<div>#=tariffs.name!==undefined?tariffs.name:""#</div>
-			<div>#=exemptions.name!==undefined?exemptions.name:""#</div>
-			<div>#=maintenances.name!==undefined?maintenances.name:""#</div>
-		</td>
-		<td>
-			#if(reactive_of>0){#
-				REACTIVE
-			#}else if(backup_of>0){#
-				BACKUP
-			#}else{#
-				
-			#}#
-		</td>
-		<td>#:status==1 ? "Active" : "Inactive"#</td>
-		<td align="center">            
-			<span class="glyphicons no-js delete" data-bind="click: delete"><i></i></span>
-			<span class="glyphicons no-js edit" data-bind="click: edit"><i></i></span>						
-		</td>		
-	</tr>
-</script>
-<script id="wMeter-contact-combobox-template" type="text/x-kendo-template">	
-	#=wnumber# #=fullname#
-</script>
-
-<script id="wReadingCenter" type="text/x-kendo-template">
-	<div class="customer-background">
-		<div class="container-960">
-			<div class="row-fluid"> 				
-				
-				<!-- Collapsible Widget -->			
-				<div class="widget">
-				    <div class="widget-head">
-				    	<span class="btn btn-primary pull-right" 
-								onclick="javascript:window.history.back()">X</span>
-				        
-				        <h4 class="heading glyphicons dashboard"><i></i><span data-bind="text: lang.lang.meter_reading"></span></h4>							        	
-				    </div>
-				    <div class="widget-body">					
-				
-			            <div class="hidden-print">	            							            	
-			            	<input data-role="combobox"
-				                   data-placeholder="number..."
-				                   data-auto-bind="false"
-				                   data-value-primitive="true"
-				                   data-filter="contains"							                   
-				                   data-min-length="3"							                   
-				                   data-text-field="number"
-				                   data-value-field="id"
-				                   data-bind="value: meter_id,
-				                              source: meterDS"
-				                   style="width: 300px;" />
-
-				            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-							<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
-			            </div>
-
-			            <br>
-
-			            <table class="table table-bordered table-condensed table-white">
-							<thead>
-								<tr>
-									<th><span data-bind="text: lang.lang.month"></span></th>
-									<th><span data-bind="text: lang.lang.reading"></span></th>								
-									<th><span data-bind="text: lang.lang.usage"></span></th>
-									<th><span data-bind="text: lang.lang.amount"></span></th>
-									<th><span data-bind="text: lang.lang.reader"></span></th>
-									<th><span data-bind="text: lang.lang.memo"></span></th>
-									<th></th>
-								</tr>
-							</thead>	            		
-		            		<tbody data-role="listview"
-		            				data-auto-bind="false"	            					            					            					            			
-					                data-template="wReading-center-tmpl"
-					                data-bind="source: dataSource">
-					        </tbody>
-		            	</table>			    
-
-					    <div data-role="pager" 
-					    	data-auto-bind="false"
-				            data-bind="source: dataSource"></div>
-
-				    </div> <!-- End Widget-Body List -->
-				</div>
-				<!-- // Collapsible Widget END -->			   		        
-				          
-			</div> <!-- //End div span12-->		
-		</div> <!-- //End div row-fluid-->
-	</div>
-</script>
-<script id="wReading-center-tmpl" type="text/x-kendo-tmpl">
-	<tr>					
-		<td>#=kendo.toString(new Date(month_of), "MM-yyyy")#</td>		
-		<td class="right">#=current#</td>
-		<td class="right">#=usage#</td>
-		<td></td>		
-		<td></td>		
-		<td>#=memo#</td>
-		<td class="center">
-			#var i = banhji.wReadingCenter.dataSource.indexOf(data);#			
-			#if(i==0){#														
-				<a href="\#/wEdit_reading/#=id#" class="btn-action glyphicons pencil btn-success"><i></i></a>
-			#}#			
-		</td>	
-    </tr>
-</script>
-<script id="wEditReading" type="text/x-kendo-template">
-	<div class="container-960">	
-		<div class="row-fluid">		    
-			<div class="span12">			
-				<div id="example" class="k-content">					
-
-					<!-- Collapsible Widget -->			
-					<div class="widget">
-					    <div class="widget-head">
-					    	<span class="btn btn-primary pull-right" 
-									onclick="javascript:window.history.back()">X</span>
-					        
-					        <h4 class="heading glyphicons dashboard"><i></i>Edit Reading</h4>							        	
-					    </div>
-					    <div class="widget-body">
-
-					    	<div class="box-generic">					    	
-
-						    	<div class="row-fluid">
-									<div class="span2">	
-										<!-- Group -->
-										<div class="control-group">							
-											<label for="registered_date">Date <span style="color:red">*</span></label>
-					              			<input id="registered_date" name="registered_date" 
-								            		data-role="datepicker"			            		
-					            					data-bind="value: obj.month_of" 
-					            					data-format="dd-MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="dd-MM-yyyy" required data-required-msg="required" style="width: 100%;" />
-										</div>
-										<!-- // Group END -->											
-									</div>
-
-									<div class="span2">	
-										<!-- Group -->
-										<div class="control-group">							
-											<label for="txtFromDate">From <span style="color:red">*</span></label>
-					              			<input id="txtFromDate" name="txtFromDate" 
-								            		data-role="datepicker"			            		
-					            					data-bind="value: obj.from_date" 
-					            					data-format="dd-MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="dd-MM-yyyy" required data-required-msg="from ..." style="width: 100%;" />
-										</div>
-										<!-- // Group END -->											
-									</div>
-
-									<div class="span2">	
-										<!-- Group -->
-										<div class="control-group">							
-											<label for="txtToDate">To <span style="color:red">*</span></label>
-					              			<input id="txtToDate" name="txtToDate" 
-								            		data-role="datepicker"			            		
-					            					data-bind="value: obj.to_date" 
-					            					data-format="dd-MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="dd-MM-yyyy" required data-required-msg="required" style="width: 100%;" />
-										</div>
-										<!-- // Group END -->											
-									</div>
-
-									<div class="span2">	
-										<!-- Group -->
-										<div class="control-group">							
-											<label for="strPrevious">Previouse</label>
-					              			<span id="strPrevious" name="strPrevious" data-bind="text: obj.previous"></span>
-										</div>
-										<!-- // Group END -->											
-									</div>
-
-									<div class="span2">	
-										<!-- Group -->
-										<div class="control-group">							
-											<label for="txtCurrent">Current <span style="color:red">*</span></label>
-					              			<input id="txtCurrent" name="txtCurrent" 
-					              				   data-role="numerictextbox"
-								                   data-format="n0"								                   
-								                   data-bind="value: obj.current, events:{change: readingChanges}"
-								                   required data-required-msg="required" style="width: 100%;">
-										</div>
-										<!-- // Group END -->											
-									</div>
-
-									<div class="span2">	
-										<!-- Group -->
-										<div class="control-group">							
-											<label for="strUsage">Usage</label>
-					              			<span id="strUsage" name="strUsage" data-bind="text: obj.usage"></span>
-										</div>
-										<!-- // Group END -->											
-									</div>
-								</div>
-
-								<div class="row-fluid">
-									<div class="span4">	
-										<!-- Group -->
-										<div class="control-group">							
-											<label for="ddlReader">Reader <span style="color:red">*</span></label>
-					              			<input id="ddlReader" name="ddlReader"
-					              				   data-role="dropdownlist"
-								                   data-auto-bind="false"
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.read_by, source: readerDS"
-								                   data-option-label="(--- Select ---)"	style="width: 100%;" />
-										</div>
-										<!-- // Group END -->											
-									</div>
-
-									<div class="span8">	
-										<!-- Group -->
-										<div class="control-group">							
-											<label for="txtMemo">Memo </label>
-					              			<input id="txtMemo" class="k-textbox" data-bind="value: obj.memo" style="width: 100%;" />
-										</div>
-										<!-- // Group END -->											
-									</div>
-								</div>
-
-					    	</div>
-
-					    	<div class="well" data-bind="visible: hasInvoice">
-								<table class="table table-invoice">
-									<tbody>
-										<tr>
-											<td>Number</td>
-											<td class="right">
-												<input id="txtNumber" name="txtNumber"
-												   type="text" class="k-textbox" 					              				  					                   
-								                   data-bind="value: invoice.number, enabled: hasInvoice"
-								                   required data-required-msg="required" style="width: 170px;" />
-											</td>
-											<td width="30%"></td>
-											<td>Billing Date</td>
-											<td class="right">												
-												<input id="txtIssuedDate" name="txtIssuedDate" 
-								            		data-role="datepicker"			            		
-					            					data-bind="value: invoice.issued_date, enabled: hasInvoice" 
-					            					data-format="dd-MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="dd-MM-yyyy" 
-					            					required data-required-msg="required" />
-											</td>											
-										</tr>
-										<tr>
-											<td>Month Of</td>
-											<td class="right">												
-												<input id="txtMonthOf" name="txtMonthOf" 
-								            		data-role="datepicker"			            		
-					            					data-bind="value: invoice.month_of, enabled: hasInvoice" 
-					            					data-format="MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="MM-yyyy" 
-					            					required data-required-msg="required" />
-											</td>
-											<td width="30%"></td>
-											<td>Payment Date</td>
-											<td class="right">												
-												<input id="txtPaymentDate" name="txtPaymentDate" 
-								            		data-role="datepicker"			            		
-					            					data-bind="value: invoice.payment_date, enabled: hasInvoice" 
-					            					data-format="dd-MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="dd-MM-yyyy" 
-					            					required data-required-msg="required" />
-											</td>											
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td width="30%"></td>
-											<td>Due Date</td>
-											<td class="right">												
-												<input id="txtDueDate" name="txtDueDate" 
-								            		data-role="datepicker"			            		
-					            					data-bind="value: invoice.due_date, enabled: hasInvoice" 
-					            					data-format="dd-MM-yyyy"
-					            					data-parse-formats="yyyy-MM-dd" 
-					            					placeholder="dd-MM-yyyy" 
-					            					required data-required-msg="required" />
-											</td>
-										</tr>										
-									</tbody>
-								</table>
-
-								<table class="table table-bordered table-condensed table-white">
-									<thead>
-										<tr>
-											<th>Description</th>
-											<th>Qty</th>								
-											<th>Price</th>
-											<th>Amount</th>											
-										</tr>
-									</thead>	            		
-				            		<tbody data-role="listview"
-				            				data-auto-bind="false"	            					            					            					            			
-							                data-template="wInvoice-line-wEdit-reading-center-tmpl"
-							                data-bind="source: invoiceLineDS">
-							        </tbody>					        		
-				            	</table>
-
-							</div>
-
-							<br>
-
-							<div class="row-fluid">
-					          	<!-- Form actions -->
-								<div align="center">
-									<span id="notification"></span>
-
-									<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i>Save</span>
-									<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i>Delete</span>
-									<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i>Cancel</span>
-								</div>
-								<!-- // Form actions END -->
-							</div>
-
-						</div> <!-- End Widget-Body List -->
-					</div>
-					<!-- // Collapsible Widget END -->				          					                
-			    											
-				</div> <!-- // End div example-->  
-			</div> <!-- // End div span12-->
-		</div> <!-- // End div row-fluid-->	
-	</div> 	
-</script>
-<script id="wInvoice-line-wEdit-reading-center-tmpl" type="text/x-kendo-tmpl">
-	<tr>					
-		<td>#=description#</td>				
-		<td class="right">
-			#if(type=="tariff"){#
-				#=unit#
-			#}#
-		</td>
-		<td class="right">
-			#if(type=="tariff"){#
-				#=kendo.toString(price, "c0", locale)#
-			#}#
-		</td>				
-		<td class="right">
-			#if(type=="tariff"){#
-				#=kendo.toString(amount, "c0", locale)#
-			#}#
-		</td>			
-    </tr>
-</script>
-
-<script id="wReading" type="text/x-kendo-template">
-	<div class="customer-background">
-		<div class="container-960">
-			<div class="row-fluid">
-				<div id="example" class="k-content">
-					<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-
-					<h3><span data-bind="text: lang.lang.reading1"></span></h3>					
-					
-		            <div class="box-generic">
-		            	<input data-role="datepicker" 
-		            			data-bind="value: monthOfSearch" 
-		            			data-start="year" data-depth="year" 
-		            			data-format="MM-yyyy" placeHolder="MM-yyyy" />						
-										
-						<input id="ddlBranch" data-bind="value: branch_id" />						                
-			            <input id="ddlLocation" data-bind="value: location_id" disabled="disabled" />
-		            	|						            	
-		            	<input data-role="combobox"
-			                   data-placeholder="number ..."
-			                   data-auto-bind="false"
-			                   data-value-primitive="true"
-			                   data-filter="contains"							                   
-			                   data-min-length="3"							                   
-			                   data-text-field="number"
-			                   data-value-field="id"
-			                   data-bind="value: meter_id,
-			                              source: meterDS" />
-		          		
-		          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> 		          								          		
-		            </div>						        
-
-			        <div align="center">
-			        	<h3 data-bind="text: strMonthOf"</h3>
-			        	<h4 data-bind="text: strTransformer"></h4>
-			        </div>
-			        
-			        <div class="demo-section">			        
-					    <table class="table table-bordered table-striped table-white">
-					        <thead>
-					            <tr>
-					                <th><span data-bind="text: lang.lang.customer"></span></th>					                						                
-					                <th><span data-bind="text: lang.lang.meter2"></span></th>					                
-					                <th><span data-bind="text: lang.lang.new_round"></span></th>
-					                <th><span data-bind="text: lang.lang.previouse"></span></th>
-					                <th><span data-bind="text: lang.lang.current"></span></th>					                
-					                <th class="right"><span data-bind="text: lang.lang.total"></span></th>
-					            </tr>
-					        </thead>
-					        <tbody data-role="listview"
-					        		data-auto-bind="false"					        		 
-					        		data-template="wReading-row-template" 
-					        		data-bind="source: dataSource"></tbody>
-					        <tfoot data-template="wReading-footer-template" 
-					        		data-bind="source: this"></tfoot>						        
-					    </table>
-
-					    <div id="pager" class="k-pager-wrap"
-					    	 data-auto-bind="false"
-				             data-role="pager" data-bind="source: dataSource"></div>
-					    
-				    </div>				       
-			        
-					<br>					
-
-			        <div>			        	
-						<span data-bind="text: lang.lang.month"></span>
-			        	<input id="monthOf" name="monthOf" data-role="datepicker" 
-				            			data-bind="value: month_of" 
-				            			data-start="year" data-depth="year" data-format="MM-yyyy"
-				            			required data-required-msg="required"
-				            			placeholder="MM-yyyy" />				    	
-				    	
-						<span data-bind="text: lang.lang.from"></span>
-                        <input type="text" data-role='datepicker' 
-                        		id="fromDate" name="fromDate"
-                        		data-bind="value: from_date"	            				
-                        		data-type="date" data-format="dd-MM-yyyy"
-                        		placeholder="ថ្ងៃ-ខែ-ឆ្នាំ"
-                        		required data-required-msg="required"  />			            
-			            
-						<span data-bind="text: lang.lang.to"></span>
-                        <input type="text" data-role='datepicker' 
-                        		id ="toDate" name="toDate"
-                        		data-bind="value: to_date"	            				 
-                        		data-type="date" data-format="dd-MM-yyyy"
-                        		placeholder="ថ្ងៃ-ខែ-ឆ្នាំ"
-                        		required data-required-msg="ដល់ថ្ងៃណា?" 
-                        		data-greaterdate-field="fromDate" 
-                        		data-greaterdate-msg='ត្រូវថ្មីជាង ថ្ងៃអានចាប់ពី' />                        
-			            			        	
-						<span data-bind="text: lang.lang.reader"></span>
-			          	<input data-role="dropdownlist"
-			                   data-option-label="(--- Select ---)"
-			                   data-value-primitive="true"
-			                   data-text-field="fullname"
-			                   data-value-field="id"
-			                   data-bind="value: read_by, source: readerDS"
-			                   required data-required-msg="required" />            
-			        </div>
-			        
-			        <br>
-
-			        <!-- Form actions -->
-					<div align="center">
-						<span id="notification"></span>
-
-						<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>						
-						<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-					</div>
-					<!-- // Form actions END -->
-
-				</div> <!-- //End div example-->
-			</div> <!-- //End div row-fluid-->
-		</div>
-	</div>
-</script>
-<script id="wReading-row-template" type="text/x-kendo-tmpl">
-	<tr>					
-		<td>#=fullname#</td>		
-		<td>#=number#</td>		
-		<td align="center">
-			<input type="checkbox" data-bind="checked: new_round, events:{ change: onChange }" />
-		</td>		
-		<td>
-			<input data-role="numerictextbox"
-				   data-min="0"
-				   data-format="n0"                                      
-                   data-bind="value: previous, events:{ change: onChange }"
-                   style="width: 100px" #=previous>0?disabled='disabled':''# />
-		</td>
-		<td>
-			<input class="txt#=index#" data-role="numerictextbox"
-				   data-min="0"
-				   data-format="n0"                                      
-                   data-bind="value: current, events:{ change: onChange }"                   
-                   style="width: 100px" />            
-			<span class="label label-important" data-bind="invisible: isValid"><strong>Invalid!</strong></span>			
-		</td>		
-		<td class="right" data-bind="text: usage"></td>	
-    </tr>
-</script>
-<script id="wReading-footer-template" type="text/x-kendo-template">
-    <tr>    	
-        <td class="right" colspan="8" style="font-size:30px;">            
-			<span data-bind="text: lang.lang.total"></span>: #:total()# m<sup>3</sup>
-        </td>
-    </tr>
-</script>
-
-<script id="wIRReader" type="text/x-kendo-template">
-	<div class="customer-background">
-		<div class="container-960">
-			<div class="row-fluid">
-					<div id="example" class="k-content">
-						<span class="pull-right glyphicons no-js remove_2" 
-							onclick="javascript:window.history.back()"><i></i></span>
-
-						<h3><span data-bind="text: lang.lang.ir_reader"></span></h3>				    
-					   
-			            <div class="box-generic">
-			            	<input id="myFile" type="file" accept="text/csv">
-			            	<button type="button" class="k-button btn-info" data-bind="click: readFile">
-							<span data-bind="text: lang.lang.upload"></span></button>		            	
-			            	<br>
-							<span data-bind="text: uploadStatus"></span>
-			            </div>			        
-				        
-				        <div class="demo-section">			        
-						    <table class="table table-bordered table-striped table-white">
-						        <thead>
-						            <tr>
-						                <th><span data-bind="text: lang.lang.customer"></span></th>					                						                
-						                <th><span data-bind="text: lang.lang.meter2"></span></th>					                
-						                <th><span data-bind="text: lang.lang.new_round"></span></th>
-						                <th><span data-bind="text: lang.lang.previouse"></span></th>
-						                <th><span data-bind="text: lang.lang.current"></span></th>					                
-						                <th class="right"><span data-bind="text: lang.lang.total"></span></th>
-						            </tr>
-						        </thead>
-						        <tbody data-role="listview"
-						        		data-auto-bind="false"					        		 
-						        		data-template="wIRReader-row-template" 
-						        		data-bind="source: dataSource"></tbody>
-						        <tfoot data-template="wIRReader-footer-template" 
-						        		data-bind="source: this"></tfoot>						        
-						    </table>
-
-						    <div id="pager" class="k-pager-wrap"
-						    	 data-auto-bind="false"
-					             data-role="pager" data-bind="source: dataSource"></div>
-						    
-					    </div>				       
-				        
-						<br>					
-
-				        <div>			        	
-							<span data-bind="text: lang.lang.month"></span>
-				        	<input id="monthOf" name="monthOf" data-role="datepicker" 
-			            			data-bind="value: month_of" 
-			            			data-start="year" data-depth="year" data-format="MM-yyyy"
-			            			required data-required-msg="ត្រូវការ Month Of"
-			            			placeholder="ខែ-ឆ្នាំ" />					    	
-					    	
-							<span data-bind="text: lang.lang.from"></span>
-	                        <input type="text" data-role='datepicker' 
-	                        		id="fromDate" name="fromDate"
-	                        		data-bind="value: from_date"	            				
-	                        		data-type="date" data-format="dd-MM-yyyy"
-	                        		placeholder="ថ្ងៃ-ខែ-ឆ្នាំ"
-	                        		required data-required-msg="ត្រូវការ ថ្ងៃអានចាប់ពី"  />                        	    				        
-				            
-				            
-							<span data-bind="text: lang.lang.to"></span>
-	                        <input type="text" data-role='datepicker' 
-	                        		id ="toDate" name="toDate"
-	                        		data-bind="value: to_date"	            				 
-	                        		data-type="date" data-format="dd-MM-yyyy"
-	                        		placeholder="dd-MM-yyyy"
-	                        		required data-required-msg="required" 
-	                        		data-greaterdate-field="fromDate" 
-	                        		data-greaterdate-msg="required" />			            			        
-				        	
-							<span data-bind="text: lang.lang.reader"></span>
-				          	<input data-role="dropdownlist"
-				                   data-option-label="(--- Select ---)"
-				                   data-value-primitive="true"
-				                   data-text-field="fullname"
-				                   data-value-field="id"
-				                   data-bind="value: read_by, source: readerDS"
-				                   required data-required-msg="required" />            
-				        </div>
-				        
-				        <br>
-
-				        <!-- Form actions -->
-						<div align="center">
-							<span id="notification"></span>
-
-							<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>						
-							<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-						</div>
-						<!-- // Form actions END -->
-
-					</div> <!-- //End div example-->            
-				</div> <!-- //End div span12-->		
-			</div> <!-- //End div row-fluid-->
-		</div>
-	</div>
-</script>
-<script id="wIRReader-row-template" type="text/x-kendo-tmpl">
-	<tr>					
-		<td>#=fullname#</td>		
-		<td>#=number#</td>		
-		<td align="center">
-			<input type="checkbox" data-bind="checked: new_round, events:{ change: onChange }" />
-		</td>		
-		<td>
-			<input data-role="numerictextbox"
-				   data-min="0"
-				   data-format="n0"                                      
-                   data-bind="value: previous, events:{ change: onChange }"
-                   style="width: 100px" #=previous>0?disabled='disabled':''# />
-		</td>
-		<td>
-			<input class="txt#=index#" data-role="numerictextbox"
-				   data-min="0"
-				   data-format="n0"                                      
-                   data-bind="value: current, events:{ change: onChange }"                   
-                   style="width: 100px" />            
-			<span class="label label-important" data-bind="invisible: isValid"><strong>invalid!</strong></span>			
-		</td>		
-		<td class="right" data-bind="text: usage"></td>	
-    </tr>
-</script>
-<script id="wIRReader-footer-template" type="text/x-kendo-template">
-    <tr>    	
-        <td class="right" colspan="8" style="font-size:30px;">            
-			<span data-bind="text: lang.lang.total"></span>: #:total()# m<sup>3</sup>
-        </td>
-    </tr>
-</script>
-
-<script id="wReadingBook" type="text/x-kendo-template">
-	<div class="customer-background">
-		<div class="container-960">
-			<div class="row-fluid">
-					<div id="example" class="k-content">
-						<span class="pull-right glyphicons no-js remove_2" 
-							onclick="javascript:window.history.back()"><i></i></span>
-
-						<h3><span data-bind="text: lang.lang.reading_book"></span></h3>					
-						
-			            <div class="box-generic">										
-							<input id="ddlBranch" data-bind="value: branch_id" />						                
-				            <input id="ddlLocation" data-bind="value: location_id" disabled="disabled" />		            	
-			          		
-			          		<button id="search" type="button" data-role="button"><i class="icon-search"></i></button>						          		
-			            </div>			        
-				        
-				        <div id="grid"></div>
-				        
-					</div> <!-- //End div example-->            
-				</div> <!-- //End div span12-->		
-			</div> <!-- //End div row-fluid-->
-		</div>
-	</div>
-</script>
-
-<script id="wInvoice" type="text/x-kendo-template">
-	<div class="customer-background">
-		<div class="container-960">
-			<div class="row-fluid">
-				<div id="example" class="k-content">
-					<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-
-					<h3><span data-bind="text: lang.lang.invoice"></span></h3>
-
-					<br>
-					
-					<div class="hidden-print">
-						<input data-role="datepicker" 
-		            			data-bind="value: monthOfSearch" 
-		            			data-start="year" data-depth="year" 
-		            			data-format="MM-yyyy" placeHolder="Month Of" />						
-										
-						<input id="ddlBranch" data-bind="value: branch_id" />						                
-			            <input id="ddlLocation" data-bind="value: location_id" disabled="disabled" />
-		            	|						            	
-		            	<input data-role="combobox"
-			                   data-placeholder="number ..."
-			                   data-auto-bind="false"
-			                   data-value-primitive="true"
-			                   data-filter="contains"							                   
-			                   data-min-length="3"							                   
-			                   data-text-field="number"
-			                   data-value-field="id"
-			                   data-bind="value: meter_id,
-			                              source: meterDS" />
-		          					          					          			          		
-		          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-						<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>								
-					</div>											
-
-					<br>
-					
-					<table class="table table-bordered table-striped table-white">
-				        <thead>
-				            <tr>
-				                <th><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>				                				                
-				                <th><span data-bind="text: lang.lang.customer"></span></th>					                
-				                <th><span data-bind="text: lang.lang.meter"></span></th>				                			                
-				                <th><span data-bind="text: lang.lang.previouse"></span></th>
-				                <th><span data-bind="text: lang.lang.current"></span></th>
-				                <th><span data-bind="text: lang.lang.total"></span></th>	                    
-				            </tr>
-				        </thead>
-				        <tbody data-role="listview" 
-				        		data-template="wInvoice-row-template" 
-				        		data-auto-bind="false" 
-				        		data-bind="source: readingDS"></tbody>
-				        <tfoot data-template="wInvoice-footer-template" 
-					        		data-bind="source: this"></tfoot>	            
-				    </table>
-				    
-				    <div id="pager" class="k-pager-wrap"
-				    	 data-auto-bind="false"
-			             data-role="pager" data-bind="source: readingDS"></div>
-
-				    <br>
-				    
-				    <div>
-						<span data-bind="text: lang.lang.month"></span>
-						<input id="monthOf" name="monthOf" data-role="datepicker" 
-		            			data-bind="value: month_of"	data-start="year" 
-		            			data-depth="year" data-format="MM-yyyy"
-		            			required data-required-msg="required" />
-				        <span data-bind="text: lang.lang.billing_date"></span>
-				        <input id="issuedDate" name="issuedDate" data-role="datepicker" 
-		            			data-bind="value: issued_date" data-format="dd-MM-yyyy"
-		            			required data-required-msg="required" />
-				        <span data-bind="text: lang.lang.payment_date"></span>
-				        <input id="paymentDate" name="paymentDate" data-role="datepicker" 
-		            			data-bind="value: payment_date" data-format="dd-MM-yyyy"
-		            			required data-required-msg="required" />
-				        <span data-bind="text: lang.lang.due_date"></span>
-				        <input id="dueDate" name="dueDate" data-role="datepicker" 
-		            			data-bind="value: due_date" data-format="dd-MM-yyyy"
-		            			required data-required-msg="required" />			           	          	
-				    </div>
-				         
-				    <br />				    
-				    
-		          	<!-- Form actions -->
-					<div align="center">
-						<span id="notification"></span>
-
-						<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>							
-						<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-					</div>
-					<!-- // Form actions END -->					
-
-				</div><!-- //End div example-->
-			</div><!-- //End div span12-->
-		</div><!-- //End div row-fluid-->
-	</div>	
-</script>
-<script id="wInvoice-row-template" type="text/x-kendo-tmpl">
-	<tr>
-		<td align="center">
-		   <input type="checkbox" data-bind="checked: isCheck" />
-		</td>						
-		<td>#=customer[0].surname# #=customer[0].name#</td>		
-		<td><a href="\#/wReading_center/#=meter_id#"><i></i> #=meter[0].number#</a></td>								
-		<td class="right">#=previous#</td>
-		<td class="right">#=current#</td>		
-		<td class="right">#=usage# m<sup>3</sup></td>		
-    </tr>
-</script>
-<script id="wInvoice-footer-template" type="text/x-kendo-template">
-    <tr>    	
-        <td class="right" colspan="8" style="font-size:30px;">
-            <span data-bind="text: lang.lang.total"></span>: #:total()# m<sup>3</sup>
-        </td>
-    </tr>
-</script>
-
-<script id="wPrintCenter" type="text/x-kendo-template">
-	<div class="customer-background">
-		<div class="container-960">
-			<div class="row-fluid">
-				<div id="example" class="k-content">
-					<span class="pull-right glyphicons no-js remove_2 hidden-print" 
-						onclick="javascript:window.history.back()"><i></i></span>
-
-					<h3 class="hidden-print"><span data-bind="text: lang.lang.print1"></span></h3>
-					
-					<br>
-					
-					<table>
-						<tr>
-							<td>								
-								<input data-role="datepicker" 
-			            			data-bind="value: monthOfSearch" 
-			            			data-start="year" data-depth="year" 
-			            			data-format="MM-yyyy" placeHolder="MM-yyyy" />						
-								
-								<input data-role="dropdownlist"
-								   data-option-label="(--- License ---)"
-				                   data-auto-bind="false"
-				                   data-value-primitive="true"
-				                   data-text-field="name"
-				                   data-value-field="id"
-				                   data-bind="value: branch_id,
-				                              source: branchDS,			                              
-				                              events: {
-				                                change: branchChanges
-				                              }"/>
-				            </td>
-				            <td>
-				                <select data-role="multiselect"
-						           data-placeholder="Location..."
-						           data-value-primitive="true"
-						           data-text-field="name"
-						           data-value-field="id"
-						           data-bind="value: selectedLocations,
-						                      source: locationDS,
-						                      enabled: isBranchSelected"
-						           style="width: 200px;" 
-						    	></select>
-						    </td>
-						    <td>							
-				            	|						            	
-				            	<input data-role="combobox"
-					                   data-placeholder="number ..."
-					                   data-auto-bind="false"
-					                   data-value-primitive="true"
-					                   data-filter="startswith"							                   
-					                   data-min-length="3"							                   
-					                   data-text-field="number"
-					                   data-value-field="id"
-					                   data-bind="value: invoice_id,
-					                              source: invoiceDS" />
-
-					            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-								<button type="button" data-role="button" data-bind="click: print"><i class="icon-print"></i></button>
-							</td>
-						</tr>
-					</table>
-
-		            <br>
-
-		            <div class="row-fluid">							
-						<div class="span2">
-						
-							<!-- Stats Widget -->
-							<span class="widget-stats widget-stats-gray widget-stats-2">
-								<span class="count"><a data-bind="text: obj.totalInvoice"></a></span>
-								<span class="txt"><span data-bind="text: lang.lang.total_invoice"></span></span>
-							</span>
-							<!-- // Stats Widget END -->
-							
-						</div>
-						<div class="span2">
-						
-							<!-- Stats Widget -->
-							<span class="widget-stats widget-stats-2">
-								<span class="count"><a data-bind="text: obj.totalUnprint"></a></span>
-								<span class="txt"><span data-bind="text: lang.lang.no_print"></span></span>
-							</span>
-							<!-- // Stats Widget END -->
-							
-						</div>
-						<div class="span2">
-						
-							<!-- Stats Widget -->
-							<span class="widget-stats widget-stats-gray widget-stats-2">
-								<span class="count"><a data-bind="text: obj.totalUsage"></a></span>
-								<span class="txt">m<sup>3</sup></span>
-							</span>
-							<!-- // Stats Widget END -->
-							
-						</div>
-						<div class="span6">
-						
-							<!-- Stats Widget -->
-							<span class="widget-stats widget-stats-2">
-								<span class="count"><a data-format="c0" data-bind="text: obj.totalAmount"></a></span>
-								<span class="txt"><span data-bind="text: lang.lang.amount1"></span></span>
-							</span>
-							<!-- // Stats Widget END -->
-							
-						</div>							
-					</div>					
-
-		            <br>
-
-		            <table class="table table-bordered table-striped table-white">
-				        <thead>
-				            <tr>
-				            	<th style="width: 5%;" class="center">
-				            		<input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" />
-				            	</th>					                
-				                <th><span data-bind="text: lang.lang.customer"></span></th>					                						                
-				                <th><span data-bind="text: lang.lang.number"></span></th>					                
-				                <th><span data-bind="text: lang.lang.amount"></span></th>
-				                <th><span data-bind="text: lang.lang.status"></span></th>
-				                <th><span data-bind="text: lang.lang.print_count"></span></th>					                					                
-				            </tr>
-				        </thead>
-				        <tbody data-role="listview"
-			        		data-auto-bind="false"					        		 
-			        		data-template="wPrint-center-template" 
-			        		data-bind="source: dataSource"></tbody>					        						        
-				    </table>
-
-		            <div data-role="pager" 
-				    	data-auto-bind="false"
-				    	data-page-sizes='[50, 100, 200, "All"]'					    	
-			            data-bind="source: dataSource"></div>																	
-		
-				</div><!-- //End div example-->
-			</div>
-		</div>
-	</div>	
-</script>
-<script id="wPrint-center-template" type="text/x-kendo-tmpl">
-	<tr>
-		<td class="center">
-			<input type="checkbox" data-bind="checked: isCheck" />
-		</td>		
-		<td>
-			#=contact[0].wnumber# 
-
-			#if(contact[0].contact_type_id==6 || contact[0].contact_type_id==7 || contact[0].contact_type_id==8){#
-				#=contact[0].company# 
-			#}else{#
-				#=contact[0].surname# #=contact[0].name#
-			#}#
-		</td>
-		<td>
-			<a href="\#/wInvoice_print/#=id#"><i></i> #=number#</a>
-		</td>
-		<td class="right">#=kendo.toString(amount, "c0", banhji.institute.locale)#</td>
-		<td>
-			#if(status==0){#
-				Open
-			#}else{#
-				Paid
-			#}#
-		</td>
-		<td class="center">#=print_count#</td>
-	</tr>
-</script>
-<script id="wInvoicePrint" type="text/x-kendo-template">
-	<div class="container-960">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">
-						<div class="hidden-print">
-							<span class="glyphicons no-js remove_2 pull-right" 
-								onclick="javascript:window.history.back()"><i></i></span>
-
-							<span class="btn btn-inverse btn-icon glyphicons print" data-bind="click: print"><i></i><span data-bind="text: lang.lang.print"></span></span>											          																
-						</div>
-
-						<br>					
-						
-						<div data-role="listview" 
-							data-auto-bind="false"
-							data-bind="source: dataSource" 
-							data-template="wInvoice-print-row-template1"></div>						
-			
-					</div><!-- //End div example-->
-				</div><!-- //End div span12-->
-			</div><!-- //End div row-fluid-->
-		</div>
-	</div>	
-</script>
-<script id="wInvoice-print-row-template" type="text/x-kendo-tmpl">	
-  	<div class="container-960">
-		<table width="100%">
-			<tr>
-				<td valign="top">
-					<img src="/banhji/#:company[0].image_url#" height="90" width="60" style="float: left">
-				</td>
-				<td align="center">
-					<h4>#:company[0].name#</h4>					
-					<h5>#:company[0].address# 
-					<br>
-					#:company[0].phone#</h5>					
-				</td>
-			</tr>
-		</table>		
-
-		<table width="100%">
-			<tr>
-				<td align="center" rowspan="2" width="60%">
-					<h4>វិក្កយបត្រទូទាត់ថ្លៃទឹក</h4>
-					<h5><span data-bind="text: lang.lang.month_of"></span> #=kendo.toString(new Date(month_of), "MM-yyyy")#</h5>
-				</td>
-				<td>ថ្ងៃចេញវិក្កយបត្រ</td>
-				<td align="right">
-					#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#					
-				</td>
-			</tr>
-			<tr>
-				<td><span data-bind="text: lang.lang.invoice_number"></span></td>
-				<td align="right">					
-					#=number#
-				</td>				
-			</tr>			
-		</table>
-
-		<table width="100%">
-			<tr>
-				<td width="60%">
-					<span data-bind="text: lang.lang.full_names"></span> 
-					<span class="strong">
-						#if(contact[0].contact_type_id==6 || contact[0].contact_type_id==7 || contact[0].contact_type_id==8){#
-							#=contact[0].company#
-						#}else{#
-							#=contact[0].surname# #=contact[0].name#
-						#}#
-					</span>
-				</td>
-				<td><span data-bind="text: lang.lang.customer_number"></span>:</td>
-				<td align="right">#=contact[0].number#</td>				
-			</tr>
-			<tr>
-				<td><span data-bind="text: lang.lang.address"></span> #=contact[0].address#</td>				
-				<td><span data-bind="text: lang.lang.location"></span></td>
-				<td align="right">#=location[0].name#</td>				
-			</tr>
-		</table>
-
-		<table class="table table-bordered table-condensed">
-			<thead>
-				<tr>
-					<th><span data-bind="text: lang.lang.meter2"></span></th>					
-					<th><span data-bind="text: lang.lang.previouse"></span></th>
-					<th><span data-bind="text: lang.lang.current"></span></th>
-					<th>បរិមាណ</th>
-					<th>តំលៃឯកត្តា</th>
-					<th><span data-bind="text: lang.lang.amount"></span></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td></td>
-					#for(var j=0; j<invoiceLines.length; j++) {#
-						#if(invoiceLines[j].type=="tariff"){#
-							<td class="center">#=kendo.toString(new Date(invoiceLines[j].record[0].from_date), "dd-MM-yyyy")#</td>
-							<td class="center">#=kendo.toString(new Date(invoiceLines[j].record[0].to_date), "dd-MM-yyyy")#</td>						
-						#}#
-					#}#	
-					<td class="right">m<sup>3</sup></td>
-					<td></td>
-					<td></td>
-				</tr>
-				#for(var i=0; i<invoiceLines.length; i++) {#
-					#if(invoiceLines[i].type=="tariff"){#
-						<tr>
-							<td>#:invoiceLines[i].meter[0].number#</td>
-							<td class="right">#:invoiceLines[i].record[0].previous#</td>
-							<td class="right">#:invoiceLines[i].record[0].current#</td>						
-							<td class="right">#:kendo.toString(kendo.parseInt(invoiceLines[i].unit), 'n0')#</td>
-							<td class="right"><span>#:kendo.toString(kendo.parseFloat(invoiceLines[i].price)*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#</span></td>
-							<td class="right"><span>#:kendo.toString(kendo.parseFloat(invoiceLines[i].amount)*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#</span></td>
-						</tr>
-					#}else{#
-						<tr>
-							<td colspan="3"></td>							
-							<td colspan="2" class="right">#:invoiceLines[i].description#</td>
-							#if(invoiceLines[i].type=="exemptionUsage"){#
-								<td class="right">#:invoiceLines[i].amount# ម<sup>៣</sup></td>							
-							#}else{#
-								<td class="right">#:kendo.toString(kendo.parseFloat(invoiceLines[i].amount)*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#</td>
-							#}#
-						</tr>
-					#}#
-				#}#						
-				<tr>
-					<td colspan="3" rowspan="2" class="center strong" style="font-size: medium;">
-						ថ្ងៃផុតកំណត់បង់ប្រាក់ 
-						<br> 
-						#=kendo.toString(new Date(due_date), "dd-MM-yyyy")#
-					</td>									
-					<td class="right" colspan="2">បំណុលខែមុន</td>					
-					<td class="right">#:kendo.toString(balance_forward*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#</td>
-				</tr>
-				<tr>										
-					<td class="right strong" colspan="2">ទឹកប្រាក់ត្រូវបង់សរុប</td>					
-					<td class="right strong">#:kendo.toString(total*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#</td>
-				</tr>
-				<tr>
-					<td class="center" colspan="2">ថ្ងៃដែលបានបង់</td>					
-					<td></td>					
-					<td class="right" colspan="2">ទឹកប្រាក់ដែលបានបង់</td>					
-					<td></td>
-				</tr>
-				<tr>
-					<td colspan="6" class="top" style="font-size: x-small;" height="100px">
-						#=company[0].term_of_condition#
-					</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<hr>
-
-		<table width="100%">
-			<tr>
-				<td rowspan="2" width="40%">
-					<span id="#=contact[0].wnumber#"></span>
-				</td>
-				<td align="left" class="strong">
-					#if(contact[0].contact_type_id==5 || contact[0].contact_type_id==6 || contact[0].contact_type_id==7){#
-						#=contact[0].company#
-					#}else{#
-						#=contact[0].surname# #=contact[0].name#
-					#}#
-				</td>
-				<td>ថ្ងៃចេញវិក្ក.</td>
-				<td align="right">#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-			</tr>
-			<tr>
-				<td align="left">#=location[0].name#</td>
-				<td>លេខវិក្ក.</td>
-				<td align="right">#=number#</td>
-			</tr>
-		</table>
-
-		<table class="table table-bordered table-condensed" style="page-break-after: always;">
-			<thead>
-				<tr>
-					<td>បេឡាករ</td>
-					<td>Date</td>
-					<td>ទឹកប្រាក់ទទួលបាន</td>
-					<td>ទឹកប្រាក់ត្រូវបង់</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td class="right">#=kendo.toString(total*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#</td>
-				</tr>
-			</tbody>
-		</table>
-
-	</div>
-</script>
-
-<script id="wInvoice-print-row-template1" type="text/x-kendo-tmpl">	
-  	<div class="container winvoice-print" style="width: 900px;">
-		<div class="span12 headerinv ">
-			<!--div valign="top">
-				<img src="/banhji/#:company[0].image_url#" height="90" width="60" style="float: left">
-			</div-->
-			<div class="span12" align="center">
-				<h4>#:company[0].name#</h4>					
-				<h5>#:company[0].address# 
-				<br>
-				#:company[0].phone#</h5>					
-			</div>
-		</div>		
-
-		<div class="span12 cover-customer">
-			<div class="span8">
-				<span id="#=contact[0].wnumber#"></span>
-				<div class="span12">
-					<p>អតិថិជន​ #=contact[0].number#</p>
-					<p>#:contact[0].name#</p>
-					<p>#=contact[0].address#</p>
-					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(payment_date), "dd-MM-yyyy")#</i></p>
-				</div>
-			</div>
-			<div class="span4">
-				<div class="span6">
-					<p>លេខ​វិក្កយ​បត្រ</p>
-					<p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p>
-					<p>តំបន់</p>
-					<p>លេខ​ទី​តាំង​</p>
-					<p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p>
-					<p>ដល់​ថ្ងៃ​ទី</p>
-				</div>	
-				<div class="span6">
-					<p style="margin-top: 5px;">#:number#</p>
-					<p style="margin-top: 10px;">#:issued_date#</p>
-					<p style="margin-top: 5px;">#:location[0].name#</p>
-					<p><strong>#:location[0].abbr#</strong></p>
-					<p style="margin-top: 10px;">#:kendo.toString(new Date(month_of), "dd-MM-yyyy")#</p>
-					<p style="margin-top: 10px;">#:kendo.toString(new Date(due_date), "dd-MM-yyyy")#</p>
-				</div>		
-			</div>			
-		</div>
-		<table class="span12 table table-bordered table-condensed" style="margin-top: 40px;border:1px solid \\#000; border-radius: 3px;margin-left: 0px;">
-			<thead>
-				<tr>
-					<th width="180">លេខ​កុងទ័រ<br>METER</th>
-					<th width="150">អំណានចាស់<br>PREVIOUS</th>
-					<th width="120">អំណានថ្មី<br>CURRENT</th>
-					<th width="120">បរិមាណ<br>CONSUMPTION</th>
-					<th width="120">តំលៃឯកត្តា<br>RATE</th>
-					<th width="180">តំលៃសរុប<br>AMOUNT</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td style="vertical-align: middle;">19-10-2015</td>
-					<td colspan="4" style="text-align: right">
-						ប្រាក់​ជំ​ពាក់​ពេល​មុន Balance brought forward . រ<br>
-						ប្រាក់​បាន​ទទួល​ Payment Recieve - THANK YOU . រ<br>
-						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .រ
-					</td>
-					<td>
-						#:kendo.toString(balance_forward*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#<br>
-						0<br>
-						0
-					</td>
-				</tr>
-				#for(var i=0; i<invoiceLines.length; i++) {#
-					#if(invoiceLines[i].type=="tariff"){#
-						<tr>
-							<td>#:invoiceLines[i].meter[0].number#</td>
-							<td class="right">#:invoiceLines[i].record[0].previous#</td>
-							<td class="right">#:invoiceLines[i].record[0].current#</td>						
-							<td class="right">#:kendo.toString(kendo.parseInt(invoiceLines[i].unit), 'n0')#</td>
-							<td class="right"><span>#:kendo.toString(kendo.parseFloat(invoiceLines[i].price)*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#</span></td>
-							<td class="right"><span>#:kendo.toString(kendo.parseFloat(invoiceLines[i].amount)*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#</span></td>
-						</tr>
-					#}else{#
-						<tr>						
-							<td colspan="5" class="right">#:invoiceLines[i].description#</td>
-							#if(invoiceLines[i].type=="exemptionUsage"){#
-								<td class="right">#:invoiceLines[i].amount# ម<sup>៣</sup></td>							
-							#}else{#
-								<td class="right">#:kendo.toString(kendo.parseFloat(invoiceLines[i].amount)*kendo.parseFloat(rate), locale=="km-KH"?"c0":"c", locale)#</td>
-							#}#
-						</tr>
-					#}#
-				#}#	
-				<tr><td colspan="6" style="height: 200px;"></td></tr>
-				<tr>
-					<td colspan="5" style="background: \\#355176;color: \\#fff;text-align: right;">បំណុល​សរុប TOTAL BALANCE</td><td>#:kendo.toString(kendo.parseFloat(total), locale=="km-KH"?"c0":"c", locale)#</td>
-				</tr>
-				<tr>
-					<td rowspan="4" colspan="3">#=company[0].term_of_condition#</td>
-					<td colspan="2" style="background: \\#ccc;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td><strong>#:kendo.toString(kendo.parseFloat(total), locale=="km-KH"?"c0":"c", locale)#</strong></td>
-				</tr>
-				<tr>
-					<td colspan="2" style="background: \\#ccc;">ថ្ងៃផុតកំណត់ DUE DATE</td>
-					<td>#=kendo.toString(new Date(due_date), "dd-MM-yyyy")#</td>
-				</tr>
-				<tr>
-					<td colspan="2" style="background: \\#ccc;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td colspan="2" style="background: \\#ccc;">ប្រាក់បានបង់ PAY AMOUNT</td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="line"></div>
-		<table class="span12 table table-bordered table-condensed" style="margin-top: 15px;border:1px solid \\#000; border-radius: 3px;margin-left: 0px;">
-			<tbody>
-				<tr>
-					<th width="490" rowspan="5">
-						<div class="span4">
-							<p style="margin-top: 45px;">វិក្កយបត្រ</p>
-							<p>អតិថិជន</p>
-							<p style="margin-top: 15px;">លេខ​ទី​តាំង</p>
-							<p>លេខ​កុនង​ទ័រ</p>
-						</div>
-						<div class="span8" style="text-align: left;">
-							<span style="margin-left: -15px;" id="secondwnumber"></span>
-							<p style="margin-top: 10px;">#:kendo.toString(new Date(month_of), "dd-MM-yyyy")# - #:number#</p>
-							<p>#=contact[0].number# #=contact[0].name#</p>
-							<p>#:location[0].name#</p>
-							<p><strong>#:location[0].abbr#</strong></p>
-							<p style="margin-top: 8px;">#:invoiceLines[0].meter[0].number#</p>
-						</div>
-					</th>
-					<td width="270" style="background: \\#ccc;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td width="180">#:kendo.toString(kendo.parseFloat(total), locale=="km-KH"?"c0":"c", locale)#</td>
-				</tr>
-				<tr>
-					<td style="background: \\#ccc;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td style="background: \\#ccc;">ប្រាក់បានបង់ PAY AMOUNT</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td style="background: \\#ccc;">អ្នកទទួលប្រាក់ RECEIVER</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td style="background: \\#ccc;"></td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</script>
-
-<script id="wInventoryItem" type="text/x-kendo-template">
-	<div class="customer-background">
-		<div class="container-960">
-			<div class="row-fluid">
-				<div id="example" class="k-content">
-					<br>
-					<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back();"><i></i></span>
-
-					<h3><span data-bind="text: lang.lang.inventory"></span></h3>
-
-					<div class="box-generic">
-					    <!-- //Tabs Heading -->
-					    <div class="tabsbar">
-					        <ul>
-					            <li class="glyphicons star active"><a href="#tab1" data-toggle="tab" data-bind="click: searchFavorite"><i></i> <span data-bind="text: lang.lang.favorite"></span> </a>
-					            </li>
-					            <li class="glyphicons list"><a href="#tab2" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.category"></span> </a>
-					            </li>		            	            		            	            
-					        </ul>
-					    </div>
-					    <!-- // Tabs Heading END -->
-
-					    <div class="tab-content">
-					        <!-- // FavoriteTab content -->
-					        <div class="tab-pane active" id="tab1">
-					        		
-					        </div>
-					        <!-- // Favorite Tab content END -->
-
-					        <!-- // Category Tab content -->
-					        <div class="tab-pane" id="tab2">
-					            <input id="categories" data-bind="value: category_id" />	                
-				                <input id="itemGroups" data-bind="value: item_group_id" disabled="disabled" />
-			            	</div>
-					        <!-- // Category Tab content END -->		                
-					    </div>
-
-					    <br>
-
-					    <div class="input-append">
-						    <input class="col-md-2" id="appendedInputButtons" 
-						    	type="text" placeholder="មុខទំនិញ ..." 
-						    	data-bind="value: searchField, events:{ change: search }">
-
-						    <button class="btn btn-default" data-bind="click: search"><i class="icon-search"></i> <span data-bind="text: lang.lang.search"></span></button>				    
-						</div>
-					</div>
-					
-					<br>
-
-					<table class="table table-bordered">
-				        <thead>
-				            <tr>
-				                <th><span data-bind="text: lang.lang.sku"></span></th>
-				                <th><span data-bind="text: lang.lang.item"></span></th>
-				                <th><span data-bind="text: lang.lang.description"></span></th>
-				                <th><span data-bind="text: lang.lang.on_hand"></span></th>	                
-				                <th><span data-bind="text: lang.lang.price"></span></th>	                
-				                <th></th>
-				            </tr>
-				        </thead>
-				        <tbody data-template="wInventory-item-template"
-				        	data-pageable="true" 
-				        	data-bind="source: dataSource"></tbody>
-				    </table>
-				    <div id="pager" class="k-pager-wrap"
-				    	 data-auto-bind="false"
-			             data-role="pager" data-bind="source: dataSource"></div>
-			    </div>
-			</div>
-		</div>
-	</div>
-</script>
-<script id="wInventory-item-template" type="text/x-kendo-template">
-    <tr>
-    	<td>#=sku#</td>
-    	<td>#=name#</td>
-    	<td>#=description#</td>
-    	<td>
-    		#if(on_hand<=order_point){#    		
-    			<span class="badge badge-danger">#=kendo.toString(on_hand, "n0")#</span>
-    		#}else{#
-    			<span class="badge badge-info">#=kendo.toString(on_hand, "n0")#</span>
-    		#}#
-
-    		#=measurement==null?"":measurement#
-    	</td>    	
-    	<td>
-    		#for(var i=0; i<price_list.length; i++) {#
-    			#if(price_list[i].price>0){#
-    				<span class="badge badge-inverse"> #=kendo.toString(price_list[i].price, "c", price_list[i].locale)# </span> / #=price_list[i].measurement# 
-    			#}else{#
-    				<span class="badge badge-danger"> #=kendo.toString(price_list[i].price, "c", price_list[i].locale)# </span> / #=price_list[i].measurement#
-    			#}#
-    			<br>    			    						 
-			#}#
-    	</td>    	
-    	<td>
-    		<div class="btn-group">
-    			<button class="btn btn-default">ធ្វើការ</button>		  	
-			  	<button class="btn dropdown-toggle" data-toggle="dropdown">
-			    	<span class="caret"></span>
-			  	</button>
-			  	<ul class="dropdown-menu">			   		
-			   		#if(is_assemble=="1"){#
-			   			<li><a href="\#/item_assembly/#=id#"><i class="icon-edit"></i> Edit</a></li>			   		
-			   		#}else if(is_catalog=="1"){#
-			   			<li><a href="\#/item_catalog/#=id#"><i class="icon-edit"></i> Edit</a></li>			   		
-			   		#}else{#
-			   			<li><a href="\#/price_list/#=id#"><i class="icon-usd"></i> Set Price</a></li>			   			
-			   			<li><a href="\#/item/#=id#"><i class="icon-edit"></i> Edit</a></li>
-			   		#}#
-			  	</ul>
-			</div>
-    	</td>    		
-    </tr>
-</script>
-<script id="wInventory-item-category-template" type="text/x-kendo-template">
-	<span class="btn btn-success" data-bind="click: categoryChanges">#=name#</span>  
-</script>
-<script id="wInventory-item-vendor-template" type="text/x-kendo-template">
-    <div class="product-tmpl" data-bind="click: vendorChanges">
-        <img src="#=image_url#" alt="#: company # image" />
-        <h3>#:company#</h3>        
-    </div>    
-</script>
-
-<script id="wBranch" type="text/x-kendo-template">
-	<div class="container-960">
-		<div class="row">
-			<div class="span12">
-				<span class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript:window.history.back()"><i></i></span>
-
-				<div id="example" class="k-content">
-					<h3><span data-bind="text: lang.lang.license"></span></h3>
-				
-					<div class="box-generic">
-									
-						<!-- Row -->
-						<div class="row-fluid">
-						
-							<!-- Column -->
-							<div class="span6">
-							
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.license_number"></span></label>
-									<div class="controls">
-										<input id="number" name="number" 
-											type="text" class="span10 k-textbox" 
-											data-bind="value: obj.operation_license, events:{change:checkExisting}"
-											required data-required-msg="ត្រូវការ លេខអាជ្ញាប័ណ្ណ">
-
-										<div class="alert alert-error" data-bind="visible: isExisting" style="width: 260px;">										    
-										    <i class="icon-warning-sign"></i> duplicate number !
-										</div>
-									</div>
-								</div>
-								<!-- // Group END -->
-								
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.license_name"></span></label>
-									<div class="controls">
-										<input id="name" name="name" 
-												type="text" class="span10 k-textbox" 
-												data-bind="value: obj.name" 
-												required data-required-msg="ត្រូវការ ឈ្មោះអាជ្ញាប័ណ្ណ">									
-									</div>
-								</div>
-								<!-- // Group END -->
-							
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.description"></span></label>
-									<div class="controls">
-										<input type="text" class="span10 k-textbox" data-bind="value: obj.description">									
-									</div>
-								</div>
-								<!-- // Group END -->
-
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.max_customer"></span></label>
-									<div class="controls">
-										<input type="text" class="input-mini k-textbox" data-bind="value: obj.max_customer">									
-									</div>
-								</div>
-								<!-- // Group END -->						
-
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.expire_date"></span></label>								
-									<div class="controls">
-										<input class="span10" data-role="datepicker"			            		
-			            					data-bind="value: obj.expire_date" 
-			            					data-format="dd-MM-yyyy"
-			            					data-parse-formats="yyyy-MM-dd" 
-			            					placeholder="dd-MM-yyyy" />		            				
-									</div>								
-								</div>
-								<!-- // Group END -->
-
-								<br><br>
-
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.address"></span></label>
-									<div class="controls">
-										<input type="text" class="span10 k-textbox" data-bind="value: obj.address">									
-									</div>
-								</div>
-								<!-- // Group END -->
-
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.status"></span></label>
-									<div class="controls">
-										<input id="ddlStatus" name="ddlStatus"
-											   data-role="dropdownlist"
-					            			   data-option-label="(--- Select ---)"					            			   			                   
-							                   data-value-primitive="true"
-							                   data-text-field="name"
-							                   data-value-field="id"
-							                   data-bind="value: obj.status,
-							                              source: statusList"
-							                   required data-required-msg="required"/>
-									</div>
-								</div>
-								<!-- // Group END -->
-								
-							</div>
-							<!-- // Column END -->
-							
-							<!-- Column -->
-							<div class="span6">
-							
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.currency"></span></label>
-									<div class="controls">
-										<input id="currency" name="currency"
-											   class="span12" data-role="dropdownlist"
-					            			   data-option-label="(--- Select ---)"					            			   			                   
-							                   data-value-primitive="true"
-							                   data-text-field="code"
-							                   data-value-field="id"
-							                   data-bind="value: obj.currency_id,
-							                              source: currencyDS"
-							                   required data-required-msg="required"/>
-									</div>
-								</div>
-								<!-- // Group END -->
-								
-								<br><br>
-
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.abbr"></span></label>
-									<div class="controls">
-										<input id="abbr" name="abbr"
-											type="text" class="input-mini k-textbox" 
-											data-bind="value: obj.abbr"
-											required data-required-msg="required">
-									</div>
-								</div>
-								<!-- // Group END -->
-
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.representative"></span></label>
-									<div class="controls">
-										<input type="text" class="span12 k-textbox" data-bind="value: obj.representative">
-									</div>
-								</div>
-								<!-- // Group END -->
-
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.tel"></span></label>
-									<div class="input-prepend">
-										<span class="add-on glyphicons phone"><i></i></span>
-										<input type="text" class="input-large" data-bind="value: obj.phone" placeholder="01234567897">
-									</div>								
-								</div>
-								<!-- // Group END -->
-
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.phone"></span></label>
-									<div class="input-prepend">
-										<span class="add-on glyphicons iphone"><i></i></span>
-										<input type="text" class="input-large" data-bind="value: obj.mobile" placeholder="01234567897">
-									</div>
-								</div>
-								<!-- // Group END -->
-
-								<!-- Group -->
-								<div class="control-group">
-									<label class="control-label"><span data-bind="text: lang.lang.email"></span></label>
-									<div class="input-prepend">
-										<span class="add-on glyphicons envelope"><i></i></span>
-										<input type="text" class="input-large" data-bind="value: obj.email" placeholder="name@email.com">
-									</div>
-								</div>
-								<!-- // Group END -->
-								
-							</div>
-							<!-- // Column END -->
-							
-						</div>
-						<!-- // Row END -->
-						
-						<div class="separator line bottom"></div>
-						
-						<!-- Group -->
-						<div class="control-group row-fluid">
-							<label class="control-label"><span data-bind="text: lang.lang.term_of_condition"></span></label>
-							<div class="controls">
-								<textarea data-role="editor"
-				                      data-tools="['bold',
-				                                   'italic',
-				                                   'underline',
-				                                   'strikethrough',
-				                                   'justifyLeft',
-				                                   'justifyCenter',
-				                                   'justifyRight',
-				                                   'justifyFull']"
-				                      data-bind="value: obj.term_of_condition"
-				                      style="height: 200px;"></textarea>
-	                      	</div>
-						</div>
-						<!-- // Group END -->
-						
-						<!-- Form actions -->
-						<div align="center">
-							<span id="notification"></span>
-
-							<span id="save" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><span data-bind="text: lang.lang.save"></span></span>
-							<span class="btn btn-danger btn-icon glyphicons delete" data-bind="click: delete, visible: isEdit"><i></i><span data-bind="text: lang.lang.delete"></span></span>
-							<span class="btn btn-icon btn-default glyphicons ban" data-bind="click: cancel"><i></i><span data-bind="text: lang.lang.cancel"></span></span>
-						</div>
-						<!-- // Form actions END -->
-						
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</script>
-
-<script id="wSettings" type="text/x-kendo-template">
-	<span class="pull-right glyphicons no-js remove_2" 
-			onclick="javascript:window.history.back()"><i></i></span>
-
-	<h2><span data-bind="text: lang.lang.general_setting_water"></span></h2>
-
-	<br>
-
-	<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
-
-	    <!-- Tabs Heading -->
-	    <div class="widget-head span3">
-	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.license"></span></span></a>
-	            </li>
-	            <li><a href="#tab2-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.cutomer_type"></span></span></a>
-	            </li>
-	            <li><a href="#tab3-1" class="glyphicons google_maps" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.location1"></span></span></a>
-	            </li>
-	            <li><a href="#tab4-1" class="glyphicons calculator" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.tariff"></span></span></a>
-	            </li>
-	            <li><a href="#tab5-1" class="glyphicons gift" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.exemption"></span></span></a>
-	            </li>
-	            <li><a href="#tab6-1" class="glyphicons circle_ok" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.maintenance"></span></span></a>
-	            </li>	           
-	        </ul>
-	    </div>
-	    <!-- // Tabs Heading END -->
-
-	    <div class="widget-body span9">
-	        <div class="tab-content">
-
-	            <!-- Tab Branch content -->
-	            <div class="tab-pane active" id="tab1-1">
-	            	<a href="#/wBranch" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i> <span data-bind="text: lang.lang.new_license"></span></a>
-
-	            	<table class="table table-bordered table-white">
-	            		<thead>
-	            			<tr>
-	            				<th><span data-bind="text: lang.lang.number"></span></th>
-	            				<th><span data-bind="text: lang.lang.license"></span></th>	            				
-	            				<th><span data-bind="text: lang.lang.abbr"></span></th>
-	            				<th><span data-bind="text: lang.lang.representive"></span></th>	            				
-	            				<th width="70px"><span data-bind="text: lang.lang.phone"></span></th>	            				
-	            				<th width="100px"><span data-bind="text: lang.lang.address"></span></th>
-	            				<th><span data-bind="text: lang.lang.expire_date"></span></th>
-	            				<th><span data-bind="text: lang.lang.max_connections"></span></th>
-	            				<th><span data-bind="text: lang.lang.status"></span></th>	            					            				
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"	            					            			
-				                data-template="branch-wSettings-template"
-				                data-bind="source: branchDS"></tbody>
-	            	</table>		            
-	            </div>
-	            <!-- // Tab Branch content END -->
-
-	            <!-- Tab Contact Type content -->
-	            <div class="tab-pane" id="tab2-1">
-	            	<div class="input-append">
-					    <input class="span6" id="appendedInputButtons" type="text" placeholder="type name ..." data-bind="value: contactTypeName">
-					    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i></button>					  
-					</div>
-	            	<table class="table table-bordered table-white">
-	            		<thead>
-	            			<tr>
-	            				<th><span data-bind="text: lang.lang.type2"></span></th>
-	            				<th></th>
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-		            			data-edit-template="edit-contact-type-wSetting-template"
-				                data-template="contact-type-wSettings-template"
-				                data-bind="source: contactTypeDS"></tbody>
-	            	</table>		            
-	            </div>
-	            <!-- // Tab Contact Type content END -->
-
-	            <!-- Tab Block content -->
-	            <div class="tab-pane" id="tab3-1">
-            		<input data-role="dropdownlist"
-            			   data-option-label="(--- Select ---)"
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="true"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: blockCompanyId,
-		                              source: branchDS"/>
-
-                	<div class="input-append">
-					    <input class="span6" id="appendedInputButtons" type="text" placeholder="location name ..." data-bind="value: blockName">
-					    <input class="span6" id="appendedInputButtons" type="text" placeholder="abbr ..." data-bind="value: blockAbbr">
-					    <button class="btn btn-default" type="button" data-bind="click: addBlock"><i class="icon-plus"></i></button>					  
-					</div>
-	            	<table class="table table-bordered table-white">
-	            		<thead>
-	            			<tr>
-	            				<th><span data-bind="text: lang.lang.license"></span></th>
-	            				<th><span data-bind="text: lang.lang.location1"></span></td>
-	            				<th><span data-bind="text: lang.lang.abbr"></span></th>
-	            				<th></th>
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-		            			data-edit-template="edit-block-wSetting-template"
-				                data-template="block-wSettings-template"
-				                data-bind="source: blockDS"></tbody>
-	            	</table>
-	            </div>
-	            <!-- // Tab Block content END -->
-
-	            <!-- Tab Tariff content -->
-	            <div class="tab-pane" id="tab4-1">
-	                <div class="row-fluid">
-		                <div class="span6">
-			                <input data-role="dropdownlist"
-		            			   data-option-label="(--- Select ---)"
-		            			   data-auto-bind="false"			                   
-				                   data-value-primitive="true"
-				                   data-text-field="name"
-				                   data-value-field="id"
-				                   data-bind="value: tariffCompanyId,
-				                              source: branchDS"/>
-
-		                	<div class="input-append">
-							    <input class="span6" id="appendedInputButtons" type="text" placeholder="tariff name ..." data-bind="value: tariffName">					    
-							    <button class="btn btn-default" type="button" data-bind="click: addTariff"><i class="icon-plus"></i></button>					  
-							</div>							
-			            	<table class="table table-bordered table-white">
-			            		<thead>
-			            			<tr>
-			            				<th><span data-bind="text: lang.lang.license"></span></th>
-			            				<th><span data-bind="text: lang.lang.tariff_name"></span></th>	            				
-			            				<th></th>
-			            			</tr>
-			            		</thead>
-			            		<tbody data-role="listview"
-			            				data-auto-bind="false"
-				            			data-edit-template="edit-tariff-wSetting-template"
-						                data-template="tariff-wSettings-template"
-						                data-bind="source: tariffDS"></tbody>
-			            	</table>
-		            	</div>
-		            	<div class="span6">		                	
-						    <input class="span3" type="text" placeholder="usage ..." data-bind="value: tariffUsage">
-						    <input class="span3" type="text" placeholder="price ..." data-bind="value: tariffPrice">							    					    
-						    <input class="span2" data-role="dropdownlist"		            			   
-	            			   data-auto-bind="false"			                   
-			                   data-value-primitive="true"
-			                   data-text-field="name"
-			                   data-value-field="id"
-			                   data-bind="value: tariffFlat,
-		                              source: flatList"/>
-						    <button class="btn btn-default" type="button" data-bind="click: addTariffItem, enabled: selectedTariff"><i class="icon-plus"></i></button>					  
-						
-							<span data-bind="text: selectedTariffName"></span>							
-
-			            	<table class="table table-bordered table-white">
-			            		<thead>
-			            			<tr>
-			            				<th><span data-bind="text: lang.lang.usage"></span></th>
-			            				<th><span data-bind="text: lang.lang.p"></span></th>
-			            				<th><span data-bind="text: lang.lang.flat"></span></th>	            				
-			            				<th></th>
-			            			</tr>
-			            		</thead>
-			            		<tbody data-role="listview"
-			            				data-auto-bind="false"
-				            			data-edit-template="edit-tariff-item-wSetting-template"
-						                data-template="tariff-item-wSettings-template"
-						                data-bind="source: tariffItemDS"></tbody>
-			            	</table>
-		            	</div>
-	            	</div>
-	            </div>
-	            <!-- // Tab Tariff content END -->
-
-	            <!-- Tab Exemption content -->
-	            <div class="tab-pane" id="tab5-1">
-	            	<input data-role="dropdownlist"
-            			   data-option-label="(--- License ---)"
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="true"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: exemptionCompanyId,
-		                              source: branchDS"/>
-
-	                <input data-role="dropdownlist"
-            			   data-option-label="(--- Type ---)"
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="true"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: exemptionType,
-		                              source: exemptionTypeList"/>
-
-                	<div class="input-append">
-					    <input class="span6" id="appendedInputButtons" type="text" placeholder="exemption name ..." data-bind="value: exemptionName">
-					    <input class="span6" id="appendedInputButtons" type="text" placeholder="price ..." data-bind="value: exemptionAmount">					    
-					    <button class="btn btn-default" type="button" data-bind="click: addExemption"><i class="icon-plus"></i></button>					  
-					</div>
-	            	<table class="table table-bordered table-white">
-	            		<thead>
-	            			<tr>
-	            				<th><span data-bind="text: lang.lang.license"></span></th>	            				
-	            				<th><span data-bind="text: lang.lang.exemption_name"></span></th>
-	            				<th><span data-bind="text: lang.lang.p"></span></th>
-	            				<th><span data-bind="text: lang.lang.type2"></span></th>
-	            				<th></th>
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-		            			data-edit-template="edit-exemption-wSetting-template"
-				                data-template="exemption-wSettings-template"
-				                data-bind="source: exemptionDS"></tbody>
-	            	</table>
-	            </div>
-	            <!-- // Tab Exemption content END -->
-
-	            <!-- Tab content -->
-	            <div class="tab-pane" id="tab6-1">
-	            	<input data-role="dropdownlist"
-            			   data-option-label="(--- Select ---)"
-            			   data-auto-bind="false"			                   
-		                   data-value-primitive="true"
-		                   data-text-field="name"
-		                   data-value-field="id"
-		                   data-bind="value: maintenanceCompanyId,
-		                              source: branchDS"/>
-
-	                <div class="input-append">
-					    <input class="span6" id="appendedInputButtons" type="text" placeholder="maintenance name ..." data-bind="value: maintenanceName">
-					    <input class="span6" id="appendedInputButtons" type="text" placeholder="price ..." data-bind="value: maintenanceAmount">
-					    <button class="btn btn-default" type="button" data-bind="click: addMaintenance"><i class="icon-plus"></i></button>					  
-					</div>
-	            	<table class="table table-bordered table-white">
-	            		<thead>
-	            			<tr>
-	            				<th><span data-bind="text: lang.lang.license"></span></th>	            				
-	            				<th><span data-bind="text: lang.lang.maintenance_name"></span></th>
-	            				<th><span data-bind="text: lang.lang.p"></span></th>
-	            				<th></th>
-	            			</tr>
-	            		</thead>
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"
-		            			data-edit-template="edit-maintenance-wSetting-template"
-				                data-template="maintenance-wSettings-template"
-				                data-bind="source: maintenanceDS"></tbody>
-	            	</table>
-	            </div>
-	            <!-- // Tab content END -->
-
-	        </div>
-	    </div>
-
-	</div>
-</script>
-<script id="branch-wSettings-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>#=operation_license#</td>
-   		<td>
-   			<a href="\#/wBranch/#=id#"><i></i>#=name#</a>
-   		</td>   		
-   		<td>#=abbr#</td>
-   		<td>#=representative#</td>   		
-   		<td>#=phone# #=mobile#</td>   		
-   		<td>#=address#</td>
-   		<td>#=expire_date#</td>
-   		<td>#=max_customer#</td>
-   		<td>
-   			#if(status==1){#
-				<span class="glyphicons no-js ok"><i></i></span>
-			#}else{#
-				<span class="glyphicons no-js ban"><i></i></span>
-			#}#
-   		</td>		 		
-   	</tr>
-</script>
-<script id="contact-type-wSettings-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>
-    		 #:name#
-   		</td>
-   		<td>
-   			#if(is_system=="0"){#
-	   			<div class="edit-buttons">       
-			        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-			        <a class="k-button" data-bind="click: deleteContactType"><span class="k-icon k-delete"></span></a>
-			   	</div>
-		   	#}#
-   		</td>
-   	</tr>
-</script>
-<script id="edit-contact-type-wSetting-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd>               
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
-<script id="block-wSettings-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>
-    		#if(company[0]) {#
-    			#=company[0].name#
-    		#}#
-    	</td>
-    	<td>
-    		#:name#
-   		</td>
-   		<td>
-    		#:abbr#
-   		</td>
-   		<td>
-   			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-		   	</div>
-   		</td>
-   	</tr>
-</script>
-<script id="edit-block-wSetting-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>                
-            <dd>
-                <input data-role="dropdownlist"
-        			   data-option-label="(--- Select ---)"        			   		                   
-	                   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: company_id,
-	                              source: branchDS"/>
-            </dd>
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd>
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:abbr" />                
-            </dd>                
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
-<script id="tariff-wSettings-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>
-    		#if(company[0]) {#
-    			#=company[0].name#
-    		#}#
-    	</td>
-    	<td>
-    		#:name#
-   		</td>   		
-		<td>
-			<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-            <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-            <span class="k-button" data-bind="click: loadTariffItem"><i class="icon-hand-right"></i></span>             
-		</td>
-   	</tr>
-</script>
-<script id="edit-tariff-wSetting-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>                
-            <dd>
-                <input data-role="dropdownlist"
-        			   data-option-label="(--- Select ---)"        			   		                   
-	                   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: company_id,
-	                              source: branchDS"/>
-            </dd>
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd>                         
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
-<script id="tariff-item-wSettings-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>#=usage#</td>
-    	<td>#=price#</td>
-    	<td>
-    		#if(is_flat){#
-    			ថេរ
-    		#}else{#
-    			អត់ថេរ
-    		#}#
-    	</td>   		
-   		<td>
-   			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#" onclick="return confirm('Are you sure you want to delete this item?');"><span class="k-icon k-delete"></span></a>
-		   	</div>
-   		</td>
-   	</tr>
-</script>
-<script id="edit-tariff-item-wSetting-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>
-        	<dd>
-        		<input data-role="dropdownlist"		            			   
-        			   data-auto-bind="false"			                   
-	                   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: is_flat,
-                              source: flatList"/>
-        	</dd>                
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:usage" name="usage" required="required" validationMessage="required" />
-                <span data-for="usage" class="k-invalid-msg"></span>
-            </dd> 
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:price" name="price" required="required" validationMessage="required" />
-                <span data-for="price" class="k-invalid-msg"></span>
-            </dd>                         
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
-<script id="exemption-wSettings-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>
-    		#if(company[0]) {#
-    			#=company[0].name#
-    		#}#
-    	</td>    	
-   		<td>
-    		#:name#
-   		</td>
-   		<td>
-    		#:amount#
-   		</td>
-   		<td>
-    		#:unit#
-   		</td>    		
-		<td>
-			<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-            <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>                        
-		</td>
-   	</tr>
-</script>
-<script id="edit-exemption-wSetting-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>                
-            <dd>
-                <input data-role="dropdownlist"
-        			   data-option-label="(--- Select ---)"        			   		                   
-	                   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: company_id,
-	                              source: branchDS"/>
-            </dd>
-            <dd>
-                <input data-role="dropdownlist"
-        			   data-option-label="(--- Type ---)"
-        			   data-auto-bind="false"			                   
-	                   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: unit,
-	                              source: exemptionTypeList"/>
-            </dd>
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd> 
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:amount" name="amount" required="required" validationMessage="required" />
-                <span data-for="amount" class="k-invalid-msg"></span>
-            </dd>                        
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
-<script id="maintenance-wSettings-template" type="text/x-kendo-tmpl">                    
-    <tr>
-    	<td>
-    		#if(company[0]) {#
-    			#=company[0].name#
-    		#}#
-    	</td>    	
-   		<td>
-    		#:name#
-   		</td>
-   		<td>
-    		#:amount#
-   		</td>    		
-		<td>
-			<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-            <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>                        
-		</td>
-   	</tr>
-</script>
-<script id="edit-maintenance-wSetting-template" type="text/x-kendo-tmpl">
-    <div class="product-view k-widget">
-        <dl>                
-            <dd>
-                <input data-role="dropdownlist"
-        			   data-option-label="(--- Select ---)"        			   		                   
-	                   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: company_id,
-	                              source: branchDS"/>
-            </dd>           
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
-                <span data-for="ProductName" class="k-invalid-msg"></span>
-            </dd> 
-            <dd>
-                <input type="text" class="k-textbox" data-bind="value:amount" name="amount" required="required" validationMessage="required" />
-                <span data-for="amount" class="k-invalid-msg"></span>
-            </dd>                        
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
-
-
-<!-- Water Reports -->
-<!-- Water Customers -->
-<script id="wReportCenter" type="text/x-kendo-template">
-	<div>
-		<span class="pull-right glyphicons no-js remove_2" 
-				onclick="javascript:window.history.back()"><i></i></span>
-
-		<table>
-			<tr>
-				<td>
-					<h2><span data-bind="text: lang.lang.key_performance_indicators"></span></h2>
-				</td>
-				<td>
-					<input data-role="dropdownlist"
-					   data-option-label="(--- Select ---)"
-	                   data-auto-bind="false"
-	                   data-value-primitive="true"
-	                   data-text-field="name"
-	                   data-value-field="id"
-	                   data-bind="value: branch_id,
-	                              source: branchDS,
-	                              events: {
-	                                change: branchChanges
-	                              }"
-	                   style="width: 400px;" /> 
-				</td>
-			</tr>
-		</table>
-	</div>
-	
-	<br>	
-
-	<div class="box-generic">
-		<div class="row-fluid">							
-			<div class="span2">
-			
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-gray widget-stats-2">
-					<span class="count"><a data-bind="text: obj.totalCustomer"></a></span>
-					<span class="txt" style="font-size: small;"><span data-bind="text: lang.lang.total_no_of_customers"></span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
-			</div>
-			<div class="span2">
-			
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-2">
-					<span class="count"><a data-format="p" data-bind="text: obj.totalAllowCustomer" style="font-size: 50px;"></a></span>
-					<span class="txt" style="font-size: small;"><span data-bind="text: lang.lang.total_customers_ratio"></span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
-			</div>
-			<div class="span3">
-			
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-gray widget-stats-2">
-					<span class="count"><a data-format="p" data-bind="text: obj.totalActiveCustomer"></a></span>
-					<span class="txt" style="font-size: small;"><span data-bind="text: lang.lang.active_customers_ratio"></span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
-			</div>
-			<div class="span5">
-			
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-2">
-					<span class="count"><a data-format="c0" data-bind="text: obj.totalIncome"></a></span>
-					<span class="txt" style="font-size: small;"><span data-bind="text: lang.lang.total_water_revenue"></span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
-			</div>							
-		</div>
-
-		<div class="row-fluid">		
-			<div class="span2">
-			
-				<!-- Stats Widget -->			
-				<span class="widget-stats widget-stats-default widget-stats-2">
-					<span class="count"><a data-bind="text: obj.totalUsage"></a></span>
-					<span class="txt" style="font-size: small;"><span data-bind="text: lang.lang.water_sold"></span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
-			</div>
-			<div class="span2">
-			
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-2">
-					<span class="count"><a data-format="n2" data-bind="text: obj.avgUsage"></a></span>
-					<span class="txt" style="font-size: small;"><span data-bind="text: lang.lang.average_water_usage_per_connection"></span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
-			</div>
-			<div class="span3">
-			
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-default widget-stats-2">
-					<span class="count"><a data-format="c0" data-bind="text: obj.avgIncome"></a></span>
-					<span class="txt" style="font-size: small;"><span data-bind="text: lang.lang.avarage_reveune_per_connection"></span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
-			</div>
-			<div class="span5">
-			
-				<!-- Stats Widget -->
-				<span class="widget-stats widget-stats-2">
-					<span class="count"><a data-format="c0" data-bind="text: obj.totalDeposit"></a></span>
-					<span class="txt" style="font-size: small;"><span data-bind="text: lang.lang.total_deposit"></span></span>
-				</span>
-				<!-- // Stats Widget END -->
-				
-			</div>							
-		</div>
-	</div>
-
-	<br>
-
-	<h2><span data-bind="text: lang.lang.water_related_reports"></span></h2>
-	<br>
-
-	<div class="row-fluid">
-		<div class="span3">
-			<h4><span data-bind="text: lang.lang.customer_management_report"></span></h4>
-			<div class="well margin-none" style="height: 250px;">
-				<span data-bind="text: lang.lang.these_reports_are_useful_for_customer_information_management_meter_connections_and_usage_managements"></span>
-				<br><br>
-				<ul>
-					<li><a href='#/wCustomer_list'><span data-bind="text: lang.lang.customer_list1"></span></a></li>
-	  				<li><a href='#/wBrand_new_customer'><span data-bind="text: lang.lang.new_customer_list"></span></a></li>  				
-	  				<li><a href='#/wCustomer_no_meter'><span data-bind="text: lang.lang.no_connection"></span></a></li>
-	  				<br>
-	  				<li><a href='#/wLow_consumption'><span data-bind="text: lang.lang.minimum_water_usage_list"></span></a></li>
-	  				<li><a href='#/wDisconnect_list'><span data-bind="text: lang.lang.disconnected_list"></span></a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="span3">
-			<h4><span data-bind="text: lang.lang.receiveable_and_deposits"></span></h4>
-			<div class="well margin-none" style="height: 250px;">
-				<span data-bind="text: lang.lang.these_would_be_the_most_common_reports_that_you_will_be_using"></span>  
-				<br><br>
-				<ul>
-					<li><a href='#/wCustomer_balance'><span data-bind="text: lang.lang.accounts_receivable_listing"></span></a></li>
-	  				<li><a href='#/wCustomer_deposit'><span data-bind="text: lang.lang.customer_deposit"></span></a></li>  				  					  				  
-	  				<li><a href='#/wAging_summary'><span data-bind="text: lang.lang.customer_aging_summary_list"></span></a></li> 
-	  				<li><a href='#/wAging_detail'><span data-bind="text: lang.lang.customer_aging_detail_list"></span></a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="span3">
-			<h4><span data-bind="text: lang.lang.sale_report"></span></h4>
-			<div class="well margin-none" style="height: 250px;">
-				<span data-bind="text: lang.lang.summary_and_detail_sale_report_broken_down_by_Licenses_bloc_and_types_of_reveneues"></span>				
-				<br><br>
-				<ul>
-					<li><a href='#/wSale_summary'><span data-bind="text: lang.lang.sale_summary_report"></span></a></li>
-	  				<li><a href='#/wSale_detail'><span data-bind="text: lang.lang.sale_detail_report"></span></a></li>  				  					  				  
-	  				<li><a ><span data-bind="text: lang.lang.connection_service"></span></a></li> 
-	  				<li><a ><span data-bind="text: lang.lang.other_revenues"></span></a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="span3">
-			<h4><span data-bind="text: lang.lang.cash_receipt_report"></span></h4>
-			<div class="well margin-none" style="height: 250px;">
-				<span data-bind="text: lang.lang.summary_and_detail_cash_receipt_reports_grouped_by_sources_methods_of_receipts"></span>
-				<br><br>
-				<ul>
-					<li><a href='#/wPayment_summary'><span data-bind="text: lang.lang.cash_receipt_by_summary"></span></a></li> 
-  					<li><a href='#/wPayment_detail'><span data-bind="text: lang.lang.cash_receipt_by_detail"></span></a></li>  
-	  				<li><a href='#/wPayment_by_source_summary'><span data-bind="text: lang.lang.cash_receipt_by_sources"></span></a></li>
-	  				<li><a href='#/wPayment_by_source_detail'><span data-bind="text: lang.lang.cash_receipt_by_sources_detail"></span></a></li> 
-				</ul>
-			</div>
-		</div>
-	</div>
-
-	<p class="separator text-center"><i class="icon-ellipsis-horizontal icon-3x"></i></p>
-</script>
-<script id="wCustomerList" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">
-						<div class="hidden-print">
-							<span class="pull-right glyphicons no-js remove_2" 
-								onclick="javascript:window.history.back()"><i></i></span>
-
-							<input id="ddlBranch" />						                
-							<input id="ddlLocation" disabled="disabled" />
-							<button id="search" type="button" data-role="button"><i class="icon-search"></i></button> |
-							<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>						
-						</div>
-
-						<h3 align="center">Customer List</h3>	
-
-						<div id="grid"></div>
-					    					
-					</div> <!-- //End div example--> 
-				</div><!-- //End div span12-->
-			</div><!-- //End div row-fluid-->
-		</div>
-	</div>	
-</script>
-<script id="wCustomerNoMeter" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">						
-						
-		                <!-- <div class="hidden-print">
-		                	<span class="pull-right glyphicons no-js remove_2" 
-								onclick="javascript:window.history.back();"><i></i></span>
-
-		                	<input data-role="dropdownlist"
-				                   data-auto-bind="false"
-				                   data-text-field="name"
-				                   data-value-field="id"
-				                   data-bind="value: branch_id,
-				                              source: branchDS"
-				                   data-option-label="(--- License ---)" />
-
-				            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-							<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>   
-		                </div>			           
-
-						<br> -->
-						
-						<h4 align="center">Un-connected Customer List</h4>							
-
-						<br>						
-
-						<table class="table table-bordered table-striped table-white">
-			        		<thead>
-			        			<tr>			        				
-			        				<th>Code</th>	
-			        				<th>Name</th>			        					            				
-			        				<th>Type</th>
-			        				<th>Block</th>
-			        				<th>License</th>			        				
-			        				<th>Deposit</th>
-			        				<th></th>		        				            					            				
-			        			</tr>
-			        		</thead>
-			        		<tbody data-role="listview"
-			        				data-auto-bind="true"	            					            			
-					                data-template="wCustomer-no-meter-row-template"
-					                data-bind="source: dataSource"></tbody>
-			        	</table>
-
-			        	<div data-role="pager" 
-						    	data-auto-bind="true"
-					            data-bind="source: dataSource"></div>						
-
-					</div><!-- //End div example-->
-				</div><!-- //End div span12-->
-			</div><!-- //End div row-fluid-->
-		</div>
-	</div>	
-</script>
-<script id="wCustomer-no-meter-row-template" type="text/x-kendo-tmpl">		
-	<tr>		
-		<td>#=wnumber#</td>
-		<td>
-			<a data-bind="click: goToNewMeter">#=fullname#</a>
-		</td>
-		<td>#=contact_type_name#</td>
-		<td>#=wlocation_name#</td>
-		<td>#=wbranch_name#</td>							
-		<td align="right">#=kendo.toString(wdeposit, "c0", banhji.userManagement.getLogin().institute[0].locale)#</td>
-		<td>
-			<span class="btn btn-success btn-icon glyphicons circle_plus" data-bind="click: goToNewMeter"><i></i>New Connected</span>			
-		</td>							
-    </tr>   
-</script>
-<script id="wBrandNewCustomer" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">						
-						
-		                <form id="employeeForm" data-role="validator" novalidate="novalidate">
-			                <div id="fieldlist" class="hidden-print">
-			                	<span class="pull-right glyphicons no-js remove_2" 
-									onclick="javascript:window.history.back();"><i></i></span>
-
-			                	<input data-role="dropdownlist"                   
-				                   data-value-primitive="true"
-				                   data-text-field="text"
-				                   data-value-field="value"
-				                   data-bind="value: sorter,
-				                              source: sortList,                              
-				                              events: { change: sorterChanges }" />
-				                                           
-			                    <input type="text" data-role='datepicker' id="sdate" name="sdate" data-type="date" data-bind="value: sdate" />
-			                    <span data-for='sdate' class='k-invalid-msg'></span>
-
-			                    <input type="text" data-role='datepicker' id ="edate" data-type="date" name="edate" data-bind="value: edate" 
-			                    		data-greaterdate-field="sdate" data-greaterdate-msg='Check Date' />
-			                    <span data-for='edate' class='k-invalid-msg'></span>
-
-			                    <input data-role="dropdownlist"
-				                   data-auto-bind="false"
-				                   data-text-field="name"
-				                   data-value-field="id"
-				                   data-bind="value: branch_id,
-				                              source: branchDS"
-				                   data-option-label="(--- License ---)" />
-			               
-			                    <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-								<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>     
-			                </div>
-			            </form>
-					
-						<div align="center">
-							<h4>New Customer List</h4>
-							
-							<span data-bind="text: strDate()"></span>														
-						</div>											
-
-						<br>						
-
-						<table class="table table-bordered table-striped table-white">
-			        		<thead>
-			        			<tr>			        				
-			        				<th>Register Date</th>
-			        				<th>Code</th>	
-			        				<th>Name</th>			        					            				
-			        				<th>Type</th>			        				
-			        				<th>Block</th>
-			        				<th>License</th>
-			        				<th>Deposit</th>
-			        				<th>Meter</th>		        				            					            				
-			        			</tr>
-			        		</thead>
-			        		<tbody data-role="listview"
-			        				data-auto-bind="false"	            					            			
-					                data-template="wBranch-new-customer-row-template"
-					                data-bind="source: dataSource"></tbody>
-			        	</table>
-
-			        	<div data-role="pager" 
-						    	data-auto-bind="false"
-					            data-bind="source: dataSource"></div>						
-
-					</div><!-- //End div example-->
-				</div><!-- //End div span12-->
-			</div><!-- //End div row-fluid-->
-		</div>
-	</div>	
-</script>
-<script id="wBranch-new-customer-row-template" type="text/x-kendo-tmpl">		
-	<tr>
-		<td>#=kendo.toString(new Date(registered_date), "dd-MM-yyyy")#</td>		
-		<td>#=wnumber#</td>
-		<td>#=fullname#</td>
-		<td>#=contact_type_name#</td>		
-		<td>#=wlocation_name#</td>
-		<td>#=wbranch_name#</td>						
-		<td align="right">#=kendo.toString(wdeposit, "c0", banhji.userManagement.getLogin().institute[0].locale)#</td>
-		<td>
-			#for(var i=0; i<meters.length; i++) {#
-				#:meters[i].number# <br>
-			#}#
-		</td>							
-    </tr>   
-</script>
-<script id="wLowConsumption" type="text/x-kendo-template">
-	<div class="row-fluid">
-		<div class="span12">
-			<div id="example" class="k-content">
-				<div class="hidden-print">
-					<a href="javascript:void()" 
-						class="pull-right glyphicons no-js remove_2" 
-						onclick="javascript: window.history.back()"><i></i></a>
-
-					<input id="ddlBranch" />						                
-					<input id="ddlLocation" disabled="disabled" />
-					<input id="monthpicker" placeholder="Monthly" />
-					<input id="usage" placeHolder="Minimux Usage" />	
-					<button id="search" type="button" data-role="button"><i class="icon-search"></i></button> |
-					<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
-				</div>
-
-				<br>
-				
-				<div align="center">
-					<h3>Minimux Usage List</h3>					
-					<span id="strDate"></span>
-				</div>
-				
-				<div id="grid"></div>					
-								
-			</div><!-- //End div example-->
-		</div><!-- //End div span12-->
-	</div><!-- //End div row-fluid-->	
-</script>
-<script id="wDisconnectList" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">
-						<div class="hidden-print">
-							<a href="javascript:void()" 
-								class="pull-right glyphicons no-js remove_2" 
-								onclick="javascript: window.history.back()"><i></i></a>
-
-							<input id="ddlBranch" />						                
-							<input id="ddlLocation" disabled="disabled" />							
-							<input id="days" placeHolder="Due Date" />	
-							<button id="search" type="button" data-role="button"><i class="icon-search"></i></button> |
-							<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>											
-						</div>
-
-						<br>
-
-						<div align="center">
-							<h3>Disconnected List</h3>		
-						</div>
-						
-						<div id="grid"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>	
-</script>
-
-<!-- Customer Accounting -->
-<script id="wCustomerBalance" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">
-						<div class="hidden-print">
-							<span class="pull-right glyphicons no-js remove_2" 
-								onclick="javascript:window.history.back()"><i></i></span>
-
-							<input id="ddlBranch" />						                
-							<input id="ddlLocation" disabled="disabled" />
-							<button id="search" type="button" data-role="button"><i class="icon-search"></i></button> |
-							<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>						
-						</div>
-
-						<h3 align="center">បញ្ជីសមតុល្យអតិថិជន</h3>	
-
-						<div id="grid"></div>					
-					    					
-					</div> <!-- //End div example--> 
-				</div><!-- //End div span12-->
-			</div><!-- //End div row-fluid-->
-		</div>
-	</div>	
-</script>
-<script id="wCustomerDeposit" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">
-						<div class="hidden-print">
-							<span class="pull-right glyphicons no-js remove_2" 
-								onclick="javascript:window.history.back()"><i></i></span>
-
-							<input id="ddlBranch" />						                
-							<input id="ddlLocation" disabled="disabled" />
-							<button id="search" type="button" data-role="button"><i class="icon-search"></i></button> |
-							<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>						
-						</div>
-
-						<h3 align="center">បញ្ជីប្រាក់កក់អតិថិជន</h3>	
-
-						<div id="grid"></div>					
-					    					
-					</div> <!-- //End div example--> 
-				</div><!-- //End div span12-->
-			</div><!-- //End div row-fluid-->
-		</div>
-	</div>	
-</script>
-<script id="wAgingSummary" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="row-fluid">
-			<div class="span12">
-				<div id="example" class="k-content">
-
-					<div class="hidden-print">
-						<span class="pull-right glyphicons no-js remove_2" 
-							onclick="javascript:window.history.back();"><i></i></span>
-
-						<input id="ddlBranch" data-bind="value: branch_id" />						                
-						<input id="ddlLocation" data-bind="value: location_id" disabled="disabled" />
-						<input data-role="datepicker" data-bind="value: search_date" data-format="dd-MM-yyyy" placeHolder="Date" />
-						<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-						<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>				
-					</div>
-
-					<br>
-					
-					<div align="center">
-						<h3>បញ្ជីបំណុលអតិថិជនសង្ខេប</h3>
-						គិតត្រឹម
-						<span data-bind="text: strDate"></span>
-					</div>
-
-					<table class="table table-bordered table-striped table-white">
-		        		<thead>
-		        			<tr>
-		        				<th>ឈ្មោះ</th>
-		        				<th>បច្ចុប្បន្ន</th>
-		        				<th>១-៣០ថ្ងៃ</th>			        				
-		        				<th>៣១-៦០ថ្ងៃ</th>
-		        				<th>៦១-៩០ថ្ងៃ</th>        				
-		        				<th>លើសពី ៩០ថ្ងៃ</th>
-		        				<th>សរុប</th>	            					            				
-		        			</tr>
-		        		</thead>
-		        		<tbody data-role="listview"
-		        				data-auto-bind="false"	            					            			
-				                data-template="wAging-summary-row-template"
-				                data-bind="source: dataSource"></tbody>
-		        	</table>
-
-		        	<div data-role="pager"
-				    	 data-auto-bind="false"
-			             data-bind="source: dataSource"></div>					
-										
-				</div><!-- //End div example-->
-			</div><!-- //End div span12-->
-		</div><!-- //End div row-fluid-->	
-	</div>	
-</script>
-<script id="wAging-summary-row-template" type="text/x-kendo-tmpl">		
-	<tr>		
-		<td>#=fullIdName#</td>		
-		<td class="right">#:kendo.toString(current, 'c0', banhji.institute.locale)#</td>		
-		<td class="right">#:kendo.toString(oneMonth, 'c0', banhji.institute.locale)#</td>
-		<td class="right">#:kendo.toString(twoMonth, 'c0', banhji.institute.locale)#</td>
-		<td class="right">#:kendo.toString(threeMonth, 'c0', banhji.institute.locale)#</td>
-		<td class="right">#:kendo.toString(overMonth, 'c0', banhji.institute.locale)#</td>
-		<td class="right">#:kendo.toString(amount, 'c0', banhji.institute.locale)#</td>					
-    </tr>   
-</script>
-<script id="wAgingDetail" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="row-fluid">
-			<div class="span12">
-				<div id="example" class="k-content">
-					
-					<div class="hidden-print">
-						<span class="pull-right glyphicons no-js remove_2" 
-							onclick="javascript:window.history.back();"><i></i></span>
-
-						<input id="ddlBranch" data-bind="value: branch_id" />						                
-						<input id="ddlLocation" data-bind="value: location_id" disabled="disabled" />
-						<input data-role="datepicker" data-bind="value: search_date" data-format="dd-MM-yyyy" placeHolder="Date" />
-						<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-						<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>				
-					</div>
-
-					
-					<div align="center">
-						<h3>Account Received By Detail List</h3>
-						To
-						<span data-bind="text: strDate"></span>
-					</div>
-
-					<div id="grid"></div>		        	
-
-				</div><!-- //End div example-->
-			</div><!-- //End div span12-->
-		</div><!-- //End div row-fluid-->	
-	</div>	
-</script>
-
-<!-- Sale -->
-<script id="wSaleSummary" type="text/x-kendo-template">
-	<div class="container-fluid">
-		<div class="row-fluid">    
-			<div class="span12">
-				<div id="example" class="k-content">
-					
-		            <div class="box-generic hidden-print">
-		            	<span class="pull-right glyphicons no-js remove_2" 
-							onclick="javascript:window.history.back()"><i></i></span>
-
-		            	<input data-role="dropdownlist"                   
-		                   data-value-primitive="true"
-		                   data-text-field="text"
-		                   data-value-field="value"
-		                   data-bind="value: sorter,
-		                              source: sortList,                              
-		                              events: { change: sorterChanges }" />
-		                                           
-	                    <input data-role="datepicker"	                       
-	                       data-format="dd-MM-yyyy"
-	                       data-parse-formats="yyyy-MM-dd"
-		                   data-bind="value: sdate"
-		                   placeholder="From" />
-	                    
-	                   	<input data-role="datepicker"
-	                       data-format="dd-MM-yyyy"
-	                       data-parse-formats="yyyy-MM-dd"
-		                   data-bind="value: edate"
-		                   placeholder="To" />	                    	            	
-		          		
-		          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-		          		|
-						<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>						          		
-		            </div>
-
-		            <br><br>
-
-		            <div align="center">
-						<h3>Sale By Summary</h3>
-						
-						<span data-bind="text: strDate"></span>														
-					</div>
-
-					<br>			        
-			        
-			        <div id="grid"></div>
-			        
-				</div> <!-- //End div example-->            
-			</div> <!-- //End div span12-->		
-		</div> <!-- //End div row-fluid-->
-	</div>
-</script>
-<script id="wSaleDetail" type="text/x-kendo-template">
-	<div class="container-fluid">
-		<div class="row-fluid">    
-			<div class="span12">
-				<div id="example" class="k-content">
-					
-		            <div class="box-generic hidden-print">
-		            	<span class="pull-right glyphicons no-js remove_2" 
-							onclick="javascript:window.history.back()"><i></i></span>
-
-						<table>
-							<tr>
-								<td>
-					            	<input data-role="dropdownlist"                   
-					                   data-value-primitive="true"
-					                   data-text-field="text"
-					                   data-value-field="value"
-					                   data-bind="value: sorter,
-					                              source: sortList,                              
-					                              events: { change: sorterChanges }" />
-					                                           
-				                    <input data-role="datepicker"
-				                       data-format="dd-MM-yyyy"
-				                       data-parse-formats="yyyy-MM-dd"
-					                   data-bind="value: sdate" />
-				                    
-				                   	<input data-role="datepicker"
-				                       data-format="dd-MM-yyyy"
-				                       data-parse-formats="yyyy-MM-dd"
-					                   data-bind="value: edate" />
-
-					                <input data-role="dropdownlist"
-									   data-option-label="(--- រើស អាជ្ញាប័ណ្ណ ---)"
-					                   data-auto-bind="false"
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: branch_id,
-					                              source: branchDS,			                              
-					                              events: {
-					                                change: branchChanges
-					                              }"/>
-					            </td>
-					            <td>
-					            	<select data-role="multiselect"
-							           data-placeholder="Block..."
-							           data-value-primitive="true"
-							           data-text-field="name"
-							           data-value-field="id"
-							           data-bind="value: selectedLocations,
-							                      source: locationDS,
-							                      enabled: isBranchSelected"
-							           style="width: 200px;" 
-							    	></select>
-					            </td>	                    	            	
-					          	<td>	
-					          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-					          		|
-									<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
-								</td>
-							</tr>
-						</table>						          		
-		            </div>
-
-		            <br><br>
-
-		            <div align="center">
-						<h3>Sale By Detail</h3>
-						
-						<span data-bind="text: strDate"></span>														
-					</div>
-
-					<br>			        
-			        
-			        <div id="grid"></div>
-
-			        <div data-role="pager" 
-					    	data-auto-bind="false"
-					    	data-page-sizes='[50, 100, 200, "All"]'					    	
-				            data-bind="source: dataSource"></div>
-			        
-				</div> <!-- //End div example-->            
-			</div> <!-- //End div span12-->		
-		</div> <!-- //End div row-fluid-->
-	</div>
-</script>
-
-<!-- Payment -->
-<script id="wPaymentSummary" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">
-						
-						<form id="employeeForm" data-role="validator" novalidate="novalidate">
-			                <div id="fieldlist" class="hidden-print">
-			                	<span class="pull-right glyphicons no-js remove_2" 
-									onclick="javascript:window.history.back();"><i></i></span>
-
-			                	<input data-role="dropdownlist"                   
-				                   data-value-primitive="true"
-				                   data-text-field="text"
-				                   data-value-field="value"
-				                   data-bind="value: sorter,
-				                              source: sortList,                              
-				                              events: { change: sorterChanges }" />
-				                                           
-			                    <input type="text" data-role='datepicker' id="sdate" name="sdate" data-type="date" data-bind="value: sdate" />
-			                    <span data-for='sdate' class='k-invalid-msg'></span>
-
-			                    <input type="text" data-role='datepicker' id ="edate" data-type="date" name="edate" data-bind="value: edate" 
-			                    		data-greaterdate-field="sdate" data-greaterdate-msg='សូមពិនិត្យមើលកាលបរិច្ឆទឡើងវិញ' />
-			                    <span data-for='edate' class='k-invalid-msg'></span>
-			               
-			                    <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> 
-			                    |
-								<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>      
-			                </div>
-			            </form>
-
-						<br>
-
-						<div align="center">
-							<h4>របាយការណ៍ទទួលប្រាក់សង្ខេប</h4>
-							
-							<span data-bind="text: strDate"></span>														
-						</div>
-
-						<br>						
-
-						<table class="table table-bordered table-striped table-white">
-			        		<thead>
-			        			<tr>
-			        				<th width="45">No.</th>
-			        				<th>អាជ្ញាប័ណ្ណ</th>
-			        				<th>តំបន់</th>			        				
-			        				<th>ទឹកប្រាក់លក់</th>
-			        				<th>ទទួលប្រាក់</th>        				
-			        				<th>សមតុល្យ</th>	            					            				
-			        			</tr>
-			        		</thead>
-			        		<tbody data-role="listview"
-			        				data-auto-bind="false"	            					            			
-					                data-template="wPayment-summary-row-template"
-					                data-bind="source: dataSource"></tbody>
-			        	</table>						
-
-					</div><!-- //End div example-->
-				</div><!-- //End div span12-->
-			</div><!-- //End div row-fluid-->
-		</div>
-	</div>	
-</script>
-<script id="wPayment-summary-row-template" type="text/x-kendo-tmpl">		
-	<tr>		
-		<td>#=banhji.wPaymentSummary.dataSource.indexOf(data)+1#</td>
-		<td>#=branch_name#</td>
-		<td>#=location_name#</td>		
-		<td class="right">#=kendo.toString(sale, "c0", banhji.eDashBoard.locale)#</td>
-		<td class="right">#=kendo.toString(paid, "c0", banhji.eDashBoard.locale)#</td>
-		<td class="right">#=kendo.toString(paid, "c0", banhji.eDashBoard.locale)#</td>						
-    </tr>   
-</script>
-<script id="wPaymentDetail" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="example" class="k-content">
-
-						<form id="employeeForm" data-role="validator" novalidate="novalidate">
-			                <div id="fieldlist" class="hidden-print">
-			                	<span class="pull-right glyphicons no-js remove_2" 
-									onclick="javascript:window.history.back();"><i></i></span>
-
-			                	<input data-role="dropdownlist"                   
-				                   data-value-primitive="true"
-				                   data-text-field="text"
-				                   data-value-field="value"
-				                   data-bind="value: sorter,
-				                              source: sortList,                              
-				                              events: { change: sorterChanges }" />
-				                                           
-			                    <input type="text" data-role='datepicker' id="sdate" name="sdate" data-type="date" data-bind="value: sdate" />
-			                    <span data-for='sdate' class='k-invalid-msg'></span>
-
-			                    <input type="text" data-role='datepicker' id ="edate" data-type="date" name="edate" data-bind="value: edate" 
-			                    		data-greaterdate-field="sdate" data-greaterdate-msg='សូមពិនិត្យមើលកាលបរិច្ឆទឡើងវិញ' />
-			                    <span data-for='edate' class='k-invalid-msg'></span>
-			               
-			                    <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button> |
-								<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>      
-			                </div>
-			            </form>
-
-						<br>
-
-						<div align="center">
-							<h4>របាយការណ៍ទទួលប្រាក់លំអិត</h4>
-							
-							<span data-bind="text: strDate"></span>														
-						</div>
-
-						<br>            			
-
-						<table class="table table-bordered table-striped table-white">
-			        		<thead>
-			        			<tr>			        				
-			        				<th>Date</th>
-			        				<th>បេឡាករ</th>
-			        				<th>លេខកូដ</th>	
-			        				<th>ឈ្មោះ</th>			        					            				
-			        				<th>វិក្កយបត្រ</th>
-			        				<th>បង់ប្រាក់</th>			        							        					        				            					            				
-			        			</tr>
-			        		</thead>
-			        		<tbody data-role="listview"
-			        				data-auto-bind="false"	            					            			
-					                data-template="wPayment-detail-row-template"
-					                data-bind="source: dataSource"></tbody>
-			        	</table>
-
-			        	<div data-role="pager" 
-						    	data-auto-bind="false"
-					            data-bind="source: dataSource"></div>
-						
-					</div><!-- //End div example-->
-				</div><!-- //End div span12-->
-			</div><!-- //End div row-fluid-->
-		</div>
-	</div>	
-</script>
-<script id="wPayment-detail-row-template" type="text/x-kendo-tmpl">		
-	<tr>		
-		<td>#=kendo.toString(new Date(payment_date), "dd-MM-yyyy")#</td>
-		<td>#=employee#</td>
-		<td>#=contact[0].wnumber#</td>
-		<td>
-			#if(contact[0].contact_type_id==6 || contact[0].contact_type_id==7 || contact[0].contact_type_id==8){#
-				#=contact[0].company#
-			#}else{#
-				#=contact[0].surname# #=contact[0].name# 
-			#}#
-		</td>		
-		<td>#=invoice#</td>		
-		<td class="right">#=kendo.toString(amount, "c0", banhji.eDashBoard.locale)#</td>										
-    </tr>   
-</script>
-
-<script id="wPaymentBySourceSummary" type="text/x-kendo-template">
-	<div class="container-fluid">
-		<div class="row-fluid">    
-			<div class="span12">
-				<div id="example" class="k-content">
-					
-		            <div class="box-generic hidden-print">
-		            	<span class="pull-right glyphicons no-js remove_2" 
-							onclick="javascript:window.history.back()"><i></i></span>
-
-		            	<input data-role="dropdownlist"                   
-		                   data-value-primitive="true"
-		                   data-text-field="text"
-		                   data-value-field="value"
-		                   data-bind="value: sorter,
-		                              source: sortList,                              
-		                              events: { change: sorterChanges }" />
-		                                           
-	                    <input data-role="datepicker"	                       
-	                       data-format="dd-MM-yyyy"
-	                       data-parse-formats="yyyy-MM-dd"
-		                   data-bind="value: sdate"
-		                   placeholder="ចាប់ពីថ្ងៃទី" />
-	                    
-	                   	<input data-role="datepicker"
-	                       data-format="dd-MM-yyyy"
-	                       data-parse-formats="yyyy-MM-dd"
-		                   data-bind="value: edate"
-		                   placeholder="ដល់ថ្ងៃទី" />	                    	            	
-		          		
-		          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-		          		|
-						<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>						          		
-		            </div>
-
-		            <br><br>
-
-		            <div align="center">
-						<h3>របាយការណ៍ទទួលប្រាក់តាមប្រភពសង្ខេប</h3>
-						
-						<span data-bind="text: strDate"></span>														
-					</div>
-
-					<br>			        
-			        
-			        <div id="grid"></div>
-			        
-				</div> <!-- //End div example-->            
-			</div> <!-- //End div span12-->		
-		</div> <!-- //End div row-fluid-->
-	</div>
-</script>
-<script id="wPaymentBySourceDetail" type="text/x-kendo-template">
-	<div class="container-fluid">
-		<div class="row-fluid">    
-			<div class="span12">
-				<div id="example" class="k-content">
-					
-		            <div class="box-generic hidden-print">
-		            	<span class="pull-right glyphicons no-js remove_2" 
-							onclick="javascript:window.history.back()"><i></i></span>
-
-						<table>
-							<tr>
-								<td>
-					            	<input data-role="dropdownlist"                   
-					                   data-value-primitive="true"
-					                   data-text-field="text"
-					                   data-value-field="value"
-					                   data-bind="value: sorter,
-					                              source: sortList,                              
-					                              events: { change: sorterChanges }" />
-					                                           
-				                    <input data-role="datepicker"	                       
-				                       data-format="dd-MM-yyyy"
-				                       data-parse-formats="yyyy-MM-dd"
-					                   data-bind="value: sdate"
-					                   placeholder="ចាប់ពីថ្ងៃទី" />
-				                    
-				                   	<input data-role="datepicker"
-				                       data-format="dd-MM-yyyy"
-				                       data-parse-formats="yyyy-MM-dd"
-					                   data-bind="value: edate"
-					                   placeholder="ដល់ថ្ងៃទី" />
-
-					                <input data-role="dropdownlist"
-									   data-option-label="(--- រើស អាជ្ញាប័ណ្ណ ---)"
-					                   data-auto-bind="false"
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: branch_id,
-					                              source: branchDS,			                              
-					                              events: {
-					                                change: branchChanges
-					                              }"/>
-					            </td>
-					            <td>
-					            	<select data-role="multiselect"
-							           data-placeholder="តំបន់..."
-							           data-value-primitive="true"
-							           data-text-field="name"
-							           data-value-field="id"
-							           data-bind="value: selectedLocations,
-							                      source: locationDS,
-							                      enabled: isBranchSelected"
-							           style="width: 200px;" 
-							    	></select>
-					            </td>	                    	            	
-					          	<td>	
-					          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-					          		|
-									<button type="button" data-role="button" onclick="javascript:window.print()"><i class="icon-print"></i></button>
-								</td>
-							</tr>
-						</table>						          		
-		            </div>
-
-		            <br><br>
-
-		            <div align="center">
-						<h3>របាយការណ៍ទទួលប្រាក់តាមប្រភពលំអិត</h3>
-						
-						<span data-bind="text: strDate"></span>														
-					</div>
-
-					<br>			        
-			        
-			        <div id="grid"></div>
-
-			        <div data-role="pager" 
-					    	data-auto-bind="false"
-					    	data-page-sizes='[50, 100, 200, "All"]'					    	
-				            data-bind="source: dataSource"></div>
-			        
-				</div> <!-- //End div example-->            
-			</div> <!-- //End div span12-->		
-		</div> <!-- //End div row-fluid-->
-	</div>
-</script>
-<!-- ***************************
-*	End Water Section         *
-**************************** -->
-
-
 
 <!-- ***************************
 *	Menu Section         	  *
@@ -44498,47 +39175,6 @@
 	  	</li>	  	  	
 	  	<li><a href='#/cash_report_center'>REPORTS</a></li>	  	
 	  	<li><a href='#/cash_setting' class='glyphicons settings'><i></i></a></li>	  		  	
-	</ul>
-</script>
-<script id="waterMenu" type="text/x-kendo-template">
-	<ul class="topnav">
-	  	<li><a href='#/water' class='glyphicons home'><i></i></a></li>
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.customer"></span> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'>  				
-  				<li><a href='#/wCustomer_center'><span data-bind="text: lang.lang.customer_center"></span></a></li>
-  				<li><a href='#/wNew_customer'><span data-bind="text: lang.lang.new_customer"></span></a></li>
-  				<li><a href='#/wCustomer_order'><span data-bind="text: lang.lang.reorder_customer"></span></a></li>  				
-  			</ul>
-	  	</li>	  	
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.reading"></span> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'> 
-  				<li><a href='#/wReading'><span data-bind="text: lang.lang.take_reading"></span></a></li>
-  				<li><a href='#/wIR_reader'><span data-bind="text: lang.lang.ir_reader"></span></a></li>  				
-  				<li><a href='#/wReading_book'><span data-bind="text: lang.lang.reading_book"></span></a></li>
-  				<li><a href='#/wReading_center'><span data-bind="text: lang.lang.edit_reading"></span></a></li>  				 
-  			</ul>
-	  	</li>
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.invoice"></span> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'> 
-  				<li><a href='#/wInvoice'><span data-bind="text: lang.lang.invoice"></span></a></li>
-  				<li><a href='#/wPrint_center'><span data-bind="text: lang.lang.print"></span></a></li>  				  								 
-  			</ul>
-	  	</li>	  	
-	  	<li><a href='#/cashier'><span data-bind="text: lang.lang.cashier"></span></a></li>	  	
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.inventory"></span> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'>  				
-  				<li><a href='#/wInventory_item'><span data-bind="text: lang.lang.inventory_center"></span></a></li>
-  				<li><a href='#/item'><span data-bind="text: lang.lang.new_item"></span></a></li>
-  				<li><a href='#/item_catalog'><span data-bind="text: lang.lang.new_catalog"></span></a></li>
-  				<li><a href='#/item_assembly'><span data-bind="text: lang.lang.new_assembly"></span></a></li>  				 				 				
-  			</ul>
-	  	</li>
-	  	<li><a href='#/wReport_center'><span data-bind="text: lang.lang.report"></span></a></li>	  	
-	  	<li><a href='#/wSettings' class='glyphicons settings'><i></i></a></li>
 	</ul>
 </script>
 <script id="inventoryMenu" type="text/x-kendo-template">
@@ -70663,6 +65299,221 @@
 	/*************************
 	*	Cash Section   *
 	**************************/
+	banhji.cashDashboard = kendo.observable({
+		lang 				: langVM,
+		topCashDS 	: dataStore(apiUrl + 'dashboards/top_cash'),
+		topAdvaDS 	: dataStore(apiUrl + 'dashboards/top_advance'),
+		topExpsDS 	: dataStore(apiUrl + 'dashboards/top_expense'),
+		graphDS 	: banhji.index.graphDS,
+		balance 	: 0,
+		open 		: 0,
+		overDue 	: 0,
+		totalAdvance: 0,
+		cashACNumber: 0,
+		ar 			: 0,
+		ar_open 	: 0,
+		ar_customer : 0
+	});
+	banhji.cashCenter = kendo.observable({
+		lang 				: langVM,
+		dataStore 			: banhji.source.cashAccountDS,
+		summaryDS  			: dataStore(apiUrl + 'centers/accounting_summary'),
+		transactionDS  		: dataStore(apiUrl + 'centers/accounting_txn'),
+		accountTypeDS 		: banhji.source.accountTypeDS,
+		balance 			: 0,
+		sortList			: banhji.source.sortList,
+		sorter 				: "all",
+		sdate 				: "",
+		edate 				: "",
+		obj 				: null,
+		searchText 			: null,
+		totalTxn 			: 0,
+		sorterChanges: function(event){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	value = event.sender.selectedIndex;
+
+			switch(value){
+				case 1:								
+					banhji.cashCenter.set('sdate', today);
+					banhji.cashCenter.set('edate', today);
+													  					
+				  	break;
+				case 2:			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					banhji.cashCenter.set('sdate', new Date(today.setDate(first)));
+					banhji.cashCenter.set('edate', new Date(today.setDate(last)));						
+					
+				  	break;
+				case 3:							  	
+					banhji.cashCenter.set('sdate', new Date(today.getFullYear(), today.getMonth(), 1));
+					banhji.cashCenter.set('edate', new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case 4:				
+				  	banhji.cashCenter.set('edate', new Date(today.getFullYear(), 0, 1));
+				  	banhji.cashCenter.set('edate', new Date(today.getFullYear(), 11, 31));
+
+				  	break;									  
+			}
+		},
+		searchTransaction: function() {
+			var self = this, obj = this.get("obj");
+			var para = [],
+				obj = this.get("obj"),
+				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+			this.set('balance', 'Loading');
+			var para = [],
+				obj = this.get("obj"),
+				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+			this.set('balance', 'Loading');
+			this.summaryDS.query({
+			  	filter: [
+			  		{ field:"account_id", value: obj.id },
+			  		{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(this.get("sdate"), 'yyyy-MM-dd') },
+			  		{ field:"issued_date <=", operator:"where_related", model:"transaction", value: kendo.toString(this.get("edate"), 'yyyy-MM-dd') }
+			  	],
+			  	page: 1,
+			  	pageSize: 100
+			}).then(function(){
+				var view = self.summaryDS.view();				
+				
+				if(view.length>0){
+					banhji.cashCenter.set("balance", kendo.toString(view[0].balance, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
+				}else{
+					banhji.cashCenter.set("balance", 0);
+				}
+			});
+			this.transactionDS.query({
+			  	filter: [
+			  		{ field:"account_id", value: obj.id },
+			  		{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(this.get("sdate"), 'yyyy-MM-dd') },
+			  		{ field:"issued_date <=", operator:"where_related", model:"transaction", value: kendo.toString(this.get("edate"), 'yyyy-MM-dd') }
+			  	],
+			  	page: 1,
+			  	pageSize: 100
+			}).then(function(){
+				var view = self.summaryDS.view();				
+				
+				if(view.length>0){
+					banhji.cashCenter.set('totalTxn', banhji.cashCenter.transactionDS.data().length);
+				}else{
+					banhji.cashCenter.set('totalTxn', 0);
+				}
+			});
+		},
+		goCashTransaction: function() {
+			banhji.router.navigate('/cash_transaction');
+		},
+		goCashReceipt: function() {
+			banhji.router.navigate('/cash_receipt');
+		},
+		goCashPayment: function() {
+			banhji.router.navigate('/cash_payment');
+		},
+		goCashAdvance: function() {
+			banhji.router.navigate('/cash_advance');
+		},
+		goExpense: function() {
+			banhji.router.navigate('/expense');
+		},
+		goExchange: function() {
+			banhji.router.navigate('/currency_rate');
+		},
+		typeName: null,
+		nature: null,
+		goEdit 				: function(){
+			var obj = this.get("obj");
+			banhji.router.navigate('/account/'+obj.id);
+		},
+		selectedRow	: function(e) {
+			this.set('obj', e.data);
+			var data = e.data,
+
+			sub = this.dataStore.get(data.sub_of_id),
+			type = this.accountTypeDS.get(data.account_type_id);
+			
+			if(data.sub_of_id>0){
+				this.set("subName", sub.name);
+			}else{
+				this.set("subName", "");
+			}
+
+			// this.set("typeName", type.name);
+			this.set("nature", type.nature);
+
+			// this.set("obj", data);
+			// this.loadSummary();
+			// this.searchTransaction();
+			//
+			
+			var self = this, obj = this.get("obj");
+			var para = [],
+				obj = this.get("obj"),
+				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
+        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
+			this.set('balance', 'Loading');
+			this.summaryDS.query({
+			  	filter: [
+			  		{ field:"account_id", value: obj.id }
+			  	],
+			  	page: 1,
+			  	pageSize: 100
+			}).then(function(){
+				var view = self.summaryDS.view();				
+				
+				if(view.length>0){
+					self.set("balance", kendo.toString(view[0].balance, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
+				}else{
+					self.set("balance", 0);
+				}
+			});
+
+        	if(obj.id){
+        		para.push({ field:"account_id", value: obj.id });
+        	}
+
+        	//Dates
+        	if(start && end){
+            	para.push({ field:"issued_date >=", operator:"where_related", model:"transaction", value: start });
+            	para.push({ field:"issued_date <=", operator:"where_related", model:"transaction", value: end });            	            	
+            }else if(start){
+            	para.push({ field:"issued_date", operator:"where_related", model:"transaction", value: start });
+            }else if(end){
+            	para.push({ field:"issued_date <=", operator:"where_related", model:"transaction", value: end });
+            }else{
+            	
+            }                        
+
+            this.transactionDS.query({
+            	filter: para,            	
+            	page: 1,
+            	pageSize: 100
+            }).then(function(){
+            	banhji.cashCenter.set('totalTxn', banhji.cashCenter.transactionDS.data().length);
+            });
+		},
+		search 		: function() {
+			var isNumber =  /^\d+$/.test(this.get('searchText'));
+
+			if(isNumber) {
+				this.dataStore.filter([
+					{field: "number", value: this.get('searchText')},
+					{field: "account_type_id", value: 10}
+				]);
+			} else {
+				this.dataStore.filter([
+					{field: "name", operator: "like", value: this.get('searchText')},
+					{field: "account_type_id", value: 10}
+				]);
+			}
+		}
+	});
 	banhji.cashier = kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
@@ -73101,224 +67952,245 @@
 			self.journalLineDS.sync();	
 		}
 	});
-
-	banhji.cashCenter = kendo.observable({
+	banhji.cashFlowForecast = kendo.observable({
 		lang 				: langVM,
-		dataStore 			: banhji.source.cashAccountDS,
-		summaryDS  			: dataStore(apiUrl + 'centers/accounting_summary'),
-		transactionDS  		: dataStore(apiUrl + 'centers/accounting_txn'),
-		accountTypeDS 		: banhji.source.accountTypeDS,
-		balance 			: 0,
-		sortList			: banhji.source.sortList,
-		sorter 				: "all",
-		sdate 				: "",
-		edate 				: "",
-		obj 				: null,
-		searchText 			: null,
-		totalTxn 			: 0,
-		sorterChanges: function(event){
-	        var today = new Date(),
-        	sdate = "",
-        	edate = "",
-        	value = event.sender.selectedIndex;
+		dataSource 			: dataStore(apiUrl + "budge_lines"),
+		nameList 			: [
+			"Cash Receipts",
+			"Cash Sale",
+			"Receivables Collection",
+			"Other receipts",
+			"Cash Disbursement",
+			"A. Operating",
+			"B. Capital Expense",
+			"C. Tax",
+			"D. Drawing/Dividends",
+			"E. Financing",
+			"Liquidlity Position",
+			"Net Cash Position"
+		],
+        obj 				: null,
+        cellIndex 			: 0,
+        month_option 		: "only",
+        amount 				: 0,
+        showEdit 			: false,
+		pageLoad 			: function(){
+			this.addEmpty();
+		},
+		addEmpty 			: function(){
+			this.dataSource.data([]);
 
-			switch(value){
-				case 1:								
-					banhji.cashCenter.set('sdate', today);
-					banhji.cashCenter.set('edate', today);
-													  					
-				  	break;
-				case 2:			  	
-					var first = today.getDate() - today.getDay(),
-					last = first + 6;
-
-					banhji.cashCenter.set('sdate', new Date(today.setDate(first)));
-					banhji.cashCenter.set('edate', new Date(today.setDate(last)));						
-					
-				  	break;
-				case 3:							  	
-					banhji.cashCenter.set('sdate', new Date(today.getFullYear(), today.getMonth(), 1));
-					banhji.cashCenter.set('edate', new Date(today.getFullYear(), today.getMonth() + 1, 0));
-
-				  	break;
-				case 4:				
-				  	banhji.cashCenter.set('edate', new Date(today.getFullYear(), 0, 1));
-				  	banhji.cashCenter.set('edate', new Date(today.getFullYear(), 11, 31));
-
-				  	break;									  
+			for (var i = 0; i <= 11; i++) {
+				this.dataSource.add({
+					name 	: this.nameList[i],
+					m0		: 0,
+					m1 		: 0,
+					m2 		: 0,
+					m3 		: 0,
+					m4 		: 0,
+					m5 		: 0,
+					m6 		: 0,
+					m7 		: 0,
+					m8 		: 0
+				});
 			}
 		},
-		searchTransaction: function() {
-			var self = this, obj = this.get("obj");
-			var para = [],
-				obj = this.get("obj"),
-				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
-			this.set('balance', 'Loading');
-			var para = [],
-				obj = this.get("obj"),
-				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
-			this.set('balance', 'Loading');
-			this.summaryDS.query({
-			  	filter: [
-			  		{ field:"account_id", value: obj.id },
-			  		{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(this.get("sdate"), 'yyyy-MM-dd') },
-			  		{ field:"issued_date <=", operator:"where_related", model:"transaction", value: kendo.toString(this.get("edate"), 'yyyy-MM-dd') }
-			  	],
-			  	page: 1,
-			  	pageSize: 100
-			}).then(function(){
-				var view = self.summaryDS.view();				
-				
-				if(view.length>0){
-					banhji.cashCenter.set("balance", kendo.toString(view[0].balance, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
-				}else{
-					banhji.cashCenter.set("balance", 0);
-				}
-			});
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"account_id", value: obj.id },
-			  		{ field:"issued_date >=", operator:"where_related", model:"transaction", value: kendo.toString(this.get("sdate"), 'yyyy-MM-dd') },
-			  		{ field:"issued_date <=", operator:"where_related", model:"transaction", value: kendo.toString(this.get("edate"), 'yyyy-MM-dd') }
-			  	],
-			  	page: 1,
-			  	pageSize: 100
-			}).then(function(){
-				var view = self.summaryDS.view();				
-				
-				if(view.length>0){
-					banhji.cashCenter.set('totalTxn', banhji.cashCenter.transactionDS.data().length);
-				}else{
-					banhji.cashCenter.set('totalTxn', 0);
-				}
-			});
-		},
-		goCashTransaction: function() {
-			banhji.router.navigate('/cash_transaction');
-		},
-		goCashReceipt: function() {
-			banhji.router.navigate('/cash_receipt');
-		},
-		goCashPayment: function() {
-			banhji.router.navigate('/cash_payment');
-		},
-		goCashAdvance: function() {
-			banhji.router.navigate('/cash_advance');
-		},
-		goExpense: function() {
-			banhji.router.navigate('/expense');
-		},
-		goExchange: function() {
-			banhji.router.navigate('/currency_rate');
-		},
-		typeName: null,
-		nature: null,
-		goEdit 				: function(){
-			var obj = this.get("obj");
-			banhji.router.navigate('/account/'+obj.id);
-		},
-		selectedRow	: function(e) {
-			this.set('obj', e.data);
-			var data = e.data,
+		changes 			: function(){
+			var a0 = 0, a1 = 0, a2 = 0, a3 = 0, a4 = 0, a5 = 0, a6 = 0, a7 = 0, a8 = 0,
+			b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0, b7 = 0, b8 = 0,
+			c0 = 0, c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0, c6 = 0, c7 = 0, c8 = 0;
 
-			sub = this.dataStore.get(data.sub_of_id),
-			type = this.accountTypeDS.get(data.account_type_id);
-			
-			if(data.sub_of_id>0){
-				this.set("subName", sub.name);
+			$.each(this.dataSource.data(), function(index, value){
+				if(index>0 && index <=3){
+					a0 += value.m0; a1 += value.m1; a2 += value.m2; a3 += value.m3; a4 += value.m4; a5 += value.m5; a6 += value.m6; a7 += value.m7; a8 += value.m8;				
+				}else if(index>4 && index <=9){
+					b0 += value.m0; b1 += value.m1; b2 += value.m2; b3 += value.m3; b4 += value.m4; b5 += value.m5; b6 += value.m6; b7 += value.m7; b8 += value.m8;
+				}else if(index>10){
+					c0 += value.m0; c1 += value.m1; c2 += value.m2; c3 += value.m3; c4 += value.m4; c5 += value.m5; c6 += value.m6; c7 += value.m7; c8 += value.m8;
+				}
+			});
+
+			var a = this.dataSource.at(0);
+			a.set("m0", a0);
+			a.set("m1", a1);
+			a.set("m2", a2);
+			a.set("m3", a3);
+			a.set("m4", a4);
+			a.set("m5", a5);
+			a.set("m6", a6);
+			a.set("m7", a7);
+			a.set("m8", a8);
+
+			var b = this.dataSource.at(4);
+			b.set("m0", b0);
+			b.set("m1", b1);
+			b.set("m2", b2);
+			b.set("m3", b3);
+			b.set("m4", b4);
+			b.set("m5", b5);
+			b.set("m6", b6);
+			b.set("m7", b7);
+			b.set("m8", b8);
+
+			var c = this.dataSource.at(10);
+			c.set("m0", c0);
+			c.set("m1", c1);
+			c.set("m2", c2);
+			c.set("m3", c3);
+			c.set("m4", c4);
+			c.set("m5", c5);
+			c.set("m6", c6);
+			c.set("m7", c7);
+			c.set("m8", c8);
+		},
+		selectedRow0 		: function(e){
+			var data = e.data;			
+			this.set("obj", data);
+			this.set("amount", data.m0);
+			this.set("cellIndex", 0);
+
+			this.set("showEdit", true);
+		},
+		selectedRow1 		: function(e){
+			var data = e.data;			
+			this.set("obj", data);
+			this.set("amount", data.m1);
+			this.set("cellIndex", 1);
+
+			this.set("showEdit", true);
+		},
+		selectedRow2 		: function(e){
+			var data = e.data;			
+			this.set("obj", data);
+			this.set("amount", data.m2);
+			this.set("cellIndex", 2);
+
+			this.set("showEdit", true);
+		},
+		selectedRow3 		: function(e){
+			var data = e.data;			
+			this.set("obj", data);
+			this.set("amount", data.m3);
+			this.set("cellIndex", 3);
+
+			this.set("showEdit", true);
+		},
+		selectedRow4 		: function(e){
+			var data = e.data;			
+			this.set("obj", data);
+			this.set("amount", data.m4);
+			this.set("cellIndex", 4);
+
+			this.set("showEdit", true);
+		},
+		selectedRow5 		: function(e){
+			var data = e.data;			
+			this.set("obj", data);
+			this.set("amount", data.m5);
+			this.set("cellIndex", 5);
+
+			this.set("showEdit", true);
+		},
+		selectedRow6 		: function(e){
+			var data = e.data;			
+			this.set("obj", data);
+			this.set("amount", data.m6);
+			this.set("cellIndex", 6);
+
+			this.set("showEdit", true);
+		},
+		selectedRow7 		: function(e){
+			var data = e.data;			
+			this.set("obj", data);
+			this.set("amount", data.m7);
+			this.set("cellIndex", 7);
+
+			this.set("showEdit", true);
+		},
+		selectedRow8 		: function(e){
+			var data = e.data;			
+			this.set("obj", data);
+			this.set("amount", data.m8);
+			this.set("cellIndex", 8);
+
+			this.set("showEdit", true);
+		},
+		save 				: function(){
+			var obj = this.get("obj"), 
+			amount = this.get("amount"), 
+			cellIndex = this.get("cellIndex"), 
+			month_option = this.get("month_option");			
+
+			if(month_option=="only"){
+				switch(cellIndex) {
+				    case 0:
+				        obj.set("m0", amount);
+				        break;
+				    case 1:
+				        obj.set("m1", amount);
+				        break;
+				    case 2:
+				        obj.set("m2", amount);
+				        break;
+				    case 3:
+				        obj.set("m3", amount);
+				        break;
+				    case 4:
+				        obj.set("m4", amount);
+				        break;
+				    case 5:
+				        obj.set("m5", amount);
+				        break;
+				    case 6:
+				        obj.set("m6", amount);
+				        break;
+				    case 7:
+				        obj.set("m7", amount);
+				        break;
+				    default:
+				        obj.set("m8", amount);
+				}
 			}else{
-				this.set("subName", "");
-			}
-
-			// this.set("typeName", type.name);
-			this.set("nature", type.nature);
-
-			// this.set("obj", data);
-			// this.loadSummary();
-			// this.searchTransaction();
-			//
-			
-			var self = this, obj = this.get("obj");
-			var para = [],
-				obj = this.get("obj"),
-				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd");
-			this.set('balance', 'Loading');
-			this.summaryDS.query({
-			  	filter: [
-			  		{ field:"account_id", value: obj.id }
-			  	],
-			  	page: 1,
-			  	pageSize: 100
-			}).then(function(){
-				var view = self.summaryDS.view();				
-				
-				if(view.length>0){
-					self.set("balance", kendo.toString(view[0].balance, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
-				}else{
-					self.set("balance", 0);
+				for (var i = cellIndex; i <= 11; i++) {
+					switch(i) {
+					    case 0:
+					        obj.set("m0", amount);
+					        break;
+					    case 1:
+					        obj.set("m1", amount);
+					        break;
+					    case 2:
+					        obj.set("m2", amount);
+					        break;
+					    case 3:
+					        obj.set("m3", amount);
+					        break;
+					    case 4:
+					        obj.set("m4", amount);
+					        break;
+					    case 5:
+					        obj.set("m5", amount);
+					        break;
+					    case 6:
+					        obj.set("m6", amount);
+					        break;
+					    case 7:
+					        obj.set("m7", amount);
+					        break;
+					    default:
+					        obj.set("m8", amount);
+					}
 				}
-			});
-
-        	if(obj.id){
-        		para.push({ field:"account_id", value: obj.id });
-        	}
-
-        	//Dates
-        	if(start && end){
-            	para.push({ field:"issued_date >=", operator:"where_related", model:"transaction", value: start });
-            	para.push({ field:"issued_date <=", operator:"where_related", model:"transaction", value: end });            	            	
-            }else if(start){
-            	para.push({ field:"issued_date", operator:"where_related", model:"transaction", value: start });
-            }else if(end){
-            	para.push({ field:"issued_date <=", operator:"where_related", model:"transaction", value: end });
-            }else{
-            	
-            }                        
-
-            this.transactionDS.query({
-            	filter: para,            	
-            	page: 1,
-            	pageSize: 100
-            }).then(function(){
-            	banhji.cashCenter.set('totalTxn', banhji.cashCenter.transactionDS.data().length);
-            });
-		},
-		search 		: function() {
-			var isNumber =  /^\d+$/.test(this.get('searchText'));
-
-			if(isNumber) {
-				this.dataStore.filter([
-					{field: "number", value: this.get('searchText')},
-					{field: "account_type_id", value: 10}
-				]);
-			} else {
-				this.dataStore.filter([
-					{field: "name", operator: "like", value: this.get('searchText')},
-					{field: "account_type_id", value: 10}
-				]);
 			}
+
+			this.changes();
+
+			this.set("showEdit", false);
+		},
+		cancel 				: function(){
+			this.set("showEdit", false);
 		}
 	});
-
-	banhji.cashDashboard = kendo.observable({
-		lang 				: langVM,
-		topCashDS 	: dataStore(apiUrl + 'dashboards/top_cash'),
-		topAdvaDS 	: dataStore(apiUrl + 'dashboards/top_advance'),
-		topExpsDS 	: dataStore(apiUrl + 'dashboards/top_expense'),
-		graphDS 	: banhji.index.graphDS,
-		balance 	: 0,
-		open 		: 0,
-		overDue 	: 0,
-		totalAdvance: 0,
-		cashACNumber: 0,
-		ar 			: 0,
-		ar_open 	: 0,
-		ar_customer : 0
-	});
-
 	banhji.cashSetting =  kendo.observable({
 		lang 				: langVM,		
         contactTypeDS 		: banhji.source.customerTypeDS,
@@ -78194,681 +73066,7 @@
             }
             this.dataSource.filter(para);
 		}
-    });
-	
-
-
-    /*************************
-	*	Water Section   	* 
-	**************************/
-    banhji.waterCenter = kendo.observable({
-		lang 				: langVM,
-		transactionDS  		: dataStore(apiUrl + 'transactions'),
-		contactDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "contacts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter:{ field:"parent_id", operator:"where_related", model:"contact_type", value:1 },
-			sort:{ field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
-		contactTypeDS  		: banhji.source.customerTypeDS,
-		noteDS 				: dataStore(apiUrl + 'notes'),
-		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		currencyDS  		: banhji.source.currencyDS,
-		summaryDS 			: dataStore(apiUrl + "transactions"),
-		sortList			: banhji.source.sortList,
-		sorter 				: "all",
-		sdate 				: "",
-		edate 				: "",
-		obj 				: {id:0},
-		note 				: "",
-		searchText 			: "",
-		contact_type_id 	: null,
-		currency_id 		: 0,
-		balance 			: 0,
-		deposit 			: 0,
-		outInvoice 			: 0,
-		overInvoice 		: 0,
-		currencyCode 		: "",
-		user_id 			: banhji.source.user_id,
-		pageLoad 			: function(id){
-			if(id){
-				this.loadObj(id);
-			}
-
-			//Refresh
-			if(this.contactDS.total()>0){
-				this.contactDS.fetch();
-				this.searchTransaction();
-				this.loadSummary();
-			}
-		},
-		sorterChanges 		: function(){
-	        var today = new Date(),
-        	sdate = "",
-        	edate = "",
-        	sorter = this.get("sorter");
-        	
-			switch(sorter){
-				case "today":								
-					this.set("sdate", today);
-					this.set("edate", "");
-													  					
-				  	break;
-				case "week":			  	
-					var first = today.getDate() - today.getDay(),
-					last = first + 6;
-
-					this.set("sdate", new Date(today.setDate(first)));
-					this.set("edate", new Date(today.setDate(last)));						
-					
-				  	break;
-				case "month":							  	
-					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
-					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
-
-				  	break;
-				case "year":				
-				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
-				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
-
-				  	break;
-				default:
-					this.set("sdate", "");
-				  	this.set("edate", "");									  
-			}
-		},
-		setCurrencyCode 	: function(){
-			var code = "", obj = this.get("obj");
-
-			$.each(banhji.source.currencyRateDS.data(), function(index, value){				
-				if(value.locale == obj.locale){
-					code = value.currency[0].code;					
-
-					return false;					
-				}
-			});
-
-			this.set("currencyCode", code);
-		},
-		loadObj 			: function(id){
-			var self = this;
-
-			this.contactDS.query({
-				filter: { field:"id", value:id},
-				page:1,
-				pageSize:100
-			}).then(function(){
-				var view = self.contactDS.view();
-
-				if(view.length>0){
-					self.set("obj", view[0]);
-					self.loadData();
-				}
-			});
-		},
-		loadData 			: function(){
-			var obj = this.get("obj");
-
-			this.searchTransaction();
-			this.loadSummary(obj.id);
-			this.setCurrencyCode();
-
-			this.attachmentDS.filter({ field:"contact_id", value: obj.id });
-			this.noteDS.query({
-				filter: { field:"contact_id", value: obj.id },
-				sort: { field:"noted_date", dir:"desc" },
-				page: 1,
-				pageSize: 10
-			});
-		},
-		//Upload
-		onSelect 			: function(e){			
-	        // Array with information about the uploaded files
-	        var self = this, 
-	        files = e.files,
-	        obj = this.get("obj");			
-			
-			if(obj.id>0){
-		        // Check the extension of each file and abort the upload if it is not .jpg
-		        $.each(files, function(index, value){
-		            if (value.extension.toLowerCase() === ".jpg"
-		            	|| value.extension.toLowerCase() === ".jpeg"
-		            	|| value.extension.toLowerCase() === ".tiff"
-		            	|| value.extension.toLowerCase() === ".png" 
-		            	|| value.extension.toLowerCase() === ".gif"
-		            	|| value.extension.toLowerCase() === ".pdf"){
-
-		            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
-
-		            	self.attachmentDS.add({
-		            		user_id 		: self.get("user_id"),
-		            		contact_id 		: obj.id,
-		            		type 			: "Contact",
-		            		name 			: value.name,
-		            		description 	: "",
-		            		key 			: key,
-		            		url 			: banhji.s3 + key,
-		            		size 			: value.size,
-		            		created_at 		: new Date(),
-
-		            		file 			: value.rawFile
-		            	});	            			            		            
-		            }else{
-		            	alert("This type of file is not allowed to attach.");
-		            }
-		        });
-	    	}else{
-	    		alert("Please select a customer!");
-	    	}
-	    },
-	    removeFile 			: function(e){
-	    	var data = e.data;
-
-	    	if (confirm(banhji.source.confirmMessage)) {
-	    		this.attachmentDS.remove(data);
-	    		this.attachmentDS.sync();
-	    	}	    	
-	    },
-	    uploadFile 			: function(){
-	    	$.each(this.attachmentDS.data(), function(index, value){	    		
-		    	if(!value.id){
-			    	var params = { 
-		            	Body: value.file, 
-		            	Key: value.key 
-		            };
-		            bucket.upload(params, function (err, data) {		                
-	                	// console.log(err, data);
-	                	// var url = data.Location;                
-	            	});
-            	}	            
-            });
-
-            this.attachmentDS.sync();
-            var saved = false;
-            this.attachmentDS.bind("requestEnd", function(e){
-            	//Delete File
-            	if(e.type=="destroy"){
-	            	if(saved==false && e.response){
-	            		saved = true;
-	            	
-	            		var response = e.response.results;
-	            		$.each(response, function(index, value){            			
-		            		var params = {
-							  	//Bucket: 'STRING_VALUE', /* required */
-							 	Delete: { /* required */
-								    Objects: [ /* required */
-								      	{
-									        Key: value.data.key /* required */
-								      	}
-								      /* more items */
-								    ]
-							  	}
-							};
-							bucket.deleteObjects(params, function(err, data) {
-							  	//console.log(err, data);
-							});
-						});
-	            	}
-            	}
-            });
-	    },
-	    //Summary
-		loadContact 		: function(id){
-			var self = this;
-			
-			this.contactDS.query({
-			  	filter:[
-			  		{ field:"id", value:id }
-			  	],
-			  	page: 1,
-			  	pageSize: 50
-			}).then(function(e) {
-			    var view = self.contactDS.data();
-			    
-			    if(view.length>0){
-			    	self.set("obj", view[0]);
-			    	self.loadData();
-			    }
-			});
-		},
-		loadSummary 		: function(id){
-			var self = this, obj = this.get("obj");
-
-			this.summaryDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", operator:"where_in", value: ["Water_Deposit", "Water_Invoice"] },
-			  		{ field:"status", operator:"where_in", value: [0,2] }
-			  	],
-			  	sort: { field: "issued_date", dir: "desc" },
-			  	page: 1,
-			  	pageSize: 1000
-			}).then(function(){
-				var view = self.summaryDS.view(),
-				deposit = 0, open = 0, over = 0, balance = 0, today = new Date();
-
-				$.each(view, function(index, value){
-					if(value.type=="Water_Deposit"){
-						deposit += kendo.parseFloat(value.amount);
-					}else{
-						balance += kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit);
-						open++;
-
-						if(new Date(value.due_date)<today){						
-							over++;
-						}
-					}									
-				});
-				
-				self.set("deposit", kendo.toString(deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
-				self.set("outInvoice", kendo.toString(open, "n0"));
-				self.set("overInvoice", kendo.toString(over, "n0"));
-				self.set("balance", kendo.toString(balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
-			});
-		},
-		loadBalance 		: function(){
-			var obj = this.get("obj");
-
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value:"Water_Invoice" },
-			  		{ field:"status", operator:"where_in", value: [0,2] }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
-		},
-		loadDeposit 		: function(){
-			var obj = this.get("obj");
-
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value:"Water_Deposit" }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
-		},
-		loadOverInvoice 	: function(){
-			var obj = this.get("obj");
-
-			this.transactionDS.query({
-			  	filter: [
-			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", value: "Water_Invoice" },
-			  		{ field:"status", operator:"where_in", value: [0,2] },
-			  		{ field:"due_date <", value: kendo.toString(new Date(), "yyyy-MM-dd") }
-			  	],
-			  	sort: [
-			  		{ field: "issued_date", dir: "desc" },
-			  		{ field: "id", dir: "desc" }
-			  	],
-			  	page: 1,
-			  	pageSize: 10
-			});
-		},	
-		selectedRow			: function(e){
-			var data = e.data;
-			
-			this.set("obj", data);
-			this.loadData();
-		},
-		//Search
-		enterSearch 		: function(e){
-			e.preventDefault();
-
-			this.search();
-		},
-		search 				: function(){
-			var self = this, 
-			para = [],
-      		searchText = this.get("searchText"),
-      		contact_type_id = this.get("contact_type_id");
-      		
-      		if(searchText){
-      			var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
-
-      			para.push(
-      				{ field: "abbr", value: textParts[0] },
-      				{ field: "number", value: textParts[1] },
-					{ field: "name", operator: "or_like", value: searchText }
-      			);
-      		}
-
-      		if(contact_type_id){
-      			para.push({ field: "contact_type_id", value: contact_type_id });
-      		}else{
-      			para.push({ field: "parent_id", model:"contact_type", operator:"where_related", value: 1 });
-      		}
-
-      		this.contactDS.filter(para);
-			
-			//Clear search filters
-      		self.set("searchText", "");
-      		self.set("contact_type_id", 0);
-		},
-		searchTransaction	: function(){
-			var self = this,
-				start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
-        		end = kendo.toString(this.get("edate"), "yyyy-MM-dd"),
-        		para = [], obj = this.get("obj");
-
-        	if(obj.id>0){
-        		para.push({ field:"contact_id", value: obj.id });
-        	
-	        	//Dates
-	        	if(start && end){
-	            	para.push({ field:"issued_date >=", value: start });
-	            	para.push({ field:"issued_date <=", value: end });
-	            }else if(start){
-	            	para.push({ field:"issued_date", value: start });
-	            }else if(end){
-	            	para.push({ field:"issued_date <=", value: end });
-	            }else{
-	            	
-	            }
-
-	            this.transactionDS.query({
-	            	filter: para,
-	            	sort: [
-				  		{ field: "issued_date", dir: "desc" },
-				  		{ field: "id", dir: "desc" }
-				  	],
-	            	page: 1,
-	            	pageSize: 10
-	            });
-	        }            
-		},
-		//Note
-		saveNoteEnter 		: function(e){
-			e.preventDefault();
-			this.saveNote();
-		},		
-		saveNote 			: function(){
-			var obj = this.get("obj");
-
-			if(obj.id>0 && this.get("note")!==""){
-				this.noteDS.insert(0, {
-					contact_id 	: obj.id,
-					note 		: this.get("note"),
-					noted_date	: new Date(),
-					created_by 	: this.get("user_id"),
-
-					creator 	: ""
-				});
-
-				this.noteDS.sync();
-				this.set("note", "");					
-			}else{
-				alert("Please select a customer and Memo is required");
-			}
-		}
-	});
-	banhji.wMeter = kendo.observable({
-		lang 				: langVM,
-		dataSource 			: dataStore(baseUrl + "meters"),
-		existingDS 			: dataStore(baseUrl + "meters"),
-		deleteDS 			: dataStore(baseUrl + "meters/record"),		
-		contactDS 			: dataStore(baseUrl + "contacts"),					
-		locationDS 			: dataStore(baseUrl + "locations"),
-		itemDS 				: dataStore(baseUrl + "items"),
-		feeDS 				: dataStore(baseUrl + "fees"),
-		statusList 			: [            
-			{ "id": 1, "name": "Active" },
-			{ "id": 0, "name": "Inactive" },
-			{ "id": 2, "name": "Void" }
-        ],
-        tariffList 			: [],
-        exemptionList 		: [],
-        maintenanceList 	: [],
-        deposit_link 		: null,
-        invoice_link 		: null,
-        deposit_amount 		: 0,
-        invoice_amount 		: 0,
-        obj 				: null,             
-        current_company_id 	: 0,
-        current_meter_id 	: 0,
-        isDuplicateNumber 	: false,
-        originalNo 			: null,
-		pageLoad 			: function(id){
-			this.loadMeter(id);									
-		},		
-		loadMeter 			: function(id){
-			var self = this;
-
-			if(this.get("current_meter_id")!=id){
-			 	this.set("current_meter_id", id);				
-
-				this.dataSource.query({
-					filter: { field:"id", value: id },
-					page: 1,
-	  				take: 50
-				}).then(function(e) {
-				    var view = self.dataSource.view();
-
-				    self.set("originalNo", view[0].number);				    
-				    self.contactDS.filter({ field:"id", value:view[0].contact_id });		    			    	
-			    	self.contactDS.filter([]);
-
-			    	return self.feeQuery(view[0].company_id);	    		   	    			    			    				    
-				}).then(function(fee){
-					var view = self.dataSource.view();					
-					
-					self.set("obj", view[0]);
-					self.set("deposit_link", "#/wDeposit/"+view[0].deposit_id);
-					self.set("invoice_link", "#/wMeterInvoice/"+view[0].invoice_id);
-
-					if(view[0].deposit[0]){
-						self.set("deposit_amount", kendo.toString(kendo.parseFloat(view[0].deposit[0].amount), "c", view[0].deposit[0].locale));
-					}else{
-						self.set("deposit_amount", 0);
-					}
-
-					if(view[0].invoice[0]){
-						self.set("invoice_amount", kendo.toString(kendo.parseFloat(view[0].invoice[0].amount), "c", view[0].invoice[0].locale));
-					}else{
-						self.set("invoice_amount", 0);
-					}					
-										
-					self.loadMap();
-				});
-			}
-		},		
-		loadMap 			: function(){
-			var obj = this.get("obj"), lat = kendo.parseFloat(obj.latitute),
-			lng = kendo.parseFloat(obj.longtitute);
-
-			if(lat && lng){
-				var myLatLng = {lat:lat, lng:lng};
-				var mapOptions = {
-					zoom: 17,					
-					center: myLatLng,
-					mapTypeControl: false,
-					zoomControl: false,
-					scaleControl: false,
-					streetViewControl: false
-				};
-				var map = new google.maps.Map(document.getElementById('map'),mapOptions);
-				var marker = new google.maps.Marker({
-					position: myLatLng,
-					map: map,
-					title: obj.number
-				});
-			} 
-		},
-		feeQuery 			: function(company_id){
-			var self = this, dfd = $.Deferred();
-
-			if(this.get("current_company_id")!=company_id){
-			 	this.set("current_company_id", company_id);
-				
-		    	this.feeDS.query({
-					filter: [
-						{ field:"company_id", value: company_id },
-						{ field:"utility_id", value: 2 }
-					]
-				}).then(function(e) {
-					var view = self.feeDS.view();
-
-					self.set("tariffList", []);
-					self.set("exemptionList", []);
-					self.set("maintenanceList", []);
-
-					$.each(view, function(index, value){																						
-						if(value.type=="tariff"){							
-							self.tariffList.push({
-								id 	: value.id,
-								name: value.name 
-							});
-						}
-						if(value.type=="exemption"){							
-							self.exemptionList.push({
-								id 	: value.id,
-								name: value.name 
-							});
-						}
-						if(value.type=="maintenance"){
-							self.maintenanceList.push({
-								id 	: value.id,
-								name: value.name 
-							});
-						}								
-					});
-
-					dfd.resolve(view);				    			   		    			
-				});
-			}			
-
-		    return dfd;	    		    	
-	    },	    	
-		contactChanges 		: function(e){
-			if(e.sender.selectedIndex>0){
-				var obj = this.get("obj"),
-				contact = this.contactDS.get(obj.contact_id);
-
-				obj.set("company_id", contact.wbranch_id);
-				obj.set("location_id", contact.wlocation_id);
-				
-				this.feeQuery(contact.wbranch_id);
-			}
-		},
-		checkExistingNumber : function(){
-			var self = this;	
-			
-			var number = this.get("obj").number;
-			var originalNo = this.get("originalNo");
-			
-			if(number.length>0 && number!==originalNo){
-				this.existingDS.query({
-					filter: { field:"number", value: number },
-					page: 1,
-					pageSize: 100
-				}).then(function(e){
-					var view = self.existingDS.view();
-					
-					if(view.length>0){
-				 		self.set("isDuplicateNumber", true);						
-					}else{
-						self.set("isDuplicateNumber", false);
-					}
-				});							
-			}else{
-				this.set("isDuplicateNumber", false);
-			}			
-		},				
-		save 				: function(){			
-			var self = this, saved = false;
-
-			this.dataSource.sync();			
-			this.dataSource.bind("requestEnd", function(e){				
-				if(e.type=="create" && saved==false){					
-					saved = true;
-					banhji.wCustomerCenter.meterDS.fetch();
-					self.addEmpty();										
-				}
-
-				if(e.type=="update" && saved==false){
-					saved = true;
-					banhji.wCustomerCenter.meterDS.fetch();
-					window.history.back();
-				}
-
-				if(e.type=="destroy" && saved==false){
-					saved = true;
-					banhji.wCustomerCenter.meterDS.fetch();					
-					window.history.back();
-				}
-			});
-		},
-		delete 				: function(){
-			var self = this,
-			obj = this.get("obj");
-
-			if (confirm("Are you sure, you want to delete it?")) {
-				this.deleteDS.query({
-				  	filter: { field: "meter_id", value: obj.id },
-				  	page: 1,
-				  	take: 1
-				}).then(function() {
-					var view = self.deleteDS.view();
-
-					if(view.length>0){
-						alert("Sorry, you can not delete it because it is using now.");
-					}else{
-						var data = self.dataSource.get(obj.id);
-				        self.dataSource.remove(data);
-				        self.save();
-					}
-				});				
-	    	}
-		},
-		cancel 				: function(){
-			this.dataSource.cancelChanges();
-			window.history.back();
-		}		
-	});
-
+    });    
 
 
     /*************************
@@ -79311,13 +73509,6 @@
 		fixedAssets: new kendo.Layout("#fixedAssets", {model: banhji.fixedAssets}),
 		itemRecurring: new kendo.Layout("#itemRecurring", {model: banhji.itemRecurring}),
 
-		//Cashier
-		cashier: new kendo.Layout("#cashier", {model: banhji.cashier}),
-		reconcile: new kendo.Layout("#reconcile", {model: banhji.reconcile}),
-		cashTransaction: new kendo.Layout("#cashTransaction", {model: banhji.cashTransaction}),
-		cashReceipt: new kendo.Layout("#cashReceipt", {model: banhji.cashReceipt}),
-		cashPayment: new kendo.Layout("#cashPayment", {model: banhji.cashPayment}),
-
 		//Cash Managment
 		cashDashboard: new kendo.Layout("#cashDashboard", {model: banhji.cashDashboard}),
 		cashCenter: new kendo.Layout("#cashCenter", {model: banhji.cashCenter}),		
@@ -79325,6 +73516,12 @@
 		cashList : new kendo.Layout("#cashList", {model: banhji.cashList}),		
 		cashDeposit: new kendo.Layout("#cashDeposit", {model: banhji.cashDeposit}),
 		cashReportCenter: new kendo.Layout("#cashReportCenter"),
+		cashier: new kendo.Layout("#cashier", {model: banhji.cashier}),
+		reconcile: new kendo.Layout("#reconcile", {model: banhji.reconcile}),
+		cashTransaction: new kendo.Layout("#cashTransaction", {model: banhji.cashTransaction}),
+		cashReceipt: new kendo.Layout("#cashReceipt", {model: banhji.cashReceipt}),
+		cashPayment: new kendo.Layout("#cashPayment", {model: banhji.cashPayment}),
+		cashFlowForecast: new kendo.Layout("#cashFlowForecast", {model: banhji.cashFlowForecast}),
 		cashSetting: new kendo.Layout("#cashSetting", {model: banhji.cashSetting}),
 		
 		//Document
@@ -79336,17 +73533,12 @@
 		//Imports
 		imports: new kendo.Layout("#importView", {model: banhji.importView}),
 
-		//Water
-		waterCenter: new kendo.Layout("#waterCenter", {model: banhji.waterCenter}),
-		wMeter: new kendo.Layout("#wMeter", {model: banhji.wMeter}),
-
 		//Menu
 		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
 		employeeMenu: new kendo.View("#employeeMenu", {model: langVM}),
 		vendorMenu: new kendo.View("#vendorMenu", {model: langVM}),
 		customerMenu: new kendo.View("#customerMenu", {model: langVM}),
 		cashMenu: new kendo.View("#cashMenu", {model: langVM}),
-		waterMenu: new kendo.View("#waterMenu", {model: langVM}),
 		inventoryMenu: new kendo.View("#inventoryMenu", {model: langVM}),
 		saleTaxMenu: new kendo.View("#saleTaxMenu", {model: langVM}),
 		saleMenu: new kendo.View("#saleMenu", {model: langVM})	
@@ -84258,323 +78450,6 @@
 		}
 	});
 	
-	
-
-
-	/*************************
-	*   Cashier Section   *
-	**************************/
-	banhji.router.route("/cashier(/:id)", function(id){
-		banhji.view.layout.showIn("#content", banhji.view.cashier);
-		kendo.fx($("#slide-form")).slideIn("down").play();
-
-		var vm = banhji.cashier;
-		banhji.userManagement.addMultiTask("Cashier Dashboard","cashier",null);
-		if(banhji.pageLoaded["cashier"]==undefined){
-			banhji.pageLoaded["cashier"] = true;
-			
-			$("#ddlContact").kendoComboBox({
-				placeholder: "លេខកូដ...",
-				valuePrimitive: true,
-                dataTextField: "fullname",
-                dataValueField: "id",
-                filter: "search",
-                autoBind: false,
-                minLength: 3,
-                height: 400,
-                dataSource: vm.contactDS,
-                change: function(e) {
-				    var value = this.value(),
-				    data = this.dataSource.get(value);
-
-				    vm.set("customer", data);
-				    vm.transactionDS.filter({ field:"contact_id", value: value });
-				    vm.loadInvoice(value, data.fullname, data.account_id);
-				},
-				template:'#=number# #=fullname#'
-            });
-
-	        $("#ddlCashAccount").kendoDropDownList({
-	            optionLabel: "(--- Select ---)",
-	            valuePrimitive: true,
-	            dataTextField: "name",
-	            dataValueField: "id",
-	            dataSource: {
-	                transport: {
-						read: {
-							url: apiUrl + "accounts",
-							headers: {
-								"Entity": getDB()
-							},
-							type: "GET",
-							dataType: "json"
-						}
-					},
-					schema 	: {
-						model: {
-							id: 'id'
-						},
-						data: 'results',
-						total: 'count'
-					},
-					serverFiltering: true,
-					filter: { field:"account_type_id", value: 6 }
-				},
-				template: '#=number# #=name#'
-	        }).data("kendoDropDownList");
-
-	        var validator = $("#example").kendoValidator().data("kendoValidator");
-			var notification = $("#notification").kendoNotification({
-			    autoHideAfter: 5000,
-			    width: 300,
-			    height: 50
-			}).data('kendoNotification');
-
-	        $("#save").click(function(e){
-				e.preventDefault();
-
-				if(validator.validate()){
-	            	vm.save();
-
-	            	notification.success("Save Successful");
-		        }else{
-		        	notification.error("Warning, please review it again!");
-		        }
-			});
-		}
-
-		vm.pageLoad(id);
-	});
-	banhji.router.route("/reconcile(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.reconcile);
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.reconcile;
-			banhji.userManagement.addMultiTask("Reconcile & Transfer","reconcile",vm);
-
-			vm.pageLoad(id);
-			
-			if(banhji.pageLoaded["reconcile"]==undefined){
-				banhji.pageLoaded["reconcile"] = true;
-
-				$("#ddlCashAccount").kendoDropDownList({
-		            optionLabel: "(--- Select ---)",
-		            valuePrimitive: true,
-		            dataTextField: "name",
-		            dataValueField: "id",
-		            dataSource: {
-		                transport: {
-							read: {
-								url: apiUrl + "accounts",
-								headers: {
-									"Entity": getDB()
-								},
-								type: "GET",
-								dataType: "json"
-							}
-						},
-						schema 	: {
-							model: {
-								id: 'id'
-							},
-							data: 'results',
-							total: 'count'
-						},
-						serverFiltering: true,
-						filter: { field:"account_type_id", value: 6 }
-					},
-					template: '#=number# #=name#'
-		        }).data("kendoDropDownList");
-
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-				var notification = $("#notification").kendoNotification({
-				    autoHideAfter: 5000,
-				    width: 300,
-				    height: 50
-				}).data('kendoNotification');
-				
-		        $("#save").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate() && vm.get("isExisting")==false && vm.get("obj").transfered_amount>0){
-		            	vm.save();
-
-		            	notification.success("Save Successful");
-			        }else{
-			        	notification.error("Warning, please review it again!");
-			        }
-				});
-			}
-		}
-	});
-	banhji.router.route("/cash_transaction(/:id)(/:is_recurring)", function(id,is_recurring){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.cashTransaction);
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.cashTransaction;
-			banhji.userManagement.addMultiTask("Cash Transaction","cash_transaction",vm);
-			
-			if(banhji.pageLoaded["cash_transaction"]==undefined){
-				banhji.pageLoaded["cash_transaction"] = true;
- 
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-		        $("#saveNew").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#saveClose").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#saveRecurring").click(function(e){
-					e.preventDefault();
-					
-					if(validator.validate() && vm.validateRecurring()){
-		            	vm.set("saveRecurring", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
-
-			vm.pageLoad(id,is_recurring);
-		}
-	});
-	banhji.router.route("/cash_receipt(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		} else {
-			banhji.view.layout.showIn("#content", banhji.view.cashReceipt);
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.cashReceipt;
-			banhji.userManagement.addMultiTask("Cash Receipt","cash_receipt",vm);
-			
-			if(banhji.pageLoaded["cash_receipt"]==undefined){
-				banhji.pageLoaded["cash_receipt"] = true;
-
-				vm.paymentTermDS.read();
-
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-		        $("#saveNew").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#saveClose").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
-
-			vm.pageLoad(id);
-		}		
-	});
-	banhji.router.route("/cash_payment(/:id)", function(id){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.cashPayment);
-			kendo.fx($("#slide-form")).slideIn("down").play();
-
-			var vm = banhji.cashPayment;
-			banhji.userManagement.addMultiTask("Cash Payment","cash_payment",vm);
-			
-			if(banhji.pageLoaded["cash_payment"]==undefined){
-				banhji.pageLoaded["cash_payment"] = true;
-
-				vm.paymentTermDS.read();
-
-				var validator = $("#example").kendoValidator().data("kendoValidator");
-		        $("#saveNew").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate()){
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#saveClose").click(function(e){
-					e.preventDefault();
-
-					if(validator.validate()){
-						vm.set("saveClose", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-
-				$("#savePrint").click(function(e){
-					e.preventDefault();
-					
-					if(validator.validate()){
-						vm.set("savePrint", true);
-		            	vm.save();
-			        }else{
-			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-			        }
-				});
-			}
-
-			vm.pageLoad(id);
-		}		
-	});
 
 
 	/*************************
@@ -85868,6 +79743,336 @@
 			vm.pageLoad(id, is_recurring);
 		}
 	});
+	banhji.router.route("/cashier(/:id)", function(id){
+		banhji.view.layout.showIn("#content", banhji.view.cashier);
+		kendo.fx($("#slide-form")).slideIn("down").play();
+
+		var vm = banhji.cashier;
+		banhji.userManagement.addMultiTask("Cashier Dashboard","cashier",null);
+		if(banhji.pageLoaded["cashier"]==undefined){
+			banhji.pageLoaded["cashier"] = true;
+			
+			$("#ddlContact").kendoComboBox({
+				placeholder: "លេខកូដ...",
+				valuePrimitive: true,
+                dataTextField: "fullname",
+                dataValueField: "id",
+                filter: "search",
+                autoBind: false,
+                minLength: 3,
+                height: 400,
+                dataSource: vm.contactDS,
+                change: function(e) {
+				    var value = this.value(),
+				    data = this.dataSource.get(value);
+
+				    vm.set("customer", data);
+				    vm.transactionDS.filter({ field:"contact_id", value: value });
+				    vm.loadInvoice(value, data.fullname, data.account_id);
+				},
+				template:'#=number# #=fullname#'
+            });
+
+	        $("#ddlCashAccount").kendoDropDownList({
+	            optionLabel: "(--- Select ---)",
+	            valuePrimitive: true,
+	            dataTextField: "name",
+	            dataValueField: "id",
+	            dataSource: {
+	                transport: {
+						read: {
+							url: apiUrl + "accounts",
+							headers: {
+								"Entity": getDB()
+							},
+							type: "GET",
+							dataType: "json"
+						}
+					},
+					schema 	: {
+						model: {
+							id: 'id'
+						},
+						data: 'results',
+						total: 'count'
+					},
+					serverFiltering: true,
+					filter: { field:"account_type_id", value: 6 }
+				},
+				template: '#=number# #=name#'
+	        }).data("kendoDropDownList");
+
+	        var validator = $("#example").kendoValidator().data("kendoValidator");
+			var notification = $("#notification").kendoNotification({
+			    autoHideAfter: 5000,
+			    width: 300,
+			    height: 50
+			}).data('kendoNotification');
+
+	        $("#save").click(function(e){
+				e.preventDefault();
+
+				if(validator.validate()){
+	            	vm.save();
+
+	            	notification.success("Save Successful");
+		        }else{
+		        	notification.error("Warning, please review it again!");
+		        }
+			});
+		}
+
+		vm.pageLoad(id);
+	});
+	banhji.router.route("/reconcile(/:id)", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.reconcile);
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.reconcile;
+			banhji.userManagement.addMultiTask("Reconcile & Transfer","reconcile",vm);
+
+			vm.pageLoad(id);
+			
+			if(banhji.pageLoaded["reconcile"]==undefined){
+				banhji.pageLoaded["reconcile"] = true;
+
+				$("#ddlCashAccount").kendoDropDownList({
+		            optionLabel: "(--- Select ---)",
+		            valuePrimitive: true,
+		            dataTextField: "name",
+		            dataValueField: "id",
+		            dataSource: {
+		                transport: {
+							read: {
+								url: apiUrl + "accounts",
+								headers: {
+									"Entity": getDB()
+								},
+								type: "GET",
+								dataType: "json"
+							}
+						},
+						schema 	: {
+							model: {
+								id: 'id'
+							},
+							data: 'results',
+							total: 'count'
+						},
+						serverFiltering: true,
+						filter: { field:"account_type_id", value: 6 }
+					},
+					template: '#=number# #=name#'
+		        }).data("kendoDropDownList");
+
+				var validator = $("#example").kendoValidator().data("kendoValidator");
+				var notification = $("#notification").kendoNotification({
+				    autoHideAfter: 5000,
+				    width: 300,
+				    height: 50
+				}).data('kendoNotification');
+				
+		        $("#save").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate() && vm.get("isExisting")==false && vm.get("obj").transfered_amount>0){
+		            	vm.save();
+
+		            	notification.success("Save Successful");
+			        }else{
+			        	notification.error("Warning, please review it again!");
+			        }
+				});
+			}
+		}
+	});
+	banhji.router.route("/cash_transaction(/:id)(/:is_recurring)", function(id,is_recurring){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashTransaction);
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.cashTransaction;
+			banhji.userManagement.addMultiTask("Cash Transaction","cash_transaction",vm);
+			
+			if(banhji.pageLoaded["cash_transaction"]==undefined){
+				banhji.pageLoaded["cash_transaction"] = true;
+ 
+				var validator = $("#example").kendoValidator().data("kendoValidator");
+		        $("#saveNew").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#saveClose").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+						vm.set("saveClose", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#savePrint").click(function(e){
+					e.preventDefault();
+					
+					if(validator.validate()){
+						vm.set("savePrint", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#saveRecurring").click(function(e){
+					e.preventDefault();
+					
+					if(validator.validate() && vm.validateRecurring()){
+		            	vm.set("saveRecurring", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+			}
+
+			vm.pageLoad(id,is_recurring);
+		}
+	});
+	banhji.router.route("/cash_receipt(/:id)", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		} else {
+			banhji.view.layout.showIn("#content", banhji.view.cashReceipt);
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.cashReceipt;
+			banhji.userManagement.addMultiTask("Cash Receipt","cash_receipt",vm);
+			
+			if(banhji.pageLoaded["cash_receipt"]==undefined){
+				banhji.pageLoaded["cash_receipt"] = true;
+
+				vm.paymentTermDS.read();
+
+				var validator = $("#example").kendoValidator().data("kendoValidator");
+		        $("#saveNew").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#saveClose").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+						vm.set("saveClose", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#savePrint").click(function(e){
+					e.preventDefault();
+					
+					if(validator.validate()){
+						vm.set("savePrint", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+			}
+
+			vm.pageLoad(id);
+		}		
+	});
+	banhji.router.route("/cash_payment(/:id)", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashPayment);
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.cashPayment;
+			banhji.userManagement.addMultiTask("Cash Payment","cash_payment",vm);
+			
+			if(banhji.pageLoaded["cash_payment"]==undefined){
+				banhji.pageLoaded["cash_payment"] = true;
+
+				vm.paymentTermDS.read();
+
+				var validator = $("#example").kendoValidator().data("kendoValidator");
+		        $("#saveNew").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#saveClose").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+						vm.set("saveClose", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#savePrint").click(function(e){
+					e.preventDefault();
+					
+					if(validator.validate()){
+						vm.set("savePrint", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+			}
+
+			vm.pageLoad(id);
+		}		
+	});
+	banhji.router.route("/cash_flow_forecast(/:id)", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashFlowForecast);
+			kendo.fx($("#slide-form")).slideIn("down").play();
+
+			var vm = banhji.cashFlowForecast;
+			banhji.userManagement.addMultiTask("Cash Flow Forecast","cash_flow_forecast",vm);
+			
+			if(banhji.pageLoaded["cash_flow_forecast"]==undefined){
+				banhji.pageLoaded["cash_flow_forecast"] = true;
+
+										
+			}
+
+			vm.pageLoad(id);
+		}		
+	});
 	banhji.router.route("/cash_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -85943,43 +80148,6 @@
 			vm.pageLoad();
 		}
 	});
-
-
-
-	/*************************
-	*   Water Section   *
-	**************************/
-	banhji.router.route("/water_center(/:id)", function(id){		
-		banhji.view.layout.showIn("#content", banhji.view.waterCenter);
-		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
-		var vm = banhji.waterCenter;
-
-		banhji.userManagement.addMultiTask("Water Center","water_center",null);
-
-		if(banhji.pageLoaded["water_center"]==undefined){
-			banhji.pageLoaded["water_center"] = true;
-		}
-
-		vm.pageLoad(id);
-	});
-	banhji.router.route("/wMeter(/:id)", function(id){		
-		banhji.view.layout.showIn("#content", banhji.view.wMeter);
-		banhji.view.layout.showIn('#menu', banhji.view.menu);
-		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		
-		var vm = banhji.wMeter;
-
-		banhji.userManagement.addMultiTask("Water Meter","wMeter",null);
-
-		if(banhji.pageLoaded["wMeter"]==undefined){
-			banhji.pageLoaded["wMeter"] = true;
-		}
-
-		vm.pageLoad(id);
-	});
-
 
 
 
