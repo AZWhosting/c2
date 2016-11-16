@@ -40132,7 +40132,7 @@
 				pageSize: 100
 			});
 		return o;
-	};	
+	};
 	banhji.userManagement = kendo.observable({
 		lang : langVM,
 		multiTaskList 		: [],
@@ -41164,6 +41164,38 @@
 		setCurrent 	: function(currentRole) {},
 		save 		: function() {}
 	});
+
+	//DBS
+	banhji.store = banhji.store || {};
+	banhji.dbsUrl = "https://developers.dbs.com:10443/api/sg/v1/accounts/1018260032/accountHolders?productType=CA";
+	banhji.dbsApiKey = "9c976436-9f86-42b1-965c-3a6d15c73d66";
+	banhji.dbsToken = "bPIIqpDNbR14tBI0X+DbkVWa0Ao=";
+	banhji.dbsHeaders = {
+		'apiKey' 		: banhji.dbsApiKey,
+		'uuid' 	 		: banhji.dbsApiKey,
+		'Authorization' : banhji.dbsToken == "" ? banhji.authorization : banhji.dbsToken
+	};
+	banhji.store.dbsDataSource = new kendo.data.DataSource({
+		transport: {
+		    read: {
+		    	url: banhji.dbsUrl,
+		    	headers: banhji.dbsHeaders,
+				type: "GET",
+		        dataType: "json",
+		        contentType: 'application/json'
+		    }
+		},
+		batch: false,
+		schema: {
+			data: function(response) {
+				var data = [];
+				data.push(response);
+				return data;
+			}
+		}
+	});
+
+	//Home Page
 	banhji.index = kendo.observable({
 		lang 				: langVM,
 		dataSource			: dataStore(apiUrl+"dashboards/home"),
@@ -68299,6 +68331,7 @@
 	banhji.cashFlowForecast = kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "budge_lines"),
+		dbsDataSource 		: banhji.store.dbsDataSource,
 		nameList 			: [
 			"Cash Receipts",
 			"Cash Sale",
@@ -68320,6 +68353,20 @@
         showEdit 			: false,
 		pageLoad 			: function(){
 			this.addEmpty();
+		},
+		loadAccountHolder 			: function(){
+			var self = this;
+			
+			banhji.dbsUrl = "https://developers.dbs.com:10443/api/sg/v1/accounts/0282828314/fundsTransfer/transferType=Scheduled";
+			this.dbsDataSource.query({
+				filter:[],
+				page:1,
+				pageSize:100
+			}).then(function(){
+				var view = banhji.store.dbsDataSource.data();
+				console.log(view[0]);
+				// self.set("customer", view[0].AccountHolder.accountHolderDetl.items[0].accountHolderDetl.partyName);
+			});
 		},
 		addEmpty 			: function(){
 			this.dataSource.data([]);
@@ -80563,6 +80610,7 @@
 	banhji.router.route("/imports", function(){
 		banhji.view.layout.showIn("#content", banhji.view.imports);
 	});
+
 
 	$(function() {	
 		banhji.router.start();
