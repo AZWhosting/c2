@@ -34787,6 +34787,8 @@
 	</div>
 </script>
 
+
+
 <!-- ***************************
 *	Cash Management            *
 **************************** -->
@@ -37310,29 +37312,71 @@
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">					
-				<div id="example" class="k-content">					
+				<div id="example" class="k-content cashFlow">					
 				    
 			    	<span class="glyphicons no-js remove_2 pull-right" 
 		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2>CASH FLOW FORECAST</h2>			    		   
+			        <h2>Rolling Cash Flow Forecast</h2>			    		   
 
 				    <br>
-
-				    <table class="table table-bordered table-primary table-striped table-vertical-center">
+				    <div class="row-fluid" style="overflow: hidden;">
+				    	<div class="span5">
+				    		<p style="color: #bababa;">Please select your scenario</p>
+				    		<div class="span12" style="padding:0">
+								<span title="" class="k-widget k-dropdown k-header selectType" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="" aria-disabled="false" aria-readonly="false" aria-busy="false" aria-activedescendant="a88f1fe2-8947-4cbb-bd22-27f7fe9310aa" style="padding:0">
+									
+									<select style="padding:0;width: 90%" class="span12 selectType k-valid" data-role="dropdownlist" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: obj.type, 
+												source: selectTypeList, 
+												events:{change: onChange}" style="display: none;">
+										<option value="Quote" selected="selected">Quotation</option>
+										<option value="Sale_Order">Sale Order</option>
+										<option value="Deposit">Deposit</option>
+										<option value="Cash_Sale">Cash Sale</option>
+										<option value="Invoice">Invoice</option>
+										<option value="Cash_Receipt">Cash Receipt</option>
+										<option value="GDN">Delivered Note</option>
+									</select>
+								</span>
+							</div>
+				    		<p style="margin-top: 10px;clear: both;color: #bababa;">This is a default scenario generated based on<br>your historical data, patterns, and defined rules.</p>
+				    	</div>
+				    	<div class="span7">
+				    		<div class="row" style="background: #deeaf6;padding:10px 0;">
+				    			<div class="span1"></div>
+				    			<div class="span3">
+				    				<h3>Accounts</h3>
+				    				<p style="color: #bababa;margin:0;">to be reconciled</p>
+				    			</div>
+				    			<div class="span1" style="margin-right: 20px;"><span class="nb-blue">5</span></div>
+				    			<div class="span4"><span class="nb-blue">$200,000</span></div>
+				    			<div class="span2"><p style="color: #1b507c;">Reconciled<br>cash</p></div>
+				    		</div>
+				    		<div class="row" style="background: #deeaf6;padding:10px 0;margin-top: 10px;margin-bottom:10px;">
+				    			<div class="span1"></div>
+				    			<div class="span5">
+				    				<h3>liquidity</h3>
+				    				<p style="color: #bababa;margin:0;">Position based on this scenario</p>
+				    			</div>
+				    			<div class="span5"><span class="nb-blue">$30,000</span></div>
+				    		</div>
+				    		<a style="color: #bababa;cursor: pointer;float:right; margin-bottom: 10px;">Refresh data from Bank <span class="glyphicons no-js refresh"><i></i></span></a>
+				    	</div> 
+				    </div>
+				    <table style="overflow: hidden;position: relative;" class="table table-primary table-striped table-vertical-center">
 				    	<thead>
 				    		<tr>
 				    			<th width="20%"></th>
-				    			<th style="background-color: #515A5A">Sep 2016</th>
-				    			<th style="background-color: #515A5A">Oct 2016</th>
-				    			<th>Nov 2016</th>
-				    			<th style="background-color: #CCD1D1; color: black;">Dec 2016</th>
-				    			<th style="background-color: #CCD1D1; color: black;">Jan 2017</th>
-				    			<th style="background-color: #CCD1D1; color: black;">Feb 2017</th>
-				    			<th style="background-color: #CCD1D1; color: black;">Mar 2017</th>
-				    			<th style="background-color: #CCD1D1; color: black;">Apr 2017</th>
-				    			<th style="background-color: #CCD1D1; color: black;">May 2017</th>			    			
+				    			<th class="old">Sep 2016</th>
+				    			<th class="old">Oct 2016</th>
+				    			<th class="recent">Nov 2016</th>
+				    			<th class="future">Dec 2016</th>
+				    			<th class="future">Jan 2017</th>
+				    			<th class="future">Feb 2017</th>
+				    			<th class="future">Mar 2017</th>
+				    			<th class="future">Apr 2017</th>
+				    			<th class="future">May 2017</th>			    			
 				    		</tr>
 				    	</thead>
 				        <tbody data-role="listview"
@@ -37407,7 +37451,7 @@
 			<td>#=name#</td>		
 			<td align="right" data-format="n0" data-bind="text: m0"></td>
 			<td align="right" data-format="n0" data-bind="text: m1"></td>
-			<td align="right" data-format="n0" data-bind="text: m2"></td>		
+			<td align="right" data-format="n0" class="recent" data-bind="text: m2"></td>		
 			<td align="right" data-format="n0" data-bind="text: m3"></td>
 			<td align="right" data-format="n0" data-bind="text: m4"></td>
 			<td align="right" data-format="n0" data-bind="text: m5"></td>
@@ -37420,7 +37464,7 @@
 			<td>&nbsp;&nbsp;&nbsp;#=name#</td>		
 			<td align="right" data-format="n0" data-bind="text: m0, click: selectedRow0"></td>
 			<td align="right" data-format="n0" data-bind="text: m1, click: selectedRow1"></td>
-			<td align="right" data-format="n0" data-bind="text: m2, click: selectedRow2"></td>		
+			<td align="right" data-format="n0" class="recent" data-bind="text: m2, click: selectedRow2"></td>		
 			<td align="right" data-format="n0" data-bind="text: m3, click: selectedRow3"></td>
 			<td align="right" data-format="n0" data-bind="text: m4, click: selectedRow4"></td>
 			<td align="right" data-format="n0" data-bind="text: m5, click: selectedRow5"></td>
@@ -37792,6 +37836,306 @@
 				</div>
 				<div id="sale-report-chart">Chart</div>
 			</div>
+		</div>
+	</div>
+</script>
+
+
+
+<!-- Cash Management Dashboard -->
+<script id="cashManagementDashboard" type="text/x-kendo-template" >
+	<img src="<?php echo base_url();?>/assets/capital.png" class="img-capital">
+	<br/>
+	<div class="row-fluid">		
+		<!-- Left Side -->
+		<div class="span6" style="padding-left: 0;">
+			<div class="cash-bg">
+				<a href="">
+					<div class="cash-tables">
+						<table class="span12">						
+							<tr>
+								<td></td>
+								<td style="color: #98B6D8;">Forecast</td>
+								<td style="color: #98B6D8;">Actual</td>
+								<td style="color: #98B6D8;">Variance</td>
+								<td></td>
+							</tr>					
+							<tr>
+								<td style="color: #fff;">Cash Receipt</td>
+								<td style="color: #fff; text-align: right;">30,000</td>
+								<td style="color: #fff; text-align: right;">27,000</td>
+								<td style="color: #fff; text-align: right;">(3,000)</td>
+								<td style="color: #fff; ">X</td>
+							</tr>
+							<tr>
+								<td style="color: #fff;">Cash Disbursement</td>
+								<td style="color: #fff; text-align: right;">20,000</td>
+								<td style="color: #fff; text-align: right;">19,000</td>
+								<td style="color: #fff; text-align: right;">1,000</td>
+								<td style="color: #fff;">X</td>
+							</tr>
+							<tr>
+								<td style="color: #fff;">Net Cash Flow</td>
+								<td style="color: #fff; text-align: right;">10,000</td>
+								<td style="color: #fff; text-align: right;">8,000</td>
+								<td style="color: #fff; text-align: right;">(2,000)</td>
+								<td style="color: #fff;">X</td>
+							</tr>
+							<tr>
+								<td style="color: #fff; font-weight: 600;">Liquidity Position</td>
+								<td style="color: #fff; font-weight: 600; text-align: right;">40,000</td>
+								<td style="color: #fff; font-weight: 600; text-align: right;">30,000</td>
+								<td style="color: #fff; font-weight: 600; text-align: right;">10,000</td>
+								<td style="color: #fff; font-weight: 600;">X</td>
+							</tr>
+						</table>
+					</div>
+				</a>
+
+				<div class="row-fluid" >
+					<div class="span6" style="background: #DEEAF6; margin-right: 15px; width: 47%; ">
+						<a href="#/customer_balance_summary">
+							<div class="widget-body alert-info welcome-nopadding" style="width: 100%;">
+								<p style="color: #000;"><span>Expected due</span></p>
+						
+								<div class="strong" align="center" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;">$35,000</div>
+							
+								<table width="100%" style="color: #8E9EAE;">
+									<tbody>
+										<tr align="center">
+											<td>										
+												<span style="font-size: 25px;">15</span>
+												<br>
+												<span>Invoices</span>
+											</td>
+											<td>
+												<span style="font-size: 25px;">5</span>
+												<br>
+												<span>Customers</span>
+											</td>
+											<td>
+												<span style="font-size: 25px;">3</span>
+												<br>
+												<span>Overdue</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</a>
+					</div>
+
+					<div class="span6" style="background: #DEEAF6;">
+						<a href="#/customer_balance_summary">
+							<div class="widget-body alert-info welcome-nopadding" style="width: 100%;">
+								<p style="color: #000;"><span>Amount to Pay</span></p>
+						
+								<div class="strong" align="center" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;">$17,000</div>
+							
+								<table width="100%" style="color: #8E9EAE;">
+									<tbody>
+										<tr align="center">
+											<td>										
+												<span style="font-size: 25px;">10</span>
+												<br>
+												<span>Bills</span>
+											</td>
+											<td>
+												<span style="font-size: 25px;">2</span>
+												<br>
+												<span>Operation</span>
+											</td>
+											<td>
+												<span style="font-size: 25px;">1</span>
+												<br>
+												<span>Financing</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="cash-bg" style="padding: 12px;">
+				<a href="">
+					<div class="cash-position">
+						<div class="span5" style="padding-left: 0;">
+							<span style="font-size: 24px;">CASH POSITION</span>
+							<br>
+							Based on your forecast
+						</div>
+						<div class="span4" style="text-align: center; font-size: 35px; font-weight: 600; padding-left: 0;">
+							($100,000)
+						</div>
+						<div class="span3" style="text-align: center; margin-top: 7px; padding-right: 0;">
+							Required in
+							<br/>
+							January 2017
+						</div>
+					</div>
+				</a>
+
+				<div class="row-fluid">
+					<a href="">
+						<div class="span6" style="background: #8397B0; text-align: center; font-size: 25px; color: #fff; padding: 10px 0; margin-right: 5px; width: 48%;">
+							Banking Financing
+						</div>
+					</a>
+					<a href="">
+						<div class="span6" style="padding-left: 0; background: #8397B0; text-align: center; font-size: 25px; color: #fff; padding: 10px 0; width: 51%;">
+							Alternative Financing
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Right Side -->
+		<div class="span6" style="padding-left: 0;">
+			<div class="cash-bg">
+				<a href="">
+					<div class="cash-invoice">
+						<div class="span3" style="padding-left: 0;">
+							<span style="font-size: 24px; color: #40546C;">INVOICE</span>
+							<br>
+							<span style="color: #9EA7B8;">to be reviewed</span>
+						</div>
+						<div class="span5" style="color: #3F73A3; text-align: center; font-size: 35px; font-weight: 600; padding-left: 0;">
+							$50,000
+						</div>
+						<div class="span2" style="color: #3F73A3; text-align: center; font-size: 35px; border-left: 1px solid #9DA9BF; border-right: 1px solid #9DA9BF; ">
+							3
+						</div>
+						<div class="span2" style="text-align: center; margin-top: 7px; padding-right: 0; color: #3A4A61;">
+							Attentions
+							<br/>
+							required
+						</div>					
+					</div>
+				</a>
+				<a href="">
+					<div class="cash-invoice">
+						<div class="span3" style="padding-left: 0;">
+							<span style="font-size: 24px; color: #40546C;">BILLS</span>
+							<br>
+							<span style="color: #9EA7B8;">to be reviewed</span>
+						</div>
+						<div class="span5" style="color: #3F73A3; text-align: center; font-size: 35px; font-weight: 600; padding-left: 0;">
+							$20,000
+						</div>
+						<div class="span2" style="color: #3F73A3; text-align: center; font-size: 35px; font-weight: 600; border-left: 1px solid #9DA9BF; border-right: 1px solid #9DA9BF; ">
+							1
+						</div>
+						<div class="span2" style="text-align: center; margin-top: 7px; padding-right: 0; color: #3A4A61;">
+							Potential
+							<br/>
+							Saving
+						</div>										
+					</div>
+				</a>
+
+				<div class="row-fluid">
+					<a href="">
+						<div class="span5" style="background: #D5DCE6;  color: #fff; padding: 10px; margin-right: 5px; ">
+							<div class="span9" style="padding-left:0;">
+								<span style="font-size: 24px; color: #40546C;">ACCOUNTS</span>
+								<br>
+								<span style="color: #9EA7B8;">to be reconciled</span>
+							</div>
+							<div class="span2">
+								<span style="color: #3F73A3; text-align: right; font-size: 35px; font-weight: 600; ">5</span>
+							</div>
+						</div>
+					</a>
+					<a href="">
+						<div class="span7" style="padding-left: 0; background: #D5DCE6; width: 57%;  padding: 10px 0; min-height: 73px;">
+							<div class="span8" style="color: #3F73A3; font-size: 35px; font-weight: 600; ">
+								$200,000
+							</div>
+							<div class="span4" style="text-align: left;  color: #3A4A61; margin-top: 6px;">
+								Reconciled
+								<br/>
+								Cash
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+			<div class="cash-bg" >
+				<div class="row-fluid">
+					<div class="span6" style="text-align: center; padding: 0;">
+						<p style="margin-bottom: 15px; color: #BABABA; ">Your working capital <br> management efficiency</p>
+						<a href="#/customer_balance_summary"  style=" width: 47%; ">
+							<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #D5DCE6;">
+								<p style="color: #000;"><span>Cash Conversion Cycle</span></p>
+						
+								<div class="strong" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;" align="center">55 days</div>
+							
+								<table style="color: #8E9EAE;" width="100%">
+									<tbody>
+										<tr align="center">
+											<td>										
+												<span style="font-size: 25px; color: #40546C;">30</span>
+												<br>
+												<span>Collection Days</span>
+											</td>
+											<td>
+												<span style="font-size: 25px; color: #40546C;">15</span>
+												<br>
+												<span>Payments Days</span>
+											</td>
+											<td>
+												<span style="font-size: 25px; color: #40546C;">40</span>
+												<br>
+												<span>Turnover Days</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</a>
+					</div>
+
+					<div class="span6" style="text-align: center; padding-right: 0;">
+						<p style="margin-bottom: 15px; color: #BABABA; ">Your ability to meet <br> present obligation</p>
+						<a href="#/customer_balance_summary" >
+							<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #D5DCE6;">
+								<p style="color: #000;"><span>Current Ratio</span></p>
+						
+								<div class="strong" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;" align="center">2x</div>
+							
+								<table style="color: #8E9EAE;" width="100%">
+									<tbody>
+										<tr align="center">
+											<td>										
+												<span style="font-size: 25px; color: #40546C;">0.8x</span>
+												<br>
+												<span>Quick <br> Ratio</span>
+											</td>
+											<td>
+												<span style="font-size: 25px; color: #40546C;">1.5</span>
+												<br>
+												<span>Cash <br> Ratio</span>
+											</td>
+											<td>
+												<span style="font-size: 25px; color: #40546C;">130%</span>
+												<br>
+												<span>WC to <br> Sale Ratio</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 </script>
@@ -39264,7 +39608,7 @@
 	banhji.no_image = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
 
 	// custom widget for min and max
-	kendo.data.binders.widget.max = kendo.data.Binder.extend({
+	 kendo.data.binders.widget.max = kendo.data.Binder.extend({
 		init: function(widget, bindings, options) {//call the base constructor
             kendo.data.Binder.fn.init.call(this, widget.element[0], bindings, options);
         },
@@ -73523,6 +73867,9 @@
 		cashPayment: new kendo.Layout("#cashPayment", {model: banhji.cashPayment}),
 		cashFlowForecast: new kendo.Layout("#cashFlowForecast", {model: banhji.cashFlowForecast}),
 		cashSetting: new kendo.Layout("#cashSetting", {model: banhji.cashSetting}),
+
+		//Cash Management Dashbaord
+		cashManagementDashboard: new kendo.Layout("#cashManagementDashboard", {model: banhji.cashManagementDashboard}),
 		
 		//Document
 		documents: new kendo.Layout("#documents", {model: banhji.fileManagement}),
@@ -80066,8 +80413,8 @@
 			
 			if(banhji.pageLoaded["cash_flow_forecast"]==undefined){
 				banhji.pageLoaded["cash_flow_forecast"] = true;
-
-										
+				
+									
 			}
 
 			vm.pageLoad(id);
@@ -80143,6 +80490,46 @@
 				banhji.pageLoaded["cash_setting"] = true;
 
 				vm.contactTypeDS.filter({ field:"parent_id", value: 1 });
+			}
+
+			vm.pageLoad();
+		}
+	});
+
+
+	/*Cash Management Dashboard*/
+	banhji.router.route("/cash_management_dashboard", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashManagementDashboard);
+			//banhji.view.layout.showIn('#menu', banhji.view.menu);
+			//banhji.view.menu.showIn('#secondary-menu', banhji.view.cashMenu);
+			
+			var vm = banhji.cashDashboard;
+			banhji.userManagement.addMultiTask("Cash Management Dashboard","cash_management_dashboard",null);
+
+			if(banhji.pageLoaded["cash_management_dashboard"]==undefined){
+				banhji.pageLoaded["cash_management_dashboard"] = true;
+				banhji.cashDashboard.graphDS.fetch();
+				banhji.cashDashboard.topCashDS.read();
+				banhji.cashDashboard.topCashDS.bind('requestEnd', function(e) {
+					if(e.response) {
+						kendo.culture(banhji.locale);
+						banhji.cashDashboard.set('balance', kendo.toString(e.response.balance, 'c2'));
+						banhji.cashDashboard.set('cashACNumber', e.response.cashACNumber);
+					}
+				});
+
+				banhji.cashDashboard.topAdvaDS.read();
+				banhji.cashDashboard.topAdvaDS.bind('requestEnd', function(e) {
+					if(e.response) {
+						kendo.culture(banhji.locale);
+						banhji.cashDashboard.set('open', e.response.open);
+						banhji.cashDashboard.set('overDue', e.response.overDue);
+						banhji.cashDashboard.set('totalAdvance', kendo.toString(e.response.total_advance, 'c2'));
+					}
+				});
 			}
 
 			vm.pageLoad();

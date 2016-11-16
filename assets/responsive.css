@@ -1,3 +1,47 @@
+.cash-bg{
+  width: 100%;
+  padding: 15px;
+  background: #fff;
+  display: inline-block;
+}
+.cash-bg .cash-tables table{
+  background: #1F4E78;
+  margin-bottom: 15px;
+  width: 100%;
+  font-size: 15px;
+  padding: 15px;
+}
+.cash-bg .cash-tables table tbody{
+  width: 100%;
+}
+.cash-bg .cash-tables table tr td{
+  padding: 5px 15px;
+  border-bottom: 1px solid #2F5F8F;
+}
+.cash-bg .cash-tables table tr:last-child td{
+  padding-bottom: 12px;
+}
+.cash-position{
+  background: #333E50;
+  color: #fff;
+  padding: 10px;
+  width: 100%;
+  float: left;
+  margin-bottom: 10px;
+}
+.cash-invoice{
+  background: #D5DCE6;
+  padding: 10px;
+  width: 100%;
+  float: left;
+  margin-bottom: 10px;
+}
+.img-capital{
+  margin-left: -5px;
+  width: 130px;
+  margin-bottom: 15px;
+}
+
 #cbbContact-list,
 #cbbAccount-list,
 #cbbCurrency-list,
@@ -2482,4 +2526,62 @@ a.activate {
     background: #496cad;
     color: #fff;
     border-radius: 2px;
+}
+/*--Cash Flow--*/
+.cashFlow table thead tr th{
+      background: #adb8ca;
+    border-bottom-width: 0;
+    border: 0;
+    padding-top: 15px;
+    border-right: 1px solid #fff;
+    padding-bottom: 15px;
+}
+.cashFlow table thead tr th.old{
+  background: #8397b0;
+  color: #000;
+}
+.cashFlow table thead tr th.old{
+  background: #8397b0;
+  color: #000;
+}
+.cashFlow table tr {
+  border-spacing: 0!important;
+}
+.cashFlow table thead tr th.future{
+  background: #deeaf6;
+  color: #000;
+}
+.cashFlow table thead tr th.recent, .cashFlow table tr td.recent {
+  background: #fff;
+  border: 0!important;
+  color: #000;
+  background: url(img/shadow.png) repeat-y left center #fff;
+  border-right: 1px solid #f4f4f4!important;
+  
+}
+.cashFlow table thead tr th.recent {
+  background-position: -1px 0px;
+  border-top: 1px solid #f4f4f4!important;
+}
+.cashFlow table tr td.recent::last-child {
+  border-bottom: 1px solid #f4f4f4!important;
+}
+.cashFlow h2 {
+  color: #1b507c;
+}
+.cashFlow h3 {
+      color: #1b507c;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    font-size: 20px;
+    line-height: 20px;
+}
+.cashFlow span.nb-blue {
+      font-size: 35px;
+    color: #1b507c;
+    line-height: 36px;
+    font-weight: bold;
+}
+.cashFlow .glyphicons.refresh i:before {
+  font-size: 12px;
 }
