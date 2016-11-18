@@ -44,6 +44,10 @@ class Item extends DataMapper {
 		'inventory_account' => array(
 			'class'=>'account',
 			'other_field' => 'inventory'
+		),
+		'attribute' => array(
+			'class' => 'itemattribute',
+			'other_field' => 'item'
 		)
 	);
 

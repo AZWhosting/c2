@@ -100,7 +100,7 @@
 			<table class="table table-borderless table-condensed table-vertical-center ">
 				<tr>
 					<td class="center ">
-						<a href="#/wReading">
+						<a href="#/reading">
 							<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png" width="110" height="200" />
 							Reading
 						</a>						
@@ -560,9 +560,6 @@
 		<td style="text-align:center"><p class="addItem glyphicons circle_remove" data-bind="click: removeItem"><i></i></p></td>
 	</tr>
 </script>
-<!-- ***************************
-*	Add Customer      	  *
-**************************** -->
 
 <script id="waterCenter" type="text/x-kendo-template">	
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
@@ -1074,6 +1071,54 @@
 	</div>
 </script>
 
+<script id="Reading" type="text/x-kendo-template">
+	<div  class="row-fluid saleSummaryCustomer">
+		<span class="glyphicons no-js remove_2 pull-right" 
+	    				onclick="javascript:window.history.back()"
+						data-bind="click: cancel"><i></i></span>	
+		<!-- Tabs -->
+		<div class="relativeWrap" data-toggle="source-code">
+			<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
+			
+				<!-- Tabs Heading -->
+				<div class="widget-head">
+					<ul style="padding-left: 1px;">
+						<li class="active"><a class="glyphicons inbox_in" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Reading</span></a></li>
+					</ul>
+				</div>
+				<!-- // Tabs Heading END -->
+				
+				<div class="widget-body">
+					<div class="tab-content">
+						<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+						</div>
+						<!-- Tab content -->
+						<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+							
+							<h4 class="separator bottom" style="margin-top: 10px;">Please upload reading file</h4>
+							<a data-bind="click: exportEXCEL">
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons download" style="width: 200px!important;position: absolute;top: 85px;right: 10px;">
+									<i></i> 
+									<span >Download Reading file</span>
+								</span>
+							</a>
+							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
+							</div>
+							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+							<span data-bind="click: importReading">Start Reading</span></span>
+						</div>
+						<!-- // Tab content END -->
+					</div>
+				</div>
+				<div id="ntf1" data-role="notification"></div>
+			</div>
+		</div>
+		<!-- // Tabs END -->
+	</div>
+</script>
+
 <script id="customerDeposit" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -1175,7 +1220,7 @@
 
 <script id="waterMenu" type="text/x-kendo-template">
 	<ul class="topnav">
-	  	<li><a href='#/water' class='glyphicons home'><i></i></a></li>
+	  	<li><a href='#/' class='glyphicons home'><i></i></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.customer"></span> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>  				
@@ -5554,7 +5599,7 @@
 	});
 	banhji.waterActivateUser = kendo.observable({
 		lang 				: langVM,
-		dataSource  		: dataStore(apiUrl + "utilities"),
+		dataSource  		: dataStore(apiUrl + "activate_water"),
 		obj 				: null,
 		isEdit 				: false,
 		pageLoad 			: function(id){
@@ -5599,6 +5644,8 @@
 				contact_id			: id,
 				code 				: null,
 				licence 			: null,
+				location  			: null,
+				type 				: "w",
 				family_member 		: null,
 				national_id_number 	: null,
 				occupation 			: null
@@ -5664,6 +5711,101 @@
 	    	});		
 			var obj = this.dataSource.at(0);			
 			this.set("obj", obj);		
+		},
+		save 				: function() {
+			if(this.dataSource.data().length > 0) {
+				//$("#loadImport").css("display","block");
+				this.dataSource.sync();
+				this.dataSource.bind("requestEnd", function(e){
+			    	if(e.response){				
+			    		$("#ntf1").data("kendoNotification").success("Activated user successfully!");
+			    		//console.log(banhji.waterCenter.get('obj'));		
+						banhji.waterCenter.get('obj').set('user_water', 1);	
+						banhji.waterCenter.dataSource.sync();
+			    		window.history.back();
+						//$("#loadImport").css("display","none");
+					}				  				
+			    });
+			    this.dataSource.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error activated!"); 
+					//$("#loadImport").css("display","none");				
+			    });
+			}	
+			
+		},
+		cancel 				: function(){
+			//this.dataSource.cancelChanges();		
+			window.history.back();
+		}
+	});
+	banhji.reading = kendo.observable({
+		lang 				: langVM,
+		dataSource  		: dataStore(apiUrl + "meters"),
+		itemDS 				: null,
+		obj 				: null,
+		isEdit 				: false,
+		contact 			: null,
+		pageLoad 			: function(id){
+			this.addEmpty();
+		},
+		types 				: [
+			{id: "w", name: "Water"},
+			{id: "e", name: "Electricity"}
+		],
+		addEmpty 		 	: function(id){			
+			//this.dataSource.data([]);		
+			this.set("obj", null);		
+			this.set("isEdit", false);		
+			this.dataSource.insert(0,{		
+	    	});		
+			var obj = this.dataSource.at(0);			
+			this.set("obj", obj);		
+		},
+		exportEXCEL 		: function(){
+			var workbook = new kendo.ooxml.Workbook({
+			  sheets: [
+			    {
+			      // Column settings (width)
+			      columns: [
+			        { autoWidth: true },
+			        { autoWidth: true }
+			      ],
+			      // Title of the sheet
+			      title: "Customers",
+			      // Rows of the sheet
+			      rows: [
+			        // First row (header)
+			        {
+			          cells: [
+			            // First cell
+			            { value: "number" },
+			            { value: "date" },
+			            { value: "previous" },
+			            { value: "reading" },
+			            { value: "current" }
+			          ]
+			        },
+			        // Second row (data)
+			        {
+			          cells: [
+			            { value: "1" },
+			            { value: "1" },
+			            { value: "1" },
+			            { value: "1" },
+			            { value: "1" }
+			          ]
+			        }
+			      ]
+			    }
+			  ]
+			});
+			kendo.saveAs({
+			    dataURI: workbook.toDataURL(),
+			    fileName: "reading.xlsx"
+			});
+		},
+		importReading 		: function(){
+
 		},
 		save 				: function() {
 			if(this.dataSource.data().length > 0) {
@@ -6480,6 +6622,7 @@
 		waterActivateUser: new kendo.Layout("#waterActivateUser", {model: banhji.waterActivateUser}),
 		meter: new kendo.Layout("#waterAddMeter", {model: banhji.meter}),
 		plan: new kendo.Layout("#plan", {model: banhji.plan}),
+		reading: new kendo.Layout("#Reading", {model: banhji.reading}),
 		customerDeposit: new kendo.Layout("#customerDeposit", {model: banhji.customerDeposit}),
 		//Menu
 		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
@@ -6645,6 +6788,21 @@
 			banhji.pageLoaded["plan"] = true;
 		}
 		console.log("plan");
+		vm.pageLoad();
+	});
+	banhji.router.route("/reading", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.reading);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.reading;
+
+		banhji.userManagement.addMultiTask("Reading","reading",null);
+
+		if(banhji.pageLoaded["reading"]==undefined){
+			banhji.pageLoaded["reading"] = true;
+		}
+
 		vm.pageLoad();
 	});
 	banhji.router.route("/customer_deposit(/:id)(/:is_recurring)", function(id,is_recurring){

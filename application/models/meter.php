@@ -36,6 +36,10 @@ class Meter extends DataMapper {
         'voltage' => array(
             'class' => 'electricity_unit',
             'other_field' => 'voltage'
+        ),
+        'plan' => array(
+            'class' => 'plan',
+            'other_field' => 'meter'
         )
 	);
 	public $has_many = array( 
