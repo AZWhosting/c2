@@ -418,7 +418,7 @@ class Imports extends REST_Controller {
 		$this->response(array('results'=> array(), 'msg' => "Operation is good."), 201);		
 	}
 
-	// private _create_get() {
+	// function create_get() {
 	// 	$this->load->dbutil();
 	// 	$dbs = $this->dbutil->list_databases();
 
@@ -430,24 +430,50 @@ class Imports extends REST_Controller {
 	// 		    $data[] = $db;
 	// 		    $connection = 'use ' . $db;
 
-	// 		    $dataInserted = array(
-	// 			   'account_type_id' => 34,
-	// 			   'sub_of_id' => 70,
-	// 			   'number' => '32900',
-	// 			   'locale' => 'km-KH',
-	// 			   'name' => 'Opening Balance Equity',
-	// 			   'status' => 1,
-	// 			   'is_system' => 1
-	// 			);
+	// 		 //    $dataInserted = array(
+	// 			//    'account_type_id' => 34,
+	// 			//    'sub_of_id' => 70,
+	// 			//    'number' => '32900',
+	// 			//    'locale' => 'km-KH',
+	// 			//    'name' => 'Opening Balance Equity',
+	// 			//    'status' => 1,
+	// 			//    'is_system' => 1
+	// 			// );
 
 	// 			$this->db->query($connection);
-
-	// 			$this->db->insert('accounts', $dataInserted);
+	// 			// $this->dbforge->add_column("account_types", array('code'=> array('type'=> 'SMALLINT')));
+	// 			$myData = array(
+	// 				array('order' => 13, 'id' => 10),
+	// 				array('order' => 12, 'id' => 11),
+	// 				array('order' => 11, 'id' => 12),
+	// 				array('order' => 10, 'id' => 13),
+	// 				array('order' => 9, 'id' => 14),
+	// 				array('order' => 8, 'id' => 15),
+	// 				array('order' => 1, 'id' => 16),
+	// 				array('order' => 2, 'id' => 17),
+	// 				array('order' => 3, 'id' => 18),
+	// 				array('order' => 4, 'id' => 19),
+	// 				array('order' => 5, 'id' => 20),
+	// 				array('order' => 6, 'id' => 21),
+	// 				array('order' => 7, 'id' => 22),
+	// 				array('order' => 22, 'id' => 23),
+	// 				array('order' => 21, 'id' => 24),
+	// 				array('order' => 20, 'id' => 25),
+	// 				array('order' => 19, 'id' => 26),
+	// 				array('order' => 18, 'id' => 27),
+	// 				array('order' => 14, 'id' => 28),
+	// 				array('order' => 15, 'id' => 29),
+	// 				array('order' => 16, 'id' => 30),
+	// 				array('order' => 17, 'id' => 31)
+	// 			);
+	// 			$this->db->update_batch('account_types', $myData, 'id');
+	// 			// $this->db->insert('accounts', $dataInserted);
+	// 			// $this->dbforge->add_column('account_types', array('order'=>array('type'=> 'SMALLINT')));
 	// 		}
 		    
 	// 	}
 
-	// 	$this->response(array('results'=>$data), 200);
+	// 	// $this->response(array('results'=>$data), 200);
 
 	// }
 	

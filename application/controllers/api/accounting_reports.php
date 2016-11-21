@@ -841,7 +841,7 @@ class Accounting_reports extends REST_Controller {
 		$obj->where_related("transaction", "is_recurring", 0);		
 		$obj->where_related("transaction", "deleted", 0);
 		$obj->where("deleted", 0);		
-		$obj->order_by_related("account", "account_type_id", "asc");
+		$obj->order_by_related("account", "account_type_id", "desc");
 		$obj->order_by_related("account", "number", "asc");
 		$obj->order_by_related("transaction", "issued_date", "asc");
 		$obj->order_by_related("transaction", "number", "asc");
@@ -1195,7 +1195,7 @@ class Accounting_reports extends REST_Controller {
 		$obj->where_related("transaction", "is_recurring", 0);
 		$obj->where_related("transaction", "deleted", 0);
 		$obj->where("deleted", 0);
-		$obj->order_by_related("account", "account_type_id", "asc");
+		$obj->order_by_related("account/account_type", "order", "asc");
 		$obj->order_by_related("account", "number", "asc");		
 		$obj->get_iterated();
 		
@@ -1328,7 +1328,7 @@ class Accounting_reports extends REST_Controller {
 		$obj->where_related("transaction", "is_recurring", 0);
 		$obj->where_related("transaction", "deleted", 0);
 		$obj->where("deleted", 0);
-		$obj->order_by_related("account", "account_type_id", "desc");
+		$obj->order_by_related("account/account_type", "order", "asc");
 		$obj->order_by_related("account", "number", "asc");		
 		$obj->get_iterated();
 		
