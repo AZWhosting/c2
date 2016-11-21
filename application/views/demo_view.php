@@ -1612,7 +1612,7 @@
 			<input id="ntbDr" name="ntbDr" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-format="n0" 
+					data-decimals="2"
 					data-bind="value: dr, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>
@@ -1620,7 +1620,7 @@
 			<input id="ntbCr" name="ntbCr" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-format="n0" 
+					data-decimals="2"
 					data-bind="value: cr, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />										
 		</td>		
@@ -7224,7 +7224,7 @@
 		<td class="right">
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
-					data-format="n0"
+					data-decimals="2"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -7803,7 +7803,7 @@
 		<td class="right">
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n0"
+					data-decimals="2"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -9560,7 +9560,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n"
+					data-decimals="2"
 					data-spinners="false"
 					data-bind="value: cost, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -9583,7 +9583,7 @@
 					style="width:100%;" />
 		</td>				
 		<td class="right">
-			<span data-format="n" data-bind="text: amount"></span> 						
+			<span data-decimals="2" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -10491,7 +10491,7 @@
 		<td class="right">
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox" 
-					data-format="n"
+					data-decimals="2"
 					data-spinners="false"
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
@@ -11292,7 +11292,7 @@
 		<td>
 			<input id="txtPrice" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n"
+					data-decimals="2"
 					data-spinners="false"
 					data-bind="value: cost, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -11308,7 +11308,7 @@
                    style="width: 65px;">			
 		</td>				
 		<td class="right">
-			<span data-format="n" data-bind="text: amount"></span> 						
+			<span data-decimals="2" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -11322,7 +11322,7 @@
                    style="width: 100%" />			
 		</td>
 		<td class="center" data-bind="visible: showAdditionalCost">
-			<span data-format="n" data-bind="text: additional_cost"></span>
+			<span data-decimals="2" data-bind="text: additional_cost"></span>
 						
 			<input type="checkbox" data-bind="checked: additional_applied,
 										events:{ change: changes }" />
@@ -11376,7 +11376,7 @@
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-format="n0" 
+					data-decimals="2" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>
@@ -11468,7 +11468,7 @@
 			<input id="txtSubTotal-#:uid#" name="txtSubTotal-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-format="n0" 
+					data-decimals="2" 
 					data-bind="value: sub_total, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" /> 						
 		</td>		
@@ -11889,7 +11889,7 @@
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-format="n" 
+					data-decimals="2" 
 					data-bind="value: cost, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
 		</td>					
@@ -11904,7 +11904,7 @@
                    style="width: 65px;">			
 		</td>				
 		<td class="right">
-			<span data-format="n" data-bind="text: amount"></span> 						
+			<span data-decimals="2" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -11962,7 +11962,7 @@
 			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-format="n" 
+					data-decimals="2" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
 		</td>								
@@ -16364,7 +16364,7 @@
 			<input 	id="txtPrice-#:uid#" 
 					name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n"
+					data-decimals="2"
 					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -16380,7 +16380,7 @@
                    style="width: 100%;">			
 		</td>				
 		<td class="right">
-			<span data-format="n" data-bind="text: amount"></span> 						
+			<span data-decimals="2" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input 	id="ccbTaxItem" 
@@ -16956,7 +16956,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n"
+					data-decimals="2"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -16987,7 +16987,7 @@
 					style="width:100%;" />
 		</td>				
 		<td class="right">
-			<span data-format="n" data-bind="text: amount"></span> 						
+			<span data-decimals="2" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -17491,7 +17491,7 @@
 			<input id="txtAmount" name="txtAmount" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-format="n" 
+					data-decimals="2" 
 					data-bind="value: amount, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%; text-align: right;" /> 						
 		</td>			
@@ -18099,7 +18099,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n"
+					data-decimals="2"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -18115,7 +18115,7 @@
                    style="width: 65px;">			
 		</td>				
 		<td class="right">
-			<span data-format="n" data-bind="text: amount"></span> 						
+			<span data-decimals="2" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -18724,7 +18724,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n"
+					data-decimals="2"
 					data-spinners="false" 
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -18740,7 +18740,7 @@
                    style="width: 65px;">			
 		</td>				
 		<td class="right">
-			<span data-format="n" data-bind="text: amount"></span> 						
+			<span data-decimals="2" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -19609,7 +19609,7 @@
 		<td>
 			<input id="txtPrice-#:uid#" name="txtPrice-#:uid#" 
 					data-role="numerictextbox" 
-					data-format="n"
+					data-decimals="2"
 					data-spinners="false"
 					data-bind="value: price, events: {change : changes}" 
 					required data-required-msg="required" style="width: 100%;" />
@@ -19625,7 +19625,7 @@
                    style="width: 65px;">			
 		</td>				
 		<td class="right">
-			<span data-format="n" data-bind="text: amount"></span> 						
+			<span data-decimals="2" data-bind="text: amount"></span> 						
 		</td>
 		<td>
 			<input id="ccbTaxItem" name="ccbTaxItem-#:uid#"
@@ -36703,7 +36703,7 @@
 			<input data-role="numerictextbox"
 				   data-spinners="false"
 				   data-culture="#:locale#"
-                   data-format="c0"
+                   data-decimals="2"
                    data-min="0"                   
                    data-bind="value: discount,
                               events: { change: changes }"
@@ -36713,7 +36713,7 @@
 			<input data-role="numerictextbox"
 				   data-spinners="false"
 				   data-culture="#:locale#"
-                   data-format="c0"
+                   data-decimals="2"
                    data-min="0"                   
                    data-bind="value: amount,
                               events: { change: changes }"
@@ -37002,7 +37002,7 @@
 			<input data-role="numerictextbox"
 				   data-spinners="false"
 				   data-culture="#:locale#"
-                   data-format="c0"
+                   data-decimals="2"
                    data-min="0"                   
                    data-bind="value: discount,
                               events: { change: changes }"
@@ -37012,7 +37012,7 @@
 			<input data-role="numerictextbox"
 				   data-spinners="false"
 				   data-culture="#:locale#"
-                   data-format="c0"
+                   data-decimals="2"
                    data-min="0"                   
                    data-bind="value: amount,
                               events: { change: changes }"
@@ -44968,8 +44968,8 @@
 	});
 	banhji.statementFinancialPosition =  kendo.observable({
 		lang 				: langVM,
-		dataSource			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
-		liabilityDS			: dataStore(apiUrl + "accounting_reports/balance_sheet"),
+		dataSource			: dataStore(apiUrl + "accounting_reports/balance_sheet_asset"),
+		liabilityDS			: dataStore(apiUrl + "accounting_reports/balance_sheet_liability"),
 		equityDS			: dataStore(apiUrl + "accounting_reports/balance_sheet_equity"),
 		as_of 				: new Date(),
 		displayDate 		: "",
