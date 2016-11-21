@@ -2642,9 +2642,7 @@
 			#}#
 		</td>		
 		<td style="color: black;">
-			#if(i==0){#
-				#=line[i].memo#
-			#}#
+			#=line[i].memo#
 		</td>
 		<td class="right" style="color: black;">
 			#=kendo.toString(line[i].amount, "c", banhji.locale)#
