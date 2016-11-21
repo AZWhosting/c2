@@ -316,273 +316,6 @@
 	</div>		
 </script>
 
-<!-- <script type="text/x-kendo-template" id="index">
-	<div class="row-fluid">
-		<div class="span6">
-			<div class="row">
-				<div class="span12" style="padding-left: 0; margin-left: 0; margin-top: 0;">
-					<ul id="module-image">
-						<li style="text-align:center;">
-							<a href="#/customers ">
-								<img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Customers</span>
-						</li>
-						<li style="text-align:center;">
-							<a href="#/vendors">
-								<img title="Supplier Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg" alt="Vendor">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Suppliers</span>
-						</li>
-						<li style="text-align:center;">
-							<a href="#/inventories">
-								<img title="Inventories Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg" alt="Inventory">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Products/Services</span>
-						</li>
-						<li style="text-align:center;">
-							<a href="#/documents">
-								<img title="Attached Documents" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/attach_file.png" alt="Attachment">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Documents</span>
-						</li>
-					</ul>
-					<ul id="module-image">
-						<li style="text-align:center;">
-							<a href="#/cashs">
-								<img title="Cash Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/1.png" alt="Cash Management">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000">Cash MGT.</span>
-						</li>
-						<li style="text-align:center;">
-							<a href="#/accounting">
-								<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">							
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.accounting"></span></span>
-							</a>
-						</li>
-						<li style="text-align:center;">
-							<a href="#/reports">
-								<img title="Reports Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/report.jpg" alt="Reports">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span ></span>Reports</span>
-						</li>
-						<li style="text-align:center;">
-							<a href="<?php echo base_url(); ?>admin">
-								<img title="Setting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
-								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.settings"></span></span>
-							</a>
-						</li>
-					</ul>
-				</div>
-				
-				<div class="span12" style="padding-left: 0; margin-left: 0; margin-top: 30px;">
-					<h4 style="margin-left: 35px; width: 450px;"><span data-bind="text: lang.lang.subcribed_industry_modules"></span></h4>
-					<ul id="module-image">
-						<li style="text-align:center;">
-							<a href="#">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/web_store.jpg" alt="Customer">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.web_store"></span></span>
-						</li>
-						<li style="text-align:center;">
-							<a href="#/sale_tax">
-								<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
-							</a>
-							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax"></span></span>
-						</li>
-					</ul>	
-				</div>
-			</div>	
-		</div>
-		
-		
-		<div class="span6">
-			<div class="row">
-				<div class="span12">					
-
-					
-					<div class="board-add">
-						<div class="span6">
-							<h2>Welcome on board!</h2>
-							<p>
-								To get you started with BanhJi, please have a look at this <a target="_blank" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/guide/welcome_guide.pdf">[Welcome Guide]</a>.
-							</p>
-						</div>
-						<div class="span6">
-							<div class="span12">
-								<div class="span3">
-									<a href="#/customer" class="center">
-										<img title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
-									</a>
-								</div>
-								<div class="span3">
-									<a href="#/vendor" class="center">
-										<img title="Add Supplier" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/suppliers.ico" />
-									</a>
-								</div>
-								<div class="span3">
-									<a href="#/item" class="center">
-										<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
-									</a>
-								</div>
-								<div class="span3">
-									<a href="#/item_service" class="center">
-										<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				
-					<div class="board-financial">
-						<div class="span12">
-							<h4 data-bind="text: companyName"></h4>
-							<h2 style="color: #113051;">Financial Snapshot</h2>
-							<span style="color: #000000;">As of:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
-						</div>
-					</div>
-
-					
-					<div class="board-chart">
-						<div class="span12">
-							<div class="span6">
-								<p>Performance</p>
-								<table class="performance">
-									<tr>
-										<td>Income</td>
-										<td></td>
-										<td>0</td>
-									</tr>
-									<tr>
-										<td>Expense</td>
-										<td></td>
-										<td>0</td>
-									</tr>
-									<tr>
-										<td><b>Net Income</b></td>
-										<td></td>
-										<td><b>0</b></td>
-									</tr>
-								</table>
-							</div>
-							<div class="span6">
-								<p>Position</p>
-								<table class="position" style="width: 100%;">
-									<tr>
-										<td>Assets</td>
-										<td></td>
-										<td>0</td>
-									</tr>
-									<tr>
-										<td>Liabilities</td>
-										<td></td>
-										<td>0</td>
-									</tr>
-									<tr>
-										<td><b>Equity</b></td>
-										<td></td>
-										<td><b>0</b></td>
-									</tr>
-								</table>
-							</div>
-						</div>
-						
-						<div class="span12">
-							<div class="span6">
-								<a href="#/customer_balance">
-									<div class="widget-body alert-info welcome-nopadding" >
-										<p>RECEIVABLES</p>
-								
-										<div align="center" class="text-large strong" data-bind="text: ar"></div>
-									
-										<table width="100%" >
-											<tr align="center">
-												<td>										
-													<span data-bind="text: ar_open"></span>
-													<br>
-													<span>Open</span>
-												</td>
-												<td>
-													<span data-bind="text: ar_customer"></span>
-													<br>
-													<span>Customer</span>
-												</td>
-												<td>
-													<span data-bind="text: ar_overdue"></span>
-													<br>
-													<span>Overdue</span>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</a>
-							</div>
-							<div class="span6">
-								
-
-								<div class="widget-body  alert-info welcome-nopadding" style="width: 100%;">
-									<p>PAYABLES</p>
-							
-									<div align="center" class="text-large strong" data-bind="text: ap"></div>
-								
-									<table width="100%">
-										<tr align="center">
-											<td>										
-												<span data-bind="text: ap_open"></span>
-												<br>
-												<span>Open</span>
-											</td>
-											<td>
-												<span data-bind="text: ap_vendor"></span>
-												<br>
-												<span>Supplier</span>
-											</td>
-											<td>
-												<span data-bind="text: ap_overdue"></span>
-												<br>
-												<span>Overdue</span>
-											</td>
-										</tr>
-									</table>
-								</div>
-							</div>
-						</div>
-
-						<div class="span12">
-							<div class="home-chart">
-								
-								<div data-role="chart"
-									 data-auto-bind="false"
-					                 data-legend="{ position: 'top' }"
-					                 data-series-defaults="{ type: 'column' }"
-					                 data-tooltip='{
-					                    visible: true,
-					                    format: "{0}%",
-					                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-					                 }'                 
-					                 data-series="[
-					                                 { field: 'cash_in', name: 'Cash In', categoryField:'month', color: '#236DA4' },
-					                                 { field: 'cash_out', name: 'Cash Out', categoryField:'month', color: '#A6C9E3' }
-					                             ]"	                             
-					                 data-bind="source: graphDS"
-					                 style="height: 250px;" ></div>
-					            
-							</div>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row-fluid">
-		<div style="margin-top: 10px; margin-left: 0;" align="center">
-			<p>© 2016 BanhJi PTE. Ltd. All rights reserved.</p>
-		</div>	
-	</div>		
-</script> -->
 
 <script id="searchAdvanced" type="text/x-kendo-template">
     <div id="slide-form">
@@ -2914,7 +2647,7 @@
 			#}#
 		</td>
 		<td class="right" style="color: black;">
-			#=line[i].amount#
+			#=kendo.toString(line[i].amount, "c", banhji.locale)#
 		</td>
 		<td class="right" style="color: black;">
 			#=kendo.toString(balance, "c", banhji.locale)#
@@ -11245,7 +10978,7 @@
 										<!-- Add New Item -->
 										<ul class="topnav addNew">
 											<li role="presentation" class="dropdown ">
-										  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+										  		<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 										  			<span data-bind="text: lang.lang.add_new_item"></span>
 							    					<span class="caret"></span>
 										  		</a>
@@ -11305,26 +11038,10 @@
 											</li>															
 										</ul>
 									</div>
-
-									<!-- Add New Item -->
-									<ul class="topnav addNew">
-										<li role="presentation" class="dropdown ">
-									  		<a href="#/account" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-									  			<span data-bind="text: lang.lang.add_account"></span>
-						    					<!-- <span class="caret"></span> -->
-									  		</a>
-								  			<!-- <ul class="dropdown-menu addNewItem">  				  				
-								  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-								  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-								  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
-								  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
-								  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
-								  				 				
-								  			</ul> -->
-									  	</li>				
-									</ul>
-									<!--End Add New Item -->
-																
+									
+							  		<a href="#/account" class="btn" style="background: #f4f4f4; color: #333; width: 137px;">
+							  			<span data-bind="text: lang.lang.add_account"></span>
+							  		</a>					
 								</div>
 
 					        </div>
@@ -11410,8 +11127,7 @@
 
 					    </div>
 					</div>							    	    
-									
-		            <!-- Bottom part -->
+ 		            <!-- Bottom part -->
 		            <div class="row-fluid">
 			
 						<!-- Column -->
@@ -11540,7 +11256,6 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 				   data-role="combobox"
-				   
 				   data-template="item-list-tmpl"                   			   
                    data-text-field="name"
                    data-value-field="id"
@@ -11624,8 +11339,7 @@
 		<td>
 			<input id="cbbAccounts" name="cbbAccounts-#:uid#"
 				   data-role="combobox"                   
-                   data-value-primitive="true"
-                   data-header-template="account-header-tmpl"                  
+                   data-value-primitive="true"                  
                    data-template="account-list-tmpl"                                     
                    data-text-field="name"
                    data-value-field="id"
@@ -20170,8 +19884,7 @@
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
 	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.customer_type"></span></span></a>
-
+	            <li class="active"><a href="#tab1-4" class="glyphicons group" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.customer_type"></span></span></a>
 	            </li>
 	            <li><a href="#tab2-4" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
 	            </li>
@@ -39289,7 +39002,7 @@
 								</span>
 							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
+							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
 							<span data-bind="click: contact.save, text: lang.lang.import_contact">Import Contact</span></span>
@@ -39309,7 +39022,7 @@
 								</span>
 							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
+							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
 							<span data-bind="click: item.save, text: lang.lang.import_inventory">Import Inventory</span></span>
@@ -39327,7 +39040,7 @@
 								</span>
 							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: journal.onSelected}" id="myFile"  class="margin-none" />
+							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: journal.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
 							<button style="background: none;border: none;" data-bind="disabled: journal.enabled, click: journal.save, text: lang.lang.import_journal">Import Journal</button></span><br>
@@ -49040,8 +48753,8 @@
 		protectDS 				: dataStore(apiUrl + "transactions"),		
 		existingDS 				: dataStore(apiUrl + "contacts"),		
 		contactPersonDS			: dataStore(apiUrl + "contact_persons"),		
-		paymentTermDS			: dataStore(apiUrl + "payment_terms"),
-		paymentMethodDS			: dataStore(apiUrl + "payment_methods"),
+		paymentTermDS			: banhji.source.paymentTermDS,
+		paymentMethodDS			: banhji.source.paymentMethodDS,
 		taxItemDS				: dataStore(apiUrl + "tax_items"),
 		countryDS 				: banhji.source.countryDS,
 		contactTypeDS  			: banhji.source.supplierTypeDS,
@@ -51898,8 +51611,6 @@
 		referenceLineDS		: dataStore(apiUrl + "transactions/line"),
 		jobDS				: dataStore(apiUrl + "jobs"),		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
-		measurementDS		: dataStore(apiUrl + "measurements"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
 		contactListDS 		: banhji.source.supplierListDS,
 		contactDS  			: banhji.source.supplierDS,
 		accountDS  			: dataStore(apiUrl + "accounts"),
@@ -51943,8 +51654,9 @@
 		taxItemDS  			: banhji.source.supplierTaxDS,
 		catalogDS			: dataStore(apiUrl + "items"),
 		assemblyDS			: dataStore(apiUrl + "items/assembly"),
-		paymentTermDS 		: dataStore(apiUrl + "payment_terms"),
-		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),
+		paymentTermDS 		: banhji.source.paymentTermDS,
+		paymentMethodDS 	: banhji.source.paymentMethodDS,
+		measurementDS		: banhji.source.measurementDS,
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		segmentItemDS		: banhji.source.segmentItemDS,
 		txnTemplateDS		: new kendo.data.DataSource({
@@ -54536,8 +54248,8 @@
 	banhji.vendorSetting =  kendo.observable({
 		lang 				: langVM,		
         contactTypeDS 		: banhji.source.supplierTypeDS,
-        paymentMethodDS		: dataStore(apiUrl+"payment_methods"),
-        paymentTermDS		: dataStore(apiUrl+"payment_terms"),  
+        paymentMethodDS		: banhji.source.paymentMethodDS,
+        paymentTermDS		: banhji.source.paymentTermDS,  
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),      
         contactTypeName 	: "",
         contactTypeAbbr 	: "",
@@ -55817,8 +55529,8 @@
 		protectDS 				: dataStore(apiUrl + "transactions"),		
 		existingDS 				: dataStore(apiUrl + "contacts"),		
 		contactPersonDS			: dataStore(apiUrl + "contact_persons"),		
-		paymentTermDS			: dataStore(apiUrl + "payment_terms"),
-		paymentMethodDS			: dataStore(apiUrl + "payment_methods"),
+		paymentTermDS			: banhji.source.paymentTermDS,
+		paymentMethodDS			: banhji.source.paymentMethodDS,
 		taxItemDS				: dataStore(apiUrl + "tax_items"),
 		countryDS 				: banhji.source.countryDS,
 		contactTypeDS  			: banhji.source.customerTypeDS,
@@ -56257,7 +55969,15 @@
 		deleteDS 			: dataStore(apiUrl + "transactions"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "transactions/line"),
-		attachmentDS	 	: dataStore(apiUrl + "attachments"),			
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		balanceDS  			: dataStore(apiUrl + "transactions"),
+		paymentTermDS 		: banhji.source.paymentTermDS,
+		contactDS  			: banhji.source.customerDS,
+		employeeDS  		: banhji.source.saleRepDS,
+		itemDS  			: banhji.source.itemDS,
+		taxItemDS 			: banhji.source.customerTaxDS,
+		catalogDS			: dataStore(apiUrl + "items"),
+		assemblyDS			: dataStore(apiUrl + "items/assembly"),
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -56293,16 +56013,7 @@
 			serverPaging: true,
 			page:1,
 			pageSize: 100
-		}),
-		balanceDS  			: dataStore(apiUrl + "transactions"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
-		paymentTermDS 		: dataStore(apiUrl + "payment_terms"),
-		contactDS  			: banhji.source.customerDS,
-		employeeDS  		: banhji.source.saleRepDS,
-		itemDS  			: banhji.source.itemDS,
-		taxItemDS 			: banhji.source.customerTaxDS,
-		catalogDS			: dataStore(apiUrl + "items"),
-		assemblyDS			: dataStore(apiUrl + "items/assembly"),		
+		}),		
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,		
@@ -60192,6 +59903,13 @@
 		jobDS				: dataStore(apiUrl + "jobs"),		
 		balanceDS  			: dataStore(apiUrl + "transactions"),
 		depositDS  			: dataStore(apiUrl + "transactions"),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		contactDS  			: banhji.source.customerDS,
+		employeeDS  		: banhji.source.saleRepDS,
+		itemDS  			: banhji.source.itemDS,
+		taxItemDS  			: banhji.source.customerTaxDS,
+		catalogDS			: dataStore(apiUrl + "items"),
+		assemblyDS			: dataStore(apiUrl + "items/assembly"),
 		depositSumDS  		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -60262,15 +59980,7 @@
 			page:1,
 			pageSize: 100
 		}),
-		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		currencyRateDS		: dataStore(apiUrl + "currencies/rate"),
-		contactDS  			: banhji.source.customerDS,
-		employeeDS  		: banhji.source.saleRepDS,
-		itemDS  			: banhji.source.itemDS,
-		taxItemDS  			: banhji.source.customerTaxDS,
-		catalogDS			: dataStore(apiUrl + "items"),
-		assemblyDS			: dataStore(apiUrl + "items/assembly"),
-		paymentTermDS 		: dataStore(apiUrl + "payment_terms"),
+		paymentTermDS 		: banhji.source.paymentTermDS,
 		segmentItemDS		: banhji.source.segmentItemDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -63722,7 +63432,7 @@
 		lang 				: langVM,
         contactTypeDS 		: banhji.source.customerTypeDS,
         paymentMethodDS		: banhji.source.paymentMethodDS,
-        paymentTermDS		: dataStore(apiUrl+"payment_terms"),
+        paymentTermDS		: banhji.source.paymentTermDS,
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
         contactTypeName 	: "",
         contactTypeAbbr 	: "",
@@ -67318,8 +67028,8 @@
 		contactDS  			: banhji.source.customerDS,
 		employeeDS  		: banhji.source.saleRepDS,
 		accountDS  			: banhji.source.cashAccountDS,		
-		paymentTermDS 		: dataStore(apiUrl + "payment_terms"),
-		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),	
+		paymentTermDS 		: banhji.source.paymentTermDS,
+		paymentMethodDS 	: banhji.source.paymentMethodDS,	
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -67829,8 +67539,8 @@
 		contactDS  			: banhji.source.supplierDS,
 		employeeDS  		: banhji.source.saleRepDS,
 		accountDS  			: banhji.source.cashAccountDS,		
-		paymentTermDS 		: dataStore(apiUrl + "payment_terms"),
-		paymentMethodDS 	: dataStore(apiUrl + "payment_methods"),	
+		paymentTermDS 		: banhji.source.paymentTermDS,
+		paymentMethodDS 	: banhji.source.paymentMethodDS,	
 		txnTemplateDS		: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -68585,8 +68295,8 @@
 	banhji.cashSetting =  kendo.observable({
 		lang 				: langVM,		
         contactTypeDS 		: banhji.source.customerTypeDS,
-        paymentMethodDS		: dataStore(apiUrl+"payment_methods"),
-        paymentTermDS		: dataStore(apiUrl+"payment_terms"),
+        paymentMethodDS		: banhji.source.paymentMethodDS,
+        paymentTermDS		: banhji.source.paymentTermDS,
         txnTemplateDS		: dataStore(apiUrl + "transaction_templates"),
         contactTypeName 	: "",
         contactTypeAbbr 	: "",
@@ -72639,7 +72349,7 @@
         		alert("required name");
         	}
         },
-        addBrand 		: function(){
+        addBrand 			: function(){
         	var self = this, 
         	code = this.get("brand_code"),
         	name = this.get("brand_name");
@@ -72661,7 +72371,7 @@
         		alert("required number and name!");
         	}
         },
-        goPattern 	: function(e){
+        goPattern 			: function(e){
         	var data = e.data;        	        	
 
         	if(kendo.parseInt(data.item_id)>0){
@@ -73513,6 +73223,7 @@
 	banhji.importContact = kendo.observable({
 		dataSource 	  : dataStore(apiUrl+"imports/contact"),
 		onSelected    : function(e) {
+			$('li.k-file').remove();
 	        var files = e.files;
 	        var reader = new FileReader();
 			banhji.importContact.dataSource.data([]);		
@@ -73550,6 +73261,7 @@
 	banhji.importItem = kendo.observable({
 		dataSource 	  : dataStore(apiUrl+"imports/item"),
 		onSelected    : function(e) {
+			$('li.k-file').remove();
 	        var files = e.files;
 	        var reader = new FileReader();
 			banhji.importItem.dataSource.data([]);	
@@ -73600,6 +73312,7 @@
 			return existed;
 		},
 		onSelected    : function(e) {
+			$('li.k-file').remove();
 	        var files = e.files;
 	        $("#loadImport").css("display","block");
 	        banhji.importJournal.set('enabled', false);

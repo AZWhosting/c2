@@ -38992,7 +38992,7 @@
 								</span>
 							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
+							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: contact.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
 							<span data-bind="click: contact.save, text: lang.lang.import_contact">Import Contact</span></span>
@@ -39012,7 +39012,7 @@
 								</span>
 							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
+							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: item.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
 							<span data-bind="click: item.save, text: lang.lang.import_inventory">Import Inventory</span></span>
@@ -39030,7 +39030,7 @@
 								</span>
 							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: journal.onSelected}" id="myFile"  class="margin-none" />
+							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: journal.onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
 							<button style="background: none;border: none;" data-bind="disabled: journal.enabled, click: journal.save, text: lang.lang.import_journal">Import Journal</button></span><br>
@@ -73169,6 +73169,7 @@
 	banhji.importContact = kendo.observable({
 		dataSource 	  : dataStore(apiUrl+"imports/contact"),
 		onSelected    : function(e) {
+			$('li.k-file').remove();
 	        var files = e.files;
 	        var reader = new FileReader();
 			banhji.importContact.dataSource.data([]);		
@@ -73206,6 +73207,7 @@
 	banhji.importItem = kendo.observable({
 		dataSource 	  : dataStore(apiUrl+"imports/item"),
 		onSelected    : function(e) {
+			$('li.k-file').remove();
 	        var files = e.files;
 	        var reader = new FileReader();
 			banhji.importItem.dataSource.data([]);	
@@ -73256,6 +73258,7 @@
 			return existed;
 		},
 		onSelected    : function(e) {
+			$('li.k-file').remove();
 	        var files = e.files;
 	        $("#loadImport").css("display","block");
 	        banhji.importJournal.set('enabled', false);

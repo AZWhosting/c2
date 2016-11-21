@@ -868,7 +868,7 @@ class Accounting_reports extends REST_Controller {
 						"type" 				=> $value->transaction_type,
 						"number" 			=> $value->transaction_number,
 						"issued_date" 		=> $value->transaction_issued_date,
-						"memo" 				=> $value->transaction_memo,
+						"memo" 				=> $value->description,
 						"amount" 			=> $amount
 					);
 				}else{
@@ -900,7 +900,7 @@ class Accounting_reports extends REST_Controller {
 						"type" 				=> $value->transaction_type,
 						"number" 			=> $value->transaction_number,
 						"issued_date" 		=> $value->transaction_issued_date,
-						"memo" 				=> $value->transaction_memo,
+						"memo" 				=> $value->description,
 						"amount" 			=> $amount
 					);			
 				}
