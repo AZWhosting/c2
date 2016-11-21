@@ -42054,6 +42054,24 @@
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
+				},
+				create 	: {
+					url: apiUrl + "accounts/type",
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: apiUrl + "accounts/type",
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: apiUrl + "accounts/type",
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
 				},				
 				parameterMap: function(options, operation) {
 					if(operation === 'read') {
@@ -42949,6 +42967,7 @@
 				pageSize:1000
 			});
 			this.accountDS.read();
+			this.accountTypeDS.read();
 		},
 		getFiscalDate 				: function(){
 			var today = new Date(),	
@@ -43233,7 +43252,7 @@
 			sub = this.dataSource.get(data.sub_of_id),
 			type = this.accountTypeDS.get(data.account_type_id);
 			
-			if(obj.sub_of_id>0){
+			if(data.sub_of_id>0){
 				this.set("subName", sub.name);
 			}else{
 				this.set("subName", "");

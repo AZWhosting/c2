@@ -1104,7 +1104,7 @@
 								</span>
 							</a>
 							<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
-							  	<input type="file"  data-role="upload" data-show-file-list="false" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
+							  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
 							</div>
 							<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
 							<span data-bind="click: importReading">Start Reading</span></span>
@@ -1224,7 +1224,7 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.customer"></span> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>  				
-  				<li><a href='#/wCustomer_center'><span data-bind="text: lang.lang.customer_center"></span></a></li>
+  				<li><a href='#/wCustomer_center'><span >Customer Center</span></a></li>
   				<li><a href='#/wNew_customer'><span data-bind="text: lang.lang.new_customer"></span></a></li>
   				<li><a href='#/wCustomer_order'><span data-bind="text: lang.lang.reorder_customer"></span></a></li>  				
   			</ul>
@@ -5760,6 +5760,9 @@
 	    	});		
 			var obj = this.dataSource.at(0);			
 			this.set("obj", obj);		
+		},
+		onSelected 			: function(){
+			$('li.k-file').remove();
 		},
 		exportEXCEL 		: function(){
 			var workbook = new kendo.ooxml.Workbook({

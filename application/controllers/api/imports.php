@@ -468,7 +468,7 @@ class Imports extends REST_Controller {
 	// 			);
 	// 			$this->db->update_batch('account_types', $myData, 'id');
 	// 			// $this->db->insert('accounts', $dataInserted);
-	// 			// $this->dbforge->add_column('account_types', array('order'=>array('type'=> 'SMALLINT')));
+	
 	// 		}
 		    
 	// 	}
