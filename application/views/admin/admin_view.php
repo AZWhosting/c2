@@ -1517,6 +1517,7 @@
           });
         }
       });
+
       banhji.profileDS = new kendo.data.DataSource({
         transport: {
           read  : {
