@@ -198,7 +198,7 @@ class Dashboards extends REST_Controller {
 
 		$transactionList = [];
 		foreach ($obj as $value) {
-			$month = date('F', strtotime($value->transaction_issued_date));
+			$month = date('M', strtotime($value->transaction_issued_date));
 			$dr = floatval($value->dr) / floatval($value->rate);
 			$cr = floatval($value->cr) / floatval($value->rate);
 
@@ -543,7 +543,7 @@ class Dashboards extends REST_Controller {
 
 		$transactionList = [];
 		foreach ($obj as $value) {
-			$month = date('F', strtotime($value->issued_date));
+			$month = date('M', strtotime($value->issued_date));
 			$amount = floatval($value->amount) / floatval($value->rate);
 
 			if(isset($transactionList[$month])){
@@ -1039,7 +1039,7 @@ class Dashboards extends REST_Controller {
 
 		$transactionList = [];
 		foreach ($obj as $value) {
-			$month = date('F', strtotime($value->issued_date));
+			$month = date('M', strtotime($value->issued_date));
 			$amount = floatval($value->amount) / floatval($value->rate);
 
 			if(isset($transactionList[$month])){
@@ -1855,7 +1855,7 @@ class Dashboards extends REST_Controller {
 		
 		$transactionList = [];
 		foreach ($obj as $value) {
-			$month = date('F', strtotime($value->issued_date));
+			$month = date('M', strtotime($value->issued_date));
 			$amount = floatval($value->amount) / floatval($value->rate);
 
 			if(isset($transactionList[$month])){
