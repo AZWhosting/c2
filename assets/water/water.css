@@ -1,0 +1,28 @@
+.widget.widget-tabs-gray > .widget-head ul li.active {
+  background: #fff;
+}
+.glyphicons.btn-icon {
+	color: #fff;
+	margin-bottom: 10px;
+}
+.k-picker-wrap .k-select, .k-numeric-wrap .k-select, .k-dropdown-wrap .k-select {
+	width: 40px;
+}
+.k-textbox .k-icon {
+	margin: -8px -6px 0;
+}
+.k-picker-wrap.k-state-hover, .k-picker-wrap.k-state-active {
+	background: none;
+}
+p.addItem {
+	cursor: pointer;
+}
+p.addItem.glyphicons.circle_plus i:before {
+	color: #fff;
+}
+p.addItem.glyphicons.circle_remove i:before {
+	color: #a22314;
+}
+.box-generic-noborder {
+	min-height: 155px;
+}

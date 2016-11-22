@@ -33364,6 +33364,27 @@
 					</table>
 				</div>
 			</div> -->
+
+
+			<div class="row-fluid recevable-report">
+				<div class="row-fluid">
+					<table class="table table-borderless table-condensed">
+						<tr>
+							<td>
+								<h3><a href="#/cash_position_report">Cash Positition Report</a></h3>
+							</td>
+							<td>
+								<h3><a href="#/cash_collection_report">Cash Collection Report</a></h3>
+							</td>
+							<td>
+								<h3><a href="#/cash_payment_report">Cash Payment Report</a></h3>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+
 		</div>
 		<div class="span5">
 			<span class="pull-right glyphicons no-js remove_2" 
@@ -35044,6 +35065,284 @@
 		</div>
 	</div>
 </script>
+
+
+
+
+
+<script id="cashPositionReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+											<input id="sorter" name="sorter"
+									    	   data-role="dropdownlist"
+									           data-value-primitive="true"
+									           data-text-field="text"
+									           data-value-field="value"
+									           data-bind="value: sorter,
+									                      source: sortList,
+									                      events: {change: dateChange}" />
+
+									        <input id="sdate" name="sdate"
+									        	   data-role="datepicker"
+										           data-bind="value: startDate, events: {change: dateMax}"
+										           placeholder="From ..." />
+
+									       	<input id="edate" name="edate"
+									       		   data-role="datepicker"
+										           data-bind="value: endDate, events: {change: dateMin}"
+										           placeholder="To ..." />
+
+										  	 <button type="button" data-role="button" data-bind="click: inventoryMovementSummary.search"><i class="icon-search"></i></button>							
+									    </div>									        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+					<div id="invFormContent">
+
+					<div class="block-title">
+						<h3 data-bind="text: institute.name"></h3>
+						<h2>Cash Position Report</h2>
+						<p>As of Date: November 30 2016</p>
+					</div>
+
+						<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
+							<thead>
+								<tr>
+									<th style="background: none;"></th>
+									<th style="background: none;"></th>
+									<th>Cash Account</th>
+								</tr>
+							</thead>
+							
+							<tr>
+								<td>
+									<b>Opening Balance</b>
+								</td>
+								<td>
+									
+								</td>
+								<td align="right">
+									210,000.00
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Cash Inflows</b>
+								</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									cash sale
+								</td>
+								<td align="right">
+									xxx
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									cash collection
+								</td>
+								<td align="right">
+									xxx
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									other cash recipt
+								</td>
+								<td align="right">
+									xxx
+								</td>
+							</tr>
+							<tr>
+								<td><b>Total Cash Inflows</b></td>
+								<td></td>
+								<td align="right" style="border-top: 1px solid #333 !important; border-bottom: 3px double #333 !important;">
+									xxx
+								</td>
+							</tr>
+							<tr>
+								<td><b>Cash Outflows</b></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									cash payment
+								</td>
+								<td align="right">
+									xxx
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									cash expense
+								</td>
+								<td align="right">
+									xxx
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									other cash expense
+								</td>
+								<td align="right">
+									xxx
+								</td>
+							</tr>
+							<tr>
+								<td><b>Total Cash Outflows</b></td>
+								<td></td>
+								<td align="right" style="border-top: 1px solid #333 !important; border-bottom: 3px double #333 !important;">
+									xxx
+								</td>
+							</tr>
+							<tr>
+								<td>Net Cash Defisit/surplus</td>
+								<td></td>
+								<td align="right" style="border-bottom: 2px solid #333 !important;">
+									xxx
+								</td>
+							</tr>
+
+
+
+
+
+
+							
+							
+						</table>
+					 
+						
+
+	            	</div>
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashCollectionReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+					
+					<div id="invFormContent">
+
+					<div class="block-title">
+
+						<h3 data-bind="text: institute.name"></h3>
+						<h2>Cash Collection Report</h2>
+						<p>As of Date: November 30 2016</p>
+					</div>
+
+					<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Account</span></th>
+									<th><span>Date</span></th>
+									<th><span>Type</span></th>
+									<th><span>Customer</span></th>
+									<th><span>Invoice</span></th>
+									<th><span>Cash Receipt</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="inventory-movement-summary-row-template"
+					                data-bind="source: inventoryMovementSummary.dataSource" >
+					        </tbody>
+		            	</table>
+	            	</div>
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashPaymentReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					
+					<div id="invFormContent">
+
+					<div class="block-title">
+
+						<h3 data-bind="text: institute.name"></h3>
+						<h2>Cash Payment Report</h2>
+						<p>As of Date: November 30 2016</p>
+					</div>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Account</span></th>
+									<th><span>Date</span></th>
+									<th><span>Type</span></th>
+									<th><span>Supplier</span></th>
+									<th><span>Bill</span></th>
+									<th><span>Cash Payment</span></th>
+								</tr>
+							</thead>
+		            		<tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="inventory-movement-summary-row-template"
+					                data-bind="source: inventoryMovementSummary.dataSource" >
+					        </tbody>
+		            	</table>
+	            	</div>
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
+
+
+
 
 <!-- ***************************
 *	Cash Management  -> Pich             *
@@ -76868,6 +77167,12 @@
 		fixedAssets: new kendo.Layout("#fixedAssets", {model: banhji.fixedAssets}),
 		itemRecurring: new kendo.Layout("#itemRecurring", {model: banhji.itemRecurring}),
 
+
+
+		cashPositionReport: new kendo.Layout("#cashPositionReport", {model: banhji.cashPositionReport}),
+		cashCollectionReport: new kendo.Layout("#cashCollectionReport", {model: banhji.cashCollectionReport}),
+		cashPaymentReport: new kendo.Layout("#cashPaymentReport", {model: banhji.cashPaymentReport}),
+
 		//Cash Managment
 		cashDashboard: new kendo.Layout("#cashDashboard", {model: banhji.cashDashboard}),
 		cashCenter: new kendo.Layout("#cashCenter", {model: banhji.cashCenter}),		
@@ -83034,6 +83339,164 @@
 			vm.pageLoad(id);
 		}
 	});
+
+
+
+
+	banhji.router.route("/cash_position_report", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashPositionReport);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+
+			var vm = banhji.cashPositionReport;
+
+			banhji.userManagement.addMultiTask("Cash Position Report","cash_position_report",vm);
+
+			if(banhji.pageLoaded["cash_position_report"]==undefined){
+				banhji.pageLoaded["cash_position_report"] = true;
+				var validator = $("#example").kendoValidator().data("kendoValidator");
+		        $("#saveNew").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#saveClose").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+						vm.set("saveClose", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#savePrint").click(function(e){
+					e.preventDefault();
+					
+					if(validator.validate()){
+						vm.set("savePrint", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+			}
+
+			vm.pageLoad(id);
+		}
+	});
+	banhji.router.route("/cash_collection_report", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashCollectionReport);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+
+			var vm = banhji.cashCollectionReport;
+
+			banhji.userManagement.addMultiTask("Cash Collection Report","cash_collection_report",vm);
+
+			if(banhji.pageLoaded["cash_collection_report"]==undefined){
+				banhji.pageLoaded["cash_collection_report"] = true;
+				var validator = $("#example").kendoValidator().data("kendoValidator");
+		        $("#saveNew").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#saveClose").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+						vm.set("saveClose", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#savePrint").click(function(e){
+					e.preventDefault();
+					
+					if(validator.validate()){
+						vm.set("savePrint", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+			}
+
+			vm.pageLoad(id);
+		}
+	});
+	banhji.router.route("/cash_payment_report", function(id){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.cashPaymentReport);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+
+			var vm = banhji.cashPaymentReport;
+
+			banhji.userManagement.addMultiTask("Cash Payment Report","cash_payment_report",vm);
+
+			if(banhji.pageLoaded["cash_payment_report"]==undefined){
+				banhji.pageLoaded["cash_payment_report"] = true;
+				var validator = $("#example").kendoValidator().data("kendoValidator");
+		        $("#saveNew").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#saveClose").click(function(e){
+					e.preventDefault();
+
+					if(validator.validate()){
+						vm.set("saveClose", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+
+				$("#savePrint").click(function(e){
+					e.preventDefault();
+					
+					if(validator.validate()){
+						vm.set("savePrint", true);
+		            	vm.save();
+			        }else{
+			        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+			        }
+				});
+			}
+
+			vm.pageLoad(id);
+		}
+	});
+
 
 
 	/*************************

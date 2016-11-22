@@ -22,6 +22,7 @@
 
      <!-- Custom style -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/admin-style.css">
+    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
   </head>
 
   <body class="nav-md">
@@ -1229,7 +1230,7 @@
       </tr>
     </script>
     <!-- cognito -->
-    <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
+    
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/sjcl.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/moment.js"></script>
@@ -1278,6 +1279,12 @@
       // Initialize aws userpool
       var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
       var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
+
+      localforage.config({
+        driver: localforage.LOCALSTORAGE,
+        name: 'userData'
+      });
+
 
       var image = kendo.Class.extend({
         dataSource: new kendo.data.DataSource({
@@ -1517,6 +1524,7 @@
           });
         }
       });
+
       banhji.profileDS = new kendo.data.DataSource({
         transport: {
           read  : {
@@ -2653,6 +2661,7 @@
           layout.showIn("#main-display-container", userlMod);
         },
         showForm: function() {
+          JSON.parse(localStorage.getItem('userData/user')) ? JSON.parse(localStorage.getItem('userData/user')) : "";
           this.users.insert(0, {
             username: null,
             first_name: null,
@@ -2660,7 +2669,7 @@
             email: null,
             mobile: null,
             profile_photo: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/blank.png",
-            company: {id: banhji.companyDS.data()[0].id, name:''},
+            company: {id: JSON.parse(localStorage.getItem('userData/user')).institute.id, name:''},
             usertype: null
           });
           this.setCurrent(this.users.at(0));
@@ -2735,11 +2744,20 @@
         editProfile: function() {
           banhji.router.navigate('userlist/edit');
         },
+        resendConfirm: function() {
+          cognitoUser.resendConfirmationCode(function(err, result) {
+            if (err) {
+              alert(err);
+              return;
+            }
+            console.log('call result: ' + result);
+          });
+        },
         showConfirm: function(e){
           this.setCurrent(e.data);
           var win = $('#userFormConfirm').kendoWindow({
             width: "600px",
-            title: e.data,
+            title: e.data.username,
             visible: false,
             modal: true,
             actions: [
@@ -2773,7 +2791,7 @@
             email: '',
             mobile: '',
             profile_photo: {id: 2, url:"https://s3-ap-southeast-1.amazonaws.com/banhji/52751311555449544_blank.png"},
-            company: {id: banhji.companyDS.data()[0].id, name:''},
+            company: {id: JSON.parse(localStorage.getItem('userData/user')).institute.id, name:''},
             role: 2,
             facebook: '',
             linkedin: '',
@@ -2891,6 +2909,18 @@
         users   : banhji.users,
         userProfile: banhji.profile,
         showLogoEdit: true,
+        retrieve: function() {
+          var dfd = $.Deferred();
+
+          localforage.getItem('user', function (err, value) {
+            if(!err) {
+              dfd.resolve(value.institute);
+            } else {
+              dfd.reject(err);
+            }
+          });
+          return dfd.promise();
+        },
         goUser: function() {
           banhji.router.navigate('userlist');
           // mainDash.showIn("#placeholder", user);

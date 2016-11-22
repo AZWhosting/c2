@@ -44,6 +44,10 @@ class Contact extends DataMapper {
 		'payroll' => array(
 			'class' => 'payroll',
 			'other_field' => 'contact'
+		),
+		'utility' => array(
+			'class' => 'plan_utility',
+			'other_field' => 'contact'
 		)
 	);
 

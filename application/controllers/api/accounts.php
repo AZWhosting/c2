@@ -70,7 +70,7 @@ class Accounts extends REST_Controller {
 		    		}else if($value["operator"]=="or_where"){
 		    			$obj->or_where($value["field"], $value["value"]);		    				    		
 		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    			$obj->where($value["field"], $value["value"]);
 		    		}
 	    		}else{	    			
 	    			$obj->where($value["field"], $value["value"]);	    				    			
@@ -119,7 +119,7 @@ class Accounts extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->account_type_id) 		? $obj->account_type_id 	= $value->account_type_id : "";
-			isset($value->sub_of_id) 			? $obj->sub_of_id 			= $value->sub_of_id : "";
+			isset($value->sub_of_id) 			? $obj->sub_of_id 			= $value->sub_of_id : $obj->sub_of_id = 0;
 			isset($value->number) 				? $obj->number 				= $value->number : "";				
 			isset($value->name) 				? $obj->name 				= $value->name : "";
 			isset($value->name_2) 				? $obj->name_2 				= $value->name_2 : "";
@@ -167,7 +167,7 @@ class Accounts extends REST_Controller {
 			$obj->get_by_id($value->id);
 			
 			isset($value->account_type_id) 		? $obj->account_type_id 	= $value->account_type_id : "";
-			isset($value->sub_of_id) 			? $obj->sub_of_id 			= $value->sub_of_id : "";
+			isset($value->sub_of_id) 			? $obj->sub_of_id 			= $value->sub_of_id : $obj->sub_of_id = 0;
 			isset($value->number) 				? $obj->number 				= $value->number : "";				
 			isset($value->name) 				? $obj->name 				= $value->name : "";
 			isset($value->name_2) 				? $obj->name_2 				= $value->name_2 : "";

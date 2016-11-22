@@ -903,9 +903,11 @@ class Transactions extends REST_Controller {
 		    		}else if($value["operator"]=="or_where"){
 		    			$obj->or_where($value["field"], $value["value"]);
 		    		}else if($value["operator"]=="where_related"){
-		    			$obj->where_related($value["model"], $value["field"], $value["value"]);		    			    		
+		    			$obj->where_related($value["model"], $value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_in_related"){
+		    			$obj->where_in_related($value["model"], $value["field"], $value["value"]);		    			    		
 		    		}else{
-		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    			$obj->where($value["field"], $value["value"]);
 		    		}
 	    		}else{	    			
 	    			$obj->where($value["field"], $value["value"]);	    				    			
@@ -997,6 +999,7 @@ class Transactions extends REST_Controller {
 					$itemIn->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Adjustment"));
 					$itemIn->where("item_id", $value->item_id);
 					$itemIn->where("movement", 1);
+					$itemIn->where_related("transaction", "issued_date<=", $transaction->issued_date);
 					$itemIn->where_related("transaction", "is_recurring", 0);
 					$itemIn->where_related("transaction", "deleted", 0);
 					$itemIn->get();
@@ -1006,6 +1009,7 @@ class Transactions extends REST_Controller {
 					$itemOut->where_in_related("transaction", "type", array("Invoice", "Cash_Sale", "Adjustment"));
 					$itemOut->where("item_id", $value->item_id);
 					$itemOut->where("movement", -1);
+					$itemOut->where_related("transaction", "issued_date<=", $transaction->issued_date);
 					$itemOut->where_related("transaction", "is_recurring", 0);
 					$itemOut->where_related("transaction", "deleted", 0);
 					$itemOut->get();					
@@ -1037,17 +1041,18 @@ class Transactions extends REST_Controller {
 
 					if($item->save()){
 						$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
 						$po->select_sum("quantity");
-						$po->where_related("transaction", "type", "PO");
+						$po->where_related("transaction", "type", "Purchase_Order");
+						$po->where_related("transaction", "issued_date <=", $transaction->issued_date);
 						$po->where_related("transaction", "status", 0);
 						$po->where_related("transaction", "is_recurring", 0);
 						$po->where_related("transaction", "deleted", 0);
 						$po->get();
 
+						$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$so->select_sum("quantity");
-						$so->where_related("transaction", "type", "SO");
+						$so->where_related("transaction", "type", "Sale_Order");
+						$po->where_related("transaction", "issued_date <=", $transaction->issued_date);
 						$so->where_related("transaction", "status", 0);
 						$so->where_related("transaction", "is_recurring", 0);
 						$so->where_related("transaction", "deleted", 0);
