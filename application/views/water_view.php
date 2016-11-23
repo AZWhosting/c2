@@ -10,7 +10,7 @@
 	<div class="menu-hidden sidebar-hidden-phone menu-left hidden-print">
 		<div class="navbar main navbar-fixed-top" id="main-menu">
 			<ul class="topnav">
-				<li><a href="#" data-bind="click: checkRole"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" style="height: 40px;"></a></li>
+				<li><a href="<?php echo base_url(); ?>rrd/#" data-bind="click: checkRole"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" style="height: 40px;"></a></li>
 			</ul>
 			<form class="navbar-form pull-left">
 				<div class="btn-group">
@@ -407,7 +407,7 @@
     </tr>   
 </script>
 
-
+<!--Setting-->
 <script id="setting" type="text/x-kendo-template">
     <span class="pull-right glyphicons no-js remove_2" 
 			onclick="javascript:window.history.back()"><i></i></span>
@@ -419,17 +419,106 @@
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
 	        <ul>
-	            <li class="active"><a href="#tab1-1" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span>Plans</span></span></a>
-	            </li>                        
+	            <li class="active"><a href="#tab1-1" class="glyphicons notes_2" data-toggle="tab"><i></i><span class="strong"><span>License</span></span></a>
+	            </li>  
+	             <li><a href="#tab1-3" class="glyphicons pushpin" data-toggle="tab"><i></i><span class="strong"><span>Bloc</span></span></a>
+	            </li>  
+	            <li><a href="#tab1-2" class="glyphicons old_man" data-toggle="tab"><i></i><span class="strong"><span>Customer Types</span></span></a>
+	            </li>  
+	            <li><a href="#tab1-4" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span>Plans</span></span></a>
+	            </li>                       
 	        </ul>
 	    </div>
 	    <!-- // Tabs Heading END -->
 
 	    <div class="widget-body span9">
 	        <div class="tab-content">
-	        	<a class="btn-icon btn-primary glyphicons circle_plus" href="#/plan"><i></i>Add Plan</a>
-	            <!-- CUSTOMER TYPE -->
-	            <div class="tab-pane active" id="tab1-4">
+	        	
+	            <!-- License -->
+	            <div class="tab-pane active" id="tab1-1">
+	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 130px" href="#/add_license"><i></i>Add License</a>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center" width="100"><span>Number</span></th>
+	            				<th class="center"><span>License</span></th>
+	            				<th class="center"><span>Abbr</span></th>
+	            				<th class="center" width="160"><span>Representive</span></th>
+	            				<th class="center"><span>Phone</span></th>
+	            				<th class="center"><span>Address</span></th>
+	            				<th class="center" width="180"><span>Expire Date</span></th>
+	            				<th class="center" width="100"><span>Max Con.</span></th>
+	            				<th class="center">Status</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="licenseSetting-template"
+				                data-template="customerSetting-contact-type-template"
+				                data-bind="source: licenseDS"></tbody>
+	            	</table>
+
+	            </div>
+	            <!-- // End License -->
+	            <div class="tab-pane" id="tab1-2">
+	            	<div style="clear: both;margin-bottom: 10px;">
+		            	<input type="text" class="span3 k-textbox k-invalid" style="height: 32px;" data-bind="value: contactTypeName" placeholder="Type" />
+		            	<input type="text" placeholder="Abbr" data-bind="value: contactTypeAbbr" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	<select class="span3" style="height: 32px; border-radius: 0;background: #fff;" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
+			                <option value="0"><span>Not A Company</span></option>
+			                <option value="1"><span>It is A Company</span></option>           
+			            </select>
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addContactType"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>Type</span></th>
+	            				<th class="center"><span>Abbr</span></th>
+	            				<th class="center"><span>Other</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            	
+				                data-template="custType-template"
+				                data-bind="source: contactTypeDS"></tbody>
+	            	</table>
+
+	            </div>
+	            <div class="tab-pane" id="tab1-3">
+	            	<div style="clear: both;margin-bottom: 10px;">
+		            	<input data-role="dropdownlist"
+		            	   class="span3"
+		            	   style="padding-right: 1px;height: 32px;" 
+            			   data-option-label="(--- Select ---)"
+            			   data-auto-bind="false"			                   
+		                   data-value-primitive="true"
+		                   data-text-field="name"
+		                   data-value-field="id"
+		                   data-bind="value: blockCompanyId,
+		                              source: licenseDS"/>
+		            	<input type="text" placeholder="Location" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	<input type="text" placeholder="Abbr" style="height: 32px;" class="span3 k-textbox k-invalid" />
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" href="#/plan"><i></i>Add</a>
+		            </div>
+	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+	            		<thead>
+	            			<tr>
+	            				<th class="center"><span>License</span></th>
+	            				<th class="center"><span>Location</span></th>
+	            				<th class="center"><span>Abbr</span></th>
+	            				<th class="center">Action</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody data-role="listview"	            				
+				                data-template="cusTypeSetting-template"
+				                data-bind="source: dataSource"></tbody>
+	            	</table>
+
+	            </div>
+	            <!-- // CUSTOMER TYPE END -->
+	            <!-- // CUSTOMER TYPE END -->
+	            <div class="tab-pane" id="tab1-4">
+	            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 110px;" href="#/plan"><i></i>Add Plan</a>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr>
@@ -453,6 +542,93 @@
 
 	</div>
 </script>
+
+<script id="licenseSetting-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>#= number #</td>
+		<td>#= name #</td>
+		<td>#= abbr #</td>
+		<td>#= representative #</td>
+		<td>#= phone #</td>
+		<td>#= address #</td>
+		<td>#= expire_date #</td>
+		<td>#= max_customer #</td>
+		<td>
+			#if(status==1){#
+				<span class="btn-action glyphicons ok_2 btn-success"><i></i></span>
+			#}else{#
+				<span class="btn-action glyphicons remove_2 btn-danger"><i></i></span>
+			#}#
+		</td>
+	</tr>
+</script>
+<script id="cusTypeSetting-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>sdfasdf</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+</script>
+<script id="custType-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#:name#
+   		</td>
+   		<td align="center">
+    		#:abbr#
+   		</td>
+   		<td align="center">
+    		#if(is_company=="1"){#
+    			Yes
+    		#}else{#
+    			No
+    		#}#
+   		</td>
+   		<td align="center">   			
+   			<div class="edit-buttons">       
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+		        #if(is_system=="0"){#
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
+		        #}#
+		        <span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
+		   	</div>		   	
+   		</td>   		
+   	</tr>
+</script>
+<script id="customerSetting-edit-contact-type-template" type="text/x-kendo-tmpl">
+    <div class="product-view k-widget">
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+                <span data-for="ProductName" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
+                <span data-for="abbr" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
+        <dl>                
+            <dd>
+                <select data-bind="value: is_company" >
+	                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
+	                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>			                
+	            </select>
+            </dd>              
+        </dl>
+        <div class="edit-buttons">
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+        </div>
+    </div>
+</script>
 <script id="planSetting-template" type="text/x-kendo-tmpl">
 	<tr>
 		<td>sdfasdf</td>
@@ -462,6 +638,8 @@
 		<td></td>
 	</tr>
 </script>
+
+
 <script id="plan" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background" style="overflow: hidden;">
@@ -560,7 +738,145 @@
 		<td style="text-align:center"><p class="addItem glyphicons circle_remove" data-bind="click: removeItem"><i></i></p></td>
 	</tr>
 </script>
+<script id="addLicense" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>						
+					</div>
+			        <h2 style="padding:0 15px;">Add License</h2>
+			        <div class="span12 row-fluid" style="overflow: hidden;padding:20px 0;">
+			        	<div class="span4">
+				        	<label>License Number</label>
+				        	<input type="text" 
+				        			class="k-textbox k-invalid" 
+				        			data-bind="value : obj.number"
+				        			style="width: 100%;margin-bottom: 15px;" />
+				        	
+				        	
+				        	<label>Max Customer</label>
+			        		<input type="text" 
+			        			class="k-textbox k-invalid" 
+			        			data-bind="value : obj.max_customer"
+			        			style="width: 100%;margin-bottom: 15px;" />
+			        		<label>Currency</label>
+			        		<select data-role="dropdownlist"
+			                   data-value-primitive="true"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="
+			                   	source: selectCurrency,
+			                   	value: obj.currency"
+			                   style="width: 100%;margin-bottom: 15px;" ></select>
+					        <label>Tel</label>
+			        		<input type="text" 
+			        			class="k-textbox k-invalid" 
+			        			data-bind="value : obj.mobile"
+			        			style="width: 100%;margin-bottom: 15px;" />
+			        		<label>Status</label>
+			        		<select data-role="dropdownlist"
+			                   data-value-primitive="true"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="
+			                   	source: selectType,
+			                   	value: obj.status"
+			                   style="width: 100%;margin-bottom: 15px;" ></select>
 
+				        </div>
+				        <div class="span4">
+				        	<label>License Name</label>
+				        	<input type="text" 
+				        			class="k-textbox k-invalid" 
+				        			data-bind="value : obj.name"
+				        			style="width: 100%;margin-bottom: 15px;" />
+				        	<label>Expire Date</label>
+			        		<div style="margin-bottom: 15px;">
+			        			<input type="text" 
+			                	style="width: 100%;" 
+			                	data-role="datepicker"
+			                	data-format="dd-MM-yyyy"
+					           	data-bind="value: obj.expire_date,
+					           			  	min: toDay" />
+					        </div>
+				        	
+			                <label>Abbr</label>
+			        		<input type="text" 
+			        			class="k-textbox k-invalid" 
+			        			data-bind="value : obj.abbr"
+			        			style="width: 100%;margin-bottom: 15px;" />
+			        		<label>Phone</label>
+			        		<input type="text" 
+			        			class="k-textbox k-invalid" 
+			        			data-bind="value : obj.phone"
+			        			style="width: 100%;margin-bottom: 15px;" />
+			        		
+				        </div>
+				        <div class="span4">
+				        	<label>Description</label>
+				        	<input type="text" 
+				        			class="k-textbox k-invalid" 
+				        			data-bind="value : obj.description"
+				        			style="width: 100%;margin-bottom: 15px;" />
+				        	<label>Address</label>
+			        		<input type="text" 
+			        			class="k-textbox k-invalid" 
+			        			data-bind="value : obj.address"
+			        			style="width: 100%;margin-bottom: 15px;" />
+				        	<label>Representative</label>
+			        		<input type="text" 
+			        			class="k-textbox k-invalid" 
+			        			data-bind="value : obj.representative"
+			        			style="width: 100%;margin-bottom: 15px;" />
+			        		
+					       	<label>Email</label>
+			        		<input type="text" 
+			        			class="k-textbox k-invalid" 
+			        			data-bind="value : obj.email"
+			        			style="width: 100%;margin-bottom: 15px;" />
+				        </div>
+				        <div class="span12" style="padding: 0">
+				        	<label>Term and Condition</label>
+				        	<div class="controls">
+								<textarea data-role="editor"
+				                      data-tools="['bold',
+				                                   'italic',
+				                                   'underline',
+				                                   'strikethrough',
+				                                   'justifyLeft',
+				                                   'justifyCenter',
+				                                   'justifyRight',
+				                                   'justifyFull']"
+				                      data-bind="value: obj.term_of_condition"
+				                      style="height: 200px;"></textarea>
+	                      	</div>
+				        </div>
+			        </div>	
+					<br>
+				    <!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" style="width: 80px!important;margin:0" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 50px;"><i></i> <span>Save</span></span>
+								<span id="cancel" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 100px;"><i></i> <span >Cancel</span></span>
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->			
+				</div>						
+			</div>
+		</div>
+	</div>
+</script>
+
+<!--End Setting-->
 <script id="waterCenter" type="text/x-kendo-template">	
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
 		<div class="widget-body padding-none">			
@@ -1219,7 +1535,7 @@
 **************************** -->
 
 <script id="waterMenu" type="text/x-kendo-template">
-	<ul class="topnav">
+	<!-- <ul class="topnav">
 	  	<li><a href='#/' class='glyphicons home'><i></i></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.customer"></span> <span class='caret'></span></a>
@@ -1257,6 +1573,26 @@
   			</ul>
 	  	</li>
 	  	<li><a href='#/wReport_center'><span data-bind="text: lang.lang.report"></span></a></li>	  	
+	  	<li><a href='#/setting' class='glyphicons settings'><i></i></a></li>
+	</ul> -->
+	<ul class="topnav pull-left">
+	  	<li><a href='#/' class='glyphicons show_big_thumbnails'><i></i></a></li>
+	  	<li><a href='#/center'><span data-bind="text: lang.lang.center"></span></a></li>
+	  	<li role='presentation' class='dropdown'>
+	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
+  			<ul class='dropdown-menu'>
+  				<li><a href='#/customer'><span >New Customer</span></a></li> 
+  				<li ><a href='#/reorder'><span >Reorder</span></a></li>  				
+  				<li><span class="li-line"></span></li>
+  				<li><a href='#/reading'><span >Meter Reading</span></a></li> 
+  				<li><a href='#/reading_book'><span >Reading Book</span></a></li>
+  				<li><a href='#/edit_reading'><span >Edit Reading</span></a></li>
+  				<li><span class="li-line"></span></li>
+  				<li><a href='#/calculate_invoice'><span >Calculate Invoice</span></a></li> 
+  				<li><a href='#/print_invoice'><span >Print Invoice</span></a></li>
+  			</ul>
+	  	</li>	  	  	
+	  	<li><a href="#/reports">Reports</a></li>	  	
 	  	<li><a href='#/setting' class='glyphicons settings'><i></i></a></li>
 	</ul>
 </script>
@@ -5031,6 +5367,7 @@
 			return dfd.promise();
 		}
 	});
+	//Setting
 	banhji.plan = kendo.observable({
 		dataSource 	: dataStore(apiUrl + "plans"),
 		items 		: banhji.item,
@@ -5079,8 +5416,83 @@
 			window.history.back();
 		}
 	});
+	banhji.addLicense = kendo.observable({
+		dataSource 	: dataStore(apiUrl + "branches"),
+		toDay 		: new Date(),
+		obj 		: null,
+		isEdit      : false,
+		pageLoad    : function(){
+			this.addNew();
+		},
+		selectType 	: [{id: "active", name: "Active"},{id: "inactive", name: "Inactive"},{id: "void", name: "Void"}],
+		selectCurrency : [{id: "KHR", name: "KHR"},{id: "USD", name: "USD"},{id: "THB", name: "THB"},{id: "VND", name: "VND"}],
+		addNew 	  	: function() {
+			this.set("obj", null);		
+			this.set("isEdit", false);		
+			this.dataSource.insert(0,{	
+				number 			: null,
+				name 			: null,
+				description 	: null,
+				max_customer 	: null,
+				expire_date 	: null,
+				address 		: null,
+				currency 		: "KHR",
+				abbr 			: null,
+				representative 	: null,
+				mobile 			: null,
+				phone 			: null,
+				email 			: null,
+				status 			: "active",
+				term_of_condition 			: null
+			});
+			var obj = this.dataSource.at(0);
+			console.log(this.dataSource.data());			
+			this.set("obj", obj);	
+		},
+		save 		: function() {
+			var dfd = $.Deferred();
+			this.dataSource.sync();
+			this.dataSource.bind('requestEnd', function(e){
+				if(e.response.results) {
+					dfd.resolve(e.response.results);
+				}
+			});
+			this.dataSource.bind('error', function(e){
+				dfd.reject(e.status);
+			});
+			return dfd.promise();
+		},
+		cancel 				: function(){
+			this.dataSource.cancelChanges();	
+			window.history.back();
+		}
+	});
+	//End Setting
 	banhji.setting = kendo.observable({
 		lang 				: langVM,
+		contactTypeName 	: "",
+		contactTypeAbbr 	: "",
+        contactTypeCompany 	: 0,
+        blockCompanyId  	: 0,
+        licenseDS 			: dataStore(apiUrl + "branches"),
+		contactTypeDS 		: banhji.source.customerTypeDS,
+		addContactType 		: function(){
+        	var name = this.get("contactTypeName");
+        	if(name!==""){
+	        	this.contactTypeDS.add({
+	        		parent_id 	: 1,
+	        		name 		: name,
+	        		abbr 		: this.get("contactTypeAbbr"),
+	        		description : "",
+	        		is_company 	: this.get("contactTypeCompany"),
+	        		is_system 	: 0
+	        	});
+	        	this.contactTypeDS.sync();
+	        	this.set("contactTypeName", "");
+	        	this.set("contactTypeAbbr", "");
+	        	this.set("contactTypeCompany", 0);
+        	}
+        },
 		pageLoad 			: function(){
 
 		},
@@ -6627,6 +7039,7 @@
 		plan: new kendo.Layout("#plan", {model: banhji.plan}),
 		reading: new kendo.Layout("#Reading", {model: banhji.reading}),
 		customerDeposit: new kendo.Layout("#customerDeposit", {model: banhji.customerDeposit}),
+		addLicense: new kendo.Layout("#addLicense", {model: banhji.addLicense}),
 		//Menu
 		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
 		employeeMenu: new kendo.View("#employeeMenu", {model: langVM}),
@@ -6689,11 +7102,11 @@
 	banhji.router.route('/', function(){
 		var blank = new kendo.View('#blank-tmpl');
 		banhji.view.layout.showIn('#content', banhji.view.wDashBoard);
-		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		//banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
-		$('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
-		$('#current-section').text("");
-		$("#secondary-menu").html("");
+		// $('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
+		// $('#current-section').text("");
+		// $("#secondary-menu").html("");
 		banhji.index.getLogo();
 		banhji.index.pageLoad();
 	});
@@ -6733,7 +7146,7 @@
 	/*************************
 	*   Water Section   *
 	**************************/
-	banhji.router.route("/water_center(/:id)", function(id){		
+	banhji.router.route("/center(/:id)", function(id){		
 		banhji.view.layout.showIn("#content", banhji.view.waterCenter);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
@@ -6778,6 +7191,7 @@
 
 		vm.pageLoad();
 	});
+	
 	banhji.router.route("/plan", function(){		
 		banhji.view.layout.showIn("#content", banhji.view.plan);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
@@ -6791,6 +7205,21 @@
 			banhji.pageLoaded["plan"] = true;
 		}
 		console.log("plan");
+		vm.pageLoad();
+	});
+	banhji.router.route("/add_license", function(){		
+		banhji.view.layout.showIn("#content", banhji.view.addLicense);
+		banhji.view.layout.showIn('#menu', banhji.view.menu);
+		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+		
+		var vm = banhji.addLicense;
+
+		banhji.userManagement.addMultiTask("Add Licence","Licence",null);
+
+		if(banhji.pageLoaded["add_license"]==undefined){
+			banhji.pageLoaded["add_license"] = true;
+		}
+		console.log("add_license");
 		vm.pageLoad();
 	});
 	banhji.router.route("/reading", function(){		

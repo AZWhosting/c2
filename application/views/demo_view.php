@@ -3416,114 +3416,115 @@
 						</div>
 					
 					</div>
+					<div id="invFormContent" class="row">
 
-
-					<div class="block-title">
-						<h3 data-bind="text: company.name"></h3>
-						<h2>Statement of Financial Position</h2>
-						<p data-bind="text: displayDate"></p>
-					</div>
-			    	
-			    	<!-- <div class="row-fluid journal_block1">
-						<div class="span2">
-							<p>&nbsp;</p>
-							<span>&nbsp;</span>
+						<div class="block-title">
+							<h3 data-bind="text: company.name"></h3>
+							<h2>Statement of Financial Position</h2>
+							<p data-bind="text: displayDate"></p>
 						</div>
-						<div class="span5">
-							<p>Assets</p>
-							<span data-bind="text: totalAsset"></span>
-						</div>
-						<div class="span5">
-							<p>Liabilities + Equity</p>
-							<span data-format="n" data-bind="text: totalLiabilityEquity"></span>
-						</div>
-					</div> -->
-			    	
-					<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
-						<thead>
-							<tr>
-								<th>ASSETS</th>
-								<th width="15%"></th>
-								<th width="15%"></th>
-							</tr>
-						</thead>
-						<tbody data-role="listview" 
-							data-template="statementFinancialPosition-template"
-							data-auto-bind="false"
-							data-bind="source: dataSource"></tbody>
-						<tfoot>
-							<tr>
-								<td style="font-weight: bold; font-size: large;">TOTAL ASSETS</td>
-								<td width="15%"></td>
-								<td width="15%" style="font-weight: bold; font-size: large;" align="right">
-									<span data-bind="text: totalAsset"></span>
-								</td>
-							</tr>
-						</tfoot>
-					</table>
+				    	
+				    	<!-- <div class="row-fluid journal_block1">
+							<div class="span2">
+								<p>&nbsp;</p>
+								<span>&nbsp;</span>
+							</div>
+							<div class="span5">
+								<p>Assets</p>
+								<span data-bind="text: totalAsset"></span>
+							</div>
+							<div class="span5">
+								<p>Liabilities + Equity</p>
+								<span data-format="n" data-bind="text: totalLiabilityEquity"></span>
+							</div>
+						</div> -->
+				    	
+						<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
+							<thead>
+								<tr>
+									<th>ASSETS</th>
+									<th width="15%"></th>
+									<th width="15%"></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview" 
+								data-template="statementFinancialPosition-template"
+								data-auto-bind="false"
+								data-bind="source: dataSource"></tbody>
+							<tfoot>
+								<tr>
+									<td style="font-weight: bold; font-size: large;">TOTAL ASSETS</td>
+									<td width="15%"></td>
+									<td width="15%" style="font-weight: bold; font-size: large;" align="right">
+										<span data-bind="text: totalAsset"></span>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
 
-					<br>
+						<br>
 
-					<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
-						<thead>
-							<tr>
-								<th>LIABILITIES</th>
-								<th width="15%"></th>
-								<th width="15%"></th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-							data-template="statementFinancialPosition-template"
-							data-auto-bind="false"
-							data-bind="source: liabilityDS"></tbody>
-						<tfoot>
-							<tr>
-								<td style="font-weight: bold; font-size: large;">TOTAL LIABILITIES</td>
-								<td width="15%"></td>
-								<td width="15%" style="font-weight: bold; font-size: large;" align="right">
-									<span data-bind="text: totalLiability"></span>
-								</td>
-							</tr>
-						</tfoot>
-					</table>
+						<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
+							<thead>
+								<tr>
+									<th>LIABILITIES</th>
+									<th width="15%"></th>
+									<th width="15%"></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+								data-template="statementFinancialPosition-template"
+								data-auto-bind="false"
+								data-bind="source: liabilityDS"></tbody>
+							<tfoot>
+								<tr>
+									<td style="font-weight: bold; font-size: large;">TOTAL LIABILITIES</td>
+									<td width="15%"></td>
+									<td width="15%" style="font-weight: bold; font-size: large;" align="right">
+										<span data-bind="text: totalLiability"></span>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
 
-					<br>
+						<br>
 
-					<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
-						<thead>
-							<tr>
-								<th>EQUITY</th>
-								<th width="15%"></th>
-								<th width="15%"></th>
-							</tr>
-						</thead>
-						<tbody data-role="listview"
-							data-template="statementFinancialPosition-template"
-							data-auto-bind="false"
-							data-bind="source: equityDS"></tbody>
-						<tfoot>
-							<tr>
-								<td style="font-weight: bold; font-size: large;">TOTAL EQUITY</td>
-								<td width="15%"></td>
-								<td width="15%" style="font-weight: bold; font-size: large;" align="right">
-									<span data-bind="text: totalEquity"></span>
-								</td>
-							</tr>
-						</tfoot>
-					</table>
+						<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
+							<thead>
+								<tr>
+									<th>EQUITY</th>
+									<th width="15%"></th>
+									<th width="15%"></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+								data-template="statementFinancialPosition-template"
+								data-auto-bind="false"
+								data-bind="source: equityDS"></tbody>
+							<tfoot>
+								<tr>
+									<td style="font-weight: bold; font-size: large;">TOTAL EQUITY</td>
+									<td width="15%"></td>
+									<td width="15%" style="font-weight: bold; font-size: large;" align="right">
+										<span data-bind="text: totalEquity"></span>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
 
-					<br>
+						<br>
 
-					<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
-						<thead>
-							<tr>
-								<th style="font-weight: bold; font-size: large;">TOTAL LIABILITY & EQUITY</th>
-								<th width="15%" data-format="n" data-bind="text: totalLiabilityEquity" style="font-weight: bold; font-size: large;" align="right"></th>
-							</tr>
-						</thead>
-					</table>
+						<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
+							<thead>
+								<tr>
+									<th style="font-weight: bold; font-size: large;">TOTAL LIABILITY & EQUITY</th>
+									<th width="15%" data-format="n" data-bind="text: totalLiabilityEquity" style="font-weight: bold; font-size: large;" align="right"></th>
+								</tr>
+							</thead>
+						</table>
 
-		        </div>		        
+			        </div>	
+			    </div>	        
 			</div>							
 		</div>
 	</div>
@@ -31152,7 +31153,7 @@
 								                   data-value-primitive="true"
 								                   data-text-field="name"
 								                   data-value-field="id"
-								                   data-bind="value: obj.inventory_account_id,
+								                   data-bind="value: obj.fixed_assets_account_id,
 								                              source: fixedAssetAccountDS"
 								                   data-option-label="Select Account..."
 								                   required data-required-msg="required" style="width: 100%;" />
@@ -31166,7 +31167,7 @@
 								                   data-value-primitive="true"
 								                   data-text-field="name"
 								                   data-value-field="id"
-								                   data-bind="value: obj.cogs_account_id,
+								                   data-bind="value: obj.accumulated_account_id,
 								                              source: accumulatedAccountDS"
 								                   data-option-label="Select Account..."
 								                   required data-required-msg="required" style="width: 100%;" />											
@@ -31180,7 +31181,7 @@
 								                   data-value-primitive="true"
 								                   data-text-field="name"
 								                   data-value-field="id"
-								                   data-bind="value: obj.income_account_id,
+								                   data-bind="value: obj.depreciation_account_id,
 								                              source: deposalAccountDS"
 								                   data-option-label="Select Account..."
 								                   required data-required-msg="required" style="width: 100%;" />
@@ -42968,6 +42969,7 @@
 			});
 			this.accountDS.read();
 			this.accountTypeDS.read();
+			this.fixedAssetCategoryDS.read();
 		},
 		getFiscalDate 				: function(){
 			var today = new Date(),	
@@ -45054,6 +45056,80 @@
 					}
 				});
 			}
+		},
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=990, height=900'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+		            '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            'html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+		            	'.inv1 .main-color {' +
+		            		
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'} ' +
+		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+		            	'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+		            	'.inv1 .light-blue-td { ' +
+		            		'background-color: #c6d9f1!important;' +
+		            		'text-align: left;' +
+		            		'padding-left: 5px;' +
+		            		'-webkit-print-color-adjust:exact; ' +
+		            	'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+    						'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+						'}'+
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+    						' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+		            	'.journal_block1>.span2:first-child { ' +
+    						'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span5:last-child {' +
+							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.journal_block1>.span5 {' +
+							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+		            		'background-color: #1C2633!important;' +
+		            		'color: #fff!important; ' + 
+		            		'-webkit-print-color-adjust:exact;' +
+		            	'}' +
+		            	'</style>' +
+		            '</head>' +
+		            '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
 		}
 	});
 	banhji.chartOfAccount =  kendo.observable({
@@ -70874,7 +70950,7 @@
     	isEdit 					: false,
     	saveClose 				: false,
 		showConfirm 			: false,
-		isDuplicateNumber 		: false,    	
+		notDuplicateNumber 		: false,    	
     	pageLoad 				: function(id, is_pattern){			
 			if(id){
 				this.set("isEdit", true);						
@@ -70884,6 +70960,54 @@
 					this.addEmpty();
 				}								
 			}  																							
+		},
+		//Pattern
+		setPattern 				: function(category_id){
+			var obj = this.get("obj");
+
+			obj.set("category_id", category_id);
+			obj.set("is_pattern", 1);
+		},
+		loadPattern 			: function(){
+			var self = this, obj = self.get("obj"), 
+			cat = this.categoryDS.get(obj.category_id);
+
+			this.patternDS.query({
+				filter: [
+					{ field:"category_id", value: cat.id },
+					{ field:"is_pattern", value: 1 }
+				],
+				page: 1,
+				pageSize: 1
+			}).then(function(data){
+				var view = self.patternDS.view();
+
+				if(view.length>0){
+	      			obj.set("category_id", view[0].category_id),
+	      			obj.set("measurement_id", view[0].measurement_id),
+	      			obj.set("abbr", cat.abbr),	      			
+	      			obj.set("name", ""),
+	      			obj.set("purchase_description", view[0].purchase_description),
+	      			obj.set("sale_description", view[0].sale_description),
+	      			obj.set("locale", view[0].locale),
+	      			obj.set("fixed_assets_account_id", view[0].fixed_assets_account_id),
+	      			obj.set("accumulated_account_id", view[0].accumulated_account_id),
+	      			obj.set("depreciation_account_id", view[0].depreciation_account_id)
+	      			obj.set("favorite", view[0].favorite)
+				}else{
+					obj.set("category_id", 0),
+	      			obj.set("measurement_id", 0),
+	      			obj.set("abbr", ""),
+	      			obj.set("number", ""),
+	      			obj.set("name", ""),
+	      			obj.set("purchase_description", ""),
+	      			obj.set("sale_description", ""),
+	      			obj.set("locale", ""),
+	      			obj.set("fixed_assets_account_id", 0),
+	      			obj.set("accumulated_account_id", 0),
+	      			obj.set("depreciation_account_id", 0)
+				}
+			});
 		},
       	//Number      	
 		checkExistingNumber 	: function(){
@@ -70899,7 +71023,7 @@
 				para.push({ field:"abbr", value: obj.abbr });
 				para.push({ field:"number", value: obj.number });
 				para.push({ field:"category_id", value: obj.category_id });
-				
+
 				this.existingDS.query({
 					filter: para,
 					page: 1,
@@ -70908,14 +71032,12 @@
 					var view = self.existingDS.view();
 					
 					if(view.length>0){
-				 		self.set("isDuplicateNumber", true);						
+				 		self.set("notDuplicateNumber", false);						
 					}else{
-						self.set("isDuplicateNumber", false);
+						self.set("notDuplicateNumber", true);
 					}
 				});							
-			}else{
-				this.set("isDuplicateNumber", false);
-			}			
+			}		
 		},
 		generateNumber 			: function(){
 			var self = this, obj = this.get("obj");
@@ -70945,10 +71067,7 @@
 			var obj = this.get("obj");
 
 			if(obj.category_id){
-				var cat = this.categoryDS.get(obj.category_id);
-
-				obj.set("abbr", cat.abbr);
-				
+				this.loadPattern();				
 				this.generateNumber();
 			}
 		},
@@ -70977,27 +71096,46 @@
 	      	this.set("isEdit", false);
       		this.set("obj", null);
 
-      		this.dataSource.insert(0, {				
-				item_type_id 			: 3,//Fixed Assets      			      			
-      			category_id 			: 0,
-      			measurement_id			: 0,
-      			abbr 					: "",
-      			number 					: "",
-      			name 					: "",
-      			locale 					: banhji.locale,
-      			purchase_description	: "",
-      			sale_description		: "",
-      			fixed_assets_account_id : 0,
-      			accumulated_account_id 	: 0,
-      			depreciation_account_id	: 0,
-      			is_pattern 				: 0,
-      			status 					: 1,
-      			deleted 				: 0								
-			});
+			this.patternDS.query({
+      			filter:[
+      				{ field:"category_id", value:7 },
+      				{ field:"is_pattern", value:1 }
+      			],
+      			page:1,
+      			pageSize:1
+      		}).then(function(){
+      			var view = self.patternDS.view(),
+      			cat = self.categoryDS.at(0);
 
-			var obj = this.dataSource.at(0);
-			this.set("obj", obj);
-			this.generateNumber();
+      			self.dataSource.insert(0, {
+					item_type_id 			: 3,//Fixed Assets      			      			
+	      			category_id 			: view[0].category_id,
+	      			measurement_id			: view[0].measurement_id,
+	      			abbr 					: cat.abbr,
+	      			number 					: "",
+	      			name 					: "",
+	      			purchase_description	: view[0].purchase_description,
+	      			sale_description		: view[0].sale_description,
+	      			locale 					: view[0].locale,
+	      			fixed_assets_account_id : view[0].fixed_assets_account_id,
+	      			accumulated_account_id  : view[0].accumulated_account_id,
+	      			depreciation_account_id : view[0].depreciation_account_id,
+	      			is_pattern 				: 0,
+	      			status 					: 1,
+	      			deleted 				: 0								
+				});
+
+				var obj = self.dataSource.at(0);				
+				//Pattern
+				// if(self.get("contact_type_id")>0){
+				// 	obj.set("contact_type_id", self.get("contact_type_id"));
+				// 	obj.set("abbr", "");
+				// 	obj.set("is_pattern", 1);
+				// }
+
+				self.set("obj", obj);
+				self.generateNumber();
+      		});
       	},
       	objSync 				: function(){
 	    	var dfd = $.Deferred();	        

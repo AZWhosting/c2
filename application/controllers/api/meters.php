@@ -883,7 +883,7 @@ class Meters extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, 'db_banhji');		
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
