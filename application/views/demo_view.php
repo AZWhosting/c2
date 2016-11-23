@@ -41238,6 +41238,24 @@
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
+				},
+				create 	: {
+					url: apiUrl + "contacts",
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: apiUrl + "contacts",
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: apiUrl + "contacts",
+					type: "DELETE",
+					headers: banhji.header,
+					dataType: 'json'
 				},				
 				parameterMap: function(options, operation) {
 					if(operation === 'read') {
@@ -41273,6 +41291,24 @@
 				read 	: {
 					url: apiUrl + "contacts",
 					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				create 	: {
+					url: apiUrl + "contacts",
+					type: "POST",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				update 	: {
+					url: apiUrl + "contacts",
+					type: "PUT",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				destroy 	: {
+					url: apiUrl + "contacts",
+					type: "DELETE",
 					headers: banhji.header,
 					dataType: 'json'
 				},				
@@ -48843,7 +48879,7 @@
 		dataSource 				: dataStore(apiUrl + "contacts"),
 		patternDS 				: dataStore(apiUrl + "contacts"),
 		numberDS 				: dataStore(apiUrl + "contacts"),
-		protectDS 				: dataStore(apiUrl + "transactions"),		
+		deleteDS 				: dataStore(apiUrl + "transactions"),		
 		existingDS 				: dataStore(apiUrl + "contacts"),		
 		contactPersonDS			: dataStore(apiUrl + "contact_persons"),		
 		paymentTermDS			: banhji.source.paymentTermDS,
@@ -48978,21 +49014,21 @@
 				}
 			});
 		},
-		protectObj 				: function(){
+		checkExistingTxn		: function(){
 			var self = this, obj = this.get("obj");
-
-			this.protectDS.query({
-			  	filter: { field: "contact_id", value: obj.id },
-			  	page: 1,
-			  	pageSize: 1
-			}).then(function() {
-				var view = self.protectDS.view();
-
+			
+			this.deleteDS.query({
+				filter: { field:"contact_id", value: obj.id },
+				page: 1,
+				pageSize: 1
+			}).then(function(e){
+				var view = self.deleteDS.view();
+				
 				if(view.length>0){
 					self.set("isProtected", true);
 				}else{
-					self.set("isProtected", false); 
-				}
+					self.set("isProtected", false);
+				}								
 			});
 		},
 		//Obj
@@ -49014,7 +49050,7 @@
 
 				self.set("obj", view[0]);
 				self.loadMap();
-				self.protectObj();								
+				self.checkExistingTxn();								
 			});
 		},
       	addEmpty 				: function(){
@@ -49024,7 +49060,7 @@
 
       		this.set("isEdit", false);
       		this.set("isProtected", false);
-      		this.set("isDuplicateNumber", false);
+      		this.set("notDuplicateNumber", true);
       		this.set("obj", null);
 
       		this.patternDS.query({
@@ -49137,6 +49173,7 @@
 					//Save Close					
 					self.set("saveClose", false);
 					self.cancel();
+					banhji.source.supplierDS.fetch();
 					window.history.back();
 				}else{
 					//Save New
@@ -49154,16 +49191,18 @@
 			banhji.userManagement.removeMultiTask("vendor");
 		},
 		delete 					: function(){
-			var self = this, obj = this.get("obj");
+			var obj = this.get("obj");
 			this.set("showConfirm",false);
 
-			if(obj.is_pattern==0 && obj.isProtected==false){				
-				obj.set("deleted", 1);
-		        self.dataSource.sync();
+			if(!obj.is_system==1){
+				if(this.get("isProtected")){
+					alert("Sorry, this data is protected!");
+				}else{
+					obj.set("deleted", 1);
+			        this.dataSource.sync();
 
-		        window.history.back();					
-			}else{
-				alert("Sorry, this data is protected!");
+			        window.history.back();
+				}
 			}	
 		},
 		openConfirm 			: function(){
@@ -55637,6 +55676,7 @@
 		statusList 				: banhji.source.statusList,
 		confirmMessage 			: banhji.source.confirmMessage,
 		isEdit 					: false,
+		isProtected 			: false,
         obj 					: null,
         saveClose 				: false,
 		showConfirm 			: false,
@@ -55754,6 +55794,23 @@
 				}
 			});
 		},
+		checkExistingTxn		: function(){
+			var self = this, obj = this.get("obj");
+			
+			this.deleteDS.query({
+				filter: { field:"contact_id", value: obj.id },
+				page: 1,
+				pageSize: 1
+			}).then(function(e){
+				var view = self.deleteDS.view();
+				
+				if(view.length>0){
+					self.set("isProtected", true);
+				}else{
+					self.set("isProtected", false);
+				}								
+			});
+		},
 		//Obj
 		loadObj 				: function(id, is_pattern){
 			var self = this, para = [];
@@ -55772,7 +55829,8 @@
 				var view = self.dataSource.view();
 				
 				self.set("obj", view[0]);
-				self.loadMap();								
+				self.loadMap();
+				self.checkExistingTxn();
 			});
 
 			this.contactPersonDS.filter({ field:"contact_id", value: id });
@@ -55784,7 +55842,7 @@
       		
       		this.set("isEdit", false);
       		this.set("isProtected", false);
-      		this.set("isDuplicateNumber", false);
+      		this.set("notDuplicateNumber", true);
       		this.set("obj", null);
 
       		this.patternDS.query({
@@ -55898,6 +55956,7 @@
 					//Save Close					
 					self.set("saveClose", false);
 					self.cancel();
+					banhji.source.customerDS.fetch();
 					window.history.back();
 				}else{
 					//Save New
@@ -55915,26 +55974,19 @@
 			banhji.userManagement.removeMultiTask("customer");
 		},
 		delete 					: function(){
-			var self = this, obj = this.get("obj");
+			var obj = this.get("obj");
 			this.set("showConfirm",false);
 
 			if(!obj.is_system==1){
-				this.deleteDS.query({
-					filter: { field:"contact_id", value: obj.id },
-					page: 1,
-					pageSize: 1
-				}).then(function(e){
-					var view = self.deleteDS.view();
-					
-					if(view.length>0){
-						alert("Sorry, this data is protected!");
-					}else{
-						obj.set("deleted", 1);
-				        self.dataSource.sync();
+				if(this.get("isProtected")){
+					alert("Sorry, this data is protected!");
+				}else{
+					obj.set("deleted", 1);
+			        this.dataSource.sync();
+			        banhji.source.customerDS.fetch();
 
-				        window.history.back();
-					}								
-				});
+			        window.history.back();
+				}
 			}	
 		},
 		openConfirm 			: function(){

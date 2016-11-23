@@ -492,14 +492,15 @@
 		            	   style="padding-right: 1px;height: 32px;" 
             			   data-option-label="(--- Select ---)"
             			   data-auto-bind="false"			                   
-		                   data-value-primitive="true"
+		                   data-value-primitive="false"
 		                   data-text-field="name"
 		                   data-value-field="id"
 		                   data-bind="value: blockCompanyId,
-		                              source: licenseDS"/>
-		            	<input type="text" placeholder="Location" style="height: 32px;"  class="span3 k-textbox k-invalid" />
-		            	<input type="text" placeholder="Abbr" style="height: 32px;" class="span3 k-textbox k-invalid" />
-		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" href="#/plan"><i></i>Add</a>
+		                              source: licenseDS,
+		                              events: {change: onLicenseChange}"/>
+		            	<input data-bind="value: blocName" type="text" placeholder="Location" style="height: 32px;"  class="span3 k-textbox k-invalid" />
+		            	<input data-bind="value: blocAbbr" type="text" placeholder="Abbr" style="height: 32px;" class="span3 k-textbox k-invalid" />
+		            	<a class="btn btn-default glyphicons circle_plus cutype-icon" style="width: 80px;margin-left: 2px;" data-bind="click: addBloc"><i></i>Add</a>
 		            </div>
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
@@ -511,8 +512,8 @@
 	            			</tr>
 	            		</thead>
 	            		<tbody data-role="listview"	            				
-				                data-template="cusTypeSetting-template"
-				                data-bind="source: dataSource"></tbody>
+				                data-template="blocSetting-template"
+				                data-bind="source: blocDS"></tbody>
 	            	</table>
 
 	            </div>
@@ -592,13 +593,59 @@
     		#}#
    		</td>
    		<td align="center">   			   
-		        <a class="btn-action glyphicons ok_2 btn-success" href="\\#"><i></i></a>
+		        <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
 		        #if(is_system=="0"){#
-			        <a class="btn-action glyphicons remove_2 btn-danger" href="\\#"><i></i></a>				        
+			        <a class="btn-action glyphicons remove_2 btn-danger k-delete-button" href="\\#"><i></i></a>				        
 		        #}#	   	
    		</td>   		
    	</tr>
 </script>
+<script id="blocSetting-template" type="text/x-kendo-tmpl">                    
+    <tr>
+    	<td>
+    		#= branch.name#
+   		</td>
+   		<td align="center">
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= abbr#
+   		</td>
+   		<td align="center">   			   
+		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#"><i></i></a>
+   		</td>   		
+   	</tr>
+</script>
+<script id="bloc-edit-contact-type-template" type="text/x-kendo-tmpl">
+    <div class="product-view k-widget">
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+                <span data-for="ProductName" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
+        <dl>                
+            <dd>
+                <select data-bind="value: location" >
+	                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
+	                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>			                
+	            </select>
+            </dd>              
+        </dl>
+        <dl>                
+            <dd>
+                <input type="text" class="k-textbox" data-bind="value:abbr" name="abbr" required="required" validationMessage="required" />
+                <span data-for="abbr" class="k-invalid-msg"></span>
+            </dd>               
+        </dl>
+        
+        <div class="edit-buttons">
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+        </div>
+    </div>
+</script>
+
 <script id="customerSetting-edit-contact-type-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget">
         <dl>                
@@ -5472,8 +5519,15 @@
 		contactTypeAbbr 	: "",
         contactTypeCompany 	: 0,
         blockCompanyId  	: 0,
+        blocDS 				: dataStore(apiUrl + "locations"),
+        objBloc 			: null,
         licenseDS 			: dataStore(apiUrl + "branches"),
 		contactTypeDS 		: banhji.source.customerTypeDS,
+		onLicenseChange 	: function(e) {
+			var index = e.sender.selectedIndex;
+			var block = this.licenseDS.at(index - 1);
+			this.set('blockCompanyId',{id:block.id, name:block.name});
+		},
 		addContactType 		: function(){
         	var name = this.get("contactTypeName");
         	if(name!==""){
@@ -5489,6 +5543,22 @@
 	        	this.set("contactTypeName", "");
 	        	this.set("contactTypeAbbr", "");
 	        	this.set("contactTypeCompany", 0);
+        	}
+        },
+        addBloc 			: function(){
+
+        	var branch = this.get("blockCompanyId");
+        	
+        	if(branch!==""){
+	        	this.blocDS.add({
+	        		branch 		: {id : branch.id, name: branch.name},
+	        		name 		: this.get("blocName"),
+	        		abbr 		: this.get("blocAbbr")
+	        	});
+	        	this.blocDS.sync();
+	        	this.set("blocName", "");
+	        	this.set("blocAbbr", "");
+	        	this.set("blockCompanyId", 0);
         	}
         },
 		pageLoad 			: function(){

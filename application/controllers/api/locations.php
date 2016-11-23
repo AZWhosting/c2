@@ -81,15 +81,13 @@ class Locations extends REST_Controller {
 		$data["count"] = $obj->paged->total_rows;		
 		
 		if($obj->result_count()>0){
-			foreach ($obj as $value) {				
-		 		$data["results"][] = array(
-		 			"id" 			=> $value->id,
-					"company_id" 	=> $value->company_id,			   			   						   
-				   	"utility_id" 	=> $value->utility_id,				   	
+			foreach ($obj as $value) {	
+				$license = $value->branch->get();			
+		 		$data["results"][] = array(	
+		 			"id"     		=> $value->id,		   	
 				   	"name" 			=> $value->name,
 				   	"abbr" 			=> $value->abbr,
-				   	"branch_id" 	=> $value->branch_id,
-				   	"company" 		=> $value->company->get_raw()->result()				
+				   	"branch" 		=> array('id' => $license->id, 'name' => $license->name)			
 		 		);
 			}
 		}
@@ -104,22 +102,19 @@ class Locations extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->company_id 	= $value->company_id;
-			$obj->utility_id 	= $value->utility_id;			
-			$obj->name 			= $value->name;
-			$obj->abbr 			= $value->abbr;
-			$obj->branch_id 	= $value->branch_id;
+			isset($value->utility_id) 			? $obj->utility_id 			= $value->utility_id : "";
+			isset($value->name) 				? $obj->name 				= $value->name : "";
+			isset($value->abbr) 				? $obj->abbr 				= $value->abbr : "";
+			isset($value->branch) 				? $obj->branch_id 			= $value->branch->id : "";
 			if($obj->save()){
 				//Respsone
-				$company = $obj->company->get_raw();
+				
 				$data["results"][] = array(					
-					"id" 			=> $obj->id,		 			
-					"company_id" 	=> $obj->company_id,
+					"id" 			=> $obj->id,
 					"utility_id" 	=> $obj->utility_id,
 					"name" 			=> $obj->name,
 					"abbr" 			=> $obj->abbr,
-					"branch_id" 	=> $obj->branch_id,
-				   	"company" 		=> $company->result()	
+					"branch_id" 	=> $obj->branch_id	
 				);				
 			}		
 		}
