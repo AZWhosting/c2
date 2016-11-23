@@ -480,6 +480,7 @@
 	            		</thead>
 	            		<tbody data-role="listview"	            	
 				                data-template="custType-template"
+				                data-edit-template="customerSetting-edit-contact-type-template"
 				                data-bind="source: contactTypeDS"></tbody>
 	            	</table>
 
@@ -590,14 +591,11 @@
     			No
     		#}#
    		</td>
-   		<td align="center">   			
-   			<div class="edit-buttons">       
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+   		<td align="center">   			   
+		        <a class="btn-action glyphicons ok_2 btn-success" href="\\#"><i></i></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>				        
-		        #}#
-		        <span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
-		   	</div>		   	
+			        <a class="btn-action glyphicons remove_2 btn-danger" href="\\#"><i></i></a>				        
+		        #}#	   	
    		</td>   		
    	</tr>
 </script>

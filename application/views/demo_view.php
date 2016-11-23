@@ -55619,7 +55619,7 @@
 		dataSource 				: dataStore(apiUrl + "contacts"),
 		patternDS 				: dataStore(apiUrl + "contacts"),
 		numberDS 				: dataStore(apiUrl + "contacts"),
-		protectDS 				: dataStore(apiUrl + "transactions"),		
+		deleteDS 				: dataStore(apiUrl + "transactions"),		
 		existingDS 				: dataStore(apiUrl + "contacts"),		
 		contactPersonDS			: dataStore(apiUrl + "contact_persons"),		
 		paymentTermDS			: banhji.source.paymentTermDS,
@@ -55637,7 +55637,6 @@
 		statusList 				: banhji.source.statusList,
 		confirmMessage 			: banhji.source.confirmMessage,
 		isEdit 					: false,
-		isProtected 			: false,
         obj 					: null,
         saveClose 				: false,
 		showConfirm 			: false,
@@ -55755,23 +55754,6 @@
 				}
 			});
 		},
-		protectObj 				: function(){
-			var self = this, obj = this.get("obj");
-
-			this.protectDS.query({
-			  	filter: { field: "contact_id", value: obj.id },
-			  	page: 1,
-			  	pageSize: 1
-			}).then(function() {
-				var view = self.protectDS.view();
-
-				if(view.length>0){
-					self.set("isProtected", true);
-				}else{
-					self.set("isProtected", false); 
-				}
-			});
-		},
 		//Obj
 		loadObj 				: function(id, is_pattern){
 			var self = this, para = [];
@@ -55790,8 +55772,7 @@
 				var view = self.dataSource.view();
 				
 				self.set("obj", view[0]);
-				self.loadMap();
-				self.protectObj();								
+				self.loadMap();								
 			});
 
 			this.contactPersonDS.filter({ field:"contact_id", value: id });
@@ -55938,14 +55919,22 @@
 			this.set("showConfirm",false);
 
 			if(!obj.is_system==1){
-				if(obj.isProtected==false){				
-					obj.set("deleted", 1);
-			        self.dataSource.sync();
+				this.deleteDS.query({
+					filter: { field:"contact_id", value: obj.id },
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.deleteDS.view();
+					
+					if(view.length>0){
+						alert("Sorry, this data is protected!");
+					}else{
+						obj.set("deleted", 1);
+				        self.dataSource.sync();
 
-			        window.history.back();					
-				}else{
-					alert("Sorry, this data is protected!");
-				}
+				        window.history.back();
+					}								
+				});
 			}	
 		},
 		openConfirm 			: function(){
@@ -69719,7 +69708,7 @@
     	saveClose 				: false,
 		showConfirm 			: false,
 		originalNo 				: "",
-		isDuplicateNumber 		: false,
+		notDuplicateNumber 		: false,
     	user_id					: banhji.source.user_id,
     	pageLoad 				: function(id){			
 			if(id){
