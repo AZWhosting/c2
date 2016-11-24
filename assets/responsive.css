@@ -21,6 +21,12 @@
 .cash-bg .cash-tables table tr:last-child td{
   padding-bottom: 12px;
 }
+.borderless tr td{
+    border: none;
+}
+.table.borderless tr td{
+  padding: 8px 0 !important;
+}
 .cash-position{
   background: #333E50;
   color: #fff;

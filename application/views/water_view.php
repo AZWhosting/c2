@@ -833,9 +833,9 @@
 							        	<li style="font-size: large; color: black; font-weight: bold;">							            	
 							            	<span data-bind="text: obj.name"></span>
 							            </li>
-							            <li class="glyphicons text_bigger dashboard"><span data-toggle="tab" data-target="#tab1" data-bind="click: meterClick"><i></i></span>
+							            <li class="glyphicons text_bigger dashboard active"><span data-toggle="tab" data-target="#tab1" data-bind="click: meterClick"><i></i></span>
 							            </li>
-							            <li class="glyphicons text_bigger active" ><span data-bind="click: NometerClick" data-toggle="tab" data-target="#tab2"><i></i></span>
+							            <li class="glyphicons text_bigger" ><span data-bind="click: NometerClick" data-toggle="tab" data-target="#tab2"><i></i></span>
 							            </li>							            							            
 							            <li class="glyphicons circle_info"><span data-bind="click: NometerClick" data-toggle="tab" data-target="#tab3"><i></i></span>
 							            </li>							            
@@ -851,14 +851,14 @@
 							    <div class="widget-body">
 							        <div class="tab-content">
 							        	<!-- Transactions Tab content -->
-							            <div id="tab1" class="tab-pane box-generic">
+							            <div id="tab1" class="tab-pane box-generic active">
 							            	<a class="btn btn-block btn-inverse" style="margin-bottom: 5px;" data-bind="click: goMeter">Add Meter</a>
-							            	<table class="table table-bordered">
+							            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 										        <thead>
 										            <tr>			                
-										                <th>Meter No.</th>
-										                <th>Status</th>
-										                <th>Action</th>            
+										                <th width="140">Meter No.</th>
+										                <th width="50">Status</th>
+										                <th width="100">Action</th>            
 										            </tr> 
 										        </thead>
 										        <tbody data-role="listview" 
@@ -882,7 +882,7 @@
 							            </div>
 							            <!-- // Transactions Tab content END -->	
 							            <!-- Transactions Tab content -->
-							            <div id="tab2" class="tab-pane active box-generic">
+							            <div id="tab2" class="tab-pane box-generic">
 							            	<table class="table table-borderless table-condensed cart_total cash-table">
 								            	<tr>
 								            		<td width="50%">
@@ -1266,71 +1266,59 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>						
 					</div>
-			        <h2 style="padding:0 15px;">Add Meter</h2>
-			        <div class="span12 row-fluid" style="overflow: hidden;padding:40px 0;">
+			        <h2 style="padding:0 15px;">Add Meter</h2><br>
+			        <h3 style="padding:0 15px;" ><p style="float:left;font-size: 15px;">Customer Name: </p><p style="float:left;font-size: 15px" data-bind="text: contact.name"></p></h3>
+			        <div class="span12 row-fluid" style="overflow: hidden;padding:20px 0;">
 			        	<div class="span4">
-			        		User Name: <span data-bind="text: contact.name"></span>
-			        	</div>
-			        	<div class="span8">
-			        		<label>Item</label>
+				        	<label>Number</label>
 				        	<input type="text" 
 				        			class="k-textbox k-invalid" 
-				        			placeholder="Item" 
-				        			data-bind="value : obj.item"
-				        			style="width: 100%;margin-bottom: 20px;" />
-			        		<label>Status</label>
-				        	<input type="text" 
-				        			class="k-textbox k-invalid" 
-				        			placeholder="Status" 
-				        			data-bind="value : obj.status"
-				        			style="width: 100%;margin-bottom: 20px;" />
-				        	<label>Location</label>
-				        	<input type="text" 
-				        			class="k-textbox k-invalid" 
-				        			placeholder="Location" 
-				        			data-bind="value : obj.location"
-				        			style="width: 100%;margin-bottom: 20px;" />
+				        			data-bind="value : obj.number"
+				        			style="width: 100%;margin-bottom: 15px;height: 32px;" />
 				        	<label>Plan</label>
 				        	<input type="text" 
 				        			class="k-textbox k-invalid" 
-				        			placeholder="Plan" 
 				        			data-bind="value : obj.plan"
-				        			style="width: 100%;margin-bottom: 20px;" />
+				        			style="width: 100%;margin-bottom: 15px;height: 32px;" />
+				        	<!--select data-role="dropdownlist"
+			                   data-value-primitive="true"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="
+			                   	source: planDS,
+			                   	value: obj.plan"
+			                   style="width: 100%;margin-bottom: 15px;" ></select-->
+				        </div>
+				        <div class="span4">
+				        	<label>Number Digit</label>
+				        	<input type="text" 
+				        			class="k-textbox k-invalid" 
+				        			data-bind="value : obj.number_digit"
+				        			style="width: 100%;margin-bottom: 15px;height: 32px;" />
 				        	<label>Map</label>
 				        	<input type="text" 
 				        			class="k-textbox k-invalid" 
 				        			data-bind="value : obj.map"
-				        			placeholder="Map" 
-				        			style="width: 100%;margin-bottom: 20px;" />
-				        	<label>Memo</label>
-				        	<textarea class="k-textbox k-invalid" placeholder="Memo" data-bind="value : obj.memo" style="width: 100%;margin-bottom: 20px;"></textarea> 
-				        	<label>Type</label>
-				        	<select
-				        		data-role="dropdownlist"
-				        		data-auto-bind="false"
-				        		data-value-primitive="true"
-			                    data-text-field="name"
-			                    data-value-field="id"
-			                    style="width: 100%;margin-bottom: 20px;"
-				        		data-bind="
-				        			value: obj.type,
-				        			source: types
-				        		"></select>
-				        	<label>Starting No.</label>
+				        			style="width: 100%;margin-bottom: 15px;height: 32px;" />
+				        </div>
+				        <div class="span4">
+				        	<label>Status</label>
+				        	<select data-role="dropdownlist"
+			                   data-value-primitive="true"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="
+			                   	source: selectType,
+			                   	value: obj.status"
+			                   style="width: 100%;margin-bottom: 15px;" ></select>
+			                <label>Starting No.</label>
 				        	<input type="text" 
 				        			class="k-textbox k-invalid" 
-				        			placeholder="Starting No." 
 				        			data-bind="value : obj.starting_no"
-				        			style="width: 100%;margin-bottom: 20px;" />
-				        	<label>Number Digit</label>
-				        	<input type="text" 
-				        			class="k-textbox k-invalid"
-				        			placeholder="Number Digit"
-				        			data-bind="value : obj.number_digit" 
-				        			style="width: 100%;margin-bottom: 20px;" />
-				        	
-				       	</div>
-			        </div>
+				        			style="width: 100%;margin-bottom: 15px;height: 32px;" />
+				        </div>
+			        </div>	
+			       
 				    <br>
 				    <!-- Form actions -->
 					<div class="box-generic bg-action-button">
@@ -1340,8 +1328,8 @@
 								
 							</div>
 							<div class="span9" align="right">
-								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 80px;margin:0;"><i></i> <span data-bind="text: lang.lang.save_new"></span></span>
-								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save-close"></span></span>		
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 80px;margin:0;"><i></i> <span>Add</span></span>
+								<span id="saveClose" data-bind="click: cancel" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span>Cancel</span></span>		
 							</div>
 						</div>
 					</div>
@@ -1493,15 +1481,24 @@
 *	End Water Section         *
 **************************** -->
 
-
+<!-- ***************************
+*	Template Blog         	  *
+**************************** -->
 <script id="meter-list-tmpl" type="text/x-kendo-tmpl">
 	<tr>
-		<td></td>
-		<td></td>
-		<td>
-			<span class="btn btn-block btn-primary" data-bind="click: goActivateMeter">
-				<span>Activate Meter</span>
-			</span>
+		<td>#= number#</td>
+		<td style="text-align:center;">
+			# if(status == 1){#
+				<span class="btn-action glyphicons ok_2 btn-success"><i></i></span>
+			# }else if(status == 0){#
+				<span class="btn-action glyphicons remove_2 btn-danger"><i></i></span>
+			# }else{ #
+				<span class="btn-action glyphicons remove_2 btn-danger widget-stats widget-stats-info "><i></i></span>
+			# } #
+		</td>
+		<td style="text-align: center;">
+			<span style="background: \#1f4774" data-bind="click: goActivateMeter" class="btn-action glyphicons inbox_in btn-success"><i></i></span>
+			<a style="border:none;" href="\#/meter/#= id #" class="btn-action glyphicons pencil btn-danger widget-stats widget-stats-info"><i></i></span>
 		</td>
 	</tr>
 </script>
@@ -1527,6 +1524,10 @@
 		</td>
 	</tr>
 </script>
+<!-- ***************************
+*	Menu Section         	  *
+**************************** -->
+
 <!-- ***************************
 *	Menu Section         	  *
 **************************** -->
@@ -5654,7 +5655,7 @@
 			console.log('Activate meter');
 		},
 		pageLoad 			: function(id){
-			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterTransactionContent);
+			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent);
 			//Refresh
 			if(this.contactDS.total()>0){
 				this.contactDS.fetch();
@@ -5939,7 +5940,7 @@
 		},	
 		selectedRow			: function(e){
 			var data = e.data, self = this;
-			
+			this.meterDS.filter({field: "contact_id", value: data.id});
 			this.set("obj", data);
 			this.loadData();
 			// if(data.use_water == 1){
@@ -6133,59 +6134,73 @@
 	banhji.meter = kendo.observable({
 		lang 				: langVM,
 		dataSource  		: dataStore(apiUrl + "meters"),
+		planDS 				: dataStore(apiUrl + "plans"),
 		itemDS 				: null,
 		obj 				: null,
 		isEdit 				: false,
 		contact 			: null,
+		selectType 			: [{id: 1, name: "Active"},{id: 0, name: "Inactive"},{id: 2, name: "Void"}],
 		pageLoad 			: function(id){
-			this.addEmpty(this.contact.id);
+			if(id){
+				this.loadObj(id);
+			}else{
+				this.addEmpty(this.contact.id);
+			}
 		},
-		types 				: [
-			{id: "w", name: "Water"},
-			{id: "e", name: "Electricity"}
-		],
+		loadObj 			: function(id){
+			var self = this;	
+			this.dataSource.data([]);			
+			this.dataSource.query({    			
+				filter: { field:"id", value: id },
+				page: 1,
+				take: 100
+			}).then(function(e){
+				var view = self.dataSource.view();	
+				self.set("obj", view[0]);
+			});
+		},
 		addEmpty 		 	: function(id){			
 			//this.dataSource.data([]);		
 			this.set("obj", null);		
 			this.set("isEdit", false);		
 			this.dataSource.insert(0,{				
 				contact_id		: id,
-				item 			: null,
-				status 			: null,
+				number 			: null,
+				status 			: 1,
 				location 		: null,
 				plan 			: null,
 				map 			: null,
 				memo 			: null,
 				type 			: {id: "w", name: "Water"},
 				starting_no 	: null,
+				activated 		: 0,
 				number_digit 	: null		
 	    	});		
 			var obj = this.dataSource.at(0);			
 			this.set("obj", obj);		
 		},
 		save 				: function() {
+			console.log('save');
+			var self = this;
 			if(this.dataSource.data().length > 0) {
 				//$("#loadImport").css("display","block");
 				this.dataSource.sync();
 				this.dataSource.bind("requestEnd", function(e){
-			    	if(e.response){				
-			    		$("#ntf1").data("kendoNotification").success("Activated user successfully!");
-			    		//console.log(banhji.waterCenter.get('obj'));		
-						banhji.waterCenter.get('obj').set('user_water', 1);	
-						banhji.waterCenter.dataSource.sync();
-			    		window.history.back();
-						//$("#loadImport").css("display","none");
-					}				  				
+					if(e.type != 'read') {
+						if(e.response){				
+				    		$("#ntf1").data("kendoNotification").success("Successfully!");
+							window.history.back();
+						}
+					}				    					  				
 			    });
 			    this.dataSource.bind("error", function(e){		    		    	
-					$("#ntf1").data("kendoNotification").error("Error activated!"); 
+					$("#ntf1").data("kendoNotification").error("Error!"); 
 					//$("#loadImport").css("display","none");				
 			    });
 			}	
-			
 		},
 		cancel 				: function(){
-			//this.dataSource.cancelChanges();		
+			this.dataSource.cancelChanges();		
 			window.history.back();
 		}
 	});
@@ -7217,7 +7232,7 @@
 
 		vm.pageLoad(id);
 	});
-	banhji.router.route("/meter", function(){		
+	banhji.router.route("/meter(/:id)", function(id){		
 		banhji.view.layout.showIn("#content", banhji.view.meter);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
@@ -7230,7 +7245,7 @@
 			banhji.pageLoaded["meter"] = true;
 		}
 
-		vm.pageLoad();
+		vm.pageLoad(id);
 	});
 	
 	banhji.router.route("/plan", function(){		
