@@ -894,7 +894,21 @@
 <script id="accountingCenter-transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>    	  	
     	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=type#</td>
+    	<td>
+        	#if(dr==0 && cr==0){#
+        		#=type#
+        	#}else{#
+	        	#if(type=="Direct_Expense" || type=="Reimbursement" || type=="Advance_Settlement" ){#
+	        		<a href="\#/expense/#=transaction_id#"><i></i> #=type#</a>
+	        	#}else if(type=="Deposit" || type=="Witdraw" || type=="Transfer" ){#
+	        		<a href="\#/cash_transaction/#=transaction_id#"><i></i> #=type#</a>
+	        	#}else if(type=="Cash_Purchase" || type=="Credit_Purchase" ){#
+	        		<a href="\#/purchase/#=transaction_id#"><i></i> #=type#</a>
+	        	#}else{#
+					<a href="\#/#=type.toLowerCase()#/#=transaction_id#"><i></i> #=type#</a>
+				#}#
+			#}#
+        </td>
         <td>
         	#if(dr==0 && cr==0){#
         		#=number#
@@ -41849,7 +41863,7 @@
 		}),
 		//Measurement
 		measurementDS				: dataStore(apiUrl + "measurements"),		
-		//Tax Item
+		//Tax
 		taxItemDS					: dataStore(apiUrl + "tax_items"),
 		customerTaxDS				: new kendo.data.DataSource({
 			transport: {
@@ -42798,6 +42812,7 @@
 		//Payment Term, Method, Segment
 		paymentTermDS				: dataStore(apiUrl + "payment_terms"),
 		paymentMethodDS				: dataStore(apiUrl + "payment_methods"),
+		//Segment
 		segmentItemDS				: dataStore(apiUrl + "segments/item"),
 		//Recurring
 		frequencyList 				: [
@@ -45283,7 +45298,7 @@
 	banhji.segment =  kendo.observable({
 		lang 				: langVM,
         dataSource 			: dataStore(apiUrl + "segments"),
-        itemDS 	 			: banhji.source.segmentItemDS,
+        itemDS 	 			: dataStore(apiUrl + "segments/item"),
         deleteDS 			: dataStore(apiUrl + "segments/item"),
         itemDeleteDS 		: dataStore(apiUrl + "transactions"),
         statusList 			: banhji.source.statusList,
@@ -45395,6 +45410,7 @@
         	this.itemDS.bind("requestEnd", function(e){
         		if( e.type == "create" || e.type == "update"){ 
         			self.set("windowItemVisible", false);
+        			banhji.source.segmentItemDS.fetch();
         		}
         	});
         },
@@ -45416,8 +45432,14 @@
 		        	var view = self.itemDeleteDS.view();
 
 		        	if(view.length>0){
-		        		this.dataSource.remove(data);
-		        		this.dataSource.sync();
+		        		this.itemDS.remove(data);
+		        		this.itemDS.sync();
+		        		this.itemDS.bind("requestEnd", function(e){
+			        		if( e.type == "create" || e.type == "update"){ 
+			        			self.set("windowItemVisible", false);
+			        			banhji.source.segmentItemDS.fetch();
+			        		}
+			        	});
 		        	}else{
 		        		alert("Sorry, this item can not be deleted.");
 		        	}

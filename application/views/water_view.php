@@ -852,7 +852,24 @@
 							        <div class="tab-content">
 							        	<!-- Transactions Tab content -->
 							            <div id="tab1" class="tab-pane box-generic">
-							            	<table class="table table-borderless table-condensed cart_total cash-table">
+							            	<a class="btn btn-block btn-inverse" style="margin-bottom: 5px;" data-bind="click: goMeter">Add Meter</a>
+							            	<table class="table table-bordered">
+										        <thead>
+										            <tr>			                
+										                <th>Meter No.</th>
+										                <th>Status</th>
+										                <th>Action</th>            
+										            </tr> 
+										        </thead>
+										        <tbody data-role="listview" 
+										        		data-template="meter-list-tmpl" 
+										        		data-auto-bind="false"
+										        		data-bind="source: meterDS"></tbody>			        
+										    </table>
+										    <div id="pager" class="k-pager-wrap"
+											 data-auto-bind="false"
+										     data-role="pager" data-bind="source: meterDS"></div>	
+							            	<!--table class="table table-borderless table-condensed cart_total cash-table">
 								            	<tr>
 								            		<td width="50%">
 								            			<a class="btn btn-block btn-inverse" data-bind="click: goMeter">Add Meter</a>
@@ -861,7 +878,7 @@
 								            			<span class="btn btn-block btn-primary" data-bind="click: goActivateMeter"><span><span>Activate Meter</span></span>								            			
 								            		</td>
 								            	</tr>
-							            	</table>
+							            	</table-->
 							            </div>
 							            <!-- // Transactions Tab content END -->	
 							            <!-- Transactions Tab content -->
@@ -969,14 +986,14 @@
 												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
 											</div>
 											<br>
-											<!--div class="table table-condensed" style="height: 100;"						 
+											<div class="table table-condensed" style="height: 100;"						 
 												 data-role="grid"
 												 data-auto-bind="false"						 
 												 data-bind="source: noteDS"
 												 data-row-template="waterCenter-note-tmpl"
 												 data-columns="[{title: ''}]"
 												 data-height="100"						 
-												 data-scrollable="{virtual: true}"></div-->
+												 data-scrollable="{virtual: true}"></div>
 											
 							            </div>
 							            <!-- // NOTE Tab content END -->
@@ -999,10 +1016,10 @@
 										                <th style="width: 13%;"></th>                			                
 										            </tr> 
 										        </thead>
-										        <!--tbody data-role="listview" 
+										        <tbody data-role="listview" 
 										        		data-template="attachment-list-tmpl" 
 										        		data-auto-bind="false"
-										        		data-bind="source: attachmentDS"></tbody-->			        
+										        		data-bind="source: attachmentDS"></tbody>			        
 										    </table>
 
 										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
@@ -1050,12 +1067,7 @@
 							</div>														
 						</div>
 					</div>
-					<div class="row-fluid">
-						<table>
-							<tbody id="waterCenterContent">
-								
-							</tbody>
-						</table>
+					<div class="row-fluid" id="waterCenterContent">
 					</div>
 				</div>
 			</div>			
@@ -1063,6 +1075,55 @@
 	</div>		
 </script>
 <script id="waterCenter-transaction-tmpl" type="text/x-kendo-tmpl">
+	<div>
+		<input data-role="dropdownlist"
+			   class="sorter"                  
+	           data-value-primitive="true"
+	           data-text-field="text"
+	           data-value-field="value"
+	           data-bind="value: sorter,
+	                      source: sortList,                              
+	                      events: { change: sorterChanges }" />
+
+		<input data-role="datepicker"
+			   class="sdate"
+			   data-format="dd-MM-yyyy"
+	           data-bind="value: sdate,
+	           			  max: edate"
+	           placeholder="From ..." >
+
+	    <input data-role="datepicker"
+	    	   class="edate"
+	    	   data-format="dd-MM-yyyy"
+	           data-bind="value: edate,
+	                      min: sdate"
+	           placeholder="To ..." >
+
+	  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+	</div>
+	<table class="table table-bordered table-striped table-white">
+		<thead>
+			<tr>
+				<th><span data-bind="text: lang.lang.date"></span></th>
+				<th><span data-bind="text: lang.lang.type"></span></th>								
+				<th><span data-bind="text: lang.lang.reference_no"></span></th>
+				<th><span data-bind="text: lang.lang.amount"></span></th>
+				<th><span data-bind="text: lang.lang.status"></span></th>
+				<th><span data-bind="text: lang.lang.action"></span></th>
+			</tr>
+		</thead>	            		
+		<tbody data-role="listview"
+				data-auto-bind="false"	            					            					            					            			
+                data-template="Transaction-tmpl"
+                data-bind="source: transactionDS" >
+        </tbody>
+	</table>
+	<div id="pager" class="k-pager-wrap"
+	 data-auto-bind="false"
+     data-role="pager" data-bind="source: transactionDS">
+     </div>	
+</script>
+<script id="Transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>    	  	
     	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
     	<td>#=type#</td>
@@ -1433,7 +1494,39 @@
 **************************** -->
 
 
-
+<script id="meter-list-tmpl" type="text/x-kendo-tmpl">
+	<tr>
+		<td></td>
+		<td></td>
+		<td>
+			<span class="btn btn-block btn-primary" data-bind="click: goActivateMeter">
+				<span>Activate Meter</span>
+			</span>
+		</td>
+	</tr>
+</script>
+<script id="attachment-list-tmpl" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+			<input id="txtName-#:uid#" name="txtName-#:uid#" 
+					type="text" class="k-textbox" 
+					data-bind="value: name" />
+		</td>
+		<td>
+			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
+					type="text" class="k-textbox" 
+					data-bind="value: description"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td>#=kendo.toString(created_at, "dd-MM-yyyy")#</td>
+		<td>
+			#if(id){#
+				<a href="#=url#" target="_blank" class="btn-action glyphicons download btn-default"><i></i></a>
+			#}#
+			<span class="btn-action glyphicons remove_2 btn-danger" data-bind="click: removeFile"><i></i></span>			
+		</td>
+	</tr>
+</script>
 <!-- ***************************
 *	Menu Section         	  *
 **************************** -->
@@ -5433,6 +5526,7 @@
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
 		filterKey 			: 1,
+		meterDS 			: dataStore(apiUrl + 'meters'),
 		meterClick 			: function(){
 			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent);
 		},
