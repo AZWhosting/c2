@@ -68,317 +68,181 @@
 *	Water Section      	  *
 **************************** -->
 <script id="wDashBoard" type="text/x-kendo-template">
-    <div class="row-fluid">
-		<!-- Left Side -->
-		<div class="span4">
-			<!-- Logo of the page -->
-			<table width="100%" cellpadding="10">
-				<tr>
-			        <td valign="top">
-			        	<img src="<?php echo base_url();?>/assets/water_bill.png" width="300" height="100">
-			        	<div class="supplier-icon" style="margin-top: 15px;">
-					       	<div class="span4">
-						       	<a href="#/customer" class="center">
-						       		<img title="Add Customer" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/customers.ico" />
-						       	</a>
-						       </div>
-						   <!--  <div class="span4">
-						       	<a href="#/item" class="center">
-						       		<img title="Add Inventory" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/inventories.ico" />
-						       	</a>
-						    </div>
-						    <div class="span4">
-						       	<a href="#/item_service" class="center">
-						       		<img title="Add Service" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/services.ico" />
-						       	</a>
-						    </div> -->
+	<img src="<?php echo base_url();?>/assets/water_bill.png" width="300" height="100">
+	<div class="row-fluid" >
+		<div class="span6" style="padding-left: 0;">
+			<div class="cash-bg" style="padding-right: 0;">				
+				<div class="span3" style="padding-left: 0; text-align: center;">
+					<a href="#/reading">
+						<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png"  style="width: 120px; "  />
+						<span style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Readings</span>
+					</a>						
+				</div>
+				<div class="span3" style="padding-left: 0; text-align: center;">
+					<a href="#/wInvoice">
+						<img title="Add Create Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/create_invoice.png" style="width: 120px;"  />
+						<span style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Create Invoice</span>
+					</a>
+				</div>
+				<div class="span3" style="padding-left: 0; text-align: center;">						
+					<a href="#/wPrint_center">
+						<img title="Add Print Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/print_invoice.png" style="width: 120px;"  />
+						<span style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Print Invoice</span>
+					</a>						
+				</div>
+				<div class="span3" style="padding: 0; text-align: center;">						
+					<a href="#/currency_rate">
+						<img title="Receive Water Bill Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/receive_payment.png" style="width: 120px;"  />
+						<span style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
+					</a>						
+				</div>
+			</div>
+			<div class="water-grap" style="background: #fff; width: 100%; min-height: 175px; margin-top: 10px;">
+				Grap
+			</div>
+		</div>
+	    <div class="span6" style="padding-left: 0;">
+	    	<div class="cash-bg" style="margin-bottom: 10px;">
+	    		<a href="">
+					<div class="cash-invoice">
+						<div class="span4" style="padding-left: 0;">
+							<span style="font-size: 24px; color: #40546C;">DEPOSIT</span>
+							<br>
+							<span style="color: #9EA7B8;">Water Connection</span>
 						</div>
-			        </td>
-			 	</tr>
-			</table>
+						<div class="span5" style="color: #3F73A3; text-align: center; font-size: 35px; font-weight: 600; padding-left: 0; border-right: 1px solid #9DA9BF; ">
+							$50,000
+						</div>
+						<div class="span3" style="text-align: center; margin-top: 7px; padding-right: 0; color: #000; font-size: 35px;">
+							3,000
+						</div>					
+					</div>
+				</a>
+				<a href="">
+					<div class="cash-invoice" style="margin-bottom: 0;">
+						<div class="span4" style="padding-left: 0;">
+							<span style="font-size: 24px; color: #40546C;">TOTAL SALE</span>
+						</div>
+						<div class="span4" style="color: #3F73A3; text-align: center; font-size: 35px; font-weight: 600; padding-left: 0; border-right: 1px solid #9DA9BF; ">
+							$50,000
+						</div>
+						<div class="span4" style="text-align: center; margin-top: 7px; padding-right: 0; color: #000; font-size: 35px;">
+							10,000<span style="font-size: 25px;">m<sup >3</sup></span>
+						</div>										
+					</div>
+				</a>
+	    	</div>
+	    	<div class="cash-bg" style="margin-bottom: 10px;">
+	    		<div class="row-fluid" >
+					<div class="span6" style="background: #DEEAF6; margin-right: 15px; width: 47%; ">
+						<a href="#/customer_balance_summary">
+							<div class="widget-body alert-info welcome-nopadding" style="width: 100%;">
+								<p style="color: #000;"><span>Expected due</span></p>
+						
+								<div class="strong" align="center" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;">$35,000</div>
+							
+								<table width="100%" style="color: #8E9EAE;">
+									<tbody>
+										<tr align="center">
+											<td>										
+												<span style="font-size: 25px;">15</span>
+												<br>
+												<span>Invoices</span>
+											</td>
+											<td>
+												<span style="font-size: 25px;">5</span>
+												<br>
+												<span>Customers</span>
+											</td>
+											<td>
+												<span style="font-size: 25px;">3</span>
+												<br>
+												<span>Overdue</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</a>
+					</div>
 
-			<table class="table table-borderless table-condensed table-vertical-center ">
+					<div class="span6" style="background: #DEEAF6;">
+						<a href="#/customer_balance_summary">
+							<div class="widget-body alert-info welcome-nopadding" style="width: 100%;">
+								<p style="color: #000;"><span>Amount to Pay</span></p>
+						
+								<div class="strong" align="center" style="color: #3475AF; font-size: 40px; margin-top: -15px; margin-bottom: 0;">$17,000</div>
+							
+								<table width="100%" style="color: #8E9EAE;">
+									<tbody>
+										<tr align="center">
+											<td>										
+												<span style="font-size: 25px;">10</span>
+												<br>
+												<span>Bills</span>
+											</td>
+											<td>
+												<span style="font-size: 25px;">2</span>
+												<br>
+												<span>Operation</span>
+											</td>
+											<td>
+												<span style="font-size: 25px;">1</span>
+												<br>
+												<span>Financing</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</a>
+					</div>
+				</div>
+	    	</div>
+	   </div>
+	</div>
+	<div class="span12 water-tableList" style="padding-left: 0;">
+		<table class=" table table-borderless table-condensed ">
+			<thead>
 				<tr>
-					<td class="center ">
-						<a href="#/reading">
-							<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png" width="110" height="200" />
-							Reading
-						</a>						
-					</td>
-					<!--td class="center ">
-						<a href="#/wIR_reader">
-							<img title="Add IR Reader" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/ir_reader.png" width="110" height="200" />
-							IR Reader
-						</a>
-					</td-->
-					<td class="center ">
-						<a href="#/wInvoice">
-							<img title="Add Create Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/create_invoice.png" width="110" height="200" />
-							W. Invoice
-						</a>
-					</td>
-					<td class="center ">
-						<a href="#/wReading_book">
-							<img title="Add Reading Book" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/reading_book.png" width="110" height="200" />
-							R. Book
-						</a>						
-					</td>
-										
+					<th><span>No.</span></th>
+					<th><span>License</span></th>
+					<th><span>No.of Bloc</span></th>
+					<th><span>Active Customers</span></th>
+					<th><span>Inactive Customers</span></th>
+					<th><span>Deposit</span></th>
+					<th><span>Quantity Sold(m<sup>3</sup>)</span></th>
+					<th><span>Sale Amount</span></th>
+					<th><span>Balance</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>test</td>
+					<td>11</td>
+					<td>3,000</td>
+					<td>10</td>
+					<td>5,000,000</td>
+					<td>10,000</td>
+					<td>2,500,000</td>
+					<td>3,000,000</td>
 				</tr>
 				<tr>
-										
-					<td class="center ">						
-						<a href="#/wPrint_center">
-							<img title="Add Print Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/print_invoice.png" width="110" height="200" />
-							Print
-						</a>						
-					</td>
-					<td class="center ">						
-						<a href="#/currency_rate">
-							<img title="Receive Water Bill Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/receive_payment.png" width="110" height="200" />
-							Receipt
-						</a>						
-					</td>
-					<td class="center ">
-					</td>									
-				</tr>							
-			</table>                
-
-		</div>
-
-		<!-- Right Side -->
-		<div class="span8">
-
-			<div class="board-chart" style="margin-bottom: 15px;">
-				<div class="span12">
-					<h4>PCG & Partners</h4>
-					<h2 style="color: #113051; margin-bottom: 11px; display: inline-block; width: 100%;" >Financial Snapshot</h2>
-					<span style="color: #000000;">As of: Tue Oct 18 2016 15:18:08 GMT+0700 (ICT)</span><br/>
-				</div>
-			</div>
-
-			<!-- Summary -->
-			<div class="row-fluid">
-	
-				<!-- Column -->
-				<div class="span4" >
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons coins"><i></i></span>Sale</h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<div class="widget-body alert alert-primary">
-							
-							<div align="center" class="text-large strong">0</div>
-							<table width="100%">
-								<tr align="center">
-									<td width="50%">										
-										<span >0</span>
-										<br>
-										<span>Customer</span>
-									</td>
-									<td width="50%">
-										<span >0</span>
-										<br>
-										<span>Meter</span>
-									</td>									
-								</tr>
-							</table>
-						</div>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-				
-				<!-- Column -->
-				<div class="span4" >
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span>Active Customer</h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<div class="widget-body alert-info">
-							
-							<div align="center" class="text-large strong">0</div>
-							<table width="100%">
-								<tr align="center">
-									<td width="33%">										
-										<span>0</span>
-										<br>
-										<span>Active</span>
-									</td>
-									<td width="33%">
-										<span>0</span>
-										<br>
-										<span>Inactive</span>
-									</td>
-									<td width="33%">
-										<span>0</span>
-										<br>
-										<span>Voice</span>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-				
-				<!-- Column -->
-				<div class="span4" style="padding-right: 0;">
-				
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-					
-						<!-- Widget heading -->
-						<div class="widget-head">
-							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span>Active Customer</h4>
-						</div>
-						<!-- // Widget heading END -->
-						
-						<div class="widget-body alert-info" style="background-color: LightGray;">
-							
-							<div align="center" class="text-large strong">0</div>
-							<table width="100%">
-								<tr align="center">
-									<td width="33%">										
-										<span>0</span>
-										<br>
-										<span>Active</span>
-									</td>
-									<td width="33%">
-										<span>0</span>
-										<br>
-										<span>Inactive</span>
-									</td>
-									<td width="33%">
-										<span>0</span>
-										<br>
-										<span>Voice</span>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<!-- // Widget footer END -->
-						
-					</div>
-					<!-- // Widget END -->
-					
-				</div>
-				<!-- // Column END -->
-			</div>
-
-			
-
-			<!-- Top 5 -->
-			<div class="row-fluid">
-				<div class="span4">								
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>
-				            <tr>
-				                <th class="center" colspan="2">Top 5 Customers</th>				                			                
-				            </tr>
-				        </thead>
-				        <!--tbody data-role="listview"
-				        	 data-auto-bind="false"				        	                 
-			                 data-template="customerDashBoard-top-customer-template"
-			                 data-bind="source: topCustomerDS"></tbody-->			        
-				    </table>			
-				</div>
-				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>				           
-				            <tr>
-				                <th class="center" colspan="2">Top 5 A/R Balance</th>				                			                
-				            </tr>					        
-				        </thead>
-				        <!--tbody data-role="listview"
-				        	 data-auto-bind="false"				        	                  
-			                 data-template="customerDashBoard-top-ar-template"
-			                 data-bind="source: topARDS"></tbody-->			        
-				    </table>
-				</div>
-				<div class="span4">					
-					<table class="table table-bordered table-primary table-striped table-vertical-center">
-				        <thead>				           
-				            <tr>
-				                <th class="center" colspan="2">Top 5 Products</th>				                			                
-				            </tr>					        
-				        </thead>
-				        <!--tbody data-role="listview"
-				        	 data-auto-bind="false"                
-			                 data-template="customerDashBoard-top-product-template"
-			                 data-bind="source: topProductDS"></tbody-->			        
-				    </table>
-				</div>		
-			</div>
-
-			<!-- Graph -->
-		    <div class="innerLR innerT">			
-				<div id="esale-graph" style="height: 150px;"></div>
-			</div>
-		</div>
-
-		<!-- <div class="row-fluid">		
-	        <div>
-	        	<input data-role="dropdownlist"                   
-	                   data-value-primitive="true"
-	                   data-text-field="text"
-	                   data-value-field="value"
-	                   data-bind="value: sorter,
-	                              source: sortList,                              
-	                              events: { change: sorterChanges }" />
-
-	        	<input data-role="datepicker"
-	        		   data-format="dd-MM-yyyy"
-	                   data-bind="value: sdate,
-	                              events: { change: dateChanges }" >
-
-	            <input data-role="datepicker"
-	            	   data-format="dd-MM-yyyy"
-	                   data-bind="value: edate,
-	                              events: { change: dateChanges }" >
-	            
-	            <button type="button" data-role="button" data-icon="search" data-bind="click: search"></button>
-	        </div>
-        	
-            <div data-role="grid" 
-					data-bind="source: saleByLocationDS"
-				    data-auto-bind="false"	        
-				    data-row-template="esale-by-location-row-template"						                           
-				    data-columns='[
-				    	{ title: "No.", width: 45 },				       	
-				        { title: "Location" },	                     
-				        { title: "អតិថិជនកំពុងប្រើប្រាស់" },
-				        { title: "អតិថិជនឈប់ប្រើប្រាស់" },
-				        { title: "Deposit" },
-				        { title: "បរិមាណលក់ភ្លើង" },	            
-				        { title: "Amount" },
-				        { title: "ជំពាក់" },
-				        { title: "Balance" }				                           	                    
-				    ]'></div>
-
-    	</div> -->
-
-
+					<td>1</td>
+					<td>test</td>
+					<td>11</td>
+					<td>3,000</td>
+					<td>10</td>
+					<td>5,000,000</td>
+					<td>10,000</td>
+					<td>2,500,000</td>
+					<td>3,000,000</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
+
 </script>
 <script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">		
 	<tr>		
@@ -930,9 +794,7 @@
 					<div class="innerAll">			
 						<!--button class="btn-primary span12" style="" data-bind="click: exportEXCEL">EXPORT XLSX</button-->						
 						<form autocomplete="off" class="form-inline">
-							
 							<div class="widget-search separator bottom">
-								
 								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
 									<input type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: enterSearch}">
@@ -949,11 +811,8 @@
 					                   style="width: 100%;" ></select>							
 							</div>
 						</form>	
-
 					</div>
-					
 					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
-
 					<div class="table table-condensed" id="listContact" style="height: 580px;"						 
 						 data-role="grid"						 
 						 data-bind="source: contactDS"
@@ -966,51 +825,94 @@
 				<div class="span9 detailsWrapper">
 					<div class="row-fluid">					
 						<div class="span6">
-							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none"-->
-
+							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
 							    <!-- Widget Heading -->
 							    <div class="widget-head">
-
 							        <!-- Tabs -->
 							        <ul class="pull-right">
 							        	<li style="font-size: large; color: black; font-weight: bold;">							            	
 							            	<span data-bind="text: obj.name"></span>
 							            </li>
-							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
-							            </li>							            							            
-							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
+							            <li class="glyphicons text_bigger dashboard"><span data-toggle="tab" data-target="#tab1" data-bind="click: meterClick"><i></i></span>
 							            </li>
-							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
+							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab2"><i></i></span>
 							            </li>							            							            
+							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab3"><i></i></span>
+							            </li>							            
+							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab4"><i></i></span>
+							            </li>
+							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab5"><i></i></span>
+							            </li>	         
 							        </ul>
 							        <div class="clearfix"></div>
 							        <!-- // Tabs END -->
-
 							    </div>
 							    <!-- Widget Heading END -->
-
 							    <div class="widget-body">
 							        <div class="tab-content">
-
-							            <!-- Transactions Tab content -->
-							            <div id="tab1-4" class="tab-pane active box-generic" data-bind="visible: meter_visible">
+							        	<!-- Transactions Tab content -->
+							            <div id="tab1" class="tab-pane box-generic">
 							            	<table class="table table-borderless table-condensed cart_total cash-table">
 								            	<tr>
 								            		<td width="50%">
-								            			<a class="btn btn-block btn-inverse" data-bind="click: goMeter">METER</a>
+								            			<a class="btn btn-block btn-inverse" data-bind="click: goMeter">Add Meter</a>
+								            		</td>
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-primary" data-bind="click: goActivateMeter"><span><span>Activate Meter</span></span>								            			
+								            		</td>
+								            	</tr>
+							            	</table>
+							            </div>
+							            <!-- // Transactions Tab content END -->	
+							            <!-- Transactions Tab content -->
+							            <div id="tab2" class="tab-pane active box-generic">
+							            	<table class="table table-borderless table-condensed cart_total cash-table">
+								            	<tr>
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goQuote"><span><span data-bind="text: lang.lang.quote"></span></span>
 								            		</td>
 								            		<td width="50%">
 								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit"><span><span data-bind="text: lang.lang.c_deposit"></span></span>								            			
 								            		</td>
 								            	</tr>
+								            	<tr>
+								            		<td>
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goSaleOrder"><span><span data-bind="text: lang.lang.sale_order"></span></span>
+								            		</td>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashSale"><span><span data-bind="text: lang.lang.cash_sale"></span></span>								            											            			
+								            		</td>
+								            	</tr>
+								            	<tr>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn"><span data-bind="text: lang.lang.sale_return1"></span></span>
+								            		</td>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice"><span data-bind="text: lang.lang.invoice"></span></span>								            											            			
+								            		</td>
+								            	</tr>
+								            	<tr>								            		
+								            		<td>
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goGDN"><span data-bind="text:lang.lang.c_gdn"></span></span>
+								            		</td>
+								            		<td class="center">
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt"><span data-bind="text: lang.lang.cash_receipt"></span></span>								            			
+
+								            		</td>
+								            	</tr>
+								            	<tr>
+								            		<td>
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goStatement"><span data-bind="text: lang.lang.statement"></span></span>
+								            		</td>
+								            		<td>
+								            			
+								            		</td>
+								            	</tr>
 							            	</table>
 							            </div>
-							            <!-- // Transactions Tab content END -->							           					            
-
+							            <!-- // Transactions Tab content END -->
 							            <!-- INFO Tab content -->
-							            <!--div id="tab2-4" class="tab-pane box-generic">
+							            <div id="tab3" class="tab-pane box-generic">
 							            	<div class="row-fluid">
 							            		<div class="accounCetner-textedit">
 									            	<table width="100%">
@@ -1052,40 +954,34 @@
 															</td>
 														</tr>
 													</table>
-
 													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
 												</div>
 											</div>
-							            </div-->
+							            </div>
 							            <!-- // INFO Tab content END -->
-
 							            <!-- NOTE Tab content -->
-							            <!--div id="tab3-4" class="tab-pane">
-
-										    <div-->
-												<!--input type="text" class="k-textbox" 
+							            <div id="tab4" class="tab-pane">
+										    <div>
+												<input type="text" class="k-textbox" 
 														data-bind="value: note, events:{change:saveNoteEnter}" 
 														placeholder="Add memo ..." 
 														style="width: 366px;" /-->
-												<!--span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
+												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
 											</div>
-
 											<br>
-
-											<div class="table table-condensed" style="height: 100;"						 
+											<!--div class="table table-condensed" style="height: 100;"						 
 												 data-role="grid"
 												 data-auto-bind="false"						 
 												 data-bind="source: noteDS"
 												 data-row-template="waterCenter-note-tmpl"
 												 data-columns="[{title: ''}]"
 												 data-height="100"						 
-												 data-scrollable="{virtual: true}"></div>
+												 data-scrollable="{virtual: true}"></div-->
 											
-							            </div-->
+							            </div>
 							            <!-- // NOTE Tab content END -->
-
 							            <!-- Attach Tab content -->
-								        <!--div id="tab4-4" class="tab-pane">							            	
+								        <div id="tab5" class="tab-pane">							            	
 								            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
 								            <input id="files" name="files"
 							                   type="file"
@@ -1094,7 +990,6 @@
 							                   data-bind="events: { 
 					                   				select: onSelect
 							                   }">
-
 								            <table class="table table-bordered">
 										        <thead>
 										            <tr>			                
@@ -1104,23 +999,22 @@
 										                <th style="width: 13%;"></th>                			                
 										            </tr> 
 										        </thead>
-										        <tbody data-role="listview" 
+										        <!--tbody data-role="listview" 
 										        		data-template="attachment-list-tmpl" 
 										        		data-auto-bind="false"
-										        		data-bind="source: attachmentDS"></tbody>			        
+										        		data-bind="source: attachmentDS"></tbody-->			        
 										    </table>
 
 										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
 
-								        </div-->
+								        </div>
 								        <!-- // Attach Tab content END -->							            								            
 
 							        </div>
 							    </div>
 							</div>
 						</div>
-
-						<!--div class="span6" style="margin-bottom: 10px;">
+						<div class="span6" style="margin-bottom: 10px;">
 							<div class="row-fluid">
 								<div class="span6">
 									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
@@ -1156,55 +1050,9 @@
 							</div>														
 						</div>
 					</div>
-					
-					<div>
-						<input data-role="dropdownlist"
-							   class="sorter"                  
-					           data-value-primitive="true"
-					           data-text-field="text"
-					           data-value-field="value"
-					           data-bind="value: sorter,
-					                      source: sortList,                              
-					                      events: { change: sorterChanges }" />
-
-						<input data-role="datepicker"
-							   class="sdate"
-							   data-format="dd-MM-yyyy"
-					           data-bind="value: sdate,
-					           			  max: edate"
-					           placeholder="From ..." >
-
-					    <input data-role="datepicker"
-					    	   class="edate"
-					    	   data-format="dd-MM-yyyy"
-					           data-bind="value: edate,
-					                      min: sdate"
-					           placeholder="To ..." >
-
-					  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+					<div class="row-fluid" id="waterCenterContent">
+						
 					</div>
-
-					<table class="table table-bordered table-striped table-white">
-						<thead>
-							<tr>
-								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.type"></span></th>								
-								<th><span data-bind="text: lang.lang.reference_no"></span></th>
-								<th><span data-bind="text: lang.lang.amount"></span></th>
-								<th><span data-bind="text: lang.lang.status"></span></th>
-								<th><span data-bind="text: lang.lang.action"></span></th>
-							</tr>
-						</thead>	            		
-	            		<tbody data-role="listview"
-	            				data-auto-bind="false"	            					            					            					            			
-				                data-template="waterCenter-transaction-tmpl"
-				                data-bind="source: transactionDS" >
-				        </tbody>
-	            	</table>
-
-	            	<div id="pager" class="k-pager-wrap"
-				    	 data-auto-bind="false"
-			             data-role="pager" data-bind="source: transactionDS"></div-->	            	
 				</div>
 			</div>			
 		</div>
@@ -1267,6 +1115,11 @@
         		#}#
         	#}#
 		</td>     	
+    </tr>
+</script>
+<script id="waterCenter-meter-tmpl" type="text/x-kendo-tmpl">
+    <tr>    	  	
+    	<td>Graph Meter</td>
     </tr>
 </script>
 <script id="waterCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
@@ -1707,6 +1560,7 @@
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/water/water.css" />
 <script>
 	localforage.config({
 		driver: localforage.LOCALSTORAGE,
@@ -5573,6 +5427,9 @@
 		lang 				: langVM,
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
 		filterKey 			: 1,
+		meterClick 			: function(){
+
+		},
 		contactDS			: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -5615,10 +5472,10 @@
 			{ id: 0, name: "None Water" }],
 		contactTypeDS  		: banhji.source.customerTypeDS,
 		filterChange 		: function(e){
-			this.contactDS.filter({field:"use_water", value: this.get("filterKey")});
-			if(this.meter_visible == true){
-				this.set('meter_visible',false);
-			}
+			this.contactDS.filter([{field:"use_water", value: this.get("filterKey")},{field:"deleted", value: "0"},{field:"is_pattern", value: "0"}]);
+			// if(this.meter_visible == true){
+			// 	this.set('meter_visible',false);
+			// }
 		},
 		noteDS 				: dataStore(apiUrl + 'notes'),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
@@ -5638,7 +5495,6 @@
 		outInvoice 			: 0,
 		overInvoice 		: 0,
 		currencyCode 		: "",
-		meter_visible 		: false,
 		user_id 			: banhji.source.user_id,
 		exportEXCEL 		: function(){
 			var workbook = new kendo.ooxml.Workbook({
@@ -5682,6 +5538,9 @@
 			    dataURI: workbook.toDataURL(),
 			    fileName: "abc.xlsx"
 			});
+		},
+		goActivateMeter 	: function(){
+			console.log('Activate meter');
 		},
 		pageLoad 			: function(id){
 			//Refresh
@@ -5971,12 +5830,12 @@
 			
 			this.set("obj", data);
 			this.loadData();
-			if(data.use_water == 1){
-				this.set('meter_visible', true);
-			}else{
-				this.set('meter_visible', false);
-			}
-			console.log(this.meter_visible);
+			// if(data.use_water == 1){
+			// 	this.set('meter_visible', true);
+			// }else{
+			// 	this.set('meter_visible', false);
+			// }
+			// console.log(this.meter_visible);
 		},
 		goMeter 			: function(){
 			banhji.meter.set("contact", this.get("obj"));
@@ -7383,45 +7242,5 @@
 		banhji.router.start();
 		banhji.source.loadData();
 		console.log($(location).attr('hash').substr(2));
-
-		function createCookie(name,value,days) {
-		    if (days) {
-		        var date = new Date();
-		        date.setTime(date.getTime()+(days*24*60*60*1000));
-		        var expires = "; expires="+date.toGMTString();
-		    }
-		    else var expires = "";
-		    document.cookie = name+"="+value+expires+"; path=/";
-		}
-		function readCookie(name) {
-		    var nameEQ = name + "=";
-		    var ca = document.cookie.split(';');
-		    for(var i=0;i < ca.length;i++) {
-		        var c = ca[i];
-		        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-		        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-		    }
-		    return null;
-		}
-		function eraseCookie(name) {
-		    createCookie(name,"");
-		}
-		//Function write css to header
-		function loadStyle(href){
-		    // avoid duplicates
-		    for(var i = 0; i < document.styleSheets.length; i++){
-		        if(document.styleSheets[i].href == href){
-		            return;
-		        }
-		    }
-		    var head  = document.getElementsByTagName('head')[0];
-		    var link  = document.createElement('link');
-		    link.rel  = 'stylesheet';
-		    link.type = 'text/css';
-		    link.href = href;
-		    head.appendChild(link);
-		}
-		var Href1 = '<?php echo base_url(); ?>assets/water/water.css';
-		loadStyle(Href1);
 	});
 </script>

@@ -39,3 +39,18 @@ p.addItem.glyphicons.circle_remove i:before {
 .k-widget.k-dropdown.k-header > .k-dropdown-wrap.k-state-default {
 	height: 30px;
 }
+
+/*Water Dashboard*/
+.water-tableList .table.table-borderless.table-condensed tr th{
+	background: #1E4E78;
+	text-transform: uppercase;
+	color: #fff;
+	padding: 10px;
+}
+.water-tableList .table.table-borderless.table-condensed tr:nth-child(2n+1) td {
+    background: #f4f4f4;
+    padding: 10px;
+}
+.water-tableList .table.table-borderless.table-condensed tr td {
+    background: #fff;
+}

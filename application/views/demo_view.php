@@ -106,7 +106,7 @@
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.reports" style="margin-top: 5px; display: inline-block;"></span></span>
 						</li>
 						<li style="text-align:center;">
-							<a href="#/sale_tax">
+							<a href="#/tax">
 								<img title="Tax Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/tax.jpg" alt="Tax">
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><span data-bind="text: lang.lang.tax" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></span></span>
@@ -1606,23 +1606,23 @@
 				   			source: segmentItemDS,
 				   			events:{ change: segmentChanges }"
 				   data-placeholder="Add Segment.."				   
-				   style="width: 100%" /></select>					
+				   style="width: 100%; " /></select>					
 		</td>
 		<td class="right">
 			<input id="ntbDr" name="ntbDr" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2"
+					data-format="n"
 					data-bind="value: dr, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" /> 						
+					required data-required-msg="required" style="width: 100%; text-align: right;" /> 						
 		</td>
 		<td class="right">
 			<input id="ntbCr" name="ntbCr" 
 					data-role="numerictextbox"
 					data-spinners="false" 
-					data-decimals="2"
+					data-format="n"
 					data-bind="value: cr, events: {change : changes}" 
-					required data-required-msg="required" style="width: 100%;" />										
+					required data-required-msg="required" style="width: 100%; text-align: right;" />										
 		</td>		
     </tr>   
 </script>
@@ -1753,7 +1753,7 @@
 		</td>		
     </tr>   
 </script>
-<script id="saleTax" type="text/x-kendo-template">
+<script id="tax" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960" style="overflow: hidden;">					
@@ -1861,7 +1861,7 @@
 		            			</tr>
 		            		</thead>
 		            		<tbody data-role="listview"			            			
-					                data-template="saleTax-type-template"
+					                data-template="tax-type-template"
 					                data-bind="source: dataSource"></tbody>
 		            	</table>
 	            	</div>
@@ -1874,6 +1874,7 @@
 		                 data-actions="{}"
 		                 data-position="{top: '30%', left: '37%'}"
 		                 data-bind="visible: windowItemVisible">
+
             		<table>
 						<tr style="border-bottom: 8px solid #fff;">
 							<td width="34%"><span data-bind="text: lang.lang.item_name"></span></td>
@@ -1939,7 +1940,7 @@
 		            			</tr>
 		            		</thead>
 		            		<tbody data-role="listview"			            				
-					                data-template="saleTax-item-template"
+					                data-template="tax-item-template"
 					                data-auto-bind="false"
 					                data-bind="source: itemDS"></tbody>
 		            	</table>
@@ -1950,7 +1951,7 @@
 		</div>
 	</div>
 </script>
-<script id="saleTax-type-template" type="text/x-kendo-tmpl">                    
+<script id="tax-type-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>#=number#</td>
     	<td>#=name#</td>
@@ -1967,7 +1968,7 @@
     	</td>
    	</tr>
 </script>
-<script id="saleTax-item-template" type="text/x-kendo-tmpl">                    
+<script id="tax-item-template" type="text/x-kendo-tmpl">                    
     <tr>
     	<td>#=name#</td>
     	<td>#=description#</td>
@@ -5324,7 +5325,7 @@
 </script>
 
 
-<script id="saleTaxReportCenter" type="text/x-kendo-template">
+<script id="taxReportCenter" type="text/x-kendo-template">
 	<div class="row-fluid customer-report-center">
 		<div class="span7">
 			<div class="row-fluid sale-report">
@@ -5484,7 +5485,7 @@
 									<td style="text-align:center !important">S13=sum(S7:S12)</td>
 									
 								</tr>
-								</tbody><tbody class="sale_tax">
+								</tbody><tbody class="tax">
 									<tr class="none-padding">
 										<td><p style="padding:5px !important; padding-left:10px !important;" class="no">1</p></td>
 										<td><input type="text" name="s2[]" id="s2" class="form-control s2" value=""></td>
@@ -5653,7 +5654,7 @@
 							       
 							    </tr>
 							</tbody>
-								<tbody class="sale_tax">
+								<tbody class="tax">
 									<tr class="none-padding">
 										<td><input type="text" name="s1[]" id="s1" class="form-control datetime s1" value="" ></td>
 										<td><input type="text" name="s2[]" id="s2" class="form-control s2" value=""></td>
@@ -38871,7 +38872,7 @@
 
 <script id="tax-header-tmpl" type="text/x-kendo-tmpl">
 	<strong>
-    	<a href="\#/sale_tax">+ Add New Tax</a>
+    	<a href="\#/tax">+ Add New Tax</a>
     </strong>	
 </script>
 
@@ -39114,7 +39115,7 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
-  				<li><a href='#/sale_tax'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
+  				<li><a href='#/tax'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  	
   				<li><a href='#/account'><span data-bind="text: lang.lang.add_account"></span></a></li>
   				<li><a href='#/segment'><span data-bind="text: lang.lang.add_segment"></span></a></li> 
   				<li> <span class="li-line"></span></li>
@@ -39261,18 +39262,18 @@
 	  	<li><a href='#/item_setting' class='glyphicons settings'><i></i></a></li>	  	
 	</ul>	
 </script>
-<script id="saleTaxMenu" type="text/x-kendo-template">
+<script id="taxMenu" type="text/x-kendo-template">
 	<ul class="topnav">
-		<li><a href='#/sale_tax' class='glyphicons show_big_thumbnails'><i></i></a></li>
+		<li><a href='#/tax' class='glyphicons show_big_thumbnails'><i></i></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>				 				  				
   				<li><a href='#/journal'>Journal</a></li>  				
-  				<li><a href='#/sale_tax'>Tax</a></li>
+  				<li><a href='#/tax'>Tax</a></li>
   				<li><a href='#/imports'><span ></span>Imports</a></li> 				  				 				  				 				
   			</ul>
 	  	</li>	  	  	
-	  	<li><a href='#/sale_tax_report_center'>REPORTS</a></li>	  	
+	  	<li><a href='#/tax_report_center'>REPORTS</a></li>	  	
 	  	<li><a href='#/' class='glyphicons settings'><i></i></a></li>	  				
 	</ul>
 </script>
@@ -41159,41 +41160,7 @@
 	//DAWINE -----------------------------------------------------------------------------------------
 	banhji.source =  kendo.observable({
 		lang 						: langVM,
-		countryDS					: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "countries",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}				
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},			
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		countryDS					: dataStore(apiUrl + "countries"),
 		//Contact
 		contactDS					: new kendo.data.DataSource({
 			transport: {
@@ -41883,41 +41850,7 @@
 		//Measurement
 		measurementDS				: dataStore(apiUrl + "measurements"),		
 		//Tax Item
-		taxItemDS					: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "tax_items",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+		taxItemDS					: dataStore(apiUrl + "tax_items"),
 		customerTaxDS				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -42039,7 +41972,10 @@
 			},
 			filter:{ field:"status", value:1 },
 			//group:{ field: "account_type_name" },
-			sort:{ field:"number", dir:"asc" },
+			sort:[
+				{ field:"account_type_id", dir:"asc" },
+				{ field:"number", dir:"asc" }
+			],
 			batch: true,			
 			serverFiltering: true,
 			serverSorting: true,
@@ -42979,7 +42915,7 @@
 			{ id: "Journal", name: "Journal" }
 	    ],
 		genderList					: ["M", "F"],
-		typeList 					: ['Invoice','eInvoice','wInvoice','Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','eDeposit','wDeposit','Customer_Deposit','Vendor_Deposit','Witdraw','Transfer','Journal','Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
+		typeList 					: ['Invoice','Electricity_Invoice','Water_Invoice','Cash_Sale','Receipt_Allocation','Sale_Order','Quote','GDN','Sale_Return','Purchase_Order','GRN','Cash_Purchase','Credit_Purchase','Purchase_Return','Payment_Allocation','Deposit','Electricty_Deposit','Water_Deposit','Customer_Deposit','Vendor_Deposit','Witdraw','Transfer','Journal','Item_Adjustment','Cash_Advance','Reimbursement','Direct_Expense','Advance_Settlement','Additional_Cost','Cash_Payment','Cash_Receipt','Credit_Note','Debit_Note','Offset_Bill','Offset_Invoice','Cash_Transfer','Internal_Usage'],
 		user_id						: banhji.userData.id,
 		amtDueColor 				: "#D5DBDB",
 		acceptedSrc					: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/ICONs/accepted.ico",
@@ -43046,6 +42982,12 @@
 			}
 
 			return rate;
+		},
+		fetchAllAccounts			: function(){
+		},
+		fetchAllTaxes 				: function(){
+			this.customerTaxDS.fetch();
+			this.supplierTaxDS.fetch();
 		}
 	});
 
@@ -43392,43 +43334,7 @@
     	deleteDS 				: dataStore(apiUrl + "account_lines"),
     	numberDS 				: dataStore(apiUrl + "accounts"),
     	accountTypeDS 			: banhji.source.accountTypeDS,
-    	subAccountDS			: new kendo.data.DataSource({
-			transport: {
-				read 	: {
-					url: apiUrl + "accounts",
-					type: "GET",
-					headers: banhji.header,
-					dataType: 'json'
-				},				
-				parameterMap: function(options, operation) {
-					if(operation === 'read') {
-						return {
-							page: options.page,
-							limit: options.pageSize,
-							filter: options.filter,
-							sort: options.sort
-						};
-					} else {
-						return {models: kendo.stringify(options.models)};
-					}
-				}
-			},
-			schema 	: {
-				model: {
-					id: 'id'
-				},
-				data: 'results',
-				total: 'count'
-			},
-			filter:{ field: "sub_of_id", value:0 },
-			sort:{ field:"number", dir:"asc" },
-			batch: true,
-			serverFiltering: true,
-			serverSorting: true,
-			serverPaging: true,
-			page:1,
-			pageSize: 100
-		}),
+    	subAccountDS			: banhji.source.subAccountDS,
     	currencyDS 				: banhji.source.currencyDS,
     	statusList 				: banhji.source.statusList,
     	confirmMessage 			: banhji.source.confirmMessage,
@@ -43937,12 +43843,15 @@
 				cr += kendo.parseFloat(value.cr);				
 	        });
 
+	        dr = kendo.toString(dr, 'n2');
+	        cr = kendo.toString(cr, 'n2');
+	        
 			if(dr!==cr){
 				this.set("isValid", false);
 			}		       	
 
-	        this.set("dr", kendo.toString(dr, "c0", obj.locale));
-	        this.set("cr", kendo.toString(cr, "c0", obj.locale));
+	        this.set("dr", kendo.toString(dr, "c", obj.locale));
+	        this.set("cr", kendo.toString(cr, "c", obj.locale));
 	        
 	        obj.set("amount", dr);
 		},
@@ -44383,6 +44292,11 @@
 			obj.set("locale", currency.locale);
 
       		this.dataSource.sync();
+      		this.dataSource.bind("requestEnd", function(e){
+      			if(e.type==="create" || e.type==="update"){
+      				banhji.source.currencyDS.fetch();
+      			}
+      		});
       		
       		this.set("windowVisible", false); 		
       	},
@@ -45202,7 +45116,7 @@
 			this.dataSource.sort({ field:col, dir:this.get("currentSort") });
 		}	      		
 	});
-	banhji.saleTax =  kendo.observable({
+	banhji.tax =  kendo.observable({
 		lang 				: langVM,
         dataSource 			: dataStore(apiUrl + "tax_types"),
         itemDS 	 			: dataStore(apiUrl + "tax_items"),
@@ -45329,6 +45243,7 @@
         	this.itemDS.bind("requestEnd", function(e){
         		if( e.type == "create" || e.type == "update"){ 
         			self.set("windowItemVisible", false);
+        			banhji.source.fetchAllTaxes();
         		}
         	});
         },
@@ -45350,8 +45265,14 @@
 		        	var view = self.deleteDS.view();
 
 		        	if(view.length>0){
-		        		this.dataSource.remove(data);
-		        		this.dataSource.sync();
+		        		this.itemDS.remove(data);
+		        		this.itemDS.sync();
+		        		this.itemDS.bind("requestEnd", function(e){
+			        		if( e.type == "delete"){ 
+			        			self.set("windowItemVisible", false);
+			        			banhji.source.fetchAllTaxes();
+			        		}
+			        	});
 		        	}else{
 		        		alert("Sorry, this item can not be deleted.");
 		        	}
@@ -49173,12 +49094,13 @@
 					//Save Close					
 					self.set("saveClose", false);
 					self.cancel();
-					banhji.source.supplierDS.fetch();
 					window.history.back();
 				}else{
 					//Save New
 					self.addEmpty();
 				}
+
+				banhji.source.supplierDS.fetch();
 			});
 		},
 		cancel 					: function(){
@@ -55956,12 +55878,13 @@
 					//Save Close					
 					self.set("saveClose", false);
 					self.cancel();
-					banhji.source.customerDS.fetch();
 					window.history.back();
 				}else{
 					//Save New
 					self.addEmpty();
 				}
+
+				banhji.source.customerDS.fetch();
 			});
 		},
 		cancel 					: function(){
@@ -73650,9 +73573,9 @@
 		statementCashFlow: new kendo.Layout("#statementCashFlow", {model: banhji.statementCashFlow}),
 		auditTrialReport: new kendo.Layout("#auditTrialReport", {model: banhji.auditTrialReport}),
 				
-		//Sale Tax
-		saleTax: new kendo.Layout("#saleTax", {model: banhji.saleTax}),
-		saleTaxReportCenter: new kendo.Layout("#saleTaxReportCenter", {model: banhji.saleTaxReportCenter}),
+		//Tax
+		tax: new kendo.Layout("#tax", {model: banhji.tax}),
+		taxReportCenter: new kendo.Layout("#taxReportCenter", {model: banhji.taxReportCenter}),
 		saleJournal: new kendo.Layout("#saleJournal", {model: banhji.saleJournal}),
 		purchaseJournal: new kendo.Layout("#purchaseJournal", {model: banhji.purchaseJournal}),
 
@@ -73843,7 +73766,7 @@
 		customerMenu: new kendo.View("#customerMenu", {model: langVM}),
 		cashMenu: new kendo.View("#cashMenu", {model: langVM}),
 		inventoryMenu: new kendo.View("#inventoryMenu", {model: langVM}),
-		saleTaxMenu: new kendo.View("#saleTaxMenu", {model: langVM}),
+		taxMenu: new kendo.View("#taxMenu", {model: langVM}),
 		saleMenu: new kendo.View("#saleMenu", {model: langVM})	
 	};
 	/* views and layout */
@@ -75831,98 +75754,42 @@
 	});
 
 	/*************************
-	*   SaleTax Section   *
+	*   Tax Section   *
 	**************************/
-	banhji.router.route("/sale_tax", function(){
+	banhji.router.route("/tax", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.saleTax);
+			banhji.view.layout.showIn("#content", banhji.view.tax);
 
-			banhji.userManagement.addMultiTask("Tax Item","sale_tax",null);
+			banhji.userManagement.addMultiTask("Tax","tax",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			//banhji.view.menu.showIn('#secondary-menu', banhji.view.saleTaxMenu);
+			//banhji.view.menu.showIn('#secondary-menu', banhji.view.taxMenu);
 			
-			var vm = banhji.saleTax;
+			var vm = banhji.tax;
 
-			if(banhji.pageLoaded["sale_tax"]==undefined){
-				banhji.pageLoaded["sale_tax"] = true;
+			if(banhji.pageLoaded["tax"]==undefined){
+				banhji.pageLoaded["tax"] = true;
 			}
-			$("#ddlIncome").kendoDropDownList({
-	            optionLabel: "(--- Select ---)",
-	            valuePrimitive: true,
-	            dataTextField: "name",
-	            dataValueField: "id",
-	            template: '#=code# #=name#',
-	            dataSource: {
-	                transport: {
-						read: {
-							url: apiUrl + "accounts",
-							headers: {
-								"Entity": getDB()
-							},
-							type: "GET",
-							dataType: "json"
-						}
-					},
-					schema 	: {
-						model: {
-							id: 'id'
-						},
-						data: 'results',
-						total: 'count'
-					},
-					serverFiltering: true,
-					filter: { field:"account_type_id", value: 20 }
-				}
-	        }).data("kendoDropDownList");
 		}		
 	});
-	banhji.router.route("/sale_tax_report_center", function(){
+	banhji.router.route("/tax_report_center", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.saleTaxReportCenter);
+			banhji.view.layout.showIn("#content", banhji.view.taxReportCenter);
 
-			banhji.userManagement.addMultiTask("Sale Tax Report Center","sale_tax_report_center",null);
+			banhji.userManagement.addMultiTask("Tax Report Center","tax_report_center",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.saleTaxMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.taxMenu);
 			
-			var vm = banhji.sale_tax_report_center;
+			// var vm = banhji.tax_report_center;
 
-			if(banhji.pageLoaded["sale_tax_report_center"]==undefined){
-				banhji.pageLoaded["sale_tax_report_center"] = true;
+			if(banhji.pageLoaded["tax_report_center"]==undefined){
+				banhji.pageLoaded["tax_report_center"] = true;
 			}
-			$("#ddlIncome").kendoDropDownList({
-	            optionLabel: "(--- Select ---)",
-	            valuePrimitive: true,
-	            dataTextField: "name",
-	            dataValueField: "id",
-	            template: '#=code# #=name#',
-	            dataSource: {
-	                transport: {
-						read: {
-							url: apiUrl + "accounts",
-							headers: {
-								"Entity": getDB()
-							},
-							type: "GET",
-							dataType: "json"
-						}
-					},
-					schema 	: {
-						model: {
-							id: 'id'
-						},
-						data: 'results',
-						total: 'count'
-					},
-					serverFiltering: true,
-					filter: { field:"account_type_id", value: 20 }
-				}
-	        }).data("kendoDropDownList");
 		}		
 	});
 	banhji.router.route("/sale_journal", function(){
@@ -75934,41 +75801,13 @@
 			banhji.userManagement.addMultiTask("Sale Journal","sale_journal",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.saleTaxMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.taxMenu);
 			
-			var vm = banhji.sale_tax_report_center;
+			var vm = banhji.tax_report_center;
 
 			if(banhji.pageLoaded["sale_journal"]==undefined){
 				banhji.pageLoaded["sale_journal"] = true;
 			}
-			$("#ddlIncome").kendoDropDownList({
-	            optionLabel: "(--- Select ---)",
-	            valuePrimitive: true,
-	            dataTextField: "name",
-	            dataValueField: "id",
-	            template: '#=code# #=name#',
-	            dataSource: {
-	                transport: {
-						read: {
-							url: apiUrl + "accounts",
-							headers: {
-								"Entity": getDB()
-							},
-							type: "GET",
-							dataType: "json"
-						}
-					},
-					schema 	: {
-						model: {
-							id: 'id'
-						},
-						data: 'results',
-						total: 'count'
-					},
-					serverFiltering: true,
-					filter: { field:"account_type_id", value: 20 }
-				}
-	        }).data("kendoDropDownList");
 		}		
 	});	
 	banhji.router.route("/purchase_journal", function(){
@@ -75980,41 +75819,13 @@
 			banhji.userManagement.addMultiTask("Purchase Journal","purchase_journal",null);
 
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			banhji.view.menu.showIn('#secondary-menu', banhji.view.saleTaxMenu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.taxMenu);
 			
-			var vm = banhji.sale_tax_report_center;
+			var vm = banhji.tax_report_center;
 
 			if(banhji.pageLoaded["purchase_journal"]==undefined){
 				banhji.pageLoaded["purchase_journal"] = true;
 			}
-			$("#ddlIncome").kendoDropDownList({
-	            optionLabel: "(--- Select ---)",
-	            valuePrimitive: true,
-	            dataTextField: "name",
-	            dataValueField: "id",
-	            template: '#=code# #=name#',
-	            dataSource: {
-	                transport: {
-						read: {
-							url: apiUrl + "accounts",
-							headers: {
-								"Entity": getDB()
-							},
-							type: "GET",
-							dataType: "json"
-						}
-					},
-					schema 	: {
-						model: {
-							id: 'id'
-						},
-						data: 'results',
-						total: 'count'
-					},
-					serverFiltering: true,
-					filter: { field:"account_type_id", value: 20 }
-				}
-	        }).data("kendoDropDownList");
 		}		
 	});
 
