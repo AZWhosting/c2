@@ -835,13 +835,13 @@
 							            </li>
 							            <li class="glyphicons text_bigger dashboard"><span data-toggle="tab" data-target="#tab1" data-bind="click: meterClick"><i></i></span>
 							            </li>
-							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab2"><i></i></span>
+							            <li class="glyphicons text_bigger active" ><span data-bind="click: NometerClick" data-toggle="tab" data-target="#tab2"><i></i></span>
 							            </li>							            							            
-							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab3"><i></i></span>
+							            <li class="glyphicons circle_info"><span data-bind="click: NometerClick" data-toggle="tab" data-target="#tab3"><i></i></span>
 							            </li>							            
-							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab4"><i></i></span>
+							            <li class="glyphicons pen"><span data-bind="click: NometerClick" data-toggle="tab" data-target="#tab4"><i></i></span>
 							            </li>
-							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab5"><i></i></span>
+							            <li class="glyphicons paperclip"><span data-bind="click: NometerClick" data-toggle="tab" data-target="#tab5"><i></i></span>
 							            </li>	         
 							        </ul>
 							        <div class="clearfix"></div>
@@ -1050,8 +1050,12 @@
 							</div>														
 						</div>
 					</div>
-					<div class="row-fluid" id="waterCenterContent">
-						
+					<div class="row-fluid">
+						<table>
+							<tbody id="waterCenterContent">
+								
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>			
@@ -1118,9 +1122,11 @@
     </tr>
 </script>
 <script id="waterCenter-meter-tmpl" type="text/x-kendo-tmpl">
-    <tr>    	  	
-    	<td>Graph Meter</td>
-    </tr>
+	<div id="meterClick">
+	    <tr>    	  	
+	    	<td>Graph Meter</td>
+	    </tr>
+	</div>
 </script>
 <script id="waterCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
@@ -5428,7 +5434,13 @@
 		transactionDS  		: dataStore(apiUrl + 'transactions'),
 		filterKey 			: 1,
 		meterClick 			: function(){
-
+			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterCenterContent);
+		},
+		NometerClick 		: function(){
+			// var Find = $('#waterCenterContent').find('#meterClick');
+			// if(Find.length > 0){
+				banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterTransactionContent);
+			// }
 		},
 		contactDS			: new kendo.data.DataSource({
 			transport: {
@@ -5458,7 +5470,7 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter:{ field:"use_water", value:1 },
+			filter:[{ field:"use_water", value:1 },{field:"parent_id", operation: "where_related", model: "contact_type", value: 1}],
 			sort:{ field:"number", dir:"asc" },
 			batch: true,
 			serverFiltering: true,
@@ -5472,7 +5484,12 @@
 			{ id: 0, name: "None Water" }],
 		contactTypeDS  		: banhji.source.customerTypeDS,
 		filterChange 		: function(e){
-			this.contactDS.filter([{field:"use_water", value: this.get("filterKey")},{field:"deleted", value: "0"},{field:"is_pattern", value: "0"}]);
+			this.contactDS.filter([
+				{field:"use_water", value: this.get("filterKey")},
+				{field:"deleted", value: "0"},
+				{field:"is_pattern", value: "0"},
+				{field:"parent_id", operation: "where_related", model: "contact_type", value: 1}
+			]);
 			// if(this.meter_visible == true){
 			// 	this.set('meter_visible',false);
 			// }
@@ -5543,6 +5560,7 @@
 			console.log('Activate meter');
 		},
 		pageLoad 			: function(id){
+			banhji.view.layout.showIn("#waterCenterContent", banhji.view.waterTransactionContent);
 			//Refresh
 			if(this.contactDS.total()>0){
 				this.contactDS.fetch();
@@ -6967,6 +6985,8 @@
 		reading: new kendo.Layout("#Reading", {model: banhji.reading}),
 		customerDeposit: new kendo.Layout("#customerDeposit", {model: banhji.customerDeposit}),
 		addLicense: new kendo.Layout("#addLicense", {model: banhji.addLicense}),
+		waterCenterContent: new kendo.Layout("#waterCenter-meter-tmpl", {model: banhji.waterCenter}),
+		waterTransactionContent: new kendo.Layout("#waterCenter-transaction-tmpl", {model: banhji.waterCenter}),
 		//Menu
 		accountingMenu: new kendo.View("#accountingMenu", {model: langVM}),
 		employeeMenu: new kendo.View("#employeeMenu", {model: langVM}),

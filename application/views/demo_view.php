@@ -43845,13 +43845,13 @@
 
 	        dr = kendo.toString(dr, 'n2');
 	        cr = kendo.toString(cr, 'n2');
-	        
+
 			if(dr!==cr){
 				this.set("isValid", false);
 			}		       	
 
-	        this.set("dr", kendo.toString(dr, "c", obj.locale));
-	        this.set("cr", kendo.toString(cr, "c", obj.locale));
+	        this.set("dr", kendo.toString(kendo.parseFloat(dr), "c", obj.locale));
+	        this.set("cr", kendo.toString(kendo.parseFloat(cr), "c", obj.locale));
 	        
 	        obj.set("amount", dr);
 		},
