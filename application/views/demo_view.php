@@ -1409,7 +1409,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>
+				                <th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>
 				                <th style="width: 30%;"><span data-bind="text: lang.lang.account"></span></th>
 				                <th data-bind="text: lang.lang.description"></th>
 				                <th data-bind="visible: showRef" style="width: 7%;"><span data-bind="text: lang.lang.reference"></span></th>
@@ -1459,10 +1459,12 @@
 							
 						</div>
 						<!-- Column END -->
-						
+					</div>
+
+					<div class="row">
 						<!-- Column -->
-						<div class="span6">
-							<div class="box-generic">						
+						<div class="span12">
+							<div class="box-generic" style="margin-bottom: 0; margin-top: 15px;">						
 								<div class="row-fluid row-merge">
 									<div class="span6">
 										<div class="center">
@@ -1480,7 +1482,6 @@
 							</div>
 						</div>
 						<!-- // Column END -->
-						
 					</div>
 		           
 		            <br>
@@ -31527,7 +31528,7 @@
 					<table class="table table-bordered table-primary table-striped table-vertical-center">
 				        <thead>
 				            <tr>
-				            	<th width="5%"><span data-bind="text: lang.lang.no_"></span></th>				                
+				            	<th width="50px"><span data-bind="text: lang.lang.no_"></span></th>				                
 				                <th data-bind="text: lang.lang.item"></th>
 				                <th data-bind="text: lang.lang.qoh"></th>
 				                <th data-bind="text: lang.lang.quantity_count"></th>
